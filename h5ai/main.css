@@ -1,0 +1,180 @@
+
+@import "lib/html5reset.css";
+
+
+body {
+	font-family: Ubuntu, sans-serif;
+	font-size: 16px;
+	color: #555;
+	margin: 80px 30px;
+}
+
+
+a, a:visited {
+	color: #555;
+	text-decoration: none;
+}
+a:hover {
+	color: #333;
+}
+
+
+nav {
+	position: fixed;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+	font-size: 0.85em;
+	background-color: rgb(240,240,240);
+	border-bottom: 1px solid rgb(225,225,225);
+	-webkit-box-shadow: 0px 0px 30px #555;
+	-moz-box-shadow: 0px 0px 30px #555;
+	box-shadow: 0px 0px 30px #555;
+}
+nav li {
+	float: left;
+	border-right: 1px dotted rgb(225,225,225);
+	cursor: pointer;
+	opacity: 0.7;
+}
+nav li.hover, nav li.hover a {
+	background-color: rgba(255,255,255,0.5);
+	opacity: 1.0;
+}
+nav a {
+	display: block
+	height: 30px;
+	line-height: 30px;
+	padding: 4px 10px;
+}
+nav img {
+	vertical-align: bottom;
+	padding-right: 6px;
+	padding-bottom: 6px;
+}
+
+
+section#content {
+	max-width: 980px;
+	margin: 0px auto;
+}
+
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+table {
+	display: block;
+}
+table tr.hover, table tr.hover a {
+	background-color: rgb(235,245,250);
+	background-color: #eeeeee;
+	color: #333;
+	cursor: pointer;
+}
+table th, table td {
+    padding: 3px 6px;
+    text-align: left;
+	border: none;
+}
+table th {
+	padding-bottom: 18px;
+	opacity: 0.4;
+}
+table th.hover {
+	cursor: pointer;
+	opacity: 0.9;
+}
+table th a, table th a:visited {
+	color: #555;
+	font-weight: normal;
+}
+table th a img {
+	width: 12px;
+	height: 12px;
+    padding: 0px 8px;
+}
+table td {
+    border: 1px solid #ddd;
+    border-left: 0px;
+    border-right: 0px;
+}
+table .icon {
+	text-align: center;
+	width: 16px;
+}
+table .icon img {
+	width: 16px;
+	height: 16px;
+	padding-top: 2px;
+}
+table .name {
+	width: 682px;
+	max-width: 682px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+table .date {
+	text-align: right;
+	width: 160px;
+	min-width: 160px;
+	white-space: nowrap;
+}
+table .size {
+	text-align: right;
+	width: 70px;
+	min-width: 70px;
+	white-space: nowrap;
+}
+
+
+div#empty {
+	display: none;
+	text-align: center;
+	margin: 50px 0px;
+	color: #ddd;
+	font-size: 5em;
+	font-weight: bold;
+}
+
+
+div#special {
+	display: none;
+	text-align: center;
+	margin: 50px 0px;
+}
+
+
+footer {
+	position: fixed;
+	width: 100%;
+	left: 0px;
+	bottom: 0px;
+	padding: 10px 0px;
+	border-top: 1px solid rgb(225,225,225);
+	background-color: rgb(240,240,240);
+	color: #999;
+	font-size: 0.85em;
+	text-align: center;
+	-webkit-box-shadow: 0px 0px 30px #555;
+	-moz-box-shadow: 0px 0px 30px #555;
+	box-shadow: 0px 0px 30px #555;
+}
+
+
+#html5 {
+	position: absolute;
+	left: 6px;
+	bottom: 6px;
+	float: left;
+}
+#html5 img {
+	opacity: 0.4;
+	width: 20px;
+	height: 20px;
+}
+#html5:hover img {
+	opacity: 0.8;
+}
+
