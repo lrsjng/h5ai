@@ -4,11 +4,24 @@ h5ai - a beautified Apache index
 Screenshot
 ----------
 
-![screenshot](h5ai.png "screenshot")
+<img
+	width="800"
+	src="http://repo.larsjung.de/screens/h5ai.png"
+	alt="screenshot"
+	title="screenshot"
+	style="border: 1px solid #ccc"
+/>
 
-compare it to the built in index
 
-![original index](ai.png "original index")
+compare it to apache's built in autoindex:
+
+<img
+	width="800"
+	src="http://repo.larsjung.de/screens/ai.png"
+	alt="apache autoindex"
+	title="apache autoindex"
+	style="border: 1px solid #ccc"
+/>
 
 
 Install
