@@ -4,11 +4,11 @@ h5ai - a beautified Apache index
 Screenshot
 ----------
 
-![screenshot](screen.jpg "screenshot")
+![screenshot](h5ai.png "screenshot")
 
 compare it to the built in index
 
-![original index](org.jpg "original index")
+![original index](ai.png "original index")
 
 
 Install
@@ -22,7 +22,7 @@ Install
 License
 -------
 
-This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/)
+This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).
 
 It is based on the awesome [HTML5 Boilerplate](http://html5boilerplate.com) and the beautiful
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228), please respect their rights.
