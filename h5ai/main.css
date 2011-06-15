@@ -162,7 +162,6 @@ table .size {
 
 
 div#empty {
-	display: none;
 	text-align: center;
 	margin: 50px 0px;
 	color: #ddd;
@@ -171,12 +170,12 @@ div#empty {
 }
 
 
-#box {
+#icons {
 	padding: 10px;
 	border: 1px solid #eee;
 	border-radius: 15px;
 }
-#box .entry {
+#icons .entry {
 	margin: 8px;
 	padding: 8px;
 	width: 100px;
@@ -188,14 +187,14 @@ div#empty {
 	cursor: pointer;
 	border: 1px solid rgba(0,0,0,0);
 }
-#box .entry:hover {
+#icons .entry:hover {
 	color: #e80;
 	border-color: #eee;
 	-webkit-box-shadow: 0px 0px 20px #555;
 	-moz-box-shadow: 0px 0px 20px #555;
 	box-shadow: 0px 0px 20px #999;
 }
-#box .entry img {
+#icons .entry img {
 	width: 48px;
 	height: 48px;
 	margin: 0px 0px 8px 0px;

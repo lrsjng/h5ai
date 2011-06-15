@@ -14,6 +14,7 @@
 
 	function init () {
 
+		checkView();
 		convertToHtml5();
 		addBreadcrumb();
 		addColumnClasses();
@@ -21,7 +22,6 @@
 		addSortOrderIcons();
 		addTopAndBottom();
 		initViews();
-		checkView();
 	};
 
 
@@ -90,7 +90,7 @@
 			} );
 		$dataRows = $( "td" ).closest( "tr" );
 		if ( $dataRows.size() === 0 || $dataRows.size() === 1 && $dataRows.find( "td.name a" ).text() === "Parent Directory" ) {
-			$( "#empty" ).show();
+			$( "#details" ).append( $( "<div id=\"empty\">empty</div>" ) );
 		}
 	};
 
@@ -135,13 +135,11 @@
 	function checkView() {
 		
 		if ( getView() === "icons" ) {
-			$( "#content table" ).hide();
-			$( "#content #empty" ).hide();
-			$( "#content #box" ).show();
+			$( "#details" ).hide();
+			$( "#icons" ).show();
 		} else {
-			$( "#content table" ).show();
-			$( "#content #empty" ).show();
-			$( "#content #box" ).hide();
+			$( "#details" ).show();
+			$( "#icons" ).hide();
 		}
 	};
 
@@ -165,7 +163,7 @@
 	
 	function initViews() {
 
-		var $box = $( "<div id=\"box\"></div>" );
+		var $div = $( "<div></div>" );
 		$( "td.name a" ).closest( "tr" ).each( function () {
 			var $tr = $( this );
 			var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icon", "image" );
@@ -176,17 +174,17 @@
 				.click( function () {
 					document.location.href = $tr.find( "td.name a" ).attr( "href" );
 				} ).
-				appendTo( $box );
+				appendTo( $div );
 		} );
-		$box.append( $( "<div class=\"clearfix\"></div>" ) );
-		$( "#content table" ).after( $box );
+		$div.append( $( "<div class=\"clearfix\"></div>" ) );
+		$( "#icons" ).append( $div );
 
 
-		$( "#details" ).closest( "li" )
+		$( "#viewdetails" ).closest( "li" )
 			.click( function () {
 				setView( "details" );
 			} );
-		$( "#icons" ).closest( "li" )
+		$( "#viewicons" ).closest( "li" )
 			.click( function () {
 				setView( "icons" );
 			} );
