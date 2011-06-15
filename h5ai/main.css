@@ -31,13 +31,13 @@ nav {
 	-moz-box-shadow: 0px 0px 30px #555;
 	box-shadow: 0px 0px 30px #555;
 }
-nav li {
+nav li.crumb {
 	float: left;
 	border-right: 1px dotted rgb(225,225,225);
 	cursor: pointer;
 	opacity: 0.7;
 }
-nav li.hover, nav li.hover a {
+nav li.crumb:hover, nav li.crumb:hover a {
 	background-color: rgba(255,255,255,0.5);
 	opacity: 1.0;
 }
@@ -54,6 +54,22 @@ nav img {
 }
 
 
+section#h5ai-top {
+	display: none;
+	padding: 0px 0px 10px 0px;
+	margin: 0px 0px 80px 0px;
+	border-bottom: 1px solid #999;
+}
+
+
+section#h5ai-bottom {
+	display: none;
+	padding: 10px 0px 0px 0px;
+	margin: 80px 0px 0px 0px;
+	border-top: 1px solid #999;
+}
+
+
 section#content {
 	max-width: 980px;
 	margin: 0px auto;
@@ -67,22 +83,22 @@ table {
 table {
 	display: block;
 }
-table tr.hover, table tr.hover a {
+table tr.entry:hover, table tr.entry:hover a {
 	background-color: rgb(235,245,250);
 	background-color: #eeeeee;
 	color: #333;
 	cursor: pointer;
 }
 table th, table td {
-    padding: 3px 6px;
-    text-align: left;
+	padding: 3px 6px;
+	text-align: left;
 	border: none;
 }
 table th {
 	padding-bottom: 18px;
 	opacity: 0.4;
 }
-table th.hover {
+table th.header:hover {
 	cursor: pointer;
 	opacity: 0.9;
 }
@@ -93,12 +109,12 @@ table th a, table th a:visited {
 table th a img {
 	width: 12px;
 	height: 12px;
-    padding: 0px 8px;
+	padding: 0px 8px;
 }
 table td {
-    border: 1px solid #ddd;
-    border-left: 0px;
-    border-right: 0px;
+	border: 1px solid #ddd;
+	border-left: 0px;
+	border-right: 0px;
 }
 table .icon {
 	text-align: center;
@@ -139,7 +155,7 @@ div#empty {
 }
 
 
-div#special {
+section#special {
 	display: none;
 	text-align: center;
 	margin: 50px 0px;

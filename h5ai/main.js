@@ -18,7 +18,7 @@
 		addColumnClasses();
 		initTableRows();
 		addSortOrderIcons();
-		//specialFiles();
+		addTopAndBottom();
 	};
 
 	
@@ -39,19 +39,12 @@
 			var part = parts[idx];
 			if ( part !== "" ) {
 				path += part + "/";
-				$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
+				$ul.append( $( "<li><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
 			}
 		}
 
 		$( "nav li a" ).closest( "li" )
-			.hover(
-				function () {
-					$( this ).addClass( "hover" );
-				},
-				function () {
-					$( this ).removeClass( "hover" );
-				}
-			)
+			.addClass( "crumb" )
 			.click( function () {
 				document.location.href = $( this ).find( "a" ).attr( "href" );
 			} );
@@ -84,26 +77,12 @@
 	function initTableRows() {
 
 		$( "th a" ).closest( "th" )
-			.hover(
-				function () {
-					$( this ).addClass( "hover" );
-				},
-				function () {
-					$( this ).removeClass( "hover" );
-				}
-			)
+			.addClass( "header" )
 			.click( function () {
 				document.location.href = $( this ).find( "a" ).attr( "href" );
 			} );
 		$( "td.name a" ).closest( "tr" )
-			.hover(
-				function () {
-					$( this ).addClass( "hover" );
-				},
-				function () {
-					$( this ).removeClass( "hover" );
-				}
-			)
+			.addClass( "entry" )
 			.click( function () {
 				document.location.href = $( this ).find( "td.name a" ).attr( "href" );
 			} );
@@ -136,24 +115,18 @@
 	};
 
 
-	function specialFiles() {
+	function addTopAndBottom() {
 
-		specialFile( "README", "readme.png" );
-		specialFile( "ChangeLog", "changelog.png" );
-		specialFile( "INSTALL", "install.png" );
-		specialFile( "COPYING", "copying.png" );
-		specialFile( "LICENSE", "copying.png" );
-		specialFile( "AUTHORS", "authors.png" );
-	};
-
-
-	function specialFile( name, img ) {
-
-		if ( $( "td.name a:contains(" + name + ")" ).size() > 0 ) {
-			$( "#special" )
-				.append( $( "<img src='" + h5aiPath + "/images/" + img + "' alt='readme' />" ) )
-				.show();
-		}
+		$( "#h5ai-top" ).load( "h5ai.top.html", function( response, status, xhr ) {
+			if (status != "error") {
+				$( "#h5ai-top" ).show();
+			}
+		} );
+		$( "#h5ai-bottom" ).load( "h5ai.bottom.html", function( response, status, xhr ) {
+			if (status != "error") {
+				$( "#h5ai-bottom" ).show();
+			}
+		} );
 	};
 
 } )( jQuery );

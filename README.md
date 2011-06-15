@@ -36,7 +36,7 @@ Install
 
 * Copy the `h5ai` folder to the web-root directory of your server or alternativly set an alias `/h5ai/` to
   this folder.
-* Add the content of file `dot-htaccess` to the `.htaccess` file in the directory
+* Add the content of file `dot.htaccess` to the `.htaccess` file in the directory
   you want to be indexed (you might have to create this file). This directory and any subdirectories will be
   styled.
 
