@@ -1,44 +1,67 @@
 h5ai - a beautified Apache index
 ================================
 
-Screenshot
-----------
+Screenshots
+-----------
 
-<img
-	width="800"
+<a href="http://repo.larsjung.de/screens/h5ai.png"><img
+	width="400"
 	src="http://repo.larsjung.de/screens/h5ai.png"
 	alt="screenshot"
 	title="screenshot"
 	style="border: 1px solid #ccc"
-/>
+/></a>
 
-
-compare it to apache's built in autoindex:
-
-<img
-	width="800"
-	src="http://repo.larsjung.de/screens/ai.png"
-	alt="apache autoindex"
-	title="apache autoindex"
+<a href="http://repo.larsjung.de/screens/h5ai-0.2.png"><img
+	width="400"
+	src="http://repo.larsjung.de/screens/h5ai-0.2.png"
+	alt="screenshot"
+	title="screenshot"
 	style="border: 1px solid #ccc"
-/>
+/></a>
 
 
 Live example
 ------------
 
-For a live experience browse [here](http://repo.larsjung.de/h5ai-sample)  
+View a [sample folder](http://repo.larsjung.de/h5ai-sample)  
 *(the files are all empty to save webspace)*
 
 
 Install
 -------
 
-* Copy the `h5ai` folder to the web-root directory of your server or alternativly set an alias `/h5ai/` to
-  this folder.
-* Add the content of file `dot.htaccess` to the `.htaccess` file in the directory
-  you want to be indexed (you might have to create this file). This directory and any subdirectories will be
-  styled.
+1. Copy the `h5ai` folder to the web-root directory of your server or alternativly set an alias `/h5ai/` to
+   this folder.
+2. Add the content of file `dot.htaccess` to the `.htaccess` file in the directory
+   you want to be indexed (you might have to create this file). This directory and any subdirectories will be
+   styled.
+
+
+Changelog
+---------
+
+### v0.2.1
+*2011-06-16*
+
+* fixed croped filenames
+* fixed missing .png extension in header
+* removed .html extension from Header-/ReadmeName references in dot.htaccess
+* added some color to the links
+* added changelog
+
+### v0.2
+*2011-06-15*
+
+* added icon view
+
+
+Author
+------
+
+Lars Jung  
+[project site](http://github.com/larrrs/h5ai)  
+[website](http://larsjung.de)
 
 
 License
@@ -51,6 +74,5 @@ This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons
 
 It is based on the awesome [HTML5 Boilerplate](http://html5boilerplate.com) and the beautiful
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228), please respect their rights.
-
 
 

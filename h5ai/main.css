@@ -15,7 +15,7 @@ a, a:visited {
 	text-decoration: none;
 }
 a:hover {
-	color: #333;
+	color: #e80;
 }
 
 
@@ -34,8 +34,13 @@ nav {
 nav li {
 	cursor: pointer;
 	opacity: 0.7;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 nav li:hover, nav li:hover a {
+	color: #e80;
 	background-color: rgba(255,255,255,0.5);
 	opacity: 1.0;
 }
@@ -91,8 +96,8 @@ table {
 }
 table tr.entry:hover, table tr.entry:hover a {
 	background-color: rgb(235,245,250);
-	background-color: #eeeeee;
-	color: #333;
+	background-color: #f0f0f0;
+	color: #e80;
 	cursor: pointer;
 }
 table th, table td {
@@ -103,8 +108,13 @@ table th, table td {
 table th {
 	padding-bottom: 18px;
 	opacity: 0.4;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
-table th.header:hover {
+table th.header:hover, table th.header:hover a {
+	color: #555;
 	cursor: pointer;
 	opacity: 0.9;
 }
@@ -167,7 +177,7 @@ div#empty {
 	border-radius: 15px;
 }
 #box .entry {
-	margin: 10px;
+	margin: 8px;
 	padding: 8px;
 	width: 100px;
 	height: 120px;
@@ -176,8 +186,11 @@ div#empty {
 	overflow: hidden;
 	border-radius: 5px;
 	cursor: pointer;
+	border: 1px solid rgba(0,0,0,0);
 }
 #box .entry:hover {
+	color: #e80;
+	border-color: #eee;
 	-webkit-box-shadow: 0px 0px 20px #555;
 	-moz-box-shadow: 0px 0px 20px #555;
 	box-shadow: 0px 0px 20px #999;
@@ -211,6 +224,16 @@ footer {
 	-moz-box-shadow: 0px 0px 30px #555;
 	box-shadow: 0px 0px 30px #555;
 }
+footer a, footer a:visited {
+	color: #555;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+footer a:hover {
+	color: #e80;
+}
 
 
 #html5 {
@@ -220,9 +243,13 @@ footer {
 	float: left;
 }
 #html5 img {
-	opacity: 0.4;
 	width: 20px;
 	height: 20px;
+	opacity: 0.4;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 #html5:hover img {
 	opacity: 0.8;

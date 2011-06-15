@@ -140,6 +140,7 @@
 			$( "#content #box" ).show();
 		} else {
 			$( "#content table" ).show();
+			$( "#content #empty" ).show();
 			$( "#content #box" ).hide();
 		}
 	};

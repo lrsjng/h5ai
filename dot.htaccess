@@ -16,8 +16,8 @@
 	# h5ai header and footer
 	################################
 
-	HeaderName           /h5ai/header.html
-	ReadmeName           /h5ai/footer.html
+	HeaderName           /h5ai/header
+	ReadmeName           /h5ai/footer
 
 
 	################################
@@ -44,21 +44,26 @@
 	IndexOptions         IgnoreCase
 	IndexOptions         IconsAreLinks
 	IndexOptions         VersionSort
+	IndexOptions         NameWidth=*
 
 
 	################################
 	# icon mapping
 	################################
 
-	AddIcon              /h5ai/icons/log.png         log  Log  LOG
-	AddIcon              /h5ai/icons/authors.png     AUTHORS
-	AddIcon              /h5ai/icons/install.png     INSTALL
-	AddIcon              /h5ai/icons/copying.png     COPYING  LICENSE
+	AddIcon              /h5ai/icons/parent.png      ..
+	AddIcon              /h5ai/icons/folder.png      ^^DIRECTORY^^
+	AddIcon              /h5ai/icons/blank.png       ^^BLANKICON^^
+
 	AddIcon              /h5ai/icons/readme.png      README
+	AddIcon              /h5ai/icons/copying.png     COPYING  LICENSE
+	AddIcon              /h5ai/icons/install.png     INSTALL
+	AddIcon              /h5ai/icons/authors.png     AUTHORS
+	AddIcon              /h5ai/icons/log.png         LOG  Log  log
 
 	AddIcon              /h5ai/icons/css.png         .less
-	AddIcon              /h5ai/icons/makefile.png    .pom  pom.xml  build.xml
 	AddIcon              /h5ai/icons/script.png      .conf  .ini  .sh  .shar  .csh  .ksh  .tcl
+	AddIcon              /h5ai/icons/makefile.png    .pom  pom.xml  build.xml
 	AddIcon              /h5ai/icons/bin.png         .so  .o
 
 	AddIcon              /h5ai/icons/zip.png         .zip  .Z  .z  .jar  .war
@@ -104,10 +109,6 @@
 	AddIconByType        /h5ai/icons/video.png       video/*
 
 	AddIconByEncoding    /h5ai/icons/zip.png         x-compress  x-gzip  x-bzip2
-
-	AddIcon              /h5ai/icons/parent.png      ..
-	AddIcon              /h5ai/icons/folder.png      ^^DIRECTORY^^
-	AddIcon              /h5ai/icons/blank.png       ^^BLANKICON^^
 
 	DefaultIcon          /h5ai/icons/unknown.png
 
