@@ -31,13 +31,11 @@ nav {
 	-moz-box-shadow: 0px 0px 30px #555;
 	box-shadow: 0px 0px 30px #555;
 }
-nav li.crumb {
-	float: left;
-	border-right: 1px dotted rgb(225,225,225);
+nav li {
 	cursor: pointer;
 	opacity: 0.7;
 }
-nav li.crumb:hover, nav li.crumb:hover a {
+nav li:hover, nav li:hover a {
 	background-color: rgba(255,255,255,0.5);
 	opacity: 1.0;
 }
@@ -51,6 +49,14 @@ nav img {
 	vertical-align: bottom;
 	padding-right: 6px;
 	padding-bottom: 6px;
+}
+nav li.crumb {
+	float: left;
+	border-right: 1px dotted rgb(225,225,225);
+}
+nav li.view {
+	float: right;
+	border-left: 1px dotted rgb(225,225,225);
 }
 
 
@@ -152,6 +158,34 @@ div#empty {
 	color: #ddd;
 	font-size: 5em;
 	font-weight: bold;
+}
+
+
+#box {
+	padding: 10px;
+	border: 1px solid #eee;
+	border-radius: 15px;
+}
+#box .entry {
+	margin: 10px;
+	padding: 8px;
+	width: 100px;
+	height: 120px;
+	float: left;
+	text-align: center;
+	overflow: hidden;
+	border-radius: 5px;
+	cursor: pointer;
+}
+#box .entry:hover {
+	-webkit-box-shadow: 0px 0px 20px #555;
+	-moz-box-shadow: 0px 0px 20px #555;
+	box-shadow: 0px 0px 20px #999;
+}
+#box .entry img {
+	width: 48px;
+	height: 48px;
+	margin: 0px 0px 8px 0px;
 }
 
 

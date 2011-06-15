@@ -33,7 +33,7 @@
 
 	IndexOrderDefault    Ascending Name
 
-	# IndexOptions         Charset=UTF-8
+	IndexOptions         Charset=UTF-8
 	IndexOptions         FancyIndexing
 	IndexOptions         HTMLTable
 	IndexOptions         XHTML
