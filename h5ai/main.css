@@ -87,6 +87,9 @@ section#content {
 }
 
 
+#details {
+	display: none;
+}
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -171,6 +174,7 @@ div#empty {
 
 
 #icons {
+	display: none;
 	padding: 10px;
 	border: 1px solid #eee;
 	border-radius: 15px;
@@ -198,13 +202,6 @@ div#empty {
 	width: 48px;
 	height: 48px;
 	margin: 0px 0px 8px 0px;
-}
-
-
-section#special {
-	display: none;
-	text-align: center;
-	margin: 50px 0px;
 }
 
 
