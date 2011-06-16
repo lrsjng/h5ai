@@ -42,7 +42,7 @@
 			var part = parts[idx];
 			if ( part !== "" ) {
 				path += part + "/";
-				$ul.append( $( "<li class=\"crumb\"><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
+				$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
 			}
 		}
 
@@ -90,7 +90,7 @@
 			} );
 		$dataRows = $( "td" ).closest( "tr" );
 		if ( $dataRows.size() === 0 || $dataRows.size() === 1 && $dataRows.find( "td.name a" ).text() === "Parent Directory" ) {
-			$( "#details" ).append( $( "<div id=\"empty\">empty</div>" ) );
+			$( "#details" ).append( $( "<div id='empty'>empty</div>" ) );
 		}
 	};
 
@@ -168,15 +168,15 @@
 			var $tr = $( this );
 			var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icon", "image" );
 			var name = $tr.find( "td.name a" ).text();
-			$( "<div class=\"entry\"></div>" )
-				.append( $( "<img src=\"" + icon + "\" />" ) )
-				.append( $( "<div class=\"label\">" + name + "</div>" ) )
+			$( "<div class='entry'></div>" )
+				.append( $( "<img src='" + icon + "' />" ) )
+				.append( $( "<div class='label'>" + name + "</div>" ) )
 				.click( function () {
 					document.location.href = $tr.find( "td.name a" ).attr( "href" );
 				} ).
 				appendTo( $div );
 		} );
-		$div.append( $( "<div class=\"clearfix\"></div>" ) );
+		$div.append( $( "<div class='clearfix'></div>" ) );
 		$( "#icons" ).append( $div );
 
 
