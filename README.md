@@ -4,21 +4,11 @@ h5ai - a beautified Apache index
 Screenshots
 -----------
 
-<a style="float: left; margin-right: 16px; border: 1px solid #eee" href="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png">
-	<img
-		width="400px"
-		src="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png"
-		alt="screenshot"
-		title="screenshot"
-	/>
+<a href="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png" target="_blank" style="float: left">
+	<img src="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png" width="400px" alt="screenshot" title="screenshot"/>
 </a>
-<a style="float: left; border: 1px solid #eee" href="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png">
-	<img
-		width="400"
-		src="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png"
-		alt="screenshot"
-		title="screenshot"
-	/>
+<a href="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png" target="_blank" style="float: right">
+	<img src="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png" width="400px" alt="screenshot" title="screenshot" />
 </a>
 <div style="clear: both"/>
 
@@ -36,8 +26,8 @@ Install
 1. Copy the `h5ai` folder to the web-root directory of your server or alternativly set an alias `/h5ai/` to
    this folder.
 2. Add the content of file `dot.htaccess` to the `.htaccess` file in the directory
-   you want to be indexed (you might have to create this file). This directory and any subdirectories will be
-   styled.
+   you want to be styled (you might have to create this file). This directory and any subdirectories will be
+   styled by h5ai.
 
 
 Changelog
@@ -61,9 +51,8 @@ Changelog
 Author
 ------
 
-Lars Jung  
-[project site](http://github.com/larrrs/h5ai)  
-[website](http://larsjung.de)
+[Lars Jung](http://larsjung.de)  
+[h5ai on github](http://github.com/larrrs/h5ai)  
 
 
 License
