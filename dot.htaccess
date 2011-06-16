@@ -16,8 +16,8 @@
 	# h5ai header and footer
 	################################
 
-	HeaderName           /h5ai/header
-	ReadmeName           /h5ai/footer
+	HeaderName           /h5ai/header.html
+	ReadmeName           /h5ai/footer.html
 
 
 	################################
