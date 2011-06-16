@@ -45,7 +45,7 @@ nav li:hover, nav li:hover a {
 	opacity: 1.0;
 }
 nav a {
-	display: block
+	display: block;
 	height: 30px;
 	line-height: 30px;
 	padding: 4px 10px;
