@@ -4,21 +4,23 @@ h5ai - a beautified Apache index
 Screenshots
 -----------
 
-<a href="http://repo.larsjung.de/screens/h5ai.png"><img
-	width="400"
-	src="http://repo.larsjung.de/screens/h5ai.png"
-	alt="screenshot"
-	title="screenshot"
-	style="border: 1px solid #ccc"
-/></a>
-
-<a href="http://repo.larsjung.de/screens/h5ai-0.2.png"><img
-	width="400"
-	src="http://repo.larsjung.de/screens/h5ai-0.2.png"
-	alt="screenshot"
-	title="screenshot"
-	style="border: 1px solid #ccc"
-/></a>
+<a style="float: left; margin-right: 16px; border: 1px solid #eee" href="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png">
+	<img
+		width="400px"
+		src="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png"
+		alt="screenshot"
+		title="screenshot"
+	/>
+</a>
+<a style="float: left; border: 1px solid #eee" href="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png">
+	<img
+		width="400"
+		src="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png"
+		alt="screenshot"
+		title="screenshot"
+	/>
+</a>
+<div style="clear: both"/>
 
 
 Live example
