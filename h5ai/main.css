@@ -22,14 +22,14 @@ a:hover {
 nav {
 	position: fixed;
 	width: 100%;
-	left: 0px;
-	top: 0px;
+	left: 0;
+	top: 0;
 	font-size: 0.85em;
 	background-color: rgb(240,240,240);
 	border-bottom: 1px solid rgb(225,225,225);
-	-webkit-box-shadow: 0px 0px 30px #555;
-	-moz-box-shadow: 0px 0px 30px #555;
-	box-shadow: 0px 0px 30px #555;
+	-webkit-box-shadow: 0 0 30px #555;
+	-moz-box-shadow: 0 0 30px #555;
+	box-shadow: 0 0 30px #555;
 }
 nav li {
 	cursor: pointer;
@@ -67,23 +67,23 @@ nav li.view {
 
 section#h5ai-top {
 	display: none;
-	padding: 0px 0px 10px 0px;
-	margin: 0px 0px 80px 0px;
+	padding: 0 0 10px 0;
+	margin: 0 0 80px 0;
 	border-bottom: 1px solid #999;
 }
 
 
 section#h5ai-bottom {
 	display: none;
-	padding: 10px 0px 0px 0px;
-	margin: 80px 0px 0px 0px;
+	padding: 10px 0 0 0;
+	margin: 80px 0 0 0;
 	border-top: 1px solid #999;
 }
 
 
 section#content {
 	max-width: 980px;
-	margin: 0px auto;
+	margin: 0 auto;
 }
 
 
@@ -128,12 +128,12 @@ table th a, table th a:visited {
 table th a img {
 	width: 12px;
 	height: 12px;
-	padding: 0px 8px;
+	padding: 0 8px;
 }
 table td {
 	border: 1px solid #ddd;
-	border-left: 0px;
-	border-right: 0px;
+	border-left: 0;
+	border-right: 0;
 }
 table .icon {
 	text-align: center;
@@ -166,7 +166,7 @@ table .size {
 
 div#empty {
 	text-align: center;
-	margin: 50px 0px;
+	margin: 50px 0;
 	color: #ddd;
 	font-size: 5em;
 	font-weight: bold;
@@ -194,31 +194,31 @@ div#empty {
 #icons .entry:hover {
 	color: #e80;
 	border-color: #eee;
-	-webkit-box-shadow: 0px 0px 20px #555;
-	-moz-box-shadow: 0px 0px 20px #555;
-	box-shadow: 0px 0px 20px #999;
+	-webkit-box-shadow: 0 0 20px #555;
+	-moz-box-shadow: 0 0 20px #555;
+	box-shadow: 0 0 20px #999;
 }
 #icons .entry img {
 	width: 48px;
 	height: 48px;
-	margin: 0px 0px 8px 0px;
+	margin: 0 0 8px 0;
 }
 
 
 footer {
 	position: fixed;
 	width: 100%;
-	left: 0px;
-	bottom: 0px;
-	padding: 10px 0px;
+	left: 0;
+	bottom: 0;
+	padding: 10px 0;
 	border-top: 1px solid rgb(225,225,225);
 	background-color: rgb(240,240,240);
 	color: #999;
 	font-size: 0.85em;
 	text-align: center;
-	-webkit-box-shadow: 0px 0px 30px #555;
-	-moz-box-shadow: 0px 0px 30px #555;
-	box-shadow: 0px 0px 30px #555;
+	-webkit-box-shadow: 0 0 30px #555;
+	-moz-box-shadow: 0 0 30px #555;
+	box-shadow: 0 0 30px #555;
 }
 footer a, footer a:visited {
 	color: #555;
