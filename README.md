@@ -33,14 +33,23 @@ Install
 Changelog
 ---------
 
+
+### v0.2.2
+*2011-06-16*
+
+* refactored a lot, added some comments
+* included fixes from [NumEricR](http://github.com/NumEricR/h5ai)
+* added top/bottom message support, only basicly styled
+
+
 ### v0.2.1
 *2011-06-16*
 
 * fixed croped filenames
 * fixed missing .png extension in header
-* removed .html extension from Header-/ReadmeName references in dot.htaccess
 * added some color to the links
 * added changelog
+
 
 ### v0.2
 *2011-06-15*

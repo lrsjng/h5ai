@@ -21,15 +21,16 @@ a:hover {
 
 nav {
 	position: fixed;
+	z-index: 1;
 	width: 100%;
-	left: 0px;
-	top: 0px;
+	left: 0;
+	top: 0;
 	font-size: 0.85em;
 	background-color: rgb(240,240,240);
 	border-bottom: 1px solid rgb(225,225,225);
-	-webkit-box-shadow: 0px 0px 30px #555;
-	-moz-box-shadow: 0px 0px 30px #555;
-	box-shadow: 0px 0px 30px #555;
+	-webkit-box-shadow: 0 0 30px #555;
+	-moz-box-shadow: 0 0 30px #555;
+	box-shadow: 0 0 30px #555;
 }
 nav li {
 	cursor: pointer;
@@ -45,15 +46,14 @@ nav li:hover, nav li:hover a {
 	opacity: 1.0;
 }
 nav a {
-	display: block
+	display: block;
 	height: 30px;
 	line-height: 30px;
-	padding: 4px 10px;
+	padding: 0 10px;
 }
 nav img {
 	vertical-align: bottom;
-	padding-right: 6px;
-	padding-bottom: 6px;
+	padding: 0 6px 6px 0;
 }
 nav li.crumb {
 	float: left;
@@ -65,50 +65,46 @@ nav li.view {
 }
 
 
-section#h5ai-top {
+#top {
 	display: none;
-	padding: 0px 0px 10px 0px;
-	margin: 0px 0px 80px 0px;
-	border-bottom: 1px solid #999;
+	padding-bottom: 10px;
+	margin-bottom: 80px;
+	border-bottom: 2px dashed #ddd;
+}
+#bottom {
+	display: none;
+	padding-top: 10px;
+	margin-top: 80px;
+	border-top: 2px dashed #ddd;
 }
 
 
-section#h5ai-bottom {
-	display: none;
-	padding: 10px 0px 0px 0px;
-	margin: 80px 0px 0px 0px;
-	border-top: 1px solid #999;
-}
-
-
-section#content {
+#content {
 	max-width: 980px;
-	margin: 0px auto;
+	margin: 0 auto;
 }
 
 
 #details {
 	display: none;
 }
-table {
+#details table {
+	display: block;
 	width: 100%;
 	border-collapse: collapse;
 }
-table {
-	display: block;
-}
-table tr.entry:hover, table tr.entry:hover a {
+#details tr.entry:hover, #details tr.entry:hover a {
 	background-color: rgb(235,245,250);
 	background-color: #f0f0f0;
 	color: #e80;
 	cursor: pointer;
 }
-table th, table td {
+#details th, #details td {
 	padding: 3px 6px;
 	text-align: left;
 	border: none;
 }
-table th {
+#details th {
 	padding-bottom: 18px;
 	opacity: 0.4;
 	-webkit-transition: all 0.2s ease-in-out;
@@ -116,57 +112,55 @@ table th {
 	-o-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
-table th.header:hover, table th.header:hover a {
+#details th.header:hover, #details th.header:hover a {
 	color: #555;
 	cursor: pointer;
 	opacity: 0.9;
 }
-table th a, table th a:visited {
+#details th a, #details th a:visited {
 	color: #555;
 	font-weight: normal;
 }
-table th a img {
+#details th a img {
 	width: 12px;
 	height: 12px;
-	padding: 0px 8px;
+	padding: 0 8px;
 }
-table td {
+#details td {
 	border: 1px solid #ddd;
-	border-left: 0px;
-	border-right: 0px;
+	border-left: none;
+	border-right: none;
 }
-table .icon {
+#details .icon {
 	text-align: center;
 	width: 16px;
 }
-table .icon img {
+#details .icon img {
 	width: 16px;
 	height: 16px;
 	padding-top: 2px;
 }
-table .name {
+#details .name {
 	width: 682px;
 	max-width: 682px;
 	overflow: hidden;
 	white-space: nowrap;
 }
-table .date {
+#details .date {
 	text-align: right;
 	width: 160px;
 	min-width: 160px;
 	white-space: nowrap;
 }
-table .size {
+#details .size {
 	text-align: right;
 	width: 70px;
 	min-width: 70px;
 	white-space: nowrap;
 }
-
-
-div#empty {
+#details .empty {
 	text-align: center;
-	margin: 50px 0px;
+	margin: 50px 0;
 	color: #ddd;
 	font-size: 5em;
 	font-weight: bold;
@@ -194,31 +188,32 @@ div#empty {
 #icons .entry:hover {
 	color: #e80;
 	border-color: #eee;
-	-webkit-box-shadow: 0px 0px 20px #555;
-	-moz-box-shadow: 0px 0px 20px #555;
-	box-shadow: 0px 0px 20px #999;
+	-webkit-box-shadow: 0 0 20px #555;
+	-moz-box-shadow: 0 0 20px #555;
+	box-shadow: 0 0 20px #999;
 }
 #icons .entry img {
 	width: 48px;
 	height: 48px;
-	margin: 0px 0px 8px 0px;
+	margin-bottom: 8px;
 }
 
 
 footer {
 	position: fixed;
+	z-index: 1;
 	width: 100%;
-	left: 0px;
-	bottom: 0px;
-	padding: 10px 0px;
+	left: 0;
+	bottom: 0;
+	padding: 10px 0;
 	border-top: 1px solid rgb(225,225,225);
 	background-color: rgb(240,240,240);
 	color: #999;
 	font-size: 0.85em;
 	text-align: center;
-	-webkit-box-shadow: 0px 0px 30px #555;
-	-moz-box-shadow: 0px 0px 30px #555;
-	box-shadow: 0px 0px 30px #555;
+	-webkit-box-shadow: 0 0 30px #555;
+	-moz-box-shadow: 0 0 30px #555;
+	box-shadow: 0 0 30px #555;
 }
 footer a, footer a:visited {
 	color: #555;

@@ -1,35 +1,71 @@
 ( function( $ ) {
 
-	var columnClasses = [ "icon", "name", "date", "size" ];
-	var defaultSortOrder = "C=N;O=A"
-	var h5aiPath = "/h5ai"
-	var views = [ "details", "icons" ];
 
+	/*******************************
+	 * init after dom load
+	 *******************************/
 
 	$( function() {
 
-		init();
+		checkViewmode();
+		addBreadcrumb();
+		addTopAndBottom();
+		initViews();
 	} );
 
 
-	function init () {
 
-		checkView();
-		convertToHtml5();
-		addBreadcrumb();
-		addColumnClasses();
-		initTableRows();
-		addSortOrderIcons();
-		addTopAndBottom();
-		initViews();
+
+	/*******************************
+	 * config
+	 *******************************/
+
+	var columnClasses = [ "icon", "name", "date", "size" ];
+	var defaultSortOrder = "C=N;O=A"
+	var h5aiPath = "/h5ai"
+	var viewmodes = [ "details", "icons" ];
+
+
+
+
+	/*******************************
+	 * local stored viewmode
+	 *******************************/
+
+	function getViewmode() {
+	
+		var viewmode = localStorage.getItem( "h5ai.viewmode" );
+		if ( $.inArray( viewmode, viewmodes ) ) {
+			return viewmode;
+		};
+		return viewmodes[0];
 	};
 
 
-	function convertToHtml5() {
-
-		$( "td" ).removeAttr( "align" ).removeAttr( "valign" );
+	function setViewmode( viewmode ) {
+	
+		localStorage.setItem( "h5ai.viewmode", viewmode );
+		checkViewmode();
 	};
 
+	
+	function checkViewmode() {
+		
+		if ( getViewmode() === "icons" ) {
+			$( "#details" ).hide();
+			$( "#icons" ).show();
+		} else {
+			$( "#details" ).show();
+			$( "#icons" ).hide();
+		}
+	};
+
+
+
+
+	/*******************************
+	 * breadcrumb
+	 *******************************/
 
 	function addBreadcrumb() {
 
@@ -42,7 +78,7 @@
 			var part = parts[idx];
 			if ( part !== "" ) {
 				path += part + "/";
-				$ul.append( $( "<li class=\"crumb\"><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
+				$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
 			}
 		}
 
@@ -52,6 +88,18 @@
 			} );
 
 		document.title = document.domain + pathname;
+	};
+
+
+
+
+	/*******************************
+	 * details view
+	 *******************************/
+
+	function convertToHtml5() {
+
+		$( "#details td" ).removeAttr( "align" ).removeAttr( "valign" );
 	};
 
 
@@ -66,7 +114,7 @@
 
 	function addColumnClasses() {
 
-		$( "tr" ).each( function () {
+		$( "#details tr" ).each( function () {
 			var colIdx = 0;
 			$( this ).find( "th,td" ).each( function () {
 				$( this ).addClass( getColumnClass( colIdx ) );
@@ -78,19 +126,19 @@
 
 	function initTableRows() {
 
-		$( "th a" ).closest( "th" )
+		$( "#details th a" ).closest( "th" )
 			.addClass( "header" )
 			.click( function () {
 				document.location.href = $( this ).find( "a" ).attr( "href" );
 			} );
-		$( "td.name a" ).closest( "tr" )
+		$( "#details td.name a" ).closest( "tr" )
 			.addClass( "entry" )
 			.click( function () {
 				document.location.href = $( this ).find( "td.name a" ).attr( "href" );
 			} );
-		$dataRows = $( "td" ).closest( "tr" );
+		$dataRows = $( "#details td" ).closest( "tr" );
 		if ( $dataRows.size() === 0 || $dataRows.size() === 1 && $dataRows.find( "td.name a" ).text() === "Parent Directory" ) {
-			$( "#details" ).append( $( "<div id=\"empty\">empty</div>" ) );
+			$( "#details" ).append( $( "<div class='empty'>empty</div>" ) );
 		}
 	};
 
@@ -108,86 +156,90 @@
 			$icon = $( "<img src='" + h5aiPath + "/icons/descending.png' class='sort' alt='descending' />" );
 		}
 		if ( order.indexOf( "C=N" ) >= 0 ) {
-			$( "th.name a" ).append( $icon );
+			$( "#details th.name a" ).append( $icon );
 		} else if ( order.indexOf( "C=M" ) >= 0 ) {
-			$( "th.date a" ).prepend( $icon );
+			$( "#details th.date a" ).prepend( $icon );
 		} else if ( order.indexOf( "C=S" ) >= 0 ) {
-			$( "th.size a" ).prepend( $icon );
+			$( "#details th.size a" ).prepend( $icon );
 		}
 	};
 
 
-	function addTopAndBottom() {
+	function initDetailsView() {
 
-		$( "#h5ai-top" ).load( "h5ai.top.html", function( response, status, xhr ) {
-			if (status != "error") {
-				$( "#h5ai-top" ).show();
-			}
-		} );
-		$( "#h5ai-bottom" ).load( "h5ai.bottom.html", function( response, status, xhr ) {
-			if (status != "error") {
-				$( "#h5ai-bottom" ).show();
-			}
-		} );
+		convertToHtml5();
+		addColumnClasses();
+		initTableRows();
+		addSortOrderIcons();
 	};
 
 
-	function checkView() {
-		
-		if ( getView() === "icons" ) {
-			$( "#details" ).hide();
-			$( "#icons" ).show();
-		} else {
-			$( "#details" ).show();
-			$( "#icons" ).hide();
-		}
-	};
 
 
-	function getView() {
-	
-		var view = localStorage.getItem( "h5ai.view" );
-		if ( $.inArray( view, views ) ) {
-			return view;
-		};
-		return views[0];
-	};
+	/*******************************
+	 * icons view
+	 *******************************/
 
-
-	function setView( view ) {
-	
-		localStorage.setItem( "h5ai.view", view );
-		checkView();
-	};
-
-	
-	function initViews() {
+	function initIconsView() {
 
 		var $div = $( "<div></div>" );
-		$( "td.name a" ).closest( "tr" ).each( function () {
+		$( "#details td.name a" ).closest( "tr" ).each( function () {
 			var $tr = $( this );
 			var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icon", "image" );
 			var name = $tr.find( "td.name a" ).text();
 			$( "<div class=\"entry\"></div>" )
-				.append( $( "<img src=\"" + icon + "\" />" ) )
-				.append( $( "<div class=\"label\">" + name + "</div>" ) )
+				.append( $( "<img src='" + icon + "' />" ) )
+				.append( $( "<div class='label'>" + name + "</div>" ) )
 				.click( function () {
 					document.location.href = $tr.find( "td.name a" ).attr( "href" );
 				} ).
 				appendTo( $div );
 		} );
-		$div.append( $( "<div class=\"clearfix\"></div>" ) );
+		$div.append( $( "<div class='clearfix'></div>" ) );
 		$( "#icons" ).append( $div );
+	};
 
+
+
+
+	/*******************************
+	 * init views
+	 *******************************/
+
+	function initViews() {
+
+		initDetailsView();
+		initIconsView();
 
 		$( "#viewdetails" ).closest( "li" )
 			.click( function () {
-				setView( "details" );
+				setViewmode( "details" );
 			} );
 		$( "#viewicons" ).closest( "li" )
 			.click( function () {
-				setView( "icons" );
+				setViewmode( "icons" );
 			} );
+	};
+
+
+
+
+	/*******************************
+	 * top and bottom messages
+	 *******************************/
+
+	function addTopAndBottom() {
+
+		$( "#top" ).load( "h5ai.top.html", function( response, status, xhr ) {
+			if (status != "error") {
+				$( "#top" ).show();
+			}
+		} );
+		$( "#bottom" ).load( "h5ai.bottom.html", function( response, status, xhr ) {
+			if (status != "error") {
+				$( "#bottom" ).show();
+			}
+		} );
 	};
 
 } )( jQuery );
