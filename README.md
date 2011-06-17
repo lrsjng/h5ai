@@ -34,6 +34,13 @@ Changelog
 ---------
 
 
+### v0.2.3
+*2011-06-17*
+
+* more refactoring in main.js
+* added custom js support, and global includes
+
+
 ### v0.2.2
 *2011-06-16*
 

@@ -7,10 +7,10 @@
 
 	$( function() {
 
-		checkViewmode();
-		addBreadcrumb();
-		addTopAndBottom();
+		applyViewmode();
+		initBreadcrumb();
 		initViews();
+		loadIncludes();
 	} );
 
 
@@ -20,10 +20,26 @@
 	 * config
 	 *******************************/
 
-	var columnClasses = [ "icon", "name", "date", "size" ];
-	var defaultSortOrder = "C=N;O=A"
-	var h5aiPath = "/h5ai"
-	var viewmodes = [ "details", "icons" ];
+	var config = {
+		columnClasses: [ "icon", "name", "date", "size" ],
+		defaultSortOrder: "C=N;O=A",
+		viewmodes: [ "details", "icons" ],
+		store: {
+			viewmode: "h5ai.viewmode"
+		},
+		icons: {
+			crumb: "/h5ai/icons/crumb.png",
+			ascending: "/h5ai/icons/ascending.png",
+			descending: "/h5ai/icons/descending.png"
+		},
+		globalPath: "/h5ai/global/",
+		localPrefix: "h5ai.",
+		includes: {
+			top: "top.html",
+			bottom: "bottom.html",
+			include: "include.js"
+		}
+	};
 
 
 
@@ -34,23 +50,19 @@
 
 	function getViewmode() {
 	
-		var viewmode = localStorage.getItem( "h5ai.viewmode" );
-		if ( $.inArray( viewmode, viewmodes ) ) {
+		var viewmode = localStorage.getItem( config.store.viewmode );
+		if ( $.inArray( viewmode, config.viewmodes ) ) {
 			return viewmode;
 		};
-		return viewmodes[0];
+		return config.viewmodes[0];
 	};
 
 
-	function setViewmode( viewmode ) {
-	
-		localStorage.setItem( "h5ai.viewmode", viewmode );
-		checkViewmode();
-	};
+	function applyViewmode( viewmode ) {
 
-	
-	function checkViewmode() {
-		
+		if ( viewmode !== undefined ) {
+			localStorage.setItem( config.store.viewmode, viewmode );
+		}	
 		if ( getViewmode() === "icons" ) {
 			$( "#details" ).hide();
 			$( "#icons" ).show();
@@ -67,7 +79,7 @@
 	 * breadcrumb
 	 *******************************/
 
-	function addBreadcrumb() {
+	function initBreadcrumb() {
 
 		$( "#domain span" ).text( document.domain );
 		var pathname = decodeURI( document.location.pathname );
@@ -78,7 +90,7 @@
 			var part = parts[idx];
 			if ( part !== "" ) {
 				path += part + "/";
-				$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + h5aiPath + "/icons/crumb.png' alt='>' />" + part + "</a></li>" ) );
+				$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + config.icons.crumb + "' alt='>' />" + part + "</a></li>" ) );
 			}
 		}
 
@@ -97,7 +109,7 @@
 	 * details view
 	 *******************************/
 
-	function convertToHtml5() {
+	function makeTableHtml5Conform() {
 
 		$( "#details td" ).removeAttr( "align" ).removeAttr( "valign" );
 	};
@@ -105,14 +117,14 @@
 
 	function getColumnClass( idx ) {
 
-		if ( idx >= 0 && idx < columnClasses.length ) {
-			return columnClasses[idx];
+		if ( idx >= 0 && idx < config.columnClasses.length ) {
+			return config.columnClasses[idx];
 		}
 		return "unknown";
 	};
 
 
-	function addColumnClasses() {
+	function initTableColumns() {
 
 		$( "#details tr" ).each( function () {
 			var colIdx = 0;
@@ -143,17 +155,17 @@
 	};
 
 
-	function addSortOrderIcons() {
+	function addSortOrderIcon() {
 
 		var order = document.location.search;
 		if ( order === "" ) {
-			order = defaultSortOrder;
+			order = config.defaultSortOrder;
 		}
 		var $icon;
 		if ( order.indexOf( "O=A" ) >= 0 ) {
-			$icon = $( "<img src='" + h5aiPath + "/icons/ascending.png' class='sort' alt='ascending' />" );
+			$icon = $( "<img src='" + config.icons.ascending + "' class='sort' alt='ascending' />" );
 		} else {
-			$icon = $( "<img src='" + h5aiPath + "/icons/descending.png' class='sort' alt='descending' />" );
+			$icon = $( "<img src='" + config.icons.descending + "' class='sort' alt='descending' />" );
 		}
 		if ( order.indexOf( "C=N" ) >= 0 ) {
 			$( "#details th.name a" ).append( $icon );
@@ -167,10 +179,10 @@
 
 	function initDetailsView() {
 
-		convertToHtml5();
-		addColumnClasses();
+		makeTableHtml5Conform();
+		initTableColumns();
 		initTableRows();
-		addSortOrderIcons();
+		addSortOrderIcon();
 	};
 
 
@@ -185,13 +197,11 @@
 		var $div = $( "<div></div>" );
 		$( "#details td.name a" ).closest( "tr" ).each( function () {
 			var $tr = $( this );
-			var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icon", "image" );
-			var name = $tr.find( "td.name a" ).text();
-			$( "<div class=\"entry\"></div>" )
-				.append( $( "<img src='" + icon + "' />" ) )
-				.append( $( "<div class='label'>" + name + "</div>" ) )
+			var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icons", "images" );
+			var $link = $tr.find( "td.name a" );
+			$( "<div class='entry'><img src='" + icon + "' /><div class='label'>" + $link.text() + "</div></div>" )
 				.click( function () {
-					document.location.href = $tr.find( "td.name a" ).attr( "href" );
+					document.location.href = $link.attr( "href" );
 				} ).
 				appendTo( $div );
 		} );
@@ -213,11 +223,11 @@
 
 		$( "#viewdetails" ).closest( "li" )
 			.click( function () {
-				setViewmode( "details" );
+				applyViewmode( "details" );
 			} );
 		$( "#viewicons" ).closest( "li" )
 			.click( function () {
-				setViewmode( "icons" );
+				applyViewmode( "icons" );
 			} );
 	};
 
@@ -225,21 +235,35 @@
 
 
 	/*******************************
-	 * top and bottom messages
+	 * includes
 	 *******************************/
 
-	function addTopAndBottom() {
+	function loadIncludes() {
 
-		$( "#top" ).load( "h5ai.top.html", function( response, status, xhr ) {
-			if (status != "error") {
+		$( "#top" ).load( config.localPrefix + config.includes.top, function( response, status ) {
+			if (status !== "error") {
 				$( "#top" ).show();
+			} else {
+				$( "#top" ).load( config.globalPath + config.includes.top, function( response, status ) {
+					if (status !== "error") {
+						$( "#top" ).show();
+					}
+				} );
 			}
 		} );
-		$( "#bottom" ).load( "h5ai.bottom.html", function( response, status, xhr ) {
-			if (status != "error") {
+		$( "#bottom" ).load( config.localPrefix + config.includes.bottom, function( response, status ) {
+			if (status !== "error") {
 				$( "#bottom" ).show();
+			} else {
+				$( "#bottom" ).load( config.globalPath + config.includes.bottom, function( response, status ) {
+					if (status !== "error") {
+						$( "#bottom" ).show();
+					}
+				} );
 			}
 		} );
+		$.getScript( config.globalPath + config.includes.include );
+		$.getScript( config.localPrefix + config.includes.include );
 	};
 
 } )( jQuery );
