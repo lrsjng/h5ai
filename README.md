@@ -40,7 +40,7 @@ Changelog
 *2011-06-17*
 
 * more refactoring in main.js
-* <strike>added custom js support, and global includes</strike> *removed, only custom top and bottom sections supported*
+* ~~added custom js support, and global includes~~ *removed, only custom top and bottom sections supported*
 
 
 ### v0.2.2
