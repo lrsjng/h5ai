@@ -10,7 +10,7 @@
 		applyViewmode();
 		initBreadcrumb();
 		initViews();
-		loadIncludes();
+		customize();
 	} );
 
 
@@ -32,13 +32,8 @@
 			ascending: "/h5ai/icons/ascending.png",
 			descending: "/h5ai/icons/descending.png"
 		},
-		globalPath: "/h5ai/global/",
-		localPrefix: "h5ai.",
-		includes: {
-			top: "top.html",
-			bottom: "bottom.html",
-			include: "include.js"
-		}
+		customHeader: "h5ai.header.html",
+		customFooter: "h5ai.footer.html",
 	};
 
 
@@ -235,35 +230,26 @@
 
 
 	/*******************************
-	 * includes
+	 * customize
 	 *******************************/
 
-	function loadIncludes() {
 
-		$( "#top" ).load( config.localPrefix + config.includes.top, function( response, status ) {
-			if (status !== "error") {
-				$( "#top" ).show();
-			} else {
-				$( "#top" ).load( config.globalPath + config.includes.top, function( response, status ) {
-					if (status !== "error") {
-						$( "#top" ).show();
-					}
-				} );
+	function customize() {
+		$.ajax( {
+			url: config.customHeader,
+			dataType: "html",
+			success: function ( data ) {
+				$( "#content > header" ).append( $( data ) ).show();
 			}
 		} );
-		$( "#bottom" ).load( config.localPrefix + config.includes.bottom, function( response, status ) {
-			if (status !== "error") {
-				$( "#bottom" ).show();
-			} else {
-				$( "#bottom" ).load( config.globalPath + config.includes.bottom, function( response, status ) {
-					if (status !== "error") {
-						$( "#bottom" ).show();
-					}
-				} );
+		$.ajax( {
+			url: config.customFooter,
+			dataType: "html",
+			success: function ( data ) {
+				$( "#content > footer" ).prepend( $( data ) ).show();
 			}
 		} );
-		$.getScript( config.globalPath + config.includes.include );
-		$.getScript( config.localPrefix + config.includes.include );
 	};
+
 
 } )( jQuery );

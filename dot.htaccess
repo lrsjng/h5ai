@@ -24,7 +24,7 @@
 	# hide h5ai folder and config files from index
 	################################
 
-	IndexIgnore          h5ai  h5ai.*
+	IndexIgnore          h5ai  h5ai.header.html  h5ai.footer.html
 
 
 	################################

@@ -19,7 +19,7 @@ a:hover {
 }
 
 
-nav {
+body > nav {
 	position: fixed;
 	z-index: 1;
 	width: 100%;
@@ -32,7 +32,7 @@ nav {
 	-moz-box-shadow: 0 0 30px #555;
 	box-shadow: 0 0 30px #555;
 }
-nav li {
+body > nav li {
 	cursor: pointer;
 	opacity: 0.7;
 	-webkit-transition: all 0.2s ease-in-out;
@@ -40,48 +40,46 @@ nav li {
 	-o-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
-nav li:hover, nav li:hover a {
+body > nav li:hover, body > nav li:hover a {
 	color: #e80;
 	background-color: rgba(255,255,255,0.5);
 	opacity: 1.0;
 }
-nav a {
+body > nav a {
 	display: block;
 	height: 30px;
 	line-height: 30px;
 	padding: 0 10px;
 }
-nav img {
+body > nav img {
 	vertical-align: bottom;
 	padding: 0 6px 6px 0;
 }
-nav li.crumb {
+body > nav li.crumb {
 	float: left;
 	border-right: 1px dotted rgb(225,225,225);
 }
-nav li.view {
+body > nav li.view {
 	float: right;
 	border-left: 1px dotted rgb(225,225,225);
-}
-
-
-#top {
-	display: none;
-	padding-bottom: 10px;
-	margin-bottom: 80px;
-	border-bottom: 2px dashed #ddd;
-}
-#bottom {
-	display: none;
-	padding-top: 10px;
-	margin-top: 80px;
-	border-top: 2px dashed #ddd;
 }
 
 
 #content {
 	max-width: 980px;
 	margin: 0 auto;
+}
+#content > header {
+	display: none;
+	padding-bottom: 10px;
+	margin-bottom: 80px;
+	border-bottom: 2px dashed #ddd;
+}
+#content > footer {
+	display: none;
+	padding-top: 10px;
+	margin-top: 80px;
+	border-top: 2px dashed #ddd;
 }
 
 
@@ -199,7 +197,7 @@ nav li.view {
 }
 
 
-footer {
+body > footer {
 	position: fixed;
 	z-index: 1;
 	width: 100%;
@@ -215,14 +213,14 @@ footer {
 	-moz-box-shadow: 0 0 30px #555;
 	box-shadow: 0 0 30px #555;
 }
-footer a, footer a:visited {
+body > footer a, body > footer a:visited {
 	color: #555;
 	-webkit-transition: all 0.2s ease-in-out;
 	-moz-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
-footer a:hover {
+body > footer a:hover {
 	color: #e80;
 }
 
