@@ -52,6 +52,8 @@ body > nav a {
 	padding: 0 10px;
 }
 body > nav img {
+	width: 16px;
+	height: 16px;
 	vertical-align: bottom;
 	padding: 0 6px 6px 0;
 }

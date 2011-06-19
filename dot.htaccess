@@ -1,8 +1,28 @@
+################################
+# customized .htaccess for h5ai
+################################
+
+
+# Options  +Indexes
+# Options  +FollowSymLinks
+
+
+################################
+# cache images for 52 weeks
+################################
+
+<IfModule mod_headers.c>
+	<FilesMatch "\.png$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
+</IfModule>
+
+
+################################
+# style auto index
+################################
 
 <IfModule mod_autoindex.c>
-
-	# Options              +Indexes
-
 
 	################################
 	# uncomment the following line to force directory listing
