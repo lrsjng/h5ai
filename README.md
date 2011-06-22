@@ -71,7 +71,7 @@ Author
 ------
 
 [Lars Jung](http://larsjung.de)  
-[h5ai on github](http://github.com/larrrs/h5ai)  
+[h5ai on github](http://github.com/lrsjng/h5ai)  
 
 
 License
