@@ -1,11 +1,12 @@
-# <img src="http://github.com/lrsjng/h5ai/raw/master/src/h5ai/images/folder.png" width="24px" height="24px" alt="logo" title="logo" style="display: inline;" /> h5ai v0.3 · a beautified Apache index
+# <img src="http://github.com/lrsjng/h5ai/raw/master/src/h5ai/images/folder.png" width="24px" height="24px" alt="logo" title="logo" style="display: inline" /> &#160; h5ai v0.3 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
 
-<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" target="_blank" style="margin-right: 20px">
+<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" target="_blank">
 	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
 </a>
+&#160; &#160; &#160;
 <a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-icons.png" target="_blank">
 	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-icons.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
 </a>
