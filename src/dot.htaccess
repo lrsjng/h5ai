@@ -1,0 +1,137 @@
+################################
+# %BUILD_NAME% %BUILD_VERSION%
+# customized .htaccess
+################################
+
+
+# Options  +Indexes
+# Options  +FollowSymLinks
+
+
+################################
+# cache images for 52 weeks
+################################
+
+<IfModule mod_headers.c>
+	<FilesMatch "\.png$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
+</IfModule>
+
+
+################################
+# style auto index
+################################
+
+<IfModule mod_autoindex.c>
+
+	################################
+	# uncomment the following line to force directory listing
+	# even for directories with valid index files
+	################################
+
+	# DirectoryIndex       IGNORE-DEFAULT-INDEX-FILES
+
+
+	################################
+	# h5ai header and footer
+	################################
+
+	HeaderName           /h5ai/header.html
+	ReadmeName           /h5ai/footer.html
+
+
+	################################
+	# hide h5ai folder and config files from index
+	################################
+
+	IndexIgnore          h5ai  h5ai.header.html  h5ai.footer.html
+
+
+	################################
+	# table options
+	################################
+
+	IndexOrderDefault    Ascending Name
+
+	IndexOptions         Charset=UTF-8
+	IndexOptions         FancyIndexing
+	IndexOptions         HTMLTable
+	IndexOptions         XHTML
+	IndexOptions         SuppressHTMLPreamble
+	IndexOptions         SuppressRules
+	IndexOptions         SuppressDescription
+	IndexOptions         FoldersFirst
+	IndexOptions         IgnoreCase
+	IndexOptions         IconsAreLinks
+	IndexOptions         VersionSort
+	IndexOptions         NameWidth=*
+
+
+	################################
+	# icon mapping
+	################################
+
+	AddIcon              /h5ai/icons/parent.png      ..
+	AddIcon              /h5ai/icons/folder.png      ^^DIRECTORY^^
+	AddIcon              /h5ai/icons/blank.png       ^^BLANKICON^^
+
+	AddIcon              /h5ai/icons/readme.png      README
+	AddIcon              /h5ai/icons/copying.png     COPYING  LICENSE
+	AddIcon              /h5ai/icons/install.png     INSTALL
+	AddIcon              /h5ai/icons/authors.png     AUTHORS
+	AddIcon              /h5ai/icons/log.png         LOG  Log  log
+
+	AddIcon              /h5ai/icons/css.png         .less
+	AddIcon              /h5ai/icons/script.png      .conf  .ini  .sh  .shar  .csh  .ksh  .tcl
+	AddIcon              /h5ai/icons/makefile.png    .pom  pom.xml  build.xml
+	AddIcon              /h5ai/icons/bin.png         .so  .o
+
+	AddIcon              /h5ai/icons/zip.png         .zip  .Z  .z  .jar  .war
+	AddIcon              /h5ai/icons/tar.png         .tar
+	AddIcon              /h5ai/icons/archive.png     .tar.gz  .tgz  .tar.bz2
+	AddIcon              /h5ai/icons/pdf.png         .pdf
+	AddIcon              /h5ai/icons/deb.png         .deb
+	AddIcon              /h5ai/icons/rpm.png         .rpm
+	AddIcon              /h5ai/icons/cd.png          .iso  .cue
+
+	AddIconByType        /h5ai/icons/png.png         image/png
+	AddIconByType        /h5ai/icons/jpg.png         image/jpeg
+	AddIconByType        /h5ai/icons/gif.png         image/gif
+	AddIconByType        /h5ai/icons/ico.png         image/x-icon
+	AddIconByType        /h5ai/icons/bmp.png         image/x-ms-bmp
+
+	AddIconByType        /h5ai/icons/html.png        text/html
+	AddIconByType        /h5ai/icons/css.png         text/css
+	AddIconByType        /h5ai/icons/xml.png         application/xml
+	AddIconByType        /h5ai/icons/js.png          application/javascript  application/json
+	AddIconByType        /h5ai/icons/php.png         application/x-httpd-php
+
+	AddIconByType        /h5ai/icons/py.png          text/x-python
+	AddIconByType        /h5ai/icons/rb.png          application/x-ruby
+	AddIconByType        /h5ai/icons/java.png        text/x-java
+	AddIconByType        /h5ai/icons/cpp.png         text/x-c++src
+	AddIconByType        /h5ai/icons/hpp.png         text/x-c++hdr
+	AddIconByType        /h5ai/icons/c.png           text/x-csrc
+	AddIconByType        /h5ai/icons/h.png           text/x-chdr
+
+	AddIconByType        /h5ai/icons/pdf.png         application/pdf
+
+	AddIconByType        /h5ai/icons/rtf.png         text/rtf  application/rtf
+	AddIconByType        /h5ai/icons/tex.png         text/x-tex
+	AddIconByType        /h5ai/icons/makefile.png    text/x-makefile
+
+	AddIconByType        /h5ai/icons/bin.png         application/java-vm
+	AddIconByType        /h5ai/icons/exe.png         application/x-executable application/x-msdos-program
+
+	AddIconByType        /h5ai/icons/text.png        text/*
+	AddIconByType        /h5ai/icons/image.png       image/*
+	AddIconByType        /h5ai/icons/audio.png       audio/*
+	AddIconByType        /h5ai/icons/video.png       video/*
+
+	AddIconByEncoding    /h5ai/icons/zip.png         x-compress  x-gzip  x-bzip2
+
+	DefaultIcon          /h5ai/icons/unknown.png
+
+</IfModule>
+

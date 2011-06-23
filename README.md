@@ -1,5 +1,6 @@
-h5ai - a beautified Apache index
-================================
+h5ai v0.3 - a beautified Apache index
+=====================================
+
 
 Screenshots
 -----------
@@ -23,9 +24,10 @@ View a [sample folder](http://repo.larsjung.de/h5ai-sample)
 Install
 -------
 
-* Copy the `h5ai` folder to the web-root directory of your server or alternativly set an alias `/h5ai/` to
+* Everything you need is located in folder `target`.
+* Copy folder `h5ai` to the web-root directory of your server or alternativly set an alias `/h5ai/` to
   this folder.
-* Add the content of file `dot.htaccess` to the `.htaccess` file in the directory
+* Add the content of file `dot.htaccess` to the `.htaccess` file inside the directory
   you want to be styled (you might have to create this file). This directory and any subdirectories will be
   styled by h5ai.
 * Optionally add `h5ai.header.html` and/or `h5ai.footer.html` files to any of the styled folders to [display
@@ -35,6 +37,14 @@ Install
 
 Changelog
 ---------
+
+### v0.3
+*2011-06-23*
+
+* included build stuff, files previously found in the base directory are now located in folder `target`
+* styles and scripts are now minified
+* added Modernizr 2.0.4 for future use
+* updated jQuery to version 1.6.1
 
 
 ### v0.2.3
@@ -77,12 +87,13 @@ Author
 License
 -------
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
-
-This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).
-
-
-It is based on the awesome [HTML5 Boilerplate](http://html5boilerplate.com) and the beautiful
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228), please respect their rights.
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>  
+This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
+It is based on
+[HTML5 Boilerplate](http://html5boilerplate.com),
+[jQuery](http://jquery.com),
+[Modernizr](http://www.modernizr.com) and
+[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228),
+please respect their rights.
 
 

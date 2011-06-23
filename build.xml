@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project
+	name="h5ai"
+	basedir="."
+	xmlns:scripp="antlib:de.larsjung.scripp.ant"
+>
+	<target name="init">
+		<property file="build.properties" />
+		<tstamp>
+			<format property="build.stamp" pattern="yyyy-MM-dd-HHmmss" />
+		</tstamp>
+		<property name="build.label" value="${project.name} ${project.version} b${build.stamp}" />
+		<echo>Build: ${build.label}</echo>
+        <taskdef
+        	resource="de/larsjung/scripp/ant/antlib.xml"
+        	uri="antlib:de.larsjung.scripp.ant"
+        	classpath="${lib.scripp.jar}"
+        />
+	</target>
+
+
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+	</target>
+
+
+	<target name="build" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<copy todir="${build.dir}">
+		    <fileset dir="${src.dir}" />
+		</copy>
+		<replace dir="${build.dir}">
+			<replacefilter token="%BUILD%" value="${build.label}" />
+			<replacefilter token="%BUILD_NAME%" value="${project.name}" />
+			<replacefilter token="%BUILD_VERSION%" value="${project.version}" />
+			<replacefilter token="%BUILD_STAMP%" value="${build.stamp}" />
+		</replace>
+
+		<scripp.dir dir="${build.dir}/h5ai/css" />
+		<scripp.dir dir="${build.dir}/h5ai/js" />
+	</target>
+
+
+	<macrodef name="scripp.dir">
+		<attribute name="dir" />
+		<sequential>
+			<scripp:process>
+		        <fileset dir="@{dir}" includes="**/*.less,**/*.css,**/*.js" excludes="inc/**/*,**/*.min.css,**/*.min.js" />
+				<globmapper from="*.less" to="*.css" />
+		        <globmapper from="*.css" to="*.css" />
+		        <globmapper from="*.js" to="*.js" />
+			</scripp:process>
+			<delete dir="@{dir}/inc">
+				<fileset dir="@{dir}" includes="**/*.less" />
+			</delete>
+		</sequential>
+	</macrodef>
+</project>
