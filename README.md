@@ -1,28 +1,23 @@
-h5ai v0.3 - a beautified Apache index
-=====================================
+# <img src="http://github.com/lrsjng/h5ai/raw/master/src/h5ai/images/folder.png" width="24px" height="24px" alt="logo" title="logo" style="display: inline;" /> h5ai v0.3 · a beautified Apache index
 
 
-Screenshots
------------
+## Screenshots
 
-<a href="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png" target="_blank" style="float: left">
-	<img src="http://repo.larsjung.de/screens/h5ai-v0.2.1-details.png" width="400px" alt="screenshot" title="screenshot"/>
+<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" target="_blank" style="margin-right: 20px">
+	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
 </a>
-<a href="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png" target="_blank" style="float: right">
-	<img src="http://repo.larsjung.de/screens/h5ai-v0.2.1-icons.png" width="400px" alt="screenshot" title="screenshot" />
+<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-icons.png" target="_blank">
+	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-icons.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
 </a>
-<div style="clear: both"/>
 
 
-Live example
-------------
+## Live example
 
 View a [sample folder](http://repo.larsjung.de/h5ai-sample)  
 *(the files are all empty to save webspace)*
 
 
-Install
--------
+## Install
 
 Everything you need is located in folder `target`.
 
@@ -37,8 +32,7 @@ custom top or bottom sections](http://repo.larsjung.de/h5ai-sample/customize). T
 will be wrapped by `<header>` and `<footer>` tags.
 
 
-Changelog
----------
+## Changelog
 
 ### v0.3
 *2011-06-23*
@@ -79,15 +73,13 @@ Changelog
 * added icon view
 
 
-Author
-------
+## Author
 
 [Lars Jung](http://larsjung.de)  
 [h5ai on github](http://github.com/lrsjng/h5ai)  
 
 
-License
--------
+## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>  
 This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
