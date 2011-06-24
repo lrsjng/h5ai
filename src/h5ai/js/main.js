@@ -13,13 +13,7 @@
 
 
 
-	/*******************************
-	 * h5ai
-	 *******************************/
-
 	H5ai = function ( options ) {
-
-
 
 		/*******************************
 		 * config
@@ -123,14 +117,14 @@
 
 			if ( viewmode !== undefined ) {
 				localStorage.setItem( config.store.viewmode, viewmode );
-			}	
+			};
 			if ( getViewmode() === "icons" ) {
 				$( "#details" ).hide();
 				$( "#icons" ).show();
 			} else {
 				$( "#details" ).show();
 				$( "#icons" ).hide();
-			}
+			};
 		};
 
 		
@@ -151,8 +145,8 @@
 				if ( part !== "" ) {
 					path += part + "/";
 					$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + config.icons.crumb + "' alt='>' />" + part + "</a></li>" ) );
-				}
-			}
+				};
+			};
 
 			$( "nav li a" ).closest( "li" )
 				.click( function () {
@@ -178,7 +172,7 @@
 
 			if ( idx >= 0 && idx < config.columnClasses.length ) {
 				return config.columnClasses[idx];
-			}
+			};
 			return "unknown";
 		};
 
@@ -219,7 +213,7 @@
 			$entries = $( "#details tr.entry" );
 			if ( $entries.size() === 0 || $entries.size() === 1 && $entries.find( "td.name a" ).text() === "Parent Directory" ) {
 				$( "#details" ).append( $( "<div class='empty'>empty</div>" ) );
-			}
+			};
 		};
 
 
@@ -228,20 +222,20 @@
 			var order = document.location.search;
 			if ( order === "" ) {
 				order = config.defaultSortOrder;
-			}
+			};
 			var $icon;
 			if ( order.indexOf( "O=A" ) >= 0 ) {
 				$icon = $( "<img src='" + config.icons.ascending + "' class='sort' alt='ascending' />" );
 			} else {
 				$icon = $( "<img src='" + config.icons.descending + "' class='sort' alt='descending' />" );
-			}
+			};
 			if ( order.indexOf( "C=N" ) >= 0 ) {
 				$( "#details th.name a" ).append( $icon );
 			} else if ( order.indexOf( "C=M" ) >= 0 ) {
 				$( "#details th.date a" ).prepend( $icon );
 			} else if ( order.indexOf( "C=S" ) >= 0 ) {
 				$( "#details th.size a" ).prepend( $icon );
-			}
+			};
 		};
 
 
@@ -275,7 +269,7 @@
 					$entry.addClass( "folder" );
 				} else {
 					$entry.addClass( "file" );
-				}
+				};
 			} );
 			$div.append( $( "<div class='clearfix'></div>" ) );
 			$( "#icons" ).append( $div );
