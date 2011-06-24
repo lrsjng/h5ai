@@ -7,6 +7,7 @@
 
 	$( function() {
 
+		initH5ai();
 		applyViewmode();
 		initBreadcrumb();
 		initViews();
@@ -34,6 +35,44 @@
 		},
 		customHeader: "h5ai.header.html",
 		customFooter: "h5ai.footer.html"
+	};
+
+
+
+
+	/*******************************
+	 * init h5ai extension
+	 *******************************/
+
+	function initH5ai() {
+
+		H5ai = function () {
+			var folderClickFns = [];
+			var fileClickFns = [];
+
+			this.folderClick = function ( fn ) {
+				if ( typeof fn === "function" ) {
+					folderClickFns.push( fn );
+				};
+			};
+			this.fileClick = function ( fn ) {
+				if ( typeof fn === "function" ) {
+					fileClickFns.push( fn );
+				};
+			};
+			this.applyFolderClick = function ( label ) {
+				for ( idx in folderClickFns ) {
+					folderClickFns[idx].call( window, label );
+				};
+			};
+			this.applyFileClick = function ( label ) {
+				for ( idx in fileClickFns ) {
+					fileClickFns[idx].call( window, label );
+				};
+			};
+		};
+
+		$.h5ai = new H5ai();
 	};
 
 
@@ -143,8 +182,17 @@
 			.click( function () {
 				document.location.href = $( this ).find( "td.name a" ).attr( "href" );
 			} );
-		$dataRows = $( "#details td" ).closest( "tr" );
-		if ( $dataRows.size() === 0 || $dataRows.size() === 1 && $dataRows.find( "td.name a" ).text() === "Parent Directory" ) {
+		$( "#details tr.entry" ).each( function () {
+			var $row = $( this );
+			$row.find( "td.name a" ).addClass( "label" );
+			if ( $row.find( "td.icon img" ).attr( "alt" ) === "[DIR]" ) {
+				$row.addClass( "folder" );
+			} else {
+				$row.addClass( "file" );				
+			};
+		} );
+		$entries = $( "#details tr.entry" );
+		if ( $entries.size() === 0 || $entries.size() === 1 && $entries.find( "td.name a" ).text() === "Parent Directory" ) {
 			$( "#details" ).append( $( "<div class='empty'>empty</div>" ) );
 		}
 	};
@@ -194,11 +242,16 @@
 			var $tr = $( this );
 			var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icons", "images" );
 			var $link = $tr.find( "td.name a" );
-			$( "<div class='entry'><img src='" + icon + "' /><div class='label'>" + $link.text() + "</div></div>" )
+			var $entry = $( "<div class='entry'><img src='" + icon + "' /><div class='label'>" + $link.text() + "</div></div>" )
 				.click( function () {
 					document.location.href = $link.attr( "href" );
 				} ).
 				appendTo( $div );
+			if ( $tr.hasClass( "folder" ) ) {
+				$entry.addClass( "folder" );
+			} else {
+				$entry.addClass( "file" );
+			}
 		} );
 		$div.append( $( "<div class='clearfix'></div>" ) );
 		$( "#icons" ).append( $div );
@@ -216,6 +269,13 @@
 		initDetailsView();
 		initIconsView();
 
+		$( "#content .entry.folder" ).click( function() {
+			$.h5ai.applyFolderClick( $( this ).find( ".label" ).text() );
+		} );
+		$( "#content .entry.file" ).click( function() {
+			$.h5ai.applyFileClick( $( this ).find( ".label" ).text() );
+		} );
+
 		$( "#viewdetails" ).closest( "li" )
 			.click( function () {
 				applyViewmode( "details" );
@@ -232,7 +292,6 @@
 	/*******************************
 	 * customize
 	 *******************************/
-
 
 	function customize() {
 		try {
