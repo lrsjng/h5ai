@@ -271,6 +271,9 @@
 					$entry.addClass( "file" );
 				};
 			} );
+			if ( $( "#details .empty" ).size() > 0 ) {
+				$div.append( $( "<div class='empty'>empty</div>" ) );
+			};
 			$div.append( $( "<div class='clearfix'></div>" ) );
 			$( "#icons" ).append( $div );
 		};
