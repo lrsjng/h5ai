@@ -1,4 +1,4 @@
-# h5ai v0.3.1 &#160; · &#160; a beautified Apache index
+# h5ai v0.3.2 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
@@ -34,6 +34,13 @@ will be wrapped by `<header>` and `<footer>` tags.
 
 
 ## Changelog
+
+### v0.3.2
+*2011-06-24*
+
+* removed lib versions from file names
+* added 'empty' indicator for icons view
+
 
 ### v0.3.1
 *2011-06-24*
