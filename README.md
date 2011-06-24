@@ -1,4 +1,4 @@
-# h5ai v0.3 &#160; · &#160; a beautified Apache index
+# h5ai v0.3.1 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
@@ -34,6 +34,14 @@ will be wrapped by `<header>` and `<footer>` tags.
 
 
 ## Changelog
+
+### v0.3.1
+*2011-06-24*
+
+* refactored js
+* added `folderClick` and `fileClick` callback hooks
+* fixed .emtpy style
+
 
 ### v0.3
 *2011-06-23*
