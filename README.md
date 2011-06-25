@@ -14,7 +14,7 @@
 
 ## Live example
 
-View a [sample folder](http://repo.larsjung.de/h5ai-sample)  
+View a [sample folder](http://larsjung.de/h5ai/sample)  
 *(the files are all empty to save webspace)*
 
 
@@ -29,7 +29,7 @@ Everything you need is located in folder `target`.
   styled by h5ai.
 
 Optionally add `h5ai.header.html` and/or `h5ai.footer.html` files to any of the styled folders to [display
-custom top or bottom sections](http://repo.larsjung.de/h5ai-sample/customize). The content of those files
+custom top or bottom sections](http://larsjung.de/h5ai/sample/customize). The content of those files
 will be wrapped by `<header>` and `<footer>` tags.
 
 
@@ -89,16 +89,17 @@ will be wrapped by `<header>` and `<footer>` tags.
 * added icon view
 
 
-## Author
+## Links
 
-[Lars Jung](http://larsjung.de)  
-[h5ai on github](http://github.com/lrsjng/h5ai)  
+* [Author](http://larsjung.de)  
+* [h5ai](http://larsjung.de/h5ai)  
+* [h5ai on GitHub](http://github.com/lrsjng/h5ai)  
 
 
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>  
-This project is licensed under the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
+This project is provided under the terms of the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
 It is based on
 [HTML5 Boilerplate](http://html5boilerplate.com),
 [jQuery](http://jquery.com),
