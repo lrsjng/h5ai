@@ -33,7 +33,32 @@ custom top or bottom sections](http://larsjung.de/h5ai/sample/customize). The co
 will be wrapped by `<header>` and `<footer>` tags.
 
 
+## References and License
+
+[h5ai](http://larsjung.de/h5ai)    
+[h5ai on GitHub](http://github.com/lrsjng/h5ai)  
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>  
+This project is provided under the terms of the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
+It is based on
+[HTML5 Boilerplate](http://html5boilerplate.com),
+[jQuery](http://jquery.com),
+[Modernizr](http://www.modernizr.com) and
+[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228),
+please respect their rights.
+
+
 ## Changelog
+
+### v0.4
+*2011-06-27*
+
+* added better fallback, in case JavaScript is disabled
+* rewrote js, fixed middle-button click etc. problems
+* refactored css
+* sorted, added and moved icons and images
+* updated dot.access
+
 
 ### v0.3.2
 *2011-06-24*
@@ -87,24 +112,4 @@ will be wrapped by `<header>` and `<footer>` tags.
 *2011-06-15*
 
 * added icon view
-
-
-## Links
-
-* [Author](http://larsjung.de)  
-* [h5ai](http://larsjung.de/h5ai)  
-* [h5ai on GitHub](http://github.com/lrsjng/h5ai)  
-
-
-## License
-
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>  
-This project is provided under the terms of the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
-It is based on
-[HTML5 Boilerplate](http://html5boilerplate.com),
-[jQuery](http://jquery.com),
-[Modernizr](http://www.modernizr.com) and
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228),
-please respect their rights.
-
 

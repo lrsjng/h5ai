@@ -1,0 +1,156 @@
+
+#extended.details-view {
+	display: none;
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		white-space: nowrap;
+	}
+	li.header a {
+		padding-bottom: 18px;
+		color: #555;
+		opacity: 0.4;
+		cursor: pointer;
+		.transition( all 0.2s ease-in-out );
+
+		&:visited {
+			color: #555;
+		}
+		&:hover {
+			color: #555;
+			opacity: 0.9;
+		}
+		img {
+			width: 12px;
+			height: 12px;
+			padding: 0 8px;
+		}
+	}
+	li.entry {
+		display: block;
+		border-bottom: 1px solid #ddd;
+		&:first-child {
+			border-top: 1px solid #ddd;
+		}
+		a, a:hover {
+			display: block;
+			cursor: pointer;
+			&:hover {
+				background-color: #f0f0f0;
+				color: #e80;
+			}
+		}
+	}
+	.icon, .label, .date, .size {
+		display: inline-block;
+		padding: 3px 6px 6px 6px;
+		text-align: left;
+		border: none;
+	}
+	.icon {
+		text-align: center;
+		width: 16px;
+
+		img {
+			padding-top: 4px;
+			width: 16px;
+			height: 16px;
+		}
+	}
+	.icon.big {
+		display: none;
+	}
+	.label {
+		width: 682px;
+		max-width: 682px;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.date {
+		text-align: right;
+		width: 160px;
+		min-width: 160px;
+		white-space: nowrap;
+	}
+	.size {
+		text-align: right;
+		width: 70px;
+		min-width: 70px;
+		white-space: nowrap;
+	}
+	.empty {
+		text-align: center;
+		margin: 50px 0;
+		color: #ddd;
+		font-size: 5em;
+		font-weight: bold;
+	}
+}
+
+
+#extended.icons-view {
+	display: none;
+	padding: 10px;
+	border: 1px solid #eee;
+	border-radius: 15px;
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li.header {
+		display: none;
+	}
+	li.entry {
+		float: left;
+
+		a {
+			display: block;
+			margin: 8px;
+			padding: 8px;
+			width: 100px;
+			height: 120px;
+			float: left;
+			text-align: center;
+			overflow: hidden;
+			border-radius: 5px;
+			cursor: pointer;
+			border: 1px solid rgba(0,0,0,0);
+	
+			&:hover {
+				color: #e80;
+				border-color: #eee;
+				.box-shadow( 0, 0, 20px, #999 );
+			}
+			.icon {
+				display: block;
+				img {
+					width: 48px;
+					height: 48px;
+					margin-bottom: 8px;
+				}
+			}
+			.icon.small {
+				display: none;
+			}
+			.label {
+				display: block;
+			}
+			.date, .size {
+				display: none;
+			}
+		}
+	}
+	.empty {
+		padding: 16px;
+		height: 120px;
+		text-align: center;
+		color: #ddd;
+		font-size: 5em;
+		font-weight: bold;
+	}
+}

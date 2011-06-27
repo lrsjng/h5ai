@@ -3,10 +3,11 @@
 bin
 build
 #target
+build.local.xml
 
 # Eclipse
 .classpath
-.ant-targets-build.xml
+.ant-targets-*
 
 # Numerous always-ignore extensions
 *.diff

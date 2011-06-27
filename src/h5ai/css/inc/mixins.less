@@ -1,45 +1,53 @@
 
 .border-radius ( @radius: 5px ) {
-	-webkit-border-radius: @radius;
 	-moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
 	border-radius: @radius;
 }
 
 
 .border-top-right-radius ( @radius: 5px ) {
-	-webkit-border-top-right-radius: @radius;
 	-moz-border-radius-topright: @radius;
+	-webkit-border-top-right-radius: @radius;
 	border-top-right-radius: @radius;
 }
 
 
 .border-bottom-right-radius ( @radius: 5px ) {
-	-webkit-border-bottom-right-radius: @radius;
 	-moz-border-radius-bottomright: @radius;
+	-webkit-border-bottom-right-radius: @radius;
 	border-bottom-right-radius: @radius;
 }
 
 
 .box-shadow ( @x: 10px, @y: 10px, @blur: 5px, @color: #ccc ) {
-	-webkit-box-shadow: @x @y @blur @color;
 	-moz-box-shadow: @x @y @blur @color;
+	-webkit-box-shadow: @x @y @blur @color;
 	box-shadow: @x @y @blur @color;
 }
 
 
 .transition ( @transitions ) {
-	-webkit-transition: @transitions;
 	-moz-transition: @transitions;
+	-ms-transition: @transitions;
 	-o-transition: @transitions;
+	-webkit-transition: @transitions;
 	transition: @transitions;
 }
 
 
 .transform ( @transforms ) {
-	-webkit-transform: @transforms;
 	-moz-transform: @transforms;
 	-o-transform: @transforms;
+	-webkit-transform: @transforms;
 	transform: @transforms;
+}
+
+
+.background-size ( @size ) {
+	-moz-background-size: @size;
+	-webkit-background-size: @size;
+	background-size: @size;
 }
 
 

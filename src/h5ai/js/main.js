@@ -27,9 +27,9 @@
 				viewmode: "h5ai.viewmode"
 			},
 			icons: {
-				crumb: "/h5ai/icons/crumb.png",
-				ascending: "/h5ai/icons/ascending.png",
-				descending: "/h5ai/icons/descending.png"
+				crumb: "/h5ai/images/crumb.png",
+				ascending: "/h5ai/images/ascending.png",
+				descending: "/h5ai/images/descending.png"
 			},
 			customHeader: "h5ai.header.html",
 			customFooter: "h5ai.footer.html",
@@ -115,22 +115,21 @@
 
 		var applyViewmode = function ( viewmode ) {
 
+			$( "#table" ).hide();
 			if ( viewmode !== undefined ) {
 				localStorage.setItem( config.store.viewmode, viewmode );
 			};
 			if ( getViewmode() === "icons" ) {
-				$( "#details" ).hide();
-				$( "#icons" ).show();
+				$( "#extended" ).removeClass( "details-view" ).addClass( "icons-view" ).show();
 			} else {
-				$( "#details" ).show();
-				$( "#icons" ).hide();
+				$( "#extended" ).addClass( "details-view" ).removeClass( "icons-view" ).show();
 			};
 		};
 
 		
 		
 		/*******************************
-		 * breadcrumb
+		 * breadcrumb and doc title
 		 *******************************/
 
 		var initBreadcrumb = function () {
@@ -148,77 +147,55 @@
 				};
 			};
 
-			$( "nav li a" ).closest( "li" )
-				.click( function () {
-					document.location.href = $( this ).find( "a" ).attr( "href" );
-				} );
-
 			document.title = document.domain + pathname;
 		};
 
 
 
 		/*******************************
-		 * details view
+		 * table view
 		 *******************************/
 
-		var makeTableHtml5Conform = function () {
+		var initTableView = function () {
 
-			$( "#details td" ).removeAttr( "align" ).removeAttr( "valign" );
-		};
+			function getColumnClass( idx ) {
 
-
-		var getColumnClass = function ( idx ) {
-
-			if ( idx >= 0 && idx < config.columnClasses.length ) {
-				return config.columnClasses[idx];
+				if ( idx >= 0 && idx < config.columnClasses.length ) {
+					return config.columnClasses[idx];
+				};
+				return "unknown";
 			};
-			return "unknown";
-		};
-
-
-		var initTableColumns = function () {
-
-			$( "#details tr" ).each( function () {
+			
+			$( "#table td" ).removeAttr( "align" ).removeAttr( "valign" );
+			$( "#table tr" ).each( function () {
 				var colIdx = 0;
 				$( this ).find( "th,td" ).each( function () {
-					$( this ).addClass( getColumnClass( colIdx ) );
-					colIdx++;
+					$( this ).addClass( getColumnClass( colIdx++ ) );
 				} );
 			} );
 		};
 
 
-		var initTableRows = function () {
 
-			$( "#details th a" ).closest( "th" )
-				.addClass( "header" )
-				.click( function () {
-					document.location.href = $( this ).find( "a" ).attr( "href" );
-				} );
-			$( "#details td.name a" ).closest( "tr" )
-				.addClass( "entry" )
-				.click( function () {
-					document.location.href = $( this ).find( "td.name a" ).attr( "href" );
-				} );
-			$( "#details tr.entry" ).each( function () {
-				var $row = $( this );
-				$row.find( "td.name a" ).addClass( "label" );
-				if ( $row.find( "td.icon img" ).attr( "alt" ) === "[DIR]" ) {
-					$row.addClass( "folder" );
-				} else {
-					$row.addClass( "file" );				
-				};
-			} );
-			$entries = $( "#details tr.entry" );
-			if ( $entries.size() === 0 || $entries.size() === 1 && $entries.find( "td.name a" ).text() === "Parent Directory" ) {
-				$( "#details" ).append( $( "<div class='empty'>empty</div>" ) );
-			};
-		};
+		/*******************************
+		 * extended view
+		 *******************************/
 
+		var initExtendedView = function () {
 
-		var addSortOrderIcon = function () {
+			var $ul = $( "<ul/>" );
 
+			// headers
+			var $li = $( "<li class='header' />" ).appendTo( $ul );
+			$( "<a class='icon'></a>" ).appendTo( $li );
+			var $label = $( "th.name a" );
+			var $date = $( "th.date a" );
+			var $size = $( "th.size a" );
+			$( "<a class='label' href='" + $label.attr( "href" ) + "'>" + $label.text() + "</a>" ).appendTo( $li );
+			$( "<a class='date' href='" + $date.attr( "href" ) + "'>" + $date.text() + "</a>" ).appendTo( $li );
+			$( "<a class='size' href='" + $size.attr( "href" ) + "'>" + $size.text() + "</a>" ).appendTo( $li );
+
+			// header sort icons
 			var order = document.location.search;
 			if ( order === "" ) {
 				order = config.defaultSortOrder;
@@ -230,52 +207,61 @@
 				$icon = $( "<img src='" + config.icons.descending + "' class='sort' alt='descending' />" );
 			};
 			if ( order.indexOf( "C=N" ) >= 0 ) {
-				$( "#details th.name a" ).append( $icon );
+				$li.find( "a.label" ).append( $icon );
 			} else if ( order.indexOf( "C=M" ) >= 0 ) {
-				$( "#details th.date a" ).prepend( $icon );
+				$li.find( "a.date" ).prepend( $icon );
 			} else if ( order.indexOf( "C=S" ) >= 0 ) {
-				$( "#details th.size a" ).prepend( $icon );
+				$li.find( "a.size" ).prepend( $icon );
 			};
-		};
-
-
-		var initDetailsView = function () {
-
-			makeTableHtml5Conform();
-			initTableColumns();
-			initTableRows();
-			addSortOrderIcon();
-		};
-
-
-
-		/*******************************
-		 * icons view
-		 *******************************/
-
-		var initIconsView = function () {
-
-			var $div = $( "<div></div>" );
-			$( "#details td.name a" ).closest( "tr" ).each( function () {
+			
+			// entries
+			$( "#table td.name a" ).closest( "tr" ).each( function () {
 				var $tr = $( this );
-				var icon = $tr.find( "td.icon img" ).attr( "src" ).replace( "icons", "images" );
+				var $img = $tr.find( "td.icon img" );
+				var iconsmall = $img.attr( "src" );
+				var iconbig = iconsmall.replace( "16x16", "48x48" );
+				var alt = $img.attr( "alt" );
 				var $link = $tr.find( "td.name a" );
-				var $entry = $( "<div class='entry'><img src='" + icon + "' /><div class='label'>" + $link.text() + "</div></div>" )
-					.click( function () {
-						document.location.href = $link.attr( "href" );
-					} ).
-					appendTo( $div );
-				if ( $tr.hasClass( "folder" ) ) {
-					$entry.addClass( "folder" );
+				var label = $link.text();
+				var href = $link.attr( "href" );
+				var date = $tr.find( "td.date" ).text();
+				var size = $tr.find( "td.size" ).text();
+
+				var $li = $( "<li class='entry' />" ).appendTo( $ul );
+				if ( alt === "[DIR]" ) {
+					$li.addClass( "folder" );
 				} else {
-					$entry.addClass( "file" );
-				};
+					$li.addClass( "file" );					
+				}
+				var $a = $( "<a href='" + href + "' />" ).appendTo( $li );
+				$( "<span class='icon small'><img src='" + iconsmall + "' alt='" + alt + "' /></span>" ).appendTo( $a );
+				$( "<span class='icon big'><img src='" + iconbig + "' alt='" + alt + "' /></span>" ).appendTo( $a );
+				$( "<span class='label'>" + label + "</span>" ).appendTo( $a );
+				$( "<span class='date'>" + date + "</span>" ).appendTo( $a );
+				$( "<span class='size'>" + size + "</span>" ).appendTo( $a );
 			} );
-			if ( $( "#details .empty" ).size() > 0 ) {
-				$div.append( $( "<div class='empty'>empty</div>" ) );
+
+			$( "#extended" ).append( $ul );
+
+			// empty
+			$entries = $( "#extended .entry" );
+			if ( $entries.size() === 0 || $entries.size() === 1 && $entries.find( ".label" ).text() === "Parent Directory" ) {
+				$( "#extended" ).append( $( "<div class='empty'>empty</div>" ) );
 			};
-			$div.append( $( "<div class='clearfix'></div>" ) );
-			$( "#icons" ).append( $div );
+
+			// in case of floats
+			$( "#extended" ).append( $( "<div class='clearfix' />" ) );
+
+		
+			// click callbacks
+			$( "#extended .entry.folder" )
+				.click( function() {
+					triggerFolderClick( $( this ).find( ".label" ).text() );
+				} );
+			$( "#extended .entry.file" )
+				.click( function() {
+					triggerFileClick( $( this ).find( ".label" ).text() );
+				} );
 		};
 
 
@@ -286,17 +272,8 @@
 
 		var initViews = function () {
 
-			initDetailsView();
-			initIconsView();
-
-			$( "#content .entry.folder" )
-				.click( function() {
-					triggerFolderClick( $( this ).find( ".label" ).text() );
-				} );
-			$( "#content .entry.file" )
-				.click( function() {
-					triggerFileClick( $( this ).find( ".label" ).text() );
-				} );
+			initTableView();
+			initExtendedView();
 
 			$( "#viewdetails" ).closest( "li" )
 				.click( function () {
