@@ -1,14 +1,14 @@
-# h5ai v0.3.2 &#160; · &#160; a beautified Apache index
+# h5ai v0.4 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
 
-<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" target="_blank">
-	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-details.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
+<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-details.png" target="_blank">
+	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-details.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
 </a>
 &#160; &#160; &#160;
-<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-icons.png" target="_blank">
-	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.2.1-icons.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
+<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-icons.png" target="_blank">
+	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-icons.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
 </a>
 
 
@@ -33,13 +33,10 @@ custom top or bottom sections](http://larsjung.de/h5ai/sample/customize). The co
 will be wrapped by `<header>` and `<footer>` tags.
 
 
-## References and License
-
-[h5ai](http://larsjung.de/h5ai)    
-[h5ai on GitHub](http://github.com/lrsjng/h5ai)  
+## License and References
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>  
-This project is provided under the terms of the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
+[h5ai](http://larsjung.de/h5ai) is provided under the terms of the [CC BY-SA 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).  
 It is based on
 [HTML5 Boilerplate](http://html5boilerplate.com),
 [jQuery](http://jquery.com),
