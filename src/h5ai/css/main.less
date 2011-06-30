@@ -58,14 +58,29 @@ body > nav {
 		&.crumb {
 			float: left;
 			border-right: 1px dotted rgb(225,225,225);
+			.hint {
+				margin-left: 8px;
+				font-style: italic;
+				color: #999;
+			}
+			img.hint {
+				width: 10px;
+				height: 10px;
+				vertical-align: baseline;
+				padding: 0px;
+			}
+		}
+		&.current {
+			background-color: rgba(255,255,255,0.5);
+			opacity: 1.0;
 		}
 		&.view {
 			float: right;
 			border-left: 1px dotted rgb(225,225,225);
 		}
 		&:hover, &:hover a {
-			color: #e80;
 			background-color: rgba(255,255,255,0.5);
+			color: #e80;
 			opacity: 1.0;
 		}
 	}
@@ -105,6 +120,7 @@ body > nav {
 
 @import "inc/table";
 @import "inc/extended";
+@import "inc/tree";
 
 
 body > footer {

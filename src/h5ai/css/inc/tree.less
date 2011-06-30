@@ -1,0 +1,71 @@
+
+#tree {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 80px;
+	font-size: 0.85em;
+	padding: 16px 32px 16px 16px;
+	background-color: rgb(240,240,240);
+	border: 1px solid rgb(225,225,225);
+	border-left: none;
+	.border-radius ( 0 15px 15px 0 );
+	.box-shadow( 0, 0, 30px, #999 );
+
+	.entry {
+		> a, > a.visited {
+			padding: 4px 6px;
+			border: 1px solid rgba(0,0,0,0);
+			.border-radius( 5px );
+			display: block;
+			opacity: 0.7;
+
+			&:hover {
+				background-color: rgba(255,255,255,0.5);
+				opacity: 1;
+			}
+			.label {
+				display: inline-block;
+			}
+			.icon {
+				display: inline-block;
+				width: 20px;
+				img {
+					width: 16px;
+					height: 16px;
+					vertical-align: bottom;
+				}
+			}
+			.hint {
+				display: inline-block;
+				margin-left: 12px;
+				font-style: italic;
+				color: #ccc;
+				img {
+					width: 10px;
+					height: 10px;
+					vertical-align: baseline;
+				}
+			}
+			.error {
+				color: #c55;
+			}
+		}
+		&.current {
+			> a, > a:visited {
+				border: 1px solid rgba(0,0,0,0.1);
+				background-color: rgba(255,255,255,0.5);
+				opacity: 1;
+			}
+		}
+		&.notListable {
+			> a, > a:visited {
+				color: #999;
+			}
+		}
+		ul {
+			list-style: none;
+			margin-left: 20px;
+		}
+	}
+}
