@@ -10,7 +10,7 @@
 	border: 1px solid rgb(225,225,225);
 	border-left: none;
 	.border-radius ( 0 15px 15px 0 );
-	.box-shadow( 0, 0, 30px, #999 );
+	.box-shadow( 0 0 30px #999 );
 
 	.entry {
 		> a, > a.visited {
@@ -50,6 +50,9 @@
 			.error {
 				color: #c55;
 			}
+		}
+		&.file {
+			display: none;
 		}
 		&.current {
 			> a, > a:visited {

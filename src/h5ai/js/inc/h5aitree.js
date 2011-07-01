@@ -10,7 +10,7 @@
 	$( function() {
 	
 		window.setTimeout( function() {
-			$.h5aiTree = new H5aiTree();
+//			$.h5aiTree = new H5aiTree();
 		}, 1 );
 	} );
 
@@ -39,8 +39,8 @@
 			var match = pathnameRegEx.exec( pathname );
 			return [ match[1], match[3] ];
 		};
-		
-		
+
+
 		function checkCrumb() {
 
 			$( "li.crumb a" ).each( function() {
@@ -108,7 +108,7 @@
 			
 			walkBack( pathname, function( walkbackedPathname ) {
 				var entry = new Entry( walkbackedPathname );
-				fetchFoldersRecursive( walkbackedPathname, function ( content ) {
+				fetchEntriesRecursive( walkbackedPathname, function ( content ) {
 					entry.content = content;
 					callback( entry );
 				} );
@@ -134,42 +134,22 @@
 		};
 
 
-		function fetchFoldersRecursive( pathname, callback ) {
+		function fetchEntriesRecursive( pathname, callback ) {
 
-			fetchFolders( pathname, false, function ( folders ) {
-				if ( folders instanceof Array ) {
-					for ( idx in folders ) {
+			fetchEntries( pathname, false, function ( entries ) {
+				if ( entries instanceof Array ) {
+					for ( idx in entries ) {
 						( function ( entry ) {
 							if ( entry.isFolder ) {
-								fetchFoldersRecursive( entry.absHref, function( content ) {
+								fetchEntriesRecursive( entry.absHref, function( content ) {
 									entry.content = content;
-									callback( folders );
+									callback( entries );
 								} );
 							};
-						} ) ( folders[idx] );
+						} ) ( entries[idx] );
 					};
 				};
-				callback( folders );
-			} );
-		};
-
-
-		function fetchFolders( pathname, includeParent, callback ) {
-
-			fetchEntries( pathname, includeParent, function ( entries ) {
-				
-				if ( entries instanceof Array ) {
-					var folders = [];
-					for ( idx in entries ) {
-						var entry = entries[idx];
-						if ( entry.isFolder ) {
-							folders.push( entry );
-						};
-					};
-					callback( folders );
-				} else {
-					callback( entries );					
-				};
+				callback( entries );
 			} );
 		};
 
@@ -272,13 +252,14 @@
 
 			this.isComplete = function () {
 				
-				if ( this.content === undefined ) {
-					return false;
-				};
-				if ( this.content instanceof Array  ) {
-					for ( idx in this.content ) {
-						if ( !this.content[idx].isComplete() ) {
-							return false;
+				if ( this.isFolder ) {
+					if ( this.content === undefined ) {
+						return false;
+					} else if ( this.content instanceof Array  ) {
+						for ( idx in this.content ) {
+							if ( !this.content[idx].isComplete() ) {
+								return false;
+							};
 						};
 					};
 				};
@@ -297,6 +278,7 @@
 						.append( $( "<span class='label'>" + this.label + "</span>" ) );
 
 					if ( this.isFolder ) {
+						$entry.addClass( "folder" );
 						if ( this.absHref === document.location.pathname ) {
 							$a.find( ".icon img" ).attr( "src", "/h5ai/images/folder-open.png" );
 							$entry.addClass( "current" );
@@ -315,6 +297,8 @@
 							$a.append( $( "<span class='hint error'>" + this.content + "</span>" ) );
 							$entry.addClass( "notListable" );
 						};
+					} else {
+						$entry.addClass( "file" );
 					};
 
 				} catch( err ) {
