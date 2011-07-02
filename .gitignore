@@ -3,7 +3,9 @@
 bin
 build
 #target
-build.local.xml
+
+build.local.*
+
 
 # Eclipse
 .classpath

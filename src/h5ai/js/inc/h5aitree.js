@@ -10,7 +10,7 @@
 	$( function() {
 	
 		window.setTimeout( function() {
-//			$.h5aiTree = new H5aiTree();
+			$.h5aiTree = new H5aiTree();
 		}, 1 );
 	} );
 
@@ -18,9 +18,9 @@
 	H5aiTree = function ( options ) {
 
 		
-		var h5aiMetaRegEx = /<meta name="h5ai-version"/;
 		var folderRegEx = /\/$/;
 		var pathnameRegEx = /^(\/(.*\/)*)([^\/]+\/?)$/;
+		var contentTypeRegEx = /^text\/html;h5ai=/;
 
 
 		function init() {
@@ -156,54 +156,50 @@
 
 		function fetchEntries( pathname, includeParent, callback ) {
 
-			$.ajax( {
-				url: pathname,
-				type: "GET",
-				dataType: "html",
-				error: function ( xhr ) {
-
-					callback( xhr.status );
-				},
-				success: function ( html ) {
-
-					if ( ! h5aiMetaRegEx.test( html ) ) {
-						callback( 200 );
-					} else {
-						var entries = [];
-						$( html ).find( "#table table td" ).closest( "tr" ).each( function () { 
-							var entry = new Entry( pathname, this );
-							if ( !entry.isParentFolder || includeParent ) {
-								entries.push( entry );
+			checkPathname( pathname, function ( status ) {
+				console.log( "checkPathname", pathname, status );
+				if ( status !== 0 ) {
+					callback( status );
+				} else {
+					$.ajax( {
+						url: pathname,
+						type: "GET",
+						dataType: "html",
+						error: function ( xhr ) {
+							// since it was checked before this should never happen
+							callback( xhr.status );
+						},
+						success: function ( html, status, xhr ) {
+							if ( !contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
+								// since it was checked before this should never happen
+								callback( xhr.status );
+							} else {
+								var entries = [];
+								$( html ).find( "#table table td" ).closest( "tr" ).each( function () { 
+									var entry = new Entry( pathname, this );
+									if ( !entry.isParentFolder || includeParent ) {
+										entries.push( entry );
+									};
+								} );
+								callback( entries );
 							};
-						} );
-						callback( entries );
-					};
-				}
+						}
+					} );
+				};
 			} );
 		};
 
 
-		/*
-		 * Checks pathname for accessibility.
-		 * Calls callback with argument 0 if pathname is a h5ai styled directory.
-		 * Otherwise it returns the http response status. 
-		 */
 		function checkPathname( pathname, callback ) {
 
 			$.ajax( {
 				url: pathname,
-				type: "GET",
-				dataType: "html",
-				error: function ( xhr ) {
-
-					callback( xhr.status );
-				},
-				success: function ( html ) {
-
-					if ( h5aiMetaRegEx.test( html ) ) {
+				type: "HEAD",
+				complete: function ( xhr ) {
+					if ( xhr.status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
 						callback( 0 );
 					} else {
-						callback( 200 );
+						callback( xhr.status );
 					};
 				}
 			} );
@@ -220,7 +216,7 @@
 				var $tds = $( tableRow ).find( "td" );
 				var $img = $( $tds.get( 0 ) ).find( "img" );
 				var $a= $( $tds.get( 1 ) ).find( "a" );
-				
+
 				this.parentFolder = folder;
 				this.icon16 = $img.attr( "src" );
 				this.alt = $img.attr( "alt" );
@@ -251,7 +247,7 @@
 
 
 			this.isComplete = function () {
-				
+
 				if ( this.isFolder ) {
 					if ( this.content === undefined ) {
 						return false;
@@ -268,7 +264,7 @@
 
 
 			this.toHtml = function () {
-				
+
 				var $entry = $( "<div class='entry' />" );
 
 				try {

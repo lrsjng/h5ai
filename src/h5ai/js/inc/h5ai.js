@@ -256,7 +256,6 @@
 			// in case of floats
 			$( "#extended" ).append( $( "<div class='clearfix' />" ) );
 
-		
 			// click callbacks
 			$( "#extended .entry.folder" )
 				.click( function() {
@@ -267,7 +266,6 @@
 					triggerFileClick( $( this ).find( ".label" ).text() );
 				} );
 		};
-
 
 
 		/*******************************

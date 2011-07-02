@@ -8,6 +8,7 @@
 		list-style: none;
 
 		li {
+			position: relative;
 			white-space: nowrap;
 			clear: both;
 
@@ -45,17 +46,16 @@
 				}
 			}
 			.icon, .label, .date, .size {
-				display: inline-block;
-				padding: 3px 6px 6px 6px;
-				text-align: left;
+				padding: 6px;
 			}
 			.icon {
-				text-align: center;
+				display: inline-block;
+				position: absolute;
+				left: 0;
+				top: 2px;
 				width: 16px;
-				//float: left;
 
 				img {
-					padding-top: 4px;
 					width: 16px;
 					height: 16px;
 				}
@@ -64,22 +64,27 @@
 				display: none;
 			}
 			.label {
-				width: 682px;
+				display: block;
+				margin: 0 220px 0 24px;
+				overflow: hidden;
 				white-space: nowrap;
-				//word-wrap: break-word;
-				//float: left;
+				text-align: left;
 			}
 			.date {
+				position: absolute;
+				right: 70px;
+				top: 0;
 				text-align: right;
-				width: 160px;
+				width: 140px;
 				white-space: nowrap;
-				//float: right;
 			}
 			.size {
+				position: absolute;
+				right: 0;
+				top: 0;
 				text-align: right;
-				width: 70px;
+				width: 50px;
 				white-space: nowrap;
-				//float: right;
 			}
 		}
 	}

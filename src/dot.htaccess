@@ -8,14 +8,16 @@
 # Options  +FollowSymLinks
 
 
-################################
-# cache images for 52 weeks
-################################
-
 <IfModule mod_headers.c>
+
+	################################
+	# cache images for 52 weeks
+	################################
+
 	<FilesMatch "\.png$">
 		Header set Cache-Control "max-age=31449600, public"
 	</FilesMatch>
+
 </IfModule>
 
 
@@ -54,6 +56,7 @@
 
 	IndexOrderDefault    Ascending Name
 
+	IndexOptions         Type=text/html;h5ai=%BUILD_VERSION%
 	IndexOptions         Charset=UTF-8
 	IndexOptions         FancyIndexing
 	IndexOptions         HTMLTable
@@ -87,9 +90,9 @@
 	AddIcon              /h5ai/icons/16x16/makefile.png    .pom  pom.xml  build.xml
 	AddIcon              /h5ai/icons/16x16/bin.png         .so  .o
 
-	AddIcon              /h5ai/icons/16x16/zip.png         .zip  .Z  .z  .jar  .war
-	AddIcon              /h5ai/icons/16x16/tar.png         .tar
 	AddIcon              /h5ai/icons/16x16/archive.png     .tar.gz  .tgz  .tar.bz2
+	AddIcon              /h5ai/icons/16x16/zip.png         .zip  .Z  .z  .jar  .war  .gz  .bz2
+	AddIcon              /h5ai/icons/16x16/tar.png         .tar
 	AddIcon              /h5ai/icons/16x16/pdf.png         .pdf
 	AddIcon              /h5ai/icons/16x16/deb.png         .deb
 	AddIcon              /h5ai/icons/16x16/rpm.png         .rpm
