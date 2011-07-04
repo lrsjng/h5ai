@@ -24,9 +24,9 @@ Everything you need is located in folder `target`.
 
 * Copy folder `h5ai` to the web-root directory of your server or alternativly set an alias `/h5ai/` to
   this folder.
-* Add the content of file `dot.htaccess` to the `.htaccess` file inside the directory
-  you want to be styled (you might have to create this file). This directory and any subdirectories will be
-  styled by h5ai.
+* Add the content of file `dot.htaccess` to the `.htaccess` file inside the directory you want to be
+  styled (you might have to create this file). This directory and any subdirectories will be styled by h5ai.
+* Adjust `options.js` inside the `h5ai` folder to your needs. Defaults will be fine for a start.
 
 Optionally add `h5ai.header.html` and/or `h5ai.footer.html` files to any of the styled folders to [display
 custom top or bottom sections](http://larsjung.de/h5ai/sample/customize). The content of those files
@@ -52,6 +52,8 @@ please respect their rights.
 
 * refactored js
 * added basic options support
+* commented options.js
+* optional tree sidebar
 
 
 ### v0.5.2

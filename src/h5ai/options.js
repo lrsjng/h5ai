@@ -21,7 +21,13 @@ h5aiOptions = {
 
 	/*
 	 * Associative array of folders and their HTTP status codes to
-	 * avoid HEAD requests to that folders.  
+	 * avoid HEAD requests to that folders. The key (folder) must start
+	 * and end with a slash (/).
+	 * For example:
+	 *   "/some/folder/": 200
+	 * will always return HTTP status 200 (OK), which will be interpreted
+	 * as a non auto indexed folder, that means a folder containing an
+	 * appropriate default index file.
 	 */
 	folderStatus: {
 		/*
