@@ -3,12 +3,12 @@
 
 ## Screenshots
 
-<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-details.png" target="_blank">
-	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-details.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
+<a href="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.5.2-details.png" target="_blank">
+	<img src="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.5.2-details.png" width="400px" alt="screenshot" title="details view" style="display: inline" />
 </a>
 &#160; &#160; &#160;
-<a href="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-icons.png" target="_blank">
-	<img src="http://github.com/lrsjng/h5ai/raw/master/resources/h5ai-v0.4-icons.png" width="400px" alt="screenshot" title="screenshot" style="display: inline" />
+<a href="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.5.2-icons.png" target="_blank">
+	<img src="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.5.2-icons.png" width="400px" alt="screenshot" title="icons view" style="display: inline" />
 </a>
 
 
