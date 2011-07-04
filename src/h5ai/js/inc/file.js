@@ -69,7 +69,7 @@ var File = function ( utils, folder, tableRow ) {
 			if ( this.isFolder ) {
 				$entry.addClass( "folder" );
 				if ( this.absHref === document.location.pathname ) {
-					$a.find( ".icon img" ).attr( "src", "/h5ai/images/folder-open.png" );
+					$a.find( ".icon img" ).attr( "src", "/h5ai/icons/16x16/folder-open.png" );
 					$entry.addClass( "current" );
 				};
 				if ( this.content instanceof Array ) {
@@ -80,7 +80,7 @@ var File = function ( utils, folder, tableRow ) {
 				} else if ( this.content === undefined ) {
 					$a.append( $( "<span class='hint'><img src='/h5ai/images/loading.png' /></span>" ) );
 				} else if ( this.content === 200 ) {
-					$a.find( ".icon img" ).attr( "src", "/h5ai/images/folder-page.png" );
+					$a.find( ".icon img" ).attr( "src", "/h5ai/icons/16x16/folder-page.png" );
 					$a.append( $( "<span class='hint'><img src='/h5ai/images/page.png' /></span>" ) );
 				} else {
 					$a.append( $( "<span class='hint error'>" + this.content + "</span>" ) );

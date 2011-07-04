@@ -17,7 +17,7 @@ h5aiOptions = {
 	 * to the folders, and therefore will invoke index.php scripts. Use
 	 * folderStatus below to avoid such requests. 
 	 */
-	showTree: false,
+	showTree: true,
 
 	/*
 	 * Associative array of folders and their HTTP status codes to

@@ -254,10 +254,19 @@ var H5ai = function ( options ) {
 
 		$( "#extended" ).append( $ul );
 
-		// empty
 		$entries = $( "#extended .entry" );
+
+		// empty
 		if ( $entries.size() === 0 || $entries.size() === 1 && $entries.find( ".label" ).text() === "Parent Directory" ) {
 			$( "#extended" ).append( $( "<div class='empty'>empty</div>" ) );
+		};
+
+		// parent folder
+		if ( $entries.size() > 0 ) {
+			$entry0 = $( $entries.get(0) );
+			if ( $entry0.find( ".label" ).text() === "Parent Directory" ) {
+				$entry0.addClass( "parentfolder" );
+			};
 		};
 
 		// in case of floats

@@ -44,6 +44,12 @@
 						color: #e80;
 					}
 				}
+				&.notListable {
+					> a, > a:visited {
+						opacity: 0.7;
+						color: #999;
+					}
+				}
 			}
 			.icon, .label, .date, .size {
 				padding: 6px;
@@ -69,6 +75,11 @@
 				overflow: hidden;
 				white-space: nowrap;
 				text-align: left;
+				.error {
+					font-size: 0.9em;
+					font-style: italic;
+					color: #c55;
+				}
 			}
 			.date {
 				position: absolute;
@@ -150,9 +161,20 @@
 					.label {
 						display: block;
 						word-wrap: break-word;
+						.error {
+							font-size: 0.9em;
+							font-style: italic;
+							color: #c55;
+						}
 					}
 					.date, .size {
 						display: none;
+					}
+				}
+				&.notListable {
+					> a, > a:visited {
+						opacity: 0.7;
+						color: #999;
 					}
 				}
 			}

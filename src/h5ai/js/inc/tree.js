@@ -8,6 +8,7 @@ var Tree = function ( utils, h5ai ) {
 
 		if ( h5ai.config.showTree ) {
 			this.checkCrumb();
+			this.checkCurrentFolder();
 			this.initShifting();
 			this.populateTree();
 		};
@@ -26,6 +27,32 @@ var Tree = function ( utils, h5ai ) {
 					if ( status !== 200 ) {
 						$( "<span class='hint'>(" + status + ")</span>" ).appendTo( $a );
 					};
+				};
+			} );
+		} );
+	};
+
+
+	this.checkCurrentFolder = function () {
+
+		$( "#extended li.entry.folder" ).each( function() {
+			
+			var $entry = $( this );
+			if ( $entry.hasClass( "parentfolder" ) ) {
+				return;
+			};
+
+			var $a = $entry.find( "a" );
+			var pathname = decodeURI( document.location.pathname ) + $a.attr( "href" );
+			thistree.checkPathname( pathname, function ( status ) {
+				if ( status === 200 ) {
+					$a.find( ".icon.small img" ).attr( "src", "/h5ai/icons/16x16/folder-page.png" );
+					$a.find( ".icon.big img" ).attr( "src", "/h5ai/icons/48x48/folder-page.png" );
+				} else if ( status !== 0 ) {
+					$entry.addClass( "notListable" );
+					$a.find( ".label" )
+						.append( " " )
+						.append(  $( "<span class='error'>" + status + "</span>" ) );
 				};
 			} );
 		} );
@@ -161,23 +188,31 @@ var Tree = function ( utils, h5ai ) {
 		} );
 	};
 
+	
+	var pathnameCache = {};
 
 	this.checkPathname = function ( pathname, callback ) {
 
 		if ( h5ai.config.folderStatus[ pathname ] !== undefined ) {
 			callback( h5ai.config.folderStatus[ pathname ] );
 		} else {
-			$.ajax( {
-				url: pathname,
-				type: "HEAD",
-				complete: function ( xhr ) {
-					if ( xhr.status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
-						callback( 0 );
-					} else {
-						callback( xhr.status );
-					};
-				}
-			} );
+			if ( pathnameCache[ pathname ] !== undefined ) {
+				callback( pathnameCache[ pathname ] );
+			} else {
+				$.ajax( {
+					url: pathname,
+					type: "HEAD",
+					complete: function ( xhr ) {
+						if ( xhr.status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
+							pathnameCache[ pathname ] = 0;
+							callback( 0 );
+						} else {
+							pathnameCache[ pathname ] = xhr.status;
+							callback( xhr.status );
+						};
+					}
+				} );
+			};
 		};
 	};
 };
