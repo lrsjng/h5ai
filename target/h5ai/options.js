@@ -1,8 +1,7 @@
 
 h5aiOptions = {
 	viewmodes: [ "icons", "details" ],
-	showTree: true,
+	showTree: false,
 	folderStatus: {
-		"/develop/folder-types/phpsite/": 200
 	}
 };
