@@ -26,7 +26,9 @@ var H5ai = function ( options ) {
 		viewmodes: [ "details", "icons" ],
 		showTree: false,
 		folderStatus: {
-		}
+		},
+		lang: undefined,
+		useBrowserLang: true
 	};
 	this.config = $.extend( {}, defaults, options );
 
@@ -65,6 +67,7 @@ var H5ai = function ( options ) {
 		this.initBreadcrumb();
 		this.initViews();
 		this.customize();
+		this.localize( h5aiLangs, this.config.lang, this.config.useBrowserLang );
 	};
 
 
@@ -202,9 +205,9 @@ var H5ai = function ( options ) {
 		var $label = $( "th.name a" );
 		var $date = $( "th.date a" );
 		var $size = $( "th.size a" );
-		$( "<a class='label' href='" + $label.attr( "href" ) + "'>" + $label.text() + "</a>" ).appendTo( $li );
-		$( "<a class='date' href='" + $date.attr( "href" ) + "'>" + $date.text() + "</a>" ).appendTo( $li );
-		$( "<a class='size' href='" + $size.attr( "href" ) + "'>" + $size.text() + "</a>" ).appendTo( $li );
+		$( "<a class='label' href='" + $label.attr( "href" ) + "'><span class='l10n-columnName'>" + $label.text() + "</span></a>" ).appendTo( $li );
+		$( "<a class='date' href='" + $date.attr( "href" ) + "'><span class='l10n-columnLastModified'>" + $date.text() + "</span></a>" ).appendTo( $li );
+		$( "<a class='size' href='" + $size.attr( "href" ) + "'><span class='l10n-columnSize'>" + $size.text() + "</span></a>" ).appendTo( $li );
 
 		// header sort icons
 		var order = document.location.search;
@@ -265,6 +268,7 @@ var H5ai = function ( options ) {
 		if ( $entries.size() > 0 ) {
 			$entry0 = $( $entries.get(0) );
 			if ( $entry0.find( ".label" ).text() === "Parent Directory" ) {
+				$entry0.find( ".label" ).addClass( "l10n-parentDirectory" );
 				$entry0.addClass( "parentfolder" );
 			};
 		};
@@ -328,5 +332,33 @@ var H5ai = function ( options ) {
 				$( "#content > footer" ).prepend( $( data ) ).show();
 			}
 		} );
+	};
+
+
+
+	/*******************************
+	 * localization
+	 *******************************/
+
+	this.localize = function ( data, lang, useBrowserLang ) {
+
+		if ( useBrowserLang === true ) {
+			var browserLang = navigator.language;
+			if ( data[ browserLang ] !== undefined ) {
+				lang = browserLang;
+			} else if ( browserLang.length > 2 &&  data[ browserLang.substr( 0, 2 ) ] !== undefined  ) {
+				lang = browserLang.substr( 0, 2 );
+			};
+			if ( lang === "en" ) {
+				lang = undefined;
+			};
+		};
+
+		if ( data[ lang ] !== undefined ) {
+			var selected = data[ lang ];
+			for ( key in selected ) {
+				$( ".l10n-" + key ).text( selected[key] );
+			};
+		};
 	};
 };

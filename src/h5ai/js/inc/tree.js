@@ -159,32 +159,32 @@ var Tree = function ( utils, h5ai ) {
 			console.log( "checkPathname", pathname, status );
 			if ( status !== 0 ) {
 				callback( status );
-			} else {
-				$.ajax( {
-					url: pathname,
-					type: "GET",
-					dataType: "html",
-					error: function ( xhr ) {
-						// since it was checked before this should never happen
-						callback( xhr.status );
-					},
-					success: function ( html, status, xhr ) {
-						if ( !contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
-							// since it was checked before this should never happen
-							callback( xhr.status );
-						} else {
-							var entries = [];
-							$( html ).find( "#table table td" ).closest( "tr" ).each( function () { 
-								var entry = new File( utils, pathname, this );
-								if ( !entry.isParentFolder || includeParent ) {
-									entries.push( entry );
-								};
-							} );
-							callback( entries );
-						};
-					}
-				} );
+				return;
 			};
+
+			$.ajax( {
+				url: pathname,
+				type: "GET",
+				dataType: "html",
+				error: function ( xhr ) {
+					callback( xhr.status ); // since it was checked before this should never happen
+				},
+				success: function ( html, status, xhr ) {
+					if ( !contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
+						callback( xhr.status ); // since it was checked before this should never happen
+						return;
+					};
+
+					var entries = [];
+					$( html ).find( "#table table td" ).closest( "tr" ).each( function () { 
+						var entry = new File( utils, pathname, this );
+						if ( !entry.isParentFolder || includeParent ) {
+							entries.push( entry );
+						};
+					} );
+					callback( entries );
+				}
+			} );
 		} );
 	};
 
@@ -195,24 +195,25 @@ var Tree = function ( utils, h5ai ) {
 
 		if ( h5ai.config.folderStatus[ pathname ] !== undefined ) {
 			callback( h5ai.config.folderStatus[ pathname ] );
-		} else {
-			if ( pathnameCache[ pathname ] !== undefined ) {
-				callback( pathnameCache[ pathname ] );
-			} else {
-				$.ajax( {
-					url: pathname,
-					type: "HEAD",
-					complete: function ( xhr ) {
-						if ( xhr.status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
-							pathnameCache[ pathname ] = 0;
-							callback( 0 );
-						} else {
-							pathnameCache[ pathname ] = xhr.status;
-							callback( xhr.status );
-						};
-					}
-				} );
-			};
+			return;
 		};
+
+		if ( pathnameCache[ pathname ] !== undefined ) {
+			callback( pathnameCache[ pathname ] );
+			return;
+		}; 
+
+		$.ajax( {
+			url: pathname,
+			type: "HEAD",
+			complete: function ( xhr ) {
+				var status = xhr.status;
+				if ( xhr.status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
+					status = 0;
+				};
+				pathnameCache[ pathname ] = status;
+				callback( status );
+			}
+		} );
 	};
 };

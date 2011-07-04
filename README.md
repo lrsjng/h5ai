@@ -1,4 +1,4 @@
-# h5ai v0.5.3 &#160; · &#160; a beautified Apache index
+# h5ai v0.6 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
@@ -46,6 +46,13 @@ please respect their rights.
 
 
 ## Changelog
+
+### v0.6
+*2011-07-05*
+
+* refactored js
+* added localization, see options.js
+
 
 ### v0.5.3
 *2011-07-04*

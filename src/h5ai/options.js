@@ -2,7 +2,7 @@
 h5aiOptions = {
 
 	/*
-	 * An array of view modes the user may chose from. Currently there
+	 * An array of view modes the user may choose from. Currently there
 	 * are two possible values: "details" and "icons". The first value
 	 * indicates the default view mode. If only one value is given the
 	 * view mode is fixed and the selector buttons are hidden.
@@ -15,9 +15,10 @@ h5aiOptions = {
 	 * Show a folder tree, boolean.
 	 * Note that this tree might have side effects as it sends HEAD requests
 	 * to the folders, and therefore will invoke index.php scripts. Use
-	 * folderStatus below to avoid such requests. 
+	 * folderStatus below to avoid such requests.
+	 * It might also affect performance significantly.
 	 */
-	showTree: true,
+	showTree: false,
 
 	/*
 	 * Associative array of folders and their HTTP status codes to
@@ -34,6 +35,48 @@ h5aiOptions = {
 		 * for example:
 		 * "/some/folder/": 200
 		 */
+	},
+
+	/*
+	 * Localization, for example "en", "de" etc. - see h5aiLangs below for
+	 * possible values. Adjust it to your needs. If lang is not found in
+	 * h5aiLangs the displayed labels stay unchanged.
+	 */
+	lang: undefined,
+
+	/*
+	 * Try to use browser language, falls back to previous specified lang. 
+	 */
+	useBrowserLang: true
+};
+
+
+
+/*
+ * Available translations.
+ * "en" is just an example - see it as a reference. Those values
+ * are "hardcoded" and will be displayed if all labels stay unchanged. 
+ */
+h5aiLangs = {
+
+	"en": {
+		viewDetails: "details",
+		viewIcons: "icons",
+		columnName: "Name",
+		columnLastModified: "Last modified",
+		columnSize: "Size",
+		footerUsing: "using",
+		parentDirectory: "Parent Directory"
+	},
+
+	"de": {
+		viewDetails: "Details",
+		viewIcons: "Icons",
+		columnName: "Name",
+		columnLastModified: "Geändert",
+		columnSize: "Größe",
+		footerUsing: "nutzt",
+		parentDirectory: "Übergeordnetes Verzeichnis"
 	}
 
 };
