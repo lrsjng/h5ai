@@ -1,19 +1,50 @@
 
 #tree {
-	display: none;
 	position: fixed;
-	left: 0;
+	left: -200px;
 	top: 80px;
 	font-size: 0.85em;
 	padding: 16px 32px 16px 16px;
-	background-color: rgb(240,240,240);
-	border: 1px solid rgb(225,225,225);
+	background-color: rgb(241,241,241);
+	border: 2px solid rgb(210,210,210);
 	border-left: none;
 	.border-radius ( 0 15px 15px 0 );
-	.box-shadow( 0 0 30px #999 );
-
+	
 	.entry {
+		.blank, .indicator {
+			display: inline-block;
+			width: 16px;
+			height: 25px;
+			float: left;
+		}
+		.indicator {
+			opacity: 0.7;
+			.transition( all 0.2s ease-in-out );
+			cursor: pointer;
+			
+			&:hover {
+				opacity: 1;
+			}
+			img {
+				position: relative;
+				left: 0;
+				top: 3px;
+				width: 12px;
+				height: 12px;
+				vertical-align: bottom;
+				.transition( all 0.2s ease-in-out );
+			}
+			&.open {
+				img {
+					.transform( rotate(90deg) );
+				}
+			}
+			&.unknown {
+				opacity: 0.3;
+			}
+		}
 		> a, > a.visited {
+			margin-left: 16px;
 			padding: 4px 6px;
 			border: 1px solid rgba(0,0,0,0);
 			.border-radius( 5px );
@@ -40,15 +71,13 @@
 				display: inline-block;
 				margin-left: 12px;
 				font-style: italic;
+				font-size: 0.9em;
 				color: #ccc;
 				img {
 					width: 10px;
 					height: 10px;
 					vertical-align: baseline;
 				}
-			}
-			.error {
-				color: #c55;
 			}
 		}
 		&.file {
@@ -61,12 +90,15 @@
 				opacity: 1;
 			}
 		}
-		&.notListable {
+		&.error {
 			> a, > a:visited {
 				color: #999;
 			}
+			.hint {
+				color: #c55;
+			}
 		}
-		ul {
+		.content {
 			list-style: none;
 			margin-left: 20px;
 		}

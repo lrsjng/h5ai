@@ -1,4 +1,4 @@
-# h5ai v0.6 &#160; · &#160; a beautified Apache index
+# h5ai v0.7 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
@@ -46,6 +46,13 @@ please respect their rights.
 
 
 ## Changelog
+
+### v0.7
+*2011-07-07*
+
+* removed shadows
+* smarter tree side bar
+
 
 ### v0.6
 *2011-07-05*

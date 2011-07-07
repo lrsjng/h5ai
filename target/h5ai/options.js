@@ -1,3 +1,7 @@
+/*
+ * h5ai 0.7
+ * Options and localization 
+ */
 
 h5aiOptions = {
 
@@ -18,7 +22,7 @@ h5aiOptions = {
 	 * folderStatus below to avoid such requests.
 	 * It might also affect performance significantly.
 	 */
-	showTree: false,
+	showTree: true,
 
 	/*
 	 * Associative array of folders and their HTTP status codes to

@@ -1,6 +1,10 @@
 
 var H5ai = function ( options ) {
 
+	var THIS = this;
+
+
+
 	/*******************************
 	 * config
 	 *******************************/
@@ -100,10 +104,7 @@ var H5ai = function ( options ) {
 	this.getViewmode = function () {
 	
 		var viewmode = localStorage.getItem( this.config.store.viewmode );
-		if ( $.inArray( viewmode, this.config.viewmodes ) >= 0 ) {
-			return viewmode;
-		};
-		return this.config.viewmodes[0];
+		return $.inArray( viewmode, this.config.viewmodes ) >= 0 ? viewmode : this.config.viewmodes[0];
 	};
 
 
@@ -112,6 +113,7 @@ var H5ai = function ( options ) {
 		if ( viewmode !== undefined ) {
 			localStorage.setItem( this.config.store.viewmode, viewmode );
 		};
+		viewmode = this.getViewmode();
 
 		$( "body > nav li.view" ).hide();
 		if ( this.config.viewmodes.length > 1 ) {
@@ -124,11 +126,11 @@ var H5ai = function ( options ) {
 		};
 
 		$( "body > nav li.view" ).removeClass( "current" );
-		if ( this.getViewmode() === "details" ) {
+		if ( viewmode === "details" ) {
 			$( "#viewdetails" ).closest( "li" ).addClass( "current" );
 			$( "#table" ).hide();
 			$( "#extended" ).addClass( "details-view" ).removeClass( "icons-view" ).show();
-		} else if ( this.getViewmode() === "icons" ) {
+		} else if ( viewmode === "icons" ) {
 			$( "#viewicons" ).closest( "li" ).addClass( "current" );
 			$( "#table" ).hide();
 			$( "#extended" ).removeClass( "details-view" ).addClass( "icons-view" ).show();
@@ -171,11 +173,10 @@ var H5ai = function ( options ) {
 
 	this.initTableView = function () {
 
-		var ref = this;
 		function getColumnClass( idx ) {
 
-			if ( idx >= 0 && idx < ref.config.columnClasses.length ) {
-				return ref.config.columnClasses[idx];
+			if ( idx >= 0 && idx < THIS.config.columnClasses.length ) {
+				return THIS.config.columnClasses[idx];
 			};
 			return "unknown";
 		};
@@ -200,11 +201,11 @@ var H5ai = function ( options ) {
 		var $ul = $( "<ul/>" );
 
 		// headers
-		var $li = $( "<li class='header' />" ).appendTo( $ul );
-		$( "<a class='icon'></a>" ).appendTo( $li );
 		var $label = $( "th.name a" );
 		var $date = $( "th.date a" );
 		var $size = $( "th.size a" );
+		var $li = $( "<li class='header' />" ).appendTo( $ul );
+		$( "<a class='icon'></a>" ).appendTo( $li );
 		$( "<a class='label' href='" + $label.attr( "href" ) + "'><span class='l10n-columnName'>" + $label.text() + "</span></a>" ).appendTo( $li );
 		$( "<a class='date' href='" + $date.attr( "href" ) + "'><span class='l10n-columnLastModified'>" + $date.text() + "</span></a>" ).appendTo( $li );
 		$( "<a class='size' href='" + $size.attr( "href" ) + "'><span class='l10n-columnSize'>" + $size.text() + "</span></a>" ).appendTo( $li );
@@ -227,66 +228,46 @@ var H5ai = function ( options ) {
 		} else if ( order.indexOf( "C=S" ) >= 0 ) {
 			$li.find( "a.size" ).prepend( $icon );
 		};
-		
+
 		// entries
 		$( "#table td.name a" ).closest( "tr" ).each( function () {
-			var $tr = $( this );
-			var $img = $tr.find( "td.icon img" );
-			var iconsmall = $img.attr( "src" );
-			var iconbig = iconsmall.replace( "16x16", "48x48" );
-			var alt = $img.attr( "alt" );
-			var $link = $tr.find( "td.name a" );
-			var label = $link.text();
-			var href = $link.attr( "href" );
-			var date = $tr.find( "td.date" ).text();
-			var size = $tr.find( "td.size" ).text();
+			var file = new File( utils, decodeURI( document.location.pathname ), this );
 
-			var $li = $( "<li class='entry' />" ).appendTo( $ul );
-			if ( alt === "[DIR]" ) {
-				$li.addClass( "folder" );
+			var $li = $( "<li class='entry' />" ).data( "file", file ).appendTo( $ul );
+			if ( file.isFolder ) {
+				$li.addClass( "folder" )
+					.click( function() {
+						THIS.triggerFolderClick( file );
+					} );
 			} else {
-				$li.addClass( "file" );					
-			}
-			var $a = $( "<a href='" + href + "' />" ).appendTo( $li );
-			$( "<span class='icon small'><img src='" + iconsmall + "' alt='" + alt + "' /></span>" ).appendTo( $a );
-			$( "<span class='icon big'><img src='" + iconbig + "' alt='" + alt + "' /></span>" ).appendTo( $a );
-			$( "<span class='label'>" + label + "</span>" ).appendTo( $a );
-			$( "<span class='date'>" + date + "</span>" ).appendTo( $a );
-			$( "<span class='size'>" + size + "</span>" ).appendTo( $a );
+				$li.addClass( "file" )
+					.click( function() {
+						THIS.triggerFileClick( file );
+					} );
+			};
+			var $a = $( "<a href='" + file.href + "' />" ).appendTo( $li );
+			$( "<span class='icon small'><img src='" + file.icon16 + "' alt='" + file.alt + "' /></span>" ).appendTo( $a );
+			$( "<span class='icon big'><img src='" + file.icon48 + "' alt='" + file.alt + "' /></span>" ).appendTo( $a );
+			var $label = $( "<span class='label'>" + file.label + "</span>" ).appendTo( $a );
+			$( "<span class='date'>" + file.date + "</span>" ).appendTo( $a );
+			$( "<span class='size'>" + file.size + "</span>" ).appendTo( $a );
+			if ( file.isParentFolder ) {
+				$label.addClass( "l10n-parentDirectory" );
+				$li.addClass( "parentfolder" );
+			};
 		} );
 
 		$( "#extended" ).append( $ul );
 
-		$entries = $( "#extended .entry" );
-
 		// empty
-		if ( $entries.size() === 0 || $entries.size() === 1 && $entries.find( ".label" ).text() === "Parent Directory" ) {
+		if ( $ul.children( ".entry:not(.parentfolder)" ).size() === 0 ) {
 			$( "#extended" ).append( $( "<div class='empty'>empty</div>" ) );
-		};
-
-		// parent folder
-		if ( $entries.size() > 0 ) {
-			$entry0 = $( $entries.get(0) );
-			if ( $entry0.find( ".label" ).text() === "Parent Directory" ) {
-				$entry0.find( ".label" ).addClass( "l10n-parentDirectory" );
-				$entry0.addClass( "parentfolder" );
-			};
 		};
 
 		// in case of floats
 		$( "#extended" ).append( $( "<div class='clearfix' />" ) );
-
-		// click callbacks
-		var ref = this;
-		$( "#extended .entry.folder" )
-			.click( function() {
-				ref.triggerFolderClick( $( this ).find( ".label" ).text() );
-			} );
-		$( "#extended .entry.file" )
-			.click( function() {
-				ref.triggerFileClick( $( this ).find( ".label" ).text() );
-			} );
 	};
+
 
 
 	/*******************************
@@ -298,14 +279,13 @@ var H5ai = function ( options ) {
 		this.initTableView();
 		this.initExtendedView();
 
-		var ref = this;
 		$( "#viewdetails" ).closest( "li" )
 			.click( function () {
-				ref.applyViewmode( "details" );
+				THIS.applyViewmode( "details" );
 			} );
 		$( "#viewicons" ).closest( "li" )
 			.click( function () {
-				ref.applyViewmode( "icons" );
+				THIS.applyViewmode( "icons" );
 			} );
 	};
 

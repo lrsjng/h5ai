@@ -2,6 +2,7 @@
 <project
 	name="h5ai"
 	basedir="."
+	default="build"
 	xmlns:scripp="antlib:de.larsjung.scripp.ant"
 >
 	<target name="init">

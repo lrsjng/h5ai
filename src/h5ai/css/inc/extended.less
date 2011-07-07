@@ -44,10 +44,16 @@
 						color: #e80;
 					}
 				}
-				&.notListable {
+				&.error {
 					> a, > a:visited {
 						opacity: 0.7;
 						color: #999;
+
+						.hint {
+							font-size: 0.9em;
+							font-style: italic;
+							color: #c55;
+						}
 					}
 				}
 			}
@@ -75,11 +81,6 @@
 				overflow: hidden;
 				white-space: nowrap;
 				text-align: left;
-				.error {
-					font-size: 0.9em;
-					font-style: italic;
-					color: #c55;
-				}
 			}
 			.date {
 				position: absolute;
@@ -161,20 +162,21 @@
 					.label {
 						display: block;
 						word-wrap: break-word;
-						.error {
-							font-size: 0.9em;
-							font-style: italic;
-							color: #c55;
-						}
 					}
 					.date, .size {
 						display: none;
 					}
 				}
-				&.notListable {
+				&.error {
 					> a, > a:visited {
 						opacity: 0.7;
 						color: #999;
+
+						.hint {
+							font-size: 0.9em;
+							font-style: italic;
+							color: #c55;
+						}
 					}
 				}
 			}
