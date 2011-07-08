@@ -1,5 +1,5 @@
 
-var H5ai = function ( options ) {
+var H5ai = function ( options, langs ) {
 
 	var THIS = this;
 
@@ -10,7 +10,6 @@ var H5ai = function ( options ) {
 	 *******************************/
 
 	var defaults = {
-		columnClasses: [ "icon", "name", "date", "size" ],
 		defaultSortOrder: "C=N;O=A",
 		store: {
 			viewmode: "h5ai.viewmode"
@@ -32,7 +31,8 @@ var H5ai = function ( options ) {
 		folderStatus: {
 		},
 		lang: undefined,
-		useBrowserLang: true
+		useBrowserLang: true,
+		setParentFolderLabels: true
 	};
 	this.config = $.extend( {}, defaults, options );
 
@@ -67,11 +67,14 @@ var H5ai = function ( options ) {
 
 	this.init = function () {
 
+		document.title = document.domain + decodeURI( document.location.pathname );
+
 		this.applyViewmode();
 		this.initBreadcrumb();
+		this.initTopSpace();
 		this.initViews();
 		this.customize();
-		this.localize( h5aiLangs, this.config.lang, this.config.useBrowserLang );
+		this.localize( langs, this.config.lang, this.config.useBrowserLang );
 	};
 
 
@@ -115,7 +118,8 @@ var H5ai = function ( options ) {
 		};
 		viewmode = this.getViewmode();
 
-		$( "body > nav li.view" ).hide();
+		$( "body > nav li.view" ).hide().removeClass( "current" );
+		
 		if ( this.config.viewmodes.length > 1 ) {
 			if ( $.inArray( "details", this.config.viewmodes ) >= 0 ) {
 				$( "#viewdetails" ).show();
@@ -125,7 +129,6 @@ var H5ai = function ( options ) {
 			};
 		};
 
-		$( "body > nav li.view" ).removeClass( "current" );
 		if ( viewmode === "details" ) {
 			$( "#viewdetails" ).closest( "li" ).addClass( "current" );
 			$( "#table" ).hide();
@@ -143,26 +146,47 @@ var H5ai = function ( options ) {
 	
 
 	/*******************************
-	 * breadcrumb and doc title
+	 * breadcrumb
 	 *******************************/
 
 	this.initBreadcrumb = function () {
 
-		$( "#domain span" ).text( document.domain );
-		var pathname = decodeURI( document.location.pathname );
-		var parts = pathname.split( "/" );
-		var path = "/";
-		var $ul = $( "nav ul" );
-		for ( idx in parts ) {
-			var part = parts[idx];
+		var $domain = $( "#domain" );
+		var $ul = $domain.closest( "ul" );
+
+		$domain.find( "span" ).text( document.domain );
+		var pathnameParts = decodeURI( document.location.pathname ).split( "/" );
+		var pathname = "/";
+		for ( idx in pathnameParts ) {
+			var part = pathnameParts[idx];
 			if ( part !== "" ) {
-				path += part + "/";
-				$ul.append( $( "<li class='crumb'><a href='" +  path + "'><img src='" + this.config.icons.crumb + "' alt='>' />" + part + "</a></li>" ) );
+				pathname += part + "/";
+				var path = pathCache.getPathForFolder( pathname );
+				$ul.append( path.updateCrumbHtml() );
 			};
 		};
-		$( "body > nav .crumb:last" ).addClass( "current" );
+	};
 
-		document.title = document.domain + pathname;
+
+
+	/*******************************
+	 * top space, depending on nav height
+	 *******************************/
+
+	this.initTopSpace = function () {
+
+		function adjustTopSpace() {
+			
+			var height = $( "body > nav" ).height();
+			var space = height + 50;
+			$( "body" ).css( "margin-top", "" + space + "px" );
+			$( "#tree" ).css( "top", "" + space + "px" );
+		};
+
+		$( window ).resize( function () {
+			adjustTopSpace();
+		} );
+		adjustTopSpace();
 	};
 
 
@@ -173,21 +197,7 @@ var H5ai = function ( options ) {
 
 	this.initTableView = function () {
 
-		function getColumnClass( idx ) {
-
-			if ( idx >= 0 && idx < THIS.config.columnClasses.length ) {
-				return THIS.config.columnClasses[idx];
-			};
-			return "unknown";
-		};
-		
 		$( "#table td" ).removeAttr( "align" ).removeAttr( "valign" );
-		$( "#table tr" ).each( function () {
-			var colIdx = 0;
-			$( this ).find( "th,td" ).each( function () {
-				$( this ).addClass( getColumnClass( colIdx++ ) );
-			} );
-		} );
 	};
 
 
@@ -201,9 +211,10 @@ var H5ai = function ( options ) {
 		var $ul = $( "<ul/>" );
 
 		// headers
-		var $label = $( "th.name a" );
-		var $date = $( "th.date a" );
-		var $size = $( "th.size a" );
+		var $ths = $( "#table th" );
+		var $label = $ths.eq( 1 ).find( "a" );
+		var $date = $ths.eq( 2 ).find( "a" );
+		var $size = $ths.eq( 3 ).find( "a" );
 		var $li = $( "<li class='header' />" ).appendTo( $ul );
 		$( "<a class='icon'></a>" ).appendTo( $li );
 		$( "<a class='label' href='" + $label.attr( "href" ) + "'><span class='l10n-columnName'>" + $label.text() + "</span></a>" ).appendTo( $li );
@@ -230,31 +241,9 @@ var H5ai = function ( options ) {
 		};
 
 		// entries
-		$( "#table td.name a" ).closest( "tr" ).each( function () {
-			var file = new File( utils, decodeURI( document.location.pathname ), this );
-
-			var $li = $( "<li class='entry' />" ).data( "file", file ).appendTo( $ul );
-			if ( file.isFolder ) {
-				$li.addClass( "folder" )
-					.click( function() {
-						THIS.triggerFolderClick( file );
-					} );
-			} else {
-				$li.addClass( "file" )
-					.click( function() {
-						THIS.triggerFileClick( file );
-					} );
-			};
-			var $a = $( "<a href='" + file.href + "' />" ).appendTo( $li );
-			$( "<span class='icon small'><img src='" + file.icon16 + "' alt='" + file.alt + "' /></span>" ).appendTo( $a );
-			$( "<span class='icon big'><img src='" + file.icon48 + "' alt='" + file.alt + "' /></span>" ).appendTo( $a );
-			var $label = $( "<span class='label'>" + file.label + "</span>" ).appendTo( $a );
-			$( "<span class='date'>" + file.date + "</span>" ).appendTo( $a );
-			$( "<span class='size'>" + file.size + "</span>" ).appendTo( $a );
-			if ( file.isParentFolder ) {
-				$label.addClass( "l10n-parentDirectory" );
-				$li.addClass( "parentfolder" );
-			};
+		$( "#table td" ).closest( "tr" ).each( function () {
+			var path = pathCache.getPathForTableRow( decodeURI( document.location.pathname ), this );
+			$ul.append( path.updateExtendedHtml() );
 		} );
 
 		$( "#extended" ).append( $ul );
@@ -265,7 +254,7 @@ var H5ai = function ( options ) {
 		};
 
 		// in case of floats
-		$( "#extended" ).append( $( "<div class='clearfix' />" ) );
+		$( "#extended" ).addClass( "clearfix" );
 	};
 
 

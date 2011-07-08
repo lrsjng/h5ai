@@ -2,7 +2,7 @@
 
 	// @include "inc/utils.js"
 	// @include "inc/h5ai.js"
-	// @include "inc/file.js"
+	// @include "inc/path.js"
 	// @include "inc/tree.js"
 
 
@@ -11,7 +11,8 @@
 	 *******************************/
 
 	var utils = new Utils();
-	var h5ai = new H5ai( h5aiOptions );
+	var pathCache = new PathCache( utils );
+	var h5ai = new H5ai( h5aiOptions, h5aiLangs );
 	var tree = new Tree( utils, h5ai );
 
 

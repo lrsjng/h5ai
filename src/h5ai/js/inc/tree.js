@@ -7,57 +7,30 @@ var Tree = function ( utils, h5ai ) {
 	this.init = function () {
 
 		if ( h5ai.config.showTree ) {
-			this.checkCrumb();
-			this.checkCurrentFolder();
+			this.updatePaths();
 			this.populateTree();
 		};
 	};
 
 
-	this.checkCrumb = function () {
+	this.updatePath = function ( path ) {
 
-		$( "li.crumb a" ).each( function() {
-
-			var $a = $( this );
-			var pathname = $a.attr( "href" );
-			THIS.checkPathname( pathname, function ( status ) {
-				if ( !isNaN( status ) ) {
-					if ( status === 200 ) {
-						$( "<img class='hint' src='/h5ai/images/page.png' alt='not listable' />" ).appendTo( $a );
-					} else {
-						$( "<span class='hint'>(" + status + ")</span>" ).appendTo( $a );
-					};
+		if ( path.isFolder && !path.isParentFolder && path.status === undefined ) {
+			this.fetchStatus( path.absHref, function ( status ) {
+				if ( status !== "h5ai" ) {
+					path.status = status;
 				};
+				path.updateHtml();
 			} );
-		} );
+		};
 	};
 
 
-	this.checkCurrentFolder = function () {
+	this.updatePaths = function () {
 
-		$( "#extended li.entry.folder" ).each( function() {
-
-			var $entry = $( this );
-			if ( $entry.hasClass( "parentfolder" ) ) {
-				return;
-			};
-
-			var $a = $entry.find( "a" );
-			var pathname = decodeURI( document.location.pathname ) + $a.attr( "href" );
-			THIS.checkPathname( pathname, function ( status ) {
-				if ( !isNaN( status ) ) {
-					if ( status === 200 ) {
-						$a.find( ".icon.small img" ).attr( "src", "/h5ai/icons/16x16/folder-page.png" );
-						$a.find( ".icon.big img" ).attr( "src", "/h5ai/icons/48x48/folder-page.png" );
-					} else {
-						$entry.addClass( "error" );
-						$a.find( ".label" )
-							.append( " " )
-							.append(  $( "<span class='hint'>" + status + "</span>" ) );
-					};
-				};
-			} );
-		} );
+		for ( var ref in pathCache.cache ) {
+			this.updatePath( pathCache.cache[ref] );
+		};
 	};
 
 
@@ -73,59 +46,47 @@ var Tree = function ( utils, h5ai ) {
 			};
 		};
 
-		$tree.hover(
-				function () {
-					shiftTree( true );
-				},
-				function () {
-					shiftTree();
-				}
-		);
+		$tree.hover( function () { shiftTree( true ); }, function () { shiftTree(); } );
+		$( window ).resize( function() { shiftTree(); } );
 
-		$( window ).resize( function() {
-			shiftTree();	
-		} );
-
-		this.fetchTree( decodeURI( document.location.pathname ), function( entry ) {
-			$tree.append( entry.updateTreeHtml() );
+		this.fetchTree( decodeURI( document.location.pathname ), function( path ) {
+			$tree.append( path.updateTreeHtml() );
 			shiftTree();
 		} );
 	};
 
 
-	this.fetchTree = function ( pathname, callback, child ) {
+	this.fetchTree = function ( pathname, callback, childPath ) {
 
-		this.fetchEntry( pathname, function ( entry ) {
-			if ( child !== undefined ) {
-				entry.content[ child.absHref ] = child;
+		this.fetchPath( pathname, function ( path ) {
+			if ( childPath !== undefined ) {
+				path.content[ childPath.absHref ] = childPath;
 			};
 
 			var parent = utils.splitPathname( pathname )[0];
 			if ( parent === "" ) {
-				callback( entry );
+				callback( path );
 			} else {
-				THIS.fetchTree( parent, callback, entry );				
+				THIS.fetchTree( parent, callback, path );				
 			};
 		} );
 	};
 
 
-	this.fetchEntry = function ( pathname, callback ) {
+	this.fetchPath = function ( pathname, callback ) {
 
-		this.fetchEntries( pathname, false, function ( status, entries ) {
-			var entry = new File( utils, pathname );
-			entry.status = status;
-			entry.content = entries;
-			callback( entry );
+		this.fetchStatusAndContent( pathname, false, function ( status, content ) {
+			var path = pathCache.getPathForFolder( pathname );
+			path.status = status;
+			path.content = content;
+			callback( path );
 		} );
 	};
 
 
-	this.fetchEntries = function ( pathname, includeParent, callback ) {
+	this.fetchStatusAndContent = function ( pathname, includeParent, callback ) {
 
-		this.checkPathname( pathname, function ( status ) {
-
-			console.log( "checkPathname", pathname, status );
+		this.fetchStatus( pathname, function ( status ) {
 
 			if ( status !== "h5ai" ) {
 				callback( status, {} );
@@ -145,35 +106,30 @@ var Tree = function ( utils, h5ai ) {
 						return;
 					};
 
-					var entries =  {};
-					$( html ).find( "#table table td" ).closest( "tr" ).each( function () { 
-						var entry = new File( utils, pathname, this );
-						if ( entry.isFolder && ( !entry.isParentFolder || includeParent ) ) {
-							entries[ entry.absHref ] = entry;
-							THIS.checkPathname( entry.absHref, function ( status ) {
-								if ( status !== "h5ai" ) {
-									entry.status = status;
-									entry.updateTreeHtml();
-								};
-							} );
+					var content =  {};
+					$( html ).find( "#table td" ).closest( "tr" ).each( function () { 
+						var path = pathCache.getPathForTableRow( pathname, this );
+						if ( path.isFolder && ( !path.isParentFolder || includeParent ) ) {
+							content[path.absHref] = path;
+							THIS.updatePath( path );
 						};
 					} );
-					callback( "h5ai", entries );
+					callback( "h5ai", content );
 				}
 			} );
 		} );
 	};
 
-	
-	var pathnameCache = {};
 
-	this.checkPathname = function ( pathname, callback ) {
+	var pathnameStatusCache = {};
+
+	this.fetchStatus = function ( pathname, callback ) {
 
 		if ( h5ai.config.folderStatus[ pathname ] !== undefined ) {
 			callback( h5ai.config.folderStatus[ pathname ] );
 			return;
-		} else if ( pathnameCache[ pathname ] !== undefined ) {
-			callback( pathnameCache[ pathname ] );
+		} else if ( pathnameStatusCache[ pathname ] !== undefined ) {
+			callback( pathnameStatusCache[ pathname ] );
 			return;
 		}; 
 
@@ -185,7 +141,7 @@ var Tree = function ( utils, h5ai ) {
 				if ( status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
 					status = "h5ai";
 				};
-				pathnameCache[ pathname ] = status;
+				pathnameStatusCache[ pathname ] = status;
 				callback( status );
 			}
 		} );

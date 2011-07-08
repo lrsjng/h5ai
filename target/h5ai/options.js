@@ -1,5 +1,5 @@
 /*
- * h5ai 0.7
+ * h5ai 0.8
  * Options and localization 
  */
 
@@ -51,7 +51,12 @@ h5aiOptions = {
 	/*
 	 * Try to use browser language, falls back to previous specified lang. 
 	 */
-	useBrowserLang: true
+	useBrowserLang: true,
+	
+	/*
+	 * Set parent folder labels to real folder names.
+	 */
+	setParentFolderLabels: true
 };
 
 

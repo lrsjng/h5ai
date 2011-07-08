@@ -51,7 +51,12 @@ h5aiOptions = {
 	/*
 	 * Try to use browser language, falls back to previous specified lang. 
 	 */
-	useBrowserLang: true
+	useBrowserLang: true,
+	
+	/*
+	 * Set parent folder labels to real folder names.
+	 */
+	setParentFolderLabels: true
 };
 
 

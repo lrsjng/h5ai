@@ -1,4 +1,4 @@
-# h5ai v0.7 &#160; · &#160; a beautified Apache index
+# h5ai v0.8 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
@@ -47,6 +47,16 @@ please respect their rights.
 
 ## Changelog
 
+### v0.8
+*2011-07-08*
+
+* removed slashes from folder labels
+* optionally rename parent folder entries to real folder names, see `options.js`
+* long breadcrumbs (multiple rows) no longer hide content 
+* error folder icons are opaque now
+* refactored js a lot (again...)
+
+
 ### v0.7
 *2011-07-07*
 
@@ -58,15 +68,15 @@ please respect their rights.
 *2011-07-05*
 
 * refactored js
-* added localization, see options.js
+* added localization, see `options.js`
 
 
 ### v0.5.3
 *2011-07-04*
 
 * refactored js
-* added basic options support
-* commented options.js
+* added basic options support via `options.js`
+* commented `options.js`
 * optional tree sidebar
 
 
