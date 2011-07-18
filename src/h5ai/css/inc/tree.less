@@ -2,7 +2,10 @@
 #tree {
 	position: fixed;
 	left: -200px;
-	top: 80px;
+	display: none;
+	left: 0;
+	top: 0;
+	overflow: auto;
 	font-size: 0.85em;
 	padding: 16px 32px 16px 16px;
 	background-color: rgb(241,241,241);
@@ -43,15 +46,18 @@
 				opacity: 0.3;
 			}
 		}
-		> a, > a.visited {
+		> a, > a:active, > a.visited {
 			margin-left: 16px;
 			padding: 4px 6px;
 			border: 1px solid rgba(0,0,0,0);
 			.border-radius( 5px );
 			display: block;
+			color: #555;
+			text-decoration: none;
 			opacity: 0.7;
 
-			&:hover {
+			&:hover, &.hover {
+				color: #e80;
 				background-color: rgba(255,255,255,0.5);
 				opacity: 1;
 			}
@@ -70,7 +76,6 @@
 			.hint {
 				display: inline-block;
 				margin-left: 12px;
-				font-style: italic;
 				font-size: 0.9em;
 				color: #ccc;
 				img {
@@ -84,15 +89,18 @@
 			display: none;
 		}
 		&.current {
-			> a, > a:visited {
-				border: 1px solid rgba(0,0,0,0.1);
+			> a, > a:active, > a:visited {
+				border: 1px solid rgb(221,221,221);
 				background-color: rgba(255,255,255,0.5);
 				opacity: 1;
 			}
 		}
 		&.error {
-			> a, > a:visited {
+			> a, > a:active, > a:visited {
 				color: #999;
+				&:hover, &.hover {
+					color: #e80;
+				}
 			}
 			.hint {
 				color: #c55;

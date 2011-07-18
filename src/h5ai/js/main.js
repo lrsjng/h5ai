@@ -1,8 +1,8 @@
 ( function( $ ) {
 
-	// @include "inc/utils.js"
-	// @include "inc/h5ai.js"
+	// @include "inc/jquery.json.min.js"
 	// @include "inc/path.js"
+	// @include "inc/h5ai.js"
 	// @include "inc/tree.js"
 
 
@@ -10,10 +10,9 @@
 	 * create
 	 *******************************/
 
-	var utils = new Utils();
-	var pathCache = new PathCache( utils );
-	var h5ai = new H5ai( h5aiOptions, h5aiLangs );
-	var tree = new Tree( utils, h5ai );
+	var pathCache = new PathCache();
+	var h5ai = new H5ai( h5aiOptions, h5aiLangs, pathCache );
+	var tree = new Tree( pathCache, h5ai );
 
 
 	/*******************************
@@ -21,11 +20,18 @@
 	 *******************************/
 
 	$.h5ai = {
-		folderClick: h5ai.folderClick,
-		fileClick: h5ai.fileClick
+		click: $.proxy( h5ai.pathClick, h5ai )
 	};
 
+	$( ".l10n-footerUsing" ).click( function () {
+		console.log( "clean" );
+		pathCache.cache = {};
+		console.log( "store" );
+		pathCache.storeCache();
+		console.log( "load", pathCache.loadCache() );
+	} );
 
+	
 	/*******************************
 	 * init after dom load
 	 *******************************/

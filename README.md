@@ -1,4 +1,4 @@
-# h5ai v0.8 &#160; · &#160; a beautified Apache index
+# h5ai v0.9 &#160; · &#160; a beautified Apache index
 
 
 ## Screenshots
@@ -46,6 +46,18 @@ please respect their rights.
 
 
 ## Changelog
+
+### v0.9
+*2011-07-18*
+
+* linked hover states between crumb, extended view and tree
+* fixed size of tree view (now there's a ugly scrollbar, hopefully will be fixed)
+* refactored js to improve performance and cleaned code
+* added caching for folder status codes and content
+* added fr translation by [Nicolas](http://github.com/Nicosmos)
+* added nl translation by [Stefan de Konink](http://github.com/skinkie)
+* added sv translation by Oscar Carlsson
+
 
 ### v0.8
 *2011-07-08*

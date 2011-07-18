@@ -1,8 +1,5 @@
 
-var H5ai = function ( options, langs ) {
-
-	var THIS = this;
-
+var H5ai = function ( options, langs, pathCache ) {
 
 
 	/*******************************
@@ -14,16 +11,10 @@ var H5ai = function ( options, langs ) {
 		store: {
 			viewmode: "h5ai.viewmode"
 		},
-		icons: {
-			crumb: "/h5ai/images/crumb.png",
-			ascending: "/h5ai/images/ascending.png",
-			descending: "/h5ai/images/descending.png"
-		},
 		customHeader: "h5ai.header.html",
 		customFooter: "h5ai.footer.html",
 		callbacks: {
-			folderClick: [],
-			fileClick: []			
+			pathClick: []
 		},
 
 		viewmodes: [ "details", "icons" ],
@@ -32,7 +23,8 @@ var H5ai = function ( options, langs ) {
 		},
 		lang: undefined,
 		useBrowserLang: true,
-		setParentFolderLabels: true
+		setParentFolderLabels: true,
+		linkHoverStates: true
 	};
 	this.config = $.extend( {}, defaults, options );
 
@@ -41,20 +33,11 @@ var H5ai = function ( options, langs ) {
 	/*******************************
 	 * public api
 	 *******************************/
-	
-	this.folderClick = function ( fn ) {
 
-		if ( typeof fn === "function" ) {
-			this.config.callbacks.folderClick.push( fn );
-		};
-		return this;
-	};
+	this.pathClick = function ( fn ) {
 
-
-	this.fileClick = function ( fn ) {
-
-		if ( typeof fn === "function" ) {
-			this.config.callbacks.fileClick.push( fn );
+		if ( $.isFunction( fn ) ) {
+			this.config.callbacks.pathClick.push( fn );
 		};
 		return this;
 	};
@@ -83,18 +66,10 @@ var H5ai = function ( options, langs ) {
 	 * callback triggers
 	 *******************************/
 
-	this.triggerFolderClick = function ( label ) {
+	this.triggerPathClick = function ( path, context ) {
 
-		for ( idx in this.config.callbacks.folderClick ) {
-			this.config.callbacks.folderClick[idx].call( window, label );
-		};
-	};
-
-
-	this.triggerFileClick = function ( label ) {
-
-		for ( idx in this.config.callbacks.fileClick ) {
-			this.config.callbacks.fileClick[idx].call( window, label );
+		for ( idx in this.config.callbacks.pathClick ) {
+			this.config.callbacks.pathClick[idx].call( window, path, context );
 		};
 	};
 
@@ -143,7 +118,7 @@ var H5ai = function ( options, langs ) {
 		};
 	};
 
-	
+
 
 	/*******************************
 	 * breadcrumb
@@ -151,12 +126,13 @@ var H5ai = function ( options, langs ) {
 
 	this.initBreadcrumb = function () {
 
-		var $domain = $( "#domain" );
-		var $ul = $domain.closest( "ul" );
+		var $ul = $( "body > nav ul" );
 
-		$domain.find( "span" ).text( document.domain );
-		var pathnameParts = decodeURI( document.location.pathname ).split( "/" );
 		var pathname = "/";
+		var path = pathCache.getPathForFolder( pathname );
+		$ul.append( path.updateCrumbHtml() );
+
+		var pathnameParts = decodeURI( document.location.pathname ).split( "/" );
 		for ( idx in pathnameParts ) {
 			var part = pathnameParts[idx];
 			if ( part !== "" ) {
@@ -177,10 +153,19 @@ var H5ai = function ( options, langs ) {
 
 		function adjustTopSpace() {
 			
-			var height = $( "body > nav" ).height();
-			var space = height + 50;
-			$( "body" ).css( "margin-top", "" + space + "px" );
-			$( "#tree" ).css( "top", "" + space + "px" );
+			var winHeight = $( window ).height();
+			var navHeight = $( "body > nav" ).outerHeight();
+			var footerHeight = $( "body > footer" ).outerHeight();
+			var contentSpacing = 50;
+			var treeSpacing = 50;
+
+			$( "body" )
+				.css( "margin-top", "" + ( navHeight + contentSpacing ) + "px" )
+				.css( "margin-bottom", "" + ( footerHeight + contentSpacing ) + "px" );
+			
+			$( "#tree" )
+				.css( "top", "" + ( navHeight + treeSpacing ) + "px" )
+				.css( "max-height", "" + ( winHeight - navHeight - footerHeight - 36 - 2 * treeSpacing ) + "px" );
 		};
 
 		$( window ).resize( function () {
@@ -228,9 +213,9 @@ var H5ai = function ( options, langs ) {
 		};
 		var $icon;
 		if ( order.indexOf( "O=A" ) >= 0 ) {
-			$icon = $( "<img src='" + this.config.icons.ascending + "' class='sort' alt='ascending' />" );
+			$icon = $( "<img src='/h5ai/images/ascending.png' class='sort' alt='ascending' />" );
 		} else {
-			$icon = $( "<img src='" + this.config.icons.descending + "' class='sort' alt='descending' />" );
+			$icon = $( "<img src='/h5ai/images/descending.png' class='sort' alt='descending' />" );
 		};
 		if ( order.indexOf( "C=N" ) >= 0 ) {
 			$li.find( "a.label" ).append( $icon );
@@ -269,13 +254,13 @@ var H5ai = function ( options, langs ) {
 		this.initExtendedView();
 
 		$( "#viewdetails" ).closest( "li" )
-			.click( function () {
-				THIS.applyViewmode( "details" );
-			} );
+			.click( $.proxy( function () {
+				this.applyViewmode( "details" );
+			}, this ) );
 		$( "#viewicons" ).closest( "li" )
-			.click( function () {
-				THIS.applyViewmode( "icons" );
-			} );
+			.click( $.proxy( function () {
+				this.applyViewmode( "icons" );
+			}, this ) );
 	};
 
 

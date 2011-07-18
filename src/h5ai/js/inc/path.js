@@ -1,19 +1,94 @@
 
 
-var PathCache = function ( utils ) {
+var PathCache = function () {
+
+	
+	var pathnameRegEx = /^(\/(.*\/)*)([^\/]+\/?)$/;
+
+	this.splitPathname = function ( pathname ) {
+		
+		if ( pathname === "/"  ) {
+			return [ "", "/" ];
+		};
+		var match = pathnameRegEx.exec( pathname );
+		return [ match[1], match[3] ];
+	};
+
 
 	this.cache = {};
 
 
+	this.loadCache = function () {
+
+		var json = localStorage.getItem( "h5ai.cache" );
+		var objs = $.evalJSON( json );
+		var cache = {};
+		for ( idx in objs ) {
+			var obj = objs[idx];
+			var path = this.objectToPath( obj );
+			cache[path.absHref] = path;
+		};
+		console.log( "loaded: ", cache );
+		return cache;
+	};
+
+
+	this.storeCache = function () {
+
+		var objs = [];
+		for ( ref in this.cache ) {
+			var path = this.cache[ref];
+			if ( path.isFolder ) {
+				objs.push( this.pathToObject( path ) );
+			};
+		};
+		var json = $.toJSON( objs ); 
+		localStorage.setItem( "h5ai.cache", json );
+	};
+
+
+	this.pathToObject = function ( path ) {
+
+		var object = {
+			r: path.absHref,
+			s: path.status,
+			c: [],
+			o: path.treeOpen
+		};
+
+		if ( path.content !== undefined ) {
+			for ( ref in path.content ) {
+				object.c.push( ref );
+			};
+		};
+
+		return object;
+	};
+
+
+	this.objectToPath = function ( obj ) {
+		
+		var path = this.getPathForFolder( obj.r );
+		path.status = obj.s;
+		path.content = {};
+		path.treeOpen = obj.o;
+		for ( idx in obj.c ) {
+			var href = obj.c[idx];
+			path.content[href] = this.getPathForFolder( href );
+		};
+		return path;
+	};
+	
+
 	this.getPathForFolder = function ( folder ) {
 
-		return this.getCachedPath( new Path( utils, folder ) );
+		return this.getCachedPath( new Path( this, folder ) );
 	};
 
 
 	this.getPathForTableRow = function ( parentFolder, tableRow ) {
 
-		return this.getCachedPath( new Path( utils, parentFolder, tableRow ) );
+		return this.getCachedPath( new Path( this, parentFolder, tableRow ) );
 	};
 
 
@@ -25,22 +100,21 @@ var PathCache = function ( utils ) {
 
 		var cachedPath = this.cache[path.absHref];
 		if ( cachedPath !== undefined ) {
-			console.log( "cached path:", cachedPath.absHref );
 			return cachedPath;
 		};
 
-		console.log( "new path:", path.absHref );
 		this.cache[path.absHref] = path;
+		this.storeCache();
 		return path;
 	};
+
+	this.cache = this.loadCache();
 
 };
 
 
 
-var Path = function ( utils, folder, tableRow ) {
-
-	var THIS = this;
+var Path = function ( pathCache, folder, tableRow ) {
 
 	if ( ! /\/$/.test( folder ) ) {
 		folder += "/";
@@ -59,7 +133,7 @@ var Path = function ( utils, folder, tableRow ) {
 		this.date = $tds.eq( 2 ).text();
 		this.size = $tds.eq( 3 ).text();
 	} else {
-		var splits = utils.splitPathname( folder );
+		var splits = pathCache.splitPathname( folder );
 
 		this.parentFolder = splits[0];
 		this.label = splits[1];
@@ -81,13 +155,14 @@ var Path = function ( utils, folder, tableRow ) {
 	this.isFolder = ( this.alt === "[DIR]" );
 	this.isParentFolder = ( this.isFolder && this.label === "Parent Directory" );
 	this.absHref = this.isParentFolder ? this.href : this.parentFolder + this.href;
-	this.isCurrentFolder = ( decodeURI( document.location.pathname ) === this.absHref );
+	this.isCurrentFolder = ( this.absHref === decodeURI( document.location.pathname ) );
+	this.isDomain = ( this.absHref === "/" );
 
 	if ( this.isParentFolder && h5ai.config.setParentFolderLabels ) {
-		if ( this.absHref === "/" ) {
+		if ( this.isDomain ) {
 			this.label = decodeURI( document.domain );
 		} else {
-			this.label = utils.splitPathname( utils.splitPathname( this.parentFolder )[0] )[1].slice( 0, -1 );
+			this.label = pathCache.splitPathname( pathCache.splitPathname( this.parentFolder )[0] )[1].slice( 0, -1 );
 		};
 	};
 
@@ -98,19 +173,44 @@ var Path = function ( utils, folder, tableRow ) {
 		$extended: undefined,
 		$tree: undefined
 	};
-
+	this.treeOpen = false;
 
 	this.isEmpty = function() {
 
-		if ( this.content === undefined ) {
-			return true;
-		};
-		for ( var prop in this.content ) {
-			if( this.content.hasOwnProperty( prop ) ) {
-				return false;
+		return this.content === undefined || $.isEmptyObject( this.content );
+	};
+
+
+	this.onClick = function ( context ) {
+
+		pathCache.storeCache();
+		h5ai.triggerPathClick( this, context );
+	};
+
+
+	this.onHoverIn = function () {
+
+		if ( h5ai.config.linkHoverStates ) {
+			for ( ref in this.html ) {
+				$ref = this.html[ref];
+				if ( $ref !== undefined ) {
+					$ref.find( "> a" ).addClass( "hover" );
+				};
 			};
 		};
-		return true;
+	};
+
+
+	this.onHoverOut = function () {
+		
+		if ( h5ai.config.linkHoverStates ) {
+			for ( ref in this.html ) {
+				$ref = this.html[ref];
+				if ( $ref !== undefined ) {
+					$ref.find( "> a" ).removeClass( "hover" );
+				};
+			};
+		};
 	};
 
 
@@ -127,8 +227,20 @@ var Path = function ( utils, folder, tableRow ) {
 		var $html = $( "<li class='crumb' />" ).data( "path", this );
 
 		try {
+			$html.addClass( this.isFolder ? "folder" : "file" );
 			var $a = $( "<a href='" + this.absHref + "'><img src='/h5ai/images/crumb.png' alt='>' />" + this.label + "</a>" );
+			$a.click( $.proxy( function() { this.onClick( "crumb" ); }, this ) );
+			$a.hover( $.proxy( function() { this.onHoverIn( "crumb" ); }, this ), $.proxy( function() { this.onHoverOut( "crumb" ); }, this ) );
 			$html.append( $a );
+			
+			if ( this.isDomain ) {
+				$html.addClass( "domain" );
+				$a.find( "img" ).attr( "src", "/h5ai/images/home.png" );
+			};
+			
+			if ( this.isCurrentFolder ) {
+				$html.addClass( "current" );
+			};
 			
 			if ( !isNaN( this.status ) ) {
 				if ( this.status === 200 ) {
@@ -136,10 +248,6 @@ var Path = function ( utils, folder, tableRow ) {
 				} else {
 					$( "<span class='hint'>(" + this.status + ")</span>" ).appendTo( $a );
 				};
-			};
-			
-			if ( this.isCurrentFolder ) {
-				$html.addClass( "current" );
 			};
 		} catch( err ) {
 			console.log( "updateCrumbHtml failed",  err );
@@ -160,18 +268,11 @@ var Path = function ( utils, folder, tableRow ) {
 		var $html = $( "<li class='entry' />" ).data( "path", this );
 
 		try {
-			if ( this.isFolder ) {
-				$html.addClass( "folder" )
-					.click( function() {
-						h5ai.triggerFolderClick( THIS );
-					} );
-			} else {
-				$html.addClass( "file" )
-					.click( function() {
-						h5ai.triggerFileClick( THIS );
-					} );
-			};
+			$html.addClass( this.isFolder ? "folder" : "file" );
 			var $a = $( "<a href='" + this.href + "' />" ).appendTo( $html );
+			$a.click( $.proxy( function() { this.onClick( "extended" ); }, this ) );
+			$a.hover( $.proxy( function() { this.onHoverIn( "extended" ); }, this ), $.proxy( function() { this.onHoverOut( "extended" ); }, this ) );
+
 			$( "<span class='icon small'><img src='" + this.icon16 + "' alt='" + this.alt + "' /></span>" ).appendTo( $a );
 			$( "<span class='icon big'><img src='" + this.icon48 + "' alt='" + this.alt + "' /></span>" ).appendTo( $a );
 			var $label = $( "<span class='label'>" + this.label + "</span>" ).appendTo( $a );
@@ -192,7 +293,7 @@ var Path = function ( utils, folder, tableRow ) {
 					$a.find( ".icon.big img" ).attr( "src", "/h5ai/icons/48x48/folder-page.png" );
 				} else {
 					$html.addClass( "error" );
-					$label.append( " " ).append(  $( "<span class='hint'>" + this.status + "</span>" ) );
+					$label.append(  $( "<span class='hint'> " + this.status + " </span>" ) );
 				};
 			};
 		} catch( err ) {
@@ -215,37 +316,48 @@ var Path = function ( utils, folder, tableRow ) {
 		var $blank = $( "<span class='blank' />" ).appendTo( $html );
 
 		try {
+			$html.addClass( this.isFolder ? "folder" : "file" );
 			var $a = $( "<a href='" + this.absHref + "' />" )
 				.appendTo( $html )
 				.append( $( "<span class='icon'><img src='" + this.icon16 + "' /></span>" ) )
 				.append( $( "<span class='label'>" + this.label + "</span>" ) );
+			$a.click( $.proxy( function() { this.onClick( "tree" ); }, this ) );
+			$a.hover( $.proxy( function() { this.onHoverIn( "tree" ); }, this ), $.proxy( function() { this.onHoverOut( "tree" ); }, this ) );
 
 			if ( this.isFolder ) {
-
-				$html.addClass( "folder" );
-
 				// indicator
 				if ( this.status === undefined || !this.isEmpty() ) {
 					var $indicator = $( "<span class='indicator'><img src='/h5ai/images/tree.png' /></span>" );
 					if ( this.status === undefined ) {
 						$indicator.addClass( "unknown" );
-					} else {
+					} else if ( this.treeOpen ) {
 						$indicator.addClass( "open" );
 					};
-					$indicator.click( function( event ) {
+					$indicator.click( $.proxy( function( event ) {
 						if ( $indicator.hasClass( "unknown" ) ) { 
-							tree.fetchPath( THIS.absHref, function ( path ) {
-								$html.replaceWith( path.updateTreeHtml() );
-							} );
+							tree.fetchStatusAndContent( this.absHref, false, $.proxy( function ( status, content ) {
+								this.status = status;
+								this.content = content;
+								this.treeOpen = true;
+								this.updateTreeHtml();
+							}, this ) );
 						} else if ( $indicator.hasClass( "open" ) ) {
+							this.treeOpen = false;
 							$indicator.removeClass( "open" );
 							$html.find( "> ul.content" ).slideUp();
 						} else {
+							this.treeOpen = true;
 							$indicator.addClass( "open" );
 							$html.find( "> ul.content" ).slideDown();				
 						};
-					} );
+					}, this ) );
 					$blank.replaceWith( $indicator );
+				};
+
+				// is this the domain?
+				if ( this.isDomain ) {
+					$html.addClass( "domain" );
+					$a.find( ".icon img" ).attr( "src", "/h5ai/icons/16x16/folder-home.png" );
 				};
 
 				// is this the current folder?
@@ -260,6 +372,9 @@ var Path = function ( utils, folder, tableRow ) {
 					for ( idx in this.content ) {
 						$( "<li />" ).append( this.content[idx].updateTreeHtml() ).appendTo( $ul );
 					};
+					if ( this.status === undefined || !this.treeOpen ) {
+						$ul.hide();
+					};
 				};
 
 				// reflect folder status
@@ -272,9 +387,6 @@ var Path = function ( utils, folder, tableRow ) {
 						$a.append( $( "<span class='hint'>" + this.status + "</span>" ) );
 					};
 				};
-
-			} else {
-				$html.addClass( "file" );
 			};
 		} catch( err ) {
 			console.log( "updateTreeHtml failed",  err );

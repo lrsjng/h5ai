@@ -12,50 +12,55 @@
 			white-space: nowrap;
 			clear: both;
 
-			&.header a {
-				padding-bottom: 18px;
-				color: #555;
-				opacity: 0.4;
-				cursor: pointer;
-				.transition( all 0.2s ease-in-out );
-
-				&:visited {
+			&.header {
+				a, a:active, a:visited {
+					padding-bottom: 18px;
 					color: #555;
-				}
-				&:hover {
-					color: #555;
-					opacity: 0.9;
-				}
-				img {
-					width: 12px;
-					height: 12px;
-					padding: 0 8px;
+					text-decoration: none;
+					opacity: 0.4;
+					cursor: pointer;
+					.transition( all 0.2s ease-in-out );
+	
+					&:hover {
+						color: #555;
+						opacity: 0.9;
+					}
+					img {
+						width: 12px;
+						height: 12px;
+						padding: 0 8px;
+					}
 				}
 			}
 			&.entry {
 				border-bottom: 1px solid #ddd;
 
-				a {
+				a, a:active, a:visited {
 					display: block;
+					color: #555;
+					text-decoration: none;
 					cursor: pointer;
-
-					&:hover {
+					
+					&:hover, &.hover {
 						background-color: #f6f6f6;
 						color: #e80;
 					}
 				}
 				&.error {
-					> a, > a:visited {
-						color: #999;
-
+					a, a:active, a:visited {
+						color: #aaa;
+					
 						.label {
-							opacity: 0.7;
-
 							.hint {
+								margin-left: 12px;
 								font-size: 0.9em;
-								font-style: italic;
 								color: #c55;
 							}
+						}
+						&:hover, &.hover {
+							opacity: 1;
+							background-color: #f6f6f6;
+							color: #e80;
 						}
 					}
 				}
@@ -115,7 +120,7 @@
 
 #extended.icons-view {
 	display: none;
-	padding: 10px;
+	padding: 3px;
 	border: 1px solid #eee;
 	border-radius: 15px;
 
@@ -131,7 +136,7 @@
 			&.entry {
 				float: left;
 
-				a {
+				a, a:active, a:visited {
 					display: block;
 					margin: 8px;
 					padding: 8px;
@@ -139,12 +144,14 @@
 					height: 120px;
 					float: left;
 					text-align: center;
+					text-decoration: none;
 					overflow: hidden;
 					border-radius: 5px;
+					color: #555;
 					cursor: pointer;
 					border: 2px solid rgba(0,0,0,0);
 			
-					&:hover {
+					&:hover, &.hover {
 						color: #e80;
 						border-color: #eee;
 						background-color: #f6f6f6;
@@ -170,17 +177,21 @@
 					}
 				}
 				&.error {
-					> a, > a:visited {
-						color: #999;
-
+					a, a:active, a:visited {
+						color: #aaa;
+						text-decoration: none;
+					
 						.label {
-							opacity: 0.7;
-
 							.hint {
+								padding: 0 6px;
 								font-size: 0.9em;
-								font-style: italic;
 								color: #c55;
 							}
+						}
+						&:hover, &.hover {
+							color: #e80;
+							border-color: #eee;
+							background-color: #f6f6f6;
 						}
 					}
 				}

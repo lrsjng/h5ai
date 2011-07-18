@@ -1,5 +1,5 @@
 
-var Tree = function ( utils, h5ai ) {
+var Tree = function ( pathCache, h5ai ) {
 
 	var THIS = this;
 	var contentTypeRegEx = /^text\/html;h5ai=/;
@@ -47,10 +47,12 @@ var Tree = function ( utils, h5ai ) {
 		};
 
 		$tree.hover( function () { shiftTree( true ); }, function () { shiftTree(); } );
-		$( window ).resize( function() { shiftTree(); } );
+		$( window ).resize( function() {
+			shiftTree();
+		} );
 
 		this.fetchTree( decodeURI( document.location.pathname ), function( path ) {
-			$tree.append( path.updateTreeHtml() );
+			$tree.append( path.updateTreeHtml() ).show();
 			shiftTree();
 		} );
 	};
@@ -58,18 +60,21 @@ var Tree = function ( utils, h5ai ) {
 
 	this.fetchTree = function ( pathname, callback, childPath ) {
 
-		this.fetchPath( pathname, function ( path ) {
+		this.fetchPath( pathname, $.proxy( function ( path ) {
+			
+			path.treeOpen = true;
+			
 			if ( childPath !== undefined ) {
 				path.content[ childPath.absHref ] = childPath;
 			};
 
-			var parent = utils.splitPathname( pathname )[0];
+			var parent = pathCache.splitPathname( pathname )[0];
 			if ( parent === "" ) {
 				callback( path );
 			} else {
-				THIS.fetchTree( parent, callback, path );				
+				this.fetchTree( parent, callback, path );				
 			};
-		} );
+		}, this ) );
 	};
 
 
@@ -131,7 +136,7 @@ var Tree = function ( utils, h5ai ) {
 		} else if ( pathnameStatusCache[ pathname ] !== undefined ) {
 			callback( pathnameStatusCache[ pathname ] );
 			return;
-		}; 
+		};
 
 		$.ajax( {
 			url: pathname,

@@ -56,7 +56,12 @@ h5aiOptions = {
 	/*
 	 * Set parent folder labels to real folder names.
 	 */
-	setParentFolderLabels: true
+	setParentFolderLabels: true,
+	
+	/*
+	 * Link the hover effects between crumb, extended view and tree.
+	 */
+	linkHoverStates: true
 };
 
 
@@ -86,6 +91,36 @@ h5aiLangs = {
 		columnSize: "Größe",
 		footerUsing: "nutzt",
 		parentDirectory: "Übergeordnetes Verzeichnis"
+	},
+	
+	"fr": {
+		viewDetails: "détails",
+		viewIcons: "icônes",
+		columnName: "Nom",
+		columnLastModified: "Dernière modification",
+		columnSize: "Taille",
+		footerUsing: "utilise",
+		parentDirectory: "Dossier parent"
+	},
+
+	"nl": {
+		viewDetails: "details",
+		viewIcons: "iconen",
+		columnName: "Naam",
+		columnLastModified: "Laatste wijziging",
+		columnSize: "Grootte",
+		footerUsing: "gebruikt",
+		parentDirectory: "Bovenliggende map"
+	},
+
+	"sv": {
+		viewDetails: "detaljerad",
+		viewIcons: "ikoner",
+		columnName: "Filnamn",
+		columnLastModified: "Senast ändrad",
+		columnSize: "Filstorlek",
+		footerUsing: "använder",
+		parentDirectory: "Till överordnad mapp"
 	}
 
 };

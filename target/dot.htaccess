@@ -1,5 +1,5 @@
 ################################
-# h5ai 0.8
+# h5ai 0.9
 # customized .htaccess
 ################################
 
@@ -56,7 +56,7 @@
 
 	IndexOrderDefault    Ascending Name
 
-	IndexOptions         Type=text/html;h5ai=0.8
+	IndexOptions         Type=text/html;h5ai=0.9
 	IndexOptions         Charset=UTF-8
 	IndexOptions         FancyIndexing
 	IndexOptions         HTMLTable
