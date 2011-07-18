@@ -87,5 +87,15 @@ h5aiLangs = {
 		footerUsing: "nutzt",
 		parentDirectory: "Übergeordnetes Verzeichnis"
 	}
+	
+	"nl": {
+		viewDetails: "details",
+		viewIcons: "iconen",
+		columnName: "Naam",
+		columnLastModified: "Laatste wijziging",
+		columnSize: "Grootte",
+		footerUsing: "gebruikt",
+		parentDirectory: "Bovenliggende map"
+	},
 
 };
