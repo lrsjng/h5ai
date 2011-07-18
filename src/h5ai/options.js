@@ -86,6 +86,16 @@ h5aiLangs = {
 		columnSize: "Größe",
 		footerUsing: "nutzt",
 		parentDirectory: "Übergeordnetes Verzeichnis"
-	}
+	},
+
+	"fr": {
+		viewDetails: "détails",
+		viewIcons: "icônes",
+		columnName: "Nom",
+		columnLastModified: "Dernière modification",
+		columnSize: "Taille",
+		footerUsing: "utilise",
+		parentDirectory: "Dossier parent"
+	},
 
 };
