@@ -101,6 +101,26 @@ h5aiLangs = {
 		columnSize: "Taille",
 		footerUsing: "utilise",
 		parentDirectory: "Dossier parent"
+	},
+
+	"nl": {
+		viewDetails: "details",
+		viewIcons: "iconen",
+		columnName: "Naam",
+		columnLastModified: "Laatste wijziging",
+		columnSize: "Grootte",
+		footerUsing: "gebruikt",
+		parentDirectory: "Bovenliggende map"
+	},
+
+	"sv": {
+		viewDetails: "detaljerad",
+		viewIcons: "ikoner",
+		columnName: "Filnamn",
+		columnLastModified: "Senast ändrad",
+		columnSize: "Filstorlek",
+		footerUsing: "använder",
+		parentDirectory: "Till överordnad mapp"
 	}
 
 };
