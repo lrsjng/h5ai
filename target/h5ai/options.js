@@ -131,6 +131,16 @@ h5aiLangs = {
 		columnSize: "Velikost",
 		footerUsing: "používá",
 		parentDirectory: "Nadřazený adresář"
+	},
+
+	"sk": {
+		viewDetails: "podrobnosti",
+		viewIcons: "ikony",
+		columnName: "Názov",
+		columnLastModified: "Upravené",
+		columnSize: "Velkosť",
+		footerUsing: "používá",
+		parentDirectory: "Nadriadený priečinok"
 	}
 
 };
