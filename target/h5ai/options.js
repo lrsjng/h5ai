@@ -121,6 +121,16 @@ h5aiLangs = {
 		columnSize: "Filstorlek",
 		footerUsing: "använder",
 		parentDirectory: "Till överordnad mapp"
+	},
+
+	"cs": {
+		viewDetails: "podrobnosti",
+		viewIcons: "ikony",
+		columnName: "Název",
+		columnLastModified: "Upraveno",
+		columnSize: "Velikost",
+		footerUsing: "používá",
+		parentDirectory: "Nadřazený adresář"
 	}
 
 };
