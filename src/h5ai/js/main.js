@@ -41,4 +41,15 @@
 		tree.init();
 	} );
 
+
+	/*******************************
+	 * hide navigation bar on mobile
+	 *******************************/
+
+	/mobile/i.test( navigator.userAgent ) && setTimeout( function () {
+		if ( !pageYOffset ) {
+			window.scrollTo( 0, 1 );
+		}
+	}, 1000 );
+
 } )( jQuery );
