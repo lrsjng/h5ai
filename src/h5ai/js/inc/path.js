@@ -269,7 +269,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
-			var $a = $( "<a href='" + this.href + "' />" ).appendTo( $html );
+			var $a = $( "<a href='" + encodeURI(this.href) + "' />" ).appendTo( $html );
 			$a.click( $.proxy( function() { this.onClick( "extended" ); }, this ) );
 			$a.hover( $.proxy( function() { this.onHoverIn( "extended" ); }, this ), $.proxy( function() { this.onHoverOut( "extended" ); }, this ) );
 
