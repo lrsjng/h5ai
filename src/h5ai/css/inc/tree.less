@@ -1,7 +1,6 @@
 
 #tree {
 	position: fixed;
-	left: -200px;
 	display: none;
 	left: 0;
 	top: 0;
@@ -12,6 +11,21 @@
 	border: 2px solid rgb(210,210,210);
 	border-left: none;
 	.border-radius ( 0 15px 15px 0 );
+
+	> .scrollbar {
+		margin: 12px;
+		width: 6px;
+		background-color: rgb(210,210,210);
+		.border-radius( 3px );
+	
+		.drag {
+			background-color: rgb(180,180,180);
+			.border-radius( 3px );
+		}
+		&.dragOn .drag {
+			background-color: rgb(150,150,150);
+		}
+	}
 	
 	.entry {
 		.blank, .indicator {

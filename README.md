@@ -1,36 +1,9 @@
-# h5ai v0.9 &#160; · &#160; a beautified Apache index
+# h5ai v0.10 &#160; · &#160; a beautified Apache index
 
-
-## Screenshots
-
-<a href="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.7-details.png" target="_blank">
-	<img src="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.7-details.png" width="400px" alt="screenshot" title="details view" style="display: inline" />
-</a>
-&#160; &#160; &#160;
-<a href="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.7-icons.png" target="_blank">
-	<img src="http://larsjung.de/h5ai/sample/screenshots/h5ai-v0.7-icons.png" width="400px" alt="screenshot" title="icons view" style="display: inline" />
-</a>
-
-
-## Live example
-
-View a [sample folder](http://larsjung.de/h5ai/sample)  
-*(the files are all empty to save webspace)*
-
-
-## Install
-
-Everything you need is located in folder `target`.
-
-* Copy folder `h5ai` to the web-root directory of your server or alternativly set an alias `/h5ai/` to
-  this folder.
-* Add the content of file `dot.htaccess` to the `.htaccess` file inside the directory you want to be
-  styled (you might have to create this file). This directory and any subdirectories will be styled by h5ai.
-* Adjust `options.js` inside the `h5ai` folder to your needs. Defaults will be fine for a start.
-
-Optionally add `h5ai.header.html` and/or `h5ai.footer.html` files to any of the styled folders to [display
-custom top or bottom sections](http://larsjung.de/h5ai/sample/customize). The content of those files
-will be wrapped by `<header>` and `<footer>` tags.
+h5ai aims to make browsing files on a Apache HTTP server more comfortable.  
+See the [live demo](http://larsjung.de/h5ai/sample).  
+For installation instructions and documentation have a look at
+[project page](http://larsjung.de/h5ai).
 
 
 ## License and References
@@ -46,6 +19,16 @@ please respect their rights.
 
 
 ## Changelog
+
+### v0.10
+*2011-07-24*
+
+* fixed problems with XAMPP on Windows (see dot.htaccess comments for instructions)
+* fixed tree fade-in-fade-out effect for small displays ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
+* added custom scrollbar to tree ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
+* fixed broken links caused by URI encoding/decoding ([issue #9](http://github.com/lrsjng/h5ai/issues/9))
+* added "empty" to localization (hope Google Translate did a good job here)
+
 
 ### v0.9
 *2011-07-18*

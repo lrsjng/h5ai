@@ -1,6 +1,7 @@
 ( function( $ ) {
 
 	// @include "inc/jquery.json.min.js"
+	// @include "inc/jquery.mousewheel.min.js"
 	// @include "inc/path.js"
 	// @include "inc/h5ai.js"
 	// @include "inc/tree.js"
@@ -23,15 +24,6 @@
 		click: $.proxy( h5ai.pathClick, h5ai )
 	};
 
-	$( ".l10n-footerUsing" ).click( function () {
-		console.log( "clean" );
-		pathCache.cache = {};
-		console.log( "store" );
-		pathCache.storeCache();
-		console.log( "load", pathCache.loadCache() );
-	} );
-
-	
 	/*******************************
 	 * init after dom load
 	 *******************************/
@@ -39,6 +31,13 @@
 	$( function() {
 		h5ai.init();
 		tree.init();
-	} );
 
+		// just for testing, resets the local cache /////////
+		$( ".l10n-footerUsing" ).click( function () {
+			pathCache.cache = {};
+			pathCache.storeCache();
+		} );
+		/////////////////////////////////////////////////////
+	} );
+	
 } )( jQuery );

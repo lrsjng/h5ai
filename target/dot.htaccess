@@ -1,5 +1,5 @@
 ################################
-# h5ai 0.9
+# h5ai 0.10
 # customized .htaccess
 ################################
 
@@ -8,7 +8,7 @@
 # Options  +FollowSymLinks
 
 
-<IfModule mod_headers.c>
+<IfModule headers_module>
 
 	################################
 	# cache images for 52 weeks
@@ -25,7 +25,13 @@
 # style auto index
 ################################
 
-<IfModule mod_autoindex.c>
+################################
+# IMPORTANT FOR XAMPP
+# if you're running XAMPP you might need to replace the
+# following line with
+# <IfModule autoindex_color_module>
+################################
+<IfModule autoindex_module>
 
 	################################
 	# uncomment the following line to force directory listing
@@ -56,7 +62,7 @@
 
 	IndexOrderDefault    Ascending Name
 
-	IndexOptions         Type=text/html;h5ai=0.9
+	IndexOptions         Type=text/html;h5ai=0.10
 	IndexOptions         Charset=UTF-8
 	IndexOptions         FancyIndexing
 	IndexOptions         HTMLTable

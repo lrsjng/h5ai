@@ -28,7 +28,6 @@ var PathCache = function () {
 			var path = this.objectToPath( obj );
 			cache[path.absHref] = path;
 		};
-		console.log( "loaded: ", cache );
 		return cache;
 	};
 
@@ -129,21 +128,21 @@ var Path = function ( pathCache, folder, tableRow ) {
 		this.icon16 = $img.attr( "src" );
 		this.alt = $img.attr( "alt" );
 		this.label = $a.text();
-		this.href = decodeURI( $a.attr("href") );
+		this.href = $a.attr("href"); //decodeURI( $a.attr("href") );
 		this.date = $tds.eq( 2 ).text();
 		this.size = $tds.eq( 3 ).text();
 	} else {
 		var splits = pathCache.splitPathname( folder );
 
 		this.parentFolder = splits[0];
-		this.label = splits[1];
+		this.href = splits[1];
+		this.label = decodeURI( splits[1] );
 		this.icon16 = "/h5ai/icons/16x16/folder.png";
 		this.alt = "[DIR]";
-		this.href = this.label;
 		this.date = "";
 		this.size = "";			
 		if ( this.label === "/" ) {
-			this.label = document.domain + "/";
+			this.label = decodeURI( document.domain ) + "/";
 		};
 	};
 
@@ -155,14 +154,14 @@ var Path = function ( pathCache, folder, tableRow ) {
 	this.isFolder = ( this.alt === "[DIR]" );
 	this.isParentFolder = ( this.isFolder && this.label === "Parent Directory" );
 	this.absHref = this.isParentFolder ? this.href : this.parentFolder + this.href;
-	this.isCurrentFolder = ( this.absHref === decodeURI( document.location.pathname ) );
+	this.isCurrentFolder = ( this.absHref === document.location.pathname );
 	this.isDomain = ( this.absHref === "/" );
 
 	if ( this.isParentFolder && h5ai.config.setParentFolderLabels ) {
 		if ( this.isDomain ) {
 			this.label = decodeURI( document.domain );
 		} else {
-			this.label = pathCache.splitPathname( pathCache.splitPathname( this.parentFolder )[0] )[1].slice( 0, -1 );
+			this.label = decodeURI( pathCache.splitPathname( pathCache.splitPathname( this.parentFolder )[0] )[1].slice( 0, -1 ) );
 		};
 	};
 
@@ -250,7 +249,6 @@ var Path = function ( pathCache, folder, tableRow ) {
 				};
 			};
 		} catch( err ) {
-			console.log( "updateCrumbHtml failed",  err );
 			$( "<span class='fail'>failed</span>" ).appendTo( $html );
 		};
 
@@ -269,7 +267,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
-			var $a = $( "<a href='" + this.href + "' />" ).appendTo( $html );
+			var $a = $( "<a href='" + this.absHref + "' />" ).appendTo( $html );
 			$a.click( $.proxy( function() { this.onClick( "extended" ); }, this ) );
 			$a.hover( $.proxy( function() { this.onHoverIn( "extended" ); }, this ), $.proxy( function() { this.onHoverOut( "extended" ); }, this ) );
 
@@ -297,7 +295,6 @@ var Path = function ( pathCache, folder, tableRow ) {
 				};
 			};
 		} catch( err ) {
-			console.log( "updateExtendedHtml failed",  err );
 			$( "<span class='fail'>failed</span>" ).appendTo( $html );
 		};
 
@@ -339,16 +336,22 @@ var Path = function ( pathCache, folder, tableRow ) {
 								this.status = status;
 								this.content = content;
 								this.treeOpen = true;
-								this.updateTreeHtml();
+								this.updateTreeHtml( function() {
+									$( "#tree" ).get( 0 ).updateScrollbar();
+								} );
 							}, this ) );
 						} else if ( $indicator.hasClass( "open" ) ) {
 							this.treeOpen = false;
 							$indicator.removeClass( "open" );
-							$html.find( "> ul.content" ).slideUp();
+							$html.find( "> ul.content" ).slideUp( function() {
+								$( "#tree" ).get( 0 ).updateScrollbar();
+							} );
 						} else {
 							this.treeOpen = true;
 							$indicator.addClass( "open" );
-							$html.find( "> ul.content" ).slideDown();				
+							$html.find( "> ul.content" ).slideDown( function() {
+								$( "#tree" ).get( 0 ).updateScrollbar();
+							} );				
 						};
 					}, this ) );
 					$blank.replaceWith( $indicator );
@@ -389,7 +392,6 @@ var Path = function ( pathCache, folder, tableRow ) {
 				};
 			};
 		} catch( err ) {
-			console.log( "updateTreeHtml failed",  err );
 			$( "<span class='fail'>failed</span>" ).appendTo( $html );
 		};
 

@@ -8,7 +8,7 @@
 # Options  +FollowSymLinks
 
 
-<IfModule mod_headers.c>
+<IfModule headers_module>
 
 	################################
 	# cache images for 52 weeks
@@ -25,7 +25,13 @@
 # style auto index
 ################################
 
-<IfModule mod_autoindex.c>
+################################
+# IMPORTANT FOR XAMPP
+# if you're running XAMPP you might need to replace the
+# following line with
+# <IfModule autoindex_color_module>
+################################
+<IfModule autoindex_module>
 
 	################################
 	# uncomment the following line to force directory listing

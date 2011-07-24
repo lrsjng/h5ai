@@ -80,7 +80,8 @@ h5aiLangs = {
 		columnLastModified: "Last modified",
 		columnSize: "Size",
 		footerUsing: "using",
-		parentDirectory: "Parent Directory"
+		parentDirectory: "Parent Directory",
+		empty: "empty"
 	},
 
 	"de": {
@@ -90,7 +91,8 @@ h5aiLangs = {
 		columnLastModified: "Geändert",
 		columnSize: "Größe",
 		footerUsing: "nutzt",
-		parentDirectory: "Übergeordnetes Verzeichnis"
+		parentDirectory: "Übergeordnetes Verzeichnis",
+		empty: "leer"
 	},
 	
 	"fr": {
@@ -100,7 +102,8 @@ h5aiLangs = {
 		columnLastModified: "Dernière modification",
 		columnSize: "Taille",
 		footerUsing: "utilise",
-		parentDirectory: "Dossier parent"
+		parentDirectory: "Dossier parent",
+		empty: "vide"
 	},
 
 	"nl": {
@@ -110,7 +113,8 @@ h5aiLangs = {
 		columnLastModified: "Laatste wijziging",
 		columnSize: "Grootte",
 		footerUsing: "gebruikt",
-		parentDirectory: "Bovenliggende map"
+		parentDirectory: "Bovenliggende map",
+		empty: "lege"
 	},
 
 	"sv": {
@@ -120,7 +124,8 @@ h5aiLangs = {
 		columnLastModified: "Senast ändrad",
 		columnSize: "Filstorlek",
 		footerUsing: "använder",
-		parentDirectory: "Till överordnad mapp"
+		parentDirectory: "Till överordnad mapp",
+		empty: "tom"
 	},
 
 	"cs": {
@@ -130,7 +135,8 @@ h5aiLangs = {
 		columnLastModified: "Upraveno",
 		columnSize: "Velikost",
 		footerUsing: "používá",
-		parentDirectory: "Nadřazený adresář"
+		parentDirectory: "Nadřazený adresář",
+		empty: "prázdný"
 	},
 
 	"sk": {
@@ -140,7 +146,8 @@ h5aiLangs = {
 		columnLastModified: "Upravené",
 		columnSize: "Velkosť",
 		footerUsing: "používá",
-		parentDirectory: "Nadriadený priečinok"
+		parentDirectory: "Nadriadený priečinok",
+		empty: "prázdny"
 	}
 	
 };

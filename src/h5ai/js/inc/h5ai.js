@@ -50,7 +50,7 @@ var H5ai = function ( options, langs, pathCache ) {
 
 	this.init = function () {
 
-		document.title = document.domain + decodeURI( document.location.pathname );
+		document.title = decodeURI( document.domain + document.location.pathname );
 
 		this.applyViewmode();
 		this.initBreadcrumb();
@@ -132,7 +132,7 @@ var H5ai = function ( options, langs, pathCache ) {
 		var path = pathCache.getPathForFolder( pathname );
 		$ul.append( path.updateCrumbHtml() );
 
-		var pathnameParts = decodeURI( document.location.pathname ).split( "/" );
+		var pathnameParts = document.location.pathname.split( "/" );
 		for ( idx in pathnameParts ) {
 			var part = pathnameParts[idx];
 			if ( part !== "" ) {
@@ -165,7 +165,10 @@ var H5ai = function ( options, langs, pathCache ) {
 			
 			$( "#tree" )
 				.css( "top", "" + ( navHeight + treeSpacing ) + "px" )
-				.css( "max-height", "" + ( winHeight - navHeight - footerHeight - 36 - 2 * treeSpacing ) + "px" );
+				.css( "height", "" + ( winHeight - navHeight - footerHeight - 36 - 2 * treeSpacing ) + "px" );
+			try {
+				$( "#tree" ).get( 0 ).updateScrollbar();
+			} catch ( err ) {};
 		};
 
 		$( window ).resize( function () {
@@ -227,15 +230,16 @@ var H5ai = function ( options, langs, pathCache ) {
 
 		// entries
 		$( "#table td" ).closest( "tr" ).each( function () {
-			var path = pathCache.getPathForTableRow( decodeURI( document.location.pathname ), this );
+			var path = pathCache.getPathForTableRow( document.location.pathname, this );
 			$ul.append( path.updateExtendedHtml() );
 		} );
+		$( "#table" ).remove();
 
 		$( "#extended" ).append( $ul );
 
 		// empty
 		if ( $ul.children( ".entry:not(.parentfolder)" ).size() === 0 ) {
-			$( "#extended" ).append( $( "<div class='empty'>empty</div>" ) );
+			$( "#extended" ).append( $( "<div class='empty l10n-empty'>empty</div>" ) );
 		};
 
 		// in case of floats
@@ -303,12 +307,9 @@ var H5ai = function ( options, langs, pathCache ) {
 			} else if ( browserLang.length > 2 &&  data[ browserLang.substr( 0, 2 ) ] !== undefined  ) {
 				lang = browserLang.substr( 0, 2 );
 			};
-			if ( lang === "en" ) {
-				lang = undefined;
-			};
 		};
 
-		if ( data[ lang ] !== undefined ) {
+		if ( lang !== "en" && data[ lang ] !== undefined ) {
 			var selected = data[ lang ];
 			for ( key in selected ) {
 				$( ".l10n-" + key ).text( selected[key] );
