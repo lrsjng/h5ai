@@ -1,4 +1,4 @@
-# h5ai v0.10 &#160; · &#160; a beautified Apache index
+# h5ai v0.10.1 &#160; · &#160; a beautified Apache index
 
 h5ai aims to make browsing files on a Apache HTTP server more comfortable.  
 See the [live demo](http://larsjung.de/h5ai/sample).  
@@ -19,6 +19,12 @@ please respect their rights.
 
 
 ## Changelog
+
+### v0.10.1
+*2011-07-24*
+
+* fixed problems with ' in links
+
 
 ### v0.10
 *2011-07-24*

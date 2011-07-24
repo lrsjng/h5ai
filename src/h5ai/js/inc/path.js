@@ -227,7 +227,8 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
-			var $a = $( "<a href='" + this.absHref + "'><img src='/h5ai/images/crumb.png' alt='>' />" + this.label + "</a>" );
+			var $a = $( "<a><img src='/h5ai/images/crumb.png' alt='>' />" + this.label + "</a>" );
+			$a.attr( "href", this.absHref );
 			$a.click( $.proxy( function() { this.onClick( "crumb" ); }, this ) );
 			$a.hover( $.proxy( function() { this.onHoverIn( "crumb" ); }, this ), $.proxy( function() { this.onHoverOut( "crumb" ); }, this ) );
 			$html.append( $a );
@@ -267,7 +268,8 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
-			var $a = $( "<a href='" + this.absHref + "' />" ).appendTo( $html );
+			var $a = $( "<a />" ).appendTo( $html );
+			$a.attr( "href", this.absHref );
 			$a.click( $.proxy( function() { this.onClick( "extended" ); }, this ) );
 			$a.hover( $.proxy( function() { this.onHoverIn( "extended" ); }, this ), $.proxy( function() { this.onHoverOut( "extended" ); }, this ) );
 
@@ -314,10 +316,11 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
-			var $a = $( "<a href='" + this.absHref + "' />" )
+			var $a = $( "<a />" )
 				.appendTo( $html )
 				.append( $( "<span class='icon'><img src='" + this.icon16 + "' /></span>" ) )
 				.append( $( "<span class='label'>" + this.label + "</span>" ) );
+			$a.attr( "href", this.absHref );
 			$a.click( $.proxy( function() { this.onClick( "tree" ); }, this ) );
 			$a.hover( $.proxy( function() { this.onHoverIn( "tree" ); }, this ), $.proxy( function() { this.onHoverOut( "tree" ); }, this ) );
 

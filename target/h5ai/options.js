@@ -1,5 +1,5 @@
 /*
- * h5ai 0.10
+ * h5ai 0.10.1
  * Options and localization 
  */
 
