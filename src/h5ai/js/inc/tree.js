@@ -179,8 +179,16 @@ var Tree = function ( pathCache, h5ai ) {
 		var $wrapper = $element.find( "> .wrapper" );
 		var $content = $wrapper.find( "> .content" );
 		var mouseOffsetY = 0;
+		var updateId = undefined;
 
-		var update = function () {
+		var update = function ( repeat ) {
+			if ( updateId !== undefined && !repeat ) {
+				clearInterval( updateId );
+				updateId = undefined;
+			} else if ( updateId === undefined && repeat ) {
+				updateId = setInterval( function() { update( true ); }, 50 );
+			};
+
 			$wrapper.css( "height", $element.height() );
 			var visibleHeight = $element.height();
 			var contentHeight = $content.outerHeight();
@@ -189,9 +197,8 @@ var Tree = function ( pathCache, h5ai ) {
 			var visVertFrac = Math.min( visibleHeight / contentHeight, 1 );
 			
 			if ( visVertFrac < 1 ) {
-				$wrapper.css( "padding-right", $scrollbar.outerWidth( true ) );
 				$scrollbar
-					.show()
+					.fadeIn( 50 )
 					.css( {
 						height: $element.innerHeight() + $scrollbar.height() - $scrollbar.outerHeight( true )
 					} );
@@ -201,8 +208,7 @@ var Tree = function ( pathCache, h5ai ) {
 						height: $scrollbar.height() * visVertFrac
 					} );
 			} else {
-				$wrapper.css( "padding-right", 0 );
-				$scrollbar.hide()				
+				$scrollbar.fadeOut( 50 );
 			};
 		};
 		var scroll = function ( event ) {
@@ -222,6 +228,7 @@ var Tree = function ( pathCache, h5ai ) {
 		$element.get( 0 ).updateScrollbar = update;
 		$wrapper
 			.css( {
+				"padding-right": $scrollbar.outerWidth( true ),
 				height: $element.height(),
 				overflow: "hidden"
 			} );

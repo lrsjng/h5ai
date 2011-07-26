@@ -232,16 +232,16 @@ var Path = function ( pathCache, folder, tableRow ) {
 			$a.click( $.proxy( function() { this.onClick( "crumb" ); }, this ) );
 			$a.hover( $.proxy( function() { this.onHoverIn( "crumb" ); }, this ), $.proxy( function() { this.onHoverOut( "crumb" ); }, this ) );
 			$html.append( $a );
-			
+
 			if ( this.isDomain ) {
 				$html.addClass( "domain" );
 				$a.find( "img" ).attr( "src", "/h5ai/images/home.png" );
 			};
-			
+
 			if ( this.isCurrentFolder ) {
 				$html.addClass( "current" );
 			};
-			
+
 			if ( !isNaN( this.status ) ) {
 				if ( this.status === 200 ) {
 					$( "<img class='hint' src='/h5ai/images/page.png' alt='not listable' />" ).appendTo( $a );
@@ -339,6 +339,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 								this.status = status;
 								this.content = content;
 								this.treeOpen = true;
+								$( "#tree" ).get( 0 ).updateScrollbar( true );
 								this.updateTreeHtml( function() {
 									$( "#tree" ).get( 0 ).updateScrollbar();
 								} );
@@ -346,12 +347,14 @@ var Path = function ( pathCache, folder, tableRow ) {
 						} else if ( $indicator.hasClass( "open" ) ) {
 							this.treeOpen = false;
 							$indicator.removeClass( "open" );
+							$( "#tree" ).get( 0 ).updateScrollbar( true );
 							$html.find( "> ul.content" ).slideUp( function() {
 								$( "#tree" ).get( 0 ).updateScrollbar();
 							} );
 						} else {
 							this.treeOpen = true;
 							$indicator.addClass( "open" );
+							$( "#tree" ).get( 0 ).updateScrollbar( true );
 							$html.find( "> ul.content" ).slideDown( function() {
 								$( "#tree" ).get( 0 ).updateScrollbar();
 							} );				
