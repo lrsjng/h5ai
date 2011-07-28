@@ -22,6 +22,7 @@
 
 	<target name="clean" depends="init">
 		<delete dir="${build.dir}" />
+		<delete dir="${release.dir}" />
 	</target>
 
 
@@ -30,6 +31,7 @@
 		<copy todir="${build.dir}">
 		    <fileset dir="${src.dir}" />
 		</copy>
+		<copy file="LICENSE.txt" todir="${build.dir}" />
 		<replace dir="${build.dir}">
 			<replacefilter token="%BUILD%" value="${build.label}" />
 			<replacefilter token="%BUILD_NAME%" value="${project.name}" />
@@ -39,6 +41,13 @@
 
 		<scripp.dir dir="${build.dir}/h5ai/css" />
 		<scripp.dir dir="${build.dir}/h5ai/js" />
+
+		<!-- release -->
+		<mkdir dir="${release.dir}" />
+		<tar destfile="${release.dir}/${project.name}-${project.version}.tar" basedir="${build.dir}"/>
+		<gzip destfile="${release.dir}/${project.name}-${project.version}.tar.gz" src="${release.dir}/${project.name}-${project.version}.tar"/>
+		<delete file="${release.dir}/${project.name}-${project.version}.tar" />
+		<zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
 	</target>
 
 

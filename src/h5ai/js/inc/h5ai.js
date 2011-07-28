@@ -28,8 +28,7 @@ var H5ai = function ( options, langs, pathCache ) {
 	};
 	this.config = $.extend( {}, defaults, options );
 
-
-
+	
 	/*******************************
 	 * public api
 	 *******************************/
@@ -93,7 +92,7 @@ var H5ai = function ( options, langs, pathCache ) {
 		};
 		viewmode = this.getViewmode();
 
-		$( "body > nav li.view" ).hide().removeClass( "current" );
+		$( "#viewdetails,#viewicons" ).hide().removeClass( "current" );
 		
 		if ( this.config.viewmodes.length > 1 ) {
 			if ( $.inArray( "details", this.config.viewmodes ) >= 0 ) {
@@ -106,14 +105,11 @@ var H5ai = function ( options, langs, pathCache ) {
 
 		if ( viewmode === "details" ) {
 			$( "#viewdetails" ).closest( "li" ).addClass( "current" );
-			$( "#table" ).hide();
 			$( "#extended" ).addClass( "details-view" ).removeClass( "icons-view" ).show();
 		} else if ( viewmode === "icons" ) {
 			$( "#viewicons" ).closest( "li" ).addClass( "current" );
-			$( "#table" ).hide();
 			$( "#extended" ).removeClass( "details-view" ).addClass( "icons-view" ).show();
 		} else {
-			$( "#table" ).show();
 			$( "#extended" ).hide();
 		};
 	};
@@ -180,17 +176,6 @@ var H5ai = function ( options, langs, pathCache ) {
 
 
 	/*******************************
-	 * table view
-	 *******************************/
-
-	this.initTableView = function () {
-
-		$( "#table td" ).removeAttr( "align" ).removeAttr( "valign" );
-	};
-
-
-
-	/*******************************
 	 * extended view
 	 *******************************/
 
@@ -228,14 +213,17 @@ var H5ai = function ( options, langs, pathCache ) {
 			$li.find( "a.size" ).prepend( $icon );
 		};
 
+		$.timer.log( "start entries" );
 		// entries
 		$( "#table td" ).closest( "tr" ).each( function () {
 			var path = pathCache.getPathForTableRow( document.location.pathname, this );
 			$ul.append( path.updateExtendedHtml() );
 		} );
+		$.timer.log( "end  entries" );
 		$( "#table" ).remove();
 
 		$( "#extended" ).append( $ul );
+		console.log( "folders", $( "#extended .folder" ).size() , "files", $( "#extended .file" ).size() );
 
 		// empty
 		if ( $ul.children( ".entry:not(.parentfolder)" ).size() === 0 ) {
@@ -254,7 +242,6 @@ var H5ai = function ( options, langs, pathCache ) {
 
 	this.initViews = function () {
 
-		this.initTableView();
 		this.initExtendedView();
 
 		$( "#viewdetails" ).closest( "li" )

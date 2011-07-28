@@ -2,7 +2,7 @@
 # Build folders to ignore
 bin
 build
-#target
+target
 
 build.local.*
 

@@ -1,45 +1,42 @@
 
+var pathnameSplitRegEx = /^(\/(.*\/)*)([^\/]+\/?)$/;
+var pathEndsWithSlashRegEx = /\/$/;
 
 var PathCache = function () {
 
-	
-	var pathnameRegEx = /^(\/(.*\/)*)([^\/]+\/?)$/;
+
+	this.cache = {};
+	this.objectCache = {};
+
 
 	this.splitPathname = function ( pathname ) {
 		
 		if ( pathname === "/"  ) {
 			return [ "", "/" ];
 		};
-		var match = pathnameRegEx.exec( pathname );
+		var match = pathnameSplitRegEx.exec( pathname );
 		return [ match[1], match[3] ];
 	};
-
-
-	this.cache = {};
-
-
+	
+	
 	this.loadCache = function () {
 
 		var json = localStorage.getItem( "h5ai.cache" );
 		var objs = $.evalJSON( json );
-		var cache = {};
+		var objectCache = {};
 		for ( idx in objs ) {
 			var obj = objs[idx];
-			var path = this.objectToPath( obj );
-			cache[path.absHref] = path;
+			objectCache[obj.r] = obj;
 		};
-		return cache;
+		return objectCache;
 	};
 
 
 	this.storeCache = function () {
 
 		var objs = [];
-		for ( ref in this.cache ) {
-			var path = this.cache[ref];
-			if ( path.isFolder ) {
-				objs.push( this.pathToObject( path ) );
-			};
+		for ( ref in this.objectCache ) {
+			objs.push( this.objectCache[ref] );
 		};
 		var json = $.toJSON( objs ); 
 		localStorage.setItem( "h5ai.cache", json );
@@ -77,45 +74,103 @@ var PathCache = function () {
 		};
 		return path;
 	};
-	
+
+
+	this.getAbsHref = function ( folder, tableRow ) {
+		
+		if ( ! pathEndsWithSlashRegEx.test( folder ) ) {
+			folder += "/";
+		};
+		
+		if ( tableRow === undefined ) {
+			return folder;
+		};
+		
+		var $a = $( tableRow ).find( "td" ).eq( 1 ).find( "a" );
+		var isParentFolder = ( $a.text() === "Parent Directory" );
+		var href = $a.attr( "href" );
+		return isParentFolder ? undefined : folder + href;
+	};
+
 
 	this.getPathForFolder = function ( folder ) {
 
-		return this.getCachedPath( new Path( this, folder ) );
+		var absHref = this.getAbsHref( folder );
+		
+		var cachedPath = this.cache[absHref];
+		if ( cachedPath !== undefined ) {
+			return cachedPath;
+		};
+
+		var path = new Path( this, folder );
+		this.cache[path.absHref] = path;
+
+		var obj = this.objectCache[absHref];
+		if ( obj !== undefined ) {
+			path.status = obj.s;
+			path.content = {};
+			path.treeOpen = obj.o;
+			for ( idx in obj.c ) {
+				var href = obj.c[idx];
+				path.content[href] = this.getPathForFolder( href );
+			};
+		} else {
+			var obj = this.pathToObject( path );
+			this.objectCache[obj.r] = obj;
+			this.storeCache();
+		};
+
+		return path;
 	};
 
 
 	this.getPathForTableRow = function ( parentFolder, tableRow ) {
 
-		return this.getCachedPath( new Path( this, parentFolder, tableRow ) );
-	};
-
-
-	this.getCachedPath = function ( path ) {
-
-		if ( path.isParentFolder ) {
-			return path;
-		};
-
-		var cachedPath = this.cache[path.absHref];
+		var absHref = this.getAbsHref( parentFolder, tableRow );
+		
+		var cachedPath = this.cache[absHref];
 		if ( cachedPath !== undefined ) {
 			return cachedPath;
 		};
+		
+		var path = new Path( this, parentFolder, tableRow );
+		if ( ! path.isParentFolder ) {
+			this.cache[path.absHref] = path;
 
-		this.cache[path.absHref] = path;
-		this.storeCache();
+			var obj = this.objectCache[absHref];
+			if ( obj !== undefined ) {
+				path.status = obj.s;
+				path.content = {};
+				path.treeOpen = obj.o;
+				for ( idx in obj.c ) {
+					var href = obj.c[idx];
+					path.content[href] = this.getPathForFolder( href );
+				};
+			} else {
+				if ( path.isFolder && path.status !== undefined ) {
+					var obj = this.pathToObject( path );
+					this.objectCache[obj.r] = obj;
+					this.storeCache();
+				};
+			};
+		};
+
 		return path;
 	};
 
-	this.cache = this.loadCache();
+
+	this.objectCache = this.loadCache();
 
 };
 
 
 
+
+
+
 var Path = function ( pathCache, folder, tableRow ) {
 
-	if ( ! /\/$/.test( folder ) ) {
+	if ( ! pathEndsWithSlashRegEx.test( folder ) ) {
 		folder += "/";
 	};
 
@@ -128,7 +183,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 		this.icon16 = $img.attr( "src" );
 		this.alt = $img.attr( "alt" );
 		this.label = $a.text();
-		this.href = $a.attr("href"); //decodeURI( $a.attr("href") );
+		this.href = $a.attr("href");
 		this.date = $tds.eq( 2 ).text();
 		this.size = $tds.eq( 3 ).text();
 	} else {
@@ -146,7 +201,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 		};
 	};
 
-	if ( /\/$/.test( this.label ) ) {
+	if ( pathEndsWithSlashRegEx.test( this.label ) ) {
 		this.label = this.label.slice( 0, -1 );
 	};
 
@@ -223,7 +278,14 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 	this.updateCrumbHtml = function () {
 
+		if ( this.html.$crumb !== undefined && this.html.$crumb.data( "status" ) === this.status ) {
+			return this.html.$crumb;
+		};
+
 		var $html = $( "<li class='crumb' />" ).data( "path", this );
+		if ( this.status !== undefined ) {
+			$html.data( "status", this.status );
+		};
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
@@ -264,7 +326,14 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 	this.updateExtendedHtml = function () {
 
+		if ( this.html.$extended !== undefined && this.html.$extended.data( "status" ) === this.status ) {
+			return this.html.$extended;
+		};
+		
 		var $html = $( "<li class='entry' />" ).data( "path", this );
+		if ( this.status !== undefined ) {
+			$html.data( "status", this.status );
+		};
 
 		try {
 			$html.addClass( this.isFolder ? "folder" : "file" );
@@ -339,6 +408,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 								this.status = status;
 								this.content = content;
 								this.treeOpen = true;
+								pathCache.objectCache[this.absHref] = pathCache.pathToObject( this );
 								$( "#tree" ).get( 0 ).updateScrollbar( true );
 								this.updateTreeHtml( function() {
 									$( "#tree" ).get( 0 ).updateScrollbar();
@@ -346,6 +416,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 							}, this ) );
 						} else if ( $indicator.hasClass( "open" ) ) {
 							this.treeOpen = false;
+							pathCache.objectCache[this.absHref] = pathCache.pathToObject( this );
 							$indicator.removeClass( "open" );
 							$( "#tree" ).get( 0 ).updateScrollbar( true );
 							$html.find( "> ul.content" ).slideUp( function() {
@@ -353,6 +424,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 							} );
 						} else {
 							this.treeOpen = true;
+							pathCache.objectCache[this.absHref] = pathCache.pathToObject( this );
 							$indicator.addClass( "open" );
 							$( "#tree" ).get( 0 ).updateScrollbar( true );
 							$html.find( "> ul.content" ).slideDown( function() {
