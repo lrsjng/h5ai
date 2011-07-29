@@ -1,10 +1,10 @@
 # h5ai
 
-For install instructions, documentation and a demo visit the [project page](http://larsjung.de/h5ai).
+* [Download, docs and demo](http://larsjung.de/h5ai)
+* [Sources at GitHub](http://github.com/lrsjng/h5ai)
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).  
-It uses the
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL license).
+It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL license).
 
 
 ## Changelog
