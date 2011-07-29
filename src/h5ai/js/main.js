@@ -6,14 +6,21 @@
 	// @include "inc/h5ai.js"
 	// @include "inc/tree.js"
 
-	
-	var Timer = function () {
+	// http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
+	$.log = function () {
+		$.log.history = $.log.history || [];
+		$.log.history.push( arguments );
+		if ( window.console ) {
+			window.console.log( Array.prototype.slice.call( arguments ) );
+		};
+	};
 
+	var Timer = function () {
 		this.start = new Date().getTime();;
 		this.last = this.start;
 		this.log = function ( label ) {
 			var now = new Date().getTime();
-			console.log( "timer", label, "+" + (now - this.last), "=" + (now - this.start) );
+			$.log( "timer", label, "+" + (now - this.last), "=" + (now - this.start) );
 			this.last = now;
 		};
 	};

@@ -219,11 +219,11 @@ var H5ai = function ( options, langs, pathCache ) {
 			var path = pathCache.getPathForTableRow( document.location.pathname, this );
 			$ul.append( path.updateExtendedHtml() );
 		} );
-		$.timer.log( "end  entries" );
+		$.timer.log( "end entries" );
 		$( "#table" ).remove();
 
 		$( "#extended" ).append( $ul );
-		console.log( "folders", $( "#extended .folder" ).size() , "files", $( "#extended .file" ).size() );
+		$.log( document.location.pathname, "folders:", $( "#extended .folder" ).size() , "files:", $( "#extended .file" ).size() );
 
 		// empty
 		if ( $ul.children( ".entry:not(.parentfolder)" ).size() === 0 ) {

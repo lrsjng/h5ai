@@ -17,6 +17,12 @@ please respect their rights.
 
 ## Changelog
 
+### v0.12.1
+*2011-07-29*
+
+* fixed unchecked use of console.log
+
+
 ### v0.12
 *2011-07-28*
 
