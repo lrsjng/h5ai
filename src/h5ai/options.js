@@ -159,6 +159,17 @@ h5aiLangs = {
 		footerUsing: "usando",
 		parentDirectory: "Directorio superior",
 		empty: "vacío"
+	},
+
+	"tr": {
+		viewDetails: "detaylar",
+		viewIcons: "ikonlar",
+		columnName: "İsim",
+		columnLastModified: "Son Düzenleme",
+		columnSize: "Boyut",
+		footerUsing: "kullanıyor",
+		parentDirectory: "Üst Dizin",
+		empty: "boş"
 	}
 
 };

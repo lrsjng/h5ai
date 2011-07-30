@@ -9,6 +9,12 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 
 ## Changelog
 
+### v0.12.3
+*2011-07-30*
+
+* added tr translation by [Batuhan Icoz](http://github.com/batuhanicoz/h5ai)
+
+
 ### v0.12.2
 *2011-07-30*
 
