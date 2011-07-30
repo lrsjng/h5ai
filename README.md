@@ -9,6 +9,12 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 
 ## Changelog
 
+### v0.12.2
+*2011-07-30*
+
+* added es translation by Jose David Calderon Serrano
+
+
 ### v0.12.1
 *2011-07-29*
 

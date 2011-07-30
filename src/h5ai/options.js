@@ -148,6 +148,17 @@ h5aiLangs = {
 		footerUsing: "používá",
 		parentDirectory: "Nadriadený priečinok",
 		empty: "prázdny"
+	},
+
+	"es": {
+		viewDetails: "Detalles",
+		viewIcons: "Íconos",
+		columnName: "Nombre",
+		columnLastModified: "Última modificación",
+		columnSize: "Tamaño",
+		footerUsing: "usando",
+		parentDirectory: "Directorio superior",
+		empty: "vacío"
 	}
-	
+
 };
