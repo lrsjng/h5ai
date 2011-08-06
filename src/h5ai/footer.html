@@ -4,20 +4,27 @@
 		<footer></footer>
 	</section>
 	<section id="tree"></section>
-	<footer>
-		<a id="html5" href="http://www.w3.org/html/logo/" target="_blank" title="HTML5 semantics, storage & CSS3">
-			<img class="logo" src="/h5ai/images/html5.png" alt="html5" />
-			<img class="techclass" src="/h5ai/images/html5-semantics.png" alt="html5-semantics" />
-			<img class="techclass" src="/h5ai/images/html5-storage.png" alt="html5-storage" />
-			<img class="techclass" src="/h5ai/images/html5-css3.png" alt="html5-css3" />
-		</a>
-		<a href="http://larsjung.de/h5ai" target="_blank" title="h5ai project page">h5ai %BUILD_VERSION%</a>
-		<span class="l10n-footerUsing">using</span>
-		<a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228" target="_blank" title="icon theme for Gnome">Faenza icons</a>
+	<footer class="clearfix">
+		<span class="left">
+			<a href="http://larsjung.de/h5ai" target="_blank" title="h5ai project page">h5ai %BUILD_VERSION% (js)</a>
+		</span>
+		<span class="right">
+			<span class="hideOnJs">JavaScript is disabled!</span>
+			<span id="langSelector">
+				<span class="lang">en</span> - <span class="l10n-lang">english</span>
+				<span class="langOptions"></span>
+			</span>
+		</span>
+		<span class="center">
+			<span class="hideOnNoJs">
+				<span class="folderCount"></span> <span class="l10n-folders">folders</span>
+				 · 
+				<span class="fileCount"></span> <span class="l10n-files">files</span>
+			</span>
+		</span>
 	</footer>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write( '<script src="/h5ai/js/lib/jquery.min.js"><\/script>' )</script>
+	<script src="/h5ai/js/lib/jquery.min.js"></script>
 	<script src="/h5ai/options.js"></script>
-	<script src="/h5ai/js/main.js"></script>
+	<script src="/h5ai/js/main-js.js"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@ h5aiOptions = {
 	 * The user selected view mode is also stored local in modern browsers
 	 * so that it will be persistent.
 	 */
-	viewmodes: [ "details", "icons" ],
+	"viewmodes": [ "details", "icons" ],
 
 	/*
 	 * Show a folder tree, boolean.
@@ -22,7 +22,7 @@ h5aiOptions = {
 	 * folderStatus below to avoid such requests.
 	 * It might also affect performance significantly.
 	 */
-	showTree: true,
+	"showTree": true,
 
 	/*
 	 * Associative array of folders and their HTTP status codes to
@@ -34,7 +34,7 @@ h5aiOptions = {
 	 * as a non auto indexed folder, that means a folder containing an
 	 * appropriate default index file.
 	 */
-	folderStatus: {
+	"folderStatus": {
 		/*
 		 * for example:
 		 * "/some/folder/": 200
@@ -44,132 +44,189 @@ h5aiOptions = {
 	/*
 	 * Localization, for example "en", "de" etc. - see h5aiLangs below for
 	 * possible values. Adjust it to your needs. If lang is not found in
-	 * h5aiLangs the displayed labels stay unchanged.
+	 * h5aiLangs it defaults to "en".
 	 */
-	lang: undefined,
+	"lang": null,
 
 	/*
 	 * Try to use browser language, falls back to previous specified lang. 
 	 */
-	useBrowserLang: true,
+	"useBrowserLang": true,
 	
 	/*
 	 * Set parent folder labels to real folder names.
 	 */
-	setParentFolderLabels: true,
+	"setParentFolderLabels": true,
 	
 	/*
 	 * Link the hover effects between crumb, extended view and tree.
 	 */
-	linkHoverStates: true
+	"linkHoverStates": true,
+
+	/*
+	 * Only used in PHP implementation.
+	 * Date format in PHP syntax, for example: "Y-m-d H:i:s"
+	 * http://www.php.net/manual/en/function.date.php
+	 */
+	"dateFormat": "Y-m-d H:i",
+
+	/*
+	 * Only used in PHP implementation.
+	 * Files/folders that should never be listed. Specified
+	 * by the complete filename or by a regular expression.
+	 * http://www.php.net/manual/en/function.preg-match.php
+	 */
+	"ignore": [ "h5ai", "h5ai.header.html", "h5ai.footer.html" ],
+	"ignoreRE": [ "/^\\./" ]
 };
 
 
 
 /*
  * Available translations.
- * "en" is just an example - see it as a reference. Those values
- * are "hardcoded" and will be displayed if all labels stay unchanged. 
- */
+*/
 h5aiLangs = {
 
 	"en": {
-		viewDetails: "details",
-		viewIcons: "icons",
-		columnName: "Name",
-		columnLastModified: "Last modified",
-		columnSize: "Size",
-		footerUsing: "using",
-		parentDirectory: "Parent Directory",
-		empty: "empty"
+		"lang": "english",
+		"details": "details",
+		"icons": "icons",
+		"name": "Name",
+		"lastModified": "Last modified",
+		"size": "Size",
+		"parentDirectory": "Parent Directory",
+		"empty": "empty",
+		"folders": "folders",
+		"files": "files"
 	},
 
 	"de": {
-		viewDetails: "Details",
-		viewIcons: "Icons",
-		columnName: "Name",
-		columnLastModified: "Geändert",
-		columnSize: "Größe",
-		footerUsing: "nutzt",
-		parentDirectory: "Übergeordnetes Verzeichnis",
-		empty: "leer"
+		"lang": "deutsch",
+		"details": "Details",
+		"icons": "Icons",
+		"name": "Name",
+		"lastModified": "Geändert",
+		"size": "Größe",
+		"parentDirectory": "Übergeordnetes Verzeichnis",
+		"empty": "leer",
+		"folders": "Ordner",
+		"files": "Dateien"
 	},
 	
 	"fr": {
-		viewDetails: "détails",
-		viewIcons: "icônes",
-		columnName: "Nom",
-		columnLastModified: "Dernière modification",
-		columnSize: "Taille",
-		footerUsing: "utilise",
-		parentDirectory: "Dossier parent",
-		empty: "vide"
+		"lang": "française",
+		"details": "détails",
+		"icons": "icônes",
+		"name": "Nom",
+		"lastModified": "Dernière modification",
+		"size": "Taille",
+		"parentDirectory": "Dossier parent",
+		"empty": "vide",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
 	},
 
 	"nl": {
-		viewDetails: "details",
-		viewIcons: "iconen",
-		columnName: "Naam",
-		columnLastModified: "Laatste wijziging",
-		columnSize: "Grootte",
-		footerUsing: "gebruikt",
-		parentDirectory: "Bovenliggende map",
-		empty: "lege"
+		"lang": "nederlands",
+		"details": "details",
+		"icons": "iconen",
+		"name": "Naam",
+		"lastModified": "Laatste wijziging",
+		"size": "Grootte",
+		"parentDirectory": "Bovenliggende map",
+		"empty": "lege",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
 	},
 
 	"sv": {
-		viewDetails: "detaljerad",
-		viewIcons: "ikoner",
-		columnName: "Filnamn",
-		columnLastModified: "Senast ändrad",
-		columnSize: "Filstorlek",
-		footerUsing: "använder",
-		parentDirectory: "Till överordnad mapp",
-		empty: "tom"
+		"lang": "svenska",
+		"details": "detaljerad",
+		"icons": "ikoner",
+		"name": "Filnamn",
+		"lastModified": "Senast ändrad",
+		"size": "Filstorlek",
+		"parentDirectory": "Till överordnad mapp",
+		"empty": "tom",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
 	},
 
 	"cs": {
-		viewDetails: "podrobnosti",
-		viewIcons: "ikony",
-		columnName: "Název",
-		columnLastModified: "Upraveno",
-		columnSize: "Velikost",
-		footerUsing: "používá",
-		parentDirectory: "Nadřazený adresář",
-		empty: "prázdný"
+		"lang": "[?lang?]",
+		"details": "podrobnosti",
+		"icons": "ikony",
+		"name": "Název",
+		"lastModified": "Upraveno",
+		"size": "Velikost",
+		"parentDirectory": "Nadřazený adresář",
+		"empty": "prázdný",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
 	},
 
 	"sk": {
-		viewDetails: "podrobnosti",
-		viewIcons: "ikony",
-		columnName: "Názov",
-		columnLastModified: "Upravené",
-		columnSize: "Velkosť",
-		footerUsing: "používá",
-		parentDirectory: "Nadriadený priečinok",
-		empty: "prázdny"
+		"lang": "[?lang?]",
+		"details": "podrobnosti",
+		"icons": "ikony",
+		"name": "Názov",
+		"lastModified": "Upravené",
+		"size": "Velkosť",
+		"parentDirectory": "Nadriadený priečinok",
+		"empty": "prázdny",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
 	},
 
 	"es": {
-		viewDetails: "Detalles",
-		viewIcons: "Íconos",
-		columnName: "Nombre",
-		columnLastModified: "Última modificación",
-		columnSize: "Tamaño",
-		footerUsing: "usando",
-		parentDirectory: "Directorio superior",
-		empty: "vacío"
+		"lang": "español",
+		"details": "Detalles",
+		"icons": "Íconos",
+		"name": "Nombre",
+		"lastModified": "Última modificación",
+		"size": "Tamaño",
+		"parentDirectory": "Directorio superior",
+		"empty": "vacío",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
 	},
 
 	"tr": {
-		viewDetails: "detaylar",
-		viewIcons: "ikonlar",
-		columnName: "İsim",
-		columnLastModified: "Son Düzenleme",
-		columnSize: "Boyut",
-		footerUsing: "kullanıyor",
-		parentDirectory: "Üst Dizin",
-		empty: "boş"
-	}
+		"lang": "türkçe",
+		"details": "detaylar",
+		"icons": "ikonlar",
+		"name": "İsim",
+		"lastModified": "Son Düzenleme",
+		"size": "Boyut",
+		"parentDirectory": "Üst Dizin",
+		"empty": "boş",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
+	},
 
+	"pt": {
+		"lang": "português",
+		"details": "detalhes",
+		"icons": "ícones",
+		"name": "Nome",
+		"lastModified": "Última modificação",
+		"size": "Tamanho",
+		"parentDirectory": "Diretório superior",
+		"empty": "vazio",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
+	},
+
+	"bg": {
+		"lang": "[?lang?]",
+		"details": "детайли",
+		"icons": "икони",
+		"name": "Име",
+		"lastModified": "Последна промяна",
+		"size": "Размер",
+		"parentDirectory": "Предходна директория",
+		"empty": "празно",
+		"folders": "[?folders?]",
+		"files": "[?files?]"
+	}
 };

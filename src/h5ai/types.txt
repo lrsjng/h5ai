@@ -1,0 +1,63 @@
+archive            .tar.gz  .tgz  .tar.bz2
+audio              .mp3  .wav  .ogg
+authors            AUTHORS  authors
+bin                .so  .o  .class
+blank
+bmp                .bmp
+c                  .c
+calc
+cd                 .iso  .cue
+copying            COPYING  copying  LICENSE  license
+cpp                .cpp
+css                .css  .less
+deb                .deb
+default
+doc                .doc
+draw
+eps
+exe                .exe
+folder
+folder-home
+folder-open
+folder-page
+folder-parent
+gif                .gif
+gzip               .gz
+h                  .h
+hpp                .hpp
+html               .html  .htm  .shtml
+ico                .ico
+image              .xpm
+install            INSTALL  install
+java               .java
+jpg                .jpg  .jpeg
+js                 .js  .json
+log                .log  CHANGELOG  changelog  LOG  log
+makefile           .pom  pom.xml  build.xml
+package
+pdf                .pdf
+php                .php
+playlist           .m3u
+png                .png
+pres
+psd
+py                 .py
+rar                .rar
+rb                 .rb
+readme             README  readme
+rpm                .rpm
+rss                .rss
+rtf                .rtf
+script             .conf  .ini  .sh  .shar  .csh  .ksh  .tcl
+source
+sql
+tar                .tar
+tex                .tex
+text               .txt  .text  .md  .markdown
+tiff               .tiff
+unknown
+vcal               .vcal
+video
+xml                .xml
+zip                .zip  .Z  .z  .jar  .war  .bz2
+

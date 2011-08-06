@@ -170,6 +170,14 @@ var PathCache = function () {
 
 var Path = function ( pathCache, folder, tableRow ) {
 
+	this.checkedDecodeUri = function ( uri ) {
+		try {
+			return decodeURI( uri );
+		} catch ( err ) {
+		};
+		return uri;
+	}
+	
 	if ( ! pathEndsWithSlashRegEx.test( folder ) ) {
 		folder += "/";
 	};
@@ -191,13 +199,13 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 		this.parentFolder = splits[0];
 		this.href = splits[1];
-		this.label = decodeURI( splits[1] );
+		this.label = this.checkedDecodeUri( splits[1] );
 		this.icon16 = "/h5ai/icons/16x16/folder.png";
 		this.alt = "[DIR]";
 		this.date = "";
 		this.size = "";			
 		if ( this.label === "/" ) {
-			this.label = decodeURI( document.domain ) + "/";
+			this.label = this.checkedDecodeUri( document.domain ) + "/";
 		};
 	};
 
@@ -214,9 +222,9 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 	if ( this.isParentFolder && h5ai.config.setParentFolderLabels ) {
 		if ( this.isDomain ) {
-			this.label = decodeURI( document.domain );
+			this.label = this.checkedDecodeUri( document.domain );
 		} else {
-			this.label = decodeURI( pathCache.splitPathname( pathCache.splitPathname( this.parentFolder )[0] )[1].slice( 0, -1 ) );
+			this.label = this.checkedDecodeUri( pathCache.splitPathname( pathCache.splitPathname( this.parentFolder )[0] )[1].slice( 0, -1 ) );
 		};
 	};
 
@@ -237,34 +245,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 
 	this.onClick = function ( context ) {
 
-		pathCache.storeCache();
 		h5ai.triggerPathClick( this, context );
-	};
-
-
-	this.onHoverIn = function () {
-
-		if ( h5ai.config.linkHoverStates ) {
-			for ( ref in this.html ) {
-				$ref = this.html[ref];
-				if ( $ref !== undefined ) {
-					$ref.find( "> a" ).addClass( "hover" );
-				};
-			};
-		};
-	};
-
-
-	this.onHoverOut = function () {
-		
-		if ( h5ai.config.linkHoverStates ) {
-			for ( ref in this.html ) {
-				$ref = this.html[ref];
-				if ( $ref !== undefined ) {
-					$ref.find( "> a" ).removeClass( "hover" );
-				};
-			};
-		};
 	};
 
 
@@ -292,7 +273,6 @@ var Path = function ( pathCache, folder, tableRow ) {
 			var $a = $( "<a><img src='/h5ai/images/crumb.png' alt='>' />" + this.label + "</a>" );
 			$a.attr( "href", this.absHref );
 			$a.click( $.proxy( function() { this.onClick( "crumb" ); }, this ) );
-			$a.hover( $.proxy( function() { this.onHoverIn( "crumb" ); }, this ), $.proxy( function() { this.onHoverOut( "crumb" ); }, this ) );
 			$html.append( $a );
 
 			if ( this.isDomain ) {
@@ -340,7 +320,6 @@ var Path = function ( pathCache, folder, tableRow ) {
 			var $a = $( "<a />" ).appendTo( $html );
 			$a.attr( "href", this.absHref );
 			$a.click( $.proxy( function() { this.onClick( "extended" ); }, this ) );
-			$a.hover( $.proxy( function() { this.onHoverIn( "extended" ); }, this ), $.proxy( function() { this.onHoverOut( "extended" ); }, this ) );
 
 			$( "<span class='icon small'><img src='" + this.icon16 + "' alt='" + this.alt + "' /></span>" ).appendTo( $a );
 			$( "<span class='icon big'><img src='" + this.icon48 + "' alt='" + this.alt + "' /></span>" ).appendTo( $a );
@@ -391,7 +370,6 @@ var Path = function ( pathCache, folder, tableRow ) {
 				.append( $( "<span class='label'>" + this.label + "</span>" ) );
 			$a.attr( "href", this.absHref );
 			$a.click( $.proxy( function() { this.onClick( "tree" ); }, this ) );
-			$a.hover( $.proxy( function() { this.onHoverIn( "tree" ); }, this ), $.proxy( function() { this.onHoverOut( "tree" ); }, this ) );
 
 			if ( this.isFolder ) {
 				// indicator
@@ -409,6 +387,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 								this.content = content;
 								this.treeOpen = true;
 								pathCache.objectCache[this.absHref] = pathCache.pathToObject( this );
+								pathCache.storeCache();
 								$( "#tree" ).get( 0 ).updateScrollbar( true );
 								this.updateTreeHtml( function() {
 									$( "#tree" ).get( 0 ).updateScrollbar();
@@ -417,6 +396,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 						} else if ( $indicator.hasClass( "open" ) ) {
 							this.treeOpen = false;
 							pathCache.objectCache[this.absHref] = pathCache.pathToObject( this );
+							pathCache.storeCache();
 							$indicator.removeClass( "open" );
 							$( "#tree" ).get( 0 ).updateScrollbar( true );
 							$html.find( "> ul.content" ).slideUp( function() {
@@ -425,6 +405,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 						} else {
 							this.treeOpen = true;
 							pathCache.objectCache[this.absHref] = pathCache.pathToObject( this );
+							pathCache.storeCache();
 							$indicator.addClass( "open" );
 							$( "#tree" ).get( 0 ).updateScrollbar( true );
 							$html.find( "> ul.content" ).slideDown( function() {
@@ -432,6 +413,7 @@ var Path = function ( pathCache, folder, tableRow ) {
 							} );				
 						};
 					}, this ) );
+					$html.addClass( "initiatedIndicator" );
 					$blank.replaceWith( $indicator );
 				};
 

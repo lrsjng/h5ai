@@ -1,5 +1,5 @@
 ################################
-# %BUILD_NAME% %BUILD_VERSION%
+# %BUILD_NAME% %BUILD_VERSION%  (js)
 # customized .htaccess
 ################################
 
@@ -8,23 +8,6 @@
 # Options  +FollowSymLinks
 
 
-<IfModule headers_module>
-
-	################################
-	# cache images for 52 weeks
-	################################
-
-	<FilesMatch "\.png$">
-		Header set Cache-Control "max-age=31449600, public"
-	</FilesMatch>
-
-</IfModule>
-
-
-################################
-# style auto index
-################################
-
 ################################
 # IMPORTANT FOR XAMPP
 # if you're running XAMPP you might need to replace the
@@ -32,13 +15,6 @@
 # <IfModule autoindex_color_module>
 ################################
 <IfModule autoindex_module>
-
-	################################
-	# uncomment the following line to force directory listing
-	# even for directories with valid index files
-	################################
-
-	# DirectoryIndex       IGNORE-DEFAULT-INDEX-FILES
 
 
 	################################
@@ -81,7 +57,7 @@
 	# icon mapping
 	################################
 
-	AddIcon              /h5ai/icons/16x16/parent.png      ..
+	AddIcon              /h5ai/icons/16x16/folder-parent.png      ..
 	AddIcon              /h5ai/icons/16x16/folder.png      ^^DIRECTORY^^
 	AddIcon              /h5ai/icons/16x16/blank.png       ^^BLANKICON^^
 
@@ -143,4 +119,5 @@
 	DefaultIcon          /h5ai/icons/16x16/unknown.png
 
 </IfModule>
+
 

@@ -9,17 +9,31 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 
 ## Changelog
 
-#### v0.12.3 · *2011-07-30*
+### v0.13 · *2011-08-06*
 
-* added tr translation by [Batuhan Icoz](http://github.com/batuhanicoz/h5ai)
+* added PHP implementation! (should work with PHP 5.2+)
+* added new options
+* changed layout of the bottom bar to display status information
+* added language selector to the bottom bar
+* quoted keys in `options.js` to make it valid json
+* changed value of option `lang` from `undefined` to `null`
+* added some new keys to `h5aiLangs`
+* added browser caching rules for css and js
+* added pt translation by [Jonnathan](http://github.com/jonnsl)
+* added bg translation by George Andonov
 
 
-#### v0.12.2 · *2011-07-30*
+### v0.12.3 · *2011-07-30*
+
+* added tr translation by [Batuhan Icoz](http://github.com/batuhanicoz)
+
+
+### v0.12.2 · *2011-07-30*
 
 * added es translation by Jose David Calderon Serrano
 
 
-#### v0.12.1 · *2011-07-29*
+### v0.12.1 · *2011-07-29*
 
 * fixed unchecked use of console.log
 
@@ -34,12 +48,12 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 * changed license to MIT license, see `LICENSE.txt`
 
 
-#### v0.10.2 · *2011-07-26*
+### v0.10.2 · *2011-07-26*
 
 * improved tree scrollbar
 
 
-#### v0.10.1 · *2011-07-24*
+### v0.10.1 · *2011-07-24*
 
 * fixed problems with ' in links
 
@@ -85,7 +99,7 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 * added localization, see `options.js`
 
 
-#### v0.5.3 · *2011-07-04*
+### v0.5.3 · *2011-07-04*
 
 * refactored js
 * added basic options support via `options.js`
@@ -93,13 +107,13 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 * optional tree sidebar
 
 
-#### v0.5.2 · *2011-07-02*
+### v0.5.2 · *2011-07-02*
 
 * details view adjusts to window width
 * linked icon for *.gz and *.bz2
 
 
-#### v0.5.1 · *2011-07-01*
+### v0.5.1 · *2011-07-01*
 
 * disabled tree sidebar for now, since it had unwanted side effects
 
@@ -119,13 +133,13 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 * updated dot.access
 
 
-#### v0.3.2 · *2011-06-24*
+### v0.3.2 · *2011-06-24*
 
 * removed lib versions from file names
 * added 'empty' indicator for icons view
 
 
-#### v0.3.1 · *2011-06-24*
+### v0.3.1 · *2011-06-24*
 
 * refactored js
 * added `folderClick` and `fileClick` callback hooks
@@ -140,20 +154,20 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 * updated jQuery to version 1.6.1
 
 
-#### v0.2.3 · *2011-06-17*
+### v0.2.3 · *2011-06-17*
 
 * more refactoring in main.js
 * ~~added custom js support, and global includes~~ *removed, only custom top and bottom sections supported*
 
 
-#### v0.2.2 · *2011-06-16*
+### v0.2.2 · *2011-06-16*
 
 * refactored a lot, added some comments
-* included fixes from [NumEricR](http://github.com/NumEricR/h5ai)
+* included fixes from [NumEricR](http://github.com/NumEricR)
 * added top/bottom message support, only basicly styled
 
 
-#### v0.2.1 · *2011-06-16*
+### v0.2.1 · *2011-06-16*
 
 * fixed croped filenames
 * fixed missing .png extension in header
