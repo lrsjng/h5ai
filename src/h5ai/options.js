@@ -16,6 +16,17 @@ h5aiOptions = {
 	"viewmodes": [ "details", "icons" ],
 
 	/*
+	 * Default sort order. Valid values for column are "name", "date" and
+	 * "size".
+	 * If you are using the JavaScript version please make sure to change
+	 * IndexOrderDefault in js.htaccess as well. 
+	 */
+	"sortorder": {
+		"column": "name",
+		"ascending": true
+	},
+
+	/*
 	 * Show a folder tree, boolean.
 	 * Note that this tree might have side effects as it sends HEAD requests
 	 * to the folders, and therefore will invoke index.php scripts. Use
@@ -71,6 +82,9 @@ h5aiOptions = {
 	"dateFormat": "Y-m-d H:i",
 
 	/*
+	 * IMPORTANT: PHP implementation doesn't care about Apache's
+	 * ignores, so you have to specify this here.
+	 * 
 	 * Only used in PHP implementation.
 	 * Files/folders that should never be listed. Specified
 	 * by the complete filename or by a regular expression.
@@ -114,7 +128,7 @@ h5aiLangs = {
 	},
 	
 	"fr": {
-		"lang": "française",
+		"lang": "français",
 		"details": "détails",
 		"icons": "icônes",
 		"name": "Nom",
@@ -122,8 +136,8 @@ h5aiLangs = {
 		"size": "Taille",
 		"parentDirectory": "Dossier parent",
 		"empty": "vide",
-		"folders": "[?folders?]",
-		"files": "[?files?]"
+		"folders": "Répertoires",
+		"files": "Fichiers"
 	},
 
 	"nl": {
@@ -153,7 +167,7 @@ h5aiLangs = {
 	},
 
 	"cs": {
-		"lang": "[?lang?]",
+		"lang": "čeština",
 		"details": "podrobnosti",
 		"icons": "ikony",
 		"name": "Název",
@@ -161,12 +175,12 @@ h5aiLangs = {
 		"size": "Velikost",
 		"parentDirectory": "Nadřazený adresář",
 		"empty": "prázdný",
-		"folders": "[?folders?]",
-		"files": "[?files?]"
+		"folders": "složek",
+		"files": "souborů"
 	},
 
 	"sk": {
-		"lang": "[?lang?]",
+		"lang": "slovenčina",
 		"details": "podrobnosti",
 		"icons": "ikony",
 		"name": "Názov",
@@ -174,8 +188,8 @@ h5aiLangs = {
 		"size": "Velkosť",
 		"parentDirectory": "Nadriadený priečinok",
 		"empty": "prázdny",
-		"folders": "[?folders?]",
-		"files": "[?files?]"
+		"folders": "priečinkov",
+		"files": "súborov"
 	},
 
 	"es": {
@@ -213,12 +227,12 @@ h5aiLangs = {
 		"size": "Tamanho",
 		"parentDirectory": "Diretório superior",
 		"empty": "vazio",
-		"folders": "[?folders?]",
-		"files": "[?files?]"
+		"folders": "pastas",
+		"files": "arquivos"
 	},
 
 	"bg": {
-		"lang": "[?lang?]",
+		"lang": "български",
 		"details": "детайли",
 		"icons": "икони",
 		"name": "Име",
@@ -226,7 +240,20 @@ h5aiLangs = {
 		"size": "Размер",
 		"parentDirectory": "Предходна директория",
 		"empty": "празно",
-		"folders": "[?folders?]",
-		"files": "[?files?]"
+		"folders": "папки",
+		"files": "файлове"
+	},
+
+	"lv": {
+		"lang": "latviešu",
+		"details": "detaļas",
+		"icons": "ikonas",
+		"name": "Nosaukums",
+		"lastModified": "Pēdējoreiz modificēts",
+		"size": "Izmērs",
+		"parentDirectory": "Vecākdirektorijs",
+		"empty": "tukšs",
+		"folders": "mapes",
+		"files": "faili"
 	}
 };

@@ -16,6 +16,10 @@ var H5ai = function ( options, langs ) {
 		},
 
 		viewmodes: [ "details", "icons" ],
+		sortorder: {
+			column: "name",
+			ascending: true
+		},
 		showTree: true,
 		folderStatus: {
 		},
@@ -173,32 +177,35 @@ var H5ai = function ( options, langs ) {
 	 * init tree
 	 *******************************/
 
-	this.initTree = function () {
+	this.shiftTree = function ( forceVisible, dontAnimate ) {
 
 		var $tree = $( "#tree" );
 		var $extended = $( "#extended" );
-		var shiftTree = function ( forceVisible, dontAnimate ) {
-			if ( $tree.outerWidth() < $extended.offset().left || forceVisible === true ) {
-				if ( dontAnimate === true ) {
-					$tree.stop().css( { left: 0 } );															
-				} else {
-					$tree.stop().animate( { left: 0 } );										
-				};
+
+		if ( $tree.outerWidth() < $extended.offset().left || forceVisible === true ) {
+			if ( dontAnimate === true ) {
+				$tree.stop().css( { left: 0 } );															
 			} else {
-				if ( dontAnimate === true ) {
-					$tree.stop().css( { left: 18 - $tree.outerWidth() } );					
-				} else {
-					$tree.stop().animate( { left: 18 - $tree.outerWidth() } );					
-				};
+				$tree.stop().animate( { left: 0 } );										
+			};
+		} else {
+			if ( dontAnimate === true ) {
+				$tree.stop().css( { left: 18 - $tree.outerWidth() } );					
+			} else {
+				$tree.stop().animate( { left: 18 - $tree.outerWidth() } );					
 			};
 		};
+	};
 
-		$tree.hover( function () { shiftTree( true ); }, function () { shiftTree(); } );
-		$( window ).resize( function() {
-			shiftTree();
-		} );
 
-		shiftTree( false, true );
+	this.initTree = function () {
+
+		$( "#tree" ).hover(
+			$.proxy( function () { this.shiftTree( true ); }, this ),
+			$.proxy( function () { this.shiftTree(); }, this )
+		);
+		$( window ).resize( $.proxy( function () { this.shiftTree(); }, this ) );
+		this.shiftTree( false, true );
 	};
 
 

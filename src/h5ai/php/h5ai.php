@@ -22,9 +22,11 @@ class H5ai {
 
 		$this->ignore = $this->options["options"]["ignore"];
 		$this->ignoreRE = $this->options["options"]["ignoreRE"];
+
+		$defaultSortOrder = $this->options["options"]["sortorder"];
 		$this->sortOrder = array(
-			"column" => array_key_exists( "col", $_REQUEST ) ? $_REQUEST["col"] : H5ai::$SORT_ORDER["column"],
-			"ascending" => array_key_exists( "asc", $_REQUEST ) ? $_REQUEST["asc"] !== "false" : H5ai::$SORT_ORDER["ascending"]
+			"column" => array_key_exists( "col", $_REQUEST ) ? $_REQUEST["col"] : $defaultSortOrder["column"],
+			"ascending" => array_key_exists( "asc", $_REQUEST ) ? $_REQUEST["asc"] !== "false" : $defaultSortOrder["ascending"]
 		);
 		$this->dateFormat = $this->options["options"]["dateFormat"];
 		$this->view = array_key_exists( "view", $_REQUEST ) ? $_REQUEST["view"] : $this->options["options"]["viewmodes"][0];

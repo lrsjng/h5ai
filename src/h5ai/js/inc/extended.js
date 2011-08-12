@@ -1,5 +1,5 @@
 
-var Extended = function ( pathCache ) {
+var Extended = function ( pathCache, h5ai ) {
 
 
 	/*******************************
@@ -7,7 +7,6 @@ var Extended = function ( pathCache ) {
 	 *******************************/
 
 	this.config = {
-		defaultSortOrder: "C=N;O=A",
 		customHeader: "h5ai.header.html",
 		customFooter: "h5ai.footer.html"
 	};
@@ -78,31 +77,30 @@ var Extended = function ( pathCache ) {
 		$( "<a class='size' href='" + $size.attr( "href" ) + "'><span class='l10n-size'>" + $size.text() + "</span></a>" ).appendTo( $li );
 
 		// header sort icons
-		var order = document.location.search;
-		if ( order === "" ) {
-			order = this.config.defaultSortOrder;
+		var sortquery = document.location.search;
+		var order = {
+			column: ( sortquery.indexOf( "C=N" ) >= 0 ) ? "name" : ( sortquery.indexOf( "C=M" ) >= 0 ) ? "date" : ( sortquery.indexOf( "C=S" ) >= 0 ) ? "size" : h5ai.config.sortorder.column,
+			ascending: ( sortquery.indexOf( "O=A" ) >= 0 ) ? true : ( sortquery.indexOf( "O=D" ) >= 0 ) ? false : h5ai.config.sortorder.ascending
 		};
 		var $icon;
-		if ( order.indexOf( "O=A" ) >= 0 ) {
+		if ( order.ascending ) {
 			$icon = $( "<img src='/h5ai/images/ascending.png' class='sort' alt='ascending' />" );
 		} else {
 			$icon = $( "<img src='/h5ai/images/descending.png' class='sort' alt='descending' />" );
 		};
-		if ( order.indexOf( "C=N" ) >= 0 ) {
-			$li.find( "a.label" ).append( $icon );
-		} else if ( order.indexOf( "C=M" ) >= 0 ) {
+		if ( order.column === "date" ) {
 			$li.find( "a.date" ).prepend( $icon );
-		} else if ( order.indexOf( "C=S" ) >= 0 ) {
+		} else if ( order.column === "size" ) {
 			$li.find( "a.size" ).prepend( $icon );
+		} else {
+			$li.find( "a.label" ).append( $icon );
 		};
 
-		$.timer.log( "start entries" );
 		// entries
 		$( "#table td" ).closest( "tr" ).each( function () {
 			var path = pathCache.getPathForTableRow( document.location.pathname, this );
 			$ul.append( path.updateExtendedHtml() );
 		} );
-		$.timer.log( "end entries" );
 
 		$( "#extended" ).append( $ul );
 		$.log( document.location.pathname, "folders:", $( "#extended .folder" ).size() , "files:", $( "#extended .file" ).size() );

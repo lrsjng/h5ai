@@ -14,11 +14,9 @@
 	 * create
 	 *******************************/
 
-	$.timer.log( "start pathcache" );
 	var pathCache = new PathCache();
-	$.timer.log( "end   pathcache" );
-	var extended = new Extended( pathCache );
 	var h5ai = new H5ai( h5aiOptions, h5aiLangs );
+	var extended = new Extended( pathCache, h5ai );
 	var tree = new Tree( pathCache, h5ai );
 
 

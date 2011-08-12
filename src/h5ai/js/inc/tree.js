@@ -40,6 +40,7 @@ var Tree = function ( pathCache, h5ai ) {
 				.append( path.updateTreeHtml() )
 				.scrollpanel()
 				.show();
+			h5ai.shiftTree( false, true );
 			h5ai.linkHoverStates();
 			pathCache.storeCache();
 			setTimeout( function () {

@@ -49,6 +49,7 @@
 			};
 		};
 		var scroll = function ( event ) {
+			event.preventDefault();
 			var clickFrac = ( event.pageY - $scrollbar.offset().top - mouseOffsetY ) / $scrollbar.height();
 			$wrapper.scrollTop( $content.outerHeight() * clickFrac );
 			update();
@@ -74,7 +75,8 @@
 				position: "absolute",
 				top: 0,
 				right: 0,
-				overflow: "hidden"
+				overflow: "hidden",
+				cursor: "pointer"
 			} )
 			.mousedown( function ( event ) {
 				mouseOffsetY = $drag.outerHeight() / 2;
@@ -88,10 +90,8 @@
 						scroll( event );
 						event.stopPropagation();
 					} );
-				event.stopPropagation();
+				event.preventDefault();
 			} )
-			.attr( "unselectable", "on" )
-			.css( "-moz-user-select", "none" )
 			.each( function () { 
 				this.onselectstart = function () {
 					return false;

@@ -1,5 +1,8 @@
 
+
 AddType  text/html  .php
+AddHandler  application/x-httpd-php  .php
+
 
 # cache images, css and js for 52 weeks
 <IfModule headers_module>

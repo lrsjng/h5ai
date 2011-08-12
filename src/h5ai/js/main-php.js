@@ -31,6 +31,7 @@
 
 		h5ai.init();
 		$( "#tree" ).scrollpanel();
+		h5ai.shiftTree( false, true );
 	} );
 	
 } )( jQuery );

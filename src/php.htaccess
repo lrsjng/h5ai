@@ -8,22 +8,12 @@
 # Options  +FollowSymLinks
 
 
-################################
-# IMPORTANT FOR XAMPP
-# if you're running XAMPP you might need to replace the
-# following line with
-# <IfModule autoindex_color_module>
-################################
-<IfModule autoindex_module>
+HeaderName    /h5ai/header.php
+ReadmeName    /h5ai/footer.php
 
-	HeaderName    /h5ai/header.php
-	ReadmeName    /h5ai/footer.php
+IndexIgnore   *
 
-	IndexIgnore   *
-
-	IndexOptions  Type=text/html;h5ai=%BUILD_VERSION%
-	IndexOptions  Charset=UTF-8
-	IndexOptions  SuppressHTMLPreamble
-
-</IfModule>
+IndexOptions  Type=text/html;h5ai=%BUILD_VERSION%
+IndexOptions  Charset=UTF-8
+IndexOptions  SuppressHTMLPreamble
 
