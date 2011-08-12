@@ -10,9 +10,14 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
+### v0.13.2 · *2011-08-12*
+
+* changes in `/h5ai/.htaccess` ... PHP configuration ...
+
+
 ### v0.13.1 · *2011-08-12*
 
-* hopefully fixed that PHP doesn't get interpreted
+* ~~hopefully fixed that PHP doesn't get interpreted~~ :/
 * fixed initial tree display
 * added sort order option
 * added/fixed some translations

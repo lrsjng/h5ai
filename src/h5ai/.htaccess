@@ -1,7 +1,20 @@
 
 
 AddType  text/html  .php
-AddHandler  application/x-httpd-php  .php
+
+
+###########################################
+# if php doesn't get interpreted try to
+# uncomment one of the following lines
+###########################################
+#AddHandler  application/x-httpd-php  .php
+#AddHandler  application/x-httpd-php5  .php
+#AddHandler  application/x-httpd-php52  .php
+#AddHandler  application/x-httpd-php53  .php
+#AddHandler  php-script  .php
+#AddHandler  php5-script  .php
+#AddHandler  php52-script  .php
+#AddHandler  php53-script  .php
 
 
 # cache images, css and js for 52 weeks
