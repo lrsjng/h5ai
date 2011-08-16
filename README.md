@@ -10,6 +10,12 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
+### v0.14 · *2011-08-16*
+
+* added image thumbnails for PHP version
+* new option `slideTree` to turn off auto slide in
+
+
 ### v0.13.2 · *2011-08-12*
 
 * changes in `/h5ai/.htaccess` ... PHP configuration ...

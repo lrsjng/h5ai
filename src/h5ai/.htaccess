@@ -28,5 +28,8 @@ AddType  text/html  .php
 	<FilesMatch "\.js$">
 		Header set Cache-Control "max-age=31449600, public"
 	</FilesMatch>
+	<FilesMatch "thumb-.*\.jpg$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
 </IfModule>
 

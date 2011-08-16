@@ -116,6 +116,18 @@
 				width: 80px;
 				white-space: nowrap;
 			}
+			&.entry.thumb .icon.small {
+				overflow: hidden;
+				padding: 5px;
+
+				img {
+					background-color: #eee;
+					width: 16px;
+					height: 16px;
+					border: 1px solid #ddd;
+					overflow: hidden;
+				}
+			}
 		}
 	}
 	.empty {
@@ -170,8 +182,8 @@
 						display: block;
 
 						img {
-							width: 48px;
-							height: 48px;
+							min-width: 48px;
+							min-height: 48px;
 							margin-bottom: 8px;
 						}
 					}
@@ -204,6 +216,21 @@
 							background-color: #f6f6f6;
 						}
 					}
+				}
+			}
+			&.entry.thumb .icon.big {
+				width: 100px;
+				height: 58px;
+				overflow: hidden;
+
+				img {
+					background-color: #eee;
+					min-width: 46px;
+					min-height: 46px;
+					min-width: 12px;
+					min-height: 12px;
+					border: 1px solid #ddd;
+					overflow: hidden;
 				}
 			}
 		}

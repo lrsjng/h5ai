@@ -36,6 +36,11 @@ h5aiOptions = {
 	"showTree": true,
 
 	/*
+	 * Slide tree bar into viewport if there is enough space, boolean.
+	 */
+	"slideTree": true,
+
+	/*
 	 * Associative array of folders and their HTTP status codes to
 	 * avoid HEAD requests to that folders. The key (folder) must start
 	 * and end with a slash (/).
@@ -91,7 +96,13 @@ h5aiOptions = {
 	 * http://www.php.net/manual/en/function.preg-match.php
 	 */
 	"ignore": [ "h5ai", "h5ai.header.html", "h5ai.footer.html" ],
-	"ignoreRE": [ "/^\\./" ]
+	"ignoreRE": [ "/^\\./" ],
+
+	/*
+	 * Only used in PHP implementation.
+	 * Show thumbnails in Icons view.
+	 */
+	"showThumbs": true
 };
 
 

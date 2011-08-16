@@ -21,6 +21,7 @@ var H5ai = function ( options, langs ) {
 			ascending: true
 		},
 		showTree: true,
+		slideTree: true,
 		folderStatus: {
 		},
 		lang: null,
@@ -182,7 +183,7 @@ var H5ai = function ( options, langs ) {
 		var $tree = $( "#tree" );
 		var $extended = $( "#extended" );
 
-		if ( $tree.outerWidth() < $extended.offset().left || forceVisible === true ) {
+		if ( this.config.slideTree && $tree.outerWidth() < $extended.offset().left || forceVisible === true ) {
 			if ( dontAnimate === true ) {
 				$tree.stop().css( { left: 0 } );															
 			} else {

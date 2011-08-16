@@ -1,7 +1,10 @@
 <?php
 
+require_once "thumbnail.php";
+
+
 class Entry {
-	private $h5ai, $label, $absPath, $absHref, $date, $isFolder, $type, $size;
+	private $h5ai, $label, $absPath, $absHref, $date, $isFolder, $type, $size, $thumbTypes;
 
 	public function __construct( $h5ai, $absPath, $absHref, $type = null, $label = null ) {
 
@@ -20,6 +23,8 @@ class Entry {
 			$this->type = $type !== null ? $type : $this->h5ai->getType( $this->absPath );
 			$this->size = filesize( $this->absPath );
 		}
+		
+		$this->thumbTypes = array( "bmp", "gif", "ico", "image", "jpg", "png", "tiff" );
 	}
 
 	public function isFolder() {
@@ -54,6 +59,8 @@ class Entry {
 
 		$classes = "entry " . $this->type;
 		$img = $this->type;
+		$smallImg = "/h5ai/icons/16x16/" . $this->type . ".png";
+		$bigImg = "/h5ai/icons/48x48/" . $this->type . ".png";
 		$hint = "";
 		$dateLabel = date( $dateFormat, $this->date );
 
@@ -63,17 +70,28 @@ class Entry {
 			if ( $code !== "h5ai" ) {
 				if ( $code === 200 ) {
 					$img = "folder-page";
+					$smallImg = "/h5ai/icons/16x16/folder-page.png";
+					$bigImg = "/h5ai/icons/48x48/folder-page.png";
 				} else {
 					$classes .= " error";
 					$hint = "<span class='hint'> " . $code . " </span>";
 				}
 			}
 		}
+		if ( $this->h5ai->showThumbs() && in_array( $this->type, $this->thumbTypes ) ) {
+			$classes .= " thumb";
+			$thumbnail = new Thumbnail( $this->absPath, "square", 16, 16 );
+			$thumbnail->create();
+			$smallImg = file_exists( $thumbnail->getPath() ) ? $thumbnail->getHref() : $thumbnail->getLiveHref();
+			$thumbnail = new Thumbnail( $this->absPath, "rational", 96, 46 );
+			$thumbnail->create();
+			$bigImg = file_exists( $thumbnail->getPath() ) ? $thumbnail->getHref() : $thumbnail->getLiveHref();
+		}
 
 		$html = "\t<li class='" . $classes . "'>\n";
 		$html .= "\t\t<a href='" . $this->absHref . "'>\n";
-		$html .= "\t\t\t<span class='icon small'><img src='/h5ai/icons/16x16/" . $img . ".png' alt='" . $img . "' /></span>\n";
-		$html .= "\t\t\t<span class='icon big'><img src='/h5ai/icons/48x48/" . $img . ".png' alt='" . $img . "' /></span>\n";
+		$html .= "\t\t\t<span class='icon small'><img src='" . $smallImg . "' alt='" . $img . "' /></span>\n";
+		$html .= "\t\t\t<span class='icon big'><img src='" . $bigImg . "' alt='" . $img . "' /></span>\n";
 		$html .= "\t\t\t<span class='label'>" . $this->label . $hint . "</span>\n";
 		$html .= "\t\t\t<span class='date'>" . $dateLabel . "</span>\n";
 		$html .= "\t\t\t<span class='size'>" . $this->formatSize( $this->size ) . "</span>\n";

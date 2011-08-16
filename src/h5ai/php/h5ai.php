@@ -83,7 +83,7 @@ class H5ai {
 	
 	public function getOptions() {
 
-		return $this->options["options"]  ;
+		return $this->options["options"];
 	}
 	
 	public function getLangs() {
@@ -115,6 +115,11 @@ class H5ai {
 	public function getDateFormat() {
 
 		return $this->dateFormat;
+	}
+	
+	public function showThumbs() {
+
+		return $this->options["options"]["showThumbs"] === true;
 	}
 	
 	public function getTitle() {
@@ -187,12 +192,12 @@ class H5ai {
 	
 	public function startsWith( $sequence, $start ) {
 	
-		return substr( $sequence, 0, strlen( $start ) ) === $start;
+		return strcasecmp( substr( $sequence, 0, strlen( $start ) ), $start ) === 0;
 	}
 
 	public function endsWith( $sequence, $end ) {
 
-		return substr( $sequence, -strlen( $end ) ) === $end;
+		return strcasecmp( substr( $sequence, -strlen( $end ) ), $end ) === 0;
 	}
 
 	public function getHttpCode( $absHref ) {
