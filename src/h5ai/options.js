@@ -266,5 +266,18 @@ h5aiLangs = {
 		"empty": "tukšs",
 		"folders": "mapes",
 		"files": "faili"
-	}
+	},
+
+        "zh-cn": {
+            "lang": "简体中文",
+            "details": "详情",
+            "icons": "图标",
+            "name": "文件名",
+            "lastModified": "上次修改",
+            "size": "大小",
+            "parentDirectory": "上层文件夹",
+            "empty": "空文件夹",
+            "folders": "文件夹",
+            "files": "文件"
+        }
 };
