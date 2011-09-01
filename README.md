@@ -10,6 +10,14 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
+### v0.14.1 · *2011-09-01*
+
+* display meta information in bottom bar (icon view)
+* added zh-cn translation by [Dongsheng Cai](http://github.com/dongsheng)
+* added pl translation by Radosław Zając
+* added ru translation by Богдан Илюхин
+
+
 ### v0.14 · *2011-08-16*
 
 * added image thumbnails for PHP version

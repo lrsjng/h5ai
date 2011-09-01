@@ -43,9 +43,13 @@
 			</span>
 		</span>
 		<span class="center">
-			<?php echo $extended->getFolderCount(); ?> <span class="l10n-folders">folders</span>
-			 · 
-			<?php echo $extended->getFileCount(); ?> <span class="l10n-files">files</span>
+			<span class="status default">
+				<?php echo $extended->getFolderCount(); ?> <span class="l10n-folders">folders</span>
+				 · 
+				<?php echo $extended->getFileCount(); ?> <span class="l10n-files">files</span>
+			</span>
+			<span class="status dynamic">
+			</span>
 		</span>
 	</footer>
 	<script src="/h5ai/js/lib/jquery.min.js"></script>

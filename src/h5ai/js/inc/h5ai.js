@@ -170,6 +170,33 @@ var H5ai = function ( options, langs ) {
 			.click( $.proxy( function () {
 				this.applyViewmode( "icons" );
 			}, this ) );
+		
+		$( "#extended .entry" ).hover(
+			function () {
+				if ( $( "#extended" ).hasClass( "icons-view" ) ) {
+					$this = $( this );
+					$( ".status.default" ).hide();
+					$( ".status.dynamic" )
+						.empty()
+						.append( $this.find( ".label" ).clone() )
+						.append( " · " )
+						.append( $this.find( ".date" ).clone() )
+						.show();
+					
+					if ( ! $this.hasClass( "folder" ) ) {
+						$( ".status.dynamic" )
+							.append( " · " )
+							.append( $this.find( ".size" ).clone() );
+					}
+				};
+			},
+			function () {
+				$( ".status.default" ).show();
+				$( ".status.dynamic" )
+					.empty()
+					.hide();
+			}
+		);
 	};
 
 
