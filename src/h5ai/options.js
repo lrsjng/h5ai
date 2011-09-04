@@ -13,7 +13,7 @@ h5aiOptions = {
      * The user selected view mode is also stored local in modern browsers
      * so that it will be persistent.
      */
-    "viewmodes": [ "details", "icons" ],
+    "viewmodes": ["details", "icons"],
 
     /*
      * Default sort order. Valid values for column are "name", "date" and
@@ -50,12 +50,7 @@ h5aiOptions = {
      * as a non auto indexed folder, that means a folder containing an
      * appropriate default index file.
      */
-    "folderStatus": {
-        /*
-         * for example:
-         * "/some/folder/": 200
-         */
-    },
+    "folderStatus": {},
 
     /*
      * Localization, for example "en", "de" etc. - see h5aiLangs below for
@@ -95,8 +90,8 @@ h5aiOptions = {
      * by the complete filename or by a regular expression.
      * http://www.php.net/manual/en/function.preg-match.php
      */
-    "ignore": [ "h5ai", "h5ai.header.html", "h5ai.footer.html" ],
-    "ignoreRE": [ "/^\\./" ],
+    "ignore": ["h5ai", "h5ai.header.html", "h5ai.footer.html"],
+    "ignoreRE": ["/^\\./"],
 
     /*
      * Only used in PHP implementation.
@@ -280,7 +275,7 @@ h5aiLangs = {
         "folders": "文件夹",
         "files": "文件"
     },
-    
+
     "pl": {
         "lang": "polski",
         "details": "szczegóły",
@@ -293,7 +288,7 @@ h5aiLangs = {
         "folders": "foldery",
         "files": "pliki"
     },
-    
+
     "ru": {
         "lang": "русский",
         "details": "детали",

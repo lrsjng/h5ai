@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project
-	name="h5ai"
-	basedir="."
-	default="release"
-	xmlns:scripp="antlib:de.larsjung.scripp.ant"
+    name="h5ai"
+    basedir="."
+    default="release"
+    xmlns:scripp="antlib:de.larsjung.scripp.ant"
 >
-	<target name="init">
-		<property file="build.properties" />
-		<tstamp>
-			<format property="build.stamp" pattern="yyyy-MM-dd-HHmmss" />
-		</tstamp>
-		<property name="build.label" value="${project.name} ${project.version} b${build.stamp}" />
-		<echo>Build: ${build.label}</echo>
+    <target name="init">
+        <property file="build.properties" />
+        <tstamp>
+            <format property="build.stamp" pattern="yyyy-MM-dd-HHmmss" />
+        </tstamp>
+        <property name="build.label" value="${project.name} ${project.version} b${build.stamp}" />
+        <echo>Build: ${build.label}</echo>
         <taskdef
-        	resource="de/larsjung/scripp/ant/antlib.xml"
-        	uri="antlib:de.larsjung.scripp.ant"
-        	classpath="${lib.scripp.jar}"
+            resource="de/larsjung/scripp/ant/antlib.xml"
+            uri="antlib:de.larsjung.scripp.ant"
+            classpath="${lib.scripp.jar}"
         />
-	</target>
+    </target>
 
 
-	<target name="clean" depends="init">
-		<delete dir="${build.dir}" />
-		<delete dir="${release.dir}" />
-	</target>
+    <target name="clean" depends="init">
+        <delete dir="${build.dir}" />
+        <delete dir="${release.dir}" />
+    </target>
 
 
-	<target name="build-prepare" depends="clean">
-		<mkdir dir="${build.dir}" />
-		<copy todir="${build.dir}">
-		    <fileset dir="${src.dir}" />
-			<fileset file="LICENSE.txt" />
-			<fileset file="README.md" />
-		</copy>
-		<replace dir="${build.dir}">
-			<replacefilter token="%BUILD%" value="${build.label}" />
-			<replacefilter token="%BUILD_NAME%" value="${project.name}" />
-			<replacefilter token="%BUILD_VERSION%" value="${project.version}" />
-			<replacefilter token="%BUILD_STAMP%" value="${build.stamp}" />
-		</replace>
-	</target>
-
-	
-	<target name="build" depends="build-prepare">
-		<scripp.dir dir="${build.dir}/h5ai/css" />
-		<scripp.dir dir="${build.dir}/h5ai/js" />
-	</target>
+    <target name="build-prepare" depends="clean">
+        <mkdir dir="${build.dir}" />
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}" />
+            <fileset file="LICENSE.txt" />
+            <fileset file="README.md" />
+        </copy>
+        <replace dir="${build.dir}">
+            <replacefilter token="%BUILD%" value="${build.label}" />
+            <replacefilter token="%BUILD_NAME%" value="${project.name}" />
+            <replacefilter token="%BUILD_VERSION%" value="${project.version}" />
+            <replacefilter token="%BUILD_STAMP%" value="${build.stamp}" />
+        </replace>
+    </target>
 
 
-	<target name="build-uncompressed" depends="build-prepare">
-		<scripp.dir dir="${build.dir}/h5ai/css" compress="false" />
-		<scripp.dir dir="${build.dir}/h5ai/js" compress="false" />
-	</target>
+    <target name="build" depends="build-prepare">
+        <scripp.dir dir="${build.dir}/h5ai/css" />
+        <scripp.dir dir="${build.dir}/h5ai/js" />
+    </target>
 
 
-	<target name="release" depends="build">
-		<mkdir dir="${release.dir}" />
-		<zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
-		<tar destfile="${release.dir}/${project.name}-${project.version}.tar" basedir="${build.dir}"/>
-		<gzip destfile="${release.dir}/${project.name}-${project.version}.tar.gz" src="${release.dir}/${project.name}-${project.version}.tar"/>
-		<delete file="${release.dir}/${project.name}-${project.version}.tar" />
-	</target>
+    <target name="build-uncompressed" depends="build-prepare">
+        <scripp.dir dir="${build.dir}/h5ai/css" compress="false" />
+        <scripp.dir dir="${build.dir}/h5ai/js" compress="false" />
+    </target>
 
 
-	<macrodef name="scripp.dir">
-		<attribute name="dir" />
-		<attribute name="compress" default="true" />
-		<sequential>
-			<scripp:process compress="@{compress}">
-		        <fileset dir="@{dir}" includes="**/*.less,**/*.css,**/*.js" excludes="inc/**/*,**/*.min.css,**/*.min.js" />
-				<globmapper from="*.less" to="*.css" />
-		        <globmapper from="*.css" to="*.css" />
-		        <globmapper from="*.js" to="*.js" />
-			</scripp:process>
-			<delete dir="@{dir}/inc">
-				<fileset dir="@{dir}" includes="**/*.less" />
-			</delete>
-		</sequential>
-	</macrodef>
+    <target name="release" depends="build">
+        <mkdir dir="${release.dir}" />
+        <zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
+        <tar destfile="${release.dir}/${project.name}-${project.version}.tar" basedir="${build.dir}"/>
+        <gzip destfile="${release.dir}/${project.name}-${project.version}.tar.gz" src="${release.dir}/${project.name}-${project.version}.tar"/>
+        <delete file="${release.dir}/${project.name}-${project.version}.tar" />
+    </target>
+
+
+    <macrodef name="scripp.dir">
+        <attribute name="dir" />
+        <attribute name="compress" default="true" />
+        <sequential>
+            <scripp:process compress="@{compress}">
+                <fileset dir="@{dir}" includes="**/*.less,**/*.css,**/*.js" excludes="inc/**/*,**/*.min.css,**/*.min.js" />
+                <globmapper from="*.less" to="*.css" />
+                <globmapper from="*.css" to="*.css" />
+                <globmapper from="*.js" to="*.js" />
+            </scripp:process>
+            <delete dir="@{dir}/inc">
+                <fileset dir="@{dir}" includes="**/*.less" />
+            </delete>
+        </sequential>
+    </macrodef>
 </project>

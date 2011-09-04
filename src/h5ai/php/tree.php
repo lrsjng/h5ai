@@ -1,146 +1,146 @@
 <?php
 
 class TreeEntry {
-	private $h5ai, $label, $absPath, $absHref, $isFolder, $type, $content;
+    private $h5ai, $label, $absPath, $absHref, $isFolder, $type, $content;
 
-	public function __construct( $h5ai, $absPath, $absHref, $type = null ) {
+    public function __construct($h5ai, $absPath, $absHref, $type = null) {
 
-		$this->h5ai = $h5ai;
+        $this->h5ai = $h5ai;
 
-		$this->label = $this->h5ai->getLabel( $absHref );
-		$this->absPath = $this->h5ai->normalizePath( $absPath, false );
-		$this->isFolder = is_dir( $this->absPath );
-		$this->absHref = $this->h5ai->normalizePath( $absHref, $this->isFolder );
+        $this->label = $this->h5ai->getLabel($absHref);
+        $this->absPath = $this->h5ai->normalizePath($absPath, false);
+        $this->isFolder = is_dir($this->absPath);
+        $this->absHref = $this->h5ai->normalizePath($absHref, $this->isFolder);
 
-		$this->type = $type !== null ? $type : ( $this->isFolder ? "folder" : $this->h5ai->getType( $this->absPath ) );
-		$this->content = null;
-	}
+        $this->type = $type !== null ? $type : ($this->isFolder ? "folder" : $this->h5ai->getType($this->absPath));
+        $this->content = null;
+    }
 
-	public function loadContent() {
+    public function loadContent() {
 
-		$this->content = array();
+        $this->content = array();
 
-		if ( $this->h5ai->getHttpCode( $this->absHref ) !== "h5ai" ) {
-			return;
-		}
-		
-		$files = $this->h5ai->readDir( $this->absPath );
-		foreach ( $files as $file ) {
-			$tree = new TreeEntry( $this->h5ai, $this->absPath . "/" . $file, $this->absHref . rawurlencode( $file ) );
+        if ($this->h5ai->getHttpCode($this->absHref) !== "h5ai") {
+            return;
+        }
 
-			if ( $tree->isFolder ) {
-				$this->content[$tree->absPath] = $tree;
-			}
-		}
+        $files = $this->h5ai->readDir($this->absPath);
+        foreach ($files as $file) {
+            $tree = new TreeEntry($this->h5ai, $this->absPath . "/" . $file, $this->absHref . rawurlencode($file));
 
-		$this->sort();
-	}
+            if ($tree->isFolder) {
+                $this->content[$tree->absPath] = $tree;
+            }
+        }
 
-	public function cmpTrees( $t1, $t2 ) {
+        $this->sort();
+    }
 
-		if ( $t1->isFolder && !$t2->isFolder ) {
-			return -1;
-		}
-		if ( !$t1->isFolder && $t2->isFolder ) {
-			return 1;
-		}
-		return strcasecmp( $t1->absPath, $t2->absPath );
-	}
+    public function cmpTrees($t1, $t2) {
 
-	public function sort() {
+        if ($t1->isFolder && !$t2->isFolder) {
+            return -1;
+        }
+        if (!$t1->isFolder && $t2->isFolder) {
+            return 1;
+        }
+        return strcasecmp($t1->absPath, $t2->absPath);
+    }
 
-		if ( $this->content !== null ) {
-			uasort( $this->content, array( $this, "cmpTrees" ) );
-		}
-	}
+    public function sort() {
 
-	public function toHtml() {
+        if ($this->content !== null) {
+            uasort($this->content, array($this, "cmpTrees"));
+        }
+    }
 
-		$classes = "entry " . $this->type . ( $this->absHref === $this->h5ai->getAbsHref() ? " current" : "" );
-		$img = $this->type;
-		if ( $this->absHref === "/" ) {
-			$img = "folder-home";
-		}
-		$hint = "";
-		$code = "h5ai";
+    public function toHtml() {
 
-		if ( $this->isFolder ) {
-			$code = $this->h5ai->getHttpCode( $this->absHref );
-			$classes .= " checkedHttpCode";
-			if ( $code !== "h5ai" ) {
-				if ( $code === 200 ) {
-					$img = "folder-page";
-					$hint = "<span class='hint'><img src='/h5ai/images/page.png' alt='page' /></span>";
-				} else {
-					$classes .= " error";
-					$hint = "<span class='hint'> " . $code . " </span>";
-				}
-			}
-		}
+        $classes = "entry " . $this->type . ($this->absHref === $this->h5ai->getAbsHref() ? " current" : "");
+        $img = $this->type;
+        if ($this->absHref === "/") {
+            $img = "folder-home";
+        }
+        $hint = "";
+        $code = "h5ai";
 
-		$html = "<div class='" . $classes ."'>\n";
-		if ( $this->content !== null && count( $this->content ) === 0 || $code !== "h5ai" ) {
-			$html .= "<span class='blank'></span>\n";
-		} else {
-			$indicatorState = $this->content === null ? " unknown" : " open";
-			$html .= "<span class='indicator" . $indicatorState . "'><img src='/h5ai/images/tree.png' alt='>' /></span>\n";
-		}
-		$html .= "<a href='" . $this->absHref . "'>\n";
-		$html .= "<span class='icon'><img src='/h5ai/icons/16x16/" . $img . ".png' alt='" . $img . "' /></span>\n";
-		$html .= "<span class='label'>" . $this->label . "</span>" . $hint . "\n";
-		$html .= "</a>\n";
-		$html .= $this->contentToHtml();
-		$html .= "</div>\n";
-		return $html;
-	}
+        if ($this->isFolder) {
+            $code = $this->h5ai->getHttpCode($this->absHref);
+            $classes .= " checkedHttpCode";
+            if ($code !== "h5ai") {
+                if ($code === 200) {
+                    $img = "folder-page";
+                    $hint = "<span class='hint'><img src='/h5ai/images/page.png' alt='page' /></span>";
+                } else {
+                    $classes .= " error";
+                    $hint = "<span class='hint'> " . $code . " </span>";
+                }
+            }
+        }
 
-	public function contentToHtml() {
+        $html = "<div class='" . $classes ."'>\n";
+        if ($this->content !== null && count($this->content) === 0 || $code !== "h5ai") {
+            $html .= "<span class='blank'></span>\n";
+        } else {
+            $indicatorState = $this->content === null ? " unknown" : " open";
+            $html .= "<span class='indicator" . $indicatorState . "'><img src='/h5ai/images/tree.png' alt='>' /></span>\n";
+        }
+        $html .= "<a href='" . $this->absHref . "'>\n";
+        $html .= "<span class='icon'><img src='/h5ai/icons/16x16/" . $img . ".png' alt='" . $img . "' /></span>\n";
+        $html .= "<span class='label'>" . $this->label . "</span>" . $hint . "\n";
+        $html .= "</a>\n";
+        $html .= $this->contentToHtml();
+        $html .= "</div>\n";
+        return $html;
+    }
 
-		$html = "<ul class='content'>\n";
-		if ( $this->content !== null ) {
-			foreach( $this->content as $tree ) {
-				$html .= "<li>" . $tree->toHtml() . "</li>";
-			}
-		}
-		$html .= "</ul>\n";
-		return $html;
-	}
+    public function contentToHtml() {
 
-	public function getRoot() {
+        $html = "<ul class='content'>\n";
+        if ($this->content !== null) {
+            foreach($this->content as $tree) {
+                $html .= "<li>" . $tree->toHtml() . "</li>";
+            }
+        }
+        $html .= "</ul>\n";
+        return $html;
+    }
 
-		if ( $this->absHref === "/" ) {
-			return $this;
-		};
+    public function getRoot() {
 
-		$tree = new TreeEntry( $this->h5ai, dirname( $this->absPath ), dirname( $this->absHref ) );
-		$tree->loadContent();
-		$tree->content[ $this->absPath ] = $this;
-		
-		return $tree->getRoot();
-	}
+        if ($this->absHref === "/") {
+            return $this;
+        };
+
+        $tree = new TreeEntry($this->h5ai, dirname($this->absPath), dirname($this->absHref));
+        $tree->loadContent();
+        $tree->content[ $this->absPath ] = $this;
+
+        return $tree->getRoot();
+    }
 }
 
 
 class Tree {
-	private $h5ai;
+    private $h5ai;
 
-	public function __construct( $h5ai ) {
+    public function __construct($h5ai) {
 
-		$this->h5ai = $h5ai;
-	}
+        $this->h5ai = $h5ai;
+    }
 
-	public function toHtml() {
+    public function toHtml() {
 
-		$options = $this->h5ai->getOptions();
-		if ( $options["showTree"] === false ) {
-			return "";
-		}
+        $options = $this->h5ai->getOptions();
+        if ($options["showTree"] === false) {
+            return "";
+        }
 
-		$tree = new TreeEntry( $this->h5ai, $this->h5ai->getAbsPath(), $this->h5ai->getAbsHref() );
-		$tree->loadContent();
-		$root = $tree->getRoot();
-		return "<section id='tree'>\n" . $root->toHtml() . "</section>\n";
-	}
+        $tree = new TreeEntry($this->h5ai, $this->h5ai->getAbsPath(), $this->h5ai->getAbsHref());
+        $tree->loadContent();
+        $root = $tree->getRoot();
+        return "<section id='tree'>\n" . $root->toHtml() . "</section>\n";
+    }
 }
 
 

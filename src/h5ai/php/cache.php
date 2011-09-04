@@ -7,87 +7,87 @@
 ##############################################
 
 class Cache {
-	private $dir;
-	
-	function __construct( $dir ) {
+    private $dir;
 
-		$this->dir = $dir;
-	}
+    function __construct($dir) {
 
-	private function _name( $key ) {
+        $this->dir = $dir;
+    }
 
-		return $this->dir . "/" . sha1( $key );
-	}
+    private function _name($key) {
 
-	public function get( $key, $expiration = 3600 ) {
+        return $this->dir . "/" . sha1($key);
+    }
 
-		if ( !is_dir( $this->dir ) || !is_writable( $this->dir ) ) {
-			return false;
-		}
+    public function get($key, $expiration = 3600) {
 
-		$cache_path = $this->_name( $key );
+        if (!is_dir($this->dir) || !is_writable($this->dir)) {
+            return false;
+        }
 
-		if ( !@file_exists( $cache_path ) ) {
-			return false;
-		}
+        $cache_path = $this->_name($key);
 
-		if ( filemtime( $cache_path ) < ( time() - $expiration ) ) {
-			$this->clear( $key );
-			return false;
-		}
+        if (!@file_exists($cache_path)) {
+            return false;
+        }
 
-		if ( !$fp = @fopen( $cache_path, "rb" ) ) {
-			return false;
-		}
+        if (filemtime($cache_path) < (time() - $expiration)) {
+            $this->clear($key);
+            return false;
+        }
 
-		flock( $fp, LOCK_SH );
-		$cache = "";
+        if (!$fp = @fopen($cache_path, "rb")) {
+            return false;
+        }
 
-		if ( filesize( $cache_path ) > 0 ) {
-			$cache = unserialize( fread( $fp, filesize( $cache_path ) ) );
-		} else {
-			$cache = null;
-		}
+        flock($fp, LOCK_SH);
+        $cache = "";
 
-		flock( $fp, LOCK_UN );
-		fclose( $fp );
+        if (filesize($cache_path) > 0) {
+            $cache = unserialize(fread($fp, filesize($cache_path)));
+        } else {
+            $cache = null;
+        }
 
-		return $cache;
-	}
+        flock($fp, LOCK_UN);
+        fclose($fp);
 
-	public function set( $key, $data ) {
+        return $cache;
+    }
 
-		if ( !is_dir( $this->dir ) || !is_writable( $this->dir ) ) {
-			return false;
-		}
+    public function set($key, $data) {
 
-		$cache_path = $this->_name( $key );
+        if (!is_dir($this->dir) || !is_writable($this->dir)) {
+            return false;
+        }
 
-		if ( ! $fp = fopen( $cache_path, "wb" ) ) {
-			return false;
-		}
+        $cache_path = $this->_name($key);
 
-		if ( flock( $fp, LOCK_EX ) ) {
-			fwrite( $fp, serialize( $data ) );
-			flock( $fp, LOCK_UN );
-		} else {
-			return false;
-		}
-		fclose( $fp );
-		@chmod( $cache_path, 0777 );
-		return true;
-	}
+        if (! $fp = fopen($cache_path, "wb")) {
+            return false;
+        }
 
-	public function clear( $key ) {
+        if (flock($fp, LOCK_EX)) {
+            fwrite($fp, serialize($data));
+            flock($fp, LOCK_UN);
+        } else {
+            return false;
+        }
+        fclose($fp);
+        @chmod($cache_path, 0777);
+        return true;
+    }
 
-		$cache_path = $this->_name( $key );
+    public function clear($key) {
 
-		if ( file_exists( $cache_path ) ) {
-			unlink( $cache_path );
-			return true;
-		}
-		return false;
-	}
+        $cache_path = $this->_name($key);
+
+        if (file_exists($cache_path)) {
+            unlink($cache_path);
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>

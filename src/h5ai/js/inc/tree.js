@@ -1,149 +1,147 @@
 
-var Tree = function ( pathCache, h5ai ) {
+var Tree = function (pathCache, h5ai) {
+    "use strict";
+    /*global $*/
 
+    var contentTypeRegEx = /^text\/html;h5ai=/,
+        pathnameStatusCache = {},
+        fetchStatus = function (pathname, callback) {
 
-	this.init = function () {
+            if (h5ai.settings.folderStatus[pathname]) {
+                callback(h5ai.settings.folderStatus[pathname]);
+                return;
+            } else if (pathnameStatusCache[pathname]) {
+                callback(pathnameStatusCache[pathname]);
+                return;
+            }
 
-		if ( h5ai.config.showTree ) {
-			this.updatePaths();
-			this.populateTree();
-		};
-	};
+            $.ajax({
+                url: pathname,
+                type: "HEAD",
+                complete: function (xhr) {
 
+                    var status = xhr.status;
 
-	this.updatePath = function ( path ) {
+                    if (status === 200 && contentTypeRegEx.test(xhr.getResponseHeader("Content-Type"))) {
+                        status = "h5ai";
+                    }
+                    pathnameStatusCache[pathname] = status;
+                    callback(status);
+                }
+            });
+        },
+        updatePath = function (path) {
 
-		if ( path.isFolder && !path.isParentFolder && path.status === undefined ) {
-			this.fetchStatus( path.absHref, function ( status ) {
-				if ( status !== "h5ai" ) {
-					path.status = status;
-				};
-				path.updateHtml();
-				h5ai.linkHoverStates();
-			} );
-		};
-	};
+            if (path.isFolder && !path.isParentFolder && path.status === undefined) {
+                fetchStatus(path.absHref, function (status) {
 
+                    if (status !== "h5ai") {
+                        path.status = status;
+                    }
+                    path.updateHtml();
+                    h5ai.linkHoverStates();
+                });
+            }
+        },
+        updatePaths = function () {
 
-	this.updatePaths = function () {
+            var ref;
 
-		for ( var ref in pathCache.cache ) {
-			this.updatePath( pathCache.cache[ref] );
-		};
-	};
+            for (ref in pathCache.cache) {
+                updatePath(pathCache.cache[ref]);
+            }
+        },
+        fetchStatusAndContent = function (pathname, includeParent, callback) {
 
+            fetchStatus(pathname, function (status) {
 
-	this.populateTree = function () {
+                if (status !== "h5ai") {
+                    callback(status, {});
+                    return;
+                }
 
-		this.fetchTree( document.location.pathname, function( path ) {
-			$( "#tree" )
-				.append( path.updateTreeHtml() )
-				.scrollpanel()
-				.show();
-			h5ai.shiftTree( false, true );
-			h5ai.linkHoverStates();
-			pathCache.storeCache();
-			setTimeout( function () {
-				$( "#tree" ).get( 0 ).updateScrollbar();
-			}, 1 );
-		} );
-	};
+                $.ajax({
+                    url: pathname,
+                    type: "GET",
+                    dataType: "html",
+                    error: function (xhr) {
 
+                        callback(xhr.status, {}); // since it was checked before this should never happen
+                    },
+                    success: function (html, status, xhr) {
 
-	this.fetchTree = function ( pathname, callback, childPath ) {
+                        var content = {};
 
-		this.fetchPath( pathname, $.proxy( function ( path ) {
-			
-			path.treeOpen = true;
-			
-			if ( childPath !== undefined ) {
-				path.content[ childPath.absHref ] = childPath;
-			};
+                        if (!contentTypeRegEx.test(xhr.getResponseHeader("Content-Type"))) {
+                            callback(xhr.status, {}); // since it was checked before this should never happen
+                            return;
+                        }
 
-			var parent = pathCache.splitPathname( pathname )[0];
-			if ( parent === "" ) {
-				callback( path );
-			} else {
-				this.fetchTree( parent, callback, path );				
-			};
-		}, this ) );
-	};
+                        $(html).find("#table td").closest("tr").each(function () {
 
+                            var path = pathCache.getPath(pathname, this);
 
-	this.fetchPath = function ( pathname, callback ) {
+                            if (path.isFolder && (!path.isParentFolder || includeParent)) {
+                                content[path.absHref] = path;
+                                updatePath(path);
+                            }
+                        });
+                        callback("h5ai", content);
+                    }
+                });
+            });
+        },
+        fetchPath = function (pathname, callback) {
 
-		this.fetchStatusAndContent( pathname, false, function ( status, content ) {
-			var path = pathCache.getPathForFolder( pathname );
-			path.status = status;
-			path.content = content;
-			callback( path );
-		} );
-	};
+            fetchStatusAndContent(pathname, false, function (status, content) {
 
+                var path = pathCache.getPath(pathname);
 
+                path.status = status;
+                path.content = content;
+                callback(path);
+            });
+        },
+        fetchTree = function (pathname, callback, childPath) {
 
-	var THIS = this;
-	var contentTypeRegEx = /^text\/html;h5ai=/;
-	var pathnameStatusCache = {};
+            fetchPath(pathname, function (path) {
 
-	this.fetchStatusAndContent = function ( pathname, includeParent, callback ) {
+                var parent = pathCache.splitPathname(pathname)[0];
 
-		this.fetchStatus( pathname, function ( status ) {
+                path.treeOpen = true;
+                if (childPath) {
+                    path.content[childPath.absHref] = childPath;
+                }
+                if (parent === "") {
+                    callback(path);
+                } else {
+                    fetchTree(parent, callback, path);
+                }
+            });
+        },
+        populateTree = function () {
 
-			if ( status !== "h5ai" ) {
-				callback( status, {} );
-				return;
-			};
+            fetchTree(document.location.pathname, function (path) {
+                $("#tree")
+                    .append(path.updateTreeHtml())
+                    .scrollpanel()
+                    .show();
+                h5ai.shiftTree(false, true);
+                h5ai.linkHoverStates();
+                setTimeout(function () { $("#tree").get(0).updateScrollbar(); }, 1);
+            });
+        },
+        init = function () {
 
-			$.ajax( {
-				url: pathname,
-				type: "GET",
-				dataType: "html",
-				error: function ( xhr ) {
-					callback( xhr.status, {} ); // since it was checked before this should never happen
-				},
-				success: function ( html, status, xhr ) {
-					if ( !contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
-						callback( xhr.status, {} ); // since it was checked before this should never happen
-						return;
-					};
+            if (h5ai.settings.showTree) {
+                updatePaths();
+                populateTree();
+            }
+        },
+        tree = {
+            fetchStatusAndContent: fetchStatusAndContent,
+            init: init
+        };
 
-					var content =  {};
-					$( html ).find( "#table td" ).closest( "tr" ).each( function () { 
-						var path = pathCache.getPathForTableRow( pathname, this );
-						if ( path.isFolder && ( !path.isParentFolder || includeParent ) ) {
-							content[path.absHref] = path;
-							THIS.updatePath( path );
-						};
-					} );
-					callback( "h5ai", content );
-				}
-			} );
-		} );
-	};
-
-
-	this.fetchStatus = function ( pathname, callback ) {
-
-		if ( h5ai.config.folderStatus[ pathname ] !== undefined ) {
-			callback( h5ai.config.folderStatus[ pathname ] );
-			return;
-		} else if ( pathnameStatusCache[ pathname ] !== undefined ) {
-			callback( pathnameStatusCache[ pathname ] );
-			return;
-		};
-
-		$.ajax( {
-			url: pathname,
-			type: "HEAD",
-			complete: function ( xhr ) {
-				var status = xhr.status;
-				if ( status === 200 && contentTypeRegEx.test( xhr.getResponseHeader( "Content-Type" ) ) ) {
-					status = "h5ai";
-				};
-				pathnameStatusCache[ pathname ] = status;
-				callback( status );
-			}
-		} );
-	};
+    return tree;
 };
