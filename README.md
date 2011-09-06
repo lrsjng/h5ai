@@ -10,6 +10,12 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
+### v0.15.1 · *2011-09-06*
+
+* fixed security issues with the zipped download feature
+* made zipped download optional (but enabled by default)
+
+
 ### v0.15 · *2011-09-04*
 
 * added zipped download for selected files

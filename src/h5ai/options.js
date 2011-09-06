@@ -97,7 +97,13 @@ h5aiOptions = {
      * Only used in PHP implementation.
      * Show thumbnails in Icons view.
      */
-    "showThumbs": true
+    "showThumbs": true,
+
+    /*
+     * Enable zipped download of selected entries. Requieres
+     * PHP on the server.
+     */
+    "zippedDownload": true
 };
 
 
@@ -117,7 +123,8 @@ h5aiLangs = {
         "parentDirectory": "Parent Directory",
         "empty": "empty",
         "folders": "folders",
-        "files": "files"
+        "files": "files",
+        "download": "download"
     },
 
     "de": {
@@ -130,7 +137,8 @@ h5aiLangs = {
         "parentDirectory": "Übergeordnetes Verzeichnis",
         "empty": "leer",
         "folders": "Ordner",
-        "files": "Dateien"
+        "files": "Dateien",
+        "download": "Download"
     },
 
     "fr": {
@@ -143,7 +151,8 @@ h5aiLangs = {
         "parentDirectory": "Dossier parent",
         "empty": "vide",
         "folders": "Répertoires",
-        "files": "Fichiers"
+        "files": "Fichiers",
+        "download": "download"
     },
 
     "nl": {
@@ -155,8 +164,9 @@ h5aiLangs = {
         "size": "Grootte",
         "parentDirectory": "Bovenliggende map",
         "empty": "lege",
-        "folders": "[?folders?]",
-        "files": "[?files?]"
+        "folders": "folders",
+        "files": "files",
+        "download": "download"
     },
 
     "sv": {
@@ -168,8 +178,9 @@ h5aiLangs = {
         "size": "Filstorlek",
         "parentDirectory": "Till överordnad mapp",
         "empty": "tom",
-        "folders": "[?folders?]",
-        "files": "[?files?]"
+        "folders": "folders",
+        "files": "files",
+        "download": "download"
     },
 
     "cs": {
@@ -182,7 +193,8 @@ h5aiLangs = {
         "parentDirectory": "Nadřazený adresář",
         "empty": "prázdný",
         "folders": "složek",
-        "files": "souborů"
+        "files": "souborů",
+        "download": "download"
     },
 
     "sk": {
@@ -195,7 +207,8 @@ h5aiLangs = {
         "parentDirectory": "Nadriadený priečinok",
         "empty": "prázdny",
         "folders": "priečinkov",
-        "files": "súborov"
+        "files": "súborov",
+        "download": "download"
     },
 
     "es": {
@@ -207,8 +220,9 @@ h5aiLangs = {
         "size": "Tamaño",
         "parentDirectory": "Directorio superior",
         "empty": "vacío",
-        "folders": "[?folders?]",
-        "files": "[?files?]"
+        "folders": "folders",
+        "files": "files",
+        "download": "download"
     },
 
     "tr": {
@@ -220,8 +234,9 @@ h5aiLangs = {
         "size": "Boyut",
         "parentDirectory": "Üst Dizin",
         "empty": "boş",
-        "folders": "[?folders?]",
-        "files": "[?files?]"
+        "folders": "folders",
+        "files": "files",
+        "download": "download"
     },
 
     "pt": {
@@ -234,7 +249,8 @@ h5aiLangs = {
         "parentDirectory": "Diretório superior",
         "empty": "vazio",
         "folders": "pastas",
-        "files": "arquivos"
+        "files": "arquivos",
+        "download": "download"
     },
 
     "bg": {
@@ -247,7 +263,8 @@ h5aiLangs = {
         "parentDirectory": "Предходна директория",
         "empty": "празно",
         "folders": "папки",
-        "files": "файлове"
+        "files": "файлове",
+        "download": "download"
     },
 
     "lv": {
@@ -260,7 +277,8 @@ h5aiLangs = {
         "parentDirectory": "Vecākdirektorijs",
         "empty": "tukšs",
         "folders": "mapes",
-        "files": "faili"
+        "files": "faili",
+        "download": "download"
     },
 
     "zh-cn": {
@@ -273,7 +291,8 @@ h5aiLangs = {
         "parentDirectory": "上层文件夹",
         "empty": "空文件夹",
         "folders": "文件夹",
-        "files": "文件"
+        "files": "文件",
+        "download": "download"
     },
 
     "pl": {
@@ -286,7 +305,8 @@ h5aiLangs = {
         "parentDirectory": "Katalog nadrzędny",
         "empty": "pusty",
         "folders": "foldery",
-        "files": "pliki"
+        "files": "pliki",
+        "download": "download"
     },
 
     "ru": {
@@ -299,6 +319,7 @@ h5aiLangs = {
         "parentDirectory": "Главная директория",
         "empty": "пусто",
         "folders": "папки",
-        "files": "файлы"
+        "files": "файлы",
+        "download": "download"
     }
 };

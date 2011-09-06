@@ -27,7 +27,7 @@ class H5ai {
         $this->sortOrder = array(
             "column" => array_key_exists("col", $_REQUEST) ? $_REQUEST["col"] : $defaultSortOrder["column"],
             "ascending" => array_key_exists("asc", $_REQUEST) ? $_REQUEST["asc"] !== "false" : $defaultSortOrder["ascending"]
-      );
+        );
         $this->dateFormat = $this->options["options"]["dateFormat"];
         $this->view = array_key_exists("view", $_REQUEST) ? $_REQUEST["view"] : $this->options["options"]["viewmodes"][0];
         if (!in_array($this->view, H5ai::$VIEWMODES)) {
@@ -96,7 +96,14 @@ class H5ai {
         if ($absPath === null) {
             return $this->absHref;
         }
-        return $this->normalizePath(rawurlencode(preg_replace("!^" . $this->docRoot . "!", "", $absPath)), $endWithSlash);
+        $absHref = preg_replace("!^" . $this->docRoot . "!", "", $absPath);
+        $parts = explode("/", $absHref);
+        $encodedParts = array();
+        foreach ($parts as $part) {
+            $encodedParts[] = rawurlencode($part);
+        }
+        $endodedAbsHref = implode("/", $encodedParts);
+        return $this->normalizePath($endodedAbsHref, $endWithSlash);
     }
 
     public function getAbsPath($absHref = null) {

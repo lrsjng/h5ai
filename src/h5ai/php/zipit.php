@@ -18,12 +18,16 @@ class ZipIt {
         }
 
         foreach ($hrefs as $href) {
-            $localFile = $this->h5ai->getAbsPath($href);
-            $file = preg_replace("!^" . $this->h5ai->getDocRoot() . "!", "", $localFile);
-            if (is_dir($localFile)) {
-                $this->zipDir($zip, $localFile, $file);
-            } else {
-                $this->zipFile($zip, $localFile, $file);
+            $d = dirname($href);
+            $n = basename($href);
+            if ($this->h5ai->getHttpCode($this->h5ai->getAbsHref($d)) === "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
+                $localFile = $this->h5ai->getAbsPath($href);
+                $file = preg_replace("!^" . $this->h5ai->getDocRoot() . "!", "", $localFile);
+                if (is_dir($localFile)) {
+                    $this->zipDir($zip, $localFile, $file);
+                } else {
+                    $this->zipFile($zip, $localFile, $file);
+                }
             }
         }
 
@@ -39,16 +43,18 @@ class ZipIt {
     }
 
     private function zipDir($zip, $localDir, $dir) {
-
-        $zip->addEmptyDir($dir);
-        $files = $this->h5ai->readDir($localDir);
-        foreach ($files as $file) {
-            $localFile = $localDir . "/" . $file;
-            $file = $dir . "/" . $file;
-            if (is_dir($localFile)) {
-                $this->zipDir($zip, $localFile, $file);
-            } else {
-                $this->zipFile($zip, $localFile, $file);
+            
+        if ($this->h5ai->getHttpCode($this->h5ai->getAbsHref($localDir)) === "h5ai") {
+            $zip->addEmptyDir($dir);
+            $files = $this->h5ai->readDir($localDir);
+            foreach ($files as $file) {
+                $localFile = $localDir . "/" . $file;
+                $file = $dir . "/" . $file;
+                if (is_dir($localFile)) {
+                    $this->zipDir($zip, $localFile, $file);
+                } else {
+                    $this->zipFile($zip, $localFile, $file);
+                }
             }
         }
     }

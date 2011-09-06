@@ -28,7 +28,9 @@ var H5ai = function (options, langs) {
             dateFormat: "Y-m-d H:i",
             ignore: ["h5ai", "h5ai.header.html", "h5ai.footer.html"],
             ignoreRE: ["/^\\./"],
-            showThumbs: true
+            showThumbs: true,
+            
+            zippedDownload: true
         },
         settings = $.extend({}, defaults, options),
         pathClick = function (fn) {
@@ -292,7 +294,7 @@ var H5ai = function (options, langs) {
                 });
             });
         },
-        initSelect = function () {
+        initZippedDownload = function () {
 
             var x = 0,
                 y = 0,
@@ -362,9 +364,11 @@ var H5ai = function (options, langs) {
                     return false;
                 };
 
-            $("body>nav,body>footer,#tree,#extended a").bind("mousedown", noSelection);
-            $("#extended a").live("mousedown", noSelection);
-            $window.bind("mousedown", selectionStart);
+            if (settings.zippedDownload) {
+                $("body>nav,body>footer,#tree,#extended a").bind("mousedown", noSelection);
+                $("#extended a").live("mousedown", noSelection);
+                $window.bind("mousedown", selectionStart);
+            }
         },
         init = function () {
 
@@ -376,7 +380,7 @@ var H5ai = function (options, langs) {
             initLangSelector(langs);
             localize(langs, settings.lang, settings.useBrowserLang);
             initIndicators();
-            initSelect();
+            initZippedDownload();
         },
         h5ai = {
             settings: settings,
