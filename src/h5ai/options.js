@@ -234,9 +234,9 @@ h5aiLangs = {
         "size": "Boyut",
         "parentDirectory": "Üst Dizin",
         "empty": "boş",
-        "folders": "folders",
-        "files": "files",
-        "download": "download"
+        "folders": "klasörler",
+        "files": "dosyalar",
+        "download": "indir"
     },
 
     "pt": {
