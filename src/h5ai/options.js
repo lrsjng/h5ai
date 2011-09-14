@@ -154,6 +154,20 @@ h5aiLangs = {
         "files": "Fichiers",
         "download": "download"
     },
+    
+    "it": {
+        "lang": "italiano",
+        "details": "dettagli",
+        "icons": "icone",
+        "name": "Nome",
+        "lastModified": "Ultima modifica",
+        "size": "Dimensione",
+        "parentDirectory": "Elenco superiore",
+        "empty": "vuoto",
+        "folders": "cartelle",
+        "files": "file",
+        "download": "download"
+    },
 
     "nl": {
         "lang": "nederlands",
