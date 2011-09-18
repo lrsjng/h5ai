@@ -127,59 +127,17 @@ h5aiLangs = {
         "download": "download"
     },
 
-    "de": {
-        "lang": "deutsch",
-        "details": "Details",
-        "icons": "Icons",
-        "name": "Name",
-        "lastModified": "Geändert",
-        "size": "Größe",
-        "parentDirectory": "Übergeordnetes Verzeichnis",
-        "empty": "leer",
-        "folders": "Ordner",
-        "files": "Dateien",
-        "download": "Download"
-    },
-
-    "fr": {
-        "lang": "français",
-        "details": "détails",
-        "icons": "icônes",
-        "name": "Nom",
-        "lastModified": "Dernière modification",
-        "size": "Taille",
-        "parentDirectory": "Dossier parent",
-        "empty": "vide",
-        "folders": "Répertoires",
-        "files": "Fichiers",
-        "download": "download"
-    },
-
-    "nl": {
-        "lang": "nederlands",
-        "details": "details",
-        "icons": "iconen",
-        "name": "Naam",
-        "lastModified": "Laatste wijziging",
-        "size": "Grootte",
-        "parentDirectory": "Bovenliggende map",
-        "empty": "lege",
-        "folders": "folders",
-        "files": "files",
-        "download": "download"
-    },
-
-    "sv": {
-        "lang": "svenska",
-        "details": "detaljerad",
-        "icons": "ikoner",
-        "name": "Filnamn",
-        "lastModified": "Senast ändrad",
-        "size": "Filstorlek",
-        "parentDirectory": "Till överordnad mapp",
-        "empty": "tom",
-        "folders": "folders",
-        "files": "files",
+    "bg": {
+        "lang": "български",
+        "details": "детайли",
+        "icons": "икони",
+        "name": "Име",
+        "lastModified": "Последна промяна",
+        "size": "Размер",
+        "parentDirectory": "Предходна директория",
+        "empty": "празно",
+        "folders": "папки",
+        "files": "файлове",
         "download": "download"
     },
 
@@ -197,6 +155,132 @@ h5aiLangs = {
         "download": "download"
     },
 
+    "de": {
+        "lang": "deutsch",
+        "details": "Details",
+        "icons": "Icons",
+        "name": "Name",
+        "lastModified": "Geändert",
+        "size": "Größe",
+        "parentDirectory": "Übergeordnetes Verzeichnis",
+        "empty": "leer",
+        "folders": "Ordner",
+        "files": "Dateien",
+        "download": "Download"
+    },
+
+    "es": {
+        "lang": "español",
+        "details": "Detalles",
+        "icons": "Íconos",
+        "name": "Nombre",
+        "lastModified": "Última modificación",
+        "size": "Tamaño",
+        "parentDirectory": "Directorio superior",
+        "empty": "vacío",
+        "folders": "folders",
+        "files": "files",
+        "download": "download"
+    },
+
+    "fr": {
+        "lang": "français",
+        "details": "détails",
+        "icons": "icônes",
+        "name": "Nom",
+        "lastModified": "Dernière modification",
+        "size": "Taille",
+        "parentDirectory": "Dossier parent",
+        "empty": "vide",
+        "folders": "Répertoires",
+        "files": "Fichiers",
+        "download": "download"
+    },
+
+    "it": {
+       "lang": "italiano",
+       "details": "dettagli",
+       "icons": "icone",
+       "name": "Nome",
+       "lastModified": "Ultima modifica",
+       "size": "Dimensione",
+       "parentDirectory": "Cartella Superiore",
+       "empty": "vuota",
+       "folders": "cartelle",
+       "files": "file",
+       "download": "download"
+   },
+
+    "lv": {
+        "lang": "latviešu",
+        "details": "detaļas",
+        "icons": "ikonas",
+        "name": "Nosaukums",
+        "lastModified": "Pēdējoreiz modificēts",
+        "size": "Izmērs",
+        "parentDirectory": "Vecākdirektorijs",
+        "empty": "tukšs",
+        "folders": "mapes",
+        "files": "faili",
+        "download": "lejupielādēt"
+    },
+
+    "nl": {
+        "lang": "nederlands",
+        "details": "details",
+        "icons": "iconen",
+        "name": "Naam",
+        "lastModified": "Laatste wijziging",
+        "size": "Grootte",
+        "parentDirectory": "Bovenliggende map",
+        "empty": "lege",
+        "folders": "folders",
+        "files": "files",
+        "download": "download"
+    },
+
+    "pl": {
+        "lang": "polski",
+        "details": "szczegóły",
+        "icons": "ikony",
+        "name": "Nazwa",
+        "lastModified": "Ostatnia modyfikacja",
+        "size": "Rozmiar",
+        "parentDirectory": "Katalog nadrzędny",
+        "empty": "pusty",
+        "folders": "foldery",
+        "files": "pliki",
+        "download": "download"
+    },
+
+    "pt": {
+        "lang": "português",
+        "details": "detalhes",
+        "icons": "ícones",
+        "name": "Nome",
+        "lastModified": "Última modificação",
+        "size": "Tamanho",
+        "parentDirectory": "Diretório superior",
+        "empty": "vazio",
+        "folders": "pastas",
+        "files": "arquivos",
+        "download": "download"
+    },
+
+    "ru": {
+        "lang": "русский",
+        "details": "детали",
+        "icons": "иконки",
+        "name": "Имя",
+        "lastModified": "Последние изменения",
+        "size": "Размер",
+        "parentDirectory": "Главная директория",
+        "empty": "пусто",
+        "folders": "папки",
+        "files": "файлы",
+        "download": "download"
+    },
+
     "sk": {
         "lang": "slovenčina",
         "details": "podrobnosti",
@@ -211,15 +295,15 @@ h5aiLangs = {
         "download": "download"
     },
 
-    "es": {
-        "lang": "español",
-        "details": "Detalles",
-        "icons": "Íconos",
-        "name": "Nombre",
-        "lastModified": "Última modificación",
-        "size": "Tamaño",
-        "parentDirectory": "Directorio superior",
-        "empty": "vacío",
+    "sv": {
+        "lang": "svenska",
+        "details": "detaljerad",
+        "icons": "ikoner",
+        "name": "Filnamn",
+        "lastModified": "Senast ändrad",
+        "size": "Filstorlek",
+        "parentDirectory": "Till överordnad mapp",
+        "empty": "tom",
         "folders": "folders",
         "files": "files",
         "download": "download"
@@ -239,48 +323,6 @@ h5aiLangs = {
         "download": "indir"
     },
 
-    "pt": {
-        "lang": "português",
-        "details": "detalhes",
-        "icons": "ícones",
-        "name": "Nome",
-        "lastModified": "Última modificação",
-        "size": "Tamanho",
-        "parentDirectory": "Diretório superior",
-        "empty": "vazio",
-        "folders": "pastas",
-        "files": "arquivos",
-        "download": "download"
-    },
-
-    "bg": {
-        "lang": "български",
-        "details": "детайли",
-        "icons": "икони",
-        "name": "Име",
-        "lastModified": "Последна промяна",
-        "size": "Размер",
-        "parentDirectory": "Предходна директория",
-        "empty": "празно",
-        "folders": "папки",
-        "files": "файлове",
-        "download": "download"
-    },
-
-    "lv": {
-        "lang": "latviešu",
-        "details": "detaļas",
-        "icons": "ikonas",
-        "name": "Nosaukums",
-        "lastModified": "Pēdējoreiz modificēts",
-        "size": "Izmērs",
-        "parentDirectory": "Vecākdirektorijs",
-        "empty": "tukšs",
-        "folders": "mapes",
-        "files": "faili",
-        "download": "lejupielādēt"
-    },
-
     "zh-cn": {
         "lang": "简体中文",
         "details": "详情",
@@ -293,47 +335,5 @@ h5aiLangs = {
         "folders": "文件夹",
         "files": "文件",
         "download": "download"
-    },
-
-    "pl": {
-        "lang": "polski",
-        "details": "szczegóły",
-        "icons": "ikony",
-        "name": "Nazwa",
-        "lastModified": "Ostatnia modyfikacja",
-        "size": "Rozmiar",
-        "parentDirectory": "Katalog nadrzędny",
-        "empty": "pusty",
-        "folders": "foldery",
-        "files": "pliki",
-        "download": "download"
-    },
-
-    "ru": {
-        "lang": "русский",
-        "details": "детали",
-        "icons": "иконки",
-        "name": "Имя",
-        "lastModified": "Последние изменения",
-        "size": "Размер",
-        "parentDirectory": "Главная директория",
-        "empty": "пусто",
-        "folders": "папки",
-        "files": "файлы",
-        "download": "download"
-    },
-
-    "it": {
-       "lang": "italiano",
-       "details": "dettagli",
-       "icons": "icone",
-       "name": "Nome",
-       "lastModified": "Ultima modifica",
-       "size": "Dimensione",
-       "parentDirectory": "Cartella Superiore",
-       "empty": "vuota",
-       "folders": "cartelle",
-       "files": "file",
-       "download": "download"
-   }
+    }
 };

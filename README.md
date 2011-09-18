@@ -12,7 +12,7 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 
 ### v0.16 · *2011-09-??*
 
-* 
+* sorted translations in `options.js`
 
 
 ### v0.15.2 · *2011-09-18*
