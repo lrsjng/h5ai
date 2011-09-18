@@ -234,9 +234,9 @@ h5aiLangs = {
         "size": "Boyut",
         "parentDirectory": "Üst Dizin",
         "empty": "boş",
-        "folders": "folders",
-        "files": "files",
-        "download": "download"
+        "folders": "klasörler",
+        "files": "dosyalar",
+        "download": "indir"
     },
 
     "pt": {
@@ -278,7 +278,7 @@ h5aiLangs = {
         "empty": "tukšs",
         "folders": "mapes",
         "files": "faili",
-        "download": "download"
+        "download": "lejupielādēt"
     },
 
     "zh-cn": {
@@ -321,5 +321,19 @@ h5aiLangs = {
         "folders": "папки",
         "files": "файлы",
         "download": "download"
-    }
+    },
+
+    "it": {
+       "lang": "italiano",
+       "details": "dettagli",
+       "icons": "icone",
+       "name": "Nome",
+       "lastModified": "Ultima modifica",
+       "size": "Dimensione",
+       "parentDirectory": "Cartella Superiore",
+       "empty": "vuota",
+       "folders": "cartelle",
+       "files": "file",
+       "download": "download"
+   }
 };

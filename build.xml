@@ -3,8 +3,10 @@
     name="h5ai"
     basedir="."
     default="release"
-    xmlns:scripp="antlib:de.larsjung.scripp.ant"
 >
+
+    <import file="tools/wepp.ant.xml" />
+
     <target name="init">
         <property file="build.properties" />
         <tstamp>
@@ -12,19 +14,12 @@
         </tstamp>
         <property name="build.label" value="${project.name} ${project.version} b${build.stamp}" />
         <echo>Build: ${build.label}</echo>
-        <taskdef
-            resource="de/larsjung/scripp/ant/antlib.xml"
-            uri="antlib:de.larsjung.scripp.ant"
-            classpath="${lib.scripp.jar}"
-        />
     </target>
-
 
     <target name="clean" depends="init">
         <delete dir="${build.dir}" />
         <delete dir="${release.dir}" />
     </target>
-
 
     <target name="build-prepare" depends="clean">
         <mkdir dir="${build.dir}" />
@@ -41,18 +36,15 @@
         </replace>
     </target>
 
-
     <target name="build" depends="build-prepare">
-        <scripp.dir dir="${build.dir}/h5ai/css" />
-        <scripp.dir dir="${build.dir}/h5ai/js" />
+        <wepp.dir dir="${build.dir}/h5ai/css" />
+        <wepp.dir dir="${build.dir}/h5ai/js" />
     </target>
-
 
     <target name="build-uncompressed" depends="build-prepare">
-        <scripp.dir dir="${build.dir}/h5ai/css" compress="false" />
-        <scripp.dir dir="${build.dir}/h5ai/js" compress="false" />
+        <wepp.dir dir="${build.dir}/h5ai/css" args="--nc" />
+        <wepp.dir dir="${build.dir}/h5ai/js" args="--nc" />
     </target>
-
 
     <target name="release" depends="build">
         <mkdir dir="${release.dir}" />
@@ -62,20 +54,4 @@
         <delete file="${release.dir}/${project.name}-${project.version}.tar" />
     </target>
 
-
-    <macrodef name="scripp.dir">
-        <attribute name="dir" />
-        <attribute name="compress" default="true" />
-        <sequential>
-            <scripp:process compress="@{compress}">
-                <fileset dir="@{dir}" includes="**/*.less,**/*.css,**/*.js" excludes="inc/**/*,**/*.min.css,**/*.min.js" />
-                <globmapper from="*.less" to="*.css" />
-                <globmapper from="*.css" to="*.css" />
-                <globmapper from="*.js" to="*.js" />
-            </scripp:process>
-            <delete dir="@{dir}/inc">
-                <fileset dir="@{dir}" includes="**/*.less" />
-            </delete>
-        </sequential>
-    </macrodef>
 </project>

@@ -1,0 +1,4 @@
+#! /usr/bin/env node
+// -*- js -*-
+
+require("wepp").processArgs(process.argv);

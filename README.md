@@ -10,6 +10,12 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
+### v0.15.2 · *2011-09-18*
+
+* added it translation by [Salvo Gentile](http://github.com/SalvoGentile) and [Marco Patriarca](http://github.com/Fexys)
+* switched build process from scripp to wepp
+
+
 ### v0.15.1 · *2011-09-06*
 
 * fixed security issues with the zipped download feature
