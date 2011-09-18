@@ -10,6 +10,11 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
+### v0.16 · *2011-09-??*
+
+* 
+
+
 ### v0.15.2 · *2011-09-18*
 
 * added it translation by [Salvo Gentile](http://github.com/SalvoGentile) and [Marco Patriarca](http://github.com/Fexys)
