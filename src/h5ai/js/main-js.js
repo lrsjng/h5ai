@@ -27,4 +27,4 @@
         h5ai.init();
     });
 
-})(jQuery);
+}(jQuery));

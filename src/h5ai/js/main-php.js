@@ -21,4 +21,4 @@
         h5ai.shiftTree(false, true);
     });
 
-})(jQuery);
+}(jQuery));
