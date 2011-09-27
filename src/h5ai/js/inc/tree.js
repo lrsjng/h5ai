@@ -1,7 +1,6 @@
+/*global $, Objects */
 
-var Tree = function (pathCache, h5ai) {
-    "use strict";
-    /*global $*/
+Objects.Tree = function (pathCache, h5ai) {
 
     var contentTypeRegEx = /^text\/html;h5ai=/,
         pathnameStatusCache = {},
@@ -45,11 +44,9 @@ var Tree = function (pathCache, h5ai) {
         },
         updatePaths = function () {
 
-            var ref;
-
-            for (ref in pathCache.cache) {
-                updatePath(pathCache.cache[ref]);
-            }
+            $.each(pathCache.cache, function (ref, cached) {
+                updatePath(cached);
+            });
         },
         fetchStatusAndContent = function (pathname, includeParent, callback) {
 

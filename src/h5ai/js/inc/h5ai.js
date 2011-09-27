@@ -1,7 +1,6 @@
+/*global window, $, Objects, localStorage */
 
-var H5ai = function (options, langs) {
-    "use strict";
-    /*global $, window, localStorage*/
+Objects.H5ai = function (options, langs) {
 
     var defaults = {
             store: {
@@ -29,7 +28,7 @@ var H5ai = function (options, langs) {
             ignore: ["h5ai", "h5ai.header.html", "h5ai.footer.html"],
             ignoreRE: ["/^\\./"],
             showThumbs: true,
-            
+
             zippedDownload: true
         },
         settings = $.extend({}, defaults, options),
@@ -41,11 +40,9 @@ var H5ai = function (options, langs) {
         },
         triggerPathClick = function (path, context) {
 
-            var i, l, a = settings.callbacks.pathClick;
-
-            for (i = 0, l = a.length; i < l; i++) {
-                a[i].call(window, path, context);
-            }
+            $.each(settings.callbacks.pathClick, function (idx, callback) {
+                callback.call(window, path, context);
+            });
         },
         getViewmode = function () {
 
@@ -144,14 +141,14 @@ var H5ai = function (options, langs) {
                     $(".status.default").show();
                     $(".status.dynamic").empty().hide();
                 }
-          );
+         );
         },
         shiftTree = function (forceVisible, dontAnimate) {
 
             var $tree = $("#tree"),
                 $extended = $("#extended");
 
-            if (settings.slideTree && $tree.outerWidth() < $extended.offset().left || forceVisible) {
+            if ((settings.slideTree && $tree.outerWidth() < $extended.offset().left) || forceVisible) {
                 if (dontAnimate) {
                     $tree.stop().css({ left: 0 });
                 } else {
@@ -170,7 +167,7 @@ var H5ai = function (options, langs) {
             $("#tree").hover(
                 function () { shiftTree(true); },
                 function () { shiftTree(); }
-         );
+            );
             $(window).resize(function () { shiftTree(); });
             shiftTree(false, true);
         },
@@ -185,7 +182,7 @@ var H5ai = function (options, langs) {
                     $a.hover(
                         function () { $("a[href='" + href + "']").addClass("hover"); },
                         function () { $("a[href='" + href + "']").removeClass("hover"); }
-                );
+                    );
                 });
             }
         },
@@ -211,9 +208,9 @@ var H5ai = function (options, langs) {
 
             selected = langs[lang];
             if (selected) {
-                for (key in selected) {
-                    $(".l10n-" + key).text(selected[key]);
-                }
+                $.each(selected, function (key, value) {
+                    $(".l10n-" + key).text(value);
+                });
                 $(".lang").text(lang);
                 $(".langOption").removeClass("current");
                 $(".langOption." + lang).addClass("current");
@@ -225,24 +222,22 @@ var H5ai = function (options, langs) {
                 sortedLangsKeys = [],
                 $ul;
 
-            for (lang in langs) {
+            $.each(langs, function (lang) {
                 sortedLangsKeys.push(lang);
-            }
+            });
             sortedLangsKeys.sort();
 
             $ul = $("<ul />");
-            for (idx in sortedLangsKeys) {
-                (function (lang) {
-                    $("<li class='langOption' />")
-                        .addClass(lang)
-                        .text(lang + " - " + langs[lang].lang)
-                        .appendTo($ul)
-                        .click(function () {
-                            localStorage.setItem(settings.store.lang, lang);
-                            localize(langs, lang, false);
-                        });
-                })(sortedLangsKeys[idx]);
-            }
+            $.each(sortedLangsKeys, function (idx, lang) {
+                $("<li class='langOption' />")
+                    .addClass(lang)
+                    .text(lang + " - " + langs[lang].lang)
+                    .appendTo($ul)
+                    .click(function () {
+                        localStorage.setItem(settings.store.lang, lang);
+                        localize(langs, lang, false);
+                    });
+            });
             $("#langSelector .langOptions").append($ul);
             $("#langSelector").hover(
                 function () {
@@ -252,46 +247,47 @@ var H5ai = function (options, langs) {
                 function () {
                     $(".langOptions").stop(true, true).fadeOut();
                 }
-        );
+            );
+        },
+        onIndicatorClick = function (event) {
+
+            var $indicator = $(this),
+                $entry = $indicator.closest(".entry");
+
+            if ($indicator.hasClass("unknown")) {
+                $.get("/h5ai/php/treecontent.php", { "href": $entry.find("> a").attr("href") }, function (html) {
+                    
+                    var $content = $(html);
+
+                    $indicator.removeClass("unknown");
+                    if ($content.find("> li").size() === 0) {
+                        $indicator.replaceWith($("<span class='blank' />"));
+                    } else {
+                        $indicator.addClass("open");
+                        $entry.find("> .content").replaceWith($content);
+                        $("#tree").get(0).updateScrollbar();
+                        initIndicators();
+                    }
+                });
+            } else if ($indicator.hasClass("open")) {
+                $indicator.removeClass("open");
+                $("#tree").get(0).updateScrollbar(true);
+                $entry.find("> .content").slideUp(function () {
+                    $("#tree").get(0).updateScrollbar();
+                });
+            } else {
+                $indicator.addClass("open");
+                $("#tree").get(0).updateScrollbar(true);
+                $entry.find("> .content").slideDown(function () {
+                    $("#tree").get(0).updateScrollbar();
+                });
+            }
         },
         initIndicators = function () {
 
-            $("#tree .entry.folder:not(.initiatedIndicator)").each(function () {
+            $("#tree .entry.folder .indicator:not(.initiated)").each(function () {
 
-                var $entry = $(this).addClass("initiatedIndicator"),
-                    $indicator = $entry.find("> .indicator");
-
-                $indicator.click(function (event) {
-
-                    var $content;
-
-                    if ($indicator.hasClass("unknown")) {
-                        $.get("/h5ai/php/treecontent.php", { "href": $entry.find("> a").attr("href") }, function (html) {
-                            $content = $(html);
-                            $indicator.removeClass("unknown");
-                            if ($content.find("> li").size() === 0) {
-                                $indicator.replaceWith($("<span class='blank' />"));
-                            } else {
-                                $indicator.addClass("open");
-                                $entry.find("> .content").replaceWith($content);
-                                $("#tree").get(0).updateScrollbar();
-                                initIndicators();
-                            }
-                        });
-                    } else if ($indicator.hasClass("open")) {
-                        $indicator.removeClass("open");
-                        $("#tree").get(0).updateScrollbar(true);
-                        $entry.find("> .content").slideUp(function () {
-                            $("#tree").get(0).updateScrollbar();
-                        });
-                    } else {
-                        $indicator.addClass("open");
-                        $("#tree").get(0).updateScrollbar(true);
-                        $entry.find("> .content").slideDown(function () {
-                            $("#tree").get(0).updateScrollbar();
-                        });
-                    }
-                });
+                $(this).addClass("initiated").click(onIndicatorClick);
             });
         },
         initZippedDownload = function () {
@@ -302,9 +298,9 @@ var H5ai = function (options, langs) {
                 selected = function (hrefs) {
 
                     var query, idx;
-                    for (idx in hrefs) {
-                        query = query ? query + ":" + hrefs[idx] : hrefs[idx];
-                    }
+                    $.each(hrefs, function (idx, href) {
+                        query = query ? query + ":" + href : href;
+                    });
                     query = "/h5ai/php/zipcontent.php?hrefs=" + query;
                     $("#download").show().find("a").attr("href", query);
                 },
@@ -388,6 +384,7 @@ var H5ai = function (options, langs) {
             linkHoverStates: linkHoverStates,
             pathClick: pathClick,
             triggerPathClick: triggerPathClick,
+            initIndicators: initIndicators,
             init: init
         };
 

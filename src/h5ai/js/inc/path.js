@@ -1,7 +1,6 @@
+/*global $, Objects */
 
-var Path = function (pathCache, folder, tableRow) {
-    "use strict";
-    /*global $, h5ai, tree*/
+Objects.Path = function (pathCache, folder, tableRow) {
 
     var path,
         checkedDecodeUri = function (uri) {
@@ -11,7 +10,7 @@ var Path = function (pathCache, folder, tableRow) {
         },
         isEmpty = function () {
 
-            return path.content === undefined || $.isEmptyObject(path.content);
+            return !path.content || $.isEmptyObject(path.content);
         },
         onClick = function (context) {
 
@@ -124,7 +123,7 @@ var Path = function (pathCache, folder, tableRow) {
                 if (!h5ai.settings.setParentFolderLabels) {
                     $label.addClass("l10n-parentDirectory");
                 }
-                $html.addClass("parentfolder");
+                $html.addClass("folder-parent");
             }
 
             if (!isNaN(path.status)) {
@@ -171,6 +170,7 @@ var Path = function (pathCache, folder, tableRow) {
                     } else if (path.treeOpen) {
                         $indicator.addClass("open");
                     }
+
                     $indicator.click(function(event) {
 
                         if ($indicator.hasClass("unknown")) {
@@ -204,9 +204,10 @@ var Path = function (pathCache, folder, tableRow) {
                         }
                     });
                     $html.addClass("initiatedIndicator");
+
                     $blank.replaceWith($indicator);
                 }
-
+               
                 // is path the domain?
                 if (path.isDomain) {
                     $html.addClass("domain");
@@ -222,9 +223,9 @@ var Path = function (pathCache, folder, tableRow) {
                 // does it have subfolders?
                 if (!path.isEmpty()) {
                     $ul = $("<ul class='content' />").appendTo($html);
-                    for (idx in path.content) {
-                        $("<li />").append(path.content[idx].updateTreeHtml()).appendTo($ul);
-                    }
+                    $.each(path.content, function (idx, entry) {
+                        $("<li />").append(entry.updateTreeHtml()).appendTo($ul);
+                    });
                     if (path.status === undefined || !path.treeOpen) {
                         $ul.hide();
                     }
@@ -342,9 +343,7 @@ var Path = function (pathCache, folder, tableRow) {
 };
 
 
-var PathCache = function () {
-    "use strict";
-    /*global $*/
+Objects.PathCache = function () {
 
     var pathCache,
         cache = {},
@@ -385,7 +384,7 @@ var PathCache = function () {
                 path = cache[absHref];
 
             if (!path) {
-                path = new Path(pathCache, folder, tableRow);
+                path = new Objects.Path(pathCache, folder, tableRow);
                 if (!path.isParentFolder) {
                     cache[path.absHref] = path;
                 }
@@ -397,7 +396,8 @@ var PathCache = function () {
     pathCache = {
         splitPathname: splitPathname,
         pathEndsWithSlash: pathEndsWithSlash,
-        getPath: getPath
+        getPath: getPath,
+        cache: cache
     };
 
     return pathCache;

@@ -1,6 +1,7 @@
+/*global window, jQuery */
+
 (function ($) {
     "use strict";
-    /*global jQuery, window*/
 
     // http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
     // modified

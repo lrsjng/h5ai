@@ -1,7 +1,6 @@
+/*global $, Objects */
 
-var Extended = function (pathCache, h5ai) {
-    "use strict";
-    /*global $*/
+Objects.Extended = function (pathCache, h5ai) {
 
     var settings = {
             customHeader: "h5ai.header.html",
@@ -16,21 +15,19 @@ var Extended = function (pathCache, h5ai) {
         },
         initBreadcrumb = function () {
 
-            var idx, part,
-                $ul = $("body > nav ul"),
+            var $ul = $("body > nav ul"),
                 pathname = "/",
                 path = pathCache.getPath(pathname),
                 pathnameParts = document.location.pathname.split("/");
 
             $ul.append(path.updateCrumbHtml());
 
-            for (idx in pathnameParts) {
-                part = pathnameParts[idx];
+            $.each(pathnameParts, function (idx, part) {
                 if (part !== "") {
                     pathname += part + "/";
                     $ul.append(pathCache.getPath(pathname).updateCrumbHtml());
                 }
-            }
+            });
         },
         initExtendedView = function () {
 
@@ -47,11 +44,11 @@ var Extended = function (pathCache, h5ai) {
 
             $ul = $("<ul/>");
             $li = $("<li class='header' />")
-                .appendTo($ul)
-                .append($("<a class='icon'></a>"))
-                .append($("<a class='label' href='" + $label.attr("href") + "'><span class='l10n-name'>" + $label.text() + "</span></a>"))
-                .append($("<a class='date' href='" + $date.attr("href") + "'><span class='l10n-lastModified'>" + $date.text() + "</span></a>"))
-                .append($("<a class='size' href='" + $size.attr("href") + "'><span class='l10n-size'>" + $size.text() + "</span></a>"));
+                    .appendTo($ul)
+                    .append($("<a class='icon'></a>"))
+                    .append($("<a class='label' href='" + $label.attr("href") + "'><span class='l10n-name'>" + $label.text() + "</span></a>"))
+                    .append($("<a class='date' href='" + $date.attr("href") + "'><span class='l10n-lastModified'>" + $date.text() + "</span></a>"))
+                    .append($("<a class='size' href='" + $size.attr("href") + "'><span class='l10n-size'>" + $size.text() + "</span></a>"));
 
             // header sort icons
             if (order.ascending) {

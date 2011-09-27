@@ -61,6 +61,8 @@
         </span>
     </footer>
     <script src="/h5ai/js/lib/jquery.min.js"></script>
+    <script src="/h5ai/js/lib/jquery.mousewheel.min.js"></script>
+    <script src="/h5ai/js/lib/jquery.fracs-core.min.js"></script>
     <script src="/h5ai/options.js"></script>
     <script src="/h5ai/js/main-php.js"></script>
     <section id="table">
