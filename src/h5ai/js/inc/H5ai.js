@@ -1,6 +1,6 @@
-/*global window, $, Objects, localStorage */
+/*global window, $, H5aiJs, localStorage */
 
-Objects.H5ai = function (options, langs) {
+H5aiJs.factory.H5ai = function (options, langs) {
 
     var defaults = {
             store: {
@@ -256,7 +256,7 @@ Objects.H5ai = function (options, langs) {
 
             if ($indicator.hasClass("unknown")) {
                 $.get("/h5ai/php/treecontent.php", { "href": $entry.find("> a").attr("href") }, function (html) {
-                    
+
                     var $content = $(html);
 
                     $indicator.removeClass("unknown");

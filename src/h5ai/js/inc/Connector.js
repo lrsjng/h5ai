@@ -1,13 +1,13 @@
-/*global $, Objects */
+/*global $, H5aiJs */
 
-Objects.Tree = function (pathCache, h5ai) {
+H5aiJs.factory.Connector = function () {
 
     var contentTypeRegEx = /^text\/html;h5ai=/,
         pathnameStatusCache = {},
         fetchStatus = function (pathname, callback) {
 
-            if (h5ai.settings.folderStatus[pathname]) {
-                callback(h5ai.settings.folderStatus[pathname]);
+            if (H5aiJs.h5ai.settings.folderStatus[pathname]) {
+                callback(H5aiJs.h5ai.settings.folderStatus[pathname]);
                 return;
             } else if (pathnameStatusCache[pathname]) {
                 callback(pathnameStatusCache[pathname]);
@@ -37,14 +37,14 @@ Objects.Tree = function (pathCache, h5ai) {
                     if (status !== "h5ai") {
                         path.status = status;
                     }
-                    path.updateHtml();
-                    h5ai.linkHoverStates();
+                    H5aiJs.html.updateHtml(path);
+                    H5aiJs.h5ai.linkHoverStates();
                 });
             }
         },
         updatePaths = function () {
 
-            $.each(pathCache.cache, function (ref, cached) {
+            $.each(H5aiJs.pathCache.cache, function (ref, cached) {
                 updatePath(cached);
             });
         },
@@ -76,7 +76,7 @@ Objects.Tree = function (pathCache, h5ai) {
 
                         $(html).find("#table td").closest("tr").each(function () {
 
-                            var path = pathCache.getPath(pathname, this);
+                            var path = H5aiJs.pathCache.getPath(pathname, this);
 
                             if (path.isFolder && (!path.isParentFolder || includeParent)) {
                                 content[path.absHref] = path;
@@ -92,7 +92,7 @@ Objects.Tree = function (pathCache, h5ai) {
 
             fetchStatusAndContent(pathname, false, function (status, content) {
 
-                var path = pathCache.getPath(pathname);
+                var path = H5aiJs.pathCache.getPath(pathname);
 
                 path.status = status;
                 path.content = content;
@@ -103,7 +103,7 @@ Objects.Tree = function (pathCache, h5ai) {
 
             fetchPath(pathname, function (path) {
 
-                var parent = pathCache.splitPathname(pathname)[0];
+                var parent = H5aiJs.pathCache.splitPathname(pathname)[0];
 
                 path.treeOpen = true;
                 if (childPath) {
@@ -120,25 +120,24 @@ Objects.Tree = function (pathCache, h5ai) {
 
             fetchTree(document.location.pathname, function (path) {
                 $("#tree")
-                    .append(path.updateTreeHtml())
+                    .append(H5aiJs.html.updateTreeHtml(path))
                     .scrollpanel()
                     .show();
-                h5ai.shiftTree(false, true);
-                h5ai.linkHoverStates();
+                H5aiJs.h5ai.shiftTree(false, true);
+                H5aiJs.h5ai.linkHoverStates();
                 setTimeout(function () { $("#tree").get(0).updateScrollbar(); }, 1);
             });
         },
         init = function () {
 
-            if (h5ai.settings.showTree) {
+            if (H5aiJs.h5ai.settings.showTree) {
                 updatePaths();
                 populateTree();
             }
-        },
-        tree = {
-            fetchStatusAndContent: fetchStatusAndContent,
-            init: init
         };
 
-    return tree;
+    return {
+        fetchStatusAndContent: fetchStatusAndContent,
+        init: init
+    };
 };

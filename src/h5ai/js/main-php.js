@@ -6,22 +6,26 @@
 (function($) {
     "use strict";
 
-    var Objects = {},
-        h5ai;
+    var H5aiJs = {
+            factory: {},
+            init: function () {
+                this.h5ai = new this.factory.H5ai(h5aiOptions, h5aiLangs);
 
-    // @include "inc/h5ai.js"
+                this.h5ai.init();
+                $("#tree").scrollpanel();
+                this.h5ai.shiftTree(false, true);
 
-    h5ai = new Objects.H5ai(h5aiOptions, h5aiLangs);
+                $.h5ai = {
+                    click: $.proxy(this.h5ai.pathClick, this.h5ai)
+                };
+            }
+        };
 
-    $.h5ai = {
-        click: $.proxy(h5ai.pathClick, h5ai)
-    };
+    // @include "inc/H5ai.js"
 
     $(function () {
 
-        h5ai.init();
-        $("#tree").scrollpanel();
-        h5ai.shiftTree(false, true);
+        H5aiJs.init();
     });
 
 }(jQuery));
