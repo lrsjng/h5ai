@@ -2,7 +2,8 @@
 
 H5aiJs.factory.H5ai = function (options, langs) {
 
-    var defaults = {
+    var $window = $(window),
+        defaults = {
             store: {
                 viewmode: "h5ai.viewmode",
                 lang: "h5ai.lang"
@@ -41,7 +42,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
         triggerPathClick = function (path, context) {
 
             $.each(settings.callbacks.pathClick, function (idx, callback) {
-                callback.call(window, path, context);
+                callback(path, context);
             });
         },
         getViewmode = function () {
@@ -82,7 +83,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
 
             var adjustTopSpace = function () {
 
-                var winHeight = $(window).height(),
+                var winHeight = $window.height(),
                     navHeight = $("body > nav").outerHeight(),
                     footerHeight = $("body > footer").outerHeight(),
                     contentSpacing = 50,
@@ -103,7 +104,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
                 } catch (err) {}
             };
 
-            $(window).resize(function () {
+            $window.resize(function () {
                 adjustTopSpace();
             });
             adjustTopSpace();
@@ -141,7 +142,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
                     $(".status.default").show();
                     $(".status.dynamic").empty().hide();
                 }
-         );
+            );
         },
         shiftTree = function (forceVisible, dontAnimate) {
 
@@ -168,7 +169,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
                 function () { shiftTree(true); },
                 function () { shiftTree(); }
             );
-            $(window).resize(function () { shiftTree(); });
+            $window.resize(function () { shiftTree(); });
             shiftTree(false, true);
         },
         linkHoverStates = function () {
@@ -266,7 +267,9 @@ H5aiJs.factory.H5ai = function (options, langs) {
                         $indicator.addClass("open");
                         $entry.find("> .content").replaceWith($content);
                         $("#tree").get(0).updateScrollbar();
-                        initIndicators();
+                        $content.find(".indicator:not(.initiated)")
+                            .click(onIndicatorClick)
+                            .addClass("initiated");
                     }
                 });
             } else if ($indicator.hasClass("open")) {
@@ -285,16 +288,14 @@ H5aiJs.factory.H5ai = function (options, langs) {
         },
         initIndicators = function () {
 
-            $("#tree .entry.folder .indicator:not(.initiated)").each(function () {
-
-                $(this).addClass("initiated").click(onIndicatorClick);
-            });
+            $("#tree .entry.folder .indicator:not(.initiated)")
+                .click(onIndicatorClick)
+                .addClass("initiated");
         },
         initZippedDownload = function () {
 
             var x = 0,
                 y = 0,
-                $window = $(window),
                 selected = function (hrefs) {
 
                     var query, idx;
@@ -377,16 +378,15 @@ H5aiJs.factory.H5ai = function (options, langs) {
             localize(langs, settings.lang, settings.useBrowserLang);
             initIndicators();
             initZippedDownload();
-        },
-        h5ai = {
-            settings: settings,
-            shiftTree: shiftTree,
-            linkHoverStates: linkHoverStates,
-            pathClick: pathClick,
-            triggerPathClick: triggerPathClick,
-            initIndicators: initIndicators,
-            init: init
         };
 
-    return h5ai;
+    return {
+        settings: settings,
+        shiftTree: shiftTree,
+        linkHoverStates: linkHoverStates,
+        pathClick: pathClick,
+        triggerPathClick: triggerPathClick,
+        initIndicators: initIndicators,
+        init: init
+    };
 };

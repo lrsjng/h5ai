@@ -4,15 +4,15 @@
     "use strict";
 
     var init = function (htmlElement) {
-    
+
             var $element = $(htmlElement),
                 $scrollbar, $drag, $wrapper, $content, mouseOffsetY, updateId,
                 update, scroll;
-    
+
             if (!$element.css("position") || $element.css("position") === "static") {
                 $element.css("position", "relative");
             }
-    
+
             $scrollbar = $("<div class='scrollbar' />");
             $drag = $("<div class='drag' />").appendTo($scrollbar);
             $element
@@ -21,25 +21,25 @@
             $wrapper = $element.find("> .wrapper");
             $content = $wrapper.find("> .content");
             mouseOffsetY = 0;
-    
+
             update = function (repeat) {
-    
+
                 var visibleHeight, contentHeight, scrollTop, scrollTopFrac, visVertFrac;
-    
+
                 if (updateId && !repeat) {
                     clearInterval(updateId);
                     updateId = undefined;
                 } else if (!updateId && repeat) {
                     updateId = setInterval(function() { update(true); }, 50);
                 }
-    
+
                 $wrapper.css("height", $element.height());
                 visibleHeight = $element.height();
                 contentHeight = $content.outerHeight();
                 scrollTop = $wrapper.scrollTop();
                 scrollTopFrac = scrollTop / contentHeight;
                 visVertFrac = Math.min(visibleHeight / contentHeight, 1);
-    
+
                 if (visVertFrac < 1) {
                     $scrollbar
                         .fadeIn(50)
@@ -55,19 +55,19 @@
                     $scrollbar.fadeOut(50);
                 }
             };
-    
+
             scroll = function (event) {
-    
+
                 var clickFrac = (event.pageY - $scrollbar.offset().top - mouseOffsetY) / $scrollbar.height();
-    
+
                 $wrapper.scrollTop($content.outerHeight() * clickFrac);
                 update();
                 event.preventDefault();
             };
-    
+
             $element
                 .mousewheel(function (event, delta) {
-    
+
                     $wrapper.scrollTop($wrapper.scrollTop() - 50 * delta);
                     update();
                     event.stopPropagation();
@@ -90,14 +90,14 @@
                     cursor: "pointer"
                 })
                 .mousedown(function (event) {
-    
+
                     mouseOffsetY = $drag.outerHeight() / 2;
                     scroll(event);
                     $scrollbar.addClass("dragOn");
                     $(window)
                         .bind("mousemove", scroll)
                         .one("mouseup", function (event) {
-    
+
                             $scrollbar.removeClass("dragOn");
                             $(window).unbind("mousemove", scroll);
                             scroll(event);
@@ -106,9 +106,9 @@
                     event.preventDefault();
                 })
                 .each(function () {
-    
+
                     this.onselectstart = function () {
-    
+
                         return false;
                     };
                 });
@@ -119,14 +119,14 @@
                     width: "100%"
                 })
                 .mousedown(function (event) {
-    
+
                     mouseOffsetY = event.pageY - $drag.offset().top;
                     scroll(event);
                     $scrollbar.addClass("dragOn");
                     $(window)
                         .bind("mousemove", scroll)
                         .one("mouseup", function (event) {
-    
+
                             $scrollbar.removeClass("dragOn");
                             $(window).unbind("mousemove", scroll);
                             scroll(event);
@@ -134,7 +134,7 @@
                         });
                     event.stopPropagation();
                 });
-    
+
             update();
         };
 

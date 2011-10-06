@@ -99,18 +99,14 @@ H5aiJs.factory.Extended = function () {
 
             $(".folderCount").text($("#extended .entry.folder:not(.parentfolder)").size());
             $(".fileCount").text($("#extended .entry.file").size());
-        },
-        init = function () {
-
-            initTitle();
-            initBreadcrumb();
-            initExtendedView();
-            customize();
-            initCounts();
-        },
-        extended = {
-            init: init
         };
 
-    return extended;
+    this.init = function () {
+
+        initTitle();
+        initBreadcrumb();
+        initExtendedView();
+        customize();
+        initCounts();
+    };
 };

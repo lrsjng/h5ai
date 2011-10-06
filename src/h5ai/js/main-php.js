@@ -9,6 +9,7 @@
     var H5aiJs = {
             factory: {},
             init: function () {
+
                 this.h5ai = new this.factory.H5ai(h5aiOptions, h5aiLangs);
 
                 this.h5ai.init();

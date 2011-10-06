@@ -2,8 +2,7 @@
 
 H5aiJs.factory.PathCache = function () {
 
-    var pathCache,
-        cache = {},
+    var cache = {},
         rePathnameSplit = /^(\/(.*\/)*)([^\/]+\/?)$/,
         rePathEndsWithSlash = /\/$/,
         splitPathname = function (pathname) {
@@ -50,12 +49,8 @@ H5aiJs.factory.PathCache = function () {
             return path;
         };
 
-    pathCache = {
-        splitPathname: splitPathname,
-        pathEndsWithSlash: pathEndsWithSlash,
-        getPath: getPath,
-        cache: cache
-    };
-
-    return pathCache;
+    this.splitPathname = splitPathname;
+    this.pathEndsWithSlash = pathEndsWithSlash;
+    this.getPath = getPath;
+    this.cache = cache;
 };
