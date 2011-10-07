@@ -57,7 +57,7 @@ h5aiOptions = {
      * possible values. Adjust it to your needs. If lang is not found in
      * h5aiLangs it defaults to "en".
      */
-    "lang": null,
+    "lang": "en",
 
     /*
      * Try to use browser language, falls back to previous specified lang.
