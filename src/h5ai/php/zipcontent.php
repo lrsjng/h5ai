@@ -1,7 +1,7 @@
 <?php
 
 if (!array_key_exists("hrefs", $_REQUEST)) {
-    echo "failed";
+    echo "1: no href specified";
     exit;
 }
 
@@ -12,7 +12,6 @@ $h5ai = new H5ai();
 $zipit = new ZipIt($h5ai);
 
 $hrefs = explode(":", trim($_REQUEST["hrefs"]));
-
 $zipFile = $zipit->zip($hrefs);
 
 if ($zipFile !== false) {
@@ -22,7 +21,7 @@ if ($zipFile !== false) {
     header("Connection: close");
     readfile($zipFile);
 } else {
-    echo "sorry, something went wrong while building the zip.";
+    echo "2: something went wrong while building the zip";
 }
 
 ?>

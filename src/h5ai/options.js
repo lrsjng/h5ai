@@ -103,7 +103,7 @@ h5aiOptions = {
      * Enable zipped download of selected entries. Requieres
      * PHP on the server.
      */
-    "zippedDownload": true
+    "zippedDownload": false
 };
 
 
@@ -194,7 +194,7 @@ h5aiLangs = {
         "empty": "vide",
         "folders": "Répertoires",
         "files": "Fichiers",
-        "download": "download"
+        "download": "télécharger"
     },
 
     "it": {

@@ -95,7 +95,7 @@ H5aiJs.factory.Extended = function () {
                 }
             });
         },
-        initCounts = function () {
+        initTotals = function () {
 
             $(".folderCount").text($("#extended .entry.folder:not(.parentfolder)").size());
             $(".fileCount").text($("#extended .entry.file").size());
@@ -107,6 +107,6 @@ H5aiJs.factory.Extended = function () {
         initBreadcrumb();
         initExtendedView();
         customize();
-        initCounts();
+        initTotals();
     };
 };

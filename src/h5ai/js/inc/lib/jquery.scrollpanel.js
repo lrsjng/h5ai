@@ -1,7 +1,7 @@
-/*global window, jQuery */
 
 (function ($) {
     "use strict";
+    /*global window, jQuery */
 
     var init = function (htmlElement) {
 

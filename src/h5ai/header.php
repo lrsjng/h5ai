@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" type="image/png" href="/h5ai/images/h5ai-48x48.png">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold">
     <link rel="stylesheet" href="/h5ai/css/main-php.css">
-    <script src="/h5ai/js/lib/modernizr.min.js"></script>
+    <script src="/h5ai/js/modernizr.min.js"></script>
 </head>
 <body>
     <div id="selection-rect"></div>
@@ -60,9 +60,7 @@
             </span>
         </span>
     </footer>
-    <script src="/h5ai/js/lib/jquery.min.js"></script>
-    <script src="/h5ai/js/lib/jquery.mousewheel.min.js"></script>
-    <script src="/h5ai/js/lib/jquery.fracs-core.min.js"></script>
+    <script src="/h5ai/js/libs.js"></script>
     <script src="/h5ai/options.js"></script>
     <script src="/h5ai/js/main-php.js"></script>
     <section id="table">

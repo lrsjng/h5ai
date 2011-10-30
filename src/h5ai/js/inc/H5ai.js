@@ -1,12 +1,13 @@
-/*global window, $, H5aiJs, localStorage */
 
 H5aiJs.factory.H5ai = function (options, langs) {
+    /*global window, $, amplify*/
 
     var $window = $(window),
+        $document = $(document),
         defaults = {
             store: {
-                viewmode: "h5ai.viewmode",
-                lang: "h5ai.lang"
+                viewmode: "h5ai.pref.viewmode",
+                lang: "h5ai.pref.lang"
             },
             callbacks: {
                 pathClick: []
@@ -47,14 +48,14 @@ H5aiJs.factory.H5ai = function (options, langs) {
         },
         getViewmode = function () {
 
-            var viewmode = localStorage.getItem(settings.store.viewmode);
+            var viewmode = amplify.store(settings.store.viewmode);
 
             return $.inArray(viewmode, settings.viewmodes) >= 0 ? viewmode : settings.viewmodes[0];
         },
         applyViewmode = function (viewmode) {
 
             if (viewmode) {
-                localStorage.setItem(settings.store.viewmode, viewmode);
+                amplify.store(settings.store.viewmode, viewmode);
             }
             viewmode = getViewmode();
 
@@ -189,7 +190,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
         },
         localize = function (langs, lang, useBrowserLang) {
 
-            var storedLang = localStorage.getItem(settings.store.lang),
+            var storedLang = amplify.store(settings.store.lang),
                 browserLang, selected, key;
 
             if (langs[storedLang]) {
@@ -219,7 +220,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
         },
         initLangSelector = function (langs) {
 
-            var idx, lang,
+            var $langOptions = $(".langOptions"),
                 sortedLangsKeys = [],
                 $ul;
 
@@ -235,18 +236,22 @@ H5aiJs.factory.H5ai = function (options, langs) {
                     .text(lang + " - " + langs[lang].lang)
                     .appendTo($ul)
                     .click(function () {
-                        localStorage.setItem(settings.store.lang, lang);
+                        amplify.store(settings.store.lang, lang);
                         localize(langs, lang, false);
                     });
             });
             $("#langSelector .langOptions").append($ul);
             $("#langSelector").hover(
                 function () {
-                    var $ele = $(".langOptions");
-                    $ele.css("top", "-" + $ele.outerHeight() + "px").stop(true, true).fadeIn();
+                    $langOptions
+                        .css("top", "-" + $langOptions.outerHeight() + "px")
+                        .stop(true, true)
+                        .fadeIn();
                 },
                 function () {
-                    $(".langOptions").stop(true, true).fadeOut();
+                    $langOptions
+                        .stop(true, true)
+                        .fadeOut();
                 }
             );
         },
@@ -296,14 +301,23 @@ H5aiJs.factory.H5ai = function (options, langs) {
 
             var x = 0,
                 y = 0,
-                selected = function (hrefs) {
+                ctrl = false,
+                updateDownloadBtn = function () {
 
-                    var query, idx;
-                    $.each(hrefs, function (idx, href) {
-                        query = query ? query + ":" + href : href;
-                    });
-                    query = "/h5ai/php/zipcontent.php?hrefs=" + query;
-                    $("#download").show().find("a").attr("href", query);
+                    var query,
+                        href,
+                        $selected = $("#extended a.selected");
+
+                    if ($selected.size() > 0) {
+                        $selected.each(function () {
+                            href = $(this).attr("href");
+                            query = query ? query + ":" + href : href;
+                        });
+                        query = "/h5ai/php/zipcontent.php?hrefs=" + query;
+                        $("#download").show().find("a").attr("href", query);
+                    } else {
+                        $("#download").hide().find("a").attr("href", "#");
+                    }
                 },
                 selectionUpdate = function (event) {
 
@@ -317,41 +331,45 @@ H5aiJs.factory.H5ai = function (options, langs) {
                     $("#selection-rect").css({left: l, top: t, width: w, height: h});
 
                     sel = $("#selection-rect").fracs("rect");
-                    $("#extended a").removeClass("selected").each(function () {
+                    $("#extended a").removeClass("selecting").each(function () {
 
                         var $a = $(this),
                             rect = $a.fracs("rect"),
                             inter = sel.intersection(rect);
                         if (inter && !$a.closest(".entry").hasClass("folder-parent")) {
-                            $a.addClass("selected");
+                            $a.addClass("selecting");
                         }
                     });
                 },
                 selectionEnd = function (event) {
 
                     event.preventDefault();
+                    $document.unbind("mousemove", selectionUpdate);
                     $("#selection-rect").hide().css({left: 0, top: 0, width: 0, height: 0});
-
-                    $window.unbind("mousemove", selectionUpdate);
-
-                    var hrefs = [];
-                    $("#extended a.selected").each(function () {
-                        hrefs.push($(this).attr("href"));
-                    });
-                    if (hrefs.length > 0) {
-                        selected(hrefs);
-                    }
+                    $("#extended a.selecting.selected").removeClass("selecting").removeClass("selected");
+                    $("#extended a.selecting").removeClass("selecting").addClass("selected");
+                    updateDownloadBtn();
                 },
                 selectionStart = function (event) {
 
-                    event.preventDefault();
+                    var view = $.fracs.viewport();
+
                     x = event.pageX;
                     y = event.pageY;
-                    $("#download").hide().find("a").attr("href", "#");
-                    $("#extended a").removeClass("selected");
-                    $("#selection-rect").show().css({left: x, top: y, width: 0, height: 0});
+                    if (x >= view.right || y >= view.bottom) {
+                        // don't block the scrollbars
+                        return;
+                    }
 
-                    $window
+                    event.preventDefault();
+                    if (!ctrl) {
+                        $("#extended a").removeClass("selected");
+                        updateDownloadBtn();
+                    }
+                    $("#selection-rect").show().css({left: x, top: y, width: 0, height: 0});
+                    selectionUpdate(event);
+
+                    $document
                         .bind("mousemove", selectionUpdate)
                         .one("mouseup", selectionEnd);
                 },
@@ -359,12 +377,29 @@ H5aiJs.factory.H5ai = function (options, langs) {
 
                     event.stopPropagation();
                     return false;
+                },
+                noSelectionUnlessCtrl = function (event) {
+
+                    if (!ctrl) {
+                        noSelection(event);
+                    }
                 };
 
             if (settings.zippedDownload) {
-                $("body>nav,body>footer,#tree,#extended a").bind("mousedown", noSelection);
-                $("#extended a").live("mousedown", noSelection);
-                $window.bind("mousedown", selectionStart);
+                $("body>nav,body>footer,#tree").bind("mousedown", noSelection);
+                $("#extended .entry a").bind("mousedown", noSelectionUnlessCtrl).live("mousedown", noSelectionUnlessCtrl);
+                $document
+                    .bind("mousedown", selectionStart)
+                    .keydown(function (event) {
+                        if (event.keyCode === 17) {
+                            ctrl = true;
+                        }
+                    })
+                    .keyup(function (event) {
+                        if (event.keyCode === 17) {
+                            ctrl = false;
+                        }
+                    });
             }
         },
         init = function () {

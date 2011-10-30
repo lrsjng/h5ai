@@ -1,7 +1,3 @@
-/*global jQuery, h5aiOptions, h5aiLangs*/
-
-// @include "inc/jquery.scrollpanel.js"
-// @include "inc/jquery.utils.js"
 
 (function($) {
     "use strict";
