@@ -27,7 +27,8 @@ IndexIgnore          h5ai  h5ai.header.html  h5ai.footer.html
 # table options
 ################################
 
-# syntax for default sort order is: IndexOrderDefault Ascending|Descending Name|Date|Size
+# syntax for default sort order is:
+# IndexOrderDefault Ascending|Descending Name|Date|Size
 IndexOrderDefault    Ascending Name
 
 IndexOptions         Type=text/html;h5ai=%BUILD_VERSION%

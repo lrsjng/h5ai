@@ -57,7 +57,7 @@ h5aiOptions = {
      * possible values. Adjust it to your needs. If lang is not found in
      * h5aiLangs it defaults to "en".
      */
-    "lang": null,
+    "lang": "en",
 
     /*
      * Try to use browser language, falls back to previous specified lang.
@@ -103,7 +103,7 @@ h5aiOptions = {
      * Enable zipped download of selected entries. Requieres
      * PHP on the server.
      */
-    "zippedDownload": true
+    "zippedDownload": false
 };
 
 
@@ -194,7 +194,7 @@ h5aiLangs = {
         "empty": "vide",
         "folders": "Répertoires",
         "files": "Fichiers",
-        "download": "download"
+        "download": "télécharger"
     },
 
     "it": {

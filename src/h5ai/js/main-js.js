@@ -1,33 +1,37 @@
-/*global jQuery, h5aiOptions, h5aiLangs*/
-
-// @include "inc/jquery.scrollpanel.js"
-// @include "inc/jquery.utils.js"
 
 (function($) {
     "use strict";
 
-    var Objects = {},
-        pathCache, h5ai, extended, tree;
+    var H5aiJs = {
+            factory: {},
+            init: function () {
 
-    // @include "inc/h5ai.js"
-    // @include "inc/path.js"
-    // @include "inc/extended.js"
-    // @include "inc/tree.js"
+                this.h5ai = new this.factory.H5ai(h5aiOptions, h5aiLangs);
+                this.pathCache = new this.factory.PathCache();
+                this.connector = new this.factory.Connector();
+                this.html = new this.factory.Html();
+                this.extended = new this.factory.Extended();
 
-    pathCache = new Objects.PathCache();
-    h5ai = new Objects.H5ai(h5aiOptions, h5aiLangs);
-    extended = new Objects.Extended(pathCache, h5ai);
-    tree = new Objects.Tree(pathCache, h5ai);
+                this.extended.init();
+                this.connector.init();
+                this.h5ai.init();
 
-    $.h5ai = {
-        click: $.proxy(h5ai.pathClick, h5ai)
-    };
+                $.h5ai = {
+                    click: $.proxy(this.h5ai.pathClick, this.h5ai)
+                };
+            }
+        };
+
+    // @include "inc/H5ai.js"
+    // @include "inc/Path.js"
+    // @include "inc/PathCache.js"
+    // @include "inc/Connector.js"
+    // @include "inc/Html.js"
+    // @include "inc/Extended.js"
 
     $(function () {
 
-        extended.init();
-        tree.init();
-        h5ai.init();
+        H5aiJs.init();
     });
 
 }(jQuery));

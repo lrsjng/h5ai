@@ -1,6 +1,6 @@
-/*global $, Objects */
+/*global $, H5aiJs */
 
-Objects.Extended = function (pathCache, h5ai) {
+H5aiJs.factory.Extended = function () {
 
     var settings = {
             customHeader: "h5ai.header.html",
@@ -17,15 +17,15 @@ Objects.Extended = function (pathCache, h5ai) {
 
             var $ul = $("body > nav ul"),
                 pathname = "/",
-                path = pathCache.getPath(pathname),
+                path = H5aiJs.pathCache.getPath(pathname),
                 pathnameParts = document.location.pathname.split("/");
 
-            $ul.append(path.updateCrumbHtml());
+            $ul.append(H5aiJs.html.updateCrumbHtml(path));
 
             $.each(pathnameParts, function (idx, part) {
                 if (part !== "") {
                     pathname += part + "/";
-                    $ul.append(pathCache.getPath(pathname).updateCrumbHtml());
+                    $ul.append(H5aiJs.html.updateCrumbHtml(H5aiJs.pathCache.getPath(pathname)));
                 }
             });
         },
@@ -37,8 +37,8 @@ Objects.Extended = function (pathCache, h5ai) {
                 $size = $ths.eq(3).find("a"),
                 sortquery = document.location.search,
                 order = {
-                    column: (sortquery.indexOf("C=N") >= 0) ? "name" : (sortquery.indexOf("C=M") >= 0) ? "date" : (sortquery.indexOf("C=S") >= 0) ? "size" : h5ai.settings.sortorder.column,
-                    ascending: (sortquery.indexOf("O=A") >= 0) ? true : (sortquery.indexOf("O=D") >= 0) ? false : h5ai.settings.sortorder.ascending
+                    column: (sortquery.indexOf("C=N") >= 0) ? "name" : (sortquery.indexOf("C=M") >= 0) ? "date" : (sortquery.indexOf("C=S") >= 0) ? "size" : H5aiJs.h5ai.settings.sortorder.column,
+                    ascending: (sortquery.indexOf("O=A") >= 0) ? true : (sortquery.indexOf("O=D") >= 0) ? false : H5aiJs.h5ai.settings.sortorder.ascending
                 },
                 $icon, $ul, $li;
 
@@ -66,8 +66,8 @@ Objects.Extended = function (pathCache, h5ai) {
 
             // entries
             $("#table td").closest("tr").each(function () {
-                var path = pathCache.getPath(document.location.pathname, this);
-                $ul.append(path.updateExtendedHtml());
+                var path = H5aiJs.pathCache.getPath(document.location.pathname, this);
+                $ul.append(H5aiJs.html.updateExtendedHtml(path));
             });
 
             $("#extended").append($ul);
@@ -95,22 +95,18 @@ Objects.Extended = function (pathCache, h5ai) {
                 }
             });
         },
-        initCounts = function () {
+        initTotals = function () {
 
             $(".folderCount").text($("#extended .entry.folder:not(.parentfolder)").size());
             $(".fileCount").text($("#extended .entry.file").size());
-        },
-        init = function () {
-
-            initTitle();
-            initBreadcrumb();
-            initExtendedView();
-            customize();
-            initCounts();
-        },
-        extended = {
-            init: init
         };
 
-    return extended;
+    this.init = function () {
+
+        initTitle();
+        initBreadcrumb();
+        initExtendedView();
+        customize();
+        initTotals();
+    };
 };

@@ -45,7 +45,7 @@
                         background-color: #f6f6f6;
                         color: #e80;
                     }
-                    &.selected {
+                    &.selected:not(.selecting), &.selecting:not(.selected) {
                         border-color: rgba(240,100,0,0.2);
                         background-color: rgba(240,100,0,0.2);
                     }
@@ -193,7 +193,7 @@
                         border-color: #eee;
                         background-color: #f6f6f6;
                     }
-                    &.selected {
+                    &.selected:not(.selecting), &.selecting:not(.selected) {
                         border-color: rgba(240,100,0,0.2);
                         background-color: rgba(240,100,0,0.2);
                     }
