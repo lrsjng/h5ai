@@ -2,6 +2,7 @@
 
 * Website with download, docs and demo: <http://larsjung.de/h5ai>
 * Sources: <http://github.com/lrsjng/h5ai>
+* Q&A group: <http://groups.google.com/group/h5ai>
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).  
 It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL license).
@@ -10,11 +11,14 @@ It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-1733
 ## Changelog
 
 
-### v0.16 · *2011-09-??*
+### v0.16 · *2011-11-??*
 
-* sorted translations in `options.js`
-* improved HTML head sections
-* 
+* sorts translations in `options.js`
+* improves HTML head sections
+* refactors JavaScript a lot
+* improves/fixes file selection for zipped download
+* zipped download is disabled by default now
+* fixed scrollbar and header/footer links issues (didn't work when zipped download enabled)
 
 
 ### v0.15.2 · *2011-09-18*
