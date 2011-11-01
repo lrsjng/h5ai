@@ -20,18 +20,18 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 ## Changelog
 
-### v0.16 · *2011-11-??*
+### v0.16 · *2011-11-02*
 
 * sorts translations in `options.js`
 * improves HTML head sections
 * refactors JavaScript and PHP a lot
 * improves/fixes file selection for zipped download
-* fixes scrollbar and header/footer links issues (didn't work when zipped download enabled)
+* fixes scrollbar and header/footer link issues (didn't work when zipped download enabled)
 * adds support for ctrl-select
 * `dateFormat` in `options.js` changed, now affecting JS and PHP version
 * `dateFormat` is localizable by adding it to a translation in `options.js`
 * PHP version is now configurable via `php/config.php` (set custom doc root and other PHP related things)
-* image thumbs and zipped download is now disabled by default now
+* image thumbs and zipped download is disabled by default now, but works fine if PHP is configured
 
 
 ### v0.15.2 · *2011-09-18*
