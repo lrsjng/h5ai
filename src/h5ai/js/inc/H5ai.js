@@ -1,17 +1,19 @@
 
-var H5ai = function (options, langs) {
-    "use strict";
-    /*global $, window, localStorage*/
+H5aiJs.factory.H5ai = function (options, langs) {
+    /*global window, $, amplify*/
 
-    var defaults = {
+    var $window = $(window),
+        $document = $(document),
+        defaults = {
             store: {
-                viewmode: "h5ai.viewmode",
-                lang: "h5ai.lang"
+                viewmode: "h5ai.pref.viewmode",
+                lang: "h5ai.pref.lang"
             },
             callbacks: {
                 pathClick: []
             },
 
+            h5aiAbsHref: "/h5ai",
             viewmodes: ["details", "icons"],
             sortorder: {
                 column: "name",
@@ -24,15 +26,22 @@ var H5ai = function (options, langs) {
             useBrowserLang: true,
             setParentFolderLabels: true,
             linkHoverStates: true,
-
-            dateFormat: "Y-m-d H:i",
-            ignore: ["h5ai", "h5ai.header.html", "h5ai.footer.html"],
-            ignoreRE: ["/^\\./"],
+            dateFormat: "yyyy-MM-dd HH:mm",
             showThumbs: true,
-            
             zippedDownload: true
         },
         settings = $.extend({}, defaults, options),
+        api = function () {
+            return settings.h5aiAbsHref + "/php/api.php";
+        },
+        image = function (id) {
+
+            return settings.h5aiAbsHref + "/images/" + id + ".png";
+        },
+        icon = function (id, big) {
+
+            return settings.h5aiAbsHref + "/icons/" + (big ? "48x48" : "16x16") + "/" + id + ".png";
+        },
         pathClick = function (fn) {
 
             if ($.isFunction(fn)) {
@@ -41,22 +50,20 @@ var H5ai = function (options, langs) {
         },
         triggerPathClick = function (path, context) {
 
-            var i, l, a = settings.callbacks.pathClick;
-
-            for (i = 0, l = a.length; i < l; i++) {
-                a[i].call(window, path, context);
-            }
+            $.each(settings.callbacks.pathClick, function (idx, callback) {
+                callback(path, context);
+            });
         },
         getViewmode = function () {
 
-            var viewmode = localStorage.getItem(settings.store.viewmode);
+            var viewmode = amplify.store(settings.store.viewmode);
 
             return $.inArray(viewmode, settings.viewmodes) >= 0 ? viewmode : settings.viewmodes[0];
         },
         applyViewmode = function (viewmode) {
 
             if (viewmode) {
-                localStorage.setItem(settings.store.viewmode, viewmode);
+                amplify.store(settings.store.viewmode, viewmode);
             }
             viewmode = getViewmode();
 
@@ -85,7 +92,7 @@ var H5ai = function (options, langs) {
 
             var adjustTopSpace = function () {
 
-                var winHeight = $(window).height(),
+                var winHeight = $window.height(),
                     navHeight = $("body > nav").outerHeight(),
                     footerHeight = $("body > footer").outerHeight(),
                     contentSpacing = 50,
@@ -106,7 +113,7 @@ var H5ai = function (options, langs) {
                 } catch (err) {}
             };
 
-            $(window).resize(function () {
+            $window.resize(function () {
                 adjustTopSpace();
             });
             adjustTopSpace();
@@ -144,14 +151,14 @@ var H5ai = function (options, langs) {
                     $(".status.default").show();
                     $(".status.dynamic").empty().hide();
                 }
-          );
+            );
         },
         shiftTree = function (forceVisible, dontAnimate) {
 
             var $tree = $("#tree"),
                 $extended = $("#extended");
 
-            if (settings.slideTree && $tree.outerWidth() < $extended.offset().left || forceVisible) {
+            if ((settings.slideTree && $tree.outerWidth() < $extended.offset().left) || forceVisible) {
                 if (dontAnimate) {
                     $tree.stop().css({ left: 0 });
                 } else {
@@ -170,9 +177,20 @@ var H5ai = function (options, langs) {
             $("#tree").hover(
                 function () { shiftTree(true); },
                 function () { shiftTree(); }
-         );
-            $(window).resize(function () { shiftTree(); });
+            );
+            $window.resize(function () { shiftTree(); });
             shiftTree(false, true);
+        },
+        selectLinks = function (href) {
+
+            var elements = [];
+            $("a[href^='/']").each(function () {
+
+                if ($(this).attr("href") === href) {
+                    elements.push(this);
+                }
+            });
+            return $(elements);
         },
         linkHoverStates = function () {
 
@@ -183,15 +201,16 @@ var H5ai = function (options, langs) {
                         href = $a.attr("href");
 
                     $a.hover(
-                        function () { $("a[href='" + href + "']").addClass("hover"); },
-                        function () { $("a[href='" + href + "']").removeClass("hover"); }
-                );
+                        function () { selectLinks(href).addClass("hover"); },
+                        function () { selectLinks(href).removeClass("hover"); }
+                    );
                 });
             }
         },
         localize = function (langs, lang, useBrowserLang) {
 
-            var storedLang = localStorage.getItem(settings.store.lang),
+            var storedLang = amplify.store(settings.store.lang),
+                dateFormat = settings.dateFormat,
                 browserLang, selected, key;
 
             if (langs[storedLang]) {
@@ -211,102 +230,125 @@ var H5ai = function (options, langs) {
 
             selected = langs[lang];
             if (selected) {
-                for (key in selected) {
-                    $(".l10n-" + key).text(selected[key]);
-                }
+                $.each(selected, function (key, value) {
+                    $(".l10n-" + key).text(value);
+                });
                 $(".lang").text(lang);
                 $(".langOption").removeClass("current");
                 $(".langOption." + lang).addClass("current");
             }
+
+            dateFormat = selected.dateFormat || dateFormat;
+            $("#extended .entry .date").each(function () {
+
+                var $this = $(this),
+                    time = $this.data("time"),
+                    formattedDate = time ? new Date(time).toString(dateFormat) : "";
+
+                $this.text(formattedDate);
+            });
+
         },
         initLangSelector = function (langs) {
 
-            var idx, lang,
+            var $langOptions = $(".langOptions"),
                 sortedLangsKeys = [],
                 $ul;
 
-            for (lang in langs) {
+            $.each(langs, function (lang) {
                 sortedLangsKeys.push(lang);
-            }
+            });
             sortedLangsKeys.sort();
 
             $ul = $("<ul />");
-            for (idx in sortedLangsKeys) {
-                (function (lang) {
-                    $("<li class='langOption' />")
-                        .addClass(lang)
-                        .text(lang + " - " + langs[lang].lang)
-                        .appendTo($ul)
-                        .click(function () {
-                            localStorage.setItem(settings.store.lang, lang);
-                            localize(langs, lang, false);
-                        });
-                })(sortedLangsKeys[idx]);
-            }
+            $.each(sortedLangsKeys, function (idx, lang) {
+                $("<li class='langOption' />")
+                    .addClass(lang)
+                    .text(lang + " - " + langs[lang].lang)
+                    .appendTo($ul)
+                    .click(function () {
+                        amplify.store(settings.store.lang, lang);
+                        localize(langs, lang, false);
+                    });
+            });
             $("#langSelector .langOptions").append($ul);
             $("#langSelector").hover(
                 function () {
-                    var $ele = $(".langOptions");
-                    $ele.css("top", "-" + $ele.outerHeight() + "px").stop(true, true).fadeIn();
+                    $langOptions
+                        .css("top", "-" + $langOptions.outerHeight() + "px")
+                        .stop(true, true)
+                        .fadeIn();
                 },
                 function () {
-                    $(".langOptions").stop(true, true).fadeOut();
+                    $langOptions
+                        .stop(true, true)
+                        .fadeOut();
                 }
-        );
+            );
+        },
+        onIndicatorClick = function (event) {
+
+            var $indicator = $(this),
+                $entry = $indicator.closest(".entry");
+
+            if ($indicator.hasClass("unknown")) {
+                $.get(api(), { "action": "tree", "href": $entry.find("> a").attr("href") }, function (html) {
+
+                    var $content = $(html);
+
+                    $indicator.removeClass("unknown");
+                    if ($content.find("> li").size() === 0) {
+                        $indicator.replaceWith($("<span class='blank' />"));
+                    } else {
+                        $indicator.addClass("open");
+                        $entry.find("> .content").replaceWith($content);
+                        $("#tree").get(0).updateScrollbar();
+                        $content.find(".indicator:not(.initiated)")
+                            .click(onIndicatorClick)
+                            .addClass("initiated");
+                    }
+                });
+            } else if ($indicator.hasClass("open")) {
+                $indicator.removeClass("open");
+                $("#tree").get(0).updateScrollbar(true);
+                $entry.find("> .content").slideUp(function () {
+                    $("#tree").get(0).updateScrollbar();
+                });
+            } else {
+                $indicator.addClass("open");
+                $("#tree").get(0).updateScrollbar(true);
+                $entry.find("> .content").slideDown(function () {
+                    $("#tree").get(0).updateScrollbar();
+                });
+            }
         },
         initIndicators = function () {
 
-            $("#tree .entry.folder:not(.initiatedIndicator)").each(function () {
-
-                var $entry = $(this).addClass("initiatedIndicator"),
-                    $indicator = $entry.find("> .indicator");
-
-                $indicator.click(function (event) {
-
-                    var $content;
-
-                    if ($indicator.hasClass("unknown")) {
-                        $.get("/h5ai/php/treecontent.php", { "href": $entry.find("> a").attr("href") }, function (html) {
-                            $content = $(html);
-                            $indicator.removeClass("unknown");
-                            if ($content.find("> li").size() === 0) {
-                                $indicator.replaceWith($("<span class='blank' />"));
-                            } else {
-                                $indicator.addClass("open");
-                                $entry.find("> .content").replaceWith($content);
-                                $("#tree").get(0).updateScrollbar();
-                                initIndicators();
-                            }
-                        });
-                    } else if ($indicator.hasClass("open")) {
-                        $indicator.removeClass("open");
-                        $("#tree").get(0).updateScrollbar(true);
-                        $entry.find("> .content").slideUp(function () {
-                            $("#tree").get(0).updateScrollbar();
-                        });
-                    } else {
-                        $indicator.addClass("open");
-                        $("#tree").get(0).updateScrollbar(true);
-                        $entry.find("> .content").slideDown(function () {
-                            $("#tree").get(0).updateScrollbar();
-                        });
-                    }
-                });
-            });
+            $("#tree .entry.folder .indicator:not(.initiated)")
+                .click(onIndicatorClick)
+                .addClass("initiated");
         },
         initZippedDownload = function () {
 
             var x = 0,
                 y = 0,
-                $window = $(window),
-                selected = function (hrefs) {
+                ctrl = false,
+                updateDownloadBtn = function () {
 
-                    var query, idx;
-                    for (idx in hrefs) {
-                        query = query ? query + ":" + hrefs[idx] : hrefs[idx];
+                    var query,
+                        href,
+                        $selected = $("#extended a.selected");
+
+                    if ($selected.size() > 0) {
+                        $selected.each(function () {
+                            href = $(this).attr("href");
+                            query = query ? query + ":" + href : href;
+                        });
+                        query = api() + "?action=zip&hrefs=" + query;
+                        $("#download").show().find("a").attr("href", query);
+                    } else {
+                        $("#download").hide().find("a").attr("href", "#");
                     }
-                    query = "/h5ai/php/zipcontent.php?hrefs=" + query;
-                    $("#download").show().find("a").attr("href", query);
                 },
                 selectionUpdate = function (event) {
 
@@ -320,41 +362,45 @@ var H5ai = function (options, langs) {
                     $("#selection-rect").css({left: l, top: t, width: w, height: h});
 
                     sel = $("#selection-rect").fracs("rect");
-                    $("#extended a").removeClass("selected").each(function () {
+                    $("#extended a").removeClass("selecting").each(function () {
 
                         var $a = $(this),
                             rect = $a.fracs("rect"),
                             inter = sel.intersection(rect);
                         if (inter && !$a.closest(".entry").hasClass("folder-parent")) {
-                            $a.addClass("selected");
+                            $a.addClass("selecting");
                         }
                     });
                 },
                 selectionEnd = function (event) {
 
                     event.preventDefault();
+                    $document.unbind("mousemove", selectionUpdate);
                     $("#selection-rect").hide().css({left: 0, top: 0, width: 0, height: 0});
-
-                    $window.unbind("mousemove", selectionUpdate);
-
-                    var hrefs = [];
-                    $("#extended a.selected").each(function () {
-                        hrefs.push($(this).attr("href"));
-                    });
-                    if (hrefs.length > 0) {
-                        selected(hrefs);
-                    }
+                    $("#extended a.selecting.selected").removeClass("selecting").removeClass("selected");
+                    $("#extended a.selecting").removeClass("selecting").addClass("selected");
+                    updateDownloadBtn();
                 },
                 selectionStart = function (event) {
 
-                    event.preventDefault();
+                    var view = $.fracs.viewport();
+
                     x = event.pageX;
                     y = event.pageY;
-                    $("#download").hide().find("a").attr("href", "#");
-                    $("#extended a").removeClass("selected");
-                    $("#selection-rect").show().css({left: x, top: y, width: 0, height: 0});
+                    // only on left button and don't block the scrollbars
+                    if (event.button !== 0 || x >= view.right || y >= view.bottom) {
+                        return;
+                    }
 
-                    $window
+                    event.preventDefault();
+                    if (!ctrl) {
+                        $("#extended a").removeClass("selected");
+                        updateDownloadBtn();
+                    }
+                    $("#selection-rect").show().css({left: x, top: y, width: 0, height: 0});
+                    selectionUpdate(event);
+
+                    $document
                         .bind("mousemove", selectionUpdate)
                         .one("mouseup", selectionEnd);
                 },
@@ -362,12 +408,29 @@ var H5ai = function (options, langs) {
 
                     event.stopPropagation();
                     return false;
+                },
+                noSelectionUnlessCtrl = function (event) {
+
+                    if (!ctrl) {
+                        noSelection(event);
+                    }
                 };
 
             if (settings.zippedDownload) {
-                $("body>nav,body>footer,#tree,#extended a").bind("mousedown", noSelection);
-                $("#extended a").live("mousedown", noSelection);
-                $window.bind("mousedown", selectionStart);
+                $("body>nav,body>footer,#tree").bind("mousedown", noSelection);
+                $("#extended .entry a").bind("mousedown", noSelectionUnlessCtrl).live("mousedown", noSelectionUnlessCtrl);
+                $document
+                    .bind("mousedown", selectionStart)
+                    .keydown(function (event) {
+                        if (event.keyCode === 17) {
+                            ctrl = true;
+                        }
+                    })
+                    .keyup(function (event) {
+                        if (event.keyCode === 17) {
+                            ctrl = false;
+                        }
+                    });
             }
         },
         init = function () {
@@ -381,15 +444,18 @@ var H5ai = function (options, langs) {
             localize(langs, settings.lang, settings.useBrowserLang);
             initIndicators();
             initZippedDownload();
-        },
-        h5ai = {
-            settings: settings,
-            shiftTree: shiftTree,
-            linkHoverStates: linkHoverStates,
-            pathClick: pathClick,
-            triggerPathClick: triggerPathClick,
-            init: init
         };
 
-    return h5ai;
+    return {
+        settings: settings,
+        api: api,
+        image: image,
+        icon: icon,
+        shiftTree: shiftTree,
+        linkHoverStates: linkHoverStates,
+        pathClick: pathClick,
+        triggerPathClick: triggerPathClick,
+        initIndicators: initIndicators,
+        init: init
+    };
 };

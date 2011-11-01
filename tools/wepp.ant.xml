@@ -6,7 +6,7 @@
         <attribute name="toFile" />
         <attribute name="args" default="" />
         <sequential>
-            <exec executable="${wepp}">
+            <exec executable="${tool.wepp}">
                 <arg line="@{args}" />
                 <arg value="--in" />
                 <arg value="@{file}" />
@@ -20,7 +20,7 @@
         <attribute name="dir" />
         <attribute name="args" default="" />
         <sequential>
-            <exec executable="${wepp}">
+            <exec executable="${tool.wepp}">
                 <arg line="@{args}" />
                 <arg value="--inDir" />
                 <arg value="@{dir}" />

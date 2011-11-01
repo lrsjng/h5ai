@@ -1,10 +1,11 @@
 <?php
 
-require_once "h5ai.php";
-require_once "crumb.php";
-require_once "customize.php";
-require_once "extended.php";
-require_once "tree.php";
+require_once "config.php";
+require_once "inc/H5ai.php";
+require_once "inc/Crumb.php";
+require_once "inc/Customize.php";
+require_once "inc/Extended.php";
+require_once "inc/Tree.php";
 
 $h5ai = new H5ai();
 $crumb = new Crumb($h5ai);

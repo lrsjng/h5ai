@@ -57,9 +57,9 @@ class TreeEntry {
     public function toHtml() {
 
         $classes = "entry " . $this->type . ($this->absHref === $this->h5ai->getAbsHref() ? " current" : "");
-        $img = $this->type;
+        $icon = $this->type;
         if ($this->absHref === "/") {
-            $img = "folder-home";
+            $icon = "folder-home";
         }
         $hint = "";
         $code = "h5ai";
@@ -69,8 +69,8 @@ class TreeEntry {
             $classes .= " checkedHttpCode";
             if ($code !== "h5ai") {
                 if ($code === 200) {
-                    $img = "folder-page";
-                    $hint = "<span class='hint'><img src='/h5ai/images/page.png' alt='page' /></span>";
+                    $icon = "folder-page";
+                    $hint = "<span class='hint'><img src='" . $this->h5ai->image("page") . "' alt='page' /></span>";
                 } else {
                     $classes .= " error";
                     $hint = "<span class='hint'> " . $code . " </span>";
@@ -83,10 +83,10 @@ class TreeEntry {
             $html .= "<span class='blank'></span>\n";
         } else {
             $indicatorState = $this->content === null ? " unknown" : " open";
-            $html .= "<span class='indicator" . $indicatorState . "'><img src='/h5ai/images/tree.png' alt='>' /></span>\n";
+            $html .= "<span class='indicator" . $indicatorState . "'><img src='" . $this->h5ai->image("tree") . "' alt='>' /></span>\n";
         }
         $html .= "<a href='" . $this->absHref . "'>\n";
-        $html .= "<span class='icon'><img src='/h5ai/icons/16x16/" . $img . ".png' alt='" . $img . "' /></span>\n";
+        $html .= "<span class='icon'><img src='" . $this->h5ai->icon($icon) . "' alt='" . $icon . "' /></span>\n";
         $html .= "<span class='label'>" . $this->label . "</span>" . $hint . "\n";
         $html .= "</a>\n";
         $html .= $this->contentToHtml();

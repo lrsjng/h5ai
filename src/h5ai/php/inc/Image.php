@@ -17,6 +17,14 @@ class Image {
     }
 
 
+    public static function showImage($filename) {
+
+        $image = file_get_contents($filename);
+        header("content-type: image");
+        echo $image;
+    }
+
+
     public function __construct($filename = null) {
 
         $this->sourceFile = null;
@@ -43,8 +51,9 @@ class Image {
         $this->releaseSource();
         $this->releaseDest();
 
-        if (is_null($filename))
+        if (is_null($filename)) {
             return;
+        }
 
         $this->sourceFile = $filename;
 
@@ -91,14 +100,6 @@ class Image {
             $this->height = null;
             $this->type = null;
         }
-    }
-
-
-    public static function showImage($filename) {
-
-        $image = file_get_contents($filename);
-        header("content-type: image");
-        echo $image;
     }
 
 

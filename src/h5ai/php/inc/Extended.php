@@ -1,6 +1,6 @@
 <?php
 
-require_once "thumbnail.php";
+require_once "Thumbnail.php";
 
 
 class Entry {
@@ -59,10 +59,9 @@ class Entry {
 
         $classes = "entry " . $this->type;
         $img = $this->type;
-        $smallImg = "/h5ai/icons/16x16/" . $this->type . ".png";
-        $bigImg = "/h5ai/icons/48x48/" . $this->type . ".png";
+        $smallImg = $this->h5ai->icon($this->type);
+        $bigImg = $this->h5ai->icon($this->type, true);
         $hint = "";
-        $dateLabel = date($dateFormat, $this->date);
 
         if ($this->isFolder && $this->type !== "folder-parent") {
             $code = $this->h5ai->getHttpCode($this->absHref);
@@ -70,8 +69,8 @@ class Entry {
             if ($code !== "h5ai") {
                 if ($code === 200) {
                     $img = "folder-page";
-                    $smallImg = "/h5ai/icons/16x16/folder-page.png";
-                    $bigImg = "/h5ai/icons/48x48/folder-page.png";
+                    $smallImg = $this->h5ai->icon("folder-page");
+                    $bigImg = $this->h5ai->icon("folder-page", true);
                 } else {
                     $classes .= " error";
                     $hint = "<span class='hint'> " . $code . " </span>";
@@ -80,10 +79,10 @@ class Entry {
         }
         if ($this->h5ai->showThumbs() && in_array($this->type, $this->thumbTypes)) {
             $classes .= " thumb";
-            $thumbnail = new Thumbnail($this->absPath, "square", 16, 16);
+            $thumbnail = new Thumbnail($this->h5ai, $this->absHref, "square", 16, 16);
             $thumbnail->create();
             $smallImg = file_exists($thumbnail->getPath()) ? $thumbnail->getHref() : $thumbnail->getLiveHref();
-            $thumbnail = new Thumbnail($this->absPath, "rational", 96, 46);
+            $thumbnail = new Thumbnail($this->h5ai,$this->absHref, "rational", 96, 46);
             $thumbnail->create();
             $bigImg = file_exists($thumbnail->getPath()) ? $thumbnail->getHref() : $thumbnail->getLiveHref();
         }
@@ -93,7 +92,7 @@ class Entry {
         $html .= "\t\t\t<span class='icon small'><img src='" . $smallImg . "' alt='" . $img . "' /></span>\n";
         $html .= "\t\t\t<span class='icon big'><img src='" . $bigImg . "' alt='" . $img . "' /></span>\n";
         $html .= "\t\t\t<span class='label'>" . $this->label . $hint . "</span>\n";
-        $html .= "\t\t\t<span class='date'>" . $dateLabel . "</span>\n";
+        $html .= "\t\t\t<span class='date' data-time='" . $this->date . "000'></span>\n";
         $html .= "\t\t\t<span class='size'>" . $this->formatSize($this->size) . "</span>\n";
         $html .= "\t\t</a>\n";
         $html .= "\t</li>\n";
@@ -198,8 +197,8 @@ class Extended {
 
     public function generateHeaders() {
 
-        $asc = "<img src='/h5ai/images/ascending.png' class='sort' alt='ascending' />";
-        $desc = "<img src='/h5ai/images/descending.png' class='sort' alt='descending' />";
+        $asc = "<img src='" . $this->h5ai->image("ascending") . "' class='sort' alt='ascending' />";
+        $desc = "<img src='" . $this->h5ai->image("descending") . "' class='sort' alt='descending' />";
 
         $so = $this->h5ai->getSortOrder();
         $order = $so["ascending"] ? $asc : $desc;

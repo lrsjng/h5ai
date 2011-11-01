@@ -1,24 +1,28 @@
+
 (function($) {
     "use strict";
-    /*global jQuery, h5aiOptions, h5aiLangs*/
 
-    // @include "inc/jquery.mousewheel.min.js"
-    // @include "inc/jquery.scrollpanel.js"
-    // @include "inc/jquery.utils.js"
-    // @include "inc/jquery.fracs.js"
-    // @include "inc/h5ai.js"
+    var H5aiJs = {
+            factory: {},
+            init: function () {
 
-    var h5ai = new H5ai(h5aiOptions, h5aiLangs);
+                this.h5ai = new this.factory.H5ai(h5aiOptions, h5aiLangs);
 
-    $.h5ai = {
-        click: $.proxy(h5ai.pathClick, h5ai)
-    };
+                this.h5ai.init();
+                $("#tree").scrollpanel();
+                this.h5ai.shiftTree(false, true);
+
+                $.h5ai = {
+                    click: $.proxy(this.h5ai.pathClick, this.h5ai)
+                };
+            }
+        };
+
+    // @include "inc/H5ai.js"
 
     $(function () {
 
-        h5ai.init();
-        $("#tree").scrollpanel();
-        h5ai.shiftTree(false, true);
+        H5aiJs.init();
     });
 
-})(jQuery);
+}(jQuery));

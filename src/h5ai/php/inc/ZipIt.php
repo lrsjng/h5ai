@@ -43,7 +43,7 @@ class ZipIt {
     }
 
     private function zipDir($zip, $localDir, $dir) {
-            
+
         if ($this->h5ai->getHttpCode($this->h5ai->getAbsHref($localDir)) === "h5ai") {
             $zip->addEmptyDir($dir);
             $files = $this->h5ai->readDir($localDir);

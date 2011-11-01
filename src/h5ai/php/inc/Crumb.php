@@ -25,7 +25,7 @@ class Crumb {
         foreach($this->parts as $href) {
             $idx++;
             $classes = "crumb folder" . ($idx === 1 ? " domain" : "") . ($idx === count($this->parts) ? " current" : "");
-            $image = "/h5ai/images/" . ($idx === 1 ? "home.png" : "crumb.png");
+            $image = $this->h5ai->image($idx === 1 ? "home" : "crumb");
             $label = $this->h5ai->getLabel($href);
             $hint = "";
 
@@ -33,7 +33,7 @@ class Crumb {
             $classes .= " checkedHttpCode";
             if ($code !== "h5ai") {
                 if ($code === 200) {
-                    $hint = "<img class='hint' src='/h5ai/images/page.png' alt='page' />";
+                    $hint = "<img class='hint' src='" . $this->h5ai->image("page") . "' alt='page' />";
                 } else {
                     $hint = "<span class='hint'>(" . $code . ")</span>";
                 }

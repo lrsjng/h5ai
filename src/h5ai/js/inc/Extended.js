@@ -1,7 +1,6 @@
+/*global $, H5aiJs */
 
-var Extended = function (pathCache, h5ai) {
-    "use strict";
-    /*global $*/
+H5aiJs.factory.Extended = function () {
 
     var settings = {
             customHeader: "h5ai.header.html",
@@ -16,21 +15,19 @@ var Extended = function (pathCache, h5ai) {
         },
         initBreadcrumb = function () {
 
-            var idx, part,
-                $ul = $("body > nav ul"),
+            var $ul = $("body > nav ul"),
                 pathname = "/",
-                path = pathCache.getPath(pathname),
+                path = H5aiJs.pathCache.getPath(pathname),
                 pathnameParts = document.location.pathname.split("/");
 
-            $ul.append(path.updateCrumbHtml());
+            $ul.append(H5aiJs.html.updateCrumbHtml(path));
 
-            for (idx in pathnameParts) {
-                part = pathnameParts[idx];
+            $.each(pathnameParts, function (idx, part) {
                 if (part !== "") {
                     pathname += part + "/";
-                    $ul.append(pathCache.getPath(pathname).updateCrumbHtml());
+                    $ul.append(H5aiJs.html.updateCrumbHtml(H5aiJs.pathCache.getPath(pathname)));
                 }
-            }
+            });
         },
         initExtendedView = function () {
 
@@ -40,24 +37,24 @@ var Extended = function (pathCache, h5ai) {
                 $size = $ths.eq(3).find("a"),
                 sortquery = document.location.search,
                 order = {
-                    column: (sortquery.indexOf("C=N") >= 0) ? "name" : (sortquery.indexOf("C=M") >= 0) ? "date" : (sortquery.indexOf("C=S") >= 0) ? "size" : h5ai.settings.sortorder.column,
-                    ascending: (sortquery.indexOf("O=A") >= 0) ? true : (sortquery.indexOf("O=D") >= 0) ? false : h5ai.settings.sortorder.ascending
+                    column: (sortquery.indexOf("C=N") >= 0) ? "name" : (sortquery.indexOf("C=M") >= 0) ? "date" : (sortquery.indexOf("C=S") >= 0) ? "size" : H5aiJs.h5ai.settings.sortorder.column,
+                    ascending: (sortquery.indexOf("O=A") >= 0) ? true : (sortquery.indexOf("O=D") >= 0) ? false : H5aiJs.h5ai.settings.sortorder.ascending
                 },
                 $icon, $ul, $li;
 
             $ul = $("<ul/>");
             $li = $("<li class='header' />")
-                .appendTo($ul)
-                .append($("<a class='icon'></a>"))
-                .append($("<a class='label' href='" + $label.attr("href") + "'><span class='l10n-name'>" + $label.text() + "</span></a>"))
-                .append($("<a class='date' href='" + $date.attr("href") + "'><span class='l10n-lastModified'>" + $date.text() + "</span></a>"))
-                .append($("<a class='size' href='" + $size.attr("href") + "'><span class='l10n-size'>" + $size.text() + "</span></a>"));
+                    .appendTo($ul)
+                    .append($("<a class='icon'></a>"))
+                    .append($("<a class='label' href='" + $label.attr("href") + "'><span class='l10n-name'>" + $label.text() + "</span></a>"))
+                    .append($("<a class='date' href='" + $date.attr("href") + "'><span class='l10n-lastModified'>" + $date.text() + "</span></a>"))
+                    .append($("<a class='size' href='" + $size.attr("href") + "'><span class='l10n-size'>" + $size.text() + "</span></a>"));
 
             // header sort icons
             if (order.ascending) {
-                $icon = $("<img src='/h5ai/images/ascending.png' class='sort' alt='ascending' />");
+                $icon = $("<img src='" + H5aiJs.h5ai.image("ascending") + "' class='sort' alt='ascending' />");
             } else {
-                $icon = $("<img src='/h5ai/images/descending.png' class='sort' alt='descending' />");
+                $icon = $("<img src='" + H5aiJs.h5ai.image("descending") + "' class='sort' alt='descending' />");
             }
             if (order.column === "date") {
                 $li.find("a.date").prepend($icon);
@@ -69,8 +66,8 @@ var Extended = function (pathCache, h5ai) {
 
             // entries
             $("#table td").closest("tr").each(function () {
-                var path = pathCache.getPath(document.location.pathname, this);
-                $ul.append(path.updateExtendedHtml());
+                var path = H5aiJs.pathCache.getPath(document.location.pathname, this);
+                $ul.append(H5aiJs.html.updateExtendedHtml(path));
             });
 
             $("#extended").append($ul);
@@ -98,22 +95,18 @@ var Extended = function (pathCache, h5ai) {
                 }
             });
         },
-        initCounts = function () {
+        initTotals = function () {
 
             $(".folderCount").text($("#extended .entry.folder:not(.parentfolder)").size());
             $(".fileCount").text($("#extended .entry.file").size());
-        },
-        init = function () {
-
-            initTitle();
-            initBreadcrumb();
-            initExtendedView();
-            customize();
-            initCounts();
-        },
-        extended = {
-            init: init
         };
 
-    return extended;
+    this.init = function () {
+
+        initTitle();
+        initBreadcrumb();
+        initExtendedView();
+        customize();
+        initTotals();
+    };
 };
