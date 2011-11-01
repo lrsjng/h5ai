@@ -5,20 +5,33 @@
 * Q&A group: <http://groups.google.com/group/h5ai>
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).  
-It uses the [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL license).
+
+
+## h5ai profits from these great projects
+
+* [AmplifyJS](http://amplifyjs.com) (MIT/GPL)
+* [Datejs](http://www.datejs.com) (MIT)
+* [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL)
+* [HTML5 ★ Boilerplate](http://html5boilerplate.com)
+* [jQuery](http://jquery.com) (MIT/GPL)
+* [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
+* [modernizr](http://www.modernizr.com) (MIT/BSD)
 
 
 ## Changelog
-
 
 ### v0.16 · *2011-11-??*
 
 * sorts translations in `options.js`
 * improves HTML head sections
-* refactors JavaScript a lot
+* refactors JavaScript and PHP a lot
 * improves/fixes file selection for zipped download
-* zipped download is disabled by default now
-* fixed scrollbar and header/footer links issues (didn't work when zipped download enabled)
+* fixes scrollbar and header/footer links issues (didn't work when zipped download enabled)
+* adds support for ctrl-select
+* `dateFormat` in `options.js` changed, now affecting JS and PHP version
+* `dateFormat` is localizable by adding it to a translation in `options.js`
+* PHP version is now configurable via `php/config.php` (set custom doc root and other PHP related things)
+* image thumbs and zipped download is now disabled by default now
 
 
 ### v0.15.2 · *2011-09-18*

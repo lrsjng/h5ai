@@ -2,16 +2,7 @@
 
 H5aiJs.factory.Html = function () {
 
-    var imagesPath = "/h5ai/images",
-        iconsPath = "/h5ai/icons",
-        image = function (id) {
-
-            return imagesPath + "/" + id + ".png";
-        },
-        icon = function (id, big) {
-
-            return iconsPath + "/" + (big ? "48x48" : "16x16") + "/" + id + ".png";
-        },
+    var thumbExts = ["bmp", "gif", "ico", "image", "jpg", "jpeg", "png", "tiff"],
         onClick = function (path, context) {
 
             H5aiJs.h5ai.triggerPathClick(path, context);
@@ -32,14 +23,14 @@ H5aiJs.factory.Html = function () {
                 $html.data("status", path.status);
             }
 
-            $a = $("<a><img src='" + image("crumb") + "' alt='>' />" + path.label + "</a>")
+            $a = $("<a><img src='" + H5aiJs.h5ai.image("crumb") + "' alt='>' />" + path.label + "</a>")
                     .appendTo($html)
                     .attr("href", path.absHref)
                     .click(function() { onClick(path, "crumb"); });
 
             if (path.isDomain) {
                 $html.addClass("domain");
-                $a.find("img").attr("src", image("home"));
+                $a.find("img").attr("src", H5aiJs.h5ai.image("home"));
             }
 
             if (path.isCurrentFolder) {
@@ -48,7 +39,7 @@ H5aiJs.factory.Html = function () {
 
             if (!isNaN(path.status)) {
                 if (path.status === 200) {
-                    $("<img class='hint' src='" + image("page") + "' alt='not listable' />").appendTo($a);
+                    $("<img class='hint' src='" + H5aiJs.h5ai.image("page") + "' alt='not listable' />").appendTo($a);
                 } else {
                     $("<span class='hint'>(" + path.status + ")</span>").appendTo($a);
                 }
@@ -63,7 +54,11 @@ H5aiJs.factory.Html = function () {
         },
         updateExtendedHtml = function (path) {
 
-            var $html, $a, $label;
+            var $html, $a, $label,
+                formattedDate = path.date ? path.date.toString(H5aiJs.h5ai.settings.dateFormat) : "",
+                ext = path.absHref.substr((path.absHref.lastIndexOf('.') + 1)),
+                icon16 = path.icon16,
+                icon48 = path.icon48;
 
             if (path.html.$extended && path.html.$extended.data("status") === path.status) {
                 return path.html.$extended;
@@ -77,15 +72,20 @@ H5aiJs.factory.Html = function () {
                 $html.data("status", path.status);
             }
 
+            if (H5aiJs.h5ai.settings.showThumbs && $.inArray(ext.toLowerCase(), thumbExts) >= 0) {
+                icon16 = H5aiJs.h5ai.api() + "?action=thumb&href=" + path.absHref + "&width=16&height=16&mode=square";
+                icon48 = H5aiJs.h5ai.api() + "?action=thumb&href=" + path.absHref + "&width=96&height=46&mode=rational";
+            }
+
             $label = $("<span class='label'>" + path.label + "</span>");
             $a = $("<a />")
                     .attr("href", path.absHref)
                     .click(function() { onClick(path, "extended"); })
                     .appendTo($html)
-                    .append($("<span class='icon small'><img src='" + path.icon16 + "' alt='" + path.alt + "' /></span>"))
-                    .append($("<span class='icon big'><img src='" + path.icon48 + "' alt='" + path.alt + "' /></span>"))
+                    .append($("<span class='icon small'><img src='" + icon16 + "' alt='" + path.alt + "' /></span>"))
+                    .append($("<span class='icon big'><img src='" + icon48 + "' alt='" + path.alt + "' /></span>"))
                     .append($label)
-                    .append($("<span class='date'>" + path.date + "</span>"))
+                    .append($("<span class='date' data-time='" + path.time + "'></span>"))
                     .append($("<span class='size'>" + path.size + "</span>"));
 
             $a.hover(
@@ -123,8 +123,8 @@ H5aiJs.factory.Html = function () {
             if (!isNaN(path.status)) {
                 if (path.status === 200) {
                     $html.addClass("page");
-                    $a.find(".icon.small img").attr("src", icon("folder-page"));
-                    $a.find(".icon.big img").attr("src", icon("folder-page", true));
+                    $a.find(".icon.small img").attr("src", H5aiJs.h5ai.icon("folder-page"));
+                    $a.find(".icon.big img").attr("src", H5aiJs.h5ai.icon("folder-page", true));
                 } else {
                     $html.addClass("error");
                     $label.append($("<span class='hint'> " + path.status + " </span>"));
@@ -158,7 +158,7 @@ H5aiJs.factory.Html = function () {
             if (path.isFolder) {
                 // indicator
                 if (path.status === undefined || !path.isEmpty()) {
-                    $indicator = $("<span class='indicator initiated'><img src='" + image("tree") + "' /></span>")
+                    $indicator = $("<span class='indicator initiated'><img src='" + H5aiJs.h5ai.image("tree") + "' /></span>")
                         .click(function (event) {
 
                             var $entry = $indicator.closest(".entry"); // $html
@@ -205,13 +205,13 @@ H5aiJs.factory.Html = function () {
                 // is path the domain?
                 if (path.isDomain) {
                     $html.addClass("domain");
-                    $a.find(".icon img").attr("src", icon("folder-home"));
+                    $a.find(".icon img").attr("src", H5aiJs.h5ai.icon("folder-home"));
                 }
 
                 // is path the current folder?
                 if (path.isCurrentFolder) {
                     $html.addClass("current");
-                    $a.find(".icon img").attr("src", icon("folder-open"));
+                    $a.find(".icon img").attr("src", H5aiJs.h5ai.icon("folder-open"));
                 }
 
                 // does it have subfolders?
@@ -228,8 +228,8 @@ H5aiJs.factory.Html = function () {
                 // reflect folder status
                 if (!isNaN(path.status)) {
                     if (path.status === 200) {
-                        $a.find(".icon img").attr("src", icon("folder-page"));
-                        $a.append($("<span class='hint'><img src='" + image("page") + "' /></span>"));
+                        $a.find(".icon img").attr("src", H5aiJs.h5ai.icon("folder-page"));
+                        $a.append($("<span class='hint'><img src='" + H5aiJs.h5ai.image("page") + "' /></span>"));
                     } else {
                         $html.addClass("error");
                         $a.append($("<span class='hint'>" + path.status + "</span>"));

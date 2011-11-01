@@ -11,7 +11,9 @@ H5aiJs.factory.Path = function (folder, tableRow) {
 
     // parentFolder: undefined,
     // label: undefined,
+    // dateOrgStr: undefined,
     // date: undefined,
+    // time: undefined,
     // size: undefined,
     // href: undefined,
     // absHref: undefined,
@@ -31,7 +33,7 @@ H5aiJs.factory.Path = function (folder, tableRow) {
         $tree: undefined
     };
     this.treeOpen = false;
-    
+
     if (!H5aiJs.pathCache.pathEndsWithSlash(folder)) {
         folder += "/";
     }
@@ -43,7 +45,9 @@ H5aiJs.factory.Path = function (folder, tableRow) {
 
         this.parentFolder = folder;
         this.label = $a.text();
-        this.date = $tds.eq(2).text();
+        this.dateOrgStr = $tds.eq(2).text();
+        this.date = Date.parse(this.dateOrgStr);
+        this.time = this.date ? this.date.getTime() : 0;
         this.size = $tds.eq(3).text();
         this.href = $a.attr("href");
         this.alt = $img.attr("alt");
@@ -56,11 +60,13 @@ H5aiJs.factory.Path = function (folder, tableRow) {
         if (this.label === "/") {
             this.label = checkedDecodeUri(document.domain) + "/";
         }
-        this.date = "";
+        this.dateOrgStr = "";
+        this.date = null;
+        this.time = 0;
         this.size = "";
         this.href = splits[1];
         this.alt = "[DIR]";
-        this.icon16 = "/h5ai/icons/16x16/folder.png";
+        this.icon16 = H5aiJs.h5ai.icon("folder");
     }
 
     if (H5aiJs.pathCache.pathEndsWithSlash(this.label)) {
@@ -84,7 +90,7 @@ H5aiJs.factory.Path = function (folder, tableRow) {
 };
 
 H5aiJs.factory.Path.prototype = {
-    
+
     isEmpty: function () {
 
         return !this.content || $.isEmptyObject(this.content);

@@ -13,6 +13,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
                 pathClick: []
             },
 
+            h5aiAbsHref: "/h5ai",
             viewmodes: ["details", "icons"],
             sortorder: {
                 column: "name",
@@ -25,15 +26,22 @@ H5aiJs.factory.H5ai = function (options, langs) {
             useBrowserLang: true,
             setParentFolderLabels: true,
             linkHoverStates: true,
-
-            dateFormat: "Y-m-d H:i",
-            ignore: ["h5ai", "h5ai.header.html", "h5ai.footer.html"],
-            ignoreRE: ["/^\\./"],
+            dateFormat: "yyyy-MM-dd HH:mm",
             showThumbs: true,
-
             zippedDownload: true
         },
         settings = $.extend({}, defaults, options),
+        api = function () {
+            return settings.h5aiAbsHref + "/php/api.php";
+        },
+        image = function (id) {
+
+            return settings.h5aiAbsHref + "/images/" + id + ".png";
+        },
+        icon = function (id, big) {
+
+            return settings.h5aiAbsHref + "/icons/" + (big ? "48x48" : "16x16") + "/" + id + ".png";
+        },
         pathClick = function (fn) {
 
             if ($.isFunction(fn)) {
@@ -173,6 +181,17 @@ H5aiJs.factory.H5ai = function (options, langs) {
             $window.resize(function () { shiftTree(); });
             shiftTree(false, true);
         },
+        selectLinks = function (href) {
+
+            var elements = [];
+            $("a[href^='/']").each(function () {
+
+                if ($(this).attr("href") === href) {
+                    elements.push(this);
+                }
+            });
+            return $(elements);
+        },
         linkHoverStates = function () {
 
             if (settings.linkHoverStates) {
@@ -182,8 +201,8 @@ H5aiJs.factory.H5ai = function (options, langs) {
                         href = $a.attr("href");
 
                     $a.hover(
-                        function () { $("a[href='" + href + "']").addClass("hover"); },
-                        function () { $("a[href='" + href + "']").removeClass("hover"); }
+                        function () { selectLinks(href).addClass("hover"); },
+                        function () { selectLinks(href).removeClass("hover"); }
                     );
                 });
             }
@@ -191,6 +210,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
         localize = function (langs, lang, useBrowserLang) {
 
             var storedLang = amplify.store(settings.store.lang),
+                dateFormat = settings.dateFormat,
                 browserLang, selected, key;
 
             if (langs[storedLang]) {
@@ -217,6 +237,17 @@ H5aiJs.factory.H5ai = function (options, langs) {
                 $(".langOption").removeClass("current");
                 $(".langOption." + lang).addClass("current");
             }
+
+            dateFormat = selected.dateFormat || dateFormat;
+            $("#extended .entry .date").each(function () {
+
+                var $this = $(this),
+                    time = $this.data("time"),
+                    formattedDate = time ? new Date(time).toString(dateFormat) : "";
+
+                $this.text(formattedDate);
+            });
+
         },
         initLangSelector = function (langs) {
 
@@ -261,7 +292,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
                 $entry = $indicator.closest(".entry");
 
             if ($indicator.hasClass("unknown")) {
-                $.get("/h5ai/php/treecontent.php", { "href": $entry.find("> a").attr("href") }, function (html) {
+                $.get(api(), { "action": "tree", "href": $entry.find("> a").attr("href") }, function (html) {
 
                     var $content = $(html);
 
@@ -313,7 +344,7 @@ H5aiJs.factory.H5ai = function (options, langs) {
                             href = $(this).attr("href");
                             query = query ? query + ":" + href : href;
                         });
-                        query = "/h5ai/php/zipcontent.php?hrefs=" + query;
+                        query = api() + "?action=zip&hrefs=" + query;
                         $("#download").show().find("a").attr("href", query);
                     } else {
                         $("#download").hide().find("a").attr("href", "#");
@@ -356,8 +387,8 @@ H5aiJs.factory.H5ai = function (options, langs) {
 
                     x = event.pageX;
                     y = event.pageY;
-                    if (x >= view.right || y >= view.bottom) {
-                        // don't block the scrollbars
+                    // only on left button and don't block the scrollbars
+                    if (event.button !== 0 || x >= view.right || y >= view.bottom) {
                         return;
                     }
 
@@ -417,6 +448,9 @@ H5aiJs.factory.H5ai = function (options, langs) {
 
     return {
         settings: settings,
+        api: api,
+        image: image,
+        icon: icon,
         shiftTree: shiftTree,
         linkHoverStates: linkHoverStates,
         pathClick: pathClick,

@@ -52,9 +52,9 @@ H5aiJs.factory.Extended = function () {
 
             // header sort icons
             if (order.ascending) {
-                $icon = $("<img src='/h5ai/images/ascending.png' class='sort' alt='ascending' />");
+                $icon = $("<img src='" + H5aiJs.h5ai.image("ascending") + "' class='sort' alt='ascending' />");
             } else {
-                $icon = $("<img src='/h5ai/images/descending.png' class='sort' alt='descending' />");
+                $icon = $("<img src='" + H5aiJs.h5ai.image("descending") + "' class='sort' alt='descending' />");
             }
             if (order.column === "date") {
                 $li.find("a.date").prepend($icon);

@@ -5,3 +5,4 @@
 // @include "inc/lib/jquery.scrollpanel.js"
 
 // @include "inc/lib/amplify.min.js"
+// @include "inc/lib/date.js"

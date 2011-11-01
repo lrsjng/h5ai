@@ -6,6 +6,12 @@
 h5aiOptions = {
 
     /*
+     * The absolute link to h5ai.
+     * Don't change this unless you know what you are doing.
+     */
+    "h5aiAbsHref": "/h5ai",
+
+    /*
      * An array of view modes the user may choose from. Currently there
      * are two possible values: "details" and "icons". The first value
      * indicates the default view mode. If only one value is given the
@@ -75,33 +81,21 @@ h5aiOptions = {
     "linkHoverStates": true,
 
     /*
-     * Only used in PHP implementation.
-     * Date format in PHP syntax, for example: "Y-m-d H:i:s"
-     * http://www.php.net/manual/en/function.date.php
+     * Date format in detailed view, for example: "yyyy-MM-dd HH:mm:ss"
+     * Syntax as specified by date.js
+     * http://code.google.com/p/datejs/wiki/FormatSpecifiers
      */
-    "dateFormat": "Y-m-d H:i",
+    "dateFormat": "yyyy-MM-dd HH:mm",
 
     /*
-     * IMPORTANT: PHP implementation doesn't care about Apache's
-     * ignores, so you have to specify this here.
-     *
-     * Only used in PHP implementation.
-     * Files/folders that should never be listed. Specified
-     * by the complete filename or by a regular expression.
-     * http://www.php.net/manual/en/function.preg-match.php
+     * Requieres PHP on the server.
+     * Show thumbnails in icons view.
      */
-    "ignore": ["h5ai", "h5ai.header.html", "h5ai.footer.html"],
-    "ignoreRE": ["/^\\./"],
+    "showThumbs": false,
 
     /*
-     * Only used in PHP implementation.
-     * Show thumbnails in Icons view.
-     */
-    "showThumbs": true,
-
-    /*
-     * Enable zipped download of selected entries. Requieres
-     * PHP on the server.
+     * Requieres PHP on the server.
+     * Enable zipped download of selected entries.
      */
     "zippedDownload": false
 };

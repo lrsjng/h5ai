@@ -1,34 +1,37 @@
 <?php
 
-require_once "cache.php";
+require_once "Cache.php";
 
 class H5ai {
     private static $SORT_ORDER = array("column" => "name", "ascending" => true);
     private static $VIEWMODES = array("details", "icons");
 
-    private $docRoot, $domain, $options, $types, $cache, $absHref, $absPath, $ignore, $ignoreRE, $sortOrder, $dateFormat, $view;
+    private $docRoot, $h5aiRoot, $h5aiAbsHref, $domain, $options, $types, $cache, $absHref, $absPath, $ignore, $ignoreRE, $sortOrder, $dateFormat, $view;
 
     public function __construct() {
 
-        $this->docRoot = getenv("DOCUMENT_ROOT");
-        $this->domain = getenv("HTTP_HOST");
+        global $H5AI_CONFIG;
 
-        $this->options = $this->loadOptions($this->docRoot . "/h5ai/options.js");
-        $this->types = $this->loadTypes($this->docRoot . "/h5ai/types.txt");
-        $this->cache = new Cache($this->docRoot . "/h5ai/cache");
+        $this->docRoot = $H5AI_CONFIG["DOCUMENT_ROOT"];
+        $this->h5aiRoot = $H5AI_CONFIG["H5AI_ROOT"];
+        $this->ignore = $H5AI_CONFIG["IGNORE"];
+        $this->ignoreRE = $H5AI_CONFIG["IGNORE_PATTERNS"];
+
+        $this->options = $this->loadOptions($this->h5aiRoot . "/options.js");
+        $this->types = $this->loadTypes($this->h5aiRoot . "/types.txt");
+        $this->cache = new Cache($this->h5aiRoot . "/cache");
+
+        $this->h5aiAbsHref = $this->options["options"]["h5aiAbsHref"];
+        $this->domain = getenv("HTTP_HOST");
 
         $this->absHref = $this->normalizePath(preg_replace('/\\?.*/', '', getenv("REQUEST_URI")), true);
         $this->absPath = $this->normalizePath($this->docRoot . rawurldecode($this->absHref), false);
-
-        $this->ignore = $this->options["options"]["ignore"];
-        $this->ignoreRE = $this->options["options"]["ignoreRE"];
 
         $defaultSortOrder = $this->options["options"]["sortorder"];
         $this->sortOrder = array(
             "column" => array_key_exists("col", $_REQUEST) ? $_REQUEST["col"] : $defaultSortOrder["column"],
             "ascending" => array_key_exists("asc", $_REQUEST) ? $_REQUEST["asc"] !== "false" : $defaultSortOrder["ascending"]
         );
-        $this->dateFormat = $this->options["options"]["dateFormat"];
         $this->view = array_key_exists("view", $_REQUEST) ? $_REQUEST["view"] : $this->options["options"]["viewmodes"][0];
         if (!in_array($this->view, H5ai::$VIEWMODES)) {
             $this->view = H5ai::$VIEWMODES[0];
@@ -71,6 +74,16 @@ class H5ai {
         return $this->docRoot;
     }
 
+    public function getH5aiRoot() {
+
+        return $this->h5aiRoot;
+    }
+
+    public function getH5aiAbsHref() {
+
+        return $this->h5aiAbsHref;
+    }
+
     public function getDomain() {
 
         return $this->domain;
@@ -79,6 +92,21 @@ class H5ai {
     public function getView() {
 
         return $this->view;
+    }
+
+    public function api() {
+
+        return $this->h5aiAbsHref . "/php/api.php";
+    }
+
+    public function image($id) {
+
+        return $this->h5aiAbsHref . "/images/" . $id . ".png";
+    }
+
+    public function icon($id, $big = false) {
+
+        return $this->h5aiAbsHref . "/icons/" . ($big ? "48x48" : "16x16") . "/" . $id . ".png";
     }
 
     public function getOptions() {
