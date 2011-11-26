@@ -100,13 +100,13 @@ H5AI_CONFIG = {
          * Requires PHP on the server.
          * Show thumbnails for image files.
          */
-        "showThumbs": true,
+        "showThumbs": false,
 
         /*
          * Requires PHP on the server.
          * Enable zipped download of selected entries.
          */
-        "zippedDownload": true
+        "zippedDownload": false
     },
 
 
