@@ -1,0 +1,237 @@
+
+@import "h5bp-norm";
+@import "mixins";
+
+
+html.js {
+    .hideOnJs {
+        display: none;
+    }
+}
+html.no-js {
+    .hideOnNoJs {
+        display: none;
+    }
+}
+
+
+body {
+    font-family: Ubuntu, sans-serif;
+    font-size: 16px;
+    color: #555;
+    background-color: #fff;
+    margin: 80px 30px;
+}
+
+
+
+body > nav {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+    top: 0;
+    font-size: 0.85em;
+    background-color: rgb(241,241,241);
+    border-bottom: 2px solid rgb(210,210,210);
+
+    span.jsDisabledFallback {
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+        color: #999;
+    }
+    a, a:active, a:visited {
+        color: #555;
+        cursor: pointer;
+        text-decoration: none;
+        opacity: 0.7;
+        .transition(all 0.2s ease-in-out);
+
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+
+        &:hover, &.hover {
+            color: #e80;
+            background-color: rgba(255,255,255,0.5);
+            opacity: 1.0;
+        }
+    }
+    .current a {
+        background-color: rgba(255,255,255,0.5);
+        opacity: 1.0;
+    }
+    img {
+        position: relative;
+        top: -2px;
+        width: 16px;
+        height: 16px;
+    }
+    img + span {
+        margin-left: 6px;
+    }
+    .crumb {
+        float: left;
+        border-right: 1px solid rgb(231,231,231);
+        .hint {
+            margin-left: 8px;
+            font-style: italic;
+            color: #999;
+        }
+        img.hint {
+            width: 10px;
+            height: 10px;
+        }
+    }
+    .view {
+        float: right;
+        border-left: 1px solid rgb(231,231,231);
+    }
+    #download {
+        display: none;
+        float: right;
+        border-left: 1px solid rgb(231,231,231);
+    }
+}
+
+
+#content {
+    max-width: 960px;
+    margin: 0 auto;
+
+    > header {
+        display: none;
+        padding-bottom: 10px;
+        margin-bottom: 80px;
+        border-bottom: 2px dashed #ddd;
+    }
+    > footer {
+        display: none;
+        padding-top: 10px;
+        margin-top: 80px;
+        border-top: 2px dashed #ddd;
+    }
+}
+
+
+@import "table";
+@import "extended";
+@import "tree";
+
+
+body > footer {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 6px 0 8px 0;
+    background-color: rgb(241,241,241);
+    border-top: 2px solid rgb(210,210,210);
+
+    color: #999;
+    font-size: 0.85em;
+    text-align: center;
+
+    a, a:active, a:visited {
+        color: #555;
+        text-decoration: none;
+        .transition(all 0.2s ease-in-out);
+        opacity: 0.7;
+
+        &:hover {
+            color: #e80;
+            opacity: 1;
+        }
+    }
+    .left {
+        display: block;
+        padding: 0 8px;
+        float: left
+    }
+    .center {
+        display: block;
+        margin: 0 100px;
+    }
+    .right {
+        display: block;
+        padding: 0 8px;
+        float: right
+    }
+    .noJsMsg {
+        color: #c33;
+        margin-left: 16px;
+    }
+    .status {
+        .sep {
+            display: inline-block;
+            padding: 0 6px;
+        }
+        &.default {
+        }
+        &.dynamic {
+            display: none;
+        }
+    }
+    #langSelector {
+        position: relative;
+        cursor: pointer;
+
+        .langOptions {
+            position: absolute;
+            z-index: 2;
+            overflow: auto;
+            display: none;
+            right: 0;
+            top: 0;
+            max-height: 200px;
+            background-color: rgb(241,241,241);
+            border: 1px solid rgb(210,210,210);
+
+            > .scrollbar {
+                margin: 0;
+                width: 6px;
+                background-color: rgb(210,210,210);
+
+                .drag {
+                    background-color: rgb(180,180,180);
+                }
+                &.dragOn .drag {
+                    background-color: rgb(150,150,150);
+                }
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                text-align: left;
+
+                li {
+                    padding: 8px 24px 10px 24px;
+                    white-space: nowrap;
+                    border-top: 1px solid rgb(231,231,231);
+                    .transition(all 0.2s ease-in-out);
+
+                    &.current {
+                        color: #333;
+                        background-color: rgba(255,255,255,0.8);
+                    }
+                    &:hover {
+                        color: #e80;
+                        background-color: rgba(255,255,255,0.8);
+                    }
+                }
+                li:nth-child(3n+1) {
+
+                }
+            }
+        }
+    }
+}
+
+@import "responsive";
+

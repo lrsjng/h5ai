@@ -37,13 +37,13 @@
     </target>
 
     <target name="build" depends="build-prepare">
-        <wepp.dir dir="${build.dir}/h5ai/css" />
-        <wepp.dir dir="${build.dir}/h5ai/js" />
+        <wepp.dir dir="${build.dir}/_h5ai/css" />
+        <wepp.dir dir="${build.dir}/_h5ai/js" />
     </target>
 
     <target name="build-uncompressed" depends="build-prepare">
-        <wepp.dir dir="${build.dir}/h5ai/css" args="--nc" />
-        <wepp.dir dir="${build.dir}/h5ai/js" args="--nc" />
+        <wepp.dir dir="${build.dir}/_h5ai/css" args="--nc" />
+        <wepp.dir dir="${build.dir}/_h5ai/js" args="--nc" />
     </target>
 
     <target name="release" depends="build">
@@ -52,6 +52,27 @@
         <tar destfile="${release.dir}/${project.name}-${project.version}.tar" basedir="${build.dir}"/>
         <gzip destfile="${release.dir}/${project.name}-${project.version}.tar.gz" src="${release.dir}/${project.name}-${project.version}.tar"/>
         <delete file="${release.dir}/${project.name}-${project.version}.tar" />
+    </target>
+
+    <target name="pre-xint" depends="build-prepare">
+        <wepp file="${tool.jsxint.file}" tofile="${tool.jsxint.file}" args="--nc" />
+    </target>
+
+    <target name="lint" depends="pre-xint">
+        <echo>JSLint "${tool.jsxint.file}"</echo>
+        <exec executable="${tool.jslint}" failonerror="true">
+            <arg value="${tool.jsxint.file}" />
+        </exec>
+    </target>
+
+    <target name="hint" depends="pre-xint">
+        <echo>JSHint "${tool.jsxint.file}"</echo>
+        <exec executable="${tool.jshint}" failonerror="true">
+            <arg value="${tool.jsxint.file}" />
+        </exec>
+    </target>
+
+    <target name="xint" depends="lint,hint">
     </target>
 
 </project>
