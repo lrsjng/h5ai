@@ -5,7 +5,7 @@
  * options, types and localization
  */
 
-H5AI_CONFIG = {
+var H5AI_CONFIG = {
 
     "options": {
 

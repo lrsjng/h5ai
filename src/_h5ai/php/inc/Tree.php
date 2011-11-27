@@ -114,7 +114,7 @@ class TreeEntry {
 
         $tree = new TreeEntry($this->h5ai, dirname($this->absPath), dirname($this->absHref));
         $tree->loadContent();
-        $tree->content[ $this->absPath ] = $this;
+        $tree->content[$this->absPath] = $this;
 
         return $tree->getRoot();
     }

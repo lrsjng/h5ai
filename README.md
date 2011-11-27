@@ -4,8 +4,8 @@ Don't use files from this repository (`src` folder) for installation.
 They need to be preprocessed/compiled to work correctly. You'll find a
 precompiled package on the [project page](http://larsjung.de/h5ai).
 
-Please create [a new issue](http://github.com/lrsjng/h5ai/issues/new)
-to report a bug or make a feature request.
+To report a bug or make a feature request
+please create [a new issue](http://github.com/lrsjng/h5ai/issues/new).
 
 * Website with download, docs and demo: <http://larsjung.de/h5ai>
 * Sources: <http://github.com/lrsjng/h5ai>
@@ -27,7 +27,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 ## Changelog
 
-### v0.17 · *2011-11-??*
+### v0.17 · *2011-11-28*
 
 * h5ai is now located in `_h5ai` to reduce collisions
 * switches from HTML5 Boilerplate reset to normalization

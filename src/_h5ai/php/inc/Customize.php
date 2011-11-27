@@ -1,21 +1,24 @@
 <?php
 
 class Customize {
-    private $h5ai;
+    private $customHeader, $customFooter;
 
     public function __construct($h5ai) {
 
-        $this->h5ai = $h5ai;
+        $absPath = $h5ai->getAbsPath();
+        $options = $h5ai->getOptions();
+        $this->customHeader = $absPath . "/" . $options["customHeader"];
+        $this->customFooter = $absPath . "/" . $options["customFooter"];
     }
 
     public function getHeader() {
 
-        return $this->getContent($this->h5ai->getAbsPath() . "/h5ai.header.html", "header");
+        return $this->getContent($this->customHeader, "header");
     }
 
     public function getFooter() {
 
-        return $this->getContent($this->h5ai->getAbsPath() . "/h5ai.footer.html", "footer");
+        return $this->getContent($this->customFooter, "footer");
     }
 
     private function getContent($file, $tag) {

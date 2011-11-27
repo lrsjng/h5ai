@@ -29,9 +29,6 @@
         <?php echo $customize->getHeader(); ?>
         <?php echo $extended->toHtml(); ?>
         <?php echo $customize->getFooter(); ?>
-        <?php echo $h5ai->getDocRoot() . "<br/>"; ?>
-        <?php echo $h5ai->getH5aiRoot() . "<br/>"; ?>
-        <?php echo $h5ai->getHrefRoot() . "<br/>"; ?>
     </section>
     <footer class="clearfix">
         <span class="left">
