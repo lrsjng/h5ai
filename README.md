@@ -1,10 +1,17 @@
 # h5ai
 
+Don't use files from this repository (`src` folder) for installation.
+They need to be preprocessed/compiled to work correctly. You'll find a
+precompiled package on the [project page](http://larsjung.de/h5ai).
+
+To report a bug or make a feature request
+please create [a new issue](http://github.com/lrsjng/h5ai/issues/new).
+
 * Website with download, docs and demo: <http://larsjung.de/h5ai>
 * Sources: <http://github.com/lrsjng/h5ai>
 * Q&A group: <http://groups.google.com/group/h5ai>
 
-h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).  
+h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
 
 
 ## h5ai profits from these great projects
@@ -19,6 +26,22 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 
 ## Changelog
+
+### v0.17 · *2011-11-28*
+
+* h5ai is now located in `_h5ai` to reduce collisions
+* switches from HTML5 Boilerplate reset to normalization
+* adds some style changes for small devices
+* configuration (options, types, translations) now via `config.js`
+* icons for JS version are now configured via `config.js`
+* sort order configuration changed
+* sorting is now done without page reload
+* adds `customHeader` and `customFooter` to `config.js`
+* supports restricted folders to some extent
+* some style changes on tree and language menu
+* fixes total file/folder count in status bar
+* adds support for use with userdir (requires some manual changes)
+
 
 ### v0.16 · *2011-11-02*
 
@@ -153,7 +176,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 * removed slashes from folder labels
 * optionally rename parent folder entries to real folder names, see `options.js`
-* long breadcrumbs (multiple rows) no longer hide content 
+* long breadcrumbs (multiple rows) no longer hide content
 * error folder icons are opaque now
 * refactored js a lot (again...)
 
