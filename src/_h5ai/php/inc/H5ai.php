@@ -26,13 +26,13 @@ class H5ai {
         $this->types = $this->config["types"];
         $this->langs = $this->config["langs"];
 
-        $this->cache = new Cache($this->h5aiRoot . "/cache");
+        $this->cache = new Cache($this->h5aiRoot . DIRECTORY_SEPARATOR . "cache");
 
         $this->hrefRoot = $this->options["rootAbsHref"];
         $this->h5aiAbsHref = $this->options["h5aiAbsHref"];
         $this->domain = getenv("HTTP_HOST");
 
-        $this->absHref = $this->normalizePath(preg_replace('/\\?.*/', '', getenv("REQUEST_URI")), true);
+        $this->absHref = $this->normalizeHref(preg_replace('/\\?.*/', '', getenv("REQUEST_URI")), true);
         $this->absPath = $this->getAbsPath($this->absHref);
 
         $this->view = $this->options["viewmodes"][0];
@@ -131,7 +131,7 @@ class H5ai {
         //
         $endodedAbsHref = $this->hrefRoot . $endodedAbsHref;
 
-        return $this->normalizePath($endodedAbsHref, $endWithSlash);
+        return $this->normalizeHref($endodedAbsHref, $endWithSlash);
     }
 
     public function getAbsPath($absHref = null) {
@@ -143,7 +143,7 @@ class H5ai {
         //
         $absHref=substr($absHref, strlen($this->hrefRoot));
 
-        return $this->normalizePath($this->docRoot . "/" . rawurldecode($absHref), false);
+        return $this->normalizePath($this->docRoot . DIRECTORY_SEPARATOR . rawurldecode(str_replace('/' , DIRECTORY_SEPARATOR , $absHref)));
     }
 
     public function showThumbs() {
@@ -214,8 +214,28 @@ class H5ai {
         return $absHref === "/" ? $this->domain : rawurldecode(basename($absHref));
     }
 
-    public function normalizePath($path, $endWithSlash) {
+    public function getParentPath($path) {
+        return $this->getParentFolder($path, DIRECTORY_SEPARATOR);
+    }
 
+    public function getParentHref($href) {
+        return $this->getParentFolder($href, '/');
+    }
+
+    private function getParentFolder($subj, $sep) {
+       $preg_sep = ($sep === '/' ? '/' : '\\\\');
+       $preg_expr = '#^(.*' .$preg_sep. ')(.*' .$preg_sep. ')$#';
+       $preg_subj = ($this->endsWith($subj, $sep) ? $subj : $subj . $sep);
+       return preg_replace($preg_expr, '\1', $preg_subj);
+    }
+
+    public function normalizePath($path) {
+       $preg_sep = (DIRECTORY_SEPARATOR === '/' ? '/' : '\\\\');
+       $preg_expr = '#' .$preg_sep. '$#';
+       return ($path === DIRECTORY_SEPARATOR) ? DIRECTORY_SEPARATOR : preg_replace($preg_expr, '', $path);
+    }
+
+    public function normalizeHref($path, $endWithSlash) {
         return ($path === "/") ? "/" : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
     }
 
