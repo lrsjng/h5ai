@@ -7,8 +7,8 @@ class Customize {
 
         $absPath = $h5ai->getAbsPath();
         $options = $h5ai->getOptions();
-        $this->customHeader = $absPath . "/" . $options["customHeader"];
-        $this->customFooter = $absPath . "/" . $options["customFooter"];
+        $this->customHeader = $absPath . DIRECTORY_SEPARATOR . $options["customHeader"];
+        $this->customFooter = $absPath . DIRECTORY_SEPARATOR . $options["customFooter"];
     }
 
     public function getHeader() {

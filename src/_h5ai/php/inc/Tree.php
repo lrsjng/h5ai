@@ -8,9 +8,9 @@ class TreeEntry {
         $this->h5ai = $h5ai;
 
         $this->label = $this->h5ai->getLabel($absHref);
-        $this->absPath = $this->h5ai->normalizePath($absPath, false);
+        $this->absPath = $this->h5ai->normalizePath($absPath);
         $this->isFolder = is_dir($this->absPath);
-        $this->absHref = $this->h5ai->normalizePath($absHref, $this->isFolder);
+        $this->absHref = $this->h5ai->normalizeHref($absHref, $this->isFolder);
 
         $this->type = $type !== null ? $type : ($this->isFolder ? "folder" : $this->h5ai->getType($this->absPath));
         $this->content = null;
@@ -26,7 +26,7 @@ class TreeEntry {
 
         $files = $this->h5ai->readDir($this->absPath);
         foreach ($files as $file) {
-            $tree = new TreeEntry($this->h5ai, $this->absPath . "/" . $file, $this->absHref . rawurlencode($file));
+            $tree = new TreeEntry($this->h5ai, $this->absPath . DIRECTORY_SEPARATOR . $file, $this->absHref . rawurlencode($file));
 
             if ($tree->isFolder) {
                 $this->content[$tree->absPath] = $tree;
@@ -112,7 +112,7 @@ class TreeEntry {
             return $this;
         };
 
-        $tree = new TreeEntry($this->h5ai, dirname($this->absPath), dirname($this->absHref));
+        $tree = new TreeEntry($this->h5ai, $this->h5ai->getParentPath($this->absPath), $this->h5ai->getParentHref($this->absHref));
         $tree->loadContent();
         $tree->content[$this->absPath] = $this;
 
