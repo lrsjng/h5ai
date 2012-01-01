@@ -10,9 +10,9 @@ class Entry {
 
         $this->h5ai = $h5ai;
         $this->label = $label !== null ? $label : $this->h5ai->getLabel($absHref);
-        $this->absPath = $this->h5ai->normalizePath($absPath, false);
+        $this->absPath = $this->h5ai->normalizePath($absPath);
         $this->isFolder = is_dir($this->absPath);
-        $this->absHref = $this->h5ai->normalizePath($absHref, $this->isFolder);
+        $this->absHref = $this->h5ai->normalizeHref($absHref, $this->isFolder);
 
         $this->date = filemtime($this->absPath);
 
@@ -94,8 +94,8 @@ class Extended {
 
         if ($this->h5ai->getAbsHref() !== "/") {
             $options = $this->h5ai->getOptions();
-            $parentPath = dirname($this->h5ai->getAbsPath());
-            $parentHref = dirname($this->h5ai->getAbsHref());
+            $parentPath = $this->h5ai->getParentPath($this->h5ai->getAbsPath());
+            $parentHref = $this->h5ai->getParentHref($this->h5ai->getAbsHref());
             $label = $options["setParentFolderLabels"] === true ? $this->h5ai->getLabel($parentHref) : "<span class='l10n-parentDirectory'>Parent Directory</span>";
             $this->parent = new Entry($this->h5ai, $parentPath, $parentHref, "folder-parent", $label);
         }
@@ -104,7 +104,7 @@ class Extended {
 
         $files = $this->h5ai->readDir($this->h5ai->getAbsPath());
         foreach ($files as $file) {
-            $absPath = $this->h5ai->getAbsPath() . "/" . $file;
+            $absPath = $this->h5ai->getAbsPath() . DIRECTORY_SEPARATOR . $file;
             $absHref = $this->h5ai->getAbsHref() . rawurlencode($file);
             $this->content[$absPath] = new Entry($this->h5ai, $absPath, $absHref);
         }

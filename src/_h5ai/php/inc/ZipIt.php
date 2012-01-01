@@ -18,7 +18,7 @@ class ZipIt {
         }
 
         foreach ($hrefs as $href) {
-            $d = dirname($href);
+            $d = $this->h5ai->getParentHref($href);
             $n = basename($href);
             if ($this->h5ai->getHttpCode($this->h5ai->getAbsHref($d)) === "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
                 $localFile = $this->h5ai->getAbsPath($href);
@@ -48,8 +48,8 @@ class ZipIt {
             $zip->addEmptyDir($dir);
             $files = $this->h5ai->readDir($localDir);
             foreach ($files as $file) {
-                $localFile = $localDir . "/" . $file;
-                $file = $dir . "/" . $file;
+                $localFile = $localDir . DIRECTORY_SEPARATOR . $file;
+                $file = $dir . DIRECTORY_SEPARATOR . $file;
                 if (is_dir($localFile)) {
                     $this->zipDir($zip, $localFile, $file);
                 } else {

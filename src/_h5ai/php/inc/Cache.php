@@ -16,7 +16,7 @@ class Cache {
 
     private function _name($key) {
 
-        return $this->dir . "/" . sha1($key);
+        return $this->dir . DIRECTORY_SEPARATOR . sha1($key);
     }
 
     public function get($key, $expiration = 3600) {
