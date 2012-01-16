@@ -1,6 +1,6 @@
 <?php
 
-require_once "Cache.php";
+require_once(dirname(__FILE__) . '/Cache.php');
 
 class H5ai {
     private static $VIEWMODES = array("details", "icons");

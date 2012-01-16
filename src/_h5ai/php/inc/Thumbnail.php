@@ -1,6 +1,6 @@
 <?php
 
-require_once "Image.php";
+require_once(dirname(__FILE__) . '/Image.php');
 
 
 class Thumbnail {

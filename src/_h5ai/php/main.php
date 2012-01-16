@@ -1,11 +1,11 @@
 <?php
 
-require_once "config.php";
-require_once "inc/H5ai.php";
-require_once "inc/Crumb.php";
-require_once "inc/Customize.php";
-require_once "inc/Extended.php";
-require_once "inc/Tree.php";
+require_once(dirname(__FILE__) . '/config.php');
+require_once(dirname(__FILE__) . '/inc/H5ai.php');
+require_once(dirname(__FILE__) . '/inc/Crumb.php');
+require_once(dirname(__FILE__) . '/inc/Customize.php');
+require_once(dirname(__FILE__) . '/inc/Extended.php');
+require_once(dirname(__FILE__) . '/inc/Tree.php');
 
 $h5ai = new H5ai();
 $crumb = new Crumb($h5ai);
