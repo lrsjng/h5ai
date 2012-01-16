@@ -21,8 +21,8 @@ function checkKeys($keys) {
 list($action) = checkKeys(array("action"));
 
 
-require_once "config.php";
-require_once "inc/H5ai.php";
+require_once(dirname(__FILE__) . '/config.php');
+require_once(dirname(__FILE__) . '/inc/H5ai.php');
 $h5ai = new H5ai();
 $options = $h5ai->getOptions();
 
@@ -55,8 +55,8 @@ else if ($action === "thumb") {
     fail(0, "thumbs are disabled", !$options["showThumbs"]);
     list($srcAbsHref, $width, $height, $mode) = checkKeys(array("href", "width", "height", "mode"));
 
-    require_once "inc/Thumbnail.php";
-    require_once "inc/Image.php";
+    require_once(dirname(__FILE__) . '/inc/Thumbnail.php');
+    require_once(dirname(__FILE__) . '/inc/Image.php');
 
     $srcAbsPath = $h5ai->getDocRoot() . rawurldecode($srcAbsHref);
 
@@ -82,7 +82,7 @@ else if ($action === "tree") {
 
     list($href) = checkKeys(array("href"));
 
-    require_once "inc/Tree.php";
+    require_once(dirname(__FILE__) . '/inc/Tree.php');
 
     $absHref = trim($href);
     $absPath = $h5ai->getAbsPath($absHref);
@@ -99,7 +99,7 @@ else if ($action === "zip") {
     fail(0, "zipped download is disabled", !$options["zippedDownload"]);
     list($hrefs) = checkKeys(array("hrefs"));
 
-    require_once "inc/ZipIt.php";
+    require_once(dirname(__FILE__) . '/inc/ZipIt.php');
 
     $zipit = new ZipIt($h5ai);
 
