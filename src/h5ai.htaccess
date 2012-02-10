@@ -1,3 +1,4 @@
+<IfModule mod_autoindex.c>
 ################################
 # h5ai %BUILD_VERSION%
 # customized .htaccess
@@ -13,6 +14,11 @@ ReadmeName    /_h5ai/footer.html
 # PHP version
 # HeaderName    /_h5ai/header.php
 # ReadmeName    /_h5ai/footer.php
+#AddType text/html .php
+#<Files "*.php">
+#    AddHandler application/x-httpd-php .php
+#</Files>
+
 
 IndexIgnore _h5ai*
 
@@ -24,3 +30,5 @@ IndexOptions  SuppressDescription
 IndexOptions  NameWidth=*
 IndexOptions  HTMLTable
 IndexOptions  XHTML
+
+</IfModule>
