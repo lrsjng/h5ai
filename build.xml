@@ -49,9 +49,6 @@
     <target name="release" depends="build">
         <mkdir dir="${release.dir}" />
         <zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
-        <tar destfile="${release.dir}/${project.name}-${project.version}.tar" basedir="${build.dir}"/>
-        <gzip destfile="${release.dir}/${project.name}-${project.version}.tar.gz" src="${release.dir}/${project.name}-${project.version}.tar"/>
-        <delete file="${release.dir}/${project.name}-${project.version}.tar" />
     </target>
 
     <target name="pre-xint" depends="build-prepare">
