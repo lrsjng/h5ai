@@ -52,21 +52,25 @@
 			},
 			customize = function () {
 
-				$.ajax({
-					url: H5AI.core.settings.customHeader,
-					dataType: "html",
-					success: function (data) {
-						$("#content > header").append($(data)).show();
-					}
-				});
+				if (H5AI.core.settings.customHeader) {
+					$.ajax({
+						url: H5AI.core.settings.customHeader,
+						dataType: "html",
+						success: function (data) {
+							$("#content > header").append($(data)).show();
+						}
+					});
+				}
 
-				$.ajax({
-					url: H5AI.core.settings.customFooter,
-					dataType: "html",
-					success: function (data) {
-						$("#content > footer").prepend($(data)).show();
-					}
-				});
+				if (H5AI.core.settings.customFooter) {
+					$.ajax({
+						url: H5AI.core.settings.customFooter,
+						dataType: "html",
+						success: function (data) {
+							$("#content > footer").prepend($(data)).show();
+						}
+					});
+				}
 			},
 			fetchPath = function (pathname, callback) {
 

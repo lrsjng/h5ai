@@ -7,8 +7,8 @@ class Customize {
 
 		$absPath = $h5ai->getAbsPath();
 		$options = $h5ai->getOptions();
-		$this->customHeader = $absPath . "/" . $options["customHeader"];
-		$this->customFooter = $absPath . "/" . $options["customFooter"];
+		$this->customHeader = $options["customHeader"] ? $absPath . "/" . $options["customHeader"] : false;
+		$this->customFooter = $options["customFooter"] ? $absPath . "/" . $options["customFooter"] : false;
 	}
 
 	public function getHeader() {
@@ -23,7 +23,7 @@ class Customize {
 
 	private function getContent($file, $tag) {
 
-		return file_exists($file) ? ("<" . $tag . ">" . file_get_contents($file) . "</" . $tag . ">") : "";
+		return (is_string($file) && file_exists($file)) ? ("<" . $tag . ">" . file_get_contents($file) . "</" . $tag . ">") : "";
 	}
 }
 

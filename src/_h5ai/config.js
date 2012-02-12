@@ -18,10 +18,15 @@ var H5AI_CONFIG = {
 
 		/*
 		 * Filenames of customized header and footer files to look for
-		 * in each folder.
+		 * in each folder. For Example:
+		 *
+		 * "customHeader": "_h5ai.header.html",
+		 * "customFooter": "_h5ai.footer.html",
+		 *
+		 * This is disabled by default.
 		 */
-		"customHeader": "_h5ai.header.html",
-		"customFooter": "_h5ai.footer.html",
+		"customHeader": false,
+		"customFooter": false,
 
 		/*
 		 * An array of view modes the user may choose from. Currently there
