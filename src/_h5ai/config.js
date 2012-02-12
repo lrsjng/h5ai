@@ -249,9 +249,9 @@ var H5AI_CONFIG = {
             "size": "Tamaño",
             "parentDirectory": "Directorio superior",
             "empty": "vacío",
-            "folders": "folders",
-            "files": "files",
-            "download": "download"
+            "folders": "Directorios",
+            "files": "Archivos",
+            "download": "Descargar"
         },
 
         "fr": {
