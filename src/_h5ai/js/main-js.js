@@ -3,27 +3,27 @@
 /*global jQuery, amplify, H5AI_CONFIG */
 
 (function ($) {
-    "use strict";
+	"use strict";
 
-    var H5AI = {};
+	var H5AI = {};
 
-    // @include "inc/Util.js"
-    // @include "inc/Core.js"
-    // @include "inc/Sort.js"
-    // @include "inc/ZippedDownload.js"
+	// @include "inc/Util.js"
+	// @include "inc/Core.js"
+	// @include "inc/Sort.js"
+	// @include "inc/ZippedDownload.js"
 
-    // @include "inc/Path.js"
-    // @include "inc/Connector.js"
-    // @include "inc/Html.js"
-    // @include "inc/Extended.js"
+	// @include "inc/Path.js"
+	// @include "inc/Connector.js"
+	// @include "inc/Html.js"
+	// @include "inc/Extended.js"
 
-    $(function () {
+	$(function () {
 
-        H5AI.extended.init();
+		H5AI.extended.init();
 
-        H5AI.core.init();
-        H5AI.sort.init();
-        H5AI.zippedDownload.init();
-    });
+		H5AI.core.init();
+		H5AI.sort.init();
+		H5AI.zippedDownload.init();
+	});
 
 }(jQuery));

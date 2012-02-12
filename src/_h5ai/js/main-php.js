@@ -3,23 +3,23 @@
 /*global jQuery, amplify, H5AI_CONFIG */
 
 (function ($) {
-    "use strict";
+	"use strict";
 
-    var H5AI = {};
+	var H5AI = {};
 
-    // @include "inc/Util.js"
-    // @include "inc/Core.js"
-    // @include "inc/Sort.js"
-    // @include "inc/ZippedDownload.js"
+	// @include "inc/Util.js"
+	// @include "inc/Core.js"
+	// @include "inc/Sort.js"
+	// @include "inc/ZippedDownload.js"
 
-    $(function () {
+	$(function () {
 
-        H5AI.core.init();
-        H5AI.sort.init();
-        H5AI.zippedDownload.init();
+		H5AI.core.init();
+		H5AI.sort.init();
+		H5AI.zippedDownload.init();
 
-        $("#tree").scrollpanel();
-        H5AI.core.shiftTree(false, true);
-    });
+		$("#tree").scrollpanel();
+		H5AI.core.shiftTree(false, true);
+	});
 
 }(jQuery));

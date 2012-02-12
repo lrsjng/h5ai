@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project
-    name="h5ai"
-    basedir="."
-    default="release"
+	name="h5ai"
+	basedir="."
+	default="release"
 >
 
-    <import file="tools/wepp.ant.xml" />
+	<import file="tools/wepp.ant.xml" />
 
-    <target name="init">
-        <property file="build.properties" />
-        <tstamp>
-            <format property="build.stamp" pattern="yyyy-MM-dd-HHmmss" />
-        </tstamp>
-        <property name="build.label" value="${project.name} ${project.version} b${build.stamp}" />
-        <echo>Build: ${build.label}</echo>
-    </target>
+	<target name="init">
+		<property file="build.properties" />
+		<tstamp>
+			<format property="build.stamp" pattern="yyyy-MM-dd-HHmmss" />
+		</tstamp>
+		<property name="build.label" value="${project.name} ${project.version} b${build.stamp}" />
+		<echo>Build: ${build.label}</echo>
+	</target>
 
-    <target name="clean" depends="init">
-        <delete dir="${build.dir}" />
-        <delete dir="${release.dir}" />
-    </target>
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+		<delete dir="${release.dir}" />
+	</target>
 
-    <target name="build-prepare" depends="clean">
-        <mkdir dir="${build.dir}" />
-        <copy todir="${build.dir}">
-            <fileset dir="${src.dir}" />
-            <fileset file="LICENSE.txt" />
-            <fileset file="README.md" />
-        </copy>
-        <replace dir="${build.dir}">
-            <replacefilter token="%BUILD%" value="${build.label}" />
-            <replacefilter token="%BUILD_NAME%" value="${project.name}" />
-            <replacefilter token="%BUILD_VERSION%" value="${project.version}" />
-            <replacefilter token="%BUILD_STAMP%" value="${build.stamp}" />
-        </replace>
-    </target>
+	<target name="build-prepare" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}" />
+			<fileset file="LICENSE.txt" />
+			<fileset file="README.md" />
+		</copy>
+		<replace dir="${build.dir}">
+			<replacefilter token="%BUILD%" value="${build.label}" />
+			<replacefilter token="%BUILD_NAME%" value="${project.name}" />
+			<replacefilter token="%BUILD_VERSION%" value="${project.version}" />
+			<replacefilter token="%BUILD_STAMP%" value="${build.stamp}" />
+		</replace>
+	</target>
 
-    <target name="build" depends="build-prepare">
-        <wepp.dir dir="${build.dir}/_h5ai/css" />
-        <wepp.dir dir="${build.dir}/_h5ai/js" />
-    </target>
+	<target name="build" depends="build-prepare">
+		<wepp.dir dir="${build.dir}/_h5ai/css" />
+		<wepp.dir dir="${build.dir}/_h5ai/js" />
+	</target>
 
-    <target name="build-uncompressed" depends="build-prepare">
-        <wepp.dir dir="${build.dir}/_h5ai/css" args="--nc" />
-        <wepp.dir dir="${build.dir}/_h5ai/js" args="--nc" />
-    </target>
+	<target name="build-uncompressed" depends="build-prepare">
+		<wepp.dir dir="${build.dir}/_h5ai/css" args="--nc" />
+		<wepp.dir dir="${build.dir}/_h5ai/js" args="--nc" />
+	</target>
 
-    <target name="release" depends="build">
-        <mkdir dir="${release.dir}" />
-        <zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
-    </target>
+	<target name="release" depends="build">
+		<mkdir dir="${release.dir}" />
+		<zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
+	</target>
 
-    <target name="pre-xint" depends="build-prepare">
-        <wepp file="${tool.jsxint.file}" tofile="${tool.jsxint.file}" args="--nc" />
-    </target>
+	<target name="pre-xint" depends="build-prepare">
+		<wepp file="${tool.jsxint.file}" tofile="${tool.jsxint.file}" args="--nc" />
+	</target>
 
-    <target name="lint" depends="pre-xint">
-        <echo>JSLint "${tool.jsxint.file}"</echo>
-        <exec executable="${tool.jslint}" failonerror="true">
-            <arg value="${tool.jsxint.file}" />
-        </exec>
-    </target>
+	<target name="lint" depends="pre-xint">
+		<echo>JSLint "${tool.jsxint.file}"</echo>
+		<exec executable="${tool.jslint}" failonerror="true">
+			<arg value="${tool.jsxint.file}" />
+		</exec>
+	</target>
 
-    <target name="hint" depends="pre-xint">
-        <echo>JSHint "${tool.jsxint.file}"</echo>
-        <exec executable="${tool.jshint}" failonerror="true">
-            <arg value="${tool.jsxint.file}" />
-        </exec>
-    </target>
+	<target name="hint" depends="pre-xint">
+		<echo>JSHint "${tool.jsxint.file}"</echo>
+		<exec executable="${tool.jshint}" failonerror="true">
+			<arg value="${tool.jsxint.file}" />
+		</exec>
+	</target>
 
-    <target name="xint" depends="lint,hint">
-    </target>
+	<target name="xint" depends="lint,hint">
+	</target>
 
 </project>

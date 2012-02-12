@@ -31,6 +31,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ### v0.18 - *2012-02-??*
 
 * updates year in `LICENSE.TXT`
+* updates es translation
 
 
 ### v0.17 - *2011-11-28*

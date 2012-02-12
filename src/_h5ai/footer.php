@@ -1,4 +1,4 @@
-        <!-- generated code ends here -->
-    </section>
+		<!-- generated code ends here -->
+	</section>
 </body>
 </html>
