@@ -39,7 +39,7 @@
 
 			path.parentFolder = folder;
 			path.label = $a.text();
-			path.type = $tds.eq(0).find("img").attr("alt") === "[DIR]" ? "folder" : H5AI.core.getFileType(path.label);
+			path.type = H5AI.util.pathEndsWithSlash(path.label) ? "folder" : H5AI.core.getFileType(path.label);
 			path.href = $a.attr("href");
 			path.time = date ? date.getTime() : 0;
 			path.size = size;
