@@ -5,8 +5,6 @@
 	default="release"
 >
 
-	<import file="tools/wepp.ant.xml" />
-
 	<target name="init">
 		<property file="build.properties" />
 		<tstamp>
@@ -37,13 +35,13 @@
 	</target>
 
 	<target name="build" depends="build-prepare">
-		<wepp.dir dir="${build.dir}/_h5ai/css" />
-		<wepp.dir dir="${build.dir}/_h5ai/js" />
+		<wepp-dir-min dir="${build.dir}/_h5ai/css" todir="${build.dir}/_h5ai/css" />
+		<wepp-dir-min dir="${build.dir}/_h5ai/js" todir="${build.dir}/_h5ai/js" />
 	</target>
 
 	<target name="build-uncompressed" depends="build-prepare">
-		<wepp.dir dir="${build.dir}/_h5ai/css" args="--nc" />
-		<wepp.dir dir="${build.dir}/_h5ai/js" args="--nc" />
+		<wepp-dir dir="${build.dir}/_h5ai/css" todir="${build.dir}/_h5ai/css" />
+		<wepp-dir dir="${build.dir}/_h5ai/js" todir="${build.dir}/_h5ai/js" />
 	</target>
 
 	<target name="release" depends="build">
@@ -51,25 +49,62 @@
 		<zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
 	</target>
 
-	<target name="pre-xint" depends="build-prepare">
-		<wepp file="${tool.jsxint.file}" tofile="${tool.jsxint.file}" args="--nc" />
+	<target name="lint" depends="build-prepare">
+		<wepp file="${build.dir}/_h5ai/js/main-js.js" tofile="${build.dir}/_h5ai/js/main-js.js" />
+		<jslint files="${build.dir}/_h5ai/js/main-js.js" />
 	</target>
 
-	<target name="lint" depends="pre-xint">
-		<echo>JSLint "${tool.jsxint.file}"</echo>
-		<exec executable="${tool.jslint}" failonerror="true">
-			<arg value="${tool.jsxint.file}" />
-		</exec>
-	</target>
 
-	<target name="hint" depends="pre-xint">
-		<echo>JSHint "${tool.jsxint.file}"</echo>
-		<exec executable="${tool.jshint}" failonerror="true">
-			<arg value="${tool.jsxint.file}" />
-		</exec>
-	</target>
+	<macrodef name="wepp-args">
+		<attribute name="args" default="" />
+		<sequential>
+			<exec executable="${tool.wepp}" failonerror="true">
+				<arg line="@{args}" />
+			</exec>
+		</sequential>
+	</macrodef>
 
-	<target name="xint" depends="lint,hint">
-	</target>
+	<macrodef name="wepp">
+		<attribute name="file" />
+		<attribute name="tofile" />
+		<sequential>
+			<wepp-args args="--nc --inFile '@{file}' --outFile '@{toFile}'" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wepp-min">
+		<attribute name="file" />
+		<attribute name="tofile" />
+		<sequential>
+			<wepp-args args="--inFile '@{file}' --outFile '@{toFile}'" />
+			<bytes file="@{file}" toFile="@{toFile}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wepp-dir">
+		<attribute name="dir" />
+		<attribute name="todir" />
+		<sequential>
+			<wepp-args args="--nc --inDir '@{dir}' --outDir '@{todir}'" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wepp-dir-min">
+		<attribute name="dir" />
+		<attribute name="todir" />
+		<sequential>
+			<wepp-args args="--inDir '@{dir}' --outDir '@{todir}'" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jslint">
+		<attribute name="files" />
+		<sequential>
+			<echo>JSLint @{files}</echo>
+			<exec executable="${tool.jslint}" failonerror="false">
+				<arg line="@{files}" />
+			</exec>
+		</sequential>
+	</macrodef>
 
 </project>
