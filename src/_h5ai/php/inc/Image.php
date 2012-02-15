@@ -78,7 +78,7 @@ class Image {
 	public function releaseDest() {
 
 		if (!is_null($this->dest)) {
-			imagedestroy($this->dest);
+			@imagedestroy($this->dest);
 			$this->dest = null;
 		}
 	}
@@ -87,7 +87,7 @@ class Image {
 	public function releaseSource() {
 
 		if (!is_null($this->source)) {
-			imagedestroy($this->source);
+			@imagedestroy($this->source);
 			$this->sourceFile = null;
 			$this->source = null;
 			$this->width = null;

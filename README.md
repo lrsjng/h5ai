@@ -34,6 +34,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * updates es translation
 * custom headers/footers are now optional and disabled by default
 * fixes problems with folder recognition in the JS version
+* fixes include problems in PHP version
+* fixes path problems on servers running on Windows in PHP version
 
 
 ### v0.17 - *2011-11-28*

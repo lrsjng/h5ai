@@ -106,6 +106,7 @@ var H5AI_CONFIG = {
 		 * Show thumbnails for image files.
 		 */
 		"showThumbs": true,
+		"thumbTypes": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
 
 		/*
 		 * Requires PHP on the server.

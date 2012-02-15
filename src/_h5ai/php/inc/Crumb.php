@@ -11,7 +11,7 @@ class Crumb {
 		$this->parts = array();
 
 		$href = $h5ai->getAbsHref();
-		while ($href !== "/" && $href !== "//") {
+		while ($href !== "/") {
 			$this->parts[] = $href;
 			$href = safe_dirname($href, true);
 		}

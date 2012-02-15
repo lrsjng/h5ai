@@ -126,24 +126,27 @@ class H5ai {
 	}
 
 
+	public function normalizePath($path, $endWithSlash) {
+
+		return preg_match("#^(\w:)?/$#", $path) ? $path : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
+	}
+
+
 	public function getAbsHref($absPath = null, $endWithSlash = true) {
 
 		if ($absPath === null) {
 			return $this->absHref;
 		}
 
-		$absPath=substr($absPath, strlen($this->rootAbsPath));
+		$absPath = substr($absPath, strlen($this->rootAbsPath));
 
 		$parts = explode("/", $absPath);
 		$encodedParts = array();
 		foreach ($parts as $part) {
 			$encodedParts[] = rawurlencode($part);
 		}
-		$endodedAbsHref = implode("/", $encodedParts);
 
-		$endodedAbsHref = $this->rootAbsHref . $endodedAbsHref;
-
-		return $this->normalizePath($endodedAbsHref, $endWithSlash);
+		return $this->normalizePath($this->rootAbsHref . implode("/", $encodedParts), $endWithSlash);
 	}
 
 
@@ -153,7 +156,7 @@ class H5ai {
 			return $this->absPath;
 		}
 
-		$absHref=substr($absHref, strlen($this->rootAbsHref));
+		$absHref = substr($absHref, strlen($this->rootAbsHref));
 
 		return $this->normalizePath($this->rootAbsPath . "/" . rawurldecode($absHref), false);
 	}
@@ -162,6 +165,12 @@ class H5ai {
 	public function showThumbs() {
 
 		return $this->options["showThumbs"] === true;
+	}
+
+
+	public function getThumbTypes() {
+
+		return $this->options["thumbTypes"];
 	}
 
 
@@ -230,12 +239,6 @@ class H5ai {
 	public function getLabel($absHref) {
 
 		return $absHref === "/" ? $this->domain : rawurldecode(basename($absHref));
-	}
-
-
-	public function normalizePath($path, $endWithSlash) {
-
-		return $path === "/" ? "/" : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
 	}
 
 

@@ -5,7 +5,7 @@ require_h5ai("/php/inc/Thumbnail.php");
 
 class Entry {
 
-	private $h5ai, $label, $absPath, $absHref, $date, $isFolder, $type, $size, $thumbTypes;
+	private $h5ai, $label, $absPath, $absHref, $date, $isFolder, $type, $size;
 
 
 	public function __construct($h5ai, $absPath, $absHref, $type = null, $label = null) {
@@ -25,8 +25,6 @@ class Entry {
 			$this->type = $type !== null ? $type : $this->h5ai->getType($this->absPath);
 			$this->size = filesize($this->absPath);
 		}
-
-		$this->thumbTypes = array("bmp", "gif", "ico", "image", "jpg", "png", "tiff");
 	}
 
 
@@ -59,7 +57,7 @@ class Entry {
 				}
 			}
 		}
-		if ($this->h5ai->showThumbs() && in_array($this->type, $this->thumbTypes)) {
+		if ($this->h5ai->showThumbs() && in_array($this->type, $this->h5ai->getThumbTypes())) {
 			$imgClass = " class='thumb' ";
 			$thumbnail = new Thumbnail($this->h5ai, $this->absHref, "square", 16, 16);
 			$thumbnail->create();
@@ -138,7 +136,7 @@ class Extended {
 	}
 
 
-	public function generateHeaders() {
+	private function generateHeaders() {
 
 		$html = "\t<li class='header'>\n";
 		$html .= "\t\t<a class='icon'></a>\n";
