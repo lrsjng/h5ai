@@ -1,7 +1,9 @@
 <?php
 
 class Crumb {
+
 	private $h5ai, $parts;
+
 
 	public function __construct($h5ai) {
 
@@ -11,12 +13,13 @@ class Crumb {
 		$href = $h5ai->getAbsHref();
 		while ($href !== "/" && $href !== "//") {
 			$this->parts[] = $href;
-			$href = dirname($href) . "/";
+			$href = safe_dirname($href, true);
 		}
 		$this->parts[] = "/";
 
 		$this->parts = array_reverse($this->parts);
 	}
+
 
 	public function toHtml() {
 

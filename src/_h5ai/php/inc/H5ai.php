@@ -1,34 +1,38 @@
 <?php
 
-require_once "Cache.php";
+require_h5ai("/config.php");
+require_h5ai("/php/inc/Cache.php");
 
 class H5ai {
+
 	private static $VIEWMODES = array("details", "icons");
 
-	private $docRoot, $h5aiRoot, $h5aiAbsHref, $domain,
+	private $h5aiAbsPath,
+			$rootAbsPath, $ignore, $ignoreRE,
 			$config, $options, $types, $langs,
 			$cache,
+			$rootAbsHref, $h5aiAbsHref, $domain,
 			$absHref, $absPath,
-			$ignore, $ignoreRE,
 			$view;
+
 
 	public function __construct() {
 
-		global $H5AI_CONFIG;
+		$this->h5aiAbsPath = H5AI_ABS_PATH;
 
-		$this->docRoot = $H5AI_CONFIG["DOCUMENT_ROOT"];
-		$this->h5aiRoot = $H5AI_CONFIG["H5AI_ROOT"];
+		global $H5AI_CONFIG;
+		$this->rootAbsPath = $H5AI_CONFIG["ROOT_ABS_PATH"];
 		$this->ignore = $H5AI_CONFIG["IGNORE"];
 		$this->ignoreRE = $H5AI_CONFIG["IGNORE_PATTERNS"];
 
-		$this->config = $this->loadConfig($this->h5aiRoot . "/config.js");
+		$this->config = $this->loadConfig($this->h5aiAbsPath . "/config.js");
 		$this->options = $this->config["options"];
 		$this->types = $this->config["types"];
 		$this->langs = $this->config["langs"];
 
-		$this->cache = new Cache($this->h5aiRoot . "/cache");
+		$this->cache = new Cache($this->h5aiAbsPath . "/cache");
 
-		$this->hrefRoot = $this->options["rootAbsHref"];
+		$this->rootAbsHref = $this->options["rootAbsHref"];
 		$this->h5aiAbsHref = $this->options["h5aiAbsHref"];
 		$this->domain = getenv("HTTP_HOST");
 
@@ -56,60 +60,71 @@ class H5ai {
 	}
 
 
-	public function getDocRoot() {
+	public function getH5aiAbsPath() {
 
-		return $this->docRoot;
+		return $this->h5aiAbsPath;
 	}
 
-	public function getH5aiRoot() {
 
-		return $this->h5aiRoot;
+	public function getRootAbsPath() {
+
+		return $this->rootAbsPath;
 	}
 
-	public function getHrefRoot() {
 
-		return $this->hrefRoot;
+	public function getRootAbsHref() {
+
+		return $this->rootAbsHref;
 	}
+
 
 	public function getH5aiAbsHref() {
 
 		return $this->h5aiAbsHref;
 	}
 
+
 	public function getDomain() {
 
 		return $this->domain;
 	}
+
 
 	public function getView() {
 
 		return $this->view;
 	}
 
+
 	public function api() {
 
 		return $this->h5aiAbsHref . "php/api.php";
 	}
+
 
 	public function image($id) {
 
 		return $this->h5aiAbsHref . "images/" . $id . ".png";
 	}
 
+
 	public function icon($id, $big = false) {
 
 		return $this->h5aiAbsHref . "icons/" . ($big ? "48x48" : "16x16") . "/" . $id . ".png";
 	}
+
 
 	public function getOptions() {
 
 		return $this->options;
 	}
 
+
 	public function getLangs() {
 
 		return $this->langs;
 	}
+
 
 	public function getAbsHref($absPath = null, $endWithSlash = true) {
 
@@ -117,22 +132,20 @@ class H5ai {
 			return $this->absHref;
 		}
 
-		//
-		$absPath=substr($absPath, strlen($this->docRoot));
+		$absPath=substr($absPath, strlen($this->rootAbsPath));
 
-		$absHref = preg_replace("!^" . $this->docRoot . "!", "", $absPath);
-		$parts = explode("/", $absHref);
+		$parts = explode("/", $absPath);
 		$encodedParts = array();
 		foreach ($parts as $part) {
 			$encodedParts[] = rawurlencode($part);
 		}
 		$endodedAbsHref = implode("/", $encodedParts);
 
-		//
-		$endodedAbsHref = $this->hrefRoot . $endodedAbsHref;
+		$endodedAbsHref = $this->rootAbsHref . $endodedAbsHref;
 
 		return $this->normalizePath($endodedAbsHref, $endWithSlash);
 	}
+
 
 	public function getAbsPath($absHref = null) {
 
@@ -140,16 +153,17 @@ class H5ai {
 			return $this->absPath;
 		}
 
-		//
-		$absHref=substr($absHref, strlen($this->hrefRoot));
+		$absHref=substr($absHref, strlen($this->rootAbsHref));
 
-		return $this->normalizePath($this->docRoot . "/" . rawurldecode($absHref), false);
+		return $this->normalizePath($this->rootAbsPath . "/" . rawurldecode($absHref), false);
 	}
+
 
 	public function showThumbs() {
 
 		return $this->options["showThumbs"] === true;
 	}
+
 
 	public function getTitle() {
 
@@ -161,6 +175,7 @@ class H5ai {
 		}
 		return $title;
 	}
+
 
 	public function getType($absPath) {
 
@@ -174,9 +189,10 @@ class H5ai {
 		return "unknown";
 	}
 
+
 	public function ignoreThisFile($file) {
 
-		# always ignore
+		// always ignore
 		if ($file === "." || $file === ".." || $this->startsWith($file, '.ht')) {
 			return true;
 		}
@@ -192,6 +208,7 @@ class H5ai {
 
 		return false;
 	}
+
 
 	public function readDir($path) {
 
@@ -209,32 +226,38 @@ class H5ai {
 		return $content;
 	}
 
+
 	public function getLabel($absHref) {
 
 		return $absHref === "/" ? $this->domain : rawurldecode(basename($absHref));
 	}
 
+
 	public function normalizePath($path, $endWithSlash) {
 
-		return ($path === "/") ? "/" : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
+		return $path === "/" ? "/" : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
 	}
+
 
 	public function startsWith($sequence, $start) {
 
 		return strcasecmp(substr($sequence, 0, strlen($start)), $start) === 0;
 	}
 
+
 	public function endsWith($sequence, $end) {
 
 		return strcasecmp(substr($sequence, -strlen($end)), $end) === 0;
 	}
 
+
 	public function getHttpCode($absHref) {
 
 		return $this->cachedHttpCode($absHref);
-		#return $this->fetchHttpCode($absHref);
-		#return $this->guessHttpCode($absHref);
+		// return $this->fetchHttpCode($absHref);
+		// return $this->guessHttpCode($absHref);
 	}
+
 
 	public function cachedHttpCode($absHref) {
 
@@ -251,6 +274,7 @@ class H5ai {
 		}
 		return $cached["code"];
 	}
+
 
 	public function fetchHttpCode($absHref) {
 
@@ -285,6 +309,7 @@ class H5ai {
 		fclose($socket);
 		return $code;
 	}
+
 
 	public function guessHttpCode($absHref) {
 

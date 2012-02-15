@@ -12,9 +12,9 @@ $H5AI_CONFIG = array();
 /*
  * This configuration assumes that h5ai is installed
  * in the webroot directory of the Apache server.
+ * Assumed to end with a slash.
  */
-$H5AI_CONFIG["H5AI_ROOT"] = dirname(dirname(__FILE__));
-$H5AI_CONFIG["DOCUMENT_ROOT"] = dirname($H5AI_CONFIG["H5AI_ROOT"]);
+$H5AI_CONFIG["ROOT_ABS_PATH"] = dirname(dirname(str_replace('\\', '/', __FILE__)));
 
 /*
  * Files/folders that should not be listed. Specified

@@ -1,10 +1,12 @@
 <?php
 
-require_once "Thumbnail.php";
+require_h5ai("/php/inc/Thumbnail.php");
 
 
 class Entry {
+
 	private $h5ai, $label, $absPath, $absHref, $date, $isFolder, $type, $size, $thumbTypes;
+
 
 	public function __construct($h5ai, $absPath, $absHref, $type = null, $label = null) {
 
@@ -27,10 +29,12 @@ class Entry {
 		$this->thumbTypes = array("bmp", "gif", "ico", "image", "jpg", "png", "tiff");
 	}
 
+
 	public function isFolder() {
 
 		return $this->isFolder;
 	}
+
 
 	public function toHtml() {
 
@@ -80,7 +84,9 @@ class Entry {
 
 
 class Extended {
+
 	private $h5ai, $parent, $content;
+
 
 	public function __construct($h5ai) {
 
@@ -90,12 +96,13 @@ class Extended {
 		$this->loadContent();
 	}
 
+
 	private function loadContent() {
 
 		if ($this->h5ai->getAbsHref() !== "/") {
 			$options = $this->h5ai->getOptions();
-			$parentPath = dirname($this->h5ai->getAbsPath());
-			$parentHref = dirname($this->h5ai->getAbsHref());
+			$parentPath = safe_dirname($this->h5ai->getAbsPath());
+			$parentHref = safe_dirname($this->h5ai->getAbsHref(), true);
 			$label = $options["setParentFolderLabels"] === true ? $this->h5ai->getLabel($parentHref) : "<span class='l10n-parentDirectory'>Parent Directory</span>";
 			$this->parent = new Entry($this->h5ai, $parentPath, $parentHref, "folder-parent", $label);
 		}
@@ -109,6 +116,7 @@ class Extended {
 			$this->content[$absPath] = new Entry($this->h5ai, $absPath, $absHref);
 		}
 	}
+
 
 	public function toHtml() {
 
@@ -128,6 +136,7 @@ class Extended {
 		$html .="</section>";
 		return $html;
 	}
+
 
 	public function generateHeaders() {
 

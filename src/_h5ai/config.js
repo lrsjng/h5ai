@@ -25,8 +25,8 @@ var H5AI_CONFIG = {
 		 *
 		 * This is disabled by default.
 		 */
-		"customHeader": false,
-		"customFooter": false,
+		"customHeader": "_h5ai.header.html",
+		"customFooter": "_h5ai.footer.html",
 
 		/*
 		 * An array of view modes the user may choose from. Currently there
@@ -105,13 +105,13 @@ var H5AI_CONFIG = {
 		 * Requires PHP on the server.
 		 * Show thumbnails for image files.
 		 */
-		"showThumbs": false,
+		"showThumbs": true,
 
 		/*
 		 * Requires PHP on the server.
 		 * Enable zipped download of selected entries.
 		 */
-		"zippedDownload": false
+		"zippedDownload": true
 	},
 
 

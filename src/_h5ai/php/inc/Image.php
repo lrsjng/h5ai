@@ -2,13 +2,7 @@
 
 class Image {
 
-	private $sourceFile;
-	private $source;
-	private $width;
-	private $height;
-	private $type;
-
-	private $dest;
+	private $sourceFile, $source, $width, $height, $type, $dest;
 
 
 	public static function isUsable() {

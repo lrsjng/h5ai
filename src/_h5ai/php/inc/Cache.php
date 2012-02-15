@@ -7,17 +7,21 @@
 ##############################################
 
 class Cache {
+
 	private $dir;
+
 
 	function __construct($dir) {
 
 		$this->dir = $dir;
 	}
 
+
 	private function _name($key) {
 
 		return $this->dir . "/" . sha1($key);
 	}
+
 
 	public function get($key, $expiration = 3600) {
 
@@ -55,6 +59,7 @@ class Cache {
 		return $cache;
 	}
 
+
 	public function set($key, $data) {
 
 		if (!is_dir($this->dir) || !is_writable($this->dir)) {
@@ -77,6 +82,7 @@ class Cache {
 		@chmod($cache_path, 0777);
 		return true;
 	}
+
 
 	public function clear($key) {
 

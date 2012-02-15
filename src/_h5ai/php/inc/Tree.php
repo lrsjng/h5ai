@@ -1,7 +1,9 @@
 <?php
 
 class TreeEntry {
+
 	private $h5ai, $label, $absPath, $absHref, $isFolder, $type, $content;
+
 
 	public function __construct($h5ai, $absPath, $absHref, $type = null) {
 
@@ -15,6 +17,7 @@ class TreeEntry {
 		$this->type = $type !== null ? $type : ($this->isFolder ? "folder" : $this->h5ai->getType($this->absPath));
 		$this->content = null;
 	}
+
 
 	public function loadContent() {
 
@@ -36,6 +39,7 @@ class TreeEntry {
 		$this->sort();
 	}
 
+
 	public function cmpTrees($t1, $t2) {
 
 		if ($t1->isFolder && !$t2->isFolder) {
@@ -47,12 +51,14 @@ class TreeEntry {
 		return strcasecmp($t1->absPath, $t2->absPath);
 	}
 
+
 	public function sort() {
 
 		if ($this->content !== null) {
 			uasort($this->content, array($this, "cmpTrees"));
 		}
 	}
+
 
 	public function toHtml() {
 
@@ -94,6 +100,7 @@ class TreeEntry {
 		return $html;
 	}
 
+
 	public function contentToHtml() {
 
 		$html = "<ul class='content'>\n";
@@ -106,13 +113,14 @@ class TreeEntry {
 		return $html;
 	}
 
+
 	public function getRoot() {
 
 		if ($this->absHref === "/") {
 			return $this;
 		};
 
-		$tree = new TreeEntry($this->h5ai, dirname($this->absPath), dirname($this->absHref));
+		$tree = new TreeEntry($this->h5ai, safe_dirname($this->absPath), safe_dirname($this->absHref, true));
 		$tree->loadContent();
 		$tree->content[$this->absPath] = $this;
 
@@ -122,12 +130,15 @@ class TreeEntry {
 
 
 class Tree {
+
 	private $h5ai;
+
 
 	public function __construct($h5ai) {
 
 		$this->h5ai = $h5ai;
 	}
+
 
 	public function toHtml() {
 
