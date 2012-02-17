@@ -1,5 +1,7 @@
 
 
+Options  -Indexes
+
 AddType  text/html  .php
 
 
