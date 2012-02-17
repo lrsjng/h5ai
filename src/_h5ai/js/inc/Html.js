@@ -3,8 +3,7 @@
 
 	H5AI.html = (function () {
 
-		var thumbTypes = ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
-			onClick = function (path, context) {
+		var onClick = function (path, context) {
 
 			},
 			updateCrumbHtml = function (path) {
@@ -72,7 +71,7 @@
 					$html.data("status", path.status);
 				}
 
-				if (H5AI.core.settings.showThumbs === true && $.inArray(path.type, thumbTypes) >= 0) {
+				if (H5AI.core.settings.showThumbs === true && $.inArray(path.type, H5AI.core.settings.thumbTypes) >= 0) {
 					imgClass = "class='thumb'";
 					var escapedHref = path.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
 					icon16 = H5AI.core.api() + "?action=thumb&href=" + escapedHref + "&width=16&height=16&mode=square";
