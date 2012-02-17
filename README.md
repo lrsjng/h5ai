@@ -38,6 +38,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * fixes path problems on servers running on Windows in PHP version
 * fixes broken links in custom headers/footers while zipped download enabled
 * fixes problems with thumbnails for files with single or double quotes in filename
+* improves zipped download
+
 
 ### v0.17 - *2011-11-28*
 

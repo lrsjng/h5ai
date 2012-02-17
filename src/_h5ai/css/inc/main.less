@@ -94,6 +94,14 @@ body > nav {
 		display: none;
 		float: right;
 		border-left: 1px solid rgb(231,231,231);
+		.transition(all 0.2s ease-in-out);
+
+		&.zipping {
+
+		}
+		&.failed {
+			background-color: rgba(255,0,0,0.5);
+		}
 	}
 }
 

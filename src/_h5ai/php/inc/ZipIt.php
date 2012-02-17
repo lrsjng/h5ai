@@ -13,17 +13,18 @@ class ZipIt {
 
 	public function zip($hrefs) {
 
-		$zipFile = tempnam("/tmp", "h5ai-download");
+		$zipFile = tempnam(sys_get_temp_dir(), "h5ai-zip-");
 		$zip = new ZipArchive();
 
 		if (!$zip->open($zipFile, ZIPARCHIVE::CREATE)) {
-			return false;
+			return null;
 		}
 
+		$zip->addEmptyDir("/");
 		foreach ($hrefs as $href) {
 			$d = safe_dirname($href, true);
 			$n = basename($href);
-			if ($this->h5ai->getHttpCode($this->h5ai->getAbsHref($d)) === "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
+			if ($this->h5ai->getHttpCode($d) === "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
 				$localFile = $this->h5ai->getAbsPath($href);
 				$file = preg_replace("!^" . $this->h5ai->getRootAbsPath() . "!", "", $localFile);
 				if (is_dir($localFile)) {
@@ -35,7 +36,7 @@ class ZipIt {
 		}
 
 		$zip->close();
-		return $zipFile;
+		return filesize($zipFile) ? $zipFile : null;
 	}
 
 

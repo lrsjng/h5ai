@@ -7,21 +7,22 @@
 			y = 0,
 			$document = $(document),
 			$selectionRect = $("#selection-rect"),
+			selectedHrefsStr = "",
 			updateDownloadBtn = function () {
 
 				var $selected = $("#extended a.selected"),
-					$downloadBtn = $("#download"),
-					query, href;
+					$downloadBtn = $("#download");
 
-				if ($selected.size() > 0) {
+				selectedHrefsStr = "";
+				if ($selected.length) {
 					$selected.each(function () {
-						href = $(this).attr("href");
-						query = query ? query + ":" + href : href;
+
+						var href = $(this).attr("href");
+						selectedHrefsStr = selectedHrefsStr ? selectedHrefsStr + ":" + href : href;
 					});
-					query = H5AI.core.api() + "?action=zip&hrefs=" + query;
-					$downloadBtn.show().find("a").attr("href", query);
+					$downloadBtn.show();
 				} else {
-					$downloadBtn.hide().find("a").attr("href", "#");
+					$downloadBtn.hide();
 				}
 			},
 			selectionUpdate = function (event) {
@@ -94,6 +95,39 @@
 				if (H5AI.core.settings.zippedDownload) {
 					$("<li id='download'><a href='#'><img alt='download' /><span class='l10n-download'>download</span></a></li>")
 						.find("img").attr("src", H5AI.core.image("download")).end()
+						.find("a").click(function () {
+
+							$('#download').addClass('zipping');
+							$('#download img').attr('src', H5AI.core.image("loading"));
+							$.ajax({
+								url: H5AI.core.api(),
+								data: {
+									action: 'zip',
+									hrefs: selectedHrefsStr
+								},
+								type: 'POST',
+								dataType: 'json',
+								success: function (response) {
+
+									$('#download img').attr('src', H5AI.core.image("download"));
+									$('#download').removeClass('zipping');
+									if (response.status === 'ok') {
+										console.log("download worked!", response);
+										window.location = H5AI.core.api() + '?action=getzip&id=' + response.id;
+									} else {
+										console.log("download failed!", response);
+										$('#download').addClass('failed');
+										setTimeout(function () {
+											$('#download').removeClass('failed');
+										}, 1000);
+									}
+								},
+								failed: function () {
+									$('#download img').attr('src', H5AI.core.image("download"));
+									$('#download').removeClass('zipping');
+								}
+							});
+						}).end()
 						.appendTo($("#navbar"));
 
 					$("body>nav,body>footer,#tree").on("mousedown", noSelection);
