@@ -74,8 +74,9 @@
 
 				if (H5AI.core.settings.showThumbs === true && $.inArray(path.type, thumbTypes) >= 0) {
 					imgClass = "class='thumb'";
-					icon16 = H5AI.core.api() + "?action=thumb&href=" + path.absHref + "&width=16&height=16&mode=square";
-					icon48 = H5AI.core.api() + "?action=thumb&href=" + path.absHref + "&width=96&height=46&mode=rational";
+					var escapedHref = path.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
+					icon16 = H5AI.core.api() + "?action=thumb&href=" + escapedHref + "&width=16&height=16&mode=square";
+					icon48 = H5AI.core.api() + "?action=thumb&href=" + escapedHref + "&width=96&height=46&mode=rational";
 				}
 
 				$label = $("<span class='label'>" + path.label + "</span>");
