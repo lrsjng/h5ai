@@ -15,20 +15,24 @@
 
 				rootAbsHref: "/",
 				h5aiAbsHref: "/_h5ai/",
-				customHeader: "_h5ai.header.html",
-				customFooter: "_h5ai.footer.html",
+
+				customHeader: null,
+				customFooter: null,
 
 				viewmodes: ["details", "icons"],
 				sortorder: "na",
 				showTree: true,
 				slideTree: true,
 				folderStatus: {},
-				lang: null,
+				lang: "en",
 				useBrowserLang: true,
 				setParentFolderLabels: true,
 				linkHoverStates: true,
 				dateFormat: "yyyy-MM-dd HH:mm",
+
 				showThumbs: false,
+				thumbTypes: ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+
 				zippedDownload: false
 			},
 			settings = $.extend({}, defaults, config.options),

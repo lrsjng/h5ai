@@ -97,7 +97,7 @@
 						.appendTo($("#navbar"));
 
 					$("body>nav,body>footer,#tree").on("mousedown", noSelection);
-					$("#extended").on("mousedown", "a", noSelectionUnlessCtrl);
+					$("#content").on("mousedown", "a", noSelectionUnlessCtrl);
 					$document.on("mousedown", selectionStart);
 				}
 			};
