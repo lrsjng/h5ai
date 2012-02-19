@@ -92,7 +92,7 @@ class TreeEntry {
 			$html .= "<span class='indicator" . $indicatorState . "'><img src='" . $this->h5ai->image("tree") . "' alt='>' /></span>\n";
 		}
 		$html .= "<a href='" . $this->absHref . "'>\n";
-		$html .= "<span class='icon'><img src='" . $this->h5ai->icon($icon) . "' alt='" . $icon . "' /></span>\n";
+		$html .= "<span class='icon'><img src='" . $this->h5ai->icon($icon) . "' alt='" . $icon . "' /></span>";
 		$html .= "<span class='label'>" . $this->label . "</span>" . $hint . "\n";
 		$html .= "</a>\n";
 		$html .= $this->contentToHtml();

@@ -112,7 +112,20 @@ var H5AI_CONFIG = {
 		 * Requires PHP on the server.
 		 * Enable zipped download of selected entries.
 		 */
-		"zippedDownload": true
+		"zippedDownload": true,
+
+		/*
+		 * Show QRCodes on hovering files.
+		 * Set this to the desired size in pixel or null to not display QRCodes.
+		 * A good size to start with might be 150.
+		 */
+		"qrCodesSize": 150,
+
+		/*
+		 * Allow filtering the displayed files and folders.
+		 * Filters are ment to be JavaScript regular expressions.
+		 */
+		"showFilter": true
 	},
 
 

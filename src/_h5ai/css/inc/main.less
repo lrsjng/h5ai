@@ -42,7 +42,7 @@ body > nav {
 		padding: 0 10px;
 		color: #999;
 	}
-	a, a:active, a:visited {
+	a, a:active, a:visited, span.element {
 		color: #555;
 		cursor: pointer;
 		text-decoration: none;
@@ -60,9 +60,11 @@ body > nav {
 			opacity: 1.0;
 		}
 	}
-	.current a {
-		background-color: rgba(255,255,255,0.5);
-		opacity: 1.0;
+	.current {
+		a, span.element {
+			background-color: rgba(255,255,255,0.5);
+			opacity: 1.0;
+		}
 	}
 	img {
 		position: relative;
@@ -70,7 +72,7 @@ body > nav {
 		width: 16px;
 		height: 16px;
 	}
-	img + span {
+	img + span, img + input {
 		margin-left: 6px;
 	}
 	.crumb {
@@ -103,6 +105,18 @@ body > nav {
 			background-color: rgba(255,0,0,0.5);
 		}
 	}
+	#filter {
+		float: right;
+		border-left: 1px solid rgb(231,231,231);
+
+		input {
+			border: none;
+			font-family: Ubuntu, sans-serif;
+			color: #555;
+			background-color: rgba(0,0,0,0);
+			width: 100px;
+		}
+	}
 }
 
 
@@ -128,6 +142,7 @@ body > nav {
 @import "table";
 @import "extended";
 @import "tree";
+@import "context";
 
 
 body > footer {

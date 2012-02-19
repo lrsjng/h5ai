@@ -68,12 +68,12 @@
 				}
 
 				event.preventDefault();
+				$(':focus').blur();
 				if (!event.ctrlKey) {
 					$("#extended a").removeClass("selected");
 					updateDownloadBtn();
 				}
 				$selectionRect.show().css({left: x, top: y, width: 0, height: 0});
-				selectionUpdate(event);
 
 				$document
 					.on("mousemove", selectionUpdate)
@@ -81,7 +81,7 @@
 			},
 			noSelection = function (event) {
 
-				event.stopPropagation();
+				event.stopImmediatePropagation();
 				return false;
 			},
 			noSelectionUnlessCtrl = function (event) {

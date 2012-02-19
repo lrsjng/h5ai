@@ -23,6 +23,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * [jQuery](http://jquery.com) (MIT/GPL)
 * [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
 * [modernizr](http://www.modernizr.com) (MIT/BSD)
+* [qrcode](http://www.d-project.com/qrcode/index.html) (MIT)
 
 
 ## Changelog
@@ -30,15 +31,17 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 ### v0.18 - *2012-02-??*
 
-* updates year in `LICENSE.TXT`
-* updates es translation
+* adds optional QRCode display
+* adds optional filtering for displayed files and folders
+* improves zipped download
 * custom headers/footers are now optional and disabled by default
 * fixes problems with folder recognition in the JS version
 * fixes include problems in PHP version
 * fixes path problems on servers running on Windows in PHP version
 * fixes broken links in custom headers/footers while zipped download enabled
 * fixes problems with thumbnails for files with single or double quotes in filename
-* improves zipped download
+* updates year in `LICENSE.TXT`
+* updates es translation
 
 
 ### v0.17 - *2011-11-28*

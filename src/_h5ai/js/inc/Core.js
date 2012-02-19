@@ -15,10 +15,8 @@
 
 				rootAbsHref: "/",
 				h5aiAbsHref: "/_h5ai/",
-
 				customHeader: null,
 				customFooter: null,
-
 				viewmodes: ["details", "icons"],
 				sortorder: "na",
 				showTree: true,
@@ -29,11 +27,11 @@
 				setParentFolderLabels: true,
 				linkHoverStates: true,
 				dateFormat: "yyyy-MM-dd HH:mm",
-
 				showThumbs: false,
 				thumbTypes: ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
-
-				zippedDownload: false
+				zippedDownload: false,
+				qrCodesSize: null,
+				showFilter: false
 			},
 			settings = $.extend({}, defaults, config.options),
 			currentDateFormat = settings.dateFormat,
