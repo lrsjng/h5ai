@@ -6,6 +6,7 @@
  * kudos to http://github.com/jeromeetienne/jquery-qrcode
  */
 (function ($) {
+	'use strict';
 
 	// @include "qrcode.js"
 

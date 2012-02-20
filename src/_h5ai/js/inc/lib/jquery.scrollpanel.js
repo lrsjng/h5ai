@@ -5,7 +5,6 @@
  *
  * still quick and dirty!
  */
-
 (function (window, $) {
 	"use strict";
 

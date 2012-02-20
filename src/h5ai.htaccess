@@ -8,11 +8,11 @@
 
 # pure JavaScript version
 HeaderName    /_h5ai/header.html
-ReadmeName    /_h5ai/footer.html
 
 # PHP version
 # HeaderName    /_h5ai/header.php
-# ReadmeName    /_h5ai/footer.php
+
+ReadmeName    /_h5ai/footer.html
 
 IndexIgnore _h5ai*
 
