@@ -37,11 +37,19 @@
 	<target name="build" depends="build-prepare">
 		<wepp-dir-min dir="${build.dir}/_h5ai/css" todir="${build.dir}/_h5ai/css" />
 		<wepp-dir-min dir="${build.dir}/_h5ai/js" todir="${build.dir}/_h5ai/js" />
+		<delete dir="${build.dir}/_h5ai/css/inc" >
+			<fileset dir="." includes="${build.dir}/_h5ai/css/**/*.less" />
+		</delete>
+		<delete dir="${build.dir}/_h5ai/js/inc" />
 	</target>
 
 	<target name="build-uncompressed" depends="build-prepare">
 		<wepp-dir dir="${build.dir}/_h5ai/css" todir="${build.dir}/_h5ai/css" />
 		<wepp-dir dir="${build.dir}/_h5ai/js" todir="${build.dir}/_h5ai/js" />
+		<delete dir="${build.dir}/_h5ai/css/inc" >
+			<fileset dir="." includes="${build.dir}/_h5ai/css/**/*.less" />
+		</delete>
+		<delete dir="${build.dir}/_h5ai/js/inc" />
 	</target>
 
 	<target name="release" depends="build">
