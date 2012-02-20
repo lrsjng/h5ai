@@ -112,10 +112,8 @@
 									$('#download img').attr('src', H5AI.core.image("download"));
 									$('#download').removeClass('zipping');
 									if (response.status === 'ok') {
-										console.log("download worked!", response);
 										window.location = H5AI.core.api() + '?action=getzip&id=' + response.id;
 									} else {
-										console.log("download failed!", response);
 										$('#download').addClass('failed');
 										setTimeout(function () {
 											$('#download').removeClass('failed');

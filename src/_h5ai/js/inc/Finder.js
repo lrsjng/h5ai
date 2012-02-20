@@ -32,8 +32,6 @@
 					$input = $filter.find('input'),
 					val = $input.val();
 
-				console.log('checkState', val, focus);
-
 				if (val || focus) {
 					$filter.addClass('current');
 				} else {
