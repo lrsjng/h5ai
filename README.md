@@ -34,6 +34,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * adds optional QRCode display
 * adds optional filtering for displayed files and folders
 * improves zipped download
+* changes h5ai.htaccess
 * custom headers/footers are now optional and disabled by default
 * fixes problems with folder recognition in the JS version
 * fixes include problems in PHP version
