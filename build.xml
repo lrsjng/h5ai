@@ -58,8 +58,8 @@
 	</target>
 
 	<target name="lint" depends="build-prepare">
-		<wepp file="${build.dir}/_h5ai/js/main-js.js" tofile="${build.dir}/_h5ai/js/main-js.js" />
-		<jslint files="${build.dir}/_h5ai/js/main-js.js" />
+		<wepp file="${build.dir}/_h5ai/js/main.js" tofile="${build.dir}/_h5ai/js/main.js" />
+		<jslint files="${build.dir}/_h5ai/js/main.js" />
 	</target>
 
 

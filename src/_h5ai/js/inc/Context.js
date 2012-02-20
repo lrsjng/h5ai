@@ -49,7 +49,7 @@
 
 		return {
 			init: init
-		}
-	}())
+		};
+	}());
 
 }(jQuery, H5AI));

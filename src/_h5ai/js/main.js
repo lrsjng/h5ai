@@ -1,9 +1,8 @@
-/*jslint browser: true, confusion: true, regexp: true, white: true */
-/*jshint browser: true, confusion: true, regexp: false, white: false */
-/*global jQuery, amplify, H5AI_CONFIG */
 
 (function ($) {
-	"use strict";
+'use strict';
+/*jslint browser: true, confusion: true, regexp: true, vars: true, white: true */
+/*global Modernizr, jQuery, amplify, H5AI_CONFIG */
 
 	var H5AI = {};
 
@@ -34,7 +33,7 @@
 		H5AI.context.init();
 
 		if (isPhp) {
-			$("#tree").scrollpanel();
+			$('#tree').scrollpanel();
 			H5AI.core.shiftTree(false, true);
 		}
 

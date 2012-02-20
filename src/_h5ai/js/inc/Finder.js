@@ -79,7 +79,7 @@
 		return {
 			init: init,
 			filter: filter
-		}
-	}())
+		};
+	}());
 
 }(jQuery, H5AI));
