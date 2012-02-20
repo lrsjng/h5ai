@@ -37,19 +37,11 @@
 	<target name="build" depends="build-prepare">
 		<wepp-dir-min dir="${build.dir}/_h5ai/css" todir="${build.dir}/_h5ai/css" />
 		<wepp-dir-min dir="${build.dir}/_h5ai/js" todir="${build.dir}/_h5ai/js" />
-		<delete dir="${build.dir}/_h5ai/css/inc" >
-			<fileset dir="." includes="${build.dir}/_h5ai/css/**/*.less" />
-		</delete>
-		<delete dir="${build.dir}/_h5ai/js/inc" />
 	</target>
 
 	<target name="build-uncompressed" depends="build-prepare">
 		<wepp-dir dir="${build.dir}/_h5ai/css" todir="${build.dir}/_h5ai/css" />
 		<wepp-dir dir="${build.dir}/_h5ai/js" todir="${build.dir}/_h5ai/js" />
-		<delete dir="${build.dir}/_h5ai/css/inc" >
-			<fileset dir="." includes="${build.dir}/_h5ai/css/**/*.less" />
-		</delete>
-		<delete dir="${build.dir}/_h5ai/js/inc" />
 	</target>
 
 	<target name="release" depends="build">
@@ -58,8 +50,8 @@
 	</target>
 
 	<target name="lint" depends="build-prepare">
-		<wepp file="${build.dir}/_h5ai/js/main.js" tofile="${build.dir}/_h5ai/js/main.js" />
-		<jslint files="${build.dir}/_h5ai/js/main.js" />
+		<wepp file="${build.dir}/_h5ai/js/inc/main.js" tofile="${build.dir}/_h5ai/js/inc/main.js" />
+		<jslint files="${build.dir}/_h5ai/js/inc/main.js" />
 	</target>
 
 
@@ -94,6 +86,9 @@
 		<attribute name="todir" />
 		<sequential>
 			<wepp-args args="--nc --inDir '@{dir}' --outDir '@{todir}'" />
+			<delete dir="@{todir}/inc" >
+				<fileset dir="." includes="@{todir}/**/*.less" />
+			</delete>
 		</sequential>
 	</macrodef>
 
@@ -102,6 +97,9 @@
 		<attribute name="todir" />
 		<sequential>
 			<wepp-args args="--inDir '@{dir}' --outDir '@{todir}'" />
+			<delete dir="@{todir}/inc" >
+				<fileset dir="." includes="@{todir}/**/*.less" />
+			</delete>
 		</sequential>
 	</macrodef>
 

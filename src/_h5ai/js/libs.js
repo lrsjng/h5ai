@@ -7,3 +7,5 @@
 
 // @include "inc/lib/amplify.min.js"
 // @include "inc/lib/date.js"
+
+// @include "inc/main.js"

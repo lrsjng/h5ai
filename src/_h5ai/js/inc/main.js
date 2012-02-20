@@ -6,17 +6,17 @@
 
 	var H5AI = {};
 
-	// @include "inc/Util.js"
-	// @include "inc/Core.js"
-	// @include "inc/Sort.js"
-	// @include "inc/ZippedDownload.js"
-	// @include "inc/Finder.js"
-	// @include "inc/Context.js"
+	// @include "Util.js"
+	// @include "Core.js"
+	// @include "Sort.js"
+	// @include "ZippedDownload.js"
+	// @include "Finder.js"
+	// @include "Context.js"
 
-	// @include "inc/Path.js"
-	// @include "inc/Connector.js"
-	// @include "inc/Html.js"
-	// @include "inc/Extended.js"
+	// @include "Path.js"
+	// @include "Connector.js"
+	// @include "Html.js"
+	// @include "Extended.js"
 
 	$(function () {
 
