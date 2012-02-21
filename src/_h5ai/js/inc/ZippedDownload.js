@@ -98,7 +98,7 @@
 						.find("a").click(function () {
 
 							$('#download').addClass('zipping');
-							$('#download img').attr('src', H5AI.core.image("loading"));
+							$('#download img').attr('src', H5AI.core.image("loading.gif", true));
 							$.ajax({
 								url: H5AI.core.api(),
 								data: {

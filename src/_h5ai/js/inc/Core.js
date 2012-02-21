@@ -48,9 +48,9 @@
 
 				return settings.h5aiAbsHref + "php/api.php";
 			},
-			image = function (id) {
+			image = function (id, noPngExt) {
 
-				return settings.h5aiAbsHref + "images/" + id + ".png";
+				return settings.h5aiAbsHref + "images/" + id + (noPngExt ? "" : ".png");
 			},
 			icon = function (id, big) {
 
