@@ -38,6 +38,18 @@
 					$filter.removeClass('current');
 				}
 			},
+			parseFilterSequence = function (sequence) {
+
+				if (sequence.substr(0,3) === 're:') {
+					return new RegExp(sequence.substr(3));
+				}
+
+				sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
+
+					return H5AI.util.reEscape(part);
+				}).join('|');
+				return new RegExp(sequence);
+			},
 			init = function () {
 
 				if (H5AI.core.settings.showFilter) {
@@ -63,7 +75,7 @@
 									val = $input.val();
 
 								if (val) {
-									filter(new RegExp(val));
+									filter(parseFilterSequence(val));
 								} else {
 									filter();
 								}

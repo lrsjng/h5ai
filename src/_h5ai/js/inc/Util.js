@@ -100,6 +100,10 @@
 					return decodeURI(uri);
 				} catch (err) {}
 				return uri;
+			},
+			reEscape = function (sequence) {
+
+				return sequence.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 			};
 
 		return {
@@ -108,7 +112,8 @@
 			getAbsHref: getAbsHref,
 			parseSize: parseSize,
 			formatSize: formatSize,
-			checkedDecodeUri: checkedDecodeUri
+			checkedDecodeUri: checkedDecodeUri,
+			reEscape: reEscape
 		};
 	}());
 

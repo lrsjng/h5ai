@@ -256,8 +256,8 @@ class H5ai {
 
 	public function getHttpCode($absHref) {
 
-		return $this->cachedHttpCode($absHref);
-		// return $this->fetchHttpCode($absHref);
+		//return $this->cachedHttpCode($absHref);
+		return $this->fetchHttpCode($absHref);
 		// return $this->guessHttpCode($absHref);
 	}
 

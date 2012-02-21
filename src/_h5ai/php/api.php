@@ -14,11 +14,6 @@ function require_h5ai($lib) {
 }
 
 
-require_h5ai("/php/inc/H5ai.php");
-$h5ai = new H5ai();
-$options = $h5ai->getOptions();
-
-
 function fail($code, $msg, $cond = true) {
 	if ($cond) {
 		echo "$code: $msg";
@@ -34,6 +29,11 @@ function checkKeys($keys) {
 	}
 	return $values;
 }
+
+
+require_h5ai("/php/inc/H5ai.php");
+$h5ai = new H5ai();
+$options = $h5ai->getOptions();
 
 
 list($action) = checkKeys(array("action"));
