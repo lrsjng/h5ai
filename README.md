@@ -43,6 +43,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * fixes problems with thumbnails for files with single or double quotes in filename
 * updates year in `LICENSE.TXT`
 * updates es translation
+* adds zh-tw translation by [Yao Wei](http://github.com/medicalwei)
+* updates zh-cn translation
 
 
 ### v0.17 - *2011-11-28*
