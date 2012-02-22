@@ -214,7 +214,8 @@ var H5AI_CONFIG = {
 			"empty": "empty",
 			"folders": "folders",
 			"files": "files",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"bg": {
@@ -228,7 +229,8 @@ var H5AI_CONFIG = {
 			"empty": "празно",
 			"folders": "папки",
 			"files": "файлове",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"cs": {
@@ -242,7 +244,8 @@ var H5AI_CONFIG = {
 			"empty": "prázdný",
 			"folders": "složek",
 			"files": "souborů",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"de": {
@@ -256,7 +259,8 @@ var H5AI_CONFIG = {
 			"empty": "leer",
 			"folders": "Ordner",
 			"files": "Dateien",
-			"download": "Download"
+			"download": "Download",
+			"noMatch": "keine Treffer"
 		},
 
 		"es": {
@@ -270,7 +274,8 @@ var H5AI_CONFIG = {
 			"empty": "vacío",
 			"folders": "Directorios",
 			"files": "Archivos",
-			"download": "Descargar"
+			"download": "Descargar",
+			"noMatch": "no match"
 		},
 
 		"fr": {
@@ -284,7 +289,8 @@ var H5AI_CONFIG = {
 			"empty": "vide",
 			"folders": "Répertoires",
 			"files": "Fichiers",
-			"download": "télécharger"
+			"download": "télécharger",
+			"noMatch": "no match"
 		},
 
 		"it": {
@@ -298,7 +304,8 @@ var H5AI_CONFIG = {
 			"empty": "vuota",
 			"folders": "cartelle",
 			"files": "file",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 	   },
 
 		"lv": {
@@ -312,7 +319,8 @@ var H5AI_CONFIG = {
 			"empty": "tukšs",
 			"folders": "mapes",
 			"files": "faili",
-			"download": "lejupielādēt"
+			"download": "lejupielādēt",
+			"noMatch": "no match"
 		},
 
 		"nl": {
@@ -326,7 +334,8 @@ var H5AI_CONFIG = {
 			"empty": "lege",
 			"folders": "folders",
 			"files": "files",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"pl": {
@@ -340,7 +349,8 @@ var H5AI_CONFIG = {
 			"empty": "pusty",
 			"folders": "foldery",
 			"files": "pliki",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"pt": {
@@ -354,7 +364,8 @@ var H5AI_CONFIG = {
 			"empty": "vazio",
 			"folders": "pastas",
 			"files": "arquivos",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"ru": {
@@ -368,7 +379,8 @@ var H5AI_CONFIG = {
 			"empty": "пусто",
 			"folders": "папки",
 			"files": "файлы",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"sk": {
@@ -382,7 +394,8 @@ var H5AI_CONFIG = {
 			"empty": "prázdny",
 			"folders": "priečinkov",
 			"files": "súborov",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"sv": {
@@ -396,7 +409,8 @@ var H5AI_CONFIG = {
 			"empty": "tom",
 			"folders": "folders",
 			"files": "files",
-			"download": "download"
+			"download": "download",
+			"noMatch": "no match"
 		},
 
 		"tr": {
@@ -410,7 +424,8 @@ var H5AI_CONFIG = {
 			"empty": "boş",
 			"folders": "klasörler",
 			"files": "dosyalar",
-			"download": "indir"
+			"download": "indir",
+			"noMatch": "no match"
 		},
 
 		"zh-cn": {
@@ -424,7 +439,8 @@ var H5AI_CONFIG = {
 			"empty": "空文件夹",
 			"folders": "文件夹",
 			"files": "文件",
-			"download": "下载"
+			"download": "下载",
+			"noMatch": "no match"
 		},
 
 		"zh-tw": {
@@ -438,7 +454,8 @@ var H5AI_CONFIG = {
 			"empty": "空資料夾",
 			"folders": "資料夾",
 			"files": "檔案",
-			"download": "下載"
+			"download": "下載",
+			"noMatch": "no match"
 		}
 	}
 };

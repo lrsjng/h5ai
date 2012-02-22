@@ -23,6 +23,14 @@
 					match = $('#extended .entry');
 				}
 
+				if ($(match).length) {
+					$('#extended .no-match').hide();
+				} else {
+					setTimeout(function () {
+
+							$('#extended .no-match').show();
+					}, 200);
+				}
 				$(match).fadeIn(200);
 				$(noMatch).fadeOut(200);
 			},
@@ -84,7 +92,6 @@
 						.end()
 						.appendTo($("#navbar"));
 				}
-
 			};
 
 

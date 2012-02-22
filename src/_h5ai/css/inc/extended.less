@@ -146,12 +146,15 @@
 			}
 		}
 	}
-	.empty {
+	.empty, .no-match {
 		text-align: center;
 		margin: 50px 0;
 		color: #ddd;
 		font-size: 5em;
 		font-weight: bold;
+	}
+	.no-match {
+		display: none;
 	}
 }
 
@@ -170,8 +173,6 @@
 #extended.icons-view {
 	display: none;
 	padding: 3px;
-	border: 1px solid #eee;
-	border-radius: 15px;
 
 	ul {
 		margin: 0;
@@ -269,12 +270,16 @@
 			}
 		}
 	}
-	.empty {
+	.empty, .no-match {
+		margin: 0 120px;
 		padding: 16px;
 		height: 120px;
 		text-align: center;
 		color: #ddd;
 		font-size: 5em;
 		font-weight: bold;
+	}
+	.no-match {
+		display: none;
 	}
 }

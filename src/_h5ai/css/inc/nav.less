@@ -1,4 +1,26 @@
 
+.nav-highlight {
+	background-color: rgba(255,255,255,0.5);
+	opacity: 1.0;
+}
+
+.nav-hover {
+	.nav-highlight;
+	color: #e80;
+}
+
+@nav-sep-border: 1px solid rgba(0,0,0,0.05);
+
+.nav-left {
+	float: left;
+	border-right: @nav-sep-border;
+}
+
+.nav-right {
+	float: right;
+	border-left: @nav-sep-border;
+}
+
 body > nav {
 	position: fixed;
 	z-index: 5;
@@ -29,15 +51,12 @@ body > nav {
 		padding: 0 10px;
 
 		&:hover, &.hover {
-			color: #e80;
-			background-color: rgba(255,255,255,0.5);
-			opacity: 1.0;
+			.nav-hover;
 		}
 	}
 	.current {
 		a, span.element {
-			background-color: rgba(255,255,255,0.5);
-			opacity: 1.0;
+			.nav-highlight;
 		}
 	}
 	img {
@@ -50,8 +69,7 @@ body > nav {
 		margin-left: 6px;
 	}
 	.crumb {
-		float: left;
-		border-right: 1px solid rgba(0,0,0,0.05);
+		.nav-left;
 		.hint {
 			margin-left: 8px;
 			font-style: italic;
@@ -63,13 +81,11 @@ body > nav {
 		}
 	}
 	.view {
-		float: right;
-		border-left: 1px solid rgba(0,0,0,0.05);
+		.nav-right;
 	}
 	#download {
 		display: none;
-		float: right;
-		border-left: 1px solid rgba(0,0,0,0.05);
+		.nav-right;
 		.transition(all 0.2s ease-in-out);
 
 		&.zipping {
@@ -80,8 +96,7 @@ body > nav {
 		}
 	}
 	#filter {
-		float: right;
-		border-left: 1px solid rgba(0,0,0,0.05);
+		.nav-right;
 
 		input {
 			display: none;

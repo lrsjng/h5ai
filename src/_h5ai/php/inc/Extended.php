@@ -131,6 +131,7 @@ class Extended {
 		if (count($this->content) === 0) {
 			$html .= "<div class='empty l10n-empty'>empty</div>";
 		}
+		$html .= "<div class='no-match l10n-noMatch'>no match</div>";
 		$html .="</section>";
 		return $html;
 	}
