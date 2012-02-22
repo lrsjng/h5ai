@@ -424,7 +424,21 @@ var H5AI_CONFIG = {
 			"empty": "空文件夹",
 			"folders": "文件夹",
 			"files": "文件",
-			"download": "download"
+			"download": "下载"
+		},
+
+		"zh-tw": {
+			"lang": "正體中文",
+			"details": "詳細資料",
+			"icons": "圖示",
+			"name": "檔名",
+			"lastModified": "上次修改",
+			"size": "大小",
+			"parentDirectory": "上層目錄",
+			"empty": "空資料夾",
+			"folders": "資料夾",
+			"files": "檔案",
+			"download": "下載"
 		}
 	}
 };
