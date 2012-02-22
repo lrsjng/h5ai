@@ -53,7 +53,7 @@
 			init = function () {
 
 				if (H5AI.core.settings.showFilter) {
-					$("<li id='filter'><span class='element'><img alt='filter' /><input type='text' value='' placeholder='Filter' /></span></li>")
+					$("<li id='filter'><span class='element'><img alt='filter' /><input type='text' value='' placeholder='filter' /></span></li>")
 						.on('click', function () {
 
 							var $input = $(this).find('input');

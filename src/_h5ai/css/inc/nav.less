@@ -84,11 +84,18 @@ body > nav {
 		border-left: 1px solid rgba(0,0,0,0.05);
 
 		input {
+			display: none;
 			border: none;
 			font-family: Ubuntu, sans-serif;
 			color: #555;
 			background-color: rgba(0,0,0,0);
 			width: 100px;
+		}
+
+		&.current {
+			input {
+				display: inline;
+			}
 		}
 	}
 }
