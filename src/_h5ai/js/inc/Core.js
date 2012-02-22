@@ -90,7 +90,7 @@
 							navHeight = $("body > nav").outerHeight(),
 							footerHeight = $("body > footer").outerHeight(),
 							contentSpacing = 50,
-							treeSpacing = 30;
+							treeSpacing = 0;
 
 						$body.css({
 							"margin-top": navHeight + contentSpacing,
@@ -99,7 +99,7 @@
 
 						$tree.css({
 							top: navHeight + treeSpacing,
-							height: winHeight - navHeight - footerHeight - 18 - 2 * treeSpacing
+							height: winHeight - navHeight - footerHeight - 16 - 2 * treeSpacing
 						});
 
 						try {

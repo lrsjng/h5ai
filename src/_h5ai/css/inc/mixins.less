@@ -1,38 +1,59 @@
 
+
 .border-radius (@radius) {
-	-moz-border-radius: @radius;
-	-webkit-border-radius: @radius;
-	border-radius: @radius;
+    -webkit-border-radius: @radius; /* Saf3-4, iOS 1-3.2, Android <1.6 */
+       -moz-border-radius: @radius; /* FF1-3.6 */
+            border-radius: @radius; /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
+}
+
+
+.background-clip () {
+    -webkit-background-clip: padding-box;
+       -moz-background-clip: padding;
+            background-clip: padding-box;
 }
 
 
 .box-shadow (@shadow) {
-	-moz-box-shadow: @shadow;
-	-webkit-box-shadow: @shadow;
-	box-shadow: @shadow;
+    -webkit-box-shadow: @shadow; /* Saf3-4 */
+       -moz-box-shadow: @shadow; /* FF3.5 - 3.6 */
+            box-shadow: @shadow; /* Opera 10.5, IE9, FF4+, Chrome 10+ */
 }
 
 
 .transition (@transition) {
-	-moz-transition: @transition;
-	-ms-transition: @transition;
-	-o-transition: @transition;
-	-webkit-transition: @transition;
-	transition: @transition;
+    -webkit-transition: @transition; /* Saf3.2+, Chrome */
+       -moz-transition: @transition; /* FF4+ */
+        -ms-transition: @transition; /* IE10? */
+         -o-transition: @transition; /* Opera 10.5+ */
+            transition: @transition;
 }
 
 
 .transform (@transform) {
-	-moz-transform: @transform;
-	-o-transform: @transform;
-	-webkit-transform: @transform;
-	transform: @transform;
+    -webkit-transform: @transform; /* Saf3.1+, Chrome */
+       -moz-transform: @transform; /* FF3.5+ */
+        -ms-transform: @transform; /* IE9 */
+         -o-transform: @transform; /* Opera 10.5 */
+            transform: @transform;
+                 zoom: 1;
+}
+
+
+.vert-gradient (@top, @bottom) {
+    background-color: @top;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@top), to(@bottom)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @top, @bottom); /* Chrome 10+, Saf5.1+, iOS 5+ */
+    background-image:    -moz-linear-gradient(top, @top, @bottom); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @top, @bottom); /* IE10 */
+    background-image:      -o-linear-gradient(top, @top, @bottom); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @top, @bottom);
 }
 
 
 .background-size (@size) {
-	-moz-background-size: @size;
-	-webkit-background-size: @size;
-	background-size: @size;
+    -webkit-background-size: @size; /* Saf3-4 */
+       -moz-background-size: @size; /* FF3.6 */
+            background-size: @size; /* Opera, IE9, Saf5, Chrome, FF4 */
 }
 

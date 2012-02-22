@@ -1,13 +1,13 @@
 
 body > nav {
 	position: fixed;
-	z-index: 1;
+	z-index: 5;
 	width: 100%;
 	left: 0;
 	top: 0;
 	font-size: 0.85em;
-	background-color: rgb(241,241,241);
-	border-bottom: 2px solid rgb(210,210,210);
+	.vert-gradient(rgb(241,241,241), rgb(228,228,228));
+	border-bottom: 1px solid rgb(210,210,210);
 
 	span.jsDisabledFallback {
 		display: block;
@@ -51,7 +51,7 @@ body > nav {
 	}
 	.crumb {
 		float: left;
-		border-right: 1px solid rgb(231,231,231);
+		border-right: 1px solid rgba(0,0,0,0.05);
 		.hint {
 			margin-left: 8px;
 			font-style: italic;
@@ -64,12 +64,12 @@ body > nav {
 	}
 	.view {
 		float: right;
-		border-left: 1px solid rgb(231,231,231);
+		border-left: 1px solid rgba(0,0,0,0.05);
 	}
 	#download {
 		display: none;
 		float: right;
-		border-left: 1px solid rgb(231,231,231);
+		border-left: 1px solid rgba(0,0,0,0.05);
 		.transition(all 0.2s ease-in-out);
 
 		&.zipping {
@@ -81,7 +81,7 @@ body > nav {
 	}
 	#filter {
 		float: right;
-		border-left: 1px solid rgb(231,231,231);
+		border-left: 1px solid rgba(0,0,0,0.05);
 
 		input {
 			border: none;
