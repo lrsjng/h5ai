@@ -50,7 +50,7 @@
 					var hashStr = '';
 					$.each($.extend({}, hash(), obj), function (key, value) {
 						if (value) {
-							hashStr += '/' + key + '=' + value;
+							hashStr += '/' + encodeURIComponent(key) + '=' + encodeURIComponent(value);
 						}
 					});
 					hashStr = '#!' + hashStr;
@@ -66,7 +66,7 @@
 
 							var match = /^([^=]*)=(.*?)$/.exec(part);
 							if (match) {
-								result[match[1]] = match[2];
+								result[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
 							}
 						});
 					}
