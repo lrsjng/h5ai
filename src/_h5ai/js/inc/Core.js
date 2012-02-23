@@ -44,6 +44,35 @@
 				});
 				return map;
 			}(config.types)),
+			hash = function (obj) {
+
+				if ($.isPlainObject(obj)) {
+					var hashStr = '';
+					$.each($.extend({}, hash(), obj), function (key, value) {
+						if (value) {
+							hashStr += '/' + key + '=' + value;
+						}
+					});
+					hashStr = '#!' + hashStr;
+					window.location.hash = hashStr;
+					return hashStr;
+				} else {
+					var result = {},
+						parts = document.location.hash.split('/');
+
+					if (parts.length >= 2 || parts[0] === '#!') {
+						parts.shift();
+						$.each(parts, function (idx, part) {
+
+							var match = /^([^=]*)=(.*?)$/.exec(part);
+							if (match) {
+								result[match[1]] = match[2];
+							}
+						});
+					}
+					return typeof obj === 'string' ? result[obj] : result;
+				}
+			},
 			api = function () {
 
 				return settings.h5aiAbsHref + "php/api.php";
@@ -68,6 +97,7 @@
 					viewmode = amplify.store(settings.store.viewmode);
 				}
 				viewmode = $.inArray(viewmode, settings.viewmodes) >= 0 ? viewmode : settings.viewmodes[0];
+				H5AI.core.hash({view: viewmode});
 
 				$viewDetails.add($viewIcons).removeClass("current");
 				if (viewmode === "details") {
@@ -123,13 +153,19 @@
 					if ($.inArray("icons", settings.viewmodes) >= 0) {
 						$("<li id='viewicons' class='view'><a href='#'><img alt='view-icons' /><span class='l10n-icons'>icons</span></a></li>")
 							.find("img").attr("src", image("view-icons")).end()
-							.click(function () { viewmode("icons"); })
+							.find("a").click(function (event) {
+								viewmode("icons");
+								event.preventDefault();
+							}).end()
 							.appendTo($navbar);
 					}
 					if ($.inArray("details", settings.viewmodes) >= 0) {
 						$("<li id='viewdetails' class='view'><a href='#'><img alt='view-details' /><span class='l10n-details'>details</span></a></li>")
 							.find("img").attr("src", image("view-details")).end()
-							.click(function () { viewmode("details"); })
+							.find("a").click(function (event) {
+								viewmode("details");
+								event.preventDefault();
+							}).end()
 							.appendTo($navbar);
 					}
 				}
@@ -257,6 +293,7 @@
 					$(".lang").text(lang);
 					$(".langOption").removeClass("current");
 					$(".langOption." + lang).addClass("current");
+					H5AI.core.hash({lang: lang});
 				}
 
 				formatDates(selected.dateFormat || settings.dateFormat);
@@ -386,6 +423,7 @@
 
 		return {
 			settings: settings,
+			hash: hash,
 			api: api,
 			image: image,
 			icon: icon,

@@ -78,14 +78,15 @@
 				var order = orders[id];
 
 				$all.removeClass("ascending").removeClass("descending");
-				order.head.addClass(order.clas).attr("href", "#!/sort=" + id);
+				order.head.addClass(order.clas);
 				sort(order.fn);
+				H5AI.core.hash({sort: id});
 			},
 			init = function () {
 
 				var $ascending = $("<img src='" + H5AI.core.image("ascending") + "' class='sort ascending' alt='ascending' />"),
 					$descending = $("<img src='" + H5AI.core.image("descending") + "' class='sort descending' alt='descending' />"),
-					initialOrder = /^.*#!.*\/sort=(.*?)(?:\/.*)?$/.exec(document.location),
+					initialOrder = H5AI.core.hash('sort'),
 					$header = $("#extended li.header"),
 					$label = $header.find("a.label"),
 					$date = $header.find("a.date"),
@@ -125,27 +126,27 @@
 					}
 				};
 
-				sortBy(initialOrder ? initialOrder[1] : H5AI.core.settings.sortorder);
+				sortBy(initialOrder ? initialOrder : H5AI.core.settings.sortorder);
 
 				$label
-					.attr("href", "#!/sort=na")
 					.append($ascending.clone()).append($descending.clone())
-					.click(function () {
+					.click(function (event) {
 						sortBy("n" + ($label.hasClass("ascending") ? "d" : "a"));
+						event.preventDefault();
 					});
 
 				$date
-					.attr("href", "#!/sort=da")
 					.prepend($ascending.clone()).prepend($descending.clone())
-					.click(function () {
+					.click(function (event) {
 						sortBy("d" + ($date.hasClass("ascending") ? "d" : "a"));
+						event.preventDefault();
 					});
 
 				$size
-					.attr("href", "#!/sort=sa")
 					.prepend($ascending.clone()).prepend($descending.clone())
-					.click(function () {
+					.click(function (event) {
 						sortBy("s" + ($size.hasClass("ascending") ? "d" : "a"));
+						event.preventDefault();
 					});
 			};
 

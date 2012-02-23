@@ -45,6 +45,7 @@
 				} else {
 					$filter.removeClass('current');
 				}
+				H5AI.core.hash({filter: val});
 			},
 			parseFilterSequence = function (sequence) {
 
@@ -91,6 +92,12 @@
 							})
 						.end()
 						.appendTo($("#navbar"));
+
+					var initialFilter = H5AI.core.hash('filter');
+					if (initialFilter) {
+						$('#filter input').val(initialFilter);
+						checkState(false);
+					}
 				}
 			};
 

@@ -42,6 +42,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * fixes path problems on servers running on Windows in PHP version
 * fixes broken links in custom headers/footers while zipped download enabled
 * fixes problems with thumbnails for files with single or double quotes in filename
+* improves url hashes
 * updates year in `LICENSE.TXT`
 * updates es translation
 * adds zh-tw translation by [Yao Wei](http://github.com/medicalwei)
