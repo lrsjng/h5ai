@@ -97,7 +97,7 @@
 						.find("img").attr("src", H5AI.core.image("download")).end()
 						.find("a").click(function () {
 
-							$('#download').addClass('zipping');
+							$('#download').addClass('current');
 							$('#download img').attr('src', H5AI.core.image("loading.gif", true));
 							$.ajax({
 								url: H5AI.core.api(),
@@ -109,8 +109,8 @@
 								dataType: 'json',
 								success: function (response) {
 
+									$('#download').removeClass('current');
 									$('#download img').attr('src', H5AI.core.image("download"));
-									$('#download').removeClass('zipping');
 									if (response.status === 'ok') {
 										window.location = H5AI.core.api() + '?action=getzip&id=' + response.id;
 									} else {
@@ -121,8 +121,8 @@
 									}
 								},
 								failed: function () {
+									$('#download').removeClass('current');
 									$('#download img').attr('src', H5AI.core.image("download"));
-									$('#download').removeClass('zipping');
 								}
 							});
 						}).end()
