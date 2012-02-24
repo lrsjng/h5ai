@@ -25,8 +25,8 @@ var H5AI_CONFIG = {
 		 *
 		 * This is disabled by default.
 		 */
-		"customHeader": "_h5ai.header.html",
-		"customFooter": "_h5ai.footer.html",
+		"customHeader": null,
+		"customFooter": null,
 
 		/*
 		 * An array of view modes the user may choose from. Currently there
@@ -112,20 +112,20 @@ var H5AI_CONFIG = {
 		 * Requires PHP on the server.
 		 * Enable zipped download of selected entries.
 		 */
-		"zippedDownload": true,
+		"zippedDownload": false,
 
 		/*
 		 * Show QRCodes on hovering files.
 		 * Set this to the desired size in pixel or null to not display QRCodes.
 		 * A good size to start with might be 150.
 		 */
-		"qrCodesSize": 150,
+		"qrCodesSize": null,
 
 		/*
 		 * Allow filtering the displayed files and folders.
 		 * Filters are ment to be JavaScript regular expressions.
 		 */
-		"showFilter": true
+		"showFilter": false
 	},
 
 
