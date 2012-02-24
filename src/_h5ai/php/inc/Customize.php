@@ -1,30 +1,35 @@
 <?php
 
 class Customize {
-    private $customHeader, $customFooter;
 
-    public function __construct($h5ai) {
+	private $customHeader, $customFooter;
 
-        $absPath = $h5ai->getAbsPath();
-        $options = $h5ai->getOptions();
-        $this->customHeader = $absPath . "/" . $options["customHeader"];
-        $this->customFooter = $absPath . "/" . $options["customFooter"];
-    }
 
-    public function getHeader() {
+	public function __construct($h5ai) {
 
-        return $this->getContent($this->customHeader, "header");
-    }
+		$absPath = $h5ai->getAbsPath();
+		$options = $h5ai->getOptions();
+		$this->customHeader = $options["customHeader"] ? $absPath . "/" . $options["customHeader"] : false;
+		$this->customFooter = $options["customFooter"] ? $absPath . "/" . $options["customFooter"] : false;
+	}
 
-    public function getFooter() {
 
-        return $this->getContent($this->customFooter, "footer");
-    }
+	public function getHeader() {
 
-    private function getContent($file, $tag) {
+		return $this->getContent($this->customHeader, "header");
+	}
 
-        return file_exists($file) ? ("<" . $tag . ">" . file_get_contents($file) . "</" . $tag . ">") : "";
-    }
+
+	public function getFooter() {
+
+		return $this->getContent($this->customFooter, "footer");
+	}
+
+
+	private function getContent($file, $tag) {
+
+		return (is_string($file) && file_exists($file)) ? ("<$tag>" . file_get_contents($file) . "</$tag>") : "";
+	}
 }
 
 ?>

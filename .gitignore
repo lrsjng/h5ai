@@ -4,10 +4,8 @@ build
 build.local.*
 release
 
-
-# Eclipse
-.classpath
-.ant-targets-*
+# Sublime
+*.sublime-*
 
 # Numerous always-ignore extensions
 *.diff
@@ -20,29 +18,3 @@ release
 *.vi
 *~
 *.sass-cache
-
-# OS or Editor folders
-.DS_Store
-.cache
-.project
-.settings
-.tmproj
-nbproject
-Thumbs.db
-
-# Dreamweaver added files
-_notes
-dwsync.xml
-
-# Komodo
-*.komodoproject
-.komodotools
-
-# Folders to ignore
-.hg
-.svn
-.CVS
-intermediate
-publish
-.idea
-

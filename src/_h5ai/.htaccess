@@ -1,5 +1,7 @@
 
 
+Options  -Indexes
+
 AddType  text/html  .php
 
 
@@ -19,17 +21,17 @@ AddType  text/html  .php
 
 # cache images, css and js for 52 weeks
 <IfModule headers_module>
-    <FilesMatch "\.png$">
-        Header set Cache-Control "max-age=31449600, public"
-    </FilesMatch>
-    <FilesMatch "\.css$">
-        Header set Cache-Control "max-age=31449600, public"
-    </FilesMatch>
-    <FilesMatch "\.js$">
-        Header set Cache-Control "max-age=31449600, public"
-    </FilesMatch>
-    <FilesMatch "thumb-.*\.jpg$">
-        Header set Cache-Control "max-age=31449600, public"
-    </FilesMatch>
+	<FilesMatch "\.png$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
+	<FilesMatch "\.css$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
+	<FilesMatch "\.js$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
+	<FilesMatch "thumb-.*\.jpg$">
+		Header set Cache-Control "max-age=31449600, public"
+	</FilesMatch>
 </IfModule>
 
