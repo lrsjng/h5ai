@@ -6,6 +6,7 @@
 // @include "inc/lib/jquery.qrcode.js"
 
 // @include "inc/lib/amplify.min.js"
+// @include "inc/lib/base64.js"
 // @include "inc/lib/date.js"
 
 // @include "inc/main.js"

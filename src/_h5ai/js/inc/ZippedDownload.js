@@ -8,6 +8,8 @@
 			$document = $(document),
 			$selectionRect = $("#selection-rect"),
 			selectedHrefsStr = "",
+			$download, $img, $downloadAuth, $downloadUser, $downloadPassword,
+
 			updateDownloadBtn = function () {
 
 				var $selected = $("#extended a.selected"),
@@ -23,6 +25,7 @@
 					$downloadBtn.show();
 				} else {
 					$downloadBtn.hide();
+					$downloadAuth.hide();
 				}
 			},
 			selectionUpdate = function (event) {
@@ -90,45 +93,91 @@
 					noSelection(event);
 				}
 			},
+			failed = function () {
+
+				$download.addClass('failed');
+				setTimeout(function () {
+					$download.removeClass('failed');
+				}, 1000);
+			},
+			handleResponse = function (response) {
+
+
+				$download.removeClass('current');
+				$img.attr('src', H5AI.core.image("download"));
+
+				if (response) {
+					if (response.status === 'ok') {
+						window.location = H5AI.core.api() + '?action=getzip&id=' + response.id;
+					} else {
+						if (response.code === 401) {
+							$downloadAuth
+								.css({
+									left: $download.offset().left,
+									top: $download.offset().top + $download.outerHeight()
+								})
+								.show();
+							$downloadUser.focus();
+						}
+						failed();
+					}
+				} else {
+					failed();
+				}
+			},
+			requestZipping = function (hrefsStr) {
+
+				$download.addClass('current');
+				$img.attr('src', H5AI.core.image("loading.gif", true));
+				$.ajax({
+					url: H5AI.core.api(),
+					data: {
+						action: 'zip',
+						hrefs: selectedHrefsStr
+					},
+					type: 'POST',
+					dataType: 'json',
+					beforeSend: function (xhr) {
+
+						var user = $downloadUser.val(),
+							password = $downloadPassword.val();
+
+						if (user) {
+							xhr.setRequestHeader ('Authorization', 'Basic ' + Base64.encode(user + ':' + password));
+						}
+					},
+					success: function (response) {
+
+						handleResponse(response);
+					},
+					failed: function () {
+
+						handleResponse();
+					}
+				});
+			},
 			init = function () {
 
 				if (H5AI.core.settings.zippedDownload) {
 					$("<li id='download'><a href='#'><img alt='download' /><span class='l10n-download'>download</span></a></li>")
 						.find("img").attr("src", H5AI.core.image("download")).end()
-						.find("a").click(function () {
+						.find("a").click(function (event) {
 
-							$('#download').addClass('current');
-							$('#download img').attr('src', H5AI.core.image("loading.gif", true));
-							$.ajax({
-								url: H5AI.core.api(),
-								data: {
-									action: 'zip',
-									hrefs: selectedHrefsStr
-								},
-								type: 'POST',
-								dataType: 'json',
-								success: function (response) {
-
-									$('#download').removeClass('current');
-									$('#download img').attr('src', H5AI.core.image("download"));
-									if (response.status === 'ok') {
-										window.location = H5AI.core.api() + '?action=getzip&id=' + response.id;
-									} else {
-										$('#download').addClass('failed');
-										setTimeout(function () {
-											$('#download').removeClass('failed');
-										}, 1000);
-									}
-								},
-								failed: function () {
-									$('#download').removeClass('current');
-									$('#download img').attr('src', H5AI.core.image("download"));
-								}
-							});
+							event.preventDefault();
+							$downloadAuth.hide();
+							requestZipping(selectedHrefsStr);
 						}).end()
 						.appendTo($("#navbar"));
+					$("<div id='download-auth'><input id='download-auth-user' type='text' value='' placeholder='user' /><input id='download-auth-password' type='text' value='' placeholder='password' /></div>")
+						.appendTo($("body"));
 
-					$("body>nav,body>footer,#tree").on("mousedown", noSelection);
+					$download = $('#download');
+					$downloadAuth = $('#download-auth');
+					$downloadUser = $('#download-auth-user');
+					$downloadPassword = $('#download-auth-password');
+					$img = $download.find('img');
+
+					$("body>nav,body>footer,#tree,input").on("mousedown", noSelection);
 					$("#content").on("mousedown", "a", noSelectionUnlessCtrl);
 					$document.on("mousedown", selectionStart);
 				}

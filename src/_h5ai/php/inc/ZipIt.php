@@ -24,11 +24,19 @@ class ZipIt {
 		foreach ($hrefs as $href) {
 			$d = safe_dirname($href, true);
 			$n = basename($href);
-			if ($this->h5ai->getHttpCode($d) === "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
+			$code = $this->h5ai->getHttpCode($d);
+			if ($code == 401) {
+				return $code;
+			}
+
+			if ($code == "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
 				$localFile = $this->h5ai->getAbsPath($href);
 				$file = preg_replace("!^" . $this->h5ai->getRootAbsPath() . "!", "", $localFile);
 				if (is_dir($localFile)) {
-					$this->zipDir($zip, $localFile, $file);
+					$rcode = $this->zipDir($zip, $localFile, $file);
+					if ($rcode == 401) {
+						return $rcode;
+					}
 				} else {
 					$this->zipFile($zip, $localFile, $file);
 				}
@@ -50,19 +58,25 @@ class ZipIt {
 
 	private function zipDir($zip, $localDir, $dir) {
 
-		if ($this->h5ai->getHttpCode($this->h5ai->getAbsHref($localDir)) === "h5ai") {
+		$code = $this->h5ai->getHttpCode($this->h5ai->getAbsHref($localDir));
+
+		if ($code == 'h5ai') {
 			$zip->addEmptyDir($dir);
 			$files = $this->h5ai->readDir($localDir);
 			foreach ($files as $file) {
 				$localFile = $localDir . "/" . $file;
 				$file = $dir . "/" . $file;
 				if (is_dir($localFile)) {
-					$this->zipDir($zip, $localFile, $file);
+					$rcode = $this->zipDir($zip, $localFile, $file);
+					if ($rcode == 401) {
+						return $rcode;
+					}
 				} else {
 					$this->zipFile($zip, $localFile, $file);
 				}
 			}
 		}
+		return code;
 	}
 }
 

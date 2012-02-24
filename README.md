@@ -35,6 +35,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * adds optional filtering for displayed files and folders
 * updates design
 * improves zipped download
+* adds support for zipped download of htaccess restricted files
 * changes h5ai.htaccess
 * custom headers/footers are now optional and disabled by default
 * fixes problems with folder recognition in the JS version

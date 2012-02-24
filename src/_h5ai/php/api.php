@@ -118,10 +118,10 @@ else if ($action === "zip") {
 	$hrefs = explode(":", trim($hrefs));
 	$zipFile = $zipit->zip($hrefs);
 
-	if ($zipFile) {
+	if (is_string($zipFile)) {
 		$response = array('status' => 'ok', 'id' => basename($zipFile), 'size' => filesize($zipFile));
 	} else {
-		$response = array('status' => 'failed', 'msg' => 'none');
+		$response = array('status' => 'failed', 'code' => $zipFile);
 	}
 	echo json_encode($response);
 }
@@ -136,7 +136,6 @@ else if ($action === "getzip") {
 	fail(2, "zipped file not found: " . $id, !file_exists($zipFile));
 
 	header("Content-Disposition: attachment; filename=\"h5ai-selection.zip\"");
-	// header("Content-Type: application/force-download");
 	header("Content-Type: application/octet-stream");
 	header("Content-Length: " . filesize($zipFile));
 	header("Connection: close");

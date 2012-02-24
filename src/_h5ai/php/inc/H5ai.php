@@ -258,7 +258,6 @@ class H5ai {
 
 		//return $this->cachedHttpCode($absHref);
 		return $this->fetchHttpCode($absHref);
-		// return $this->guessHttpCode($absHref);
 	}
 
 
@@ -311,20 +310,6 @@ class H5ai {
 		}
 		fclose($socket);
 		return $code;
-	}
-
-
-	public function guessHttpCode($absHref) {
-
-		$indexFiles = array("index.html", "index.cgi", "index.pl", "index.php", "index.xhtml", "index.htm");
-		$absPath = $this->getAbsPath($absHref);
-		$files = $this->readDir($absPath);
-		foreach ($files as $file) {
-			if (in_array($file, $indexFiles)) {
-				return 200;
-			}
-		}
-		return "h5ai";
 	}
 }
 
