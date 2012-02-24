@@ -29,7 +29,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ## Changelog
 
 
-### v0.18 - *2012-02-??*
+### v0.18 - *2012-02-24*
 
 * adds optional QRCode display
 * adds optional filtering for displayed files and folders
