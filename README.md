@@ -29,6 +29,11 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ## Changelog
 
 
+### v0.19 - *2012-??-??*
+
+*
+
+
 ### v0.18 - *2012-02-24*
 
 * adds optional QRCode display
