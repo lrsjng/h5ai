@@ -368,6 +368,21 @@ var H5AI_CONFIG = {
 			"noMatch": "no match"
 		},
 
+		"ro": {
+			"lang": "română",
+			"details": "detalii",
+			"icons": "pictograme",
+			"name": "nume",
+			"lastModified": "ultima modificare",
+			"size": "mărime",
+			"parentDirectory": "dosar parinte",
+			"empty": "gol",
+			"folders": "dosar",
+			"files": "fişiere",
+			"download": "descarcă",
+			"noMatch": "0 rezultate"
+		},
+
 		"ru": {
 			"lang": "русский",
 			"details": "детали",
