@@ -375,7 +375,7 @@ var H5AI_CONFIG = {
 			"name": "nume",
 			"lastModified": "ultima modificare",
 			"size": "mărime",
-			"parentDirectory": "dosar parinte",
+			"parentDirectory": "dosar părinte",
 			"empty": "gol",
 			"folders": "dosar",
 			"files": "fişiere",
