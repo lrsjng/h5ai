@@ -32,6 +32,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ### v0.19 - *2012-??-??*
 
 * updates lv translation
+* adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
 
 
 ### v0.18 - *2012-02-24*
