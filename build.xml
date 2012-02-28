@@ -77,7 +77,6 @@
 		<attribute name="tofile" />
 		<sequential>
 			<wepp-args args="--inFile '@{file}' --outFile '@{toFile}'" />
-			<bytes file="@{file}" toFile="@{toFile}" />
 		</sequential>
 	</macrodef>
 
