@@ -308,6 +308,21 @@ var H5AI_CONFIG = {
 			"noMatch": "no match"
 		},
 
+		"ja": {
+			"lang": "日本語",
+			"details": "詳細",
+			"icons": "アイコン",
+			"name": "名前",
+			"lastModified": "変更日",
+			"size": "サイズ",
+			"parentDirectory": "親フォルダ",
+			"empty": "項目なし",
+			"folders": "フォルダ",
+			"files": "ファイル",
+			"download": "ダウンロード",
+			"noMatch": "一致なし"
+		},
+
 		"lv": {
 			"lang": "latviešu",
 			"details": "detaļas",
