@@ -31,6 +31,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 ### v0.19 - *2012-??-??*
 
+* Fixes js problems in IE 7+8
+* Hides broken tree view in IE < 9 and adds a message to the footer
 * updates lv translation
 * adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
 * adds ja translation by [metasta](http://github.com/metasta)
