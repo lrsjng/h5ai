@@ -273,11 +273,13 @@
 				if (langs[storedLang]) {
 					lang = storedLang;
 				} else if (useBrowserLang) {
-					browserLang = navigator.language;
-					if (langs[browserLang]) {
-						lang = browserLang;
-					} else if (browserLang.length > 2 && langs[browserLang.substr(0, 2)]) {
-						lang = browserLang.substr(0, 2);
+					browserLang = navigator.language || navigator.browserLanguage;
+					if (browserLang) {
+						if (langs[browserLang]) {
+							lang = browserLang;
+						} else if (browserLang.length > 2 && langs[browserLang.substr(0, 2)]) {
+							lang = browserLang.substr(0, 2);
+						}
 					}
 				}
 

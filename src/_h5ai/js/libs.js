@@ -5,6 +5,7 @@
 // @include "inc/lib/jquery.scrollpanel.js"
 // @include "inc/lib/jquery.qrcode.js"
 
+// @include "inc/lib/json2.js"
 // @include "inc/lib/amplify.min.js"
 // @include "inc/lib/base64.js"
 // @include "inc/lib/date.js"
