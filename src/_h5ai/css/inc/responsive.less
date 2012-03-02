@@ -34,3 +34,23 @@ body > footer {
 	}
 }
 }
+
+@media print {
+a[href]:after {
+	content: "";
+}
+body > nav {
+	position: static;
+	margin-bottom: 2em;
+	.view, #download {
+		display: none;
+	}
+}
+body > footer {
+	position: static;
+	margin-top: 2em;
+}
+#tree {
+	display: none !important;
+}
+}
