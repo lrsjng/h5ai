@@ -47,6 +47,8 @@
 			if ($ul.children(".entry:not(.folder-parent)").size() === 0) {
 				$("#extended").append($("<div class='empty l10n-empty'>empty</div>"));
 			}
+
+			// no match
 			$("#extended").append($("<div class='no-match l10n-noMatch'>no match</div>"));
 		},
 		customize = function () {

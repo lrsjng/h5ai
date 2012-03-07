@@ -2,7 +2,6 @@
 (function ($, h5ai) {
 
 	var settings = h5ai.settings,
-		langs = h5ai.config.langs,
 		currentDateFormat = settings.dateFormat,
 		formatDates = function (dateFormat) {
 
@@ -97,8 +96,8 @@
 		},
 		init = function () {
 
-			initLangSelector(langs);
-			localize(langs, settings.lang, settings.useBrowserLang);
+			initLangSelector(h5ai.config.langs);
+			localize(h5ai.config.langs, settings.lang, settings.useBrowserLang);
 		};
 
 	h5ai.localize = {
