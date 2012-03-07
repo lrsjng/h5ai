@@ -59,7 +59,7 @@
 		},
 		selectionStart = function (event) {
 
-			var view = $.fracs.viewport();
+			var view = $(document).fracs('viewport');
 
 			x = event.pageX;
 			y = event.pageY;
