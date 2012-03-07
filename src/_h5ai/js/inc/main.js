@@ -2,7 +2,7 @@
 (function ($) {
 'use strict';
 /*jslint browser: true, confusion: true, regexp: true, vars: true, white: true */
-/*global Modernizr, jQuery, amplify, H5AI_CONFIG */
+/*global Modernizr, jQuery, amplify, Base64, H5AI_CONFIG */
 
 	var H5AI = {};
 
