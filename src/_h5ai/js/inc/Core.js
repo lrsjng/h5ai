@@ -1,38 +1,8 @@
 
-(function (window, $, h5ai, config) {
+(function (window, $, h5ai) {
 
 	var $window = $(window),
-		defaults = {
-			store: {
-				viewmode: "h5ai.pref.viewmode",
-				lang: "h5ai.pref.lang"
-			},
-			callbacks: {
-				pathClick: []
-			},
-
-			rootAbsHref: "/",
-			h5aiAbsHref: "/_h5ai/",
-			customHeader: null,
-			customFooter: null,
-			viewmodes: ["details", "icons"],
-			sortorder: "na",
-			showTree: true,
-			slideTree: true,
-			folderStatus: {},
-			lang: "en",
-			useBrowserLang: true,
-			setParentFolderLabels: true,
-			linkHoverStates: true,
-			dateFormat: "yyyy-MM-dd HH:mm",
-			showThumbs: false,
-			thumbTypes: ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
-			zippedDownload: false,
-			qrCodesSize: null,
-			showFilter: false
-		},
-		settings = $.extend({}, defaults, config.options),
-		currentDateFormat = settings.dateFormat,
+		settings = h5ai.settings,
 		extToFileType = (function (types) {
 			var map = {};
 			$.each(types, function (type, exts) {
@@ -41,7 +11,7 @@
 				});
 			});
 			return map;
-		}(config.types)),
+		}(h5ai.config.types)),
 		hash = function (obj) {
 
 			if ($.isPlainObject(obj)) {
@@ -248,97 +218,6 @@
 				});
 			}
 		},
-		formatDates = function (dateFormat) {
-
-			if (dateFormat) {
-				currentDateFormat = dateFormat;
-			}
-
-			$("#extended .entry .date").each(function () {
-
-				var $this = $(this),
-					time = $this.data("time"),
-					formattedDate = time ? new Date(time).toString(currentDateFormat) : "";
-
-				$this.text(formattedDate);
-			});
-		},
-		localize = function (langs, lang, useBrowserLang) {
-
-			var storedLang = amplify.store(settings.store.lang),
-				browserLang, selected, key;
-
-			if (langs[storedLang]) {
-				lang = storedLang;
-			} else if (useBrowserLang) {
-				browserLang = navigator.language || navigator.browserLanguage;
-				if (browserLang) {
-					if (langs[browserLang]) {
-						lang = browserLang;
-					} else if (browserLang.length > 2 && langs[browserLang.substr(0, 2)]) {
-						lang = browserLang.substr(0, 2);
-					}
-				}
-			}
-
-			if (!langs[lang]) {
-				lang = "en";
-			}
-
-			selected = langs[lang];
-			if (selected) {
-				$.each(selected, function (key, value) {
-					$(".l10n-" + key).text(value);
-				});
-				$(".lang").text(lang);
-				$(".langOption").removeClass("current");
-				$(".langOption." + lang).addClass("current");
-				h5ai.core.hash({lang: lang});
-			}
-
-			formatDates(selected.dateFormat || settings.dateFormat);
-		},
-		initLangSelector = function (langs) {
-
-			var $langOptions = $("#langSelector .langOptions"),
-				sortedLangsKeys = [],
-				$ul;
-
-			$.each(langs, function (lang) {
-				sortedLangsKeys.push(lang);
-			});
-			sortedLangsKeys.sort();
-
-			$ul = $("<ul />");
-			$.each(sortedLangsKeys, function (idx, lang) {
-				$("<li class='langOption' />")
-					.addClass(lang)
-					.text(lang + " - " + langs[lang].lang)
-					.appendTo($ul)
-					.click(function () {
-						amplify.store(settings.store.lang, lang);
-						localize(langs, lang, false);
-					});
-			});
-			$langOptions
-				.append($ul)
-				.scrollpanel();
-
-			$("#langSelector").hover(
-				function () {
-					$langOptions
-						.css("top", "-" + $langOptions.outerHeight() + "px")
-						.stop(true, true)
-						.fadeIn();
-					$langOptions.get(0).updateScrollbar();
-				},
-				function () {
-					$langOptions
-						.stop(true, true)
-						.fadeOut();
-				}
-			);
-		},
 		onIndicatorClick = function (event) {
 
 			var $indicator = $(this),
@@ -414,15 +293,12 @@
 			initTopSpace();
 			initTree();
 			linkHoverStates();
-			initLangSelector(config.langs);
-			localize(config.langs, settings.lang, settings.useBrowserLang);
 			formatSizes();
 			setTotals();
 			initIndicators();
 		};
 
 	h5ai.core = {
-		settings: settings,
 		hash: hash,
 		api: api,
 		image: image,
@@ -430,9 +306,8 @@
 		shiftTree: shiftTree,
 		linkHoverStates: linkHoverStates,
 		initIndicators: initIndicators,
-		formatDates: formatDates,
 		getFileType: getFileType,
 		init: init
 	};
 
-}(window, jQuery, h5ai, H5AI_CONFIG));
+}(window, jQuery, h5ai));

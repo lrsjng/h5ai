@@ -52,7 +52,7 @@
 		updateExtendedHtml = function (path) {
 
 			var $html, $a, $label,
-				formattedDate = path.date ? path.date.toString(h5ai.core.settings.dateFormat) : "",
+				formattedDate = path.date ? path.date.toString(h5ai.settings.dateFormat) : "",
 				imgClass = "",
 				icon16 = h5ai.core.icon(path.type),
 				icon48 = h5ai.core.icon(path.type, true);
@@ -69,7 +69,7 @@
 				$html.data("status", path.status);
 			}
 
-			if (h5ai.core.settings.showThumbs === true && $.inArray(path.type, h5ai.core.settings.thumbTypes) >= 0) {
+			if (h5ai.settings.showThumbs === true && $.inArray(path.type, h5ai.settings.thumbTypes) >= 0) {
 				imgClass = "class='thumb'";
 				var escapedHref = path.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
 				icon16 = h5ai.core.api() + "?action=thumb&href=" + escapedHref + "&width=16&height=16&mode=square";
@@ -113,7 +113,7 @@
 			);
 
 			if (path.isParentFolder) {
-				if (!h5ai.core.settings.setParentFolderLabels) {
+				if (!h5ai.settings.setParentFolderLabels) {
 					$label.addClass("l10n-parentDirectory");
 				}
 				$html.addClass("folder-parent");

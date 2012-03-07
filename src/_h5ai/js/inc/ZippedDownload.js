@@ -4,21 +4,21 @@
 	var x = 0,
 		y = 0,
 		$document = $(document),
-		$selectionRect = $("#selection-rect"),
-		selectedHrefsStr = "",
+		$selectionRect = $('#selection-rect'),
+		selectedHrefsStr = '',
 		$download, $img, $downloadAuth, $downloadUser, $downloadPassword,
 
 		updateDownloadBtn = function () {
 
-			var $selected = $("#extended a.selected"),
-				$downloadBtn = $("#download");
+			var $selected = $('#extended a.selected'),
+				$downloadBtn = $('#download');
 
-			selectedHrefsStr = "";
+			selectedHrefsStr = '';
 			if ($selected.length) {
 				$selected.each(function () {
 
-					var href = $(this).attr("href");
-					selectedHrefsStr = selectedHrefsStr ? selectedHrefsStr + ":" + href : href;
+					var href = $(this).attr('href');
+					selectedHrefsStr = selectedHrefsStr ? selectedHrefsStr + ':' + href : href;
 				});
 				$downloadBtn.show();
 			} else {
@@ -37,24 +37,24 @@
 			event.preventDefault();
 			$selectionRect.css({left: l, top: t, width: w, height: h});
 
-			selRect = $selectionRect.fracs("rect");
-			$("#extended a").removeClass("selecting").each(function () {
+			selRect = $selectionRect.fracs('rect');
+			$('#extended a').removeClass('selecting').each(function () {
 
 				var $a = $(this),
-					rect = $a.fracs("rect"),
+					rect = $a.fracs('rect'),
 					inter = selRect.intersection(rect);
-				if (inter && !$a.closest(".entry").hasClass("folder-parent")) {
-					$a.addClass("selecting");
+				if (inter && !$a.closest('.entry').hasClass('folder-parent')) {
+					$a.addClass('selecting');
 				}
 			});
 		},
 		selectionEnd = function (event) {
 
 			event.preventDefault();
-			$document.off("mousemove", selectionUpdate);
+			$document.off('mousemove', selectionUpdate);
 			$selectionRect.hide().css({left: 0, top: 0, width: 0, height: 0});
-			$("#extended a.selecting.selected").removeClass("selecting").removeClass("selected");
-			$("#extended a.selecting").removeClass("selecting").addClass("selected");
+			$('#extended a.selecting.selected').removeClass('selecting').removeClass('selected');
+			$('#extended a.selecting').removeClass('selecting').addClass('selected');
 			updateDownloadBtn();
 		},
 		selectionStart = function (event) {
@@ -156,18 +156,18 @@
 		},
 		init = function () {
 
-			if (h5ai.core.settings.zippedDownload) {
-				$("<li id='download'><a href='#'><img alt='download' /><span class='l10n-download'>download</span></a></li>")
-					.find("img").attr("src", h5ai.core.image("download")).end()
-					.find("a").click(function (event) {
+			if (h5ai.settings.zippedDownload) {
+				$('<li id="download"><a href="#"><img alt="download" /><span class="l10n-download">download</span></a></li>')
+					.find('img').attr('src', h5ai.core.image('download')).end()
+					.find('a').click(function (event) {
 
 						event.preventDefault();
 						$downloadAuth.hide();
 						requestZipping(selectedHrefsStr);
 					}).end()
-					.appendTo($("#navbar"));
-				$("<div id='download-auth'><input id='download-auth-user' type='text' value='' placeholder='user' /><input id='download-auth-password' type='text' value='' placeholder='password' /></div>")
-					.appendTo($("body"));
+					.appendTo($('#navbar'));
+				$('<div id="download-auth"><input id="download-auth-user" type="text" value="" placeholder="user" /><input id="download-auth-password" type="text" value="" placeholder="password" /></div>')
+					.appendTo($('body'));
 
 				$download = $('#download');
 				$downloadAuth = $('#download-auth');
@@ -175,9 +175,9 @@
 				$downloadPassword = $('#download-auth-password');
 				$img = $download.find('img');
 
-				$("body>nav,body>footer,#tree,input").on("mousedown", noSelection);
-				$("#content").on("mousedown", "a", noSelectionUnlessCtrl);
-				$document.on("mousedown", selectionStart);
+				$('body>nav,body>footer,#tree,input').on('mousedown', noSelection);
+				$('#content').on('mousedown', 'a', noSelectionUnlessCtrl);
+				$document.on('mousedown', selectionStart);
 			}
 		};
 

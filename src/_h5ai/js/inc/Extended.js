@@ -51,9 +51,9 @@
 		},
 		customize = function () {
 
-			if (h5ai.core.settings.customHeader) {
+			if (h5ai.settings.customHeader) {
 				$.ajax({
-					url: h5ai.core.settings.customHeader,
+					url: h5ai.settings.customHeader,
 					dataType: "html",
 					success: function (data) {
 						$("#content > header").append($(data)).show();
@@ -61,9 +61,9 @@
 				});
 			}
 
-			if (h5ai.core.settings.customFooter) {
+			if (h5ai.settings.customFooter) {
 				$.ajax({
-					url: h5ai.core.settings.customFooter,
+					url: h5ai.settings.customFooter,
 					dataType: "html",
 					success: function (data) {
 						$("#content > footer").prepend($(data)).show();
@@ -117,7 +117,7 @@
 			initExtendedView();
 			customize();
 			h5ai.connector.updatePaths();
-			if (h5ai.core.settings.showTree) {
+			if (h5ai.settings.showTree) {
 				populateTree();
 			}
 		};

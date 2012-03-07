@@ -59,15 +59,15 @@
 		},
 		init = function () {
 
-			if (h5ai.core.settings.showFilter) {
-				$("<li id='filter'><span class='element'><img alt='filter' /><input type='text' value='' placeholder='filter' /></span></li>")
+			if (h5ai.settings.showFilter) {
+				$('<li id="filter"><span class="element"><img alt="filter" /><input type="text" value="" placeholder="filter" /></span></li>')
 					.on('click', function () {
 
 						var $input = $(this).find('input');
 						$input.focus();
 					})
-					.find("img").attr("src", h5ai.core.image("filter")).end()
-					.find("input")
+					.find('img').attr('src', h5ai.core.image('filter')).end()
+					.find('input')
 						.on('focus', function () {
 
 							checkState(true);
@@ -89,7 +89,7 @@
 							checkState($input.is(':focus'));
 						})
 					.end()
-					.appendTo($("#navbar"));
+					.appendTo($('#navbar'));
 
 				var initialFilter = h5ai.core.hash('filter');
 				if (initialFilter) {

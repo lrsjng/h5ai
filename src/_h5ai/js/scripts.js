@@ -14,6 +14,6 @@
 // @include "inc/lib/base64.js"
 // @include "inc/lib/date.js"
 
-// app scripts
-// -----------
+// h5ai
+// ----
 // @include "inc/H5ai.js"

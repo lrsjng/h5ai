@@ -18,7 +18,7 @@
 		},
 		init = function () {
 
-			qrCodesSize = h5ai.core.settings.qrCodesSize;
+			qrCodesSize = h5ai.settings.qrCodesSize;
 			if (!qrCodesSize) {
 				return;
 			}

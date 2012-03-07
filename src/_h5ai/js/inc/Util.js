@@ -3,15 +3,20 @@
 
 	var reSplitPath = /^\/([^\/]+\/?)$/,
 		reSplitPath2 = /^(\/(?:.*\/)*?([^\/]+)\/)([^\/]+\/?)$/,
+		rePathEndsWithSlash = /\/$/,
+		reParseSize = /^\s*([\.\d]+)\s*([kmg]?)b?\s*$/i,
+		kilo = 1000.0,
+		sizeUnits = ['B', 'KB', 'MB', 'GB', 'TB'],
+
 		splitPath = function (pathname) {
 
 			var match;
 
-			if (pathname === "/") {
+			if (pathname === '/') {
 				return {
 					parent: null,
 					parentname: null,
-					name: "/"
+					name: '/'
 				};
 			}
 			match = reSplitPath2.exec(pathname);
@@ -25,13 +30,12 @@
 			match = reSplitPath.exec(pathname);
 			if (match) {
 				return {
-					parent: "/",
-					parentname: "/",
+					parent: '/',
+					parentname: '/',
 					name: match[1]
 				};
 			}
 		},
-		rePathEndsWithSlash = /\/$/,
 		pathEndsWithSlash = function (pathname) {
 
 			return rePathEndsWithSlash.test(pathname);
@@ -41,18 +45,16 @@
 			var $a, isParentFolder, href;
 
 			if (!pathEndsWithSlash(folder)) {
-				folder += "/";
+				folder += '/';
 			}
 			if (!tableRow) {
 				return folder;
 			}
-			$a = $(tableRow).find("td").eq(1).find("a");
-			isParentFolder = ($a.text() === "Parent Directory");
-			href = $a.attr("href");
+			$a = $(tableRow).find('td').eq(1).find('a');
+			isParentFolder = ($a.text() === 'Parent Directory');
+			href = $a.attr('href');
 			return isParentFolder ? undefined : folder + href;
 		},
-		kilo = 1000.0,
-		reParseSize = /^\s*([\.\d]+)\s*([kmg]?)b?\s*$/i,
 		parseSize = function (str) {
 
 			var match = reParseSize.exec(str),
@@ -64,18 +66,17 @@
 
 			val = parseFloat(match[1]);
 			unit = match[2].toLowerCase();
-			if (unit === "k") {
+			if (unit === 'k') {
 				val *= kilo;
-			} else if (unit === "m") {
+			} else if (unit === 'm') {
 				val *= kilo * kilo;
-			} else if (unit === "g") {
+			} else if (unit === 'g') {
 				val *= kilo * kilo * kilo;
-			} else if (unit === "t") {
+			} else if (unit === 't') {
 				val *= kilo * kilo * kilo * kilo;
 			}
 			return val;
 		},
-		sizeUnits = ["B", "KB", "MB", "GB", "TB"],
 		formatSize = function (size) {
 
 			var th = 1000.0,
@@ -90,7 +91,7 @@
 				size /= kilo;
 				i += 1;
 			}
-			return (i <= 1 ? Math.round(size) : size.toFixed(1)).toString() + " " + sizeUnits[i];
+			return (i <= 1 ? Math.round(size) : size.toFixed(1)).toString() + ' ' + sizeUnits[i];
 		},
 		checkedDecodeUri = function (uri) {
 

@@ -20,8 +20,8 @@
 		},
 		fetchStatus = function (pathname, callback) {
 
-			if (h5ai.core.settings.folderStatus[pathname]) {
-				callback(h5ai.core.settings.folderStatus[pathname]);
+			if (h5ai.settings.folderStatus[pathname]) {
+				callback(h5ai.settings.folderStatus[pathname]);
 				return;
 			} else if (pathnameStatusCache[pathname]) {
 				callback(pathnameStatusCache[pathname]);
@@ -30,13 +30,13 @@
 
 			$.ajax({
 				url: pathname,
-				type: "HEAD",
+				type: 'HEAD',
 				complete: function (xhr) {
 
 					var status = xhr.status;
 
-					if (status === 200 && contentTypeRegEx.test(xhr.getResponseHeader("Content-Type"))) {
-						status = "h5ai";
+					if (status === 200 && contentTypeRegEx.test(xhr.getResponseHeader('Content-Type'))) {
+						status = 'h5ai';
 					}
 					pathnameStatusCache[pathname] = status;
 					callback(status);
@@ -48,7 +48,7 @@
 			if (path.isFolder && !path.isParentFolder && path.status === undefined) {
 				fetchStatus(path.absHref, function (status) {
 
-					if (status !== "h5ai") {
+					if (status !== 'h5ai') {
 						path.status = status;
 					}
 					h5ai.html.updateHtml(path);
@@ -66,15 +66,15 @@
 
 			fetchStatus(pathname, function (status) {
 
-				if (status !== "h5ai") {
+				if (status !== 'h5ai') {
 					callback(status, {});
 					return;
 				}
 
 				$.ajax({
 					url: pathname,
-					type: "GET",
-					dataType: "html",
+					type: 'GET',
+					dataType: 'html',
 					error: function (xhr) {
 
 						callback(xhr.status, {}); // since it was checked before this should never happen
@@ -83,12 +83,12 @@
 
 						var content = {};
 
-						if (!contentTypeRegEx.test(xhr.getResponseHeader("Content-Type"))) {
+						if (!contentTypeRegEx.test(xhr.getResponseHeader('Content-Type'))) {
 							callback(xhr.status, {}); // since it was checked before this should never happen
 							return;
 						}
 
-						$(html).find("#table td").closest("tr").each(function () {
+						$(html).find('#table td').closest('tr').each(function () {
 
 							var path = getPath(pathname, this);
 
@@ -97,7 +97,7 @@
 								updatePath(path);
 							}
 						});
-						callback("h5ai", content);
+						callback('h5ai', content);
 					}
 				});
 			});
