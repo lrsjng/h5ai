@@ -1,5 +1,5 @@
 
-(function ($, H5AI) {
+(function ($, h5ai) {
 
 	var filter = function (re) {
 
@@ -43,7 +43,7 @@
 			} else {
 				$filter.removeClass('current');
 			}
-			H5AI.core.hash({filter: val});
+			h5ai.core.hash({filter: val});
 		},
 		parseFilterSequence = function (sequence) {
 
@@ -53,20 +53,20 @@
 
 			sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
 
-				return H5AI.util.reEscape(part);
+				return h5ai.util.reEscape(part);
 			}).join('|');
 			return new RegExp(sequence);
 		},
 		init = function () {
 
-			if (H5AI.core.settings.showFilter) {
+			if (h5ai.core.settings.showFilter) {
 				$("<li id='filter'><span class='element'><img alt='filter' /><input type='text' value='' placeholder='filter' /></span></li>")
 					.on('click', function () {
 
 						var $input = $(this).find('input');
 						$input.focus();
 					})
-					.find("img").attr("src", H5AI.core.image("filter")).end()
+					.find("img").attr("src", h5ai.core.image("filter")).end()
 					.find("input")
 						.on('focus', function () {
 
@@ -91,7 +91,7 @@
 					.end()
 					.appendTo($("#navbar"));
 
-				var initialFilter = H5AI.core.hash('filter');
+				var initialFilter = h5ai.core.hash('filter');
 				if (initialFilter) {
 					$('#filter input').val(initialFilter);
 					checkState(false);
@@ -99,9 +99,9 @@
 			}
 		};
 
-	H5AI.finder = {
+	h5ai.finder = {
 		init: init,
 		filter: filter
 	};
 
-}(jQuery, H5AI));
+}(jQuery, h5ai));

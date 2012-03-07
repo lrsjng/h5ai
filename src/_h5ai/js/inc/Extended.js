@@ -1,27 +1,27 @@
 
-(function (document, $, H5AI) {
+(function (document, $, h5ai) {
 
 	var initBreadcrumb = function () {
 
 			var $ul = $("body > nav ul"),
 				pathname = "/",
-				path = H5AI.connector.getPath(pathname),
+				path = h5ai.connector.getPath(pathname),
 				pathnameParts = document.location.pathname.split("/"),
 				lastPart = "",
 				title = document.domain;
 
-			$ul.append(H5AI.html.updateCrumbHtml(path));
+			$ul.append(h5ai.html.updateCrumbHtml(path));
 
 			$.each(pathnameParts, function (idx, part) {
 				if (part !== "") {
 					pathname += part + "/";
-					$ul.append(H5AI.html.updateCrumbHtml(H5AI.connector.getPath(pathname)));
+					$ul.append(h5ai.html.updateCrumbHtml(h5ai.connector.getPath(pathname)));
 					lastPart = part + " - ";
 					title += " > " + part;
 				}
 			});
 
-			document.title = H5AI.util.checkedDecodeUri(lastPart + title);
+			document.title = h5ai.util.checkedDecodeUri(lastPart + title);
 		},
 		initExtendedView = function () {
 
@@ -37,8 +37,8 @@
 
 			// entries
 			$("#table td").closest("tr").each(function () {
-				var path = H5AI.connector.getPath(document.location.pathname, this);
-				$ul.append(H5AI.html.updateExtendedHtml(path));
+				var path = h5ai.connector.getPath(document.location.pathname, this);
+				$ul.append(h5ai.html.updateExtendedHtml(path));
 			});
 
 			$("#extended").append($ul);
@@ -51,9 +51,9 @@
 		},
 		customize = function () {
 
-			if (H5AI.core.settings.customHeader) {
+			if (h5ai.core.settings.customHeader) {
 				$.ajax({
-					url: H5AI.core.settings.customHeader,
+					url: h5ai.core.settings.customHeader,
 					dataType: "html",
 					success: function (data) {
 						$("#content > header").append($(data)).show();
@@ -61,9 +61,9 @@
 				});
 			}
 
-			if (H5AI.core.settings.customFooter) {
+			if (h5ai.core.settings.customFooter) {
 				$.ajax({
-					url: H5AI.core.settings.customFooter,
+					url: h5ai.core.settings.customFooter,
 					dataType: "html",
 					success: function (data) {
 						$("#content > footer").prepend($(data)).show();
@@ -73,9 +73,9 @@
 		},
 		fetchPath = function (pathname, callback) {
 
-			H5AI.connector.fetchStatusAndContent(pathname, false, function (status, content) {
+			h5ai.connector.fetchStatusAndContent(pathname, false, function (status, content) {
 
-				var path = H5AI.connector.getPath(pathname);
+				var path = h5ai.connector.getPath(pathname);
 
 				path.status = status;
 				path.content = content;
@@ -86,7 +86,7 @@
 
 			fetchPath(pathname, function (path) {
 
-				var parent = H5AI.util.splitPath(pathname).parent;
+				var parent = h5ai.util.splitPath(pathname).parent;
 
 				path.treeOpen = true;
 				if (childPath) {
@@ -103,11 +103,11 @@
 
 			fetchTree(document.location.pathname, function (path) {
 				$("#tree")
-					.append(H5AI.html.updateTreeHtml(path))
+					.append(h5ai.html.updateTreeHtml(path))
 					.scrollpanel()
 					.show();
-				H5AI.core.shiftTree(false, true);
-				H5AI.core.linkHoverStates();
+				h5ai.core.shiftTree(false, true);
+				h5ai.core.linkHoverStates();
 				setTimeout(function () { $("#tree").get(0).updateScrollbar(); }, 1);
 			});
 		},
@@ -116,14 +116,14 @@
 			initBreadcrumb();
 			initExtendedView();
 			customize();
-			H5AI.connector.updatePaths();
-			if (H5AI.core.settings.showTree) {
+			h5ai.connector.updatePaths();
+			if (h5ai.core.settings.showTree) {
 				populateTree();
 			}
 		};
 
-	H5AI.extended = {
+	h5ai.extended = {
 		init: init
 	};
 
-}(document, jQuery, H5AI));
+}(document, jQuery, h5ai));

@@ -1,5 +1,5 @@
 
-(function ($, H5AI) {
+(function ($, h5ai) {
 
 	var reSplitPath = /^\/([^\/]+\/?)$/,
 		reSplitPath2 = /^(\/(?:.*\/)*?([^\/]+)\/)([^\/]+\/?)$/,
@@ -104,7 +104,7 @@
 			return sequence.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 		};
 
-	H5AI.util = {
+	h5ai.util = {
 		splitPath: splitPath,
 		pathEndsWithSlash: pathEndsWithSlash,
 		getAbsHref: getAbsHref,
@@ -114,4 +114,4 @@
 		reEscape: reEscape
 	};
 
-}(jQuery, H5AI));
+}(jQuery, h5ai));

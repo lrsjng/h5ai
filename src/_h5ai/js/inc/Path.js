@@ -1,7 +1,7 @@
 
-(function (document, $, H5AI) {
+(function (document, $, h5ai) {
 
-	H5AI.Path = function (folder, tableRow) {
+	h5ai.Path = function (folder, tableRow) {
 
 		var path = {},
 			$tds, $a, date, size, splits;
@@ -27,7 +27,7 @@
 		};
 		path.treeOpen = false;
 
-		if (!H5AI.util.pathEndsWithSlash(folder)) {
+		if (!h5ai.util.pathEndsWithSlash(folder)) {
 			folder += "/";
 		}
 
@@ -35,21 +35,21 @@
 			$tds = $(tableRow).find("td");
 			$a = $tds.eq(1).find("a");
 			date = Date.parse($tds.eq(2).text());
-			size = H5AI.util.parseSize($tds.eq(3).text());
+			size = h5ai.util.parseSize($tds.eq(3).text());
 
 			path.parentFolder = folder;
 			path.label = $a.text();
-			path.type = H5AI.util.pathEndsWithSlash(path.label) ? "folder" : H5AI.core.getFileType(path.label);
+			path.type = h5ai.util.pathEndsWithSlash(path.label) ? "folder" : h5ai.core.getFileType(path.label);
 			path.href = $a.attr("href");
 			path.time = date ? date.getTime() : 0;
 			path.size = size;
 		} else {
-			splits = H5AI.util.splitPath(folder);
+			splits = h5ai.util.splitPath(folder);
 
 			path.parentFolder = splits.parent || "";
-			path.label = H5AI.util.checkedDecodeUri(splits.name);
+			path.label = h5ai.util.checkedDecodeUri(splits.name);
 			if (path.label === "/") {
-				path.label = H5AI.util.checkedDecodeUri(document.domain);
+				path.label = h5ai.util.checkedDecodeUri(document.domain);
 			}
 			path.type = "folder";
 			path.href = splits.name;
@@ -57,7 +57,7 @@
 			path.size = -1;
 		}
 
-		if (H5AI.util.pathEndsWithSlash(path.label)) {
+		if (h5ai.util.pathEndsWithSlash(path.label)) {
 			path.label = path.label.slice(0, -1);
 		}
 
@@ -71,12 +71,12 @@
 		path.isCurrentFolder = (path.absHref === document.location.pathname);
 		path.isDomain = (path.absHref === "/");
 
-		if (path.isParentFolder && H5AI.core.settings.setParentFolderLabels) {
+		if (path.isParentFolder && h5ai.core.settings.setParentFolderLabels) {
 			if (path.isDomain) {
-				path.label = H5AI.util.checkedDecodeUri(document.domain);
+				path.label = h5ai.util.checkedDecodeUri(document.domain);
 			} else {
-				splits = H5AI.util.splitPath(path.parentFolder);
-				path.label = H5AI.util.checkedDecodeUri(splits.parentname);
+				splits = h5ai.util.splitPath(path.parentFolder);
+				path.label = h5ai.util.checkedDecodeUri(splits.parentname);
 			}
 		}
 
@@ -86,10 +86,10 @@
 		};
 		path.onClick = function (context) {
 
-			H5AI.core.triggerPathClick(path, context);
+			h5ai.core.triggerPathClick(path, context);
 		};
 
 		return path;
 	};
 
-}(document, jQuery, H5AI));
+}(document, jQuery, h5ai));

@@ -1,16 +1,16 @@
 
-(function ($, H5AI) {
+(function ($, h5ai) {
 
 	var cache = {},
 		pathnameStatusCache = {},
 		contentTypeRegEx = /^text\/html;h5ai=/,
 		getPath = function (folder, tableRow) {
 
-			var absHref = H5AI.util.getAbsHref(folder, tableRow),
+			var absHref = h5ai.util.getAbsHref(folder, tableRow),
 				path = cache[absHref];
 
 			if (!path) {
-				path = H5AI.Path(folder, tableRow);
+				path = h5ai.Path(folder, tableRow);
 				if (!path.isParentFolder) {
 					cache[path.absHref] = path;
 				}
@@ -20,8 +20,8 @@
 		},
 		fetchStatus = function (pathname, callback) {
 
-			if (H5AI.core.settings.folderStatus[pathname]) {
-				callback(H5AI.core.settings.folderStatus[pathname]);
+			if (h5ai.core.settings.folderStatus[pathname]) {
+				callback(h5ai.core.settings.folderStatus[pathname]);
 				return;
 			} else if (pathnameStatusCache[pathname]) {
 				callback(pathnameStatusCache[pathname]);
@@ -51,8 +51,8 @@
 					if (status !== "h5ai") {
 						path.status = status;
 					}
-					H5AI.html.updateHtml(path);
-					H5AI.core.linkHoverStates();
+					h5ai.html.updateHtml(path);
+					h5ai.core.linkHoverStates();
 				});
 			}
 		},
@@ -103,10 +103,10 @@
 			});
 		};
 
-	H5AI.connector = {
+	h5ai.connector = {
 		getPath: getPath,
 		updatePaths: updatePaths,
 		fetchStatusAndContent: fetchStatusAndContent
 	};
 
-}(jQuery, H5AI));
+}(jQuery, h5ai));

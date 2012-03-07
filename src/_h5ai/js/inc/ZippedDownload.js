@@ -1,5 +1,5 @@
 
-(function ($, H5AI) {
+(function ($, h5ai) {
 
 	var x = 0,
 		y = 0,
@@ -102,11 +102,11 @@
 
 
 			$download.removeClass('current');
-			$img.attr('src', H5AI.core.image("download"));
+			$img.attr('src', h5ai.core.image("download"));
 
 			if (response) {
 				if (response.status === 'ok') {
-					window.location = H5AI.core.api() + '?action=getzip&id=' + response.id;
+					window.location = h5ai.core.api() + '?action=getzip&id=' + response.id;
 				} else {
 					if (response.code === 401) {
 						$downloadAuth
@@ -126,9 +126,9 @@
 		requestZipping = function (hrefsStr) {
 
 			$download.addClass('current');
-			$img.attr('src', H5AI.core.image("loading.gif", true));
+			$img.attr('src', h5ai.core.image("loading.gif", true));
 			$.ajax({
-				url: H5AI.core.api(),
+				url: h5ai.core.api(),
 				data: {
 					action: 'zip',
 					hrefs: selectedHrefsStr
@@ -156,9 +156,9 @@
 		},
 		init = function () {
 
-			if (H5AI.core.settings.zippedDownload) {
+			if (h5ai.core.settings.zippedDownload) {
 				$("<li id='download'><a href='#'><img alt='download' /><span class='l10n-download'>download</span></a></li>")
-					.find("img").attr("src", H5AI.core.image("download")).end()
+					.find("img").attr("src", h5ai.core.image("download")).end()
 					.find("a").click(function (event) {
 
 						event.preventDefault();
@@ -181,8 +181,8 @@
 			}
 		};
 
-	H5AI.zippedDownload = {
+	h5ai.zippedDownload = {
 		init: init
 	};
 
-}(jQuery, H5AI));
+}(jQuery, h5ai));

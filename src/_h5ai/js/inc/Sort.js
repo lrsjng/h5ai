@@ -1,5 +1,5 @@
 
-(function ($, H5AI) {
+(function ($, h5ai) {
 
 	var type = function (entry) {
 
@@ -78,13 +78,13 @@
 			$all.removeClass("ascending").removeClass("descending");
 			order.head.addClass(order.clas);
 			sort(order.fn);
-			H5AI.core.hash({sort: id});
+			h5ai.core.hash({sort: id});
 		},
 		init = function () {
 
-			var $ascending = $("<img src='" + H5AI.core.image("ascending") + "' class='sort ascending' alt='ascending' />"),
-				$descending = $("<img src='" + H5AI.core.image("descending") + "' class='sort descending' alt='descending' />"),
-				initialOrder = H5AI.core.hash('sort'),
+			var $ascending = $("<img src='" + h5ai.core.image("ascending") + "' class='sort ascending' alt='ascending' />"),
+				$descending = $("<img src='" + h5ai.core.image("descending") + "' class='sort descending' alt='descending' />"),
+				initialOrder = h5ai.core.hash('sort'),
 				$header = $("#extended li.header"),
 				$label = $header.find("a.label"),
 				$date = $header.find("a.date"),
@@ -124,7 +124,7 @@
 				}
 			};
 
-			sortBy(initialOrder ? initialOrder : H5AI.core.settings.sortorder);
+			sortBy(initialOrder ? initialOrder : h5ai.core.settings.sortorder);
 
 			$label
 				.append($ascending.clone()).append($descending.clone())
@@ -148,8 +148,8 @@
 				});
 		};
 
-	H5AI.sort = {
+	h5ai.sort = {
 		init: init
 	};
 
-}(jQuery, H5AI));
+}(jQuery, h5ai));

@@ -1,5 +1,5 @@
 
-(function (window, $, H5AI, config) {
+(function (window, $, h5ai, config) {
 
 	var $window = $(window),
 		defaults = {
@@ -95,7 +95,7 @@
 				viewmode = amplify.store(settings.store.viewmode);
 			}
 			viewmode = $.inArray(viewmode, settings.viewmodes) >= 0 ? viewmode : settings.viewmodes[0];
-			H5AI.core.hash({view: viewmode});
+			h5ai.core.hash({view: viewmode});
 
 			$viewDetails.add($viewIcons).removeClass("current");
 			if (viewmode === "details") {
@@ -293,7 +293,7 @@
 				$(".lang").text(lang);
 				$(".langOption").removeClass("current");
 				$(".langOption." + lang).addClass("current");
-				H5AI.core.hash({lang: lang});
+				h5ai.core.hash({lang: lang});
 			}
 
 			formatDates(selected.dateFormat || settings.dateFormat);
@@ -395,7 +395,7 @@
 
 				var $this = $(this),
 					bytes = $this.data("bytes"),
-					formattedSize = bytes >= 0 ? H5AI.util.formatSize(bytes) : "";
+					formattedSize = bytes >= 0 ? h5ai.util.formatSize(bytes) : "";
 
 				$this.text(formattedSize);
 			});
@@ -421,7 +421,7 @@
 			initIndicators();
 		};
 
-	H5AI.core = {
+	h5ai.core = {
 		settings: settings,
 		hash: hash,
 		api: api,
@@ -435,4 +435,4 @@
 		init: init
 	};
 
-}(window, jQuery, H5AI, H5AI_CONFIG));
+}(window, jQuery, h5ai, H5AI_CONFIG));

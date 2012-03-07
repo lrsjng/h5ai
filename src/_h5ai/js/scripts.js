@@ -10,4 +10,4 @@
 // @include "inc/lib/base64.js"
 // @include "inc/lib/date.js"
 
-// @include "inc/main.js"
+// @include "inc/H5ai.js"
