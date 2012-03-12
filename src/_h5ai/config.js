@@ -456,6 +456,21 @@ var H5AI_CONFIG = {
 			"files": "檔案",
 			"download": "下載",
 			"noMatch": "no match"
+		},
+
+		"ja": {
+			"lang": "日本語",
+			"details": "詳細",
+			"icons": "アイコン",
+			"name": "名前",
+			"lastModified": "最終更新時刻",
+			"size": "容量",
+			"parentDirectory": "親ディレクトリ",
+			"empty": "空です",
+			"folders": "フォルダ",
+			"files": "ファイル",
+			"download": "ダウンロード",
+			"noMatch": "マッチしません"
 		}
 	}
 };
