@@ -367,7 +367,7 @@ var H5AI_CONFIG = {
 			"download": "download",
 			"noMatch": "no match"
 		},
-
+	
 		"ru": {
 			"lang": "русский",
 			"details": "детали",
@@ -396,6 +396,21 @@ var H5AI_CONFIG = {
 			"files": "súborov",
 			"download": "download",
 			"noMatch": "no match"
+		},
+	
+		"sr": {
+			"lang": "Srpski",
+			"details": "detalji",
+			"icons": "ikone",
+			"name": "Ime",
+			"lastModified": "Poslednja modifikacija",
+			"size": "Veličina",
+			"parentDirectory": "Roditeljski direktorijum",
+			"empty": "prazno",
+			"folders": "direktorijum",
+			"files": "fajlovi",
+			"download": "download",
+			"noMatch": "bez poklapanja"
 		},
 
 		"sv": {
