@@ -443,6 +443,21 @@ var H5AI_CONFIG = {
 			"noMatch": "no match"
 		},
 
+		"sr": {
+			"lang": "srpski",
+			"details": "detalji",
+			"icons": "ikone",
+			"name": "Ime",
+			"lastModified": "Poslednja modifikacija",
+			"size": "Veličina",
+			"parentDirectory": "Roditeljski direktorijum",
+			"empty": "prazno",
+			"folders": "direktorijum",
+			"files": "fajlovi",
+			"download": "download",
+			"noMatch": "bez poklapanja"
+		},
+
 		"sv": {
 			"lang": "svenska",
 			"details": "detaljerad",

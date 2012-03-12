@@ -306,8 +306,9 @@
 		shiftTree: shiftTree,
 		linkHoverStates: linkHoverStates,
 		initIndicators: initIndicators,
-		getFileType: getFileType,
-		init: init
+		getFileType: getFileType
 	};
+
+	h5ai(init);
 
 }(window, jQuery, h5ai));

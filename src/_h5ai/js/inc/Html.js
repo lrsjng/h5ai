@@ -132,7 +132,7 @@
 
 			if (path.html.$extended) {
 				path.html.$extended.replaceWith($html);
-				h5ai.core.formatDates();
+				h5ai.localize.formatDates();
 			}
 			path.html.$extended = $html;
 

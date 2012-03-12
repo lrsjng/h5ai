@@ -101,7 +101,8 @@
 		};
 
 	h5ai.localize = {
-		init: init
+		init: init,
+		formatDates: formatDates
 	};
 
 }(jQuery, h5ai));

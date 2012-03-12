@@ -33,39 +33,52 @@
 			qrCodesSize: null,
 			showFilter: false
 		},
-		h5ai = function () {
 
+		initMethods = [],
+		addInitMethod = function (fn) {
+
+			if ($.isFunction(fn)) {
+				initMethods.push(fn);
+			}
+		},
+		init = function () {
+
+			var $html = $('html');
+
+			h5ai.isJs = $html.hasClass('h5ai-js');
+			h5ai.isPhp = $html.hasClass('h5ai-php');
+
+			if (h5ai.isJs) {
+				h5ai.extended.init();
+			}
+
+			$.each(initMethods, function (idx, initMethod) {
+
+				initMethod();
+			})
+
+			// h5ai.core.init();
+			h5ai.localize.init();
+			h5ai.sort.init();
+			h5ai.finder.init();
+			h5ai.zippedDownload.init();
+			h5ai.context.init();
+
+			if (h5ai.isPhp) {
+				$('#tree').scrollpanel();
+				h5ai.core.shiftTree(false, true);
+			}
+
+			// publish for testing
+			window.h5ai = h5ai;
+		},
+		h5ai = function (fn) {
+
+			addInitMethod(fn);
 		};
 
 	h5ai.config = config;
 	h5ai.settings = $.extend({}, defaults, config.options);
-
-	h5ai.init = function () {
-
-		var $html = $('html');
-
-		h5ai.isJs = $html.hasClass('h5ai-js');
-		h5ai.isPhp = $html.hasClass('h5ai-php');
-
-		if (h5ai.isJs) {
-			h5ai.extended.init();
-		}
-
-		h5ai.core.init();
-		h5ai.localize.init();
-		h5ai.sort.init();
-		h5ai.finder.init();
-		h5ai.zippedDownload.init();
-		h5ai.context.init();
-
-		if (h5ai.isPhp) {
-			$('#tree').scrollpanel();
-			h5ai.core.shiftTree(false, true);
-		}
-
-		// publish for testing
-		window.h5ai = h5ai;
-	};
 
 	// @include "Util.js"
 	// @include "Core.js"
@@ -80,6 +93,6 @@
 	// @include "Html.js"
 	// @include "Extended.js"
 
-	$(h5ai.init);
+	$(init);
 
 }(jQuery, H5AI_CONFIG));

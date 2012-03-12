@@ -36,6 +36,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * updates lv translation
 * adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
 * adds ja translation by [metasta](http://github.com/metasta)
+* adds nb translation by [Sindre Sorhus](http://github.com/sindresorhus)
+* adds sr translation by [Goran](http://github.com/vBm)
 
 
 ### v0.18 - *2012-02-24*
