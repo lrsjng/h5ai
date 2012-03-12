@@ -72,14 +72,14 @@
 			};
 
 			$element
-				.mousewheel(function (event, delta) {
+				.on('mousewheel', function (event, delta, deltaX, deltaY) {
 
-					$wrapper.scrollTop($wrapper.scrollTop() - 50 * delta);
+					$wrapper.scrollTop($wrapper.scrollTop() - 50 * deltaY);
 					update();
 					event.stopPropagation();
 					event.preventDefault();
 				})
-				.scroll(update);
+				.on('scroll', update);
 			$element.get(0).updateScrollbar = update;
 			$wrapper
 				.css({
