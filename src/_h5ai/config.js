@@ -322,6 +322,21 @@ var H5AI_CONFIG = {
 			"download": "lejupielādēt",
 			"noMatch": "no match"
 		},
+		
+		"nb": {
+			"lang": "norwegian",
+			"details": "detaljer",
+			"icons": "ikoner",
+			"name": "Navn",
+			"lastModified": "Sist endret",
+			"size": "Størrelse",
+			"parentDirectory": "Overordnet mappe",
+			"empty": "tom",
+			"folders": "mapper",
+			"files": "filer",
+			"download": "last ned",
+			"noMatch": "ingen treff"
+		},
 
 		"nl": {
 			"lang": "nederlands",
