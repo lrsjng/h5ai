@@ -35,6 +35,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * hides broken tree view in IE < 9 and adds a message to the footer
 * disables hash changes since they break logical browser history
 * fixes thumbnail size for portrait images in icon view
+* adds a info page to `/_ha5i`
 * updates lv translation
 * adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
 * adds ja translation by [metasta](http://github.com/metasta)
