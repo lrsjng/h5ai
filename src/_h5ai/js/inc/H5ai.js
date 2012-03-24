@@ -48,6 +48,10 @@
 			h5ai.isJs = $html.hasClass('h5ai-js');
 			h5ai.isPhp = $html.hasClass('h5ai-php');
 
+			if (!h5ai.isJs && !h5ai.isPhp) {
+				return;
+			}
+
 			if (h5ai.isJs) {
 				h5ai.extended.init();
 			}
