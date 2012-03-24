@@ -22,7 +22,7 @@
 					}
 				});
 				hashStr = '#!' + hashStr;
-				window.location.hash = hashStr;
+				// window.location.hash = hashStr;
 				return hashStr;
 			} else {
 				var result = {},
