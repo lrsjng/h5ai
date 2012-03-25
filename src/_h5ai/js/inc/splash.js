@@ -15,9 +15,14 @@
 				$this.replaceWith($a);
 			});
 		},
+		configFile = function () {
+
+			$('#config-file').text(JSON.stringify(H5AI_CONFIG.options));
+		},
 		init = function () {
 
 			deobfuscate();
+			configFile();
 		};
 
 	$(init);
