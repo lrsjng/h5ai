@@ -2,35 +2,24 @@
 (function ($, h5ai) {
 'use strict';
 
-	var deobfuscate = function () {
-
-			$('.obfusma').each(function () {
-
-				var $this = $(this),
-					add = $this.text().replace(/\s*/g, '').replace(/\[at\]/gi, '@').replace(/\[dot\]/gi, '.'),
-					$a = $('<a/>').attr('href', 'mailto:' + add).text(add).addClass('deobfusma');
-
-				$this.replaceWith($a);
-			});
-		},
-		handleChecksResponse = function (response) {
+	var handleChecksResponse = function (response) {
 
 			if (response) {
-				$('#test-php .test-result').addClass('test-passed').text('passed');
+				$('#test-php .test-result').addClass('test-passed').text('yes');
 				if (response.zips === 0) {
-					$('#test-zips .test-result').addClass('test-passed').text('passed');
+					$('#test-zips .test-result').addClass('test-passed').text('yes');
 				} else {
-					$('#test-zips .test-result').addClass('test-failed').text('failed (' + response.zips + ')');
+					$('#test-zips .test-result').addClass('test-failed').text('no').attr('title', 'error-code: ' + response.zips);
 				}
 				if (response.thumbs === 0) {
-					$('#test-thumbs .test-result').addClass('test-passed').text('passed');
+					$('#test-thumbs .test-result').addClass('test-passed').text('yes');
 				} else {
-					$('#test-thumbs .test-result').addClass('test-failed').text('failed (' + response.thumbs + ')');
+					$('#test-thumbs .test-result').addClass('test-failed').text('no').attr('title', 'error-code: ' + response.thumbs);
 				}
 			} else {
-				$('#test-php .test-result').addClass('test-failed').text('failed');
-				$('#test-zips .test-result').addClass('test-failed').text('failed');
-				$('#test-thumbs .test-result').addClass('test-failed').text('failed');
+				$('#test-php .test-result').addClass('test-failed').text('no');
+				$('#test-zips .test-result').addClass('test-failed').text('no');
+				$('#test-thumbs .test-result').addClass('test-failed').text('no');
 			}
 		},
 		checks = function () {
@@ -57,7 +46,6 @@
 			h5ai.isSplash = $('html').hasClass('h5ai-splash');
 
 			if (h5ai.isSplash) {
-				deobfuscate();
 				checks();
 			}
 		};

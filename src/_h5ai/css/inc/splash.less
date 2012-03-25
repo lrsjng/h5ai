@@ -1,151 +1,58 @@
 
-
 html.h5ai-splash {
 	body {
-		position: relative;
 		font-family: Ubuntu, Arial, sans;
 		margin: 0 auto;
-		padding: 0 142px;
 		font-size: 20px;
 		color: #555;
 		max-width: 600px;
+		text-align: center;
 
-		a, a:visited, a:active {
-			color: #2080ff;
-			text-decoration: none;
-			.transition(all 0.2s ease-in-out);
-
-			&:hover {
-				color: #68A9ff;
-			}
+		.h5ai {
+			font-family: 'Miltonian Tattoo';
+			font-weight: normal;
 		}
-
-		header {
-			color: #333;
-			text-align: center;
-			margin: 32px 0;
-
-			h1 {
-				margin: 0;
-				padding: 0;
-				font-size: 100px;
-				font-weight: normal;
-				height: 150px;
-				line-height: 150px;
-				font-family: 'Miltonian Tattoo';
-				font-size: 160px;
-				letter-spacing: -5px;
-				.logo-5 {
-					position: relative;
-					top: -14px;
-					img {
-						width: 128px;
-						height: 128px;
-					}
-				}
-				.logo-a {
-					margin-left: -9px;
-				}
-			}
-			h2 {
-				margin: 16px 0 0 0;
-				padding: 0;
-				font-size: 26px;
-				font-weight: normal;
-			}
+		h1 {
+			font-size: 3.6em;
+			margin: 0.9em 0 0 0;
 		}
-		section {
-			margin: 48px 0;
+		h2 {
+			font-size: 1.15em;
+			margin: 2.6em 0 0 0;
+		}
+		p {
+			line-height: 1.6em;
+		}
+		p + p {
+			margin-top: 1.2em;
+		}
+		li {
+			margin-top: 0.6em;
+			line-height: 1.4em;
+		}
+		#tests {
+			display: inline-block;
+			list-style-type: none;
+			text-align: left;
+			margin: 0;
+			padding: 0;
 
-			.h5ai {
-				font-family: 'Miltonian Tattoo';
-				font-weight: normal;
-			}
-			h2 {
-				font-size: 1.5em;
-				margin-top: 1.5em;
-				margin-bottom: 0.4em;
-				color: #555;
-			}
-			h3 {
-				font-size: 1.15em;
-				margin-top: 1.8em;
-				margin-bottom: 0.6em;
-				color: #555;
-			}
-			h4 {
-				font-size: 0.85em;
-				margin-top: 1.8em;
-				margin-bottom: 0.1em;
-				color: #333;
-			}
-			p {
-				line-height: 1.6em;
-			}
-			p + p {
-				margin-top: 1.2em;
-			}
-			li {
-				margin-top: 0.6em;
-				line-height: 1.4em;
-			}
 			.test-label {
-
+				display: inline-block;
+				width: 300px;
 			}
 			.test-result {
+				display: inline-block;
+				width: 70px;
+				text-align: right;
 				font-weight: bold;
+
 				&.test-passed {
 					color: #5a5;
 				}
 				&.test-failed {
 					color: #a55;
 				}
-			}
-			pre.prettyprint.nice, code.prettyprint.nice {
-				font-family: "Ubuntu Mono", Ubuntu, Arial, sans;
-				font-size: 0.95em;
-				a {
-					background-color: rgba(255,241,0,0.3);
-
-					&:hover {
-						background-color: rgba(255,241,0,0.7);
-					}
-				}
-
-				.com {
-					color: #aaa;
-				}
-				.since .com {
-					&:before {
-						content: "@since ";
-					}
-				}
-				.since.new .com {
-					font-weight: bold;
-					color: #17b31c;
-					&:after {
-						content: " NEW!";
-					}
-				}
-			}
-			pre.prettyprint {
-				border: none;
-				margin: 1em 0 1em 0.3em;
-				padding-left: 0.6em;
-				border-left: 2px solid rgba(0,0,0,0.15);
-			}
-			code.prettyprint {
-				border: 1px solid rgba(0,0,0,0.15);
-				padding: 2px 4px 2px 4px;
-			}
-			img.gravatar {
-				float: left;
-				width: 80px;
-				height: 80px;
-				margin: 8px 12px 20px 2px;
-				padding: 2px;
-				background-color: #ddd;
-				border: 1px solid #bbb;
 			}
 		}
 	}
