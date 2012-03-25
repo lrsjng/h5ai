@@ -97,6 +97,8 @@
 	// @include "Html.js"
 	// @include "Extended.js"
 
+	// @include "splash.js"
+
 	$(init);
 
 }(jQuery, H5AI_CONFIG));

@@ -1,7 +1,7 @@
 <?php
 
 function safe_dirname($path, $endWithSlash = false) {
-	
+
 	$path = str_replace("\\", "/", dirname($path));
 	return preg_match("#^(\w:)?/$#", $path) ? $path : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
 }
@@ -140,6 +140,49 @@ else if ($action === "getzip") {
 	header("Content-Length: " . filesize($zipFile));
 	header("Connection: close");
 	readfile($zipFile);
+}
+
+
+else if ($action === "checks") {
+
+	function checkZipSupport () {
+
+		if (!class_exists("ZipArchive")) {
+			return 1;
+		}
+
+		try {
+			$zipFile = tempnam(sys_get_temp_dir(), "h5ai-zip-");
+			$zip = new ZipArchive();
+
+			if (!$zip->open($zipFile, ZIPARCHIVE::CREATE)) {
+				return 2;
+			}
+
+			$zip->addEmptyDir("/");
+			$zip->close();
+
+			if (filesize($zipFile) === 0) {
+				return 3;
+			}
+		} catch (Exception $e) {
+			return 4;
+		};
+
+		return 0;
+	}
+
+	function checkGdSupport () {
+
+		if (GD_VERSION == "GD_VERSION") {
+			return 1;
+		}
+
+		return 0;
+	}
+
+	$response = array('zips' => checkZipSupport(), 'thumbs' => checkGdSupport());
+	echo json_encode($response);
 }
 
 

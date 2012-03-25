@@ -17,7 +17,3 @@
 // h5ai
 // ----
 // @include "inc/H5ai.js"
-
-// info
-// ----
-// @include "inc/splash.js"

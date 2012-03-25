@@ -1,8 +1,6 @@
 
-(function (window, $) {
+(function ($, h5ai) {
 'use strict';
-/*jslint browser: true, confusion: true, white: true */
-/*global jQuery */
 
 	var deobfuscate = function () {
 
@@ -15,16 +13,55 @@
 				$this.replaceWith($a);
 			});
 		},
-		configFile = function () {
+		handleChecksResponse = function (response) {
 
-			$('#config-file').text(JSON.stringify(H5AI_CONFIG.options));
+			if (response) {
+				$('#test-php .test-result').addClass('test-passed').text('passed');
+				if (response.zips === 0) {
+					$('#test-zips .test-result').addClass('test-passed').text('passed');
+				} else {
+					$('#test-zips .test-result').addClass('test-failed').text('failed (' + response.zips + ')');
+				}
+				if (response.thumbs === 0) {
+					$('#test-thumbs .test-result').addClass('test-passed').text('passed');
+				} else {
+					$('#test-thumbs .test-result').addClass('test-failed').text('failed (' + response.thumbs + ')');
+				}
+			} else {
+				$('#test-php .test-result').addClass('test-failed').text('failed');
+				$('#test-zips .test-result').addClass('test-failed').text('failed');
+				$('#test-thumbs .test-result').addClass('test-failed').text('failed');
+			}
+		},
+		checks = function () {
+
+			$.ajax({
+				url: h5ai.core.api(),
+				data: {
+					action: 'checks'
+				},
+				type: 'POST',
+				dataType: 'json',
+				success: function (response) {
+
+					handleChecksResponse(response);
+				},
+				error: function () {
+
+					handleChecksResponse();
+				}
+			});
 		},
 		init = function () {
 
-			deobfuscate();
-			configFile();
+			h5ai.isSplash = $('html').hasClass('h5ai-splash');
+
+			if (h5ai.isSplash) {
+				deobfuscate();
+				checks();
+			}
 		};
 
 	$(init);
 
-}(window, jQuery));
+}(jQuery, h5ai));
