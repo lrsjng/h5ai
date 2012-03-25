@@ -148,7 +148,7 @@
 
 					handleResponse(response);
 				},
-				failed: function () {
+				error: function () {
 
 					handleResponse();
 				}
