@@ -2,25 +2,21 @@
 (function ($, h5ai) {
 'use strict';
 
-	var handleChecksResponse = function (response) {
+	var setCheckResult = function (id, result) {
 
-			if (response) {
-				$('#test-php .test-result').addClass('test-passed').text('yes');
-				if (response.zips === 0) {
-					$('#test-zips .test-result').addClass('test-passed').text('yes');
-				} else {
-					$('#test-zips .test-result').addClass('test-failed').text('no').attr('title', 'error-code: ' + response.zips);
-				}
-				if (response.thumbs === 0) {
-					$('#test-thumbs .test-result').addClass('test-passed').text('yes');
-				} else {
-					$('#test-thumbs .test-result').addClass('test-failed').text('no').attr('title', 'error-code: ' + response.thumbs);
-				}
+			var $ele = $(id).find('.test-result');
+
+			if (result) {
+				$ele.addClass('test-passed').text('yes');
 			} else {
-				$('#test-php .test-result').addClass('test-failed').text('no');
-				$('#test-zips .test-result').addClass('test-failed').text('no');
-				$('#test-thumbs .test-result').addClass('test-failed').text('no');
+				$ele.addClass('test-failed').text('no');
 			}
+		},
+		handleChecksResponse = function (response) {
+
+			setCheckResult('#test-php', response && response.php);
+			setCheckResult('#test-zips', response && response.zips);
+			setCheckResult('#test-thumbs', response && response.thumbs);
 		},
 		checks = function () {
 

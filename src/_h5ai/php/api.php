@@ -145,43 +145,11 @@ else if ($action === "getzip") {
 
 else if ($action === "checks") {
 
-	function checkZipSupport () {
-
-		if (!class_exists("ZipArchive")) {
-			return 1;
-		}
-
-		try {
-			$zipFile = tempnam(sys_get_temp_dir(), "h5ai-zip-");
-			$zip = new ZipArchive();
-
-			if (!$zip->open($zipFile, ZIPARCHIVE::CREATE)) {
-				return 2;
-			}
-
-			$zip->addEmptyDir("/");
-			$zip->close();
-
-			if (filesize($zipFile) === 0) {
-				return 3;
-			}
-		} catch (Exception $e) {
-			return 4;
-		};
-
-		return 0;
-	}
-
-	function checkGdSupport () {
-
-		if (GD_VERSION == "GD_VERSION") {
-			return 1;
-		}
-
-		return 0;
-	}
-
-	$response = array('zips' => checkZipSupport(), 'thumbs' => checkGdSupport());
+	$response = array(
+		'php' => true,
+		'zips' => class_exists("ZipArchive"),
+		'thumbs' => GD_VERSION != "GD_VERSION"
+	);
 	echo json_encode($response);
 }
 

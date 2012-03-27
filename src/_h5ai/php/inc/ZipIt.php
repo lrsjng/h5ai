@@ -5,6 +5,12 @@ class ZipIt {
 	private $h5ai;
 
 
+	public static function isUsable() {
+
+		return class_exists("ZipArchive");
+	}
+
+
 	public function __construct($h5ai) {
 
 		$this->h5ai = $h5ai;
