@@ -146,9 +146,9 @@ else if ($action === "getzip") {
 else if ($action === "checks") {
 
 	$response = array(
-		'php' => true,
-		'zips' => class_exists("ZipArchive"),
-		'thumbs' => GD_VERSION != "GD_VERSION"
+		'php' => $h5ai->checks["php"],
+		'zips' => $h5ai->checks["php"] && $h5ai->checks["zip"],
+		'thumbs' => $h5ai->checks["php"] && $h5ai->checks["gd"]
 	);
 	echo json_encode($response);
 }

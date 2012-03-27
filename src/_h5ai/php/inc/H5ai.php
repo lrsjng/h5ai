@@ -18,6 +18,12 @@ class H5ai {
 
 	public function __construct() {
 
+		$this->checks = array(
+			"php" => version_compare(PHP_VERSION, "5.2.0") >= 0,
+			"zip" => class_exists("ZipArchive"),
+			"gd" => GD_VERSION != "GD_VERSION"
+		);
+
 		$this->h5aiAbsPath = H5AI_ABS_PATH;
 
 		global $H5AI_CONFIG;
