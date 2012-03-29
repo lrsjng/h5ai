@@ -1,6 +1,5 @@
 
 (function ($, h5ai) {
-'use strict';
 
 	var setCheckResult = function (id, result) {
 
