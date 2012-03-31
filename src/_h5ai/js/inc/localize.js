@@ -12,7 +12,7 @@ Module.define('localize', [jQuery, 'settings', 'langs', 'core'], function ($, se
 
 				var $this = $(this),
 					time = $this.data('time'),
-					formattedDate = time ? new Date(time).toString(currentDateFormat) : '';
+					formattedDate = time ? moment(time).format(currentDateFormat) : '';
 
 				$this.text(formattedDate);
 			});

@@ -17,13 +17,14 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ## h5ai profits from these great projects
 
 * [AmplifyJS](http://amplifyjs.com) (MIT/GPL)
-* [Datejs](http://www.datejs.com) (MIT)
 * [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL)
 * [HTML5 ★ Boilerplate](http://html5boilerplate.com)
 * [jQuery](http://jquery.com) (MIT/GPL)
 * [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
 * [modernizr](http://www.modernizr.com) (MIT/BSD)
+* [Moment.js](http://momentjs.com) (MIT)
 * [qrcode](http://www.d-project.com/qrcode/index.html) (MIT)
+* [underscore.js](http://underscorejs.org) (MIT)
 
 
 ## Changelog
@@ -35,6 +36,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * hides broken tree view in IE < 9 and adds a message to the footer
 * disables hash changes since they break logical browser history
 * fixes thumbnail size for portrait images in icon view
+* switches from [Datejs](http://www.datejs.com) to [Moment.js](http://momentjs.com)
+* adds [underscore.js](http://underscorejs.org)
 * adds a info page to `/_ha5i`
 * updates lv translation
 * adds ro translation by [Jakob Cosoroabă](http://github.com/midday)

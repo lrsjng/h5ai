@@ -4,7 +4,7 @@ Module.define('path', [jQuery, 'settings', 'util', 'core'], function ($, setting
 	var create = function (folder, tableRow) {
 
 			var path = {},
-				$tds, $a, date, size, splits;
+				$tds, $a, time, size, splits;
 
 			// path.parentFolder: undefined
 			// path.label: undefined
@@ -34,14 +34,14 @@ Module.define('path', [jQuery, 'settings', 'util', 'core'], function ($, setting
 			if (tableRow) {
 				$tds = $(tableRow).find('td');
 				$a = $tds.eq(1).find('a');
-				date = Date.parse($tds.eq(2).text());
+				time = Date.parse($tds.eq(2).text()) || 0;
 				size = util.parseSize($tds.eq(3).text());
 
 				path.parentFolder = folder;
 				path.label = $a.text();
 				path.type = util.pathEndsWithSlash(path.label) ? 'folder' : core.getFileType(path.label);
 				path.href = $a.attr('href');
-				path.time = date ? date.getTime() : 0;
+				path.time = time;
 				path.size = size;
 			} else {
 				splits = util.splitPath(folder);

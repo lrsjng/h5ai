@@ -159,7 +159,6 @@ Module.define('conhtml', [jQuery, 'settings', 'path', 'util', 'core', 'localize'
 		updateExtendedHtml = function (path) {
 
 			var $html, $a, $label,
-				formattedDate = path.date ? path.date.toString(settings.dateFormat) : "",
 				imgClass = "",
 				icon16 = core.icon(path.type),
 				icon48 = core.icon(path.type, true);

@@ -95,11 +95,10 @@ var H5AI_CONFIG = {
 		"linkHoverStates": true,
 
 		/*
-		 * Date format in detailed view, for example: "yyyy-MM-dd HH:mm:ss"
-		 * Syntax as specified by date.js
-		 * http://code.google.com/p/datejs/wiki/FormatSpecifiers
+		 * Date format in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
+		 * Syntax as specified by Moment.js (http://momentjs.com)
 		 */
-		"dateFormat": "yyyy-MM-dd HH:mm",
+		"dateFormat": "YYYY-MM-DD HH:mm",
 
 		/*
 		 * Requires PHP on the server.

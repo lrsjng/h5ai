@@ -24,7 +24,7 @@ var Module = window.Module = (function ($) {
 			return uniq;
 		},
 
-		deps = function (ids) {
+		depsIntern = function (ids) {
 
 			var self = this;
 			var deps = [];
@@ -35,7 +35,7 @@ var Module = window.Module = (function ($) {
 				if (def) {
 					$.each(def.deps, function (idx, id) {
 
-						deps = deps.concat(deps(id));
+						deps = deps.concat(depsIntern(id));
 					});
 					deps.push(def.id);
 				} else {
@@ -45,20 +45,60 @@ var Module = window.Module = (function ($) {
 
 				$.each(ids, function (idx, id) {
 
-					deps = deps.concat(deps(id));
+					deps = deps.concat(depsIntern(id));
 				});
 			}
 
 			return uniq(deps);
 		},
 
-		checkedDeps = function (ids) {
+		deps = function (ids) {
 
-			try {
-				return deps(ids);
-			} catch (e) {
-				err('cyclic dependencies for ids "' + ids + '"');
+			if (ids) {
+				try {
+					return depsIntern(ids);
+				} catch (e) {
+					err('cyclic dependencies for ids "' + ids + '"');
+				}
+			} else {
+				var res = {};
+				$.each(definitions, function (id, def) {
+
+					res[id] = deps(id);
+				});
+				return res;
 			}
+		},
+
+		log = function () {
+
+			var allDeps = deps(),
+				allInvDeps = {};
+
+			$.each(definitions, function (id, def) {
+
+				var invDeps = [];
+				$.each(allDeps, function (i, depId) {
+
+					if ($.inArray(id, depId) >= 0) {
+						invDeps.push(i);
+					}
+				});
+				allInvDeps[id] = invDeps;
+			});
+
+			$.each(allDeps, function (id, deps) {
+
+				deps.pop();
+				console.log(id + ' -> [ ' + deps.join(', ') + ' ]');
+			});
+
+			console.log('\n');
+			$.each(allInvDeps, function (id, invDeps) {
+
+				invDeps.shift();
+				console.log(id + ' <- [ ' + invDeps.join(', ') + ' ]');
+			});
 		},
 
 		defs = function () {
@@ -123,7 +163,8 @@ var Module = window.Module = (function ($) {
 		};
 
 	return {
-		deps: checkedDeps,
+		deps: deps,
+		log: log,
 		defs: defs,
 		mods: mods,
 		define: define,
