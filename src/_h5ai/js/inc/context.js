@@ -1,5 +1,5 @@
 
-(function ($, h5ai) {
+Module.define('context', [jQuery, 'settings'], function ($, settings) {
 
 	var $context,
 		qrCodesSize,
@@ -18,7 +18,7 @@
 		},
 		init = function () {
 
-			qrCodesSize = h5ai.settings.qrCodesSize;
+			qrCodesSize = settings.qrCodesSize;
 			if (!qrCodesSize) {
 				return;
 			}
@@ -44,8 +44,7 @@
 				});
 		};
 
-	h5ai.context = {
+	return {
 		init: init
 	};
-
-}(jQuery, h5ai));
+});

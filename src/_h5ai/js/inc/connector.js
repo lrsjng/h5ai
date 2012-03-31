@@ -1,5 +1,112 @@
 
-(function ($, h5ai) {
+Module.define('conhtml', [jQuery, 'settings', 'path', 'util', 'core', 'localize'], function ($, settings, pathFactory, util, core, localize) {
+
+	var cache = {},
+		pathnameStatusCache = {},
+		contentTypeRegEx = /^text\/html;h5ai=/,
+		getPath = function (folder, tableRow) {
+
+			var absHref = util.getAbsHref(folder, tableRow),
+				path = cache[absHref];
+
+			if (!path) {
+				path = pathFactory.create(folder, tableRow);
+				if (!path.isParentFolder) {
+					cache[path.absHref] = path;
+				}
+			}
+
+			return path;
+		},
+		fetchStatus = function (pathname, callback) {
+
+			if (settings.folderStatus[pathname]) {
+				callback(settings.folderStatus[pathname]);
+				return;
+			} else if (pathnameStatusCache[pathname]) {
+				callback(pathnameStatusCache[pathname]);
+				return;
+			}
+
+			$.ajax({
+				url: pathname,
+				type: 'HEAD',
+				complete: function (xhr) {
+
+					var status = xhr.status;
+
+					if (status === 200 && contentTypeRegEx.test(xhr.getResponseHeader('Content-Type'))) {
+						status = 'h5ai';
+					}
+					pathnameStatusCache[pathname] = status;
+					callback(status);
+				}
+			});
+		},
+		updatePath = function (path) {
+
+			if (path.isFolder && !path.isParentFolder && path.status === undefined) {
+				fetchStatus(path.absHref, function (status) {
+
+					if (status !== 'h5ai') {
+						path.status = status;
+					}
+					updateHtml(path);
+					core.linkHoverStates();
+				});
+			}
+		},
+		updatePaths = function () {
+
+			$.each(cache, function (ref, cached) {
+				updatePath(cached);
+			});
+		},
+		fetchStatusAndContent = function (pathname, includeParent, callback) {
+
+			fetchStatus(pathname, function (status) {
+
+				if (status !== 'h5ai') {
+					callback(status, {});
+					return;
+				}
+
+				$.ajax({
+					url: pathname,
+					type: 'GET',
+					dataType: 'html',
+					error: function (xhr) {
+
+						callback(xhr.status, {}); // since it was checked before this should never happen
+					},
+					success: function (html, status, xhr) {
+
+						var content = {};
+
+						if (!contentTypeRegEx.test(xhr.getResponseHeader('Content-Type'))) {
+							callback(xhr.status, {}); // since it was checked before this should never happen
+							return;
+						}
+
+						$(html).find('#table td').closest('tr').each(function () {
+
+							var path = getPath(pathname, this);
+
+							if (path.isFolder && (!path.isParentFolder || includeParent)) {
+								content[path.absHref] = path;
+								updatePath(path);
+							}
+						});
+						callback('h5ai', content);
+					}
+				});
+			});
+		};
+
+
+
+
+
 
 	var onClick = function (path, context) {
 
@@ -22,12 +129,12 @@
 			$a = $html.find("a")
 					.attr("href", path.absHref)
 					.click(function() { onClick(path, "crumb"); })
-					.find("img").attr("src", h5ai.core.image("crumb")).end()
+					.find("img").attr("src", core.image("crumb")).end()
 					.find("span").text(path.label).end();
 
 			if (path.isDomain) {
 				$html.addClass("domain");
-				$a.find("img").attr("src", h5ai.core.image("home"));
+				$a.find("img").attr("src", core.image("home"));
 			}
 
 			if (path.isCurrentFolder) {
@@ -36,7 +143,7 @@
 
 			if (!isNaN(path.status)) {
 				if (path.status === 200) {
-					$a.append($("<img class='hint' src='" + h5ai.core.image("page") + "' alt='not listable' />"));
+					$a.append($("<img class='hint' src='" + core.image("page") + "' alt='not listable' />"));
 				} else {
 					$a.append($("<span class='hint'>(" + path.status + ")</span>"));
 				}
@@ -52,10 +159,10 @@
 		updateExtendedHtml = function (path) {
 
 			var $html, $a, $label,
-				formattedDate = path.date ? path.date.toString(h5ai.settings.dateFormat) : "",
+				formattedDate = path.date ? path.date.toString(settings.dateFormat) : "",
 				imgClass = "",
-				icon16 = h5ai.core.icon(path.type),
-				icon48 = h5ai.core.icon(path.type, true);
+				icon16 = core.icon(path.type),
+				icon48 = core.icon(path.type, true);
 
 			if (path.html.$extended && path.html.$extended.data("status") === path.status) {
 				return path.html.$extended;
@@ -69,11 +176,11 @@
 				$html.data("status", path.status);
 			}
 
-			if (h5ai.settings.showThumbs === true && $.inArray(path.type, h5ai.settings.thumbTypes) >= 0) {
+			if (settings.showThumbs === true && $.inArray(path.type, settings.thumbTypes) >= 0) {
 				imgClass = "class='thumb'";
 				var escapedHref = path.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
-				icon16 = h5ai.core.api() + "?action=thumb&href=" + escapedHref + "&width=16&height=16&mode=square";
-				icon48 = h5ai.core.api() + "?action=thumb&href=" + escapedHref + "&width=96&height=46&mode=rational";
+				icon16 = core.api() + "?action=thumb&href=" + escapedHref + "&width=16&height=16&mode=square";
+				icon48 = core.api() + "?action=thumb&href=" + escapedHref + "&width=96&height=46&mode=rational";
 			}
 
 			$label = $("<span class='label'>" + path.label + "</span>");
@@ -113,7 +220,7 @@
 			);
 
 			if (path.isParentFolder) {
-				if (!h5ai.settings.setParentFolderLabels) {
+				if (!settings.setParentFolderLabels) {
 					$label.addClass("l10n-parentDirectory");
 				}
 				$html.addClass("folder-parent");
@@ -122,8 +229,8 @@
 			if (!isNaN(path.status)) {
 				if (path.status === 200) {
 					$html.addClass("page");
-					$a.find(".icon.small img").attr("src", h5ai.core.icon("folder-page"));
-					$a.find(".icon.big img").attr("src", h5ai.core.icon("folder-page", true));
+					$a.find(".icon.small img").attr("src", core.icon("folder-page"));
+					$a.find(".icon.big img").attr("src", core.icon("folder-page", true));
 				} else {
 					$html.addClass("error");
 					$label.append($("<span class='hint'> " + path.status + " </span>"));
@@ -132,7 +239,7 @@
 
 			if (path.html.$extended) {
 				path.html.$extended.replaceWith($html);
-				h5ai.localize.formatDates();
+				localize.formatDates();
 			}
 			path.html.$extended = $html;
 
@@ -152,19 +259,19 @@
 					.attr("href", path.absHref)
 					.click(function() { onClick(path, "tree"); })
 					.appendTo($html)
-					.append($("<span class='icon'><img src='" + h5ai.core.icon(path.type) + "' /></span>"))
+					.append($("<span class='icon'><img src='" + core.icon(path.type) + "' /></span>"))
 					.append($("<span class='label'>" + path.label + "</span>"));
 
 			if (path.isFolder) {
 				// indicator
 				if (path.status === undefined || !path.isEmpty()) {
-					$indicator = $("<span class='indicator initiated'><img src='" + h5ai.core.image("tree") + "' /></span>")
+					$indicator = $("<span class='indicator initiated'><img src='" + core.image("tree") + "' /></span>")
 						.click(function (event) {
 
 							var $entry = $indicator.closest(".entry"); // $html
 
 							if ($indicator.hasClass("unknown")) {
-								h5ai.connector.fetchStatusAndContent(path.absHref, false, function (status, content) {
+								fetchStatusAndContent(path.absHref, false, function (status, content) {
 
 									path.status = status;
 									path.content = content;
@@ -205,13 +312,13 @@
 				// is path the domain?
 				if (path.isDomain) {
 					$html.addClass("domain");
-					$a.find(".icon img").attr("src", h5ai.core.icon("folder-home"));
+					$a.find(".icon img").attr("src", core.icon("folder-home"));
 				}
 
 				// is path the current folder?
 				if (path.isCurrentFolder) {
 					$html.addClass("current");
-					$a.find(".icon img").attr("src", h5ai.core.icon("folder-open"));
+					$a.find(".icon img").attr("src", core.icon("folder-open"));
 				}
 
 				// does it have subfolders?
@@ -228,8 +335,8 @@
 				// reflect folder status
 				if (!isNaN(path.status)) {
 					if (path.status === 200) {
-						$a.find(".icon img").attr("src", h5ai.core.icon("folder-page"));
-						$a.append($("<span class='hint'><img src='" + h5ai.core.image("page") + "' /></span>"));
+						$a.find(".icon img").attr("src", core.icon("folder-page"));
+						$a.append($("<span class='hint'><img src='" + core.image("page") + "' /></span>"));
 					} else {
 						$html.addClass("error");
 						$a.append($("<span class='hint'>" + path.status + "</span>"));
@@ -251,11 +358,17 @@
 			updateTreeHtml(path);
 		};
 
-	h5ai.html = {
+
+
+
+	return {
+		getPath: getPath,
+		updatePaths: updatePaths,
+		fetchStatusAndContent: fetchStatusAndContent,
+
 		updateCrumbHtml: updateCrumbHtml,
 		updateExtendedHtml: updateExtendedHtml,
 		updateTreeHtml: updateTreeHtml,
 		updateHtml: updateHtml
 	};
-
-}(jQuery, h5ai));
+});

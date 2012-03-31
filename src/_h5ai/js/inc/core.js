@@ -1,8 +1,7 @@
 
-(function (window, $, h5ai) {
+Module.define('core', [jQuery, 'settings', 'types', 'util'], function ($, settings, types, util) {
 
 	var $window = $(window),
-		settings = h5ai.settings,
 		extToFileType = (function (types) {
 			var map = {};
 			$.each(types, function (type, exts) {
@@ -11,7 +10,7 @@
 				});
 			});
 			return map;
-		}(h5ai.config.types)),
+		}(types)),
 		hash = function (obj) {
 
 			if ($.isPlainObject(obj)) {
@@ -65,7 +64,7 @@
 				viewmode = amplify.store(settings.store.viewmode);
 			}
 			viewmode = $.inArray(viewmode, settings.viewmodes) >= 0 ? viewmode : settings.viewmodes[0];
-			h5ai.core.hash({view: viewmode});
+			hash({view: viewmode});
 
 			$viewDetails.add($viewIcons).removeClass("current");
 			if (viewmode === "details") {
@@ -274,7 +273,7 @@
 
 				var $this = $(this),
 					bytes = $this.data("bytes"),
-					formattedSize = bytes >= 0 ? h5ai.util.formatSize(bytes) : "";
+					formattedSize = bytes >= 0 ? util.formatSize(bytes) : "";
 
 				$this.text(formattedSize);
 			});
@@ -298,7 +297,8 @@
 			initIndicators();
 		};
 
-	h5ai.core = {
+	return {
+		init: init,
 		hash: hash,
 		api: api,
 		image: image,
@@ -308,7 +308,4 @@
 		initIndicators: initIndicators,
 		getFileType: getFileType
 	};
-
-	h5ai(init);
-
-}(window, jQuery, h5ai));
+});

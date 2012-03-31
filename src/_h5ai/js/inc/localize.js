@@ -1,8 +1,7 @@
 
-(function ($, h5ai) {
+Module.define('localize', [jQuery, 'settings', 'langs', 'core'], function ($, settings, langs, core) {
 
-	var settings = h5ai.settings,
-		currentDateFormat = settings.dateFormat,
+	var currentDateFormat = settings.dateFormat,
 		formatDates = function (dateFormat) {
 
 			if (dateFormat) {
@@ -48,7 +47,7 @@
 				$('.lang').text(lang);
 				$('.langOption').removeClass('current');
 				$('.langOption.' + lang).addClass('current');
-				h5ai.core.hash({lang: lang});
+				core.hash({lang: lang});
 			}
 
 			formatDates(selected.dateFormat || settings.dateFormat);
@@ -96,13 +95,13 @@
 		},
 		init = function () {
 
-			initLangSelector(h5ai.config.langs);
-			localize(h5ai.config.langs, settings.lang, settings.useBrowserLang);
+			initLangSelector(langs);
+			localize(langs, settings.lang, settings.useBrowserLang);
 		};
 
-	h5ai.localize = {
+	return {
 		init: init,
 		formatDates: formatDates
 	};
 
-}(jQuery, h5ai));
+});

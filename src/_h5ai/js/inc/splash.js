@@ -1,5 +1,5 @@
 
-(function ($, h5ai) {
+Module.define('splash', [jQuery, 'core'], function ($, core) {
 
 	var setCheckResult = function (id, result) {
 
@@ -20,7 +20,7 @@
 		checks = function () {
 
 			$.ajax({
-				url: h5ai.core.api(),
+				url: core.api(),
 				data: {
 					action: 'checks'
 				},
@@ -38,13 +38,10 @@
 		},
 		init = function () {
 
-			h5ai.isSplash = $('html').hasClass('h5ai-splash');
-
-			if (h5ai.isSplash) {
-				checks();
-			}
+			checks();
 		};
 
-	$(init);
-
-}(jQuery, h5ai));
+	return {
+		init: init
+	};
+});

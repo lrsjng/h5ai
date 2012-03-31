@@ -1,27 +1,27 @@
 
-(function (document, $, h5ai) {
+Module.define('extended', [jQuery, 'settings', 'conhtml', 'util', 'core'], function ($, settings, conhtml, util, core) {
 
 	var initBreadcrumb = function () {
 
 			var $ul = $("body > nav ul"),
 				pathname = "/",
-				path = h5ai.connector.getPath(pathname),
+				path = conhtml.getPath(pathname),
 				pathnameParts = document.location.pathname.split("/"),
 				lastPart = "",
 				title = document.domain;
 
-			$ul.append(h5ai.html.updateCrumbHtml(path));
+			$ul.append(conhtml.updateCrumbHtml(path));
 
 			$.each(pathnameParts, function (idx, part) {
 				if (part !== "") {
 					pathname += part + "/";
-					$ul.append(h5ai.html.updateCrumbHtml(h5ai.connector.getPath(pathname)));
+					$ul.append(conhtml.updateCrumbHtml(conhtml.getPath(pathname)));
 					lastPart = part + " - ";
 					title += " > " + part;
 				}
 			});
 
-			document.title = h5ai.util.checkedDecodeUri(lastPart + title);
+			document.title = util.checkedDecodeUri(lastPart + title);
 		},
 		initExtendedView = function () {
 
@@ -37,8 +37,8 @@
 
 			// entries
 			$("#table td").closest("tr").each(function () {
-				var path = h5ai.connector.getPath(document.location.pathname, this);
-				$ul.append(h5ai.html.updateExtendedHtml(path));
+				var path = conhtml.getPath(document.location.pathname, this);
+				$ul.append(conhtml.updateExtendedHtml(path));
 			});
 
 			$("#extended").append($ul);
@@ -53,9 +53,9 @@
 		},
 		customize = function () {
 
-			if (h5ai.settings.customHeader) {
+			if (settings.customHeader) {
 				$.ajax({
-					url: h5ai.settings.customHeader,
+					url: settings.customHeader,
 					dataType: "html",
 					success: function (data) {
 						$("#content > header").append($(data)).show();
@@ -63,9 +63,9 @@
 				});
 			}
 
-			if (h5ai.settings.customFooter) {
+			if (settings.customFooter) {
 				$.ajax({
-					url: h5ai.settings.customFooter,
+					url: settings.customFooter,
 					dataType: "html",
 					success: function (data) {
 						$("#content > footer").prepend($(data)).show();
@@ -75,9 +75,9 @@
 		},
 		fetchPath = function (pathname, callback) {
 
-			h5ai.connector.fetchStatusAndContent(pathname, false, function (status, content) {
+			conhtml.fetchStatusAndContent(pathname, false, function (status, content) {
 
-				var path = h5ai.connector.getPath(pathname);
+				var path = conhtml.getPath(pathname);
 
 				path.status = status;
 				path.content = content;
@@ -88,7 +88,7 @@
 
 			fetchPath(pathname, function (path) {
 
-				var parent = h5ai.util.splitPath(pathname).parent;
+				var parent = util.splitPath(pathname).parent;
 
 				path.treeOpen = true;
 				if (childPath) {
@@ -105,11 +105,11 @@
 
 			fetchTree(document.location.pathname, function (path) {
 				$("#tree")
-					.append(h5ai.html.updateTreeHtml(path))
+					.append(conhtml.updateTreeHtml(path))
 					.scrollpanel()
 					.show();
-				h5ai.core.shiftTree(false, true);
-				h5ai.core.linkHoverStates();
+				core.shiftTree(false, true);
+				core.linkHoverStates();
 				setTimeout(function () { $("#tree").get(0).updateScrollbar(); }, 1);
 			});
 		},
@@ -118,14 +118,13 @@
 			initBreadcrumb();
 			initExtendedView();
 			customize();
-			h5ai.connector.updatePaths();
-			if (h5ai.settings.showTree) {
+			conhtml.updatePaths();
+			if (settings.showTree) {
 				populateTree();
 			}
 		};
 
-	h5ai.extended = {
+	return {
 		init: init
 	};
-
-}(document, jQuery, h5ai));
+});

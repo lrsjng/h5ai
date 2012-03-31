@@ -1,5 +1,5 @@
 
-(function ($, h5ai) {
+Module.define('zip', [jQuery, 'settings', 'core'], function ($, settings, core) {
 
 	var x = 0,
 		y = 0,
@@ -102,11 +102,11 @@
 
 
 			$download.removeClass('current');
-			$img.attr('src', h5ai.core.image("download"));
+			$img.attr('src', core.image("download"));
 
 			if (response) {
 				if (response.status === 'ok') {
-					window.location = h5ai.core.api() + '?action=getzip&id=' + response.id;
+					window.location = core.api() + '?action=getzip&id=' + response.id;
 				} else {
 					if (response.code === 401) {
 						$downloadAuth
@@ -126,9 +126,9 @@
 		requestZipping = function (hrefsStr) {
 
 			$download.addClass('current');
-			$img.attr('src', h5ai.core.image("loading.gif", true));
+			$img.attr('src', core.image("loading.gif", true));
 			$.ajax({
-				url: h5ai.core.api(),
+				url: core.api(),
 				data: {
 					action: 'zip',
 					hrefs: selectedHrefsStr
@@ -156,9 +156,9 @@
 		},
 		init = function () {
 
-			if (h5ai.settings.zippedDownload) {
+			if (settings.zippedDownload) {
 				$('<li id="download"><a href="#"><img alt="download" /><span class="l10n-download">download</span></a></li>')
-					.find('img').attr('src', h5ai.core.image('download')).end()
+					.find('img').attr('src', core.image('download')).end()
 					.find('a').click(function (event) {
 
 						event.preventDefault();
@@ -181,8 +181,7 @@
 			}
 		};
 
-	h5ai.zippedDownload = {
+	return {
 		init: init
 	};
-
-}(jQuery, h5ai));
+});
