@@ -2,63 +2,37 @@
 @import "inc/h5bp-norm";
 @import "inc/mixins";
 
+::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
+::selection { background: #68A9FF; color: #fff; text-shadow: none; }
 
 body {
 	font-family: Ubuntu, sans-serif;
 	font-size: 16px;
 	color: #555;
 	background-color: #fff;
-	margin: 80px 30px;
+	margin: 30px;
 }
 
 
-@import "inc/nav";
+@smaller-font: 15px;
+
+@import "inc/topbar";
 @import "inc/content";
-@import "inc/table";
 @import "inc/extended";
+@import "inc/bottombar";
+@import "inc/l10n";
 @import "inc/tree";
 @import "inc/context";
-@import "inc/footer";
+@import "inc/apache-autoindex-table";
 @import "inc/responsive";
 
 
-html.js {
-	.hideOnJs {
-		display: none;
-	}
-}
-html.no-js {
-	.hideOnNoJs {
-		display: none;
-	}
-}
-html.h5ai-js {
-	#h5ai-reference:after {
-		content: " (js)";
-	}
-}
-html.h5ai-php {
-	#h5ai-reference:after {
-		content: " (php)";
-	}
-
-	#table {
-		display: none;
-	}
-
-	#tree, #content > header, #content > footer {
-		display: block;
-	}
-
-	&.no-js {
-		#extended.details-view, #extended.icons-view {
-			display: block;
-		}
-	}
+html.js .hideOnJs, html.no-js .hideOnNoJs {
+	display: none;
 }
 html.oldie {
 	.oldBrowser {
-		display: inline;
+		display: inline !important;
 	}
 	#tree {
 		display: none !important;
@@ -66,5 +40,4 @@ html.oldie {
 }
 
 
-@import "inc/splash";
-
+@import "inc/h5ai-info";

@@ -1,6 +1,6 @@
 # h5ai
 
-Don't use files from this repository (`src` folder) for installation.
+Please don't use files from this repository (`src` folder) for installation.
 They need to be preprocessed/compiled to work correctly. You'll find a
 precompiled package on the [project page](http://larsjung.de/h5ai).
 
@@ -20,6 +20,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL)
 * [HTML5 ★ Boilerplate](http://html5boilerplate.com)
 * [jQuery](http://jquery.com) (MIT/GPL)
+* [jQuery.fracs](http://larsjung.de/fracs) (MIT)
 * [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
 * [modernizr](http://www.modernizr.com) (MIT/BSD)
 * [Moment.js](http://momentjs.com) (MIT)
@@ -30,20 +31,29 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ## Changelog
 
 
-### v0.19 - *2012-??-??*
+### v0.19 - *2012-04-??*
 
+* adds lots of config options
+* changes in `config.js` and `h5ai.htaccess`
 * fixes js problems in IE 7+8
-* hides broken tree view in IE < 9 and adds a message to the footer
-* disables hash changes since they break logical browser history
+* hides broken tree view in IE < 9, adds a message to the footer
+* removes hash changes since they break logical browser history
 * fixes thumbnail size for portrait images in icon view
+* adds an info page at `/_h5ai`
+* sort order is preserved while browsing
+* removes PHP error messages on thumbnail generation
+* fixes PHP problems with zipped download
+* changes crumb image for folders with an index file
+* adds `index.php` to use h5ai in non-Apache environments
 * switches from [Datejs](http://www.datejs.com) to [Moment.js](http://momentjs.com)
 * adds [underscore.js](http://underscorejs.org)
-* adds a info page to `/_ha5i`
+* fixes mousewheel problems, updates [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) to 3.0.6
 * updates lv translation
 * adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
 * adds ja translation by [metasta](http://github.com/metasta)
 * adds nb translation by [Sindre Sorhus](http://github.com/sindresorhus)
 * adds sr translation by [Goran](http://github.com/vBm)
+* adds gr translation by [xhmikosr](http://github.com/xhmikosr)
 
 
 ### v0.18 - *2012-02-24*

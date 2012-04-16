@@ -17,16 +17,17 @@ var H5AI_CONFIG = {
 		"h5aiAbsHref": "/_h5ai/",
 
 		/*
-		 * Filenames of customized header and footer files to look for
-		 * in each folder. For Example:
-		 *
-		 * "customHeader": "_h5ai.header.html",
-		 * "customFooter": "_h5ai.footer.html",
-		 *
-		 * This is disabled by default.
+		 * Spacing of the main content.
+		 * Left and right will be added to a minimum of 30px. Top and bottom
+		 * are calculated relative to the top and bottom bar heights.
 		 */
-		"customHeader": null,
-		"customFooter": null,
+		"spacing": {
+			"maxWidth": 960,
+			"top": 50,
+			"right": "auto",
+			"bottom": 50,
+			"left": "auto"
+		},
 
 		/*
 		 * An array of view modes the user may choose from. Currently there
@@ -35,8 +36,102 @@ var H5AI_CONFIG = {
 		 * view mode is fixed and the selector buttons are hidden.
 		 * The user selected view mode is also stored local in modern browsers
 		 * so that it will be persistent.
+		 *
+		 * Set parent folder labels to real folder names.
 		 */
-		"viewmodes": ["details", "icons"],
+		"view": {
+			"modes": ["details", "icons"],
+			"setParentFolderLabels": true
+		},
+
+
+
+
+		/*
+		 * Extensions in alphabetical order.
+		 */
+
+		/*
+		 * Show a clickable breadcrumb.
+		 */
+		"crumb": {
+			"enabled": true
+		},
+
+		/*
+		 * Filenames of customized header and footer files to look for
+		 * in each folder.
+		 */
+		"custom": {
+			"enabled": true,
+			"header": "_h5ai.header.html",
+			"footer": "_h5ai.footer.html"
+		},
+
+		/*
+		 * Allow filtering the displayed files and folders.
+		 * Note: filters will be treated as JavaScript regular expressions
+		 * if you prefix them with "re:".
+		 */
+		"filter": {
+			"enabled": true
+		},
+
+		/*
+		 * Associative array of folders and their HTTP status codes to
+		 * avoid HEAD requests to that folders. The key (folder) must start
+		 * and end with a slash (/).
+		 * For example
+		 *   "/some/folder/": 200
+		 * will always return HTTP status 200 (OK), which will be interpreted
+		 * as a non auto indexed folder, that means a folder containing an
+		 * appropriate default index file.
+		 */
+		"folderstatus": {
+			"enabled": true,
+			"folders": {}
+		},
+
+		/*
+		 * Localization, for example "en", "de" etc. - see "langs" below for
+		 * possible values. Adjust it to your needs. If lang is not found in
+		 * "langs" it defaults to "en".
+		 *
+		 * Optionally try to use browser language, falls back to previous
+		 * specified language.
+		 *
+		 * Date format in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
+		 * Syntax as specified by Moment.js (http://momentjs.com)
+		 * This might be overidden by "dateFormat" in a lang specification.
+		 */
+		"l10n": {
+			"enabled": true,
+			"lang": "en",
+			"useBrowserLang": true,
+			"defaultDateFormat": "YYYY-MM-DD HH:mm"
+		},
+
+		/*
+		 * Link the hover effects between crumb, main view and tree.
+		 */
+		"link-hover-states": {
+			"enabled": true
+		},
+
+		/*
+		 * Show QRCodes on hovering files.
+		 */
+		"qrcode": {
+			"enabled": true,
+			"size": 150
+		},
+
+		/*
+		 * Make entries selectable. At the moment only needed for zipped download.
+		 */
+		"select": {
+			"enabled": true
+		},
 
 		/*
 		 * Default sort order is a two letter code. The first letter specifies
@@ -44,96 +139,66 @@ var H5AI_CONFIG = {
 		 * second letter specifies the sort order: "a" for "ascending" or "d"
 		 * for "descending".
 		 */
-		"sortorder": "na",
+		"sort": {
+			"enabled": true,
+			"order": "na"
+		},
 
 		/*
-		 * Show a folder tree, boolean.
-		 * Note that this tree might have side effects as it sends HEAD requests
-		 * to the folders, and therefore will invoke index.php scripts. Use
-		 * folderStatus below to avoid such requests.
-		 * It might also affect performance significantly.
+		 * Show additional info in a statusbar.
 		 */
-		"showTree": true,
-
-		/*
-		 * Slide tree bar into viewport if there is enough space, boolean.
-		 */
-		"slideTree": true,
-
-		/*
-		 * Associative array of folders and their HTTP status codes to
-		 * avoid HEAD requests to that folders. The key (folder) must start
-		 * and end with a slash (/).
-		 * For example:
-		 *   "/some/folder/": 200
-		 * will always return HTTP status 200 (OK), which will be interpreted
-		 * as a non auto indexed folder, that means a folder containing an
-		 * appropriate default index file.
-		 */
-		"folderStatus": {},
-
-		/*
-		 * Localization, for example "en", "de" etc. - see h5aiLangs below for
-		 * possible values. Adjust it to your needs. If lang is not found in
-		 * h5aiLangs it defaults to "en".
-		 */
-		"lang": "en",
-
-		/*
-		 * Try to use browser language, falls back to previous specified lang.
-		 */
-		"useBrowserLang": true,
-
-		/*
-		 * Set parent folder labels to real folder names.
-		 */
-		"setParentFolderLabels": true,
-
-		/*
-		 * Link the hover effects between crumb, extended view and tree.
-		 */
-		"linkHoverStates": true,
-
-		/*
-		 * Date format in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
-		 * Syntax as specified by Moment.js (http://momentjs.com)
-		 */
-		"dateFormat": "YYYY-MM-DD HH:mm",
+		"statusbar": {
+			"enabled": true
+		},
 
 		/*
 		 * Requires PHP on the server.
-		 * Show thumbnails for image files.
+		 * Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
+		 * writable for the Apache Server.
 		 */
-		"showThumbs": true,
-		"thumbTypes": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+		"thumbnails": {
+			"enabled": true,
+			"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+			"delay": 1000
+		},
+
+		/*
+		 * Replace window title with current breadcrumb.
+		 */
+		"title": {
+			"enabled": true
+		},
+
+		/*
+		 * Show a folder tree.
+		 * Note that this tree might have side effects as it sends HEAD requests
+		 * to the folders, and therefore will invoke index.php scripts. Use
+		 * "folderstatus" above to avoid such requests.
+		 * It might also affect performance significantly.
+		 *
+		 * Slide tree bar into viewport if there is enough space.
+		 */
+		"tree": {
+			"enabled": true,
+			"slide": true
+		},
 
 		/*
 		 * Requires PHP on the server.
 		 * Enable zipped download of selected entries.
 		 */
-		"zippedDownload": true,
-
-		/*
-		 * Show QRCodes on hovering files.
-		 * Set this to the desired size in pixel or null to not display QRCodes.
-		 * A good size to start with might be 150.
-		 */
-		"qrCodesSize": 150,
-
-		/*
-		 * Allow filtering the displayed files and folders.
-		 * Filters are ment to be JavaScript regular expressions.
-		 */
-		"showFilter": true
+		"zipped-download": {
+			"enabled": true
+		}
 	},
 
 
 	/*
-	 * File types mapped to file extensions.
+	 * File types mapped to file extensions. In alphabetical order.
 	 */
 	"types": {
 		"archive":			[".tar.bz2", ".tar.gz", ".tgz"],
-		"audio":			[".aif", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
+		"audio":			[".aif", ".flac", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
 		"authors":			["authors"],
 		"bin":				[".class", ".o", ".so"],
 		"blank":			[],
@@ -149,7 +214,7 @@ var H5AI_CONFIG = {
 		"doc":				[".doc", ".docx", ".odm", ".odt", ".ott"],
 		"draw":				[".drw"],
 		"eps":				[".eps"],
-		"exe":				[".exe"],
+		"exe":				[".bat", ".cmd", ".exe"],
 		"folder":			[],
 		"folder-home":		[],
 		"folder-open":		[],
@@ -171,7 +236,7 @@ var H5AI_CONFIG = {
 		"package":			[],
 		"pdf":				[".pdf"],
 		"php":				[".php"],
-		"playlist":			[".m3u"],
+		"playlist":			[".m3u", ".m3u8", ".pls"],
 		"png":				[".png"],
 		"pres":				[".odp", ".otp", ".pps", ".ppt", ".pptx"],
 		"psd":				[".psd"],
@@ -187,18 +252,18 @@ var H5AI_CONFIG = {
 		"sql":				[],
 		"tar":				[".tar"],
 		"tex":				[".tex"],
-		"text":				[".markdown", ".md", ".text", ".txt"],
+		"text":				[".diff", ".markdown", ".md", ".patch", ".text", ".txt"],
 		"tiff":				[".tiff"],
 		"unknown":			[],
 		"vcal":				[".vcal"],
-		"video":			[".avi", ".flv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
+		"video":			[".avi", ".flv", ".mkv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
 		"xml":				[".xml"],
-		"zip":				[".bz2", ".jar", ".war", ".z", ".Z", ".zip"]
+		"zip":				[".7z", ".bz2", ".jar", ".lzma", ".war", ".z", ".Z", ".zip"]
 	},
 
 
 	/*
-	 * Available translations.
+	 * Available translations. "en" in first place as a reference, otherwise in alphabetical order.
 	 */
 	"langs": {
 
@@ -259,7 +324,8 @@ var H5AI_CONFIG = {
 			"folders": "Ordner",
 			"files": "Dateien",
 			"download": "Download",
-			"noMatch": "keine Treffer"
+			"noMatch": "keine Treffer",
+			"dateFormat": "DD.MM.YYYY HH:mm"
 		},
 
 		"es": {
@@ -290,6 +356,21 @@ var H5AI_CONFIG = {
 			"files": "Fichiers",
 			"download": "télécharger",
 			"noMatch": "no match"
+		},
+
+		"gr": {
+			"lang": "ελληνικά",
+			"details": "Λεπτομέρειες",
+			"icons": "Εικονίδια",
+			"name": "Όνομα",
+			"lastModified": "Τελευταία Τροποποίηση",
+			"size": "Μέγεθος",
+			"parentDirectory": "Προηγούμενος Κατάλογος",
+			"empty": "κενό",
+			"folders": "Φάκελοι",
+			"files": "Αρχεία",
+			"download": "Μεταμόρφωση",
+			"noMatch": "Κανένα Ταίριασμα"
 		},
 
 		"it": {

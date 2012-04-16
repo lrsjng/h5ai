@@ -1,18 +1,30 @@
 
 #content {
 	max-width: 960px;
-	margin: 0 auto;
+	margin: 50px auto;
+}
 
-	> header {
-		display: none;
-		padding-bottom: 10px;
-		margin-bottom: 80px;
-		border-bottom: 2px dashed #ddd;
+
+#content-header, #content-footer {
+
+	a, a:active, a:visited {
+		color: #2080FF;
+		text-decoration: none;
+		cursor: pointer;
+
+		&:hover {
+			color: #68A9FF;
+		}
 	}
-	> footer {
-		display: none;
-		padding-top: 10px;
-		margin-top: 80px;
-		border-top: 2px dashed #ddd;
-	}
+}
+
+
+#content-header {
+	padding-bottom: 12px;
+	margin-bottom: 32px;
+}
+
+#content-footer {
+	padding-top: 12px;
+	margin-top: 32px;
 }

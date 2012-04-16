@@ -7,7 +7,7 @@
 	height: 100%;
 	z-index: 3;
 	overflow: auto;
-	font-size: 0.85em;
+	font-size: @smaller-font;
 	padding: 8px;
 	background-color: rgb(241,241,241);
 	border-right: 2px solid rgb(221,221,221);
@@ -28,20 +28,12 @@
 	}
 
 	.entry {
-		.blank, .indicator {
+		.indicator {
 			display: inline-block;
 			width: 16px;
 			height: 25px;
 			float: left;
-		}
-		.indicator {
-			opacity: 0.7;
-			.transition(all 0.2s ease-in-out);
-			cursor: pointer;
 
-			&:hover {
-				opacity: 1;
-			}
 			img {
 				position: relative;
 				left: 0;
@@ -52,12 +44,22 @@
 				.transition(all 0.2s ease-in-out);
 			}
 			&.open {
+				cursor: pointer;
+				opacity: 0.7;
 				img {
 					.transform(rotate(90deg));
 				}
 			}
+			&.close {
+				cursor: pointer;
+				opacity: 0.7;
+			}
 			&.unknown {
+				cursor: pointer;
 				opacity: 0.3;
+			}
+			&.none {
+				opacity: 0;
 			}
 		}
 		> a, > a:active, > a.visited {
@@ -92,15 +94,7 @@
 				margin-left: 12px;
 				font-size: 0.9em;
 				color: #ccc;
-				img {
-					width: 10px;
-					height: 10px;
-					vertical-align: baseline;
-				}
 			}
-		}
-		&.file {
-			display: none;
 		}
 		&.current {
 			> a, > a:active, > a:visited {

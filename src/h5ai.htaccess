@@ -6,21 +6,25 @@
 # Options  +Indexes
 # Options  +FollowSymLinks
 
-# pure JavaScript version
+
 HeaderName    /_h5ai/header.html
 
-# PHP version
-# HeaderName    /_h5ai/header.php
-
+# pure JavaScript version
 ReadmeName    /_h5ai/footer.html
+
+# PHP version
+# ReadmeName    /_h5ai/footer.php
+
 
 IndexIgnore _h5ai*
 
-IndexOptions  Type=text/html;h5ai=%BUILD_VERSION%
 IndexOptions  Charset=UTF-8
+IndexOptions  FancyIndexing
+IndexOptions  FoldersFirst
+IndexOptions  HTMLTable
+IndexOptions  NameWidth=*
+IndexOptions  SuppressDescription
 IndexOptions  SuppressHTMLPreamble
 IndexOptions  SuppressRules
-IndexOptions  SuppressDescription
-IndexOptions  NameWidth=*
-IndexOptions  HTMLTable
+IndexOptions  Type=text/html;h5ai=%BUILD_VERSION%
 IndexOptions  XHTML

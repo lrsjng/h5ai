@@ -1,5 +1,6 @@
+
 @media only screen and (max-width: 500px) {
-body > nav {
+#topbar {
 	.view span {
 		display: none;
 	}
@@ -12,7 +13,7 @@ body > nav {
 }
 
 @media only screen and (max-width: 350px) {
-body > nav {
+#topbar {
 	.crumb {
 		display: none;
 	}
@@ -28,7 +29,7 @@ body > nav {
 		display: none;
 	}
 }
-body > footer {
+#bottombar {
 	.center {
 		display: none;
 	}
@@ -39,14 +40,14 @@ body > footer {
 a[href]:after {
 	content: "";
 }
-body > nav {
+#topbar {
 	position: static;
 	margin-bottom: 2em;
 	.view, #download {
 		display: none;
 	}
 }
-body > footer {
+#bottombar {
 	position: static;
 	margin-top: 2em;
 }

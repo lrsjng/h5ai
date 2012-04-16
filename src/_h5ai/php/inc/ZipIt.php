@@ -28,7 +28,7 @@ class ZipIt {
 
 		$zip->addEmptyDir("/");
 		foreach ($hrefs as $href) {
-			$d = safe_dirname($href, true);
+			$d = H5ai::normalize_path(dirname($href, true));
 			$n = basename($href);
 			$code = $this->h5ai->getHttpCode($d);
 			if ($code == 401) {
@@ -82,7 +82,7 @@ class ZipIt {
 				}
 			}
 		}
-		return code;
+		return $code;
 	}
 }
 

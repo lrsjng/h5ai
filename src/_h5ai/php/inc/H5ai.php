@@ -1,58 +1,43 @@
 <?php
 
-require_h5ai("/config.php");
-require_h5ai("/php/inc/Cache.php");
+
+define("H5AI_ABS_PATH", H5ai::normalize_path(dirname(dirname(dirname(__FILE__)))));
+
+
+H5ai::req_once("/config.php");
+H5ai::req_once("/php/inc/Cache.php");
+H5ai::req_once("/php/inc/Entry.php");
+
 
 class H5ai {
 
-	private static $VIEWMODES = array("details", "icons");
 
-	private $h5aiAbsPath,
-			$rootAbsPath, $ignore, $ignoreRE,
-			$config, $options, $types, $langs,
-			$cache,
-			$rootAbsHref, $h5aiAbsHref, $domain,
-			$absHref, $absPath,
-			$view;
+	public static final function normalize_path($path, $endWithSlash = false) {
 
-
-	public function __construct() {
-
-		$this->checks = array(
-			"php" => version_compare(PHP_VERSION, "5.2.0") >= 0,
-			"zip" => class_exists("ZipArchive"),
-			"gd" => GD_VERSION != "GD_VERSION"
-		);
-
-		$this->h5aiAbsPath = H5AI_ABS_PATH;
-
-		global $H5AI_CONFIG;
-		$this->rootAbsPath = $H5AI_CONFIG["ROOT_ABS_PATH"];
-		$this->ignore = $H5AI_CONFIG["IGNORE"];
-		$this->ignoreRE = $H5AI_CONFIG["IGNORE_PATTERNS"];
-
-		$this->config = $this->loadConfig($this->h5aiAbsPath . "/config.js");
-		$this->options = $this->config["options"];
-		$this->types = $this->config["types"];
-		$this->langs = $this->config["langs"];
-
-		$this->cache = new Cache($this->h5aiAbsPath . "/cache");
-
-		$this->rootAbsHref = $this->options["rootAbsHref"];
-		$this->h5aiAbsHref = $this->options["h5aiAbsHref"];
-		$this->domain = getenv("HTTP_HOST");
-
-		$this->absHref = $this->normalizePath(preg_replace('/\\?.*/', '', getenv("REQUEST_URI")), true);
-		$this->absPath = $this->getAbsPath($this->absHref);
-
-		$this->view = $this->options["viewmodes"][0];
-		if (!in_array($this->view, H5ai::$VIEWMODES)) {
-			$this->view = H5ai::$VIEWMODES[0];
-		}
+		$path = str_replace("\\", "/", $path);
+		return preg_match("#^(\w:)?/$#", $path) ? $path : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
 	}
 
 
-	private function loadConfig($file) {
+	public static final function req_once($lib) {
+
+		require_once(H5AI_ABS_PATH . $lib);
+	}
+
+
+	public static final function starts_with($sequence, $start) {
+
+		return strcasecmp(substr($sequence, 0, strlen($start)), $start) === 0;
+	}
+
+
+	public static final function ends_with($sequence, $end) {
+
+		return strcasecmp(substr($sequence, -strlen($end)), $end) === 0;
+	}
+
+
+	private static final function load_config($file) {
 
 		$str = file_exists($file) ? file_get_contents($file) : "";
 
@@ -66,15 +51,55 @@ class H5ai {
 	}
 
 
-	public function getH5aiAbsPath() {
 
-		return $this->h5aiAbsPath;
+
+	private $h5aiAbsPath,
+			$rootAbsPath, $ignore, $ignoreRE,
+			$config, $options,
+			$cache,
+			$rootAbsHref, $h5aiAbsHref,
+			$absHref, $absPath;
+
+
+	public function __construct() {
+
+		$this->h5aiAbsPath = H5ai::normalize_path(H5AI_ABS_PATH);
+
+		global $H5AI_CONFIG;
+		$this->rootAbsPath = H5ai::normalize_path($H5AI_CONFIG["ROOT_ABS_PATH"]);
+		$this->ignore = $H5AI_CONFIG["IGNORE"];
+		$this->ignoreRE = $H5AI_CONFIG["IGNORE_PATTERNS"];
+
+		$this->config = H5ai::load_config($this->h5aiAbsPath . "/config.js");
+		$this->options = $this->config["options"];
+
+		$this->rootAbsHref = H5ai::normalize_path($this->options["rootAbsHref"], true);
+		$this->h5aiAbsHref = H5ai::normalize_path($this->options["h5aiAbsHref"], true);
+
+		$this->absHref = H5ai::normalize_path(preg_replace('/\\?.*/', '', getenv("REQUEST_URI")), true);
+		$this->absPath = $this->getAbsPath($this->absHref);
+
+		$this->cache = new Cache($this->h5aiAbsPath . "/cache");
+
+		$this->checks = array(
+			"php" => version_compare(PHP_VERSION, "5.2.0") >= 0,
+			"zip" => class_exists("ZipArchive"),
+			"gd" => GD_VERSION != "GD_VERSION",
+			"cache" => is_writable($this->h5aiAbsPath . "/cache"),
+			"temp" => is_writable(sys_get_temp_dir())
+		);
 	}
 
 
 	public function getRootAbsPath() {
 
 		return $this->rootAbsPath;
+	}
+
+
+	public function getH5aiAbsPath() {
+
+		return $this->h5aiAbsPath;
 	}
 
 
@@ -90,51 +115,15 @@ class H5ai {
 	}
 
 
-	public function getDomain() {
-
-		return $this->domain;
-	}
-
-
-	public function getView() {
-
-		return $this->view;
-	}
-
-
 	public function api() {
 
 		return $this->h5aiAbsHref . "php/api.php";
 	}
 
 
-	public function image($id) {
-
-		return $this->h5aiAbsHref . "images/" . $id . ".png";
-	}
-
-
-	public function icon($id, $big = false) {
-
-		return $this->h5aiAbsHref . "icons/" . ($big ? "48x48" : "16x16") . "/" . $id . ".png";
-	}
-
-
 	public function getOptions() {
 
 		return $this->options;
-	}
-
-
-	public function getLangs() {
-
-		return $this->langs;
-	}
-
-
-	public function normalizePath($path, $endWithSlash) {
-
-		return preg_match("#^(\w:)?/$#", $path) ? $path : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
 	}
 
 
@@ -152,7 +141,7 @@ class H5ai {
 			$encodedParts[] = rawurlencode($part);
 		}
 
-		return $this->normalizePath($this->rootAbsHref . implode("/", $encodedParts), $endWithSlash);
+		return H5ai::normalize_path($this->rootAbsHref . implode("/", $encodedParts), $endWithSlash);
 	}
 
 
@@ -164,51 +153,14 @@ class H5ai {
 
 		$absHref = substr($absHref, strlen($this->rootAbsHref));
 
-		return $this->normalizePath($this->rootAbsPath . "/" . rawurldecode($absHref), false);
-	}
-
-
-	public function showThumbs() {
-
-		return $this->options["showThumbs"] === true;
-	}
-
-
-	public function getThumbTypes() {
-
-		return $this->options["thumbTypes"];
-	}
-
-
-	public function getTitle() {
-
-		$title = $this->domain . rawurldecode($this->absHref);
-		$title = preg_replace("/\/$/", "", $title);
-		$title = preg_replace("/\//", " > ", $title);
-		if ($this->absHref !== "/") {
-			$title = basename($this->absPath) . " - " . $title;
-		}
-		return $title;
-	}
-
-
-	public function getType($absPath) {
-
-		foreach($this->types as $type => $exts) {
-			foreach($exts as $ext) {
-				if ($this->endsWith($absPath, $ext)) {
-					return $type;
-				}
-			}
-		}
-		return "unknown";
+		return H5ai::normalize_path($this->rootAbsPath . "/" . rawurldecode($absHref));
 	}
 
 
 	public function ignoreThisFile($file) {
 
 		// always ignore
-		if ($file === "." || $file === ".." || $this->startsWith($file, '.ht')) {
+		if ($file === "." || $file === ".." || H5ai::starts_with($file, '.ht')) {
 			return true;
 		}
 
@@ -242,24 +194,6 @@ class H5ai {
 	}
 
 
-	public function getLabel($absHref) {
-
-		return $absHref === "/" ? $this->domain : rawurldecode(basename($absHref));
-	}
-
-
-	public function startsWith($sequence, $start) {
-
-		return strcasecmp(substr($sequence, 0, strlen($start)), $start) === 0;
-	}
-
-
-	public function endsWith($sequence, $end) {
-
-		return strcasecmp(substr($sequence, -strlen($end)), $end) === 0;
-	}
-
-
 	public function getHttpCode($absHref) {
 
 		//return $this->cachedHttpCode($absHref);
@@ -271,12 +205,7 @@ class H5ai {
 
 		$cached = $this->cache->get($absHref);
 		if ($cached === false) {
-			$folderStatus = $this->options["folderStatus"];
-			if (array_key_exists($absHref, $folderStatus)) {
-				$code = $folderStatus[$absHref];
-			} else {
-				$code = $this->fetchHttpCode($absHref);
-			}
+			$code = $this->fetchHttpCode($absHref);
 			$cached = array("href" => $absHref, "code" => $code);
 			$this->cache->set($absHref, $cached);
 		}
@@ -285,6 +214,17 @@ class H5ai {
 
 
 	public function fetchHttpCode($absHref) {
+
+		if (!is_dir($this->getAbsPath($absHref))) {
+			return null;
+		}
+
+		if ($this->options["folderstatus"]["enabled"]) {
+			$folders = $this->options["folderstatus"]["folders"];
+			if (array_key_exists($absHref, $folders)) {
+				return $folders[$absHref];
+			}
+		}
 
 		$contentType = "Content-Type:";
 		$h5aiContentType = "Content-Type: text/html;h5ai=";
@@ -307,15 +247,52 @@ class H5ai {
 		$content = fgets($socket);
 		$code = intval(trim(substr($content, 9, 4)));
 		if ($code === 200) {
-			while (! $this->startsWith($content, $contentType)) {
+			while (! H5ai::starts_with($content, $contentType)) {
 				$content = fgets($socket);
 			}
-			if ($this->startsWith($content, $h5aiContentType)) {
+			if (H5ai::starts_with($content, $h5aiContentType)) {
 				$code = "h5ai";
 			}
 		}
 		fclose($socket);
+
 		return $code;
+	}
+
+
+	private function fileExists($file) {
+
+		return is_string($file) && file_exists($file);
+	}
+
+
+	public function getGenericJson() {
+
+		$header = $this->options["custom"]["header"];
+		$footer = $this->options["custom"]["footer"];
+		$header = $this->fileExists($header ? $this->absPath . "/" . $header : null) ? $header : null;
+		$footer = $this->fileExists($footer ? $this->absPath . "/" . $footer : null) ? $footer : null;
+
+		// collect and sort entries
+		$folder = Entry::get($this, $this->absPath, $this->absHref);
+		while ($folder !== null) {
+			$folder->getContent();
+			$folder = $folder->getParent();
+		}
+		Entry::sort();
+
+		$entries = array();
+		foreach(Entry::getCache() as $entry) {
+			$entries[] = $entry->toJsonObject(true);
+		}
+
+		$json = array(
+			"entries" => $entries,
+			"customHeader" => $header,
+			"customFooter" => $footer
+		);
+
+		return json_encode($json) . "\n";
 	}
 }
 

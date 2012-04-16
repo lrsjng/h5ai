@@ -1,36 +1,48 @@
 
-(function () {
-'use strict';
-/*jslint  browser: true, confusion: true, regexp: true, vars: true, white: true */
-/*global  Modernizr, jQuery, amplify, Base64, H5AI_CONFIG */
+(function ($) {
+	'use strict';
+	/*jshint  browser: true */
+	/*global  _, amplify, Base64, H5AI_CONFIG, jQuery, Modernizr, module, moment */
 
-	// @include "module.js"
+	// @include "core/entry.js"
+	// @include "core/event.js"
+	// @include "core/format.js"
+	// @include "core/parser.js"
+	// @include "core/resource.js"
+	// @include "core/settings.js"
+	// @include "core/store.js"
 
-	// @include "settings.js"
+	// @include "model/entry.js"
 
-	// @include "util.js"
-	// @include "core.js"
-	// @include "localize.js"
-	// @include "sort.js"
-	// @include "zip.js"
-	// @include "finder.js"
-	// @include "context.js"
+	// @include "parser/apache-autoindex.js"
+	// @include "parser/generic-json.js"
 
-	// @include "path.js"
-	// @include "connector.js"
-	// @include "html.js"
-	// @include "extended.js"
+	// @include "view/extended.js"
+	// @include "view/spacing.js"
+	// @include "view/viewmode.js"
 
-	// @include "splash.js"
+	// @include "ext/crumb.js"
+	// @include "ext/custom.js"
+	// @include "ext/filter.js"
+	// @include "ext/folderstatus.js"
+	// @include "ext/l10n.js"
+	// @include "ext/link-hover-states.js"
+	// @include "ext/qrcode.js"
+	// @include "ext/select.js"
+	// @include "ext/sort.js"
+	// @include "ext/statusbar.js"
+	// @include "ext/thumbnails.js"
+	// @include "ext/title.js"
+	// @include "ext/tree.js"
+	// @include "ext/zipped-download.js"
 
-	// @include "h5ai.js"
+	// @include "h5ai-info.js"
+	// @include "h5ai-main.js"
 
 
-	jQuery(function () {
+	$(function () {
 
-		var h5ai = Module.require('h5ai');
-
-		h5ai.init();
+		module.require($('body').attr('id'));
 	});
 
-}());
+}(jQuery));

@@ -1,17 +1,10 @@
 <?php
 
-function safe_dirname($path, $endWithSlash = false) {
+require_once(str_replace("\\", "/", __DIR__) . "/inc/H5ai.php");
 
-	$path = str_replace("\\", "/", dirname($path));
-	return preg_match("#^(\w:)?/$#", $path) ? $path : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
-}
 
-define("H5AI_ABS_PATH", safe_dirname(safe_dirname(__FILE__)));
-
-function require_h5ai($lib) {
-
-	require_once(H5AI_ABS_PATH . $lib);
-}
+$h5ai = new H5ai();
+$options = $h5ai->getOptions();
 
 
 function fail($code, $msg, $cond = true) {
@@ -29,11 +22,6 @@ function checkKeys($keys) {
 	}
 	return $values;
 }
-
-
-require_h5ai("/php/inc/H5ai.php");
-$h5ai = new H5ai();
-$options = $h5ai->getOptions();
 
 
 list($action) = checkKeys(array("action"));
@@ -64,11 +52,11 @@ if ($action === "httpcodes") {
 
 else if ($action === "thumb") {
 
-	fail(0, "thumbs are disabled", !$options["showThumbs"]);
+	fail(0, "thumbs are disabled", !$options["thumbnails"]["enabled"]);
 	list($srcAbsHref, $width, $height, $mode) = checkKeys(array("href", "width", "height", "mode"));
 
-	require_h5ai("/php/inc/Thumbnail.php");
-	require_h5ai("/php/inc/Image.php");
+	H5ai::req_once("/php/inc/Thumbnail.php");
+	H5ai::req_once("/php/inc/Image.php");
 
 	$srcAbsPath = $h5ai->getRootAbsPath() . rawurldecode($srcAbsHref);
 
@@ -90,28 +78,42 @@ else if ($action === "thumb") {
 }
 
 
-else if ($action === "tree") {
+else if ($action === "thumbsrc") {
 
-	list($href) = checkKeys(array("href"));
+	if (!$options["thumbnails"]["enabled"]) {
+		echo json_encode(array("code" => 1, "absHref" => null));
+		exit;
+	}
 
-	require_h5ai("/php/inc/Tree.php");
+	list($srcAbsHref, $width, $height, $mode) = checkKeys(array("href", "width", "height", "mode"));
 
-	$absHref = trim($href);
-	$absPath = $h5ai->getAbsPath($absHref);
+	H5ai::req_once("/php/inc/Thumbnail.php");
+	H5ai::req_once("/php/inc/Image.php");
 
-	$tree = new TreeEntry($h5ai, $absPath, $absHref);
-	$tree->loadContent();
+	$srcAbsPath = $h5ai->getRootAbsPath() . rawurldecode($srcAbsHref);
 
-	echo $tree->contentToHtml();
+	if (!Thumbnail::isUsable()) {
+		echo json_encode(array("code" => 2, "absHref" => null));
+		exit;
+	}
+
+	$thumbnail = new Thumbnail($h5ai, $srcAbsHref, $mode, $width, $height);
+	$thumbnail->create(1);
+	if (!file_exists($thumbnail->getPath())) {
+		echo json_encode(array("code" => 3, "absHref" => null));
+		exit;
+	}
+
+	echo json_encode(array("code" => 0, "absHref" => $thumbnail->getHref()));
 }
 
 
 else if ($action === "zip") {
 
-	fail(0, "zipped download is disabled", !$options["zippedDownload"]);
+	fail(0, "zipped download is disabled", !$options["zipped-download"]["enabled"]);
 	list($hrefs) = checkKeys(array("hrefs"));
 
-	require_h5ai("/php/inc/ZipIt.php");
+	H5ai::req_once("/php/inc/ZipIt.php");
 
 	$zipit = new ZipIt($h5ai);
 
@@ -147,8 +149,10 @@ else if ($action === "checks") {
 
 	$response = array(
 		'php' => $h5ai->checks["php"],
-		'zips' => $h5ai->checks["php"] && $h5ai->checks["zip"],
-		'thumbs' => $h5ai->checks["php"] && $h5ai->checks["gd"]
+		'cache' => $h5ai->checks["php"] && $h5ai->checks["cache"],
+		'thumbs' => $h5ai->checks["php"] && $h5ai->checks["cache"] && $h5ai->checks["gd"],
+		'temp' => $h5ai->checks["php"] && $h5ai->checks["temp"],
+		'zips' => $h5ai->checks["php"] && $h5ai->checks["temp"] && $h5ai->checks["zip"]
 	);
 	echo json_encode($response);
 }
