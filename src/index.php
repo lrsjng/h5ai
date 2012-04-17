@@ -14,7 +14,8 @@
 	<link rel="apple-touch-icon" type="image/png" href="/_h5ai/images/h5ai-48x48.png">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold">
 	<link rel="stylesheet" href="/_h5ai/css/styles.css">
-	<script src="/_h5ai/js/modernizr-2.5.3.min.js"></script>
+	<script src="/_h5ai/config.js"></script>
+	<script src="/_h5ai/js/scripts.js"></script>
 </head>
 <body id="h5ai-main">
 	<div id="topbar" class="clearfix">
@@ -32,8 +33,6 @@
 		<span class="right"></span>
 		<span class="center"></span>
 	</div>
-	<script src="/_h5ai/config.js"></script>
-	<script src="/_h5ai/js/scripts.js"></script>
 	<div id="data-generic-json" class="hidden">
 		<?php if (stripos($_SERVER["REQUEST_METHOD"], "HEAD") === false) {
 

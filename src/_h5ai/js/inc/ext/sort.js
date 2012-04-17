@@ -67,7 +67,7 @@ module.define('ext/sort', [jQuery, 'core/settings', 'core/resource', 'core/store
 
 			$all.removeClass('ascending').removeClass('descending');
 			order.head.addClass(order.clas);
-			$('#extended .entry').detach().sort(order.fn).appendTo($('#extended > ul'));
+			$('#extended .entry').detach().sort(order.fn).appendTo('#extended > ul');
 		},
 
 		init = function () {

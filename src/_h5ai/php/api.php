@@ -108,40 +108,42 @@ else if ($action === "thumbsrc") {
 }
 
 
-else if ($action === "zip") {
+else if ($action === "archive") {
 
-	fail(0, "zipped download is disabled", !$options["zipped-download"]["enabled"]);
-	list($hrefs) = checkKeys(array("hrefs"));
+	fail(0, "download is disabled", !$options["download"]["enabled"]);
 
-	H5ai::req_once("/php/inc/ZipIt.php");
+	list($format, $hrefs) = checkKeys(array("format", "hrefs"));
 
-	$zipit = new ZipIt($h5ai);
+	H5ai::req_once("/php/inc/Archive.php");
+	$archive = new Archive($h5ai);
 
 	$hrefs = explode(":", trim($hrefs));
-	$zipFile = $zipit->zip($hrefs);
+	$target = $archive->create($format, $hrefs);
 
-	if (is_string($zipFile)) {
-		$response = array('status' => 'ok', 'id' => basename($zipFile), 'size' => filesize($zipFile));
+	if (is_string($target)) {
+		$response = array('status' => 'ok', 'id' => basename($target), 'size' => filesize($target));
 	} else {
-		$response = array('status' => 'failed', 'code' => $zipFile);
+		$response = array('status' => 'failed', 'code' => $target);
 	}
 	echo json_encode($response);
 }
 
 
-else if ($action === "getzip") {
+else if ($action === "getarchive") {
 
-	list($id) = checkKeys(array("id"));
-	fail(1, "zipped file not found: " . $id, !preg_match("/^h5ai-zip-/", $id));
+	fail(0, "download is disabled", !$options["download"]["enabled"]);
 
-	$zipFile = str_replace("\\", "/", sys_get_temp_dir()) . "/" . $id;
-	fail(2, "zipped file not found: " . $id, !file_exists($zipFile));
+	list($id,$as) = checkKeys(array("id", "as"));
+	fail(1, "file not found: " . $id, !preg_match("/^h5ai-selection-/", $id));
 
-	header("Content-Disposition: attachment; filename=\"h5ai-selection.zip\"");
+	$target = H5ai::normalize_path(sys_get_temp_dir(), true) . $id;
+	fail(2, "file not found: " . $id, !file_exists($target));
+
+	header("Content-Disposition: attachment; filename=\"$as\"");
 	header("Content-Type: application/octet-stream");
-	header("Content-Length: " . filesize($zipFile));
+	header("Content-Length: " . filesize($target));
 	header("Connection: close");
-	readfile($zipFile);
+	readfile($target);
 }
 
 
@@ -152,7 +154,7 @@ else if ($action === "checks") {
 		'cache' => $h5ai->checks["php"] && $h5ai->checks["cache"],
 		'thumbs' => $h5ai->checks["php"] && $h5ai->checks["cache"] && $h5ai->checks["gd"],
 		'temp' => $h5ai->checks["php"] && $h5ai->checks["temp"],
-		'zips' => $h5ai->checks["php"] && $h5ai->checks["temp"] && $h5ai->checks["zip"]
+		'download' => $h5ai->checks["php"] && $h5ai->checks["temp"] && $h5ai->checks["archive"]
 	);
 	echo json_encode($response);
 }

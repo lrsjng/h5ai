@@ -1,11 +1,14 @@
 
-module.define('ext/zipped-download', [jQuery, 'core/settings', 'core/resource', 'core/event'], function ($, allsettings, resource, event) {
+module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/event'], function ($, allsettings, resource, event) {
 
 	var defaults = {
-			enabled: false
+			enabled: false,
+			format: 'tar'
 		},
 
-		settings = _.extend({}, defaults, allsettings['zipped-download']),
+		settings = _.extend({}, defaults, allsettings['download']),
+
+		formats = ['tar', 'zip'],
 
 		downloadBtnTemplate = '<li id="download">' +
 									'<a href="#">' +
@@ -38,7 +41,7 @@ module.define('ext/zipped-download', [jQuery, 'core/settings', 'core/resource', 
 				if (response.status === 'ok') {
 					setTimeout(function () { // wait here so the img above can be updated in time
 
-						window.location = resource.api() + '?action=getzip&id=' + response.id;
+						window.location = resource.api() + '?action=getarchive&id=' + response.id + '&as=h5ai-selection.' + settings.format;
 					}, 200);
 				} else {
 					if (response.code === 401) {
@@ -57,14 +60,15 @@ module.define('ext/zipped-download', [jQuery, 'core/settings', 'core/resource', 
 			}
 		},
 
-		requestZipping = function (hrefsStr) {
+		requestArchive = function (hrefsStr) {
 
 			$download.addClass('current');
 			$img.attr('src', resource.image('loading.gif', true));
 			$.ajax({
 				url: resource.api(),
 				data: {
-					action: 'zip',
+					action: 'archive',
+					format: settings.format,
 					hrefs: hrefsStr
 				},
 				type: 'POST',
@@ -91,7 +95,7 @@ module.define('ext/zipped-download', [jQuery, 'core/settings', 'core/resource', 
 
 		onSelection = function (entries) {
 
-			var $downloadBtn = $('#download');
+			var $download = $('#download').appendTo('#navbar');
 
 			selectedHrefsStr = '';
 			if (entries.length) {
@@ -99,9 +103,9 @@ module.define('ext/zipped-download', [jQuery, 'core/settings', 'core/resource', 
 
 					return entry.absHref;
 				}).join(':');
-				$downloadBtn.show();
+				$download.show();
 			} else {
-				$downloadBtn.hide();
+				$download.hide();
 				$downloadAuth.hide();
 			}
 		},
@@ -113,16 +117,16 @@ module.define('ext/zipped-download', [jQuery, 'core/settings', 'core/resource', 
 			}
 
 			$download = $(downloadBtnTemplate)
-				.appendTo($('#navbar'))
+				.appendTo('#navbar')
 				.find('a').on('click', function (event) {
 
 					event.preventDefault();
 					$downloadAuth.hide();
-					requestZipping(selectedHrefsStr);
+					requestArchive(selectedHrefsStr);
 				});
 			$img = $download.find('img');
 
-			$downloadAuth = $(authTemplate).appendTo($('body'));
+			$downloadAuth = $(authTemplate).appendTo('body');
 			$downloadUser = $downloadAuth.find('#download-auth-user');
 			$downloadPassword = $downloadAuth.find('#download-auth-password');
 

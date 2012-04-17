@@ -69,6 +69,15 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		 * Requires PHP on the server.
+		 * Enable packaged download of selected entries. Supported formats: "tar", "zip".
+		 */
+		"download": {
+			"enabled": true,
+			"format": "zip"
+		},
+
+		/*
 		 * Allow filtering the displayed files and folders.
 		 * Note: filters will be treated as JavaScript regular expressions
 		 * if you prefix them with "re:".
@@ -181,14 +190,6 @@ var H5AI_CONFIG = {
 		"tree": {
 			"enabled": true,
 			"slide": true
-		},
-
-		/*
-		 * Requires PHP on the server.
-		 * Enable zipped download of selected entries.
-		 */
-		"zipped-download": {
-			"enabled": true
 		}
 	},
 
@@ -355,7 +356,7 @@ var H5AI_CONFIG = {
 			"folders": "Répertoires",
 			"files": "Fichiers",
 			"download": "télécharger",
-			"noMatch": "no match"
+			"noMatch": "rien trouvé"
 		},
 
 		"gr": {

@@ -98,14 +98,14 @@ module.define('ext/filter', [jQuery, 'core/settings', 'core/resource'], function
 
 			$filter = $(template);
 			$input = $filter.find('input');
-			$noMatch = $(noMatchTemplate).appendTo($('#extended'));
+			$noMatch = $(noMatchTemplate).appendTo('#extended');
 
 			$filter
 				.on('click', function () {
 
 					$input.focus();
 				})
-				.appendTo($('#navbar'));
+				.appendTo('#navbar');
 
 			$input
 				.on('focus', function () {

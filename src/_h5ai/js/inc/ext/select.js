@@ -98,7 +98,7 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 				return;
 			}
 
-			$selectionRect.hide().appendTo($('body'));
+			$selectionRect.hide().appendTo('body');
 
 			$document
 				.on('mousedown', '.noSelection', noSelection)

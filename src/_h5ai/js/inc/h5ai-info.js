@@ -14,7 +14,7 @@ module.define('h5ai-info', [jQuery, 'core/resource'], function ($, resource) {
 
 		handleChecksResponse = function (response) {
 
-			_.each(['php', 'cache', 'thumbs', 'temp', 'zips'], function (test) {
+			_.each(['php', 'cache', 'thumbs', 'temp', 'download'], function (test) {
 
 				setCheckResult('#test-' + test, response && response[test]);
 			})

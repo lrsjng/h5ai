@@ -23,6 +23,7 @@
 
 	// @include "ext/crumb.js"
 	// @include "ext/custom.js"
+	// @include "ext/download.js"
 	// @include "ext/filter.js"
 	// @include "ext/folderstatus.js"
 	// @include "ext/l10n.js"
@@ -34,7 +35,6 @@
 	// @include "ext/thumbnails.js"
 	// @include "ext/title.js"
 	// @include "ext/tree.js"
-	// @include "ext/zipped-download.js"
 
 	// @include "h5ai-info.js"
 	// @include "h5ai-main.js"

@@ -39,11 +39,13 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * hides broken tree view in IE < 9, adds a message to the footer
 * removes hash changes since they break logical browser history
 * fixes thumbnail size for portrait images in icon view
+* fixes problems with file type recognition
 * adds an info page at `/_h5ai`
 * sort order is preserved while browsing
 * removes PHP error messages on thumbnail generation
 * fixes PHP problems with zipped download
 * changes crumb image for folders with an index file
+* adds support for tarred downloads
 * adds `index.php` to use h5ai in non-Apache environments
 * switches from [Datejs](http://www.datejs.com) to [Moment.js](http://momentjs.com)
 * adds [underscore.js](http://underscorejs.org)

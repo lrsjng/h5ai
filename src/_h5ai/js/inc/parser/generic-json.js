@@ -10,17 +10,17 @@ module.define('parser/generic-json', [jQuery, 'core/settings', 'model/entry'], f
 
 	var parseJson = function (absHref, json) {
 
-			_.each(json.entries, function (jsonEntry) {
-
-				Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status);
-			});
-
 			if (json.hasOwnProperty('customHeader')) {
 				settings.custom.header = json.customHeader;
 			}
 			if (json.hasOwnProperty('customFooter')) {
 				settings.custom.footer = json.customFooter;
 			}
+
+			return _.map(json.entries, function (jsonEntry) {
+
+				return Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status);
+			});
 		},
 
 		parseJsonStr = function (absHref, jsonStr) {

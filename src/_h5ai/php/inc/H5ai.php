@@ -83,7 +83,7 @@ class H5ai {
 
 		$this->checks = array(
 			"php" => version_compare(PHP_VERSION, "5.2.0") >= 0,
-			"zip" => class_exists("ZipArchive"),
+			"archive" => class_exists("PharData"),
 			"gd" => GD_VERSION != "GD_VERSION",
 			"cache" => is_writable($this->h5aiAbsPath . "/cache"),
 			"temp" => is_writable(sys_get_temp_dir())

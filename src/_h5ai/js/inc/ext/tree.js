@@ -197,7 +197,7 @@ module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event
 				return;
 			}
 
-			var $tree = $('<div id="tree" />').appendTo($('body'));
+			var $tree = $('<div id="tree" />').appendTo('body');
 
 			fetchTree(entry, parser, function (root) {
 

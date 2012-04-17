@@ -3,7 +3,7 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 
 	var defaults = {
 			enabled: true,
-			lang: "en",
+			lang: 'en',
 			useBrowserLang: true,
 			defaultDateFormat: 'YYYY-MM-DD HH:mm'
 		},
