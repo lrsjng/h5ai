@@ -1,32 +1,65 @@
 
-module.define('core/config', [H5AI_CONFIG], function (config) {
+module.define('core/settings', [H5AI_CONFIG], function (config) {
 
 	var defaults = {
 			rootAbsHref: '/',
 			h5aiAbsHref: '/_h5ai/',
 		};
 
+	return _.extend({}, defaults, config.options);
+});
+
+
+module.define('core/types', [H5AI_CONFIG], function (config) {
+
+	var reEndsWithSlash = /\/$/,
+		reStartsWithDot = /^\./,
+
+		fileExts = {},
+		fileNames = {},
+
+		parse = function (types) {
+
+			_.each(types, function (matches, type) {
+
+				_.each(matches, function (match) {
+
+					match = match.toLowerCase();
+
+					if (reStartsWithDot.test(match)) {
+						fileExts[match] = type;
+					} else {
+						fileNames[match] = type;
+					}
+				})
+			});
+		},
+
+		getType = function (sequence) {
+
+			if (reEndsWithSlash.test(sequence)) {
+				return 'folder';
+			}
+
+			sequence = sequence.toLowerCase();
+
+			var slashidx = sequence.lastIndexOf('/'),
+				name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence,
+				dotidx = sequence.lastIndexOf('.'),
+				ext = dotidx >= 0 ? sequence.substr(dotidx) : sequence;
+
+			return fileNames[name] || fileExts[ext] || 'unknown';
+		};
+
+	parse(_.extend({}, config.types));
+
 	return {
-		settings: _.extend({}, defaults, config.options),
-		types: _.extend({}, config.types),
-		langs: _.extend({}, config.langs)
+		getType: getType
 	};
 });
 
 
-module.define('core/settings', ['core/config'], function (config) {
+module.define('core/langs', [H5AI_CONFIG], function (config) {
 
-	return config.settings;
-});
-
-
-module.define('core/types', ['core/config'], function (config) {
-
-	return config.types;
-});
-
-
-module.define('core/langs', ['core/config'], function (config) {
-
-	return config.langs;
+	return _.extend({}, config.langs);
 });

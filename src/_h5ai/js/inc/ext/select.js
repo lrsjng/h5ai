@@ -49,7 +49,7 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 			event.preventDefault();
 			$document.off('mousemove', selectionUpdate);
-			$selectionRect.hide().css({left: 0, top: 0, width: 0, height: 0});
+			$selectionRect.fadeOut(300);
 			$('#extended .entry.selecting.selected').removeClass('selecting').removeClass('selected');
 			$('#extended .entry.selecting').removeClass('selecting').addClass('selected');
 			publish();
@@ -99,10 +99,6 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 			}
 
 			$selectionRect.hide().appendTo($('body'));
-
-			// $('#topbar,#bottombar,#tree,input').on('mousedown', noSelection);
-			// $('#content').on('mousedown', 'a', noSelectionUnlessCtrl);
-			// $document.on('mousedown', selectionStart);
 
 			$document
 				.on('mousedown', '.noSelection', noSelection)

@@ -9,10 +9,6 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 
 		reEndsWithSlash = /\/$/,
 
-		pathEndsWithSlash = function (sequence) {
-
-			return reEndsWithSlash.test(sequence);
-		},
 
 		createLabel = function (sequence) {
 
@@ -60,29 +56,6 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 		},
 
 
-		extToFileType = (function (types) {
-			var map = {};
-			$.each(types, function (type, exts) {
-				$.each(exts, function (idx, ext) {
-					map[ext] = type;
-				});
-			});
-			return map;
-		}(types)),
-
-		getFileType = function (sequence) {
-
-			if (pathEndsWithSlash(sequence)) {
-				return 'folder';
-			}
-
-			var dotidx = sequence.lastIndexOf('.'),
-				ext = dotidx >= 0 ? sequence.substr(dotidx) : sequence;
-
-			return extToFileType[ext.toLowerCase()] || 'unknown';
-		},
-
-
 		reContentType = /^text\/html;h5ai=/,
 
 		ajaxRequest = function (self, parser, callback) {
@@ -120,7 +93,7 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			cache[absHref] = this;
 
 			this.absHref = absHref;
-			this.type = getFileType(absHref);
+			this.type = types.getType(absHref);
 			this.label = createLabel(absHref === '/' ? domain : split.name);
 			this.time = null;
 			this.size = null;
@@ -194,7 +167,7 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 
 		isFolder: function () {
 
-			return pathEndsWithSlash(this.absHref);
+			return reEndsWithSlash.test(this.absHref);
 		},
 
 		isCurrentFolder: function () {

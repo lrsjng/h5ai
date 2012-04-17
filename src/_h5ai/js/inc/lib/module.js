@@ -88,9 +88,9 @@
 				_.each(definitions, function (def) {
 
 					var invDeps = [];
-					_.each(allDeps, function (depId, id) {
+					_.each(allDeps, function (depIds, id) {
 
-						if (_.inArray(def.id, depId) >= 0) {
+						if (_.indexOf(depIds, def.id) >= 0) {
 							invDeps.push(id);
 						}
 					});
