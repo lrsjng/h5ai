@@ -56,9 +56,11 @@ class H5ai {
 	private $h5aiAbsPath,
 			$rootAbsPath, $ignore, $ignoreRE,
 			$config, $options,
-			$cache,
 			$rootAbsHref, $h5aiAbsHref,
-			$absHref, $absPath;
+			$absHref, $absPath,
+			$cache;
+
+	public $checks;
 
 
 	public function __construct() {
@@ -86,7 +88,9 @@ class H5ai {
 			"archive" => class_exists("PharData"),
 			"gd" => GD_VERSION != "GD_VERSION",
 			"cache" => is_writable($this->h5aiAbsPath . "/cache"),
-			"temp" => is_writable(sys_get_temp_dir())
+			"temp" => is_writable(sys_get_temp_dir()),
+			"tar" => preg_match("/tar$/", `which tar`) > 0,
+			"zip" => preg_match("/zip$/", `which zip`) > 0
 		);
 	}
 

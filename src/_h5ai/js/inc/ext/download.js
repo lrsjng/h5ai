@@ -3,10 +3,11 @@ module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/e
 
 	var defaults = {
 			enabled: false,
-			format: 'tar'
+			execution: 'php',
+			format: 'zip'
 		},
 
-		settings = _.extend({}, defaults, allsettings['download']),
+		settings = _.extend({}, defaults, allsettings.download),
 
 		formats = ['tar', 'zip'],
 
@@ -38,7 +39,7 @@ module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/e
 			$img.attr('src', resource.image('download'));
 
 			if (response) {
-				if (response.status === 'ok') {
+				if (response.code === 0) {
 					setTimeout(function () { // wait here so the img above can be updated in time
 
 						window.location = resource.api() + '?action=getarchive&id=' + response.id + '&as=h5ai-selection.' + settings.format;
@@ -68,6 +69,7 @@ module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/e
 				url: resource.api(),
 				data: {
 					action: 'archive',
+					execution: settings.execution,
 					format: settings.format,
 					hrefs: hrefsStr
 				},
@@ -95,15 +97,13 @@ module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/e
 
 		onSelection = function (entries) {
 
-			var $download = $('#download').appendTo('#navbar');
-
 			selectedHrefsStr = '';
 			if (entries.length) {
 				selectedHrefsStr = _.map(entries, function (entry) {
 
 					return entry.absHref;
 				}).join(':');
-				$download.show();
+				$download.appendTo('#navbar').show();
 			} else {
 				$download.hide();
 				$downloadAuth.hide();
@@ -117,13 +117,13 @@ module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/e
 			}
 
 			$download = $(downloadBtnTemplate)
-				.appendTo('#navbar')
 				.find('a').on('click', function (event) {
 
 					event.preventDefault();
 					$downloadAuth.hide();
 					requestArchive(selectedHrefsStr);
-				});
+				}).end()
+				.appendTo('#navbar');
 			$img = $download.find('img');
 
 			$downloadAuth = $(authTemplate).appendTo('body');

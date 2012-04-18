@@ -14,10 +14,10 @@ module.define('h5ai-info', [jQuery, 'core/resource'], function ($, resource) {
 
 		handleChecksResponse = function (response) {
 
-			_.each(['php', 'cache', 'thumbs', 'temp', 'download'], function (test) {
+			$('.test').each(function () {
 
-				setCheckResult('#test-' + test, response && response[test]);
-			})
+				setCheckResult(this, response && response[$(this).data('id')]);
+			});
 		},
 
 		checks = function () {
@@ -25,7 +25,7 @@ module.define('h5ai-info', [jQuery, 'core/resource'], function ($, resource) {
 			$.ajax({
 				url: resource.api(),
 				data: {
-					action: 'checks'
+					action: 'getchecks'
 				},
 				type: 'POST',
 				dataType: 'json',

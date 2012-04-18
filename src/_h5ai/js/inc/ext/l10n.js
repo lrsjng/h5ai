@@ -4,8 +4,7 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 	var defaults = {
 			enabled: true,
 			lang: 'en',
-			useBrowserLang: true,
-			defaultDateFormat: 'YYYY-MM-DD HH:mm'
+			useBrowserLang: true
 		},
 
 		settings = _.extend({}, defaults, allsettings.l10n),
@@ -52,7 +51,7 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 				$('.langOption.' + lang).addClass('current');
 			}
 
-			format.setDefaultDateFormat(currentLang.dateFormat || settings.defaultDateFormat);
+			format.setDefaultDateFormat(currentLang.dateFormat);
 
 			$('#extended .entry .date').each(function () {
 

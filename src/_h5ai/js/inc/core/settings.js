@@ -3,7 +3,7 @@ module.define('core/settings', [H5AI_CONFIG], function (config) {
 
 	var defaults = {
 			rootAbsHref: '/',
-			h5aiAbsHref: '/_h5ai/',
+			h5aiAbsHref: '/_h5ai/'
 		};
 
 	return _.extend({}, defaults, config.options);
@@ -31,7 +31,7 @@ module.define('core/types', [H5AI_CONFIG], function (config) {
 					} else {
 						fileNames[match] = type;
 					}
-				})
+				});
 			});
 		},
 
@@ -61,5 +61,33 @@ module.define('core/types', [H5AI_CONFIG], function (config) {
 
 module.define('core/langs', [H5AI_CONFIG], function (config) {
 
-	return _.extend({}, config.langs);
+	var defaults = {
+			lang: 'unknown',
+			details: 'details',
+			icons: 'icons',
+			name: 'Name',
+			lastModified: 'Last modified',
+			size: 'Size',
+			parentDirectory: 'Parent Directory',
+			empty: 'empty',
+			folders: 'folders',
+			files: 'files',
+			download: 'download',
+			noMatch: 'no match',
+			dateFormat: 'YYYY-MM-DD HH:mm'
+		},
+
+		translations = {},
+
+		parse = function (langs) {
+
+			_.each(langs, function (trans, lang) {
+
+				translations[lang] = _.extend({}, defaults, trans);
+			});
+		};
+
+	parse(_.extend({}, config.langs));
+
+	return translations;
 });

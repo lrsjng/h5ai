@@ -7,85 +7,41 @@ $h5ai = new H5ai();
 $options = $h5ai->getOptions();
 
 
-function fail($code, $msg, $cond = true) {
+function json_exit($obj) {
+
+	$obj["code"] = 0;
+	echo json_encode($obj);
+	exit;
+}
+
+function json_fail($code, $msg = "", $cond = true) {
+
 	if ($cond) {
-		echo "$code: $msg";
+		echo json_encode(array("code" => $code, "msg" => $msg));
 		exit;
 	}
 }
 
-function checkKeys($keys) {
+function check_keys($keys) {
 	$values = array();
 	foreach ($keys as $key) {
-		fail(1, "parameter '$key' is missing", !array_key_exists($key, $_REQUEST));
+		json_fail(101, "parameter '$key' is missing", !array_key_exists($key, $_REQUEST));
 		$values[] = $_REQUEST[$key];
 	}
 	return $values;
 }
 
 
-list($action) = checkKeys(array("action"));
+list($action) = check_keys(array("action"));
 
 
-if ($action === "httpcodes") {
-
-	list($hrefs) = checkKeys(array("hrefs"));
-
-	function getHttpCodes($h5ai, $hrefs) {
-
-		$codes = array();
-		foreach ($hrefs as $href) {
-			$href = trim($href);
-			if (strlen($href) > 0) {
-				$codes[$href] = $h5ai->getHttpCode($href);
-			}
-		}
-		return $codes;
-	}
-
-	$hrefs = preg_split("/;/", $hrefs);
-	$codes = getHttpCodes($h5ai, $hrefs);
-
-	echo count($codes) === 0 ? "{}" : json_encode($codes);
-}
-
-
-else if ($action === "thumb") {
-
-	fail(0, "thumbs are disabled", !$options["thumbnails"]["enabled"]);
-	list($srcAbsHref, $width, $height, $mode) = checkKeys(array("href", "width", "height", "mode"));
-
-	H5ai::req_once("/php/inc/Thumbnail.php");
-	H5ai::req_once("/php/inc/Image.php");
-
-	$srcAbsPath = $h5ai->getRootAbsPath() . rawurldecode($srcAbsHref);
-
-	if (!Thumbnail::isUsable()) {
-		Image::showImage($srcAbsPath);
-		exit;
-	}
-
-	$thumbnail = new Thumbnail($h5ai, $srcAbsHref, $mode, $width, $height);
-	$thumbnail->create(1);
-	if (file_exists($thumbnail->getPath())) {
-		Image::showImage($thumbnail->getPath());
-	} else {
-		$image = new Image();
-		$image->setSource($srcAbsPath);
-		$image->thumb($mode, $width, $height);
-		$image->showDest();
-	}
-}
-
-
-else if ($action === "thumbsrc") {
+if ($action === "getthumbsrc") {
 
 	if (!$options["thumbnails"]["enabled"]) {
-		echo json_encode(array("code" => 1, "absHref" => null));
-		exit;
+		json_fail(1, "thumbnails disabled");
 	}
 
-	list($srcAbsHref, $width, $height, $mode) = checkKeys(array("href", "width", "height", "mode"));
+	list($srcAbsHref, $width, $height, $mode) = check_keys(array("href", "width", "height", "mode"));
 
 	H5ai::req_once("/php/inc/Thumbnail.php");
 	H5ai::req_once("/php/inc/Image.php");
@@ -93,75 +49,77 @@ else if ($action === "thumbsrc") {
 	$srcAbsPath = $h5ai->getRootAbsPath() . rawurldecode($srcAbsHref);
 
 	if (!Thumbnail::isUsable()) {
-		echo json_encode(array("code" => 2, "absHref" => null));
-		exit;
+		json_fail(2, "thumbnails not supported");
 	}
 
 	$thumbnail = new Thumbnail($h5ai, $srcAbsHref, $mode, $width, $height);
 	$thumbnail->create(1);
 	if (!file_exists($thumbnail->getPath())) {
-		echo json_encode(array("code" => 3, "absHref" => null));
-		exit;
+		json_fail(3, "thumbnail creation failed");
 	}
 
-	echo json_encode(array("code" => 0, "absHref" => $thumbnail->getHref()));
+	json_exit(array("absHref" => $thumbnail->getHref()));
 }
 
 
 else if ($action === "archive") {
 
-	fail(0, "download is disabled", !$options["download"]["enabled"]);
+	json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-	list($format, $hrefs) = checkKeys(array("format", "hrefs"));
+	list($execution, $format, $hrefs) = check_keys(array("execution", "format", "hrefs"));
 
 	H5ai::req_once("/php/inc/Archive.php");
 	$archive = new Archive($h5ai);
 
 	$hrefs = explode(":", trim($hrefs));
-	$target = $archive->create($format, $hrefs);
+	$target = $archive->create($execution, $format, $hrefs);
 
-	if (is_string($target)) {
-		$response = array('status' => 'ok', 'id' => basename($target), 'size' => filesize($target));
-	} else {
-		$response = array('status' => 'failed', 'code' => $target);
+	if (!is_string($target)) {
+		json_fail($target, "package creation failed");
 	}
-	echo json_encode($response);
+
+	json_exit(array("id" => basename($target), "size" => filesize($target)));
 }
 
 
 else if ($action === "getarchive") {
 
-	fail(0, "download is disabled", !$options["download"]["enabled"]);
+	json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-	list($id,$as) = checkKeys(array("id", "as"));
-	fail(1, "file not found: " . $id, !preg_match("/^h5ai-selection-/", $id));
+	list($id, $as) = check_keys(array("id", "as"));
+	json_fail(2, "file not found", !preg_match("/^h5ai-selection-/", $id));
 
 	$target = H5ai::normalize_path(sys_get_temp_dir(), true) . $id;
-	fail(2, "file not found: " . $id, !file_exists($target));
+	json_fail(3, "file not found", !file_exists($target));
 
-	header("Content-Disposition: attachment; filename=\"$as\"");
 	header("Content-Type: application/octet-stream");
 	header("Content-Length: " . filesize($target));
+	header("Content-Disposition: attachment; filename=\"$as\"");
 	header("Connection: close");
 	readfile($target);
 }
 
 
-else if ($action === "checks") {
+else if ($action === "getchecks") {
 
-	$response = array(
-		'php' => $h5ai->checks["php"],
-		'cache' => $h5ai->checks["php"] && $h5ai->checks["cache"],
-		'thumbs' => $h5ai->checks["php"] && $h5ai->checks["cache"] && $h5ai->checks["gd"],
-		'temp' => $h5ai->checks["php"] && $h5ai->checks["temp"],
-		'download' => $h5ai->checks["php"] && $h5ai->checks["temp"] && $h5ai->checks["archive"]
-	);
-	echo json_encode($response);
+	$php = $h5ai->checks["php"];
+	$cache = $php && $h5ai->checks["cache"];
+	$temp = $php && $h5ai->checks["temp"];
+
+	json_exit(array(
+		"php" => $php,
+		"cache" => $cache,
+		"thumbs" => $cache && $h5ai->checks["gd"],
+		"temp" => $temp,
+		"archive" => $temp && $h5ai->checks["archive"],
+		"tar" => $temp && $h5ai->checks["tar"],
+		"zip" => $temp && $h5ai->checks["zip"]
+	));
 }
 
 
 else {
-	fail(1, "unsupported 'action' specified");
+	json_fail(100, "unsupported action");
 }
 
 

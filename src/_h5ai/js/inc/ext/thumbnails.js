@@ -27,14 +27,14 @@ module.define('ext/thumbnails', [jQuery, 'core/settings', 'core/resource', 'core
 				var $imgBig = entry.$extended.find('.icon.big img');
 
 				requestThumb($imgSmall, {
-					action: 'thumbsrc',
+					action: 'getthumbsrc',
 					href: entry.absHref,
 					width: 16,
 					height: 16,
 					mode: 'square'
 				});
 				requestThumb($imgBig, {
-					action: 'thumbsrc',
+					action: 'getthumbsrc',
 					href: entry.absHref,
 					width: 100,
 					height: 48,

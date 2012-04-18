@@ -7,8 +7,9 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 		settings = _.extend({}, defaults, allsettings.select),
 
-		x = 0,
-		y = 0,
+		x = 0, y = 0,
+		l = 0, t = 0, w = 0, h = 0,
+		shrink = 1/3,
 		$document = $(document),
 		$selectionRect = $('<div id="selection-rect"></div>'),
 
@@ -24,16 +25,17 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 		selectionUpdate = function (event) {
 
-			var l = Math.min(x, event.pageX),
-				t = Math.min(y, event.pageY),
-				w = Math.abs(x - event.pageX),
-				h = Math.abs(y - event.pageY),
-				selRect;
+			l = Math.min(x, event.pageX);
+			t = Math.min(y, event.pageY);
+			w = Math.abs(x - event.pageX);
+			h = Math.abs(y - event.pageY);
 
 			event.preventDefault();
-			$selectionRect.css({left: l, top: t, width: w, height: h});
+			$selectionRect
+				.stop(true, true)
+				.css({left: l, top: t, width: w, height: h});
 
-			selRect = $selectionRect.fracs('rect');
+			var selRect = $selectionRect.fracs('rect');
 			$('#extended .entry').removeClass('selecting').each(function () {
 
 				var $entry = $(this),
@@ -49,10 +51,13 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 			event.preventDefault();
 			$document.off('mousemove', selectionUpdate);
-			$selectionRect.fadeOut(300);
 			$('#extended .entry.selecting.selected').removeClass('selecting').removeClass('selected');
 			$('#extended .entry.selecting').removeClass('selecting').addClass('selected');
 			publish();
+
+			$selectionRect
+				.stop(true, true)
+				.animate({left: l + w * 0.5 * shrink, top: t + h  * 0.5 * shrink, width: w * (1 - shrink), height: h * (1 - shrink), opacity: 0}, 300);
 		},
 
 		selectionStart = function (event) {
@@ -61,8 +66,13 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 			x = event.pageX;
 			y = event.pageY;
+			l = x;
+			t = y;
+			w = 0;
+			h = 0;
+
 			// only on left button and don't block the scrollbars
-			if (event.button !== 0 || x >= view.right || y >= view.bottom) {
+			if (event.button !== 0 || l >= view.right || t >= view.bottom) {
 				return;
 			}
 
@@ -72,7 +82,10 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 				$('#extended .entry').removeClass('selected');
 				publish();
 			}
-			$selectionRect.show().css({left: x, top: y, width: 0, height: 0});
+			$selectionRect
+				.stop(true, true)
+				.css({left: l, top: t, width: w, height: h, opacity: 1})
+				.show();
 
 			$document
 				.on('mousemove', selectionUpdate)

@@ -69,11 +69,16 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		 * EXPLICITLY: USE "shell" ON YOUR OWN RISK.
+		 *
 		 * Requires PHP on the server.
-		 * Enable packaged download of selected entries. Supported formats: "tar", "zip".
+		 * Enable packaged download of selected entries.
+		 * Execution: "php", "shell".
+		 * Supported formats: "tar", "zip".
 		 */
 		"download": {
 			"enabled": true,
+			"execution": "shell",
 			"format": "zip"
 		},
 
@@ -108,16 +113,11 @@ var H5AI_CONFIG = {
 		 *
 		 * Optionally try to use browser language, falls back to previous
 		 * specified language.
-		 *
-		 * Date format in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
-		 * Syntax as specified by Moment.js (http://momentjs.com)
-		 * This might be overidden by "dateFormat" in a lang specification.
 		 */
 		"l10n": {
 			"enabled": true,
 			"lang": "en",
-			"useBrowserLang": true,
-			"defaultDateFormat": "YYYY-MM-DD HH:mm"
+			"useBrowserLang": true
 		},
 
 		/*
@@ -136,7 +136,7 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		 * Make entries selectable. At the moment only needed for zipped download.
+		 * Make entries selectable. At the moment only needed for packaged download.
 		 */
 		"select": {
 			"enabled": true
@@ -265,6 +265,9 @@ var H5AI_CONFIG = {
 
 	/*
 	 * Available translations. "en" in first place as a reference, otherwise in alphabetical order.
+	 *
+	 * Date format is used in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
+	 * Syntax as specified by Moment.js (http://momentjs.com)
 	 */
 	"langs": {
 
@@ -280,7 +283,8 @@ var H5AI_CONFIG = {
 			"folders": "folders",
 			"files": "files",
 			"download": "download",
-			"noMatch": "no match"
+			"noMatch": "no match",
+			"dateFormat": "YYYY-MM-DD HH:mm"
 		},
 
 		"bg": {
@@ -293,9 +297,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Предходна директория",
 			"empty": "празно",
 			"folders": "папки",
-			"files": "файлове",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "файлове"
 		},
 
 		"cs": {
@@ -308,9 +310,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Nadřazený adresář",
 			"empty": "prázdný",
 			"folders": "složek",
-			"files": "souborů",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "souborů"
 		},
 
 		"de": {
@@ -340,8 +340,7 @@ var H5AI_CONFIG = {
 			"empty": "vacío",
 			"folders": "Directorios",
 			"files": "Archivos",
-			"download": "Descargar",
-			"noMatch": "no match"
+			"download": "Descargar"
 		},
 
 		"fr": {
@@ -384,9 +383,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Cartella Superiore",
 			"empty": "vuota",
 			"folders": "cartelle",
-			"files": "file",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "file"
 		},
 
 		"ja": {
@@ -442,11 +439,7 @@ var H5AI_CONFIG = {
 			"lastModified": "Laatste wijziging",
 			"size": "Grootte",
 			"parentDirectory": "Bovenliggende map",
-			"empty": "lege",
-			"folders": "folders",
-			"files": "files",
-			"download": "download",
-			"noMatch": "no match"
+			"empty": "lege"
 		},
 
 		"pl": {
@@ -459,9 +452,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Katalog nadrzędny",
 			"empty": "pusty",
 			"folders": "foldery",
-			"files": "pliki",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "pliki"
 		},
 
 		"pt": {
@@ -474,9 +465,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Diretório superior",
 			"empty": "vazio",
 			"folders": "pastas",
-			"files": "arquivos",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "arquivos"
 		},
 
 		"ro": {
@@ -504,9 +493,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Главная директория",
 			"empty": "пусто",
 			"folders": "папки",
-			"files": "файлы",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "файлы"
 		},
 
 		"sk": {
@@ -519,9 +506,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Nadriadený priečinok",
 			"empty": "prázdny",
 			"folders": "priečinkov",
-			"files": "súborov",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "súborov"
 		},
 
 		"sr": {
@@ -547,11 +532,7 @@ var H5AI_CONFIG = {
 			"lastModified": "Senast ändrad",
 			"size": "Filstorlek",
 			"parentDirectory": "Till överordnad mapp",
-			"empty": "tom",
-			"folders": "folders",
-			"files": "files",
-			"download": "download",
-			"noMatch": "no match"
+			"empty": "tom"
 		},
 
 		"tr": {
@@ -565,8 +546,7 @@ var H5AI_CONFIG = {
 			"empty": "boş",
 			"folders": "klasörler",
 			"files": "dosyalar",
-			"download": "indir",
-			"noMatch": "no match"
+			"download": "indir"
 		},
 
 		"zh-cn": {
@@ -580,8 +560,7 @@ var H5AI_CONFIG = {
 			"empty": "空文件夹",
 			"folders": "文件夹",
 			"files": "文件",
-			"download": "下载",
-			"noMatch": "no match"
+			"download": "下载"
 		},
 
 		"zh-tw": {
@@ -595,8 +574,7 @@ var H5AI_CONFIG = {
 			"empty": "空資料夾",
 			"folders": "資料夾",
 			"files": "檔案",
-			"download": "下載",
-			"noMatch": "no match"
+			"download": "下載"
 		}
 	}
 };

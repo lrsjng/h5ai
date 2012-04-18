@@ -43,9 +43,9 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * adds an info page at `/_h5ai`
 * sort order is preserved while browsing
 * removes PHP error messages on thumbnail generation
-* fixes PHP problems with zipped download
-* changes crumb image for folders with an index file
+* fixes PHP some problems with packed download
 * adds support for tarred downloads
+* changes crumb image for folders with an index file
 * adds `index.php` to use h5ai in non-Apache environments
 * switches from [Datejs](http://www.datejs.com) to [Moment.js](http://momentjs.com)
 * adds [underscore.js](http://underscorejs.org)
