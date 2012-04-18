@@ -51,7 +51,15 @@ class Image {
 
 		$this->sourceFile = $filename;
 
-		list($this->width, $this->height, $this->type) = getimagesize($this->sourceFile);
+		list($this->width, $this->height, $this->type) = @getimagesize($this->sourceFile);
+
+		if (!$this->width || !$this->height) {
+			$this->sourceFile = null;
+			$this->width = null;
+			$this->height = null;
+			$this->type = null;
+			return;
+		}
 
 		$this->source = imagecreatefromstring(file_get_contents($this->sourceFile));
 	}
@@ -99,6 +107,10 @@ class Image {
 
 	private function magic($destX, $destY, $srcX, $srcY, $destWidth, $destHeight, $srcWidth, $srcHeight, $canWidth = null, $canHeight = null, $color = null) {
 
+		if (is_null($this->source)) {
+			return;
+		}
+
 		if (!is_null($canWidth) && !is_null($canHeight)) {
 			$this->dest = imagecreatetruecolor($canWidth, $canHeight);
 		} else {
@@ -134,6 +146,10 @@ class Image {
 
 	public function squareThumb($width) {
 
+		if (is_null($this->source)) {
+			return;
+		}
+
 		$a = min($this->width, $this->height);
 		$x = intval(($this->width - $a) / 2);
 		$y = intval(($this->height - $a) / 2);
@@ -143,6 +159,10 @@ class Image {
 
 
 	public function rationalThumb($width, $height) {
+
+		if (is_null($this->source)) {
+			return;
+		}
 
 		$r = 1.0 * $this->width / $this->height;
 
@@ -163,6 +183,10 @@ class Image {
 
 
 	public function centerThumb($width, $height, $color = null) {
+
+		if (is_null($this->source)) {
+			return;
+		}
 
 		$r = 1.0 * $this->width / $this->height;
 
@@ -186,6 +210,10 @@ class Image {
 
 
 	public function freeThumb($width, $height) {
+
+		if (is_null($this->source)) {
+			return;
+		}
 
 		$w = intval($width);
 		$h = intval($height);

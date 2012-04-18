@@ -1,5 +1,4 @@
 
-
 Options  -Indexes
 
 AddType  text/html  .php
@@ -9,6 +8,7 @@ AddType  text/html  .php
 # if php doesn't get interpreted try to
 # uncomment one of the following lines
 ###########################################
+
 #AddHandler  application/x-httpd-php  .php
 #AddHandler  application/x-httpd-php5  .php
 #AddHandler  application/x-httpd-php52  .php
@@ -19,19 +19,19 @@ AddType  text/html  .php
 #AddHandler  php53-script  .php
 
 
-# cache images, css and js for 52 weeks
+# cache images, css and js for 7 days
 <IfModule headers_module>
 	<FilesMatch "\.png$">
-		Header set Cache-Control "max-age=31449600, public"
+		Header set Cache-Control "max-age=604800, public"
 	</FilesMatch>
 	<FilesMatch "\.css$">
-		Header set Cache-Control "max-age=31449600, public"
+		Header set Cache-Control "max-age=604800, public"
 	</FilesMatch>
 	<FilesMatch "\.js$">
-		Header set Cache-Control "max-age=31449600, public"
+		Header set Cache-Control "max-age=604800, public"
 	</FilesMatch>
 	<FilesMatch "thumb-.*\.jpg$">
-		Header set Cache-Control "max-age=31449600, public"
+		Header set Cache-Control "max-age=604800, public"
 	</FilesMatch>
 </IfModule>
 

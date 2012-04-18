@@ -17,16 +17,17 @@ var H5AI_CONFIG = {
 		"h5aiAbsHref": "/_h5ai/",
 
 		/*
-		 * Filenames of customized header and footer files to look for
-		 * in each folder. For Example:
-		 *
-		 * "customHeader": "_h5ai.header.html",
-		 * "customFooter": "_h5ai.footer.html",
-		 *
-		 * This is disabled by default.
+		 * Spacing of the main content.
+		 * Left and right will be added to a minimum of 30px. Top and bottom
+		 * are calculated relative to the top and bottom bar heights.
 		 */
-		"customHeader": null,
-		"customFooter": null,
+		"spacing": {
+			"maxWidth": 960,
+			"top": 50,
+			"right": "auto",
+			"bottom": 50,
+			"left": "auto"
+		},
 
 		/*
 		 * An array of view modes the user may choose from. Currently there
@@ -35,8 +36,111 @@ var H5AI_CONFIG = {
 		 * view mode is fixed and the selector buttons are hidden.
 		 * The user selected view mode is also stored local in modern browsers
 		 * so that it will be persistent.
+		 *
+		 * Set parent folder labels to real folder names.
 		 */
-		"viewmodes": ["details", "icons"],
+		"view": {
+			"modes": ["details", "icons"],
+			"setParentFolderLabels": true
+		},
+
+
+
+
+		/*
+		 * Extensions in alphabetical order.
+		 */
+
+		/*
+		 * Show a clickable breadcrumb.
+		 */
+		"crumb": {
+			"enabled": true
+		},
+
+		/*
+		 * Filenames of customized header and footer files to look for
+		 * in each folder.
+		 */
+		"custom": {
+			"enabled": false,
+			"header": "_h5ai.header.html",
+			"footer": "_h5ai.footer.html"
+		},
+
+		/*
+		 * EXPLICITLY: USE "shell" ON YOUR OWN RISK.
+		 *
+		 * Requires PHP on the server.
+		 * Enable packaged download of selected entries.
+		 * Execution: "php", "shell".
+		 * Supported formats: "tar", "zip".
+		 */
+		"download": {
+			"enabled": false,
+			"execution": "shell",
+			"format": "zip"
+		},
+
+		/*
+		 * Allow filtering the displayed files and folders.
+		 * Note: filters will be treated as JavaScript regular expressions
+		 * if you prefix them with "re:".
+		 */
+		"filter": {
+			"enabled": true
+		},
+
+		/*
+		 * Associative array of folders and their HTTP status codes to
+		 * avoid HEAD requests to that folders. The key (folder) must start
+		 * and end with a slash (/).
+		 * For example
+		 *   "/some/folder/": 200
+		 * will always return HTTP status 200 (OK), which will be interpreted
+		 * as a non auto indexed folder, that means a folder containing an
+		 * appropriate default index file.
+		 */
+		"folderstatus": {
+			"enabled": false,
+			"folders": {}
+		},
+
+		/*
+		 * Localization, for example "en", "de" etc. - see "langs" below for
+		 * possible values. Adjust it to your needs. If lang is not found in
+		 * "langs" it defaults to "en".
+		 *
+		 * Optionally try to use browser language, falls back to previous
+		 * specified language.
+		 */
+		"l10n": {
+			"enabled": true,
+			"lang": "en",
+			"useBrowserLang": true
+		},
+
+		/*
+		 * Link the hover effects between crumb, main view and tree.
+		 */
+		"link-hover-states": {
+			"enabled": true
+		},
+
+		/*
+		 * Show QRCodes on hovering files.
+		 */
+		"qrcode": {
+			"enabled": false,
+			"size": 150
+		},
+
+		/*
+		 * Make entries selectable. At the moment only needed for packaged download.
+		 */
+		"select": {
+			"enabled": true
+		},
 
 		/*
 		 * Default sort order is a two letter code. The first letter specifies
@@ -44,162 +148,126 @@ var H5AI_CONFIG = {
 		 * second letter specifies the sort order: "a" for "ascending" or "d"
 		 * for "descending".
 		 */
-		"sortorder": "na",
+		"sort": {
+			"enabled": true,
+			"order": "na"
+		},
 
 		/*
-		 * Show a folder tree, boolean.
+		 * Show additional info in a statusbar.
+		 */
+		"statusbar": {
+			"enabled": true
+		},
+
+		/*
+		 * Requires PHP on the server.
+		 * Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
+		 * writable for the Apache Server.
+		 */
+		"thumbnails": {
+			"enabled": true,
+			"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+			"delay": 1000
+		},
+
+		/*
+		 * Replace window title with current breadcrumb.
+		 */
+		"title": {
+			"enabled": true
+		},
+
+		/*
+		 * Show a folder tree.
 		 * Note that this tree might have side effects as it sends HEAD requests
 		 * to the folders, and therefore will invoke index.php scripts. Use
-		 * folderStatus below to avoid such requests.
+		 * "folderstatus" above to avoid such requests.
 		 * It might also affect performance significantly.
+		 *
+		 * Slide tree bar into viewport if there is enough space.
 		 */
-		"showTree": true,
-
-		/*
-		 * Slide tree bar into viewport if there is enough space, boolean.
-		 */
-		"slideTree": true,
-
-		/*
-		 * Associative array of folders and their HTTP status codes to
-		 * avoid HEAD requests to that folders. The key (folder) must start
-		 * and end with a slash (/).
-		 * For example:
-		 *   "/some/folder/": 200
-		 * will always return HTTP status 200 (OK), which will be interpreted
-		 * as a non auto indexed folder, that means a folder containing an
-		 * appropriate default index file.
-		 */
-		"folderStatus": {},
-
-		/*
-		 * Localization, for example "en", "de" etc. - see h5aiLangs below for
-		 * possible values. Adjust it to your needs. If lang is not found in
-		 * h5aiLangs it defaults to "en".
-		 */
-		"lang": "en",
-
-		/*
-		 * Try to use browser language, falls back to previous specified lang.
-		 */
-		"useBrowserLang": true,
-
-		/*
-		 * Set parent folder labels to real folder names.
-		 */
-		"setParentFolderLabels": true,
-
-		/*
-		 * Link the hover effects between crumb, extended view and tree.
-		 */
-		"linkHoverStates": true,
-
-		/*
-		 * Date format in detailed view, for example: "yyyy-MM-dd HH:mm:ss"
-		 * Syntax as specified by date.js
-		 * http://code.google.com/p/datejs/wiki/FormatSpecifiers
-		 */
-		"dateFormat": "yyyy-MM-dd HH:mm",
-
-		/*
-		 * Requires PHP on the server.
-		 * Show thumbnails for image files.
-		 */
-		"showThumbs": true,
-		"thumbTypes": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
-
-		/*
-		 * Requires PHP on the server.
-		 * Enable zipped download of selected entries.
-		 */
-		"zippedDownload": false,
-
-		/*
-		 * Show QRCodes on hovering files.
-		 * Set this to the desired size in pixel or null to not display QRCodes.
-		 * A good size to start with might be 150.
-		 */
-		"qrCodesSize": null,
-
-		/*
-		 * Allow filtering the displayed files and folders.
-		 * Filters are ment to be JavaScript regular expressions.
-		 */
-		"showFilter": false
+		"tree": {
+			"enabled": true,
+			"slide": true
+		}
 	},
 
 
 	/*
-	 * File types mapped to file extensions.
+	 * File types mapped to file extensions. In alphabetical order.
 	 */
 	"types": {
-		"archive":          [".tar.bz2", ".tar.gz", ".tgz"],
-		"audio":            [".aif", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
-		"authors":          ["authors"],
-		"bin":              [".class", ".o", ".so"],
-		"blank":            [],
-		"bmp":              [".bmp"],
-		"c":                [".c"],
-		"calc":             [".ods", ".ots", ".xlr", ".xls", ".xlsx"],
-		"cd":               [".cue", ".iso"],
-		"copying":          ["copying", "license"],
-		"cpp":              [".cpp"],
-		"css":              [".css", ".less"],
-		"deb":              [".deb"],
-		"default":          [],
-		"doc":              [".doc", ".docx", ".odm", ".odt", ".ott"],
-		"draw":             [".drw"],
-		"eps":              [".eps"],
-		"exe":              [".exe"],
-		"folder":           [],
-		"folder-home":      [],
-		"folder-open":      [],
-		"folder-page":      [],
-		"folder-parent":    [],
-		"gif":              [".gif"],
-		"gzip":             [".gz"],
-		"h":                [".h"],
-		"hpp":              [".hpp"],
-		"html":             [".htm", ".html", ".shtml"],
-		"ico":              [".ico"],
-		"image":            [".xpm"],
-		"install":          ["install"],
-		"java":             [".java"],
-		"jpg":              [".jpg", ".jpeg"],
-		"js":               [".js", ".json"],
-		"log":              [".log", "changelog"],
-		"makefile":         [".pom", "build.xml", "pom.xml"],
-		"package":          [],
-		"pdf":              [".pdf"],
-		"php":              [".php"],
-		"playlist":         [".m3u"],
-		"png":              [".png"],
-		"pres":             [".odp", ".otp", ".pps", ".ppt", ".pptx"],
-		"psd":              [".psd"],
-		"py":               [".py"],
-		"rar":              [".rar"],
-		"rb":               [".rb"],
-		"readme":           ["readme"],
-		"rpm":              [".rpm"],
-		"rss":              [".rss"],
-		"rtf":              [".rtf"],
-		"script":           [".conf", ".csh", ".ini", ".ksh", ".sh", ".shar", ".tcl"],
-		"source":           [],
-		"sql":              [],
-		"tar":              [".tar"],
-		"tex":              [".tex"],
-		"text":             [".markdown", ".md", ".text", ".txt"],
-		"tiff":             [".tiff"],
-		"unknown":          [],
-		"vcal":             [".vcal"],
-		"video":            [".avi", ".flv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
-		"xml":              [".xml"],
-		"zip":              [".bz2", ".jar", ".war", ".z", ".Z", ".zip"]
+		"archive":			[".tar.bz2", ".tar.gz", ".tgz"],
+		"audio":			[".aif", ".flac", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
+		"authors":			["authors"],
+		"bin":				[".class", ".o", ".so"],
+		"blank":			[],
+		"bmp":				[".bmp"],
+		"c":				[".c"],
+		"calc":				[".ods", ".ots", ".xlr", ".xls", ".xlsx"],
+		"cd":				[".cue", ".iso"],
+		"copying":			["copying", "license"],
+		"cpp":				[".cpp"],
+		"css":				[".css", ".less"],
+		"deb":				[".deb"],
+		"default":			[],
+		"doc":				[".doc", ".docx", ".odm", ".odt", ".ott"],
+		"draw":				[".drw"],
+		"eps":				[".eps"],
+		"exe":				[".bat", ".cmd", ".exe"],
+		"folder":			[],
+		"folder-home":		[],
+		"folder-open":		[],
+		"folder-page":		[],
+		"folder-parent":	[],
+		"gif":				[".gif"],
+		"gzip":				[".gz"],
+		"h":				[".h"],
+		"hpp":				[".hpp"],
+		"html":				[".htm", ".html", ".shtml"],
+		"ico":				[".ico"],
+		"image":			[".xpm"],
+		"install":			["install"],
+		"java":				[".java"],
+		"jpg":				[".jpg", ".jpeg"],
+		"js":				[".js", ".json"],
+		"log":				[".log", "changelog"],
+		"makefile":			[".pom", "build.xml", "pom.xml"],
+		"package":			[],
+		"pdf":				[".pdf"],
+		"php":				[".php"],
+		"playlist":			[".m3u", ".m3u8", ".pls"],
+		"png":				[".png"],
+		"pres":				[".odp", ".otp", ".pps", ".ppt", ".pptx"],
+		"psd":				[".psd"],
+		"py":				[".py"],
+		"rar":				[".rar"],
+		"rb":				[".rb"],
+		"readme":			["readme"],
+		"rpm":				[".rpm"],
+		"rss":				[".rss"],
+		"rtf":				[".rtf"],
+		"script":			[".conf", ".csh", ".ini", ".ksh", ".sh", ".shar", ".tcl"],
+		"source":			[],
+		"sql":				[],
+		"tar":				[".tar"],
+		"tex":				[".tex"],
+		"text":				[".diff", ".markdown", ".md", ".patch", ".text", ".txt"],
+		"tiff":				[".tiff"],
+		"unknown":			[],
+		"vcal":				[".vcal"],
+		"video":			[".avi", ".flv", ".mkv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
+		"xml":				[".xml"],
+		"zip":				[".7z", ".bz2", ".jar", ".lzma", ".war", ".z", ".Z", ".zip"]
 	},
 
 
 	/*
-	 * Available translations.
+	 * Available translations. "en" in first place as a reference, otherwise in alphabetical order.
+	 *
+	 * Date format is used in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
+	 * Syntax as specified by Moment.js (http://momentjs.com)
 	 */
 	"langs": {
 
@@ -215,7 +283,8 @@ var H5AI_CONFIG = {
 			"folders": "folders",
 			"files": "files",
 			"download": "download",
-			"noMatch": "no match"
+			"noMatch": "no match",
+			"dateFormat": "YYYY-MM-DD HH:mm"
 		},
 
 		"bg": {
@@ -228,9 +297,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Предходна директория",
 			"empty": "празно",
 			"folders": "папки",
-			"files": "файлове",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "файлове"
 		},
 
 		"cs": {
@@ -243,9 +310,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Nadřazený adresář",
 			"empty": "prázdný",
 			"folders": "složek",
-			"files": "souborů",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "souborů"
 		},
 
 		"de": {
@@ -260,7 +325,8 @@ var H5AI_CONFIG = {
 			"folders": "Ordner",
 			"files": "Dateien",
 			"download": "Download",
-			"noMatch": "keine Treffer"
+			"noMatch": "keine Treffer",
+			"dateFormat": "DD.MM.YYYY HH:mm"
 		},
 
 		"es": {
@@ -274,8 +340,7 @@ var H5AI_CONFIG = {
 			"empty": "vacío",
 			"folders": "Directorios",
 			"files": "Archivos",
-			"download": "Descargar",
-			"noMatch": "no match"
+			"download": "Descargar"
 		},
 
 		"fr": {
@@ -290,7 +355,22 @@ var H5AI_CONFIG = {
 			"folders": "Répertoires",
 			"files": "Fichiers",
 			"download": "télécharger",
-			"noMatch": "no match"
+			"noMatch": "rien trouvé"
+		},
+
+		"gr": {
+			"lang": "ελληνικά",
+			"details": "Λεπτομέρειες",
+			"icons": "Εικονίδια",
+			"name": "Όνομα",
+			"lastModified": "Τελευταία Τροποποίηση",
+			"size": "Μέγεθος",
+			"parentDirectory": "Προηγούμενος Κατάλογος",
+			"empty": "κενό",
+			"folders": "Φάκελοι",
+			"files": "Αρχεία",
+			"download": "Μεταμόρφωση",
+			"noMatch": "Κανένα Ταίριασμα"
 		},
 
 		"it": {
@@ -303,10 +383,23 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Cartella Superiore",
 			"empty": "vuota",
 			"folders": "cartelle",
-			"files": "file",
-			"download": "download",
-			"noMatch": "no match"
-	   },
+			"files": "file"
+		},
+
+		"ja": {
+			"lang": "日本語",
+			"details": "詳細",
+			"icons": "アイコン",
+			"name": "名前",
+			"lastModified": "変更日",
+			"size": "サイズ",
+			"parentDirectory": "親フォルダ",
+			"empty": "項目なし",
+			"folders": "フォルダ",
+			"files": "ファイル",
+			"download": "ダウンロード",
+			"noMatch": "一致なし"
+		},
 
 		"lv": {
 			"lang": "latviešu",
@@ -320,7 +413,22 @@ var H5AI_CONFIG = {
 			"folders": "mapes",
 			"files": "faili",
 			"download": "lejupielādēt",
-			"noMatch": "no match"
+			"noMatch": "nav sakritības"
+		},
+
+		"nb": {
+			"lang": "norwegian",
+			"details": "detaljer",
+			"icons": "ikoner",
+			"name": "Navn",
+			"lastModified": "Sist endret",
+			"size": "Størrelse",
+			"parentDirectory": "Overordnet mappe",
+			"empty": "tom",
+			"folders": "mapper",
+			"files": "filer",
+			"download": "last ned",
+			"noMatch": "ingen treff"
 		},
 
 		"nl": {
@@ -331,11 +439,7 @@ var H5AI_CONFIG = {
 			"lastModified": "Laatste wijziging",
 			"size": "Grootte",
 			"parentDirectory": "Bovenliggende map",
-			"empty": "lege",
-			"folders": "folders",
-			"files": "files",
-			"download": "download",
-			"noMatch": "no match"
+			"empty": "lege"
 		},
 
 		"pl": {
@@ -348,9 +452,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Katalog nadrzędny",
 			"empty": "pusty",
 			"folders": "foldery",
-			"files": "pliki",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "pliki"
 		},
 
 		"pt": {
@@ -363,9 +465,22 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Diretório superior",
 			"empty": "vazio",
 			"folders": "pastas",
-			"files": "arquivos",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "arquivos"
+		},
+
+		"ro": {
+			"lang": "română",
+			"details": "detalii",
+			"icons": "pictograme",
+			"name": "nume",
+			"lastModified": "ultima modificare",
+			"size": "mărime",
+			"parentDirectory": "dosar părinte",
+			"empty": "gol",
+			"folders": "dosar",
+			"files": "fişiere",
+			"download": "descarcă",
+			"noMatch": "0 rezultate"
 		},
 
 		"ru": {
@@ -378,9 +493,7 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Главная директория",
 			"empty": "пусто",
 			"folders": "папки",
-			"files": "файлы",
-			"download": "download",
-			"noMatch": "no match"
+			"files": "файлы"
 		},
 
 		"sk": {
@@ -393,9 +506,22 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Nadriadený priečinok",
 			"empty": "prázdny",
 			"folders": "priečinkov",
-			"files": "súborov",
+			"files": "súborov"
+		},
+
+		"sr": {
+			"lang": "srpski",
+			"details": "detalji",
+			"icons": "ikone",
+			"name": "Ime",
+			"lastModified": "Poslednja modifikacija",
+			"size": "Veličina",
+			"parentDirectory": "Roditeljski direktorijum",
+			"empty": "prazno",
+			"folders": "direktorijum",
+			"files": "fajlovi",
 			"download": "download",
-			"noMatch": "no match"
+			"noMatch": "bez poklapanja"
 		},
 
 		"sv": {
@@ -406,11 +532,7 @@ var H5AI_CONFIG = {
 			"lastModified": "Senast ändrad",
 			"size": "Filstorlek",
 			"parentDirectory": "Till överordnad mapp",
-			"empty": "tom",
-			"folders": "folders",
-			"files": "files",
-			"download": "download",
-			"noMatch": "no match"
+			"empty": "tom"
 		},
 
 		"tr": {
@@ -424,8 +546,7 @@ var H5AI_CONFIG = {
 			"empty": "boş",
 			"folders": "klasörler",
 			"files": "dosyalar",
-			"download": "indir",
-			"noMatch": "no match"
+			"download": "indir"
 		},
 
 		"zh-cn": {
@@ -439,8 +560,7 @@ var H5AI_CONFIG = {
 			"empty": "空文件夹",
 			"folders": "文件夹",
 			"files": "文件",
-			"download": "下载",
-			"noMatch": "no match"
+			"download": "下载"
 		},
 
 		"zh-tw": {
@@ -454,8 +574,7 @@ var H5AI_CONFIG = {
 			"empty": "空資料夾",
 			"folders": "資料夾",
 			"files": "檔案",
-			"download": "下載",
-			"noMatch": "no match"
+			"download": "下載"
 		}
 	}
 };

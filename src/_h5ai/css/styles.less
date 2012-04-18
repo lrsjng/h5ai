@@ -1,0 +1,47 @@
+
+@import "inc/h5bp-norm";
+@import "inc/mixins";
+
+::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
+::selection { background: #68A9FF; color: #fff; text-shadow: none; }
+
+body {
+	font-family: Ubuntu, sans-serif;
+	font-size: 13px;
+	color: #555;
+	background-color: #fff;
+	margin: 30px;
+}
+
+
+@import "inc/topbar";
+@import "inc/download";
+@import "inc/filter";
+
+@import "inc/content";
+@import "inc/extended";
+
+@import "inc/bottombar";
+@import "inc/l10n";
+
+@import "inc/tree";
+@import "inc/context";
+@import "inc/apache-autoindex-table";
+
+@import "inc/responsive";
+
+@import "inc/h5ai-info";
+
+
+html.js .hideOnJs, html.no-js .hideOnNoJs {
+	display: none;
+}
+html.oldie {
+	.oldBrowser {
+		display: inline !important;
+	}
+	#tree {
+		display: none !important;
+	}
+}
+

@@ -1,6 +1,6 @@
 <?php
 
-require_h5ai("/php/inc/Image.php");
+H5ai::req_once("/php/inc/Image.php");
 
 
 class Thumbnail {

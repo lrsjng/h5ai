@@ -1,0 +1,30 @@
+
+#download {
+	display: none;
+	.topbar-right;
+	.transition(all 0.2s ease-in-out);
+
+	&.failed {
+		background-color: rgba(255,0,0,0.5);
+	}
+}
+
+#download-auth {
+	display: none;
+	position: fixed;
+	z-index: 5;
+	left: 0;
+	top: 0;
+	.vert-gradient(rgb(241,241,241), rgb(228,228,228));
+	border: 1px solid rgb(210,210,210);
+
+	input {
+		display: block;
+		margin: 4px 6px;
+		border: 1px solid rgb(210,210,210);
+		font-family: Ubuntu, sans-serif;
+		color: #555;
+		background-color: rgba(255,255,255,1);
+		width: 100px;
+	}
+}
