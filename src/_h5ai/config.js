@@ -63,7 +63,7 @@ var H5AI_CONFIG = {
 		 * in each folder.
 		 */
 		"custom": {
-			"enabled": true,
+			"enabled": false,
 			"header": "_h5ai.header.html",
 			"footer": "_h5ai.footer.html"
 		},
@@ -77,7 +77,7 @@ var H5AI_CONFIG = {
 		 * Supported formats: "tar", "zip".
 		 */
 		"download": {
-			"enabled": true,
+			"enabled": false,
 			"execution": "shell",
 			"format": "zip"
 		},
@@ -102,7 +102,7 @@ var H5AI_CONFIG = {
 		 * appropriate default index file.
 		 */
 		"folderstatus": {
-			"enabled": true,
+			"enabled": false,
 			"folders": {}
 		},
 
@@ -131,7 +131,7 @@ var H5AI_CONFIG = {
 		 * Show QRCodes on hovering files.
 		 */
 		"qrcode": {
-			"enabled": true,
+			"enabled": false,
 			"size": 150
 		},
 
