@@ -49,14 +49,18 @@
 		<zip destfile="${release.dir}/${project.name}-${project.version}.zip" basedir="${build.dir}" />
 	</target>
 
-	<target name="lint" depends="build-prepare">
-		<wepp file="${build.dir}/_h5ai/js/inc/main.js" tofile="${build.dir}/_h5ai/js/inc/main.js" />
-		<jslint files="${build.dir}/_h5ai/js/inc/main.js" />
-	</target>
-
-	<target name="hint" depends="build-prepare">
-		<wepp file="${build.dir}/_h5ai/js/inc/main.js" tofile="${build.dir}/_h5ai/js/inc/main.js" />
-		<jshint files="${build.dir}/_h5ai/js/inc/main.js" />
+	<target name="jshint" depends="init">
+		<apply executable="${tool.jshint}" verbose="true" parallel="true">
+			<srcfile />
+			<arg line="--config jshint.json" />
+			<arg line="--show-non-errors" />
+			<fileset dir="${src.dir}/_h5ai/js/inc">
+				<patternset>
+					<include name="**/*.js" />
+					<exclude name="lib/**/*" />
+				</patternset>
+			</fileset>
+		</apply>
 	</target>
 
 
@@ -104,26 +108,6 @@
 			<delete dir="@{todir}/inc" >
 				<fileset dir="." includes="@{todir}/**/*.less" />
 			</delete>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="jslint">
-		<attribute name="files" />
-		<sequential>
-			<echo>JSLint @{files}</echo>
-			<exec executable="${tool.jslint}" failonerror="false">
-				<arg line="@{files}" />
-			</exec>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="jshint">
-		<attribute name="files" />
-		<sequential>
-			<echo>JSHint @{files}</echo>
-			<exec executable="${tool.jshint}" failonerror="false">
-				<arg line="@{files}" />
-			</exec>
 		</sequential>
 	</macrodef>
 

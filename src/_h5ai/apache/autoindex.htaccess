@@ -3,20 +3,13 @@
 # customized .htaccess
 ################################
 
-# Options  +Indexes
-# Options  +FollowSymLinks
+Options       +Indexes
+Options       +FollowSymLinks
 
+HeaderName    /_h5ai/apache/h5ai-header.html
+ReadmeName    /_h5ai/apache/h5ai-footer.html
 
-HeaderName    /_h5ai/header.html
-
-# pure JavaScript version
-ReadmeName    /_h5ai/footer.html
-
-# PHP version
-# ReadmeName    /_h5ai/footer.php
-
-
-IndexIgnore _h5ai*
+IndexIgnore   _h5ai*
 
 IndexOptions  Charset=UTF-8
 IndexOptions  FancyIndexing

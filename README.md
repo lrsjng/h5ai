@@ -1,15 +1,14 @@
 # h5ai
 
-Please don't use files from this repository (`src` folder) for installation.
-They need to be preprocessed/compiled to work correctly. You'll find a
-precompiled package on the [project page](http://larsjung.de/h5ai).
+Please don't use files from the `src` folder for installation.
+They need to be preprocessed to work correctly. You'll find a preprocessed
+package on the [project page](http://larsjung.de/h5ai).
 
 To report a bug or make a feature request
 please create [a new issue](http://github.com/lrsjng/h5ai/issues/new).
 
 * Website with download, docs and demo: <http://larsjung.de/h5ai>
 * Sources: <http://github.com/lrsjng/h5ai>
-* Q&A group: <http://groups.google.com/group/h5ai>
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
 
@@ -31,7 +30,18 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ## Changelog
 
 
-### v0.19 - *2012-04-??*
+### v0.20 - *2012-05-11*
+
+* adds image preview
+* adds thumbnails for video and pdf
+* adds support for lighttpd, nginx and cherokee and maybe other webservers with PHP
+* adds folder size in PHP version via shell `du`
+* fixes some localization problems
+* updates info page at `/_h5ai/`
+* switches to JSHint
+
+
+### v0.19 - *2012-04-19*
 
 * adds lots of config options
 * changes in `config.js` and `h5ai.htaccess`
@@ -40,7 +50,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * removes hash changes since they break logical browser history
 * fixes thumbnail size for portrait images in icon view
 * fixes problems with file type recognition
-* adds an info page at `/_h5ai`
+* adds an info page at `/_h5ai/`
 * sort order is preserved while browsing
 * removes PHP error messages on thumbnail generation
 * fixes PHP some problems with packed download
@@ -54,7 +64,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
 * adds ja translation by [metasta](http://github.com/metasta)
 * adds nb translation by [Sindre Sorhus](http://github.com/sindresorhus)
-* adds sr translation by [Goran](http://github.com/vBm)
+* adds sr translation by [vBm](http://github.com/vBm)
 * adds gr translation by [xhmikosr](http://github.com/xhmikosr)
 
 

@@ -1,37 +1,43 @@
 
-Options  -Indexes
+Options -Indexes
 
-AddType  text/html  .php
+<IfModule mod_expires.c>
+	Header set Cache-Control "public"
+	ExpiresActive on
 
+	# Perhaps better to whitelist expires rules? Perhaps.
+	ExpiresDefault                          "access plus 1 month"
 
-###########################################
-# if php doesn't get interpreted try to
-# uncomment one of the following lines
-###########################################
+	# cache.manifest needs re-requests in FF 3.6 (thx Remy ~Introducing HTML5)
+	ExpiresByType text/cache-manifest       "access plus 0 seconds"
 
-#AddHandler  application/x-httpd-php  .php
-#AddHandler  application/x-httpd-php5  .php
-#AddHandler  application/x-httpd-php52  .php
-#AddHandler  application/x-httpd-php53  .php
-#AddHandler  php-script  .php
-#AddHandler  php5-script  .php
-#AddHandler  php52-script  .php
-#AddHandler  php53-script  .php
+	# your document html 
+	ExpiresByType text/html                 "access plus 0 seconds"
 
+	# data
+	ExpiresByType text/xml                  "access plus 0 seconds"
+	ExpiresByType application/xml           "access plus 0 seconds"
+	ExpiresByType application/json          "access plus 0 seconds"
 
-# cache images, css and js for 7 days
-<IfModule headers_module>
-	<FilesMatch "\.png$">
-		Header set Cache-Control "max-age=604800, public"
-	</FilesMatch>
-	<FilesMatch "\.css$">
-		Header set Cache-Control "max-age=604800, public"
-	</FilesMatch>
-	<FilesMatch "\.js$">
-		Header set Cache-Control "max-age=604800, public"
-	</FilesMatch>
-	<FilesMatch "thumb-.*\.jpg$">
-		Header set Cache-Control "max-age=604800, public"
-	</FilesMatch>
+	# media: images, video, audio
+	ExpiresByType image/gif                 "access plus 1 month"
+	ExpiresByType image/png                 "access plus 1 month"
+	ExpiresByType image/jpg                 "access plus 1 month"
+	ExpiresByType image/jpeg                "access plus 1 month"
+	ExpiresByType video/ogg                 "access plus 1 month"
+	ExpiresByType audio/ogg                 "access plus 1 month"
+	ExpiresByType video/mp4                 "access plus 1 month"
+	ExpiresByType video/webm                "access plus 1 month"
+
+	# webfonts
+	ExpiresByType font/truetype             "access plus 1 month"
+	ExpiresByType font/opentype             "access plus 1 month"
+	ExpiresByType font/woff                 "access plus 1 month"
+	ExpiresByType image/svg+xml             "access plus 1 month"
+	ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+
+	# css and javascript
+	ExpiresByType text/css                  "access plus 1 month"
+	ExpiresByType application/javascript    "access plus 1 month"
+	ExpiresByType text/javascript           "access plus 1 month"
 </IfModule>
-

@@ -28,8 +28,6 @@ module.define('view/extended', [jQuery, 'core/settings', 'core/resource', 'core/
 						'</ul>',
 		emptyTemplate = '<div class="empty l10n-empty">empty</div>',
 
-
-
 		// updates this single entry
 		update = function (entry) {
 
@@ -43,28 +41,17 @@ module.define('view/extended', [jQuery, 'core/settings', 'core/resource', 'core/
 				$imgBig = $html.find('.icon.big img'),
 				$label = $html.find('.label'),
 				$date = $html.find('.date'),
-				$size = $html.find('.size'),
-				icon16 = resource.icon(entry.type),
-				icon48 = resource.icon(entry.type, true),
-				escapedHref = entry.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
+				$size = $html.find('.size');
+				// escapedHref = entry.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
 
 			$html
 				.addClass(entry.isFolder() ? 'folder' : 'file')
 				.data('entry', entry)
 				.data('status', entry.status);
 
-			if (entry.isParentFolder) {
-				icon16 = resource.icon('folder-parent');
-				icon48 = resource.icon('folder-parent', true);
-				if (!settings.setParentFolderLabels) {
-					$label.addClass('l10n-parentDirectory');
-				}
-				$html.addClass('folder-parent');
-			}
-
 			$a.attr('href', entry.absHref);
-			$imgSmall.attr('src', icon16).attr('alt', entry.type);
-			$imgBig.attr('src', icon48).attr('alt', entry.type);
+			$imgSmall.attr('src', resource.icon(entry.type)).attr('alt', entry.type);
+			$imgBig.attr('src', resource.icon(entry.type, true)).attr('alt', entry.type);
 			$label.text(entry.label);
 			$date.data('time', entry.time).text(format.formatDate(entry.time));
 			$size.data('bytes', entry.size).text(format.formatSize(entry.size));
@@ -78,6 +65,15 @@ module.define('view/extended', [jQuery, 'core/settings', 'core/resource', 'core/
 					$html.addClass('error');
 					$label.append($(hintTemplate).text(' ' + entry.status + ' '));
 				}
+			}
+
+			if (entry.isParentFolder) {
+				$imgSmall.attr('src', resource.icon('folder-parent'));
+				$imgBig.attr('src', resource.icon('folder-parent', true));
+				if (!settings.setParentFolderLabels) {
+					$label.addClass('l10n-parentDirectory');
+				}
+				$html.addClass('folder-parent');
 			}
 
 			if (entry.$extended) {

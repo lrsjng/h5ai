@@ -77,9 +77,9 @@ var H5AI_CONFIG = {
 		 * Supported formats: "tar", "zip".
 		 */
 		"download": {
-			"enabled": false,
+			"enabled": true,
 			"execution": "shell",
-			"format": "zip"
+			"format": "tar"
 		},
 
 		/*
@@ -89,6 +89,15 @@ var H5AI_CONFIG = {
 		 */
 		"filter": {
 			"enabled": true
+		},
+
+		/*
+		 * Requires PHP on the server.
+		 * Calc the size of folders.
+		 * Depends on du.
+		 */
+		"foldersize": {
+			"enabled": false
 		},
 
 		/*
@@ -128,6 +137,26 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		 * Shows the server mode in the bottom left corner.
+		 * display values:
+		 *   0: only show mode
+		 *   1: mode and servername
+		 *   2: mode, servername and -version
+		 */
+		"mode": {
+			"enabled": true,
+			"display": 2
+		},
+
+		/*
+		 * Show an image preview on click.
+		 */
+		"preview-img": {
+			"enabled": true,
+			"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
+		},
+
+		/*
 		 * Show QRCodes on hovering files.
 		 */
 		"qrcode": {
@@ -164,10 +193,15 @@ var H5AI_CONFIG = {
 		 * Requires PHP on the server.
 		 * Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
 		 * writable for the Apache Server.
+		 * - img thumbnails depend on PHP-GD
+		 * - mov thumbnails depend on ffmpeg
+		 * - doc thumbnails depend on convert
 		 */
 		"thumbnails": {
-			"enabled": true,
-			"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+			"enabled": false,
+			"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+			"mov": ["video"],
+			"doc": ["pdf", "ps"],
 			"delay": 1000
 		},
 
@@ -240,6 +274,7 @@ var H5AI_CONFIG = {
 		"playlist":			[".m3u", ".m3u8", ".pls"],
 		"png":				[".png"],
 		"pres":				[".odp", ".otp", ".pps", ".ppt", ".pptx"],
+		"ps":				[".ps"],
 		"psd":				[".psd"],
 		"py":				[".py"],
 		"rar":				[".rar"],
@@ -413,7 +448,8 @@ var H5AI_CONFIG = {
 			"folders": "mapes",
 			"files": "faili",
 			"download": "lejupielādēt",
-			"noMatch": "nav sakritības"
+			"noMatch": "nav sakritības",
+			"dateFormat": "YYYY-MM-DD HH:mm"
 		},
 
 		"nb": {

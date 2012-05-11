@@ -1,9 +1,9 @@
 <?php
 
-require_once(str_replace("\\", "/", __DIR__) . "/inc/H5ai.php");
+require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php");
 
 
-$h5ai = new H5ai();
+$h5ai = new H5ai(__FILE__);
 $options = $h5ai->getOptions();
 
 
@@ -41,24 +41,20 @@ if ($action === "getthumbsrc") {
 		json_fail(1, "thumbnails disabled");
 	}
 
-	list($srcAbsHref, $width, $height, $mode) = check_keys(array("href", "width", "height", "mode"));
-
-	H5ai::req_once("/php/inc/Thumbnail.php");
-	H5ai::req_once("/php/inc/Image.php");
-
-	$srcAbsPath = $h5ai->getRootAbsPath() . rawurldecode($srcAbsHref);
-
-	if (!Thumbnail::isUsable()) {
+	H5ai::req_once("/php/inc/Thumb.php");
+	if (!Thumb::is_supported()) {
 		json_fail(2, "thumbnails not supported");
 	}
 
-	$thumbnail = new Thumbnail($h5ai, $srcAbsHref, $mode, $width, $height);
-	$thumbnail->create(1);
-	if (!file_exists($thumbnail->getPath())) {
+	list($type, $srcAbsHref, $mode, $width, $height) = check_keys(array("type", "href", "mode", "width", "height"));
+
+	$thumb = new Thumb($h5ai);
+	$thumbHref = $thumb->thumb($type, $srcAbsHref, $mode, $width, $height);
+	if ($thumbHref === null) {
 		json_fail(3, "thumbnail creation failed");
 	}
 
-	json_exit(array("absHref" => $thumbnail->getHref()));
+	json_exit(array("absHref" => $thumbHref));
 }
 
 
@@ -102,19 +98,43 @@ else if ($action === "getarchive") {
 
 else if ($action === "getchecks") {
 
-	$php = $h5ai->checks["php"];
-	$cache = $php && $h5ai->checks["cache"];
-	$temp = $php && $h5ai->checks["temp"];
+	$php = version_compare(PHP_VERSION, "5.2.1") >= 0;
+	$archive = class_exists("PharData");
+	$gd = false;
+	if (function_exists("gd_info")) {
+		$gdinfo = gd_info();
+		$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
+	}
+	$cache = is_writable($h5ai->getH5aiAbsPath() . "/cache");
+	$temp = is_writable(sys_get_temp_dir());
+	$tar = preg_match("/tar$/", `which tar`) > 0;
+	$zip = preg_match("/zip$/", `which zip`) > 0;
+	$convert = preg_match("/convert$/", `which convert`) > 0;
+	$ffmpeg = preg_match("/ffmpeg$/", `which ffmpeg`) > 0;
+	$du = preg_match("/du$/", `which du`) > 0;
 
 	json_exit(array(
 		"php" => $php,
 		"cache" => $cache,
-		"thumbs" => $cache && $h5ai->checks["gd"],
+		"thumbs" => $gd,
 		"temp" => $temp,
-		"archive" => $temp && $h5ai->checks["archive"],
-		"tar" => $temp && $h5ai->checks["tar"],
-		"zip" => $temp && $h5ai->checks["zip"]
+		"archive" => $archive,
+		"tar" => $tar,
+		"zip" => $zip,
+		"convert" => $convert,
+		"ffmpeg" => $ffmpeg,
+		"du" => $du
 	));
+}
+
+
+else if ($action === "getentries") {
+
+	list($href, $content) = check_keys(array("href", "content"));
+
+	$content = intval($content, 10);
+
+	json_exit(array("entries" => $h5ai->getEntries($href, $content)));
 }
 
 

@@ -3,7 +3,9 @@ module.define('core/settings', [H5AI_CONFIG], function (config) {
 
 	var defaults = {
 			rootAbsHref: '/',
-			h5aiAbsHref: '/_h5ai/'
+			h5aiAbsHref: '/_h5ai/',
+			server: 'unknown',
+			mode: 'unknown'
 		};
 
 	return _.extend({}, defaults, config.options);

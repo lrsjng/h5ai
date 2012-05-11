@@ -7,6 +7,15 @@
 (function (global, name) {
 	'use strict';
 
+	var	err = function (message) {
+
+			throw name + ' exception: ' + message;
+		};
+
+	if (!_) {
+		err(name + ' depends on underscore');
+	}
+
 	var self = {},
 		previous = global[name],
 
@@ -16,11 +25,6 @@
 				global[name] = previous;
 			}
 			return self;
-		},
-
-		err = function (message) {
-
-			throw name + ' exception: ' + message;
 		},
 
 		definitions = {},
@@ -180,16 +184,14 @@
 			return obj;
 		};
 
-	if (!_) {
-		err(name + ' depends on underscore');
-	}
-
-	self.noConflict = noConflict;
-	self.log = log;
-	self.define = define;
-	self.require = require;
-	self.getIds = getIds;
-	self.isDefined = isDefined;
+	_.extend(self, {
+		noConflict: noConflict,
+		log: log,
+		define: define,
+		require: require,
+		getIds: getIds,
+		isDefined: isDefined
+	});
 
 	global[name] = self;
 

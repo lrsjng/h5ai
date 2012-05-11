@@ -1,5 +1,5 @@
 
-module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format', 'core/store'], function ($, allsettings, langs, format, store) {
+module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function ($, allsettings, langs, format, store, event) {
 
 	var defaults = {
 			enabled: true,
@@ -21,13 +21,12 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 
 		localize = function (langs, lang, useBrowserLang) {
 
-			var storedLang = store.get(storekey),
-				browserLang, key;
+			var storedLang = store.get(storekey);
 
 			if (langs[storedLang]) {
 				lang = storedLang;
 			} else if (useBrowserLang) {
-				browserLang = navigator.language || navigator.browserLanguage;
+				var browserLang = navigator.language || navigator.browserLanguage;
 				if (browserLang) {
 					if (langs[browserLang]) {
 						lang = browserLang;
@@ -110,7 +109,11 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 			}
 
 			initLangSelector(langs);
-			localize(langs, settings.lang, settings.useBrowserLang);
+
+			event.sub('ready', function () {
+
+				localize(langs, settings.lang, settings.useBrowserLang);
+			});
 		};
 
 	init();

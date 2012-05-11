@@ -14,8 +14,7 @@
 	<link rel="apple-touch-icon" type="image/png" href="/_h5ai/images/h5ai-48x48.png">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold">
 	<link rel="stylesheet" href="/_h5ai/css/styles.css">
-	<script src="/_h5ai/config.js"></script>
-	<script src="/_h5ai/js/scripts.js"></script>
+	<script src="/_h5ai/js/modernizr-2.5.3.min.js"></script>
 </head>
 <body id="h5ai-main">
 	<div id="topbar" class="clearfix">
@@ -33,24 +32,37 @@
 		<span class="right"></span>
 		<span class="center"></span>
 	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/_h5ai/js/jquery-1.7.2.min.js"><\/script>')</script>
+	<script src="/_h5ai/config.js"></script>
+	<script src="/_h5ai/js/scripts.js"></script>
 	<div id="data-generic-json" class="hidden">
 		<?php if (stripos($_SERVER["REQUEST_METHOD"], "HEAD") === false) {
 
-			function find_h5ai($path, $h5ai) {
+			$h5ai_php = str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php";
 
-				if (file_exists($path . $h5ai)) {
-					return $path . $h5ai;
-				} else {
+			if (!file_exists($h5ai_php)) {
+
+				function find_h5ai($path, $h5ai) {
+
+					if (file_exists($path . $h5ai)) {
+						return $path . $h5ai;
+					}
+
 					$parent = str_replace("\\", "/", dirname($path));
 					if ($parent !== $path) {
 						return find_h5ai($parent, $h5ai);
 					}
+
+					error_log("h5ai not found: " . __FILE__);
 				}
-				error_log("h5ai not found from " . __DIR__);
+
+				$h5ai_php = find_h5ai(str_replace("\\", "/", dirname(__FILE__)), "/_h5ai/php/inc/H5ai.php");
 			}
 
-			require_once(find_h5ai(str_replace("\\", "/", __DIR__), "/_h5ai/php/inc/H5ai.php"));
-			$h5ai = new H5ai();
+			require_once($h5ai_php);
+
+			$h5ai = new H5ai(__FILE__);
 			echo $h5ai->getGenericJson();
 		} ?>
 	</div>
