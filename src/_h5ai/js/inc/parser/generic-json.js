@@ -1,14 +1,16 @@
 
 module.define('parser/generic-json', [jQuery, 'core/settings', 'model/entry'], function ($, settings, Entry) {
 
-	// expectes an hash of the form
-	// {
-	//   entries: [
-	//     {absHref: String, time: Number, size: Number, status: Number or "h5ai"}
-	//   ]
-	// }
+	var parser = {
+			id: 'generic-json',
+			mode: null,
+			server: {
+				name: null,
+				version: null
+			}
+		},
 
-	var parseJson = function (absHref, json) {
+		parseJson = function (absHref, json) {
 
 			if (json.hasOwnProperty('customHeader')) {
 				settings.custom.header = json.customHeader;
@@ -16,10 +18,16 @@ module.define('parser/generic-json', [jQuery, 'core/settings', 'model/entry'], f
 			if (json.hasOwnProperty('customFooter')) {
 				settings.custom.footer = json.customFooter;
 			}
+			if (json.hasOwnProperty('mode')) {
+				parser.mode = json.mode;
+			}
+			if (json.hasOwnProperty('server')) {
+				parser.server = json.server;
+			}
 
 			return _.map(json.entries, function (jsonEntry) {
 
-				return Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status);
+				return Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
 			});
 		},
 
@@ -41,8 +49,7 @@ module.define('parser/generic-json', [jQuery, 'core/settings', 'model/entry'], f
 			return parseJsonStr(absHref, $id.text());
 		};
 
-	return {
-		id: 'generic-json',
-		parse: parse
-	};
+	parser.parse = parse;
+
+	return parser;
 });

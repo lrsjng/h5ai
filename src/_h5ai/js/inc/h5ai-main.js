@@ -1,14 +1,11 @@
 
-module.define('h5ai-main', [jQuery, 'core/event'], function ($, event) {
-
+module.define('h5ai-main', [jQuery, 'core/event', 'core/settings'], function ($, event, settings) {
 
 	event.pub('beforeView');
 
 	module.require('view/extended');
 	module.require('view/viewmode');
 	module.require('view/spacing');
-
-	$('#h5ai-reference').append(module.require('core/parser').id === 'apache-autoindex' ? ' (js)' : ' (php)');
 
 	event.pub('beforeExt');
 

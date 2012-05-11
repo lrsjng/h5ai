@@ -21,7 +21,7 @@ class Archive {
 		$this->files = array();
 		$this->sc401 = false;
 
-		$this->addHrefs($hrefs);
+		$this->add_hrefs($hrefs);
 
 		if ($this->sc401) {
 			return 401;
@@ -55,7 +55,7 @@ class Archive {
 					$archive->addEmptyDir($archivedDir);
 				}
 				foreach ($this->files as $realFile => $archivedFile) {
-					$archive->addFile($realFile, $archivedFile); // very, very slow :/
+					$archive->add_file($realFile, $archivedFile); // very, very slow :/
 				}
 
 			}
@@ -67,7 +67,7 @@ class Archive {
 	}
 
 
-	private function addHrefs($hrefs) {
+	private function add_hrefs($hrefs) {
 
 		foreach ($hrefs as $href) {
 
@@ -79,22 +79,22 @@ class Archive {
 				$this->sc401 = true;
 			}
 
-			if ($code == "h5ai" && !$this->h5ai->ignoreThisFile($n)) {
+			if ($code == "h5ai" && !$this->h5ai->is_ignored($n)) {
 
 				$realFile = $this->h5ai->getAbsPath($href);
 				$archivedFile = preg_replace("!^" . H5ai::normalize_path($this->h5ai->getRootAbsPath(), true) . "!", "", $realFile);
 
 				if (is_dir($realFile)) {
-					$this->addDir($realFile, $archivedFile);
+					$this->add_dir($realFile, $archivedFile);
 				} else {
-					$this->addFile($realFile, $archivedFile);
+					$this->add_file($realFile, $archivedFile);
 				}
 			}
 		}
 	}
 
 
-	private function addFile($realFile, $archivedFile) {
+	private function add_file($realFile, $archivedFile) {
 
 		if (is_readable($realFile)) {
 			$this->files[$realFile] = $archivedFile;
@@ -102,7 +102,7 @@ class Archive {
 	}
 
 
-	private function addDir($realDir, $archivedDir) {
+	private function add_dir($realDir, $archivedDir) {
 
 		$code = $this->h5ai->getHttpCode($this->h5ai->getAbsHref($realDir));
 		if ($code == 401) {
@@ -112,16 +112,16 @@ class Archive {
 		if ($code == "h5ai") {
 			$this->dirs[] = $archivedDir;
 
-			$files = $this->h5ai->readDir($realDir);
+			$files = $this->h5ai->read_dir($realDir);
 			foreach ($files as $file) {
 
 				$realFile = $realDir . "/" . $file;
 				$archivedFile = $archivedDir . "/" . $file;
 
 				if (is_dir($realFile)) {
-					$this->addDir($realFile, $archivedFile);
+					$this->add_dir($realFile, $archivedFile);
 				} else {
-					$this->addFile($realFile, $archivedFile);
+					$this->add_file($realFile, $archivedFile);
 				}
 			}
 		}

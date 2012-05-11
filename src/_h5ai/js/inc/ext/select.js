@@ -57,7 +57,19 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 			$selectionRect
 				.stop(true, true)
-				.animate({left: l + w * 0.5 * shrink, top: t + h  * 0.5 * shrink, width: w * (1 - shrink), height: h * (1 - shrink), opacity: 0}, 300);
+				.animate(
+					{
+						left: l + w * 0.5 * shrink,
+						top: t + h  * 0.5 * shrink,
+						width: w * (1 - shrink),
+						height: h * (1 - shrink),
+						opacity: 0
+					},
+					300,
+					function () {
+						$selectionRect.hide();
+					}
+				);
 		},
 
 		selectionStart = function (event) {

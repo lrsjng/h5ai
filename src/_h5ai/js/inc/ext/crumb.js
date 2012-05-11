@@ -2,7 +2,7 @@
 module.define('ext/crumb', [jQuery, 'core/settings', 'core/resource', 'core/entry'], function ($, allsettings, resource, entry) {
 
 	var defaults = {
-			enabled: true
+			enabled: false
 		},
 
 		settings = _.extend({}, defaults, allsettings.crumb),

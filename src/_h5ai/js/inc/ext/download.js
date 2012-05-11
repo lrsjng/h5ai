@@ -9,7 +9,7 @@ module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/e
 
 		settings = _.extend({}, defaults, allsettings.download),
 
-		formats = ['tar', 'zip'],
+		// formats = ['tar', 'zip'],
 
 		downloadBtnTemplate = '<li id="download">' +
 									'<a href="#">' +

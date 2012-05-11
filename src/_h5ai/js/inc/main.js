@@ -1,8 +1,6 @@
 
 (function ($) {
 	'use strict';
-	/*jshint  browser: true */
-	/*global  _, amplify, Base64, H5AI_CONFIG, jQuery, Modernizr, module, moment */
 
 	// @include "core/entry.js"
 	// @include "core/event.js"
@@ -28,6 +26,8 @@
 	// @include "ext/folderstatus.js"
 	// @include "ext/l10n.js"
 	// @include "ext/link-hover-states.js"
+	// @include "ext/mode.js"
+	// @include "ext/preview-img.js"
 	// @include "ext/qrcode.js"
 	// @include "ext/select.js"
 	// @include "ext/sort.js"

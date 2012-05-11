@@ -1,5 +1,5 @@
 
-module.define('parser/apache-autoindex', [jQuery, 'core/format', 'model/entry'], function ($, format, Entry) {
+module.define('parser/apache-autoindex', [jQuery, 'core/settings', 'core/format', 'model/entry'], function ($, settings, format, Entry) {
 
 	var parseTableRow = function (absHref, tr) {
 
@@ -37,6 +37,11 @@ module.define('parser/apache-autoindex', [jQuery, 'core/format', 'model/entry'],
 
 	return {
 		id: 'apache-autoindex',
+		mode: 'aai',
+		server: {
+			name: 'apache',
+			version: null
+		},
 		parse: parse
 	};
 });

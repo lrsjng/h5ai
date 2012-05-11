@@ -57,9 +57,16 @@ module.define('ext/statusbar', [jQuery, 'core/settings', 'core/format', 'core/ev
 
 			event.sub('entry.mouseenter', function (entry) {
 
-				var $span = $('<span/>').append(entry.label).append(sepTemplate).append(format.formatDate(entry.time));
+				if (entry.isParentFolder) {
+					return;
+				}
 
-				if (!entry.isFolder()) {
+				var $span = $('<span/>').append(entry.label);
+
+				if (_.isNumber(entry.time)) {
+					$span.append(sepTemplate).append(format.formatDate(entry.time));
+				}
+				if (_.isNumber(entry.size)) {
 					$span.append(sepTemplate).append(format.formatSize(entry.size));
 				}
 

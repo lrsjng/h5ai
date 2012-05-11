@@ -2,7 +2,7 @@
 module.define('view/viewmode', [jQuery, 'core/settings', 'core/resource', 'core/store'], function ($, allsettings, resource, store) {
 
 	var defaults = {
-			modes: ['details', 'icons'],
+			modes: ['details', 'list', 'icons'],
 			setParentFolderLabels: false
 		},
 
@@ -10,67 +10,51 @@ module.define('view/viewmode', [jQuery, 'core/settings', 'core/resource', 'core/
 
 		storekey = 'h5ai.viewmode',
 
-		templates = {
-			details: '<li id="viewdetails" class="view">' +
-							'<a href="#">' +
-								'<img src="' + resource.image('view-details') + '" alt="view-details" />' +
-								'<span class="l10n-details">details</span>' +
-							'</a>' +
-						'</li>',
-			icons: '<li id="viewicons" class="view">' +
-							'<a href="#">' +
-								'<img src="' + resource.image('view-icons') + '" alt="view-icons" />' +
-								'<span class="l10n-icons">icons</span>' +
-							'</a>' +
-						'</li>'
-		},
+		template = '<li id="view-[MODE]" class="view">' +
+						'<a href="#">' +
+							'<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]" />' +
+							'<span class="l10n-[MODE]">[MODE]</span>' +
+						'</a>' +
+					'</li>',
 
 		update = function (viewmode) {
 
-			var $viewDetails = $('#viewdetails'),
-				$viewIcons = $('#viewicons'),
-				$extended = $('#extended');
+			var $extended = $('#extended');
 
-			if (viewmode) {
-				store.put(storekey, viewmode);
-			} else {
-				viewmode = store.get(storekey);
-			}
-			viewmode = $.inArray(viewmode, settings.modes) >= 0 ? viewmode : settings.modes[0];
+			viewmode = _.indexOf(settings.modes, viewmode) >= 0 ? viewmode : settings.modes[0];
+			store.put(storekey, viewmode);
 
-			$viewDetails.add($viewIcons).removeClass('current');
-			if (viewmode === 'details') {
-				$viewDetails.addClass('current');
-				$extended.addClass('details-view').removeClass('icons-view').show();
-			} else if (viewmode === 'icons') {
-				$viewIcons.addClass('current');
-				$extended.removeClass('details-view').addClass('icons-view').show();
-			} else {
-				$extended.hide();
-			}
+			_.each(defaults.modes, function (mode) {
+				if (mode === viewmode) {
+					$('#view-' + mode).addClass('current');
+					$extended.addClass('view-' + mode).show();
+				} else {
+					$('#view-' + mode).removeClass('current');
+					$extended.removeClass('view-' + mode);
+				}
+			});
 		},
 
 		init = function () {
 
-			var $navbar = $('#navbar'),
-				$extended = $('#extended');
+			var $navbar = $('#navbar');
 
 			settings.modes = _.intersection(settings.modes, defaults.modes);
 
 			if (settings.modes.length > 1) {
-				_.each(['icons', 'details'], function (view) {
-					if ($.inArray(view, settings.modes) >= 0) {
-						$(templates[view])
+				_.each(defaults.modes.reverse(), function (mode) {
+					if (_.indexOf(settings.modes, mode) >= 0) {
+						$(template.replace(/\[MODE\]/g, mode))
 							.appendTo($navbar)
 							.on('click', 'a', function (event) {
-								update(view);
+								update(mode);
 								event.preventDefault();
 							});
 					}
 				});
 			}
 
-			update();
+			update(store.get(storekey));
 		};
 
 	init();

@@ -2,7 +2,7 @@
 module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 
 	var domain = document.domain,
-		location = document.location.pathname,
+		location = document.location.pathname.replace(/[^\/]*$/, ''),
 
 
 		// utils
@@ -104,10 +104,13 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			if (split.parent) {
 				this.parent = cache[split.parent] || new Entry(split.parent);
 				this.parent.content[this.absHref] = this;
+				if (_.keys(this.parent.content).length > 1) {
+					this.parent.isContentFetched = true;
+				}
 			}
 		},
 
-		get = function (absHref, time, size, status) {
+		get = function (absHref, time, size, status, isContentFetched) {
 
 			absHref = absHref || location;
 
@@ -121,6 +124,9 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			}
 			if (status) {
 				self.status = status;
+			}
+			if (isContentFetched) {
+				self.isContentFetched = true;
 			}
 
 			return self;
@@ -146,8 +152,7 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 
 			var self = cache[absHref] || new Entry(absHref);
 
-			if (self.isContentFetched || _.keys(self.content).length > 1) {
-				self.isContentFetched = true;
+			if (self.isContentFetched) {
 				callback(self);
 			} else {
 				fetchStatus(absHref, function (self) {
@@ -215,7 +220,7 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 				return entry.isFolder();
 			}), function (entry) {
 
-				return entry.absHref;
+				return entry.label.toLowerCase();
 			});
 		},
 

@@ -3,7 +3,9 @@ module.define('ext/thumbnails', [jQuery, 'core/settings', 'core/resource', 'core
 
 	var defaults = {
 			enabled: false,
-			types: ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff'],
+			mov: ['video'],
+			doc: ['pdf', 'ps'],
 			delay: 1000
 		},
 
@@ -21,25 +23,36 @@ module.define('ext/thumbnails', [jQuery, 'core/settings', 'core/resource', 'core
 
 		checkEntry = function (entry) {
 
-			if (entry.$extended && $.inArray(entry.type, settings.types) >= 0) {
+			if (entry.$extended) {
 
-				var $imgSmall = entry.$extended.find('.icon.small img');
-				var $imgBig = entry.$extended.find('.icon.big img');
+				var type = null;
 
-				requestThumb($imgSmall, {
-					action: 'getthumbsrc',
-					href: entry.absHref,
-					width: 16,
-					height: 16,
-					mode: 'square'
-				});
-				requestThumb($imgBig, {
-					action: 'getthumbsrc',
-					href: entry.absHref,
-					width: 100,
-					height: 48,
-					mode: 'rational'
-				});
+				if ($.inArray(entry.type, settings.img) >= 0) {
+					type = 'img';
+				} else if ($.inArray(entry.type, settings.mov) >= 0) {
+					type = 'mov';
+				} else if ($.inArray(entry.type, settings.doc) >= 0) {
+					type = 'doc';
+				}
+
+				if (type) {
+					requestThumb(entry.$extended.find('.icon.small img'), {
+						action: 'getthumbsrc',
+						type: type,
+						href: entry.absHref,
+						mode: 'square',
+						width: 16,
+						height: 16
+					});
+					requestThumb(entry.$extended.find('.icon.big img'), {
+						action: 'getthumbsrc',
+						type: type,
+						href: entry.absHref,
+						mode: 'rational',
+						width: 100,
+						height: 48
+					});
+				}
 			}
 		},
 

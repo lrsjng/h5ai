@@ -2,11 +2,13 @@
 
 class Entry {
 
+	private static $FOLDER_SIZE_CMD = "du -sb \"[DIR]\"";
+
 
 	private static $cache = array();
 
 
-	public static function getCache() {
+	public static function get_cache() {
 
 		return Entry::$cache;
 	}
@@ -24,16 +26,18 @@ class Entry {
 
 	public static function sort() {
 
-		uasort(Entry::$cache, function ($entry1, $entry2) {
+		function cmp($entry1, $entry2) {
 
 			return strcasecmp($entry1->absHref, $entry2->absHref);
-		});
+		}
+
+		uasort(Entry::$cache, "cmp");
 	}
 
 
 
 
-	public $h5ai, $absPath, $absHref, $date, $size, $isFolder, $parent;
+	public $h5ai, $absPath, $absHref, $date, $size, $isFolder, $parent, $isContentFetched;
 
 
 	private function __construct($h5ai, $absPath, $absHref) {
@@ -49,6 +53,11 @@ class Entry {
 
 		if ($this->isFolder) {
 			$this->size = null;
+			$options = $h5ai->getOptions();
+			if ($options["foldersize"]["enabled"]) {
+				$cmd = str_replace("[DIR]", $this->absPath, Entry::$FOLDER_SIZE_CMD);
+				$this->size = intval(preg_replace("/\s.*$/", "", `$cmd`), 10);
+			}
 		} else {
 			$this->size = filesize($this->absPath);
 		}
@@ -57,6 +66,8 @@ class Entry {
 		if ($this->absHref !== "/") {
 			$this->parent = Entry::get($this->h5ai, H5ai::normalize_path(dirname($this->absPath)), H5ai::normalize_path(dirname($this->absHref), true));
 		}
+
+		$this->isContentFetched = false;
 
 		Entry::$cache[$this->absHref] = $this;
 	}
@@ -72,6 +83,7 @@ class Entry {
 
 		if ($withStatus && $this->isFolder) {
 			$obj["status"] = $this->h5ai->getHttpCode($this->absHref);
+			$obj["content"] = $this->isContentFetched;
 		}
 
 		return $obj;
@@ -92,11 +104,13 @@ class Entry {
 			return $content;
 		}
 
-		$files = $this->h5ai->readDir($this->absPath);
+		$files = $this->h5ai->read_dir($this->absPath);
 		foreach ($files as $file) {
 			$entry = Entry::get($this->h5ai, $this->absPath . "/" . $file, $this->absHref . rawurlencode($file));
 			$content[$entry->absPath] = $entry;
 		}
+
+		$this->isContentFetched = true;
 
 		return $content;
 	}

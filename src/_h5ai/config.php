@@ -22,8 +22,13 @@ $H5AI_CONFIG = array(
 	 * http://www.php.net/manual/en/function.preg-match.php
 	 */
 	"IGNORE" => array(),
-	"IGNORE_PATTERNS" => array("/^\\./", "/^_h5ai/")
+	"IGNORE_PATTERNS" => array("/^\\./", "/^_h5ai/"),
 
+	/*
+	 * Folders that contain one of these files will be considered
+	 * as none h5ai folders.
+	 */
+	"INDEX_FILES" => array("index.html", "index.htm", "index.php")
 );
 
 ?>

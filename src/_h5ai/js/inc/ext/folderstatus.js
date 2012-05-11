@@ -2,7 +2,7 @@
 module.define('ext/folderstatus', [jQuery, 'core/settings'], function ($, allsettings) {
 
 	var defaults = {
-			enabled: true,
+			enabled: false,
 			folders: {}
 		},
 
