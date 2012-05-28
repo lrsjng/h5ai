@@ -30,9 +30,9 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ## Changelog
 
 
-### v0.21 - *2012-05-??*
+### v0.21 - *2012-??*
 
-* 
+* adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
 
 
 ### v0.20 - *2012-05-11*
@@ -65,12 +65,12 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * switches from [Datejs](http://www.datejs.com) to [Moment.js](http://momentjs.com)
 * adds [underscore.js](http://underscorejs.org)
 * fixes mousewheel problems, updates [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) to 3.0.6
-* updates lv translation
-* adds ro translation by [Jakob Cosoroabă](http://github.com/midday)
-* adds ja translation by [metasta](http://github.com/metasta)
-* adds nb translation by [Sindre Sorhus](http://github.com/sindresorhus)
-* adds sr translation by [vBm](http://github.com/vBm)
-* adds gr translation by [xhmikosr](http://github.com/xhmikosr)
+* updates `lv` translation
+* adds `ro` translation by [Jakob Cosoroabă](http://github.com/midday)
+* adds `ja` translation by [metasta](http://github.com/metasta)
+* adds `nb` translation by [Sindre Sorhus](http://github.com/sindresorhus)
+* adds `sr` translation by [vBm](http://github.com/vBm)
+* adds `gr` translation by [xhmikosr](http://github.com/xhmikosr)
 
 
 ### v0.18 - *2012-02-24*
@@ -90,8 +90,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * improves url hashes
 * updates year in `LICENSE.TXT`
 * updates es translation
-* adds zh-tw translation by [Yao Wei](http://github.com/medicalwei)
-* updates zh-cn translation
+* adds `zh-tw` translation by [Yao Wei](http://github.com/medicalwei)
+* updates `zh-cn` translation
 
 
 ### v0.17 - *2011-11-28*
@@ -126,33 +126,33 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 ### v0.15.2 - *2011-09-18*
 
-* added it translation by [Salvo Gentile](http://github.com/SalvoGentile) and [Marco Patriarca](http://github.com/Fexys)
-* switched build process from scripp to wepp
+* adds `it` translation by [Salvo Gentile](http://github.com/SalvoGentile) and [Marco Patriarca](http://github.com/Fexys)
+* switches build process from scripp to wepp
 
 
 ### v0.15.1 - *2011-09-06*
 
-* fixed security issues with the zipped download feature
-* made zipped download optional (but enabled by default)
+* fixes security issues with the zipped download feature
+* makes zipped download optional (but enabled by default)
 
 
 ### v0.15 - *2011-09-04*
 
-* added zipped download for selected files
-* cleaned and refactored
+* adds zipped download for selected files
+* cleans and refactores
 
 
 ### v0.14.1 - *2011-09-01*
 
 * display meta information in bottom bar (icon view)
-* added zh-cn translation by [Dongsheng Cai](http://github.com/dongsheng)
-* added pl translation by Radosław Zając
-* added ru translation by Богдан Илюхин
+* adds `zh-cn` translation by [Dongsheng Cai](http://github.com/dongsheng)
+* adds `pl` translation by Radosław Zając
+* adds `ru` translation by Богдан Илюхин
 
 
 ### v0.14 - *2011-08-16*
 
-* added image thumbnails for PHP version
+* adds image thumbnails for PHP version
 * new option `slideTree` to turn off auto slide in
 
 
@@ -163,180 +163,178 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 
 ### v0.13.1 - *2011-08-12*
 
-* ~~hopefully fixed that PHP doesn't get interpreted~~ :/
-* fixed initial tree display
-* added sort order option
-* added/fixed some translations
-* added lv translation by Sandis Veinbergs
+* fixes initial tree display
+* adds sort order option
+* adds/fixes some translations
+* adds `lv` translation by Sandis Veinbergs
 
 
 ### v0.13 - *2011-08-06*
 
-* added PHP implementation! (should work with PHP 5.2+)
-* added new options
-* changed layout of the bottom bar to display status information
-* added language selector to the bottom bar
-* quoted keys in `options.js` to make it valid json
-* changed value of option `lang` from `undefined` to `null`
-* added some new keys to `h5aiLangs`
-* added browser caching rules for css and js
-* added pt translation by [Jonnathan](http://github.com/jonnsl)
-* added bg translation by George Andonov
+* adds PHP implementation! (should work with PHP 5.2+)
+* adds new options
+* changes layout of the bottom bar to display status information
+* adds language selector to the bottom bar
+* quotes keys in `options.js` to make it valid json
+* changes value of option `lang` from `undefined` to `null`
+* adds some new keys to `h5aiLangs`
+* adds browser caching rules for css and js
+* adds `pt` translation by [Jonnathan](http://github.com/jonnsl)
+* adds `bg` translation by George Andonov
 
 
 ### v0.12.3 - *2011-07-30*
 
-* added tr translation by [Batuhan Icoz](http://github.com/batuhanicoz)
+* adds `tr` translation by [Batuhan Icoz](http://github.com/batuhanicoz)
 
 
 ### v0.12.2 - *2011-07-30*
 
-* added es translation by Jose David Calderon Serrano
+* adds `es` translation by Jose David Calderon Serrano
 
 
 ### v0.12.1 - *2011-07-29*
 
-* fixed unchecked use of console.log
+* fixes unchecked use of console.log
 
 
 ### v0.12 - *2011-07-28*
 
-* improved performance
+* improves performance
 
 
 ### v0.11 - *2011-07-27*
 
-* changed license to MIT license, see `LICENSE.txt`
+* changes license to MIT license, see `LICENSE.txt`
 
 
 ### v0.10.2 - *2011-07-26*
 
-* improved tree scrollbar
+* improves tree scrollbar
 
 
 ### v0.10.1 - *2011-07-24*
 
-* fixed problems with ' in links
+* fixes problems with ' in links
 
 
 ### v0.10 - *2011-07-24*
 
-* fixed problems with XAMPP on Windows (see `dot.htaccess` comments for instructions)
-* fixed tree fade-in-fade-out effect for small displays ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
-* added custom scrollbar to tree ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
-* fixed broken links caused by URI encoding/decoding ([issue #9](http://github.com/lrsjng/h5ai/issues/9))
-* added "empty" to localization (hope Google Translate did a good job here)
+* fixes problems with XAMPP on Windows (see `dot.htaccess` comments for instructions)
+* fixes tree fade-in-fade-out effect for small displays ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
+* adds custom scrollbar to tree ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
+* fixes broken links caused by URI encoding/decoding ([issue #9](http://github.com/lrsjng/h5ai/issues/9))
+* adds "empty" to localization (hope Google Translate did a good job here)
 
 
 ### v0.9 - *2011-07-18*
 
-* linked hover states between crumb, extended view and tree
-* fixed size of tree view (now there's a ugly scrollbar, hopefully will be fixed)
-* refactored js to improve performance and cleaned code
-* added caching for folder status codes and content
-* added fr translation by [Nicolas](http://github.com/Nicosmos)
-* added nl translation by [Stefan de Konink](http://github.com/skinkie)
-* added sv translation by Oscar Carlsson
+* links hover states between crumb, extended view and tree
+* fixes size of tree view (now there's a ugly scrollbar, hopefully will be fixed)
+* refactores js to improve performance and cleaned code
+* adds caching for folder status codes and content
+* adds `fr` translation by [Nicolas](http://github.com/Nicosmos)
+* adds `nl` translation by [Stefan de Konink](http://github.com/skinkie)
+* adds `sv` translation by Oscar Carlsson
 
 
 ### v0.8 - *2011-07-08*
 
-* removed slashes from folder labels
+* removes slashes from folder labels
 * optionally rename parent folder entries to real folder names, see `options.js`
 * long breadcrumbs (multiple rows) no longer hide content
 * error folder icons are opaque now
-* refactored js a lot (again...)
+* refactores js a lot (again...)
 
 
 ### v0.7 - *2011-07-07*
 
-* removed shadows
+* removes shadows
 * smarter tree side bar
 
 
 ### v0.6 - *2011-07-05*
 
-* refactored js
-* added localization, see `options.js`
+* refactores js
+* adds localization, see `options.js`
 
 
 ### v0.5.3 - *2011-07-04*
 
-* refactored js
-* added basic options support via `options.js`
-* commented `options.js`
-* optional tree sidebar
+* refactores js
+* adds basic options support via `options.js`
+* adds comments to `options.js`
+* adds optional tree sidebar
 
 
 ### v0.5.2 - *2011-07-02*
 
 * details view adjusts to window width
-* linked icon for *.gz and *.bz2
+* links icon for *.gz and *.bz2
 
 
 ### v0.5.1 - *2011-07-01*
 
-* disabled tree sidebar for now, since it had unwanted side effects
+* disables tree sidebar for now, since it had unwanted side effects
 
 
 ### v0.5 - *2011-07-01*
 
-* added tree sidebar
+* adds tree sidebar
 * some refactorings
 
 
 ### v0.4 - *2011-06-27*
 
-* added better fallback, in case JavaScript is disabled
-* rewrote js, fixed middle-button click etc. problems
-* refactored css
-* sorted, added and moved icons and images
-* updated dot.access
+* adds better fallback, in case JavaScript is disabled
+* rewrites js, fixed middle-button click etc. problems
+* refactors css
+* sorts, adds and moves icons and images
+* updates dot.access
 
 
 ### v0.3.2 - *2011-06-24*
 
-* removed lib versions from file names
-* added 'empty' indicator for icons view
+* removes lib versions from file names
+* adds 'empty' indicator for icons view
 
 
 ### v0.3.1 - *2011-06-24*
 
-* refactored js
-* added `folderClick` and `fileClick` callback hooks
-* fixed .emtpy style
+* refactores js
+* adds `folderClick` and `fileClick` callback hooks
+* fixes .emtpy style
 
 
 ### v0.3 - *2011-06-23*
 
-* included build stuff, files previously found in the base directory are now located in folder `target`
+* includes build stuff, files previously found in the base directory are now located in folder `target`
 * styles and scripts are now minified
-* added Modernizr 2.0.4 for future use
-* updated jQuery to version 1.6.1
+* adds Modernizr 2.0.4 for future use
+* updates jQuery to version 1.6.1
 
 
 ### v0.2.3 - *2011-06-17*
 
 * more refactoring in main.js
-* ~~added custom js support, and global includes~~ *removed, only custom top and bottom sections supported*
 
 
 ### v0.2.2 - *2011-06-16*
 
-* refactored a lot, added some comments
-* included fixes from [NumEricR](http://github.com/NumEricR)
-* added top/bottom message support, only basicly styled
+* refactores a lot, adds some comments
+* includes fixes from [NumEricR](http://github.com/NumEricR)
+* adds top/bottom message support, only basicly styled
 
 
 ### v0.2.1 - *2011-06-16*
 
-* fixed croped filenames
-* fixed missing .png extension in header
-* added some color to the links
-* added changelog
+* fixes croped filenames
+* fixes missing .png extension in header
+* adds some color to the links
+* adds changelog
 
 
 ### v0.2 - *2011-06-15*
 
-* added icon view
+* adds icon view
 

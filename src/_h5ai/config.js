@@ -408,6 +408,22 @@ var H5AI_CONFIG = {
 			"noMatch": "Κανένα Ταίριασμα"
 		},
 
+		"hu": {
+			"lang": "magyar",
+			"details": "részletek",
+			"icons": "ikonok",
+			"name": "Név",
+			"lastModified": "Utoljára módosítva",
+			"size": "Méret",
+			"parentDirectory": "Szülő könyvtár",
+			"empty": "üres",
+			"folders": "mappák",
+			"files": "fájlok",
+			"download": "letöltés",
+			"noMatch": "nincs találat",
+			"dateFormat": "YYYY-MM-DD HH:mm"
+		},
+
 		"it": {
 			"lang": "italiano",
 			"details": "dettagli",
