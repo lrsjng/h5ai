@@ -23,6 +23,8 @@
 		<mkdir dir="${build.dir}" />
 		<copy todir="${build.dir}">
 			<fileset dir="${src.dir}" />
+		</copy>
+		<copy todir="${build.dir}/_h5ai">
 			<fileset file="LICENSE.txt" />
 			<fileset file="README.md" />
 		</copy>
