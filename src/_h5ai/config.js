@@ -63,7 +63,7 @@ var H5AI_CONFIG = {
 		 * in each folder.
 		 */
 		"custom": {
-			"enabled": false,
+			"enabled": true,
 			"header": "_h5ai.header.html",
 			"footer": "_h5ai.footer.html"
 		},
@@ -97,7 +97,7 @@ var H5AI_CONFIG = {
 		 * Depends on du.
 		 */
 		"foldersize": {
-			"enabled": false
+			"enabled": true
 		},
 
 		/*
@@ -111,7 +111,7 @@ var H5AI_CONFIG = {
 		 * appropriate default index file.
 		 */
 		"folderstatus": {
-			"enabled": false,
+			"enabled": true,
 			"folders": {}
 		},
 
@@ -160,7 +160,7 @@ var H5AI_CONFIG = {
 		 * Show QRCodes on hovering files.
 		 */
 		"qrcode": {
-			"enabled": false,
+			"enabled": true,
 			"size": 150
 		},
 
@@ -198,11 +198,11 @@ var H5AI_CONFIG = {
 		 * - doc thumbnails depend on convert
 		 */
 		"thumbnails": {
-			"enabled": false,
+			"enabled": true,
 			"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
 			"mov": ["video"],
 			"doc": ["pdf", "ps"],
-			"delay": 1000
+			"delay": 1
 		},
 
 		/*
