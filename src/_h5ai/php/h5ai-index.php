@@ -9,10 +9,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>Directory index · styled with h5ai</title>
 	<meta name="description" content="Directory index styled with h5ai (http://larsjung.de/h5ai)">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width">
 	<link rel="shortcut icon" type="image/png" href="/_h5ai/images/h5ai-16x16.png">
 	<link rel="apple-touch-icon" type="image/png" href="/_h5ai/images/h5ai-48x48.png">
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400">
 	<link rel="stylesheet" href="/_h5ai/css/styles.css">
 	<script src="/_h5ai/js/modernizr-2.5.3.min.js"></script>
 </head>
