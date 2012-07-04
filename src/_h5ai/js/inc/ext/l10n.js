@@ -92,7 +92,9 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 						.css('top', '-' + $langOptions.outerHeight() + 'px')
 						.stop(true, true)
 						.fadeIn();
-					$langOptions.get(0).updateScrollbar();
+
+					// needs to be updated twice for initial fade in rendering :/
+					$langOptions.scrollpanel('update').scrollpanel('update');
 				},
 				function () {
 					$langOptions

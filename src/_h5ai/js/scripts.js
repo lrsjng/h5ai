@@ -5,7 +5,7 @@
 // @include "inc/lib/jquery.fracs-0.11.min.js"
 // @include "inc/lib/jquery.mousewheel-3.0.6.js"
 // @include "inc/lib/jquery.qrcode.js"
-// @include "inc/lib/jquery.scrollpanel.js"
+// @include "inc/lib/jquery.scrollpanel-0.1.min.js"
 
 // underscore libs
 // ---------------
