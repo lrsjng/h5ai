@@ -19,8 +19,10 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL)
 * [HTML5 ★ Boilerplate](http://html5boilerplate.com)
 * [jQuery](http://jquery.com) (MIT/GPL)
-* [jQuery.fracs](http://larsjung.de/fracs) (MIT)
+* [jQuery.fracs](http://larsjung.de/fracs/) (MIT)
 * [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
+* [jQuery.qrcode](http://larsjung.de/qrcode/) (MIT)
+* [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) (MIT)
 * [modernizr](http://www.modernizr.com) (MIT/BSD)
 * [Moment.js](http://momentjs.com) (MIT)
 * [qrcode](http://www.d-project.com/qrcode/index.html) (MIT)
@@ -33,6 +35,8 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 ### v0.21 - *2012-??*
 
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
+* updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
+* updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1
 
 
 ### v0.20 - *2012-05-11*

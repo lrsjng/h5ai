@@ -193,27 +193,33 @@ module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event
 				return;
 			}
 
-			var $tree = $('<div id="tree" />').appendTo('body');
+			var $tree = $('<div id="tree" />')
+				.appendTo('body')
+				.scrollpanel()
+				.on('click', '.indicator', createOnIndicatorClick(parser))
+				.on('mouseenter', function () {
+
+					shiftTree(true);
+				})
+				.on('mouseleave', function () {
+
+					shiftTree();
+				});
 
 			fetchTree(entry, parser, function (root) {
 
 				$tree
-					.append(update(root))
-					.scrollpanel()
+					.find('.sp-container').append(update(root)).end()
 					.show();
 
 				adjustSpacing();
 				shiftTree(false, true);
-				$tree.scrollpanel('update');
 			});
 
-			$tree
-				.on('click', '.indicator', createOnIndicatorClick(parser))
-				.on('mouseenter', function () { shiftTree(true); })
-				.on('mouseleave', function () { shiftTree(); });
-
 			event.sub('ready', adjustSpacing);
+
 			$(window).on('resize', function () {
+
 				adjustSpacing();
 				shiftTree();
 			});
