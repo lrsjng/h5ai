@@ -1,5 +1,5 @@
 
-module.define('ext/download', [jQuery, 'core/settings', 'core/resource', 'core/event'], function ($, allsettings, resource, event) {
+modulejs.define('ext/download', ['jQuery', 'core/settings', 'core/resource', 'core/event'], function ($, allsettings, resource, event) {
 
 	var defaults = {
 			enabled: false,

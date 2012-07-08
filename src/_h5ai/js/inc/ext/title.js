@@ -1,5 +1,5 @@
 
-module.define('ext/title', [jQuery, 'core/settings', 'core/entry'], function ($, allsettings, entry) {
+modulejs.define('ext/title', ['jQuery', 'core/settings', 'core/entry'], function ($, allsettings, entry) {
 
 	var defaults = {
 			enabled: false

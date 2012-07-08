@@ -10,7 +10,8 @@
 // underscore libs
 // ---------------
 // @include "inc/lib/underscore-1.3.1.min.js"
-// @include "inc/lib/module.js"
+// @-include "inc/lib/modulejs-debug-0.1.js"
+// @include "inc/lib/modulejs-0.1.js"
 
 // other libs
 // ----------

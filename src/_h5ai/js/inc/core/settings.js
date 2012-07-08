@@ -1,5 +1,5 @@
 
-module.define('core/settings', [H5AI_CONFIG], function (config) {
+modulejs.define('core/settings', ['H5AI_CONFIG'], function (config) {
 
 	var defaults = {
 			rootAbsHref: '/',
@@ -12,7 +12,7 @@ module.define('core/settings', [H5AI_CONFIG], function (config) {
 });
 
 
-module.define('core/types', [H5AI_CONFIG], function (config) {
+modulejs.define('core/types', ['H5AI_CONFIG'], function (config) {
 
 	var reEndsWithSlash = /\/$/,
 		reStartsWithDot = /^\./,
@@ -61,7 +61,7 @@ module.define('core/types', [H5AI_CONFIG], function (config) {
 });
 
 
-module.define('core/langs', [H5AI_CONFIG], function (config) {
+modulejs.define('core/langs', ['H5AI_CONFIG'], function (config) {
 
 	var defaults = {
 			lang: 'unknown',

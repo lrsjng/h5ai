@@ -1,5 +1,5 @@
 
-module.define('ext/folderstatus', [jQuery, 'core/settings'], function ($, allsettings) {
+modulejs.define('ext/folderstatus', ['jQuery', 'core/settings'], function ($, allsettings) {
 
 	var defaults = {
 			enabled: false,

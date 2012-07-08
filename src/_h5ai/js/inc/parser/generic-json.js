@@ -1,5 +1,5 @@
 
-module.define('parser/generic-json', [jQuery, 'core/settings', 'model/entry'], function ($, settings, Entry) {
+modulejs.define('parser/generic-json', ['jQuery', 'core/settings', 'model/entry'], function ($, settings, Entry) {
 
 	var parser = {
 			id: 'generic-json',

@@ -1,5 +1,5 @@
 
-module.define('ext/filter', [jQuery, 'core/settings', 'core/resource'], function ($, allsettings, resource) {
+modulejs.define('ext/filter', ['jQuery', 'core/settings', 'core/resource'], function ($, allsettings, resource) {
 
 	var defaults = {
 			enabled: false

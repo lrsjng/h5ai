@@ -1,5 +1,5 @@
 
-module.define('ext/sort', [jQuery, 'core/settings', 'core/resource', 'core/store'], function ($, allsettings, resource, store) {
+modulejs.define('ext/sort', ['jQuery', 'core/settings', 'core/resource', 'core/store'], function ($, allsettings, resource, store) {
 
 	var defaults = {
 			enabled: false,

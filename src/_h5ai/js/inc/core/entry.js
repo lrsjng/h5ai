@@ -1,5 +1,5 @@
 
-module.define('core/entry', [jQuery, 'core/parser', 'model/entry'], function ($, parser, Entry) {
+modulejs.define('core/entry', ['jQuery', 'core/parser', 'model/entry'], function ($, parser, Entry) {
 
 	var absHref = document.location.pathname.replace(/[^\/]*$/, '');
 

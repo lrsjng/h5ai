@@ -1,5 +1,5 @@
 
-module.define('view/extended', [jQuery, 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/entry'], function ($, allsettings, resource, format, event, entry) {
+modulejs.define('view/extended', ['jQuery', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/entry'], function ($, allsettings, resource, format, event, entry) {
 
 	var defaults = {
 			modes: ['details', 'icons'],

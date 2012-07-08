@@ -1,5 +1,5 @@
 
-module.define('core/resource', ['core/settings'], function (settings) {
+modulejs.define('core/resource', ['core/settings'], function (settings) {
 
 	var api = function () {
 

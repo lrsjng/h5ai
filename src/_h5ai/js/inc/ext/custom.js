@@ -1,5 +1,5 @@
 
-module.define('ext/custom', [jQuery, 'core/settings'], function ($, allsettings) {
+modulejs.define('ext/custom', ['jQuery', 'core/settings'], function ($, allsettings) {
 
 	var defaults = {
 			enabled: false,

@@ -1,5 +1,5 @@
 
-module.define('h5ai-info', [jQuery, 'core/resource'], function ($, resource) {
+modulejs.define('h5ai-info', ['jQuery', 'core/resource'], function ($, resource) {
 
 	var setCheckResult = function (id, result) {
 

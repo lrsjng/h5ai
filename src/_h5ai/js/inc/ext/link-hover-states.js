@@ -1,5 +1,5 @@
 
-module.define('ext/link-hover-states', [jQuery, 'core/settings'], function ($, allsettings) {
+modulejs.define('ext/link-hover-states', ['jQuery', 'core/settings'], function ($, allsettings) {
 
 	var defaults = {
 			enabled: false

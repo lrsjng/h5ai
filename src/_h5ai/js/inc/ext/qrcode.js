@@ -1,5 +1,5 @@
 
-module.define('ext/qrcode', [jQuery, 'core/settings', 'core/event'], function ($, allsettings, event) {
+modulejs.define('ext/qrcode', ['jQuery', 'core/settings', 'core/event'], function ($, allsettings, event) {
 
 	var defaults = {
 			enabled: false,

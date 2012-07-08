@@ -1,5 +1,5 @@
 
-module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
+modulejs.define('model/entry', ['jQuery', 'core/types'], function ($, types) {
 
 	var domain = document.domain,
 		location = document.location.pathname.replace(/[^\/]*$/, ''),
@@ -132,7 +132,14 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			return self;
 		},
 
-		folderstatus = module.isDefined('ext/folderstatus') ? module.require('ext/folderstatus') : {},
+		// folderstatus = module.isDefined('ext/folderstatus') ? module.require('ext/folderstatus') : {},
+		folderstatus = (function () {
+
+			var id = 'ext/folderstatus',
+				res = modulejs.require(new RegExp('^' + id + '$'));
+
+			return res.id ? res.id : {};
+		}()),
 
 		fetchStatus = function (absHref, callback) {
 

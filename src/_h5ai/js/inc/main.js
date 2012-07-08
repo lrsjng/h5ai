@@ -2,6 +2,12 @@
 (function ($) {
 	'use strict';
 
+	modulejs.predefined('jQuery', jQuery);
+	modulejs.predefined('amplify', amplify);
+	modulejs.predefined('moment', moment);
+	modulejs.predefined('H5AI_CONFIG', H5AI_CONFIG);
+
+
 	// @include "core/entry.js"
 	// @include "core/event.js"
 	// @include "core/format.js"
@@ -42,7 +48,7 @@
 
 	$(function () {
 
-		module.require($('body').attr('id'));
+		modulejs.require($('body').attr('id'));
 	});
 
 }(jQuery));

@@ -1,5 +1,5 @@
 
-module.define('parser/apache-autoindex', [jQuery, 'core/settings', 'core/format', 'model/entry'], function ($, settings, format, Entry) {
+modulejs.define('parser/apache-autoindex', ['jQuery', 'core/settings', 'core/format', 'model/entry'], function ($, settings, format, Entry) {
 
 	var parseTableRow = function (absHref, tr) {
 
