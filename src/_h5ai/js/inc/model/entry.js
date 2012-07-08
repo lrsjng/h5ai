@@ -132,13 +132,13 @@ modulejs.define('model/entry', ['jQuery', 'core/types'], function ($, types) {
 			return self;
 		},
 
-		// folderstatus = module.isDefined('ext/folderstatus') ? module.require('ext/folderstatus') : {},
 		folderstatus = (function () {
 
-			var id = 'ext/folderstatus',
-				res = modulejs.require(new RegExp('^' + id + '$'));
+			try {
+				return modulejs.require('ext/folderstatus');
+			} catch (e) {}
 
-			return res.id ? res.id : {};
+			return [];
 		}()),
 
 		fetchStatus = function (absHref, callback) {

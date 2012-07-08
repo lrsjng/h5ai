@@ -8,12 +8,12 @@
 	var	err = function (condition, code, message) {
 
 		if (condition) {
-			if (console && console.error) {
-				console.error(name + ' error: [' + code + '] ' + message);
-			}
 			throw {
 				code: code,
-				msg: name + ' error: ' + message
+				msg: message,
+				toString: function () {
+					return name + ' error: ' + message;
+				}
 			};
 		}
 	};
