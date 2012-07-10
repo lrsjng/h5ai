@@ -9,11 +9,12 @@ modulejs.define('h5ai-main', ['jQuery', 'core/event', 'core/settings'], function
 
 	event.pub('beforeExt');
 
-	// _.each(modulejs.getIds(/^ext\/.+/), function (id) {
+	_.each(modulejs.state(), function (state, id) {
 
-	// 	modulejs.require(id);
-	// });
-	modulejs.require(/^ext\/.+/);
+		if (/^ext\/.+/.test(id)) {
+			modulejs.require(id);
+		}
+	});
 
 	event.pub('ready');
 });

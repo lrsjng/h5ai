@@ -2,11 +2,6 @@
 (function ($) {
 	'use strict';
 
-	modulejs.predefined('jQuery', jQuery);
-	modulejs.predefined('amplify', amplify);
-	modulejs.predefined('moment', moment);
-	modulejs.predefined('H5AI_CONFIG', H5AI_CONFIG);
-
 
 	// @include "core/entry.js"
 	// @include "core/event.js"
@@ -47,6 +42,21 @@
 
 
 	$(function () {
+
+		// define it on doc ready, so the script order in the doc doesn't matter
+		modulejs.define('H5AI_CONFIG', H5AI_CONFIG);
+		modulejs.define('amplify', amplify);
+
+		// `jQuery` and `moment` are itself functions, so they have to be wrapped
+		// to not be taken as a constructor
+		modulejs.define('jQuery', function () {
+
+			return jQuery;
+		});
+		modulejs.define('moment', function () {
+
+			return moment;
+		});
 
 		modulejs.require($('body').attr('id'));
 	});

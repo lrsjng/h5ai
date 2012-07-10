@@ -21,7 +21,7 @@
 		"H5AI_CONFIG",
 		"jQuery",
 		"Modernizr",
-		"module",
+		"modulejs",
 		"moment",
 		"_"
 	]
