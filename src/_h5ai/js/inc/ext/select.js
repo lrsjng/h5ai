@@ -13,6 +13,33 @@ modulejs.define('ext/select', ['jQuery', 'core/settings', 'core/event'], functio
 		$document = $(document),
 		$selectionRect = $('<div id="selection-rect"></div>'),
 
+		ctrlKeyPressed = false,
+
+		isCtrlKey = function (code) {
+
+			// http://github.com/madrobby/keymaster/blob/master/keymaster.js
+			return code === 17 || code === 91 || code === 92 || code === 93 || code === 224;
+		},
+
+		onFocus = function () {
+
+			ctrlKeyPressed = false;
+		},
+
+		onKeydown = function (event) {
+
+			if (isCtrlKey(event.keyCode)) {
+				ctrlKeyPressed = true;
+			}
+		},
+
+		onKeyup = function (event) {
+
+			if (isCtrlKey(event.keyCode)) {
+				ctrlKeyPressed = false;
+			}
+		},
+
 		publish = function () {
 
 			var entries = _.map($('#extended .entry.selected'), function (entryElement) {
@@ -90,7 +117,7 @@ modulejs.define('ext/select', ['jQuery', 'core/settings', 'core/event'], functio
 
 			event.preventDefault();
 			$(':focus').blur();
-			if (!event.ctrlKey) {
+			if (!ctrlKeyPressed) {
 				$('#extended .entry').removeClass('selected');
 				publish();
 			}
@@ -112,7 +139,7 @@ modulejs.define('ext/select', ['jQuery', 'core/settings', 'core/event'], functio
 
 		noSelectionUnlessCtrl = function (event) {
 
-			if (!event.ctrlKey) {
+			if (!ctrlKeyPressed) {
 				noSelection(event);
 			}
 		},
@@ -125,7 +152,11 @@ modulejs.define('ext/select', ['jQuery', 'core/settings', 'core/event'], functio
 
 			$selectionRect.hide().appendTo('body');
 
+			$(window).on('focus', onFocus);
+
 			$document
+				.on('keydown', onKeydown)
+				.on('keyup', onKeyup)
 				.on('mousedown', '.noSelection', noSelection)
 				.on('mousedown', '.noSelectionUnlessCtrl,input,a', noSelectionUnlessCtrl)
 				.on('mousedown', selectionStart);
