@@ -55,7 +55,7 @@ class Archive {
 					$archive->addEmptyDir($archivedDir);
 				}
 				foreach ($this->files as $realFile => $archivedFile) {
-					$archive->add_file($realFile, $archivedFile); // very, very slow :/
+					$archive->addFile($realFile, $archivedFile); // very, very slow :/
 				}
 
 			}
