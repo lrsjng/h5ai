@@ -56,10 +56,11 @@
 			<srcfile />
 			<arg line="--config jshint.json" />
 			<arg line="--show-non-errors" />
-			<fileset dir="${src.dir}/_h5ai/js/inc">
+			<fileset dir="${src.dir}/_h5ai/js">
 				<patternset>
 					<include name="**/*.js" />
-					<exclude name="lib/**/*" />
+					<exclude name="inc/lib/**/*" />
+					<exclude name="modernizr*" />
 				</patternset>
 			</fileset>
 		</apply>
