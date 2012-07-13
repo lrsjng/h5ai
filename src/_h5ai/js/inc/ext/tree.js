@@ -1,5 +1,5 @@
 
-modulejs.define('ext/tree', ['jQuery', 'core/settings', 'core/resource', 'core/event', 'core/entry', 'core/parser'], function ($, allsettings, resource, event, entry, parser) {
+modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry', 'core/parser'], function (_, $, allsettings, resource, event, entry, parser) {
 
 	var defaults = {
 			enabled: false,

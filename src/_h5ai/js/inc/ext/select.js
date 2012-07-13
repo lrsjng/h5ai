@@ -1,5 +1,5 @@
 
-modulejs.define('ext/select', ['jQuery', 'core/settings', 'core/event'], function ($, allsettings, event) {
+modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
 	var defaults = {
 			enabled: false

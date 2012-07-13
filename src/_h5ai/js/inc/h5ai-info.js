@@ -1,5 +1,5 @@
 
-modulejs.define('h5ai-info', ['jQuery', 'core/resource'], function ($, resource) {
+modulejs.define('h5ai-info', ['$', 'core/ajax'], function ($, ajax) {
 
 	var setCheckResult = function (id, result) {
 
@@ -12,37 +12,17 @@ modulejs.define('h5ai-info', ['jQuery', 'core/resource'], function ($, resource)
 			}
 		},
 
-		handleChecksResponse = function (response) {
-
-			$('.test').each(function () {
-
-				setCheckResult(this, response && response[$(this).data('id')]);
-			});
-		},
-
-		checks = function () {
-
-			$.ajax({
-				url: resource.api(),
-				data: {
-					action: 'getchecks'
-				},
-				type: 'POST',
-				dataType: 'json',
-				success: function (response) {
-
-					handleChecksResponse(response);
-				},
-				error: function () {
-
-					handleChecksResponse();
-				}
-			});
-		},
-
 		init = function () {
 
-			checks();
+			ajax.getChecks(function (json) {
+
+				if (json) {
+					$('.test').each(function () {
+
+						setCheckResult(this, json[$(this).data('id')]);
+					});
+				}
+			});
 		};
 
 	init();

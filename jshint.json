@@ -16,13 +16,6 @@
 
 	// Globals
 	"predef": [
-		"amplify",
-		"Base64",
-		"H5AI_CONFIG",
-		"jQuery",
-		"Modernizr",
-		"modulejs",
-		"moment",
-		"_"
+		"modulejs"
 	]
 }

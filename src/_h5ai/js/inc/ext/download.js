@@ -1,5 +1,5 @@
 
-modulejs.define('ext/download', ['jQuery', 'core/settings', 'core/resource', 'core/event'], function ($, allsettings, resource, event) {
+modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/ajax'], function (_, $, allsettings, resource, event, ajax) {
 
 	var defaults = {
 			enabled: false,
@@ -33,19 +33,19 @@ modulejs.define('ext/download', ['jQuery', 'core/settings', 'core/resource', 'co
 			}, 1000);
 		},
 
-		handleResponse = function (response) {
+		handleResponse = function (json) {
 
 			$download.removeClass('current');
 			$img.attr('src', resource.image('download'));
 
-			if (response) {
-				if (response.code === 0) {
+			if (json) {
+				if (json.code === 0) {
 					setTimeout(function () { // wait here so the img above can be updated in time
 
-						window.location = resource.api() + '?action=getarchive&id=' + response.id + '&as=h5ai-selection.' + settings.format;
+						window.location = resource.api() + '?action=getarchive&id=' + json.id + '&as=h5ai-selection.' + settings.format;
 					}, 200);
 				} else {
-					if (response.code === 401) {
+					if (json.code === 401) {
 						$downloadAuth
 							.css({
 								left: $download.offset().left,
@@ -65,34 +65,13 @@ modulejs.define('ext/download', ['jQuery', 'core/settings', 'core/resource', 'co
 
 			$download.addClass('current');
 			$img.attr('src', resource.image('loading.gif', true));
-			$.ajax({
-				url: resource.api(),
-				data: {
-					action: 'archive',
-					execution: settings.execution,
-					format: settings.format,
-					hrefs: hrefsStr
-				},
-				type: 'POST',
-				dataType: 'json',
-				beforeSend: function (xhr) {
-
-					var user = $downloadUser.val(),
-						password = $downloadPassword.val();
-
-					if (user) {
-						xhr.setRequestHeader('Authorization', 'Basic ' + Base64.encode(user + ':' + password));
-					}
-				},
-				success: function (response) {
-
-					handleResponse(response);
-				},
-				error: function () {
-
-					handleResponse();
-				}
-			});
+			ajax.getArchive({
+				execution: settings.execution,
+				format: settings.format,
+				hrefs: hrefsStr,
+				user: $downloadUser.val(),
+				password: $downloadPassword.val()
+			}, handleResponse);
 		},
 
 		onSelection = function (entries) {

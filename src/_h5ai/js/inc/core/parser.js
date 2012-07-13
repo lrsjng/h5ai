@@ -1,5 +1,5 @@
 
-modulejs.define('core/parser', ['jQuery'], function ($) {
+modulejs.define('core/parser', ['$'], function ($) {
 
 	if ($('#data-apache-autoindex').length) {
 		return modulejs.require('parser/apache-autoindex');

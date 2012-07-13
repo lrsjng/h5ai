@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-img', ['jQuery', 'core/settings', 'core/resource', 'core/store', 'core/entry'], function ($, allsettings, resource, store, entry) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/entry'], function (_, $, allsettings, resource, store, entry) {
 
 	var defaults = {
 			enabled: false,

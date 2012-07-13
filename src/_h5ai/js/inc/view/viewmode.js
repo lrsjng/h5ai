@@ -1,5 +1,5 @@
 
-modulejs.define('view/viewmode', ['jQuery', 'core/settings', 'core/resource', 'core/store'], function ($, allsettings, resource, store) {
+modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store'], function (_, $, allsettings, resource, store) {
 
 	var defaults = {
 			modes: ['details', 'list', 'icons'],

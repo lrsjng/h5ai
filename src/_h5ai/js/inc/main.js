@@ -3,6 +3,7 @@
 	'use strict';
 
 
+	// @include "core/ajax.js"
 	// @include "core/entry.js"
 	// @include "core/event.js"
 	// @include "core/format.js"
@@ -42,21 +43,19 @@
 
 
 	$(function () {
+		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, _ */
 
-		// define it on doc ready, so the script order in the doc doesn't matter
-		modulejs.define('H5AI_CONFIG', H5AI_CONFIG);
+		// Register predefined globals on doc ready, so the script order inside
+		// the document doesn't matter. `jQuery`, `moment` and `underscore` are
+		// itself functions, so they have to be wrapped to not be handled as
+		// constructors.
+		modulejs.define('config', H5AI_CONFIG);
 		modulejs.define('amplify', amplify);
-
-		// `jQuery` and `moment` are itself functions, so they have to be wrapped
-		// to not be taken as a constructor
-		modulejs.define('jQuery', function () {
-
-			return jQuery;
-		});
-		modulejs.define('moment', function () {
-
-			return moment;
-		});
+		modulejs.define('base64', Base64);
+		modulejs.define('$', function () { return jQuery; });
+		modulejs.define('modernizr', Modernizr);
+		modulejs.define('moment', function () { return moment; });
+		modulejs.define('_', function () { return _; });
 
 		modulejs.require($('body').attr('id'));
 	});

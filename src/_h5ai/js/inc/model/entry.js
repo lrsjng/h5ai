@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['jQuery', 'core/types'], function ($, types) {
+modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, types, ajax) {
 
 	var domain = document.domain,
 		location = document.location.pathname.replace(/[^\/]*$/, ''),
@@ -56,25 +56,13 @@ modulejs.define('model/entry', ['jQuery', 'core/types'], function ($, types) {
 		},
 
 
-		reContentType = /^text\/html;h5ai=/,
-
 		ajaxRequest = function (self, parser, callback) {
 
-			$.ajax({
-				url: self.absHref,
-				type: parser ? 'GET' : 'HEAD',
-				complete: function (xhr) {
+			ajax.getStatus(self.absHref, parser, function (response) {
 
-					if (xhr.status === 200 && reContentType.test(xhr.getResponseHeader('Content-Type'))) {
-						self.status = 'h5ai';
-						if (parser) {
-							parser.parse(self.absHref, xhr.responseText);
-						}
-					} else {
-						self.status = xhr.status;
-					}
-
-					callback(self);
+				self.status = response.status;
+				if (parser && response.status === 'h5ai') {
+					parser.parse(self.absHref, response.content);
 				}
 			});
 		},

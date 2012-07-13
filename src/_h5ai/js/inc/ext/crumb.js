@@ -1,5 +1,5 @@
 
-modulejs.define('ext/crumb', ['jQuery', 'core/settings', 'core/resource', 'core/entry'], function ($, allsettings, resource, entry) {
+modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/entry'], function (_, $, allsettings, resource, entry) {
 
 	var defaults = {
 			enabled: false

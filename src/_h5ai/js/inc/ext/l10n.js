@@ -1,5 +1,5 @@
 
-modulejs.define('ext/l10n', ['jQuery', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function ($, allsettings, langs, format, store, event) {
+modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function (_, $, allsettings, langs, format, store, event) {
 
 	var defaults = {
 			enabled: true,

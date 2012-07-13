@@ -1,5 +1,5 @@
 
-modulejs.define('h5ai-main', ['jQuery', 'core/event', 'core/settings'], function ($, event, settings) {
+modulejs.define('h5ai-main', ['_', 'core/event', 'core/settings'], function (_, event, settings) {
 
 	event.pub('beforeView');
 
