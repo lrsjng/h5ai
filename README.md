@@ -23,10 +23,10 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
 * [jQuery.qrcode](http://larsjung.de/qrcode/) (MIT)
 * [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) (MIT)
-* [modernizr](http://www.modernizr.com) (MIT/BSD)
+* [Modernizr](http://www.modernizr.com) (MIT/BSD)
+* [modulejs](http://larsjung.de/modulejs/) (MIT)
 * [Moment.js](http://momentjs.com) (MIT)
-* [qrcode](http://www.d-project.com/qrcode/index.html) (MIT)
-* [underscore.js](http://underscorejs.org) (MIT)
+* [Underscore.js](http://underscorejs.org) (MIT)
 
 
 ## Changelog
@@ -37,6 +37,7 @@ h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
 * updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
 * updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1
+* updates to [modulejs](http://larsjung.de/modulejs/) 0.2
 
 
 ### v0.20 - *2012-05-11*
