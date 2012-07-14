@@ -12,21 +12,19 @@ please create [a new issue](http://github.com/lrsjng/h5ai/issues/new).
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
 
-
-## h5ai profits from these great projects
-
-* [AmplifyJS](http://amplifyjs.com) (MIT/GPL)
-* [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL)
-* [HTML5 ★ Boilerplate](http://html5boilerplate.com)
-* [jQuery](http://jquery.com) (MIT/GPL)
-* [jQuery.fracs](http://larsjung.de/fracs/) (MIT)
-* [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT)
-* [jQuery.qrcode](http://larsjung.de/qrcode/) (MIT)
-* [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) (MIT)
-* [Modernizr](http://www.modernizr.com) (MIT/BSD)
-* [modulejs](http://larsjung.de/modulejs/) (MIT)
-* [Moment.js](http://momentjs.com) (MIT)
-* [Underscore.js](http://underscorejs.org) (MIT)
+h5ai profits from these great projects:
+[AmplifyJS](http://amplifyjs.com) (MIT/GPL),
+[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL),
+[HTML5 ★ Boilerplate](http://html5boilerplate.com),
+[jQuery](http://jquery.com) (MIT/GPL),
+[jQuery.fracs](http://larsjung.de/fracs/) (MIT),
+[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT),
+[jQuery.qrcode](http://larsjung.de/qrcode/) (MIT),
+[jQuery.scrollpanel](http://larsjung.de/scrollpanel/) (MIT),
+[Modernizr](http://www.modernizr.com) (MIT/BSD),
+[modulejs](http://larsjung.de/modulejs/) (MIT),
+[Moment.js](http://momentjs.com) (MIT),
+[Underscore.js](http://underscorejs.org) (MIT)
 
 
 ## Changelog
