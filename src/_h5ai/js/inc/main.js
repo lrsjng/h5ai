@@ -7,10 +7,12 @@
 	// @include "core/entry.js"
 	// @include "core/event.js"
 	// @include "core/format.js"
+	// @include "core/langs.js"
 	// @include "core/parser.js"
 	// @include "core/resource.js"
 	// @include "core/settings.js"
 	// @include "core/store.js"
+	// @include "core/types.js"
 
 	// @include "model/entry.js"
 
