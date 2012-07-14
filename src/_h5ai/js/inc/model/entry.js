@@ -64,6 +64,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 				if (parser && response.status === 'h5ai') {
 					parser.parse(self.absHref, response.content);
 				}
+				callback(self);
 			});
 		},
 
