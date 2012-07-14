@@ -31,27 +31,15 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 			sequence = sequence.replace(/\/+/g, '/');
 			if (sequence === '/') {
-				return {
-					parent: null,
-					parentname: null,
-					name: '/'
-				};
+				return { parent: null, name: '/' };
 			}
 			match = reSplitPath2.exec(sequence);
 			if (match) {
-				return {
-					parent: match[1],
-					parentname: match[2],
-					name: match[3]
-				};
+				return { parent: match[1], name: match[3] };
 			}
 			match = reSplitPath.exec(sequence);
 			if (match) {
-				return {
-					parent: '/',
-					parentname: '/',
-					name: match[1]
-				};
+				return { parent: '/', name: match[1] };
 			}
 		},
 
@@ -127,7 +115,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 				return modulejs.require('ext/folderstatus');
 			} catch (e) {}
 
-			return [];
+			return {};
 		}()),
 
 		fetchStatus = function (absHref, callback) {

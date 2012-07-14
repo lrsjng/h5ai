@@ -12,16 +12,16 @@ modulejs.define('parser/generic-json', ['_', '$', 'core/settings', 'model/entry'
 
 		parseJson = function (absHref, json) {
 
-			if (json.hasOwnProperty('customHeader')) {
+			if (_.has(json, 'customHeader')) {
 				settings.custom.header = json.customHeader;
 			}
-			if (json.hasOwnProperty('customFooter')) {
+			if (_.has(json, 'customFooter')) {
 				settings.custom.footer = json.customFooter;
 			}
-			if (json.hasOwnProperty('mode')) {
+			if (_.has(json, 'mode')) {
 				parser.mode = json.mode;
 			}
-			if (json.hasOwnProperty('server')) {
+			if (_.has(json, 'server')) {
 				parser.server = json.server;
 			}
 
