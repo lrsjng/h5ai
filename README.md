@@ -11,8 +11,7 @@ please create [a new issue](http://github.com/lrsjng/h5ai/issues/new).
 * Sources: <http://github.com/lrsjng/h5ai>
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
-
-h5ai profits from these great projects:
+It profits from these great projects:
 [AmplifyJS](http://amplifyjs.com) (MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com),
