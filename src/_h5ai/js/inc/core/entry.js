@@ -1,7 +1,7 @@
 
 modulejs.define('core/entry', ['$', 'core/parser', 'model/entry'], function ($, parser, Entry) {
 
-	var absHref = document.location.pathname.replace(/[^\/]*$/, '');
+	var absHref = document.location.href.replace(/^.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, '');
 
 	parser.parse(absHref, $('body'));
 	$('#data-apache-autoindex').remove();

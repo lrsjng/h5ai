@@ -2,7 +2,7 @@
 modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, types, ajax) {
 
 	var domain = document.domain,
-		location = document.location.pathname.replace(/[^\/]*$/, ''),
+		location = document.location.href.replace(/^.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, ''),
 
 
 		// utils
