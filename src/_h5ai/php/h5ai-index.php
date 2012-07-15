@@ -32,8 +32,6 @@
 		<span class="right"></span>
 		<span class="center"></span>
 	</div>
-	<script src="/_h5ai/config.js"></script>
-	<script src="/_h5ai/js/scripts.js"></script>
 	<div id="data-generic-json" class="hidden">
 		<?php if (stripos($_SERVER["REQUEST_METHOD"], "HEAD") === false) {
 
@@ -64,5 +62,13 @@
 			echo $h5ai->getGenericJson();
 		} ?>
 	</div>
+	<div id="data-php-no-js-fallback" class="hideOnJs">
+		<?php if (stripos($_SERVER["REQUEST_METHOD"], "HEAD") === false) {
+
+			echo $h5ai->getNoJsFallback();
+		} ?>
+	</div>
+	<script src="/_h5ai/config.js"></script>
+	<script src="/_h5ai/js/scripts.js"></script>
 </body>
 </html>

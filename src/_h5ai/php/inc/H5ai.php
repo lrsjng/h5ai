@@ -292,6 +292,45 @@ class H5ai {
 
 		return $entries;
 	}
+
+
+	public function getNoJsFallback() {
+
+		date_default_timezone_set ("UTC");
+
+		function _cmp($entry1, $entry2) {
+
+			if ($entry1->isFolder && !$entry2->isFolder) {
+				return -1;
+			}
+			if (!$entry1->isFolder && $entry2->isFolder) {
+				return 1;
+			}
+
+			return strcasecmp($entry1->absHref, $entry2->absHref);
+		}
+
+		$folder = Entry::get($this, $this->absPath, $this->absHref);
+		$entries = $folder->getContent();
+		uasort($entries, "_cmp");
+
+		$html = "<table>";
+		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
+		if ($folder->parent) {
+			$html .= "<tr><td></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
+		}
+		foreach ($entries as $entry) {
+			$html .= "<tr>";
+			$html .= "<td></td>";
+			$html .= "<td><a href=\"" . $entry->absHref . "\">" . basename($entry->absPath) . ($entry->isFolder ? "/" : "") . "</a></td>";
+			$html .= "<td>" . date("Y-m-d H:i", $entry->date) . "</td>";
+			$html .= "<td>" . ($entry->size !== null ? intval($entry->size / 1000) . " KB" : "" ) . "</td>";
+			$html .= "</tr>";
+		}
+		$html .= "</table>";
+
+		return $html;
+	}
 }
 
 ?>
