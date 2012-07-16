@@ -16,7 +16,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 				sequence = sequence.slice(0, -1);
 			}
 			try {
-				sequence = decodeURI(sequence);
+				sequence = decodeURIComponent(sequence);
 			} catch (err) {}
 			return sequence;
 		},
