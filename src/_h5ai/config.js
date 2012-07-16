@@ -390,7 +390,8 @@ var H5AI_CONFIG = {
 			"folders": "Répertoires",
 			"files": "Fichiers",
 			"download": "télécharger",
-			"noMatch": "rien trouvé"
+			"noMatch": "rien trouvé",
+			"dateFormat": "DD/MM/YYYY HH:mm"
 		},
 
 		"gr": {
