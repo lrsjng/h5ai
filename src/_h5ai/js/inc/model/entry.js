@@ -3,6 +3,17 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 	var doc = document,
 		domain = doc.domain,
+		forceEncode = function (href) {
+
+			return href
+					.replace(/'/g, '%27')
+					.replace(/\[/g, '%5B')
+					.replace(/\]/g, '%5D')
+					.replace(/\(/g, '%28')
+					.replace(/\)/g, '%29')
+					.replace(/\+/g, '%2B')
+					.replace(/\=/g, '%3D');
+		},
 		location = (function () {
 
 			var testpathname = '/a b',
@@ -16,14 +27,14 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 			location = a.href.replace(/.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, '');
 
 			if (isDecoded) {
-				location = encodeURIComponent(location).replace(/%2F/ig, '/').replace(/'/g, '%27');
+				location = encodeURIComponent(location).replace(/%2F/ig, '/');
 			}
 
 			if (!location) {
 				location = doc.location.href.replace(/.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, '');
 			}
 
-			return location;
+			return forceEncode(location);
 		}()),
 
 
@@ -87,6 +98,8 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 		Entry = function (absHref) {
 
+			absHref = forceEncode(absHref);
+
 			var split = splitPath(absHref);
 
 			cache[absHref] = this;
@@ -111,7 +124,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 		get = function (absHref, time, size, status, isContentFetched) {
 
-			absHref = absHref || location;
+			absHref = forceEncode(absHref || location);
 
 			var self = cache[absHref] || new Entry(absHref);
 
