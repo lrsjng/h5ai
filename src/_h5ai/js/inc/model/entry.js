@@ -3,9 +3,11 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 	var doc = document,
 		domain = doc.domain,
-		forceEncode = function (href) {
+
+		forceEncoding = function (href) {
 
 			return href
+					.replace(/\/+/g, '/')
 					.replace(/'/g, '%27')
 					.replace(/\[/g, '%5B')
 					.replace(/\]/g, '%5D')
@@ -14,6 +16,17 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 					.replace(/\+/g, '%2B')
 					.replace(/\=/g, '%3D');
 		},
+
+
+		rePrePathname = /.*:\/\/[^\/]*/,
+		rePostPathname = /[^\/]*$/,
+
+		uriToPathname = function (uri) {
+
+			return uri.replace(rePrePathname, '').replace(rePostPathname, '');
+		},
+
+
 		location = (function () {
 
 			var testpathname = '/a b',
@@ -21,21 +34,24 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 				isDecoded, location;
 
 			a.href = testpathname;
-			isDecoded = a.href.replace(/.*:\/\/[^\/]*/, '') === testpathname;
+			isDecoded = uriToPathname(a.href) === testpathname;
 
-			a.href = '.';
-			location = a.href.replace(/.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, '');
+			a.href = doc.location.href;
+			location = uriToPathname(a.href);
 
 			if (isDecoded) {
 				location = encodeURIComponent(location).replace(/%2F/ig, '/');
 			}
 
-			if (!location) {
-				location = doc.location.href.replace(/.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, '');
-			}
-
-			return forceEncode(location);
+			return forceEncoding(location);
 		}()),
+
+		folderstatus = (function () {
+
+			try { return modulejs.require('ext/folderstatus'); } catch (e) {}
+			return {};
+		}()),
+
 
 
 		// utils
@@ -48,9 +64,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 			if (sequence.length > 1 && reEndsWithSlash.test(sequence)) {
 				sequence = sequence.slice(0, -1);
 			}
-			try {
-				sequence = decodeURIComponent(sequence);
-			} catch (err) {}
+			try { sequence = decodeURIComponent(sequence); } catch (e) {}
 			return sequence;
 		},
 
@@ -62,7 +76,6 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 			var match;
 
-			sequence = sequence.replace(/\/+/g, '/');
 			if (sequence === '/') {
 				return { parent: null, name: '/' };
 			}
@@ -91,40 +104,13 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 
 
-
-		// Entry
+		// Cache
 
 		cache = {},
 
-		Entry = function (absHref) {
+		getEntry = function (absHref, time, size, status, isContentFetched) {
 
-			absHref = forceEncode(absHref);
-
-			var split = splitPath(absHref);
-
-			cache[absHref] = this;
-
-			this.absHref = absHref;
-			this.type = types.getType(absHref);
-			this.label = createLabel(absHref === '/' ? domain : split.name);
-			this.time = null;
-			this.size = null;
-			this.parent = null;
-			this.status = null;
-			this.content = {};
-
-			if (split.parent) {
-				this.parent = cache[split.parent] || new Entry(split.parent);
-				this.parent.content[this.absHref] = this;
-				if (_.keys(this.parent.content).length > 1) {
-					this.parent.isContentFetched = true;
-				}
-			}
-		},
-
-		get = function (absHref, time, size, status, isContentFetched) {
-
-			absHref = forceEncode(absHref || location);
+			absHref = forceEncoding(absHref || location);
 
 			var self = cache[absHref] || new Entry(absHref);
 
@@ -144,18 +130,9 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 			return self;
 		},
 
-		folderstatus = (function () {
-
-			try {
-				return modulejs.require('ext/folderstatus');
-			} catch (e) {}
-
-			return {};
-		}()),
-
 		fetchStatus = function (absHref, callback) {
 
-			var self = cache[absHref] || new Entry(absHref);
+			var self = getEntry(absHref);
 
 			if (self.status || !self.isFolder()) {
 				callback(self);
@@ -169,7 +146,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 		fetchContent = function (absHref, parser, callback) {
 
-			var self = cache[absHref] || new Entry(absHref);
+			var self = getEntry(absHref);
 
 			if (self.isContentFetched) {
 				callback(self);
@@ -186,6 +163,33 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 			}
 		};
 
+
+
+	// Entry
+
+	var Entry = function (absHref) {
+
+		var split = splitPath(absHref);
+
+		cache[absHref] = this;
+
+		this.absHref = absHref;
+		this.type = types.getType(absHref);
+		this.label = createLabel(absHref === '/' ? domain : split.name);
+		this.time = null;
+		this.size = null;
+		this.parent = null;
+		this.status = null;
+		this.content = {};
+
+		if (split.parent) {
+			this.parent = getEntry(split.parent);
+			this.parent.content[this.absHref] = this;
+			if (_.keys(this.parent.content).length > 1) {
+				this.parent.isContentFetched = true;
+			}
+		}
+	};
 
 	_.extend(Entry.prototype, {
 
@@ -273,7 +277,9 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 		}
 	});
 
+
+
 	return {
-		get: get
+		get: getEntry
 	};
 });
