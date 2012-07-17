@@ -18,18 +18,17 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 		},
 
 
-		rePrePathname = /.*:\/\/[^\/]*/,
-		rePostPathname = /[^\/]*$/,
-
-		uriToPathname = function (uri) {
-
-			return uri.replace(rePrePathname, '').replace(rePostPathname, '');
-		},
-
-
 		location = (function () {
 
-			var testpathname = '/a b',
+			var rePrePathname = /.*:\/\/[^\/]*/,
+				rePostPathname = /[^\/]*$/,
+
+				uriToPathname = function (uri) {
+
+					return uri.replace(rePrePathname, '').replace(rePostPathname, '');
+				},
+
+				testpathname = '/a b',
 				a = doc.createElement('a'),
 				isDecoded, location;
 
