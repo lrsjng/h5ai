@@ -4,12 +4,17 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 	var domain = document.domain,
 		location = (function () {
 
-			var location = document.location.pathname.replace(/[^\/]*$/, ''),
-				testpathname = '/a b',
-				a = document.createElement('a');
+			var testpathname = '/a b',
+				a = document.createElement('a'),
+				isDecoded, location;
 
 			a.href = testpathname;
-			if (a.pathname === testpathname) {
+			isDecoded = a.href.replace(/.*:\/\/[^\/]*/, '') === testpathname;
+
+			a.href = '.';
+			location = a.href.replace(/.*:\/\/[^\/]*/, '').replace(/[^\/]*$/, '');
+
+			if (isDecoded) {
 				location = encodeURIComponent(location).replace(/%2F/ig, '/').replace(/'/g, '%27');
 			}
 
