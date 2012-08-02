@@ -78,7 +78,7 @@ It profits from these great projects:
 * adds `ja` translation by [metasta](http://github.com/metasta)
 * adds `nb` translation by [Sindre Sorhus](http://github.com/sindresorhus)
 * adds `sr` translation by [vBm](http://github.com/vBm)
-* adds `gr` translation by [xhmikosr](http://github.com/xhmikosr)
+* adds `el` translation by [xhmikosr](http://github.com/xhmikosr)
 
 
 ### v0.18 - *2012-02-24*
