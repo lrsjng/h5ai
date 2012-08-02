@@ -7,7 +7,7 @@ var path = require('path'),
 	moment = require('moment');
 
 
-var version = '0.21-dev-30',
+var version = '0.21-dev-31',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
@@ -63,7 +63,7 @@ module.exports = function (make, $) {
 			stamp: stamp.format('YYYY-MM-DD HH:mm:ss')
 		};
 
-		$.info({ method: 'before', message: version + ' ' + replacements.stamp.human });
+		$.info({ method: 'before', message: version + ' ' + replacements.stamp });
 	};
 
 
