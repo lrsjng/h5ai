@@ -84,7 +84,11 @@ var H5AI_CONFIG = {
 
 		/*
 		 * Allow filtering the displayed files and folders.
-		 * Note: filters will be treated as JavaScript regular expressions
+		 * Will check entries for right order of characters, i.e.
+		 * "ab" matches "ab", "axb", "xaxbx" but not "ba".
+		 * Space separated sequences get OR-ed.
+		 *
+		 * Filters will be treated as JavaScript regular expressions
 		 * if you prefix them with "re:".
 		 */
 		"filter": {
@@ -129,7 +133,7 @@ var H5AI_CONFIG = {
 		 * see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
 		 */
 		"google-analytics": {
-			"enabled": false,
+			"enabled": true,
 			"gaq": []
 		},
 
