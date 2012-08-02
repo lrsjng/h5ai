@@ -116,6 +116,24 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		 * Adds Google Analytics asynchronous tracking code.
+		 *
+		 * for example:
+		 * "gaq": [
+		 *   ["_setAccount", "UA-xxxxxx-x"],
+		 *   ["_setDomainName", ".your-domain.tld"],
+		 *   ["_trackPageview"],
+		 *   ["_trackPageLoadTime"]
+		 * ]
+		 *
+		 * see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
+		 */
+		"google-analytics": {
+			"enabled": false,
+			"gaq": []
+		},
+
+		/*
 		 * Localization, for example "en", "de" etc. - see "langs" below for
 		 * possible values. Adjust it to your needs. If lang is not found in
 		 * "langs" it defaults to "en".

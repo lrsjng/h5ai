@@ -28,6 +28,7 @@
 	// @include "ext/download.js"
 	// @include "ext/filter.js"
 	// @include "ext/folderstatus.js"
+	// @include "ext/google-analytics.js"
 	// @include "ext/l10n.js"
 	// @include "ext/link-hover-states.js"
 	// @include "ext/mode.js"
