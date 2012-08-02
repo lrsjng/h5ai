@@ -34,6 +34,7 @@ It profits from these great projects:
 * fixes misaligned image previews
 * adds no JavaScript fallback to PHP version
 * fixes duplicate tree entries and empty main views
+* adds Google Analytics support (async)
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
 * updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
 * updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1
