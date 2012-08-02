@@ -29,7 +29,7 @@ It profits from these great projects:
 ## Changelog
 
 
-### v0.21 - *2012-??*
+### v0.21 - *2012-08-??*
 
 * fixes misaligned image previews
 * adds no JavaScript fallback to PHP version
@@ -41,6 +41,8 @@ It profits from these great projects:
 * updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
 * updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1
 * updates to [modulejs](http://larsjung.de/modulejs/) 0.2
+* updates to [Moment.js](http://momentjs.com) 1.7.0
+* updates to [Underscore.js](http://underscorejs.org) 1.3.3
 
 
 ### v0.20 - *2012-05-11*

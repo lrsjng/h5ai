@@ -1,21 +1,21 @@
 
 // jQuery libs
 // -----------
-// @include "inc/lib/jquery-1.7.2.min.js"
-// @include "inc/lib/jquery.fracs-0.11.min.js"
-// @include "inc/lib/jquery.mousewheel-3.0.6.js"
-// @include "inc/lib/jquery.qrcode-0.2.min.js"
-// @include "inc/lib/jquery.scrollpanel-0.1.min.js"
+// @include "lib/jquery-1.7.2.min.js"
+// @include "lib/jquery.fracs-0.11.min.js"
+// @include "lib/jquery.mousewheel-3.0.6.js"
+// @include "lib/jquery.qrcode-0.2.min.js"
+// @include "lib/jquery.scrollpanel-0.1.min.js"
 
 // other libs
 // ----------
-// @include "inc/lib/underscore-1.3.1.min.js"
-// @include "inc/lib/amplify-1.1.0.min.js"
-// @include "inc/lib/modulejs-0.2.js"
-// @include "inc/lib/moment-1.5.0.min.js"
-// @include "inc/lib/json2.js"
-// @include "inc/lib/base64.js"
-// @include "inc/lib/spin-1.2.5.min.js"
+// @include "lib/underscore-1.3.3.js"
+// @include "lib/amplify-1.1.0.min.js"
+// @include "lib/modulejs-0.2.js"
+// @include "lib/moment-1.7.0.js"
+// @include "lib/json2-2011.10.19.js"
+// @include "lib/base64.js"
+// @include "lib/spin-1.2.5.min.js"
 
 // h5ai
 // ----
