@@ -386,6 +386,21 @@ var H5AI_CONFIG = {
 			"dateFormat": "DD.MM.YYYY HH:mm"
 		},
 
+		"el": {
+			"lang": "ελληνικά",
+			"details": "Λεπτομέρειες",
+			"icons": "Εικονίδια",
+			"name": "Όνομα",
+			"lastModified": "Τελευταία Τροποποίηση",
+			"size": "Μέγεθος",
+			"parentDirectory": "Προηγούμενος Κατάλογος",
+			"empty": "κενό",
+			"folders": "Φάκελοι",
+			"files": "Αρχεία",
+			"download": "Μεταμόρφωση",
+			"noMatch": "Κανένα Ταίριασμα"
+		},
+
 		"es": {
 			"lang": "español",
 			"details": "Detalles",
@@ -414,21 +429,6 @@ var H5AI_CONFIG = {
 			"download": "télécharger",
 			"noMatch": "rien trouvé",
 			"dateFormat": "DD/MM/YYYY HH:mm"
-		},
-
-		"gr": {
-			"lang": "ελληνικά",
-			"details": "Λεπτομέρειες",
-			"icons": "Εικονίδια",
-			"name": "Όνομα",
-			"lastModified": "Τελευταία Τροποποίηση",
-			"size": "Μέγεθος",
-			"parentDirectory": "Προηγούμενος Κατάλογος",
-			"empty": "κενό",
-			"folders": "Φάκελοι",
-			"files": "Αρχεία",
-			"download": "Μεταμόρφωση",
-			"noMatch": "Κανένα Ταίριασμα"
 		},
 
 		"hu": {
