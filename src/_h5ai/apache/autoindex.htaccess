@@ -1,5 +1,5 @@
 ################################
-# h5ai %BUILD_VERSION%
+# h5ai {{version}}
 # customized .htaccess
 ################################
 
@@ -19,5 +19,5 @@ IndexOptions  NameWidth=*
 IndexOptions  SuppressDescription
 IndexOptions  SuppressHTMLPreamble
 IndexOptions  SuppressRules
-IndexOptions  Type=text/html;h5ai=%BUILD_VERSION%
+IndexOptions  Type=text/html;h5ai={{version}}
 IndexOptions  XHTML

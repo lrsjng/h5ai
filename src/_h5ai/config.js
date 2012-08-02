@@ -1,5 +1,5 @@
 /*
- * h5ai %BUILD_VERSION%
+ * h5ai {{version}}
  *
  * Configuration
  * options, types and localization

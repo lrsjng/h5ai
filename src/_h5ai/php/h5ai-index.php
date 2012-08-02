@@ -1,4 +1,4 @@
-<?php header("Content-type: text/html;h5ai=%BUILD_VERSION%"); ?>
+<?php header("Content-type: text/html;h5ai={{version}}"); ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
@@ -25,7 +25,7 @@
 	</div>
 	<div id="bottombar" class="clearfix">
 		<span class="left">
-			<a id="h5ai-reference" href="http://larsjung.de/h5ai" title="h5ai project page">h5ai %BUILD_VERSION%</a>
+			<a id="h5ai-reference" href="http://larsjung.de/h5ai" title="h5ai project page">h5ai {{version}}</a>
 			<span class="hideOnJs noJsMsg"> ⚡ JavaScript is disabled! ⚡ </span>
 			<span class="oldBrowser"> ⚡ Some features disabled! Works best in <a href="http://browsehappy.com">modern browsers</a>. ⚡ </span>
 		</span>
