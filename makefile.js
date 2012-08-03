@@ -7,7 +7,7 @@ var path = require('path'),
 	moment = require('moment');
 
 
-var version = '0.21-dev-32',
+var version = '0.21-dev-33',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
@@ -116,7 +116,7 @@ module.exports = function (make, $) {
 				.cssmin()
 				.write($.OVERWRITE, mapper);
 
-			$(src + ': **, **/*/.*, ! _h5ai/js/**, ! _h5ai/css/**')
+			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
 				.modified(mapper)
 				.mustache(replacements)
 				.write($.OVERWRITE, mapper);
@@ -142,7 +142,7 @@ module.exports = function (make, $) {
 				// .cssmin()
 				.write($.OVERWRITE, mapper);
 
-			$(src + ': **, **/*/.*, ! _h5ai/js/**, ! _h5ai/css/**')
+			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
 				.modified(mapper)
 				.mustache(replacements)
 				.write($.OVERWRITE, mapper);
