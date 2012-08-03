@@ -60,7 +60,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			rect = $img.fracs('rect');
 			if (!rect) {
-				// console.log('RECT FAILED!');
 				return;
 			}
 			rect = rect.relativeTo($('#preview-overlay').fracs('rect'));
@@ -79,7 +78,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			});
 		},
 
-		preload = function (src, callback) {
+		preloadImg = function (src, callback) {
 
 			var $hidden = $('<div><img/></div>')
 							.css({
@@ -102,9 +101,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 							.attr('src', src);
 		},
 
-		showImg = function (entries, idx) {
+		onIndexChange = function (idx) {
 
-			currentEntries = entries;
 			currentIdx = (idx + currentEntries.length) % currentEntries.length;
 
 			var $container = $('#preview-content'),
@@ -124,7 +122,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			$('#preview-overlay').stop(true, true).fadeIn(200);
 			$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
 
-			preload(src, function (width, height) {
+			preloadImg(src, function (width, height) {
 
 				clearTimeout(spinnerTimeout);
 				$container.spin(false);
@@ -132,18 +130,76 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				$img.fadeOut(100, function () {
 
 					$img.attr('src', src).fadeIn(200);
-					setTimeout(adjustSize, 1);
+
+					// small timeout, so $img is visible
+					setTimeout(function () {
+						adjustSize();
+						$('#preview-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
+					}, 1);
 				});
 
 				$('#preview-bar-label').text(currentEntries[currentIdx].label);
-				$('#preview-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
+				$('#preview-bar-percent').text('···%');
 				$('#preview-bar-size').text('' + width + 'x' + height);
 				$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
 				$('#preview-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
 			});
 		},
 
-		checkEntry = function (entry) {
+		onEnter = function (entries, idx) {
+
+			$(window).on('keydown', onKeydown);
+			currentEntries = entries;
+			onIndexChange(idx);
+		},
+
+		onNext = function () {
+
+			onIndexChange(currentIdx + 1);
+		},
+
+		onPrevious = function () {
+
+			onIndexChange(currentIdx - 1);
+		},
+
+		onExit = function () {
+
+			$(window).off('keydown', onKeydown);
+			$('#preview-overlay').stop(true, true).fadeOut(200);
+		},
+
+		onFullscreen = function () {
+
+			isFullscreen = !isFullscreen;
+			store.put(storekey, isFullscreen);
+
+			adjustSize();
+
+			if (isFullscreen) {
+				$('#preview-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
+				$('#preview-bottombar').fadeOut(400);
+			} else {
+				$('#preview-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
+				$('#preview-bottombar').fadeIn(200);
+			}
+		},
+
+		onKeydown = function (event) {
+
+			var key = event.which;
+			if (key === 27) { // esc
+				onExit();
+			} else if (key === 37 || key === 40) { // left, down
+				onPrevious();
+			} else if (key === 38 || key === 39) { // up, right
+				onNext();
+			} else if (key === 70) { // f
+				onFullscreen();
+			}
+		},
+
+		initEntry = function (entry) {
 
 			if (entry.$extended && $.inArray(entry.type, settings.types) >= 0) {
 
@@ -160,7 +216,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 							return _.indexOf(settings.types, entry.type) >= 0;
 						});
 
-					showImg(entries, _.indexOf(entries, entry));
+					onEnter(entries, _.indexOf(entries, entry));
 				});
 			}
 		},
@@ -173,60 +229,41 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			$(template).appendTo('body');
 
-			_.each(entry.content, checkEntry);
+			_.each(entry.content, initEntry);
 
-			$('#preview-bar-prev, #preview-prev').on('click', function (event) {
-				// event.stopPropagation();
-				showImg(currentEntries, currentIdx - 1);
-			});
+			$('#preview-bar-prev, #preview-prev').on('click', onPrevious);
+			$('#preview-bar-next, #preview-next').on('click', onNext);
+			$('#preview-bar-close, #preview-close').on('click', onExit);
+			$('#preview-bar-fullscreen').on('click', onFullscreen);
+			$('#preview-overlay').on('keydown', onKeydown);
+
 			$('#preview-prev')
 				.on('mouseenter', function (event) {
-					// event.stopPropagation();
 					$('#preview-bar-prev').addClass('hover');
 				})
 				.on('mouseleave', function (event) {
-					// event.stopPropagation();
 					$('#preview-bar-prev').removeClass('hover');
 				});
 
-			$('#preview-bar-next, #preview-next').on('click', function (event) {
-				// event.stopPropagation();
-				showImg(currentEntries, currentIdx + 1);
-			});
 			$('#preview-next')
 				.on('mouseenter', function (event) {
-					// event.stopPropagation();
 					$('#preview-bar-next').addClass('hover');
 				})
 				.on('mouseleave', function (event) {
-					// event.stopPropagation();
 					$('#preview-bar-next').removeClass('hover');
 				});
 
-			$('#preview-bar-close, #preview-close').on('click', function () {
-				// event.stopPropagation();
-				$('#preview-overlay').stop(true, true).fadeOut(200);
-			});
 			$('#preview-close')
 				.on('mouseenter', function (event) {
-					// event.stopPropagation();
 					$('#preview-bar-close').addClass('hover');
 				})
 				.on('mouseleave', function (event) {
-					// event.stopPropagation();
 					$('#preview-bar-close').removeClass('hover');
 				});
 
-			$('#preview-bar-fullscreen').on('click', function (event) {
-				// event.stopPropagation();
-				isFullscreen = !isFullscreen;
-				store.put(storekey, isFullscreen);
-				$('#preview-bar-fullscreen').find('img').attr('src', isFullscreen ? resource.image('preview/no-fullscreen') : resource.image('preview/fullscreen'));
-				adjustSize();
-			});
 
 			$('#preview-overlay')
-				.on('mousedown', function (event) {
+				.on('click mousedown mousemove keydown keypress', function (event) {
 
 					event.stopPropagation();
 				})

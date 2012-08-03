@@ -7,7 +7,7 @@ var path = require('path'),
 	moment = require('moment');
 
 
-var version = '0.21-dev-33',
+var version = '0.21-dev-34',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
