@@ -388,17 +388,17 @@ var H5AI_CONFIG = {
 
 		"el": {
 			"lang": "ελληνικά",
-			"details": "Λεπτομέρειες",
-			"icons": "Εικονίδια",
+			"details": "λεπτομέρειες",
+			"icons": "εικονίδια",
 			"name": "Όνομα",
-			"lastModified": "Τελευταία Τροποποίηση",
+			"lastModified": "Τελευταία τροποποίηση",
 			"size": "Μέγεθος",
 			"parentDirectory": "Προηγούμενος Κατάλογος",
 			"empty": "κενό",
-			"folders": "Φάκελοι",
-			"files": "Αρχεία",
-			"download": "Μεταμόρφωση",
-			"noMatch": "Κανένα Ταίριασμα",
+			"folders": "φάκελοι",
+			"files": "αρχεία",
+			"download": "μεταμόρφωση",
+			"noMatch": "κανένα ταίριασμα",
 			"dateFormat": "DD/MM/YYYY HH:mm"
 		},
 
