@@ -398,7 +398,7 @@ var H5AI_CONFIG = {
 			"folders": "φάκελοι",
 			"files": "αρχεία",
 			"download": "μεταμόρφωση",
-			"noMatch": "κανένα ταίριασμα",
+			"noMatch": "κανένα αποτέλεσμα",
 			"dateFormat": "DD/MM/YYYY HH:mm"
 		},
 
