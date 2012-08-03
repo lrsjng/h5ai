@@ -398,7 +398,8 @@ var H5AI_CONFIG = {
 			"folders": "Φάκελοι",
 			"files": "Αρχεία",
 			"download": "Μεταμόρφωση",
-			"noMatch": "Κανένα Ταίριασμα"
+			"noMatch": "Κανένα Ταίριασμα",
+			"dateFormat": "DD/MM/YYYY HH:mm"
 		},
 
 		"es": {
