@@ -37,6 +37,7 @@ It profits from these great projects:
 * adds Google Analytics support (async)
 * improves filter (now ignorecase, now only checks if chars in right order)
 * changes language code `gr` to `el`
+* adds localization for filter placeholder
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
 * updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
 * updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1

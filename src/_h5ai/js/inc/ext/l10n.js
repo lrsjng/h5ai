@@ -58,6 +58,8 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 
 				$this.text(format.formatDate($this.data('time')));
 			});
+
+			$('#filter input').attr('placeholder', currentLang.filter);
 		},
 
 		initLangSelector = function (langs) {

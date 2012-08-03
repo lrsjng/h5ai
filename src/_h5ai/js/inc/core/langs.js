@@ -14,7 +14,8 @@ modulejs.define('core/langs', ['config', '_'], function (config, _) {
 			files: 'files',
 			download: 'download',
 			noMatch: 'no match',
-			dateFormat: 'YYYY-MM-DD HH:mm'
+			dateFormat: 'YYYY-MM-DD HH:mm',
+			filter: 'filter'
 		},
 
 		translations = {},

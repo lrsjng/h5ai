@@ -341,7 +341,8 @@ var H5AI_CONFIG = {
 			"files": "files",
 			"download": "download",
 			"noMatch": "no match",
-			"dateFormat": "YYYY-MM-DD HH:mm"
+			"dateFormat": "YYYY-MM-DD HH:mm",
+			"filter": "filter"
 		},
 
 		"bg": {
@@ -383,7 +384,8 @@ var H5AI_CONFIG = {
 			"files": "Dateien",
 			"download": "Download",
 			"noMatch": "keine Treffer",
-			"dateFormat": "DD.MM.YYYY HH:mm"
+			"dateFormat": "DD.MM.YYYY HH:mm",
+			"filter": "Filter"
 		},
 
 		"el": {
