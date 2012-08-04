@@ -65,16 +65,16 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			rect = rect.relativeTo($('#preview-overlay').fracs('rect'));
 
 			$('#preview-prev').css({
-				'left': rect.left,
-				'top': rect.top,
-				'width': rect.width / 2,
-				'height': rect.height
+				left: rect.left,
+				top: rect.top,
+				width: rect.width / 2,
+				height: rect.height
 			});
 			$('#preview-next').css({
-				'left': rect.left + rect.width / 2,
-				'top': rect.top,
-				'width': rect.width / 2,
-				'height': rect.height
+				left: rect.left + rect.width / 2,
+				top: rect.top,
+				width: rect.width / 2,
+				height: rect.height
 			});
 		},
 
@@ -97,6 +97,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 								$hidden.remove();
 
 								callback(width, height);
+								// setTimeout(function () { callback(width, height); }, 1000); // for testing
 							})
 							.attr('src', src);
 		},
@@ -119,9 +120,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 					});
 				}, 200);
 
-			$('#preview-overlay').stop(true, true).fadeIn(200);
-			$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
-
 			preloadImg(src, function (width, height) {
 
 				clearTimeout(spinnerTimeout);
@@ -135,20 +133,21 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 					setTimeout(function () {
 						adjustSize();
 						$('#preview-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
+						$('#preview-bar-label').text(currentEntries[currentIdx].label);
+						$('#preview-bar-size').text('' + width + 'x' + height);
+						$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
+						$('#preview-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
 					}, 1);
 				});
 
-				$('#preview-bar-label').text(currentEntries[currentIdx].label);
-				$('#preview-bar-percent').text('···%');
-				$('#preview-bar-size').text('' + width + 'x' + height);
-				$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
-				$('#preview-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
 			});
 		},
 
 		onEnter = function (entries, idx) {
 
 			$(window).on('keydown', onKeydown);
+			$('#preview-overlay').stop(true, true).fadeIn(200);
+
 			currentEntries = entries;
 			onIndexChange(idx);
 		},
@@ -188,35 +187,25 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 		onKeydown = function (event) {
 
 			var key = event.which;
+
 			if (key === 27) { // esc
 				onExit();
-			} else if (key === 37 || key === 40) { // left, down
+			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
 				onPrevious();
-			} else if (key === 38 || key === 39) { // up, right
+			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
 				onNext();
 			} else if (key === 70) { // f
 				onFullscreen();
 			}
 		},
 
-		initEntry = function (entry) {
+		initEntry = function (entries, entry, idx) {
 
-			if (entry.$extended && $.inArray(entry.type, settings.types) >= 0) {
-
-				var $a = entry.$extended.find('a');
-				$a.on('click', function (event) {
+			if (entry.$extended) {
+				entry.$extended.find('a').on('click', function (event) {
 
 					event.preventDefault();
-
-					var entries = _.filter(_.map($('#extended .entry'), function (entry) {
-
-							return $(entry).data('entry');
-						}), function (entry) {
-
-							return _.indexOf(settings.types, entry.type) >= 0;
-						});
-
-					onEnter(entries, _.indexOf(entries, entry));
+					onEnter(entries, idx);
 				});
 			}
 		},
@@ -227,10 +216,16 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				return;
 			}
 
+			var imageEntries = _.filter(entry.content, function (entry) {
+
+				return _.indexOf(settings.types, entry.type) >= 0;
+			});
+			_.each(imageEntries, function (e, idx) {
+
+				initEntry(imageEntries, e, idx);
+			});
+
 			$(template).appendTo('body');
-
-			_.each(entry.content, initEntry);
-
 			$('#preview-bar-prev, #preview-prev').on('click', onPrevious);
 			$('#preview-bar-next, #preview-next').on('click', onNext);
 			$('#preview-bar-close, #preview-close').on('click', onExit);
@@ -238,26 +233,26 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			$('#preview-overlay').on('keydown', onKeydown);
 
 			$('#preview-prev')
-				.on('mouseenter', function (event) {
+				.on('mouseenter', function () {
 					$('#preview-bar-prev').addClass('hover');
 				})
-				.on('mouseleave', function (event) {
+				.on('mouseleave', function () {
 					$('#preview-bar-prev').removeClass('hover');
 				});
 
 			$('#preview-next')
-				.on('mouseenter', function (event) {
+				.on('mouseenter', function () {
 					$('#preview-bar-next').addClass('hover');
 				})
-				.on('mouseleave', function (event) {
+				.on('mouseleave', function () {
 					$('#preview-bar-next').removeClass('hover');
 				});
 
 			$('#preview-close')
-				.on('mouseenter', function (event) {
+				.on('mouseenter', function () {
 					$('#preview-bar-close').addClass('hover');
 				})
-				.on('mouseleave', function (event) {
+				.on('mouseleave', function () {
 					$('#preview-bar-close').removeClass('hover');
 				});
 

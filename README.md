@@ -36,6 +36,7 @@ It profits from these great projects:
 * fixes duplicate tree entries and empty main views
 * adds Google Analytics support (async)
 * improves filter (now ignorecase, now only checks if chars in right order)
+* adds keyboard support to image preview (space, enter, backspace, left, right, up, down, f, esc)
 * changes language code `gr` to `el`
 * adds localization for filter placeholder
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
