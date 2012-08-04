@@ -179,6 +179,26 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		 * Show text file preview on click.
+		 * "types" maps file types to SyntaxHighligher brushes.
+		 *
+		 * For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+		 */
+		"preview-txt": {
+			"enabled": true,
+			"types": {
+				"authors": "plain",
+				"copying": "plain",
+				"css": "css",
+				"install": "plain",
+				"readme": "plain",
+				"script": "shell",
+				"text": "plain",
+				"js": "js"
+			}
+		},
+
+		/*
 		 * Show QRCodes on hovering files.
 		 */
 		"qrcode": {

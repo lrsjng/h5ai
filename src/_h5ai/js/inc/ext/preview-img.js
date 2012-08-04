@@ -8,24 +8,24 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 		settings = _.extend({}, defaults, allsettings['preview-img']),
 
-		template = '<div id="preview-overlay" class="noSelection">' +
-						'<div id="preview-content">' +
-							'<img id="preview-img" />' +
+		template = '<div id="pv-img-overlay" class="noSelection">' +
+						'<div id="pv-img-content">' +
+							'<img id="pv-img-image" />' +
 						'</div>' +
-						'<div id="preview-close" />' +
-						'<div id="preview-prev" />' +
-						'<div id="preview-next" />' +
-						'<div id="preview-bottombar" class="clearfix">' +
-							'<ul id="preview-buttons">' +
-								'<li id="preview-bar-size" class="bar-left bar-label"></li>' +
-								'<li id="preview-bar-percent" class="bar-left bar-label"></li>' +
-								'<li id="preview-bar-label" class="bar-left bar-label"></li>' +
-								'<li id="preview-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '" /></li>' +
-								'<li id="preview-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/image') + '" /></a></li>' +
-								'<li id="preview-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '" /></li>' +
-								'<li id="preview-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '" /></li>' +
-								'<li id="preview-bar-idx" class="bar-right bar-label"></li>' +
-								'<li id="preview-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '" /></li>' +
+						'<div id="pv-img-close" />' +
+						'<div id="pv-img-prev" />' +
+						'<div id="pv-img-next" />' +
+						'<div id="pv-img-bottombar" class="clearfix">' +
+							'<ul id="pv-img-buttons">' +
+								'<li id="pv-img-bar-size" class="bar-left bar-label"></li>' +
+								'<li id="pv-img-bar-percent" class="bar-left bar-label"></li>' +
+								'<li id="pv-img-bar-label" class="bar-left bar-label"></li>' +
+								'<li id="pv-img-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '" /></li>' +
+								'<li id="pv-img-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '" /></a></li>' +
+								'<li id="pv-img-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '" /></li>' +
+								'<li id="pv-img-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '" /></li>' +
+								'<li id="pv-img-bar-idx" class="bar-right bar-label"></li>' +
+								'<li id="pv-img-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '" /></li>' +
 							'</ul>' +
 						'</div>' +
 					'</div>',
@@ -39,8 +39,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 		adjustSize = function () {
 
 			var rect = $(window).fracs('viewport'),
-				$container = $('#preview-content'),
-				$img = $('#preview-img'),
+				$container = $('#pv-img-content'),
+				$img = $('#pv-img-image'),
 				margin = isFullscreen ? 0 : 20,
 				barheight = isFullscreen ? 0 : 31;
 
@@ -62,15 +62,15 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			if (!rect) {
 				return;
 			}
-			rect = rect.relativeTo($('#preview-overlay').fracs('rect'));
+			rect = rect.relativeTo($('#pv-img-overlay').fracs('rect'));
 
-			$('#preview-prev').css({
+			$('#pv-img-prev').css({
 				left: rect.left,
 				top: rect.top,
 				width: rect.width / 2,
 				height: rect.height
 			});
-			$('#preview-next').css({
+			$('#pv-img-next').css({
 				left: rect.left + rect.width / 2,
 				top: rect.top,
 				width: rect.width / 2,
@@ -106,8 +106,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			currentIdx = (idx + currentEntries.length) % currentEntries.length;
 
-			var $container = $('#preview-content'),
-				$img = $('#preview-img'),
+			var $container = $('#pv-img-content'),
+				$img = $('#pv-img-image'),
 				src = currentEntries[currentIdx].absHref,
 				spinnerTimeout = setTimeout(function () {
 
@@ -129,14 +129,14 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 					$img.attr('src', src).fadeIn(200);
 
-					// small timeout, so $img is visible
+					// small timeout, so $img is visible and therefor $img.width is available
 					setTimeout(function () {
 						adjustSize();
-						$('#preview-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
-						$('#preview-bar-label').text(currentEntries[currentIdx].label);
-						$('#preview-bar-size').text('' + width + 'x' + height);
-						$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
-						$('#preview-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
+						$('#pv-img-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
+						$('#pv-img-bar-label').text(currentEntries[currentIdx].label);
+						$('#pv-img-bar-size').text('' + width + 'x' + height);
+						$('#pv-img-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
+						$('#pv-img-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
 					}, 1);
 				});
 
@@ -146,7 +146,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 		onEnter = function (entries, idx) {
 
 			$(window).on('keydown', onKeydown);
-			$('#preview-overlay').stop(true, true).fadeIn(200);
+			$('#pv-img-overlay').stop(true, true).fadeIn(200);
 
 			currentEntries = entries;
 			onIndexChange(idx);
@@ -165,7 +165,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 		onExit = function () {
 
 			$(window).off('keydown', onKeydown);
-			$('#preview-overlay').stop(true, true).fadeOut(200);
+			$('#pv-img-overlay').stop(true, true).fadeOut(200);
 		},
 
 		onFullscreen = function () {
@@ -176,11 +176,11 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			adjustSize();
 
 			if (isFullscreen) {
-				$('#preview-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
-				$('#preview-bottombar').fadeOut(400);
+				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
+				$('#pv-img-bottombar').fadeOut(400);
 			} else {
-				$('#preview-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
-				$('#preview-bottombar').fadeIn(200);
+				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
+				$('#pv-img-bottombar').fadeIn(200);
 			}
 		},
 
@@ -226,38 +226,38 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			});
 
 			$(template).appendTo('body');
-			$('#preview-bar-prev, #preview-prev').on('click', onPrevious);
-			$('#preview-bar-next, #preview-next').on('click', onNext);
-			$('#preview-bar-close, #preview-close').on('click', onExit);
-			$('#preview-bar-fullscreen').on('click', onFullscreen);
-			$('#preview-overlay').on('keydown', onKeydown);
+			$('#pv-img-bar-prev, #pv-img-prev').on('click', onPrevious);
+			$('#pv-img-bar-next, #pv-img-next').on('click', onNext);
+			$('#pv-img-bar-close, #pv-img-close').on('click', onExit);
+			$('#pv-img-bar-fullscreen').on('click', onFullscreen);
+			$('#pv-img-overlay').on('keydown', onKeydown);
 
-			$('#preview-prev')
+			$('#pv-img-prev')
 				.on('mouseenter', function () {
-					$('#preview-bar-prev').addClass('hover');
+					$('#pv-img-bar-prev').addClass('hover');
 				})
 				.on('mouseleave', function () {
-					$('#preview-bar-prev').removeClass('hover');
+					$('#pv-img-bar-prev').removeClass('hover');
 				});
 
-			$('#preview-next')
+			$('#pv-img-next')
 				.on('mouseenter', function () {
-					$('#preview-bar-next').addClass('hover');
+					$('#pv-img-bar-next').addClass('hover');
 				})
 				.on('mouseleave', function () {
-					$('#preview-bar-next').removeClass('hover');
+					$('#pv-img-bar-next').removeClass('hover');
 				});
 
-			$('#preview-close')
+			$('#pv-img-close')
 				.on('mouseenter', function () {
-					$('#preview-bar-close').addClass('hover');
+					$('#pv-img-bar-close').addClass('hover');
 				})
 				.on('mouseleave', function () {
-					$('#preview-bar-close').removeClass('hover');
+					$('#pv-img-bar-close').removeClass('hover');
 				});
 
 
-			$('#preview-overlay')
+			$('#pv-img-overlay')
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
 					event.stopPropagation();
@@ -265,12 +265,12 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				.on('mousemove', function (event) {
 
 					if (isFullscreen) {
-						var rect = $('#preview-overlay').fracs('rect');
+						var rect = $('#pv-img-overlay').fracs('rect');
 
 						if (rect.bottom - event.pageY < 64) {
-							$('#preview-bottombar').fadeIn(200);
+							$('#pv-img-bottombar').fadeIn(200);
 						} else {
-							$('#preview-bottombar').fadeOut(400);
+							$('#pv-img-bottombar').fadeOut(400);
 						}
 					}
 				});

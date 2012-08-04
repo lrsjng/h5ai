@@ -23,6 +23,7 @@ It profits from these great projects:
 [Modernizr](http://www.modernizr.com) (MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/) (MIT),
 [Moment.js](http://momentjs.com) (MIT),
+[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) (MIT/GPL),
 [Underscore.js](http://underscorejs.org) (MIT)
 
 
@@ -37,6 +38,7 @@ It profits from these great projects:
 * adds Google Analytics support (async)
 * improves filter (now ignorecase, now only checks if chars in right order)
 * adds keyboard support to image preview (space, enter, backspace, left, right, up, down, f, esc)
+* adds text file preview and highlighting with [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) (keys: left, right, esc)
 * changes language code `gr` to `el`
 * adds localization for filter placeholder
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)

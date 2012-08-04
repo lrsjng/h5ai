@@ -17,6 +17,23 @@
 // @include "lib/base64.js"
 // @include "lib/spin-1.2.5.min.js"
 
+// @include "lib/sh/shCore.js"
+// @include "lib/sh/shBrushBash.js"
+// @include "lib/sh/shBrushCSharp.js"
+// @include "lib/sh/shBrushCpp.js"
+// @include "lib/sh/shBrushCss.js"
+// @include "lib/sh/shBrushDiff.js"
+// @include "lib/sh/shBrushJScript.js"
+// @include "lib/sh/shBrushJava.js"
+// @include "lib/sh/shBrushPerl.js"
+// @include "lib/sh/shBrushPhp.js"
+// @include "lib/sh/shBrushPlain.js"
+// @include "lib/sh/shBrushPython.js"
+// @include "lib/sh/shBrushRuby.js"
+// @include "lib/sh/shBrushSass.js"
+// @include "lib/sh/shBrushXml.js"
+
+
 // h5ai
 // ----
 // @include "inc/main.js"

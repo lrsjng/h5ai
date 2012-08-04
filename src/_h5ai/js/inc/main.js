@@ -33,6 +33,7 @@
 	// @include "ext/link-hover-states.js"
 	// @include "ext/mode.js"
 	// @include "ext/preview-img.js"
+	// @include "ext/preview-txt.js"
 	// @include "ext/qrcode.js"
 	// @include "ext/select.js"
 	// @include "ext/sort.js"
@@ -46,7 +47,7 @@
 
 
 	$(function () {
-		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, _ */
+		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, SyntaxHighlighter, _ */
 
 		// Register predefined globals on doc ready, so the script order inside
 		// the document doesn't matter. `jQuery`, `moment` and `underscore` are
@@ -58,6 +59,7 @@
 		modulejs.define('$', function () { return jQuery; });
 		modulejs.define('modernizr', Modernizr);
 		modulejs.define('moment', function () { return moment; });
+		modulejs.define('sh', SyntaxHighlighter);
 		modulejs.define('_', function () { return _; });
 
 		modulejs.require($('body').attr('id'));
