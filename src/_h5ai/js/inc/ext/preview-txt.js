@@ -42,9 +42,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'sh', 'core/settings', 'core/resou
 				barheight = 31;
 
 			$container.css({
-				width: rect.width - 2 * margin,
+				// width: rect.width - 2 * margin,
 				height: rect.height - 2 * margin - barheight - 32,
-				left: margin,
+				// left: margin,
 				top: margin
 			});
 		},
