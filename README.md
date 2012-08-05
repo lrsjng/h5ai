@@ -25,6 +25,7 @@ It profits from these great projects:
 [Underscore.js](http://underscorejs.org) (MIT)
 
 
+
 ## Build
 
 A prebuilt package can be found on the [project page](http://larsjung.de/h5ai/). If you want to build
@@ -39,8 +40,8 @@ To build the project run the following command inside the project's root directo
 Run `makejs -t` to list all possible targets.
 
 
-## Changelog
 
+## Changelog
 
 ### v0.21 - *2012-08-??*
 

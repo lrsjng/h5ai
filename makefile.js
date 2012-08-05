@@ -6,7 +6,7 @@ var path = require('path'),
 	child_process = require('child_process');
 
 
-var version = '0.21-dev-37',
+var version = '0.21-dev-43',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
@@ -159,17 +159,26 @@ module.exports = function (make) {
 		.async(function (done, fail) {
 
 			var target = path.join(build, 'h5ai-' + version + '.zip'),
-				command = 'zip -ro ' + target + ' _h5ai',
-				options = { cwd: build };
+				cmd = 'zip',
+				args = ['-ro', target, '_h5ai'],
+				options = { cwd: build },
+				proc = child_process.spawn(cmd, args, options);
 
-			child_process.exec(command, options, function (error, stdout, stderr) {
+			Event.info({ method: 'exec', message: cmd + ' ' + args.join(' ') });
 
-				if (error === null) {
-					Event.ok({ method: 'zip', message: target });
-					done();
-				} else {
-					Event.error({ method: 'zip', message: stderr });
+			// proc.stdout.on('data', function (data) {
+				// process.stdout.write(data);
+			// });
+			proc.stderr.on('data', function (data) {
+				process.stderr.write(data);
+			});
+			proc.on('exit', function (code) {
+				if (code) {
+					Event.error({ method: 'exec', message: cmd + ' exit code ' + code });
 					fail();
+				} else {
+					Event.ok({ method: 'exec', message: 'created zipball ' + target });
+					done();
 				}
 			});
 		});
