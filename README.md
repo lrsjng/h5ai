@@ -2,7 +2,7 @@
 
 Please don't use files from the `src` folder for installation.
 They need to be preprocessed to work correctly. You'll find a preprocessed
-package on the [project page](http://larsjung.de/h5ai).
+package on the [project page](http://larsjung.de/h5ai/).
 
 * to report a bug or make a feature request please create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub
 * website with download, docs and demo: <http://larsjung.de/h5ai>
@@ -27,12 +27,12 @@ It profits from these great projects:
 
 ## Build
 
-A prebuilt package can be found on the [project page](http://larsjung.de/h5ai). But if you want to build
-h5ai yourself you have to install `fQuery` first:
+A prebuilt package can be found on the [project page](http://larsjung.de/h5ai/). If you want to build
+h5ai yourself you need to install [fQuery](http://larsjung.de/fquery/) first:
 
     > npm install -g fquery
 
-To build the project run the following command from this root directory
+To build the project run the following command inside the project's root directory
 
     > makejs
 
