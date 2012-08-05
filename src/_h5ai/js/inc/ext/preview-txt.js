@@ -4,6 +4,13 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 	var defaults = {
 			enabled: false,
 			types: {
+				authors: 'plain',
+				copying: 'plain',
+				css: 'css',
+				install: 'plain',
+				markdown: 'plain',
+				readme: 'plain',
+				script: 'shell',
 				text: 'plain',
 				js: 'js'
 			}
@@ -14,7 +21,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 		template = '<div id="pv-txt-overlay" class="noSelection">' +
 						'<div id="pv-txt-close" />' +
 						'<div id="pv-txt-content">' +
-							'<pre id="pv-txt-text" class="brush: js" />' +
+							'<div id="pv-txt-text" />' +
 						'</div>' +
 						'<div id="pv-txt-bottombar" class="clearfix">' +
 							'<ul id="pv-txt-buttons">' +
@@ -30,26 +37,33 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 					'</div>',
 
 		templateText = '<pre id="pv-txt-text" />',
+		templateMarkdown = '<div id="pv-txt-text" class="markdown" />',
 
 		currentEntries = [],
 		currentIdx = 0,
 
-		loadSyntaxhighlighter = function (callback) {
+		loadScript = function (url, globalId, callback) {
 
-			var id = 'SyntaxHighlighter';
-
-			if (window[id]) {
-				callback(window[id]);
+			if (window[globalId]) {
+				callback(window[globalId]);
 			} else {
 				$.ajax({
-					url: allsettings.h5aiAbsHref + 'js/syntaxhighlighter.js',
+					url: url,
 					dataType: 'script',
 					complete: function () {
 
-						callback(window[id]);
+						callback(window[globalId]);
 					}
 				});
 			}
+		},
+		loadSyntaxhighlighter = function (callback) {
+
+			loadScript(allsettings.h5aiAbsHref + 'js/syntaxhighlighter.js', 'SyntaxHighlighter', callback);
+		},
+		loadMarkdown = function (callback) {
+
+			loadScript(allsettings.h5aiAbsHref + 'js/markdown.js', 'markdown', callback);
 		},
 
 		adjustSize = function () {
@@ -109,15 +123,29 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 				$text.fadeOut(100, function () {
 
-					var $nText = $(templateText).hide().addClass('toolbar: false; brush:').addClass(settings.types[current.type] || 'plain').text(content);
+					var $nText;
 
-					$text.replaceWith($nText);
-					loadSyntaxhighlighter(function (sh) {
+					if (current.type === 'markdown') {
+						$nText = $(templateMarkdown).hide();
+						$text.replaceWith($nText);
 
-						if (sh) {
-							sh.highlight({}, $nText[0]);
-						}
-					});
+						loadMarkdown(function (md) {
+
+							if (md) {
+								$nText.html(md.toHTML(content));
+							}
+						});
+					} else {
+						$nText = $(templateText).hide().addClass('toolbar: false; brush:').addClass(settings.types[current.type] || 'plain').text(content);
+						$text.replaceWith($nText);
+
+						loadSyntaxhighlighter(function (sh) {
+
+							if (sh) {
+								sh.highlight({}, $nText[0]);
+							}
+						});
+					}
 					$nText.fadeIn(200);
 
 					adjustSize();

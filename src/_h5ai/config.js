@@ -180,7 +180,8 @@ var H5AI_CONFIG = {
 
 		/*
 		 * Show text file preview on click.
-		 * "types" maps file types to SyntaxHighligher brushes.
+		 * "types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
+		 * be rendered to HTML.
 		 *
 		 * For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
 		 */
@@ -191,6 +192,7 @@ var H5AI_CONFIG = {
 				"copying": "plain",
 				"css": "css",
 				"install": "plain",
+				"markdown": "plain",
 				"readme": "plain",
 				"script": "shell",
 				"text": "plain",
@@ -310,6 +312,7 @@ var H5AI_CONFIG = {
 		"js":				[".js", ".json"],
 		"log":				[".log", "changelog"],
 		"makefile":			[".pom", "build.xml", "pom.xml"],
+		"markdown":			[".markdown", ".md"],
 		"package":			[],
 		"pdf":				[".pdf"],
 		"php":				[".php"],
@@ -330,7 +333,7 @@ var H5AI_CONFIG = {
 		"sql":				[],
 		"tar":				[".tar"],
 		"tex":				[".tex"],
-		"text":				[".diff", ".markdown", ".md", ".patch", ".text", ".txt"],
+		"text":				[".diff", ".patch", ".text", ".txt"],
 		"tiff":				[".tiff"],
 		"unknown":			[],
 		"vcal":				[".vcal"],
