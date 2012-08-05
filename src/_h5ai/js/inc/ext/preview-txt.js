@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'sh', 'core/settings', 'core/resource', 'core/store', 'core/entry'], function (_, $, SH, allsettings, resource, store, entry) {
+modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/entry'], function (_, $, allsettings, resource, store, entry) {
 
 	var defaults = {
 			enabled: false,
@@ -33,6 +33,24 @@ modulejs.define('ext/preview-txt', ['_', '$', 'sh', 'core/settings', 'core/resou
 
 		currentEntries = [],
 		currentIdx = 0,
+
+		loadSyntaxhighlighter = function (callback) {
+
+			var id = 'SyntaxHighlighter';
+
+			if (window[id]) {
+				callback(window[id]);
+			} else {
+				$.ajax({
+					url: allsettings.h5aiAbsHref + 'js/syntaxhighlighter.js',
+					dataType: 'script',
+					complete: function () {
+
+						callback(window[id]);
+					}
+				});
+			}
+		},
 
 		adjustSize = function () {
 
@@ -94,7 +112,12 @@ modulejs.define('ext/preview-txt', ['_', '$', 'sh', 'core/settings', 'core/resou
 					var $nText = $(templateText).hide().addClass('toolbar: false; brush:').addClass(settings.types[current.type] || 'plain').text(content);
 
 					$text.replaceWith($nText);
-					SH.highlight({}, $nText[0]);
+					loadSyntaxhighlighter(function (sh) {
+
+						if (sh) {
+							sh.highlight({}, $nText[0]);
+						}
+					});
 					$nText.fadeIn(200);
 
 					adjustSize();

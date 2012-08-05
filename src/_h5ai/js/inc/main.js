@@ -47,7 +47,7 @@
 
 
 	$(function () {
-		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, SyntaxHighlighter, _ */
+		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, _ */
 
 		// Register predefined globals on doc ready, so the script order inside
 		// the document doesn't matter. `jQuery`, `moment` and `underscore` are
@@ -59,7 +59,6 @@
 		modulejs.define('$', function () { return jQuery; });
 		modulejs.define('modernizr', Modernizr);
 		modulejs.define('moment', function () { return moment; });
-		modulejs.define('sh', SyntaxHighlighter);
 		modulejs.define('_', function () { return _; });
 
 		modulejs.require($('body').attr('id'));
