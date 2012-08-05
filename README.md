@@ -4,11 +4,9 @@ Please don't use files from the `src` folder for installation.
 They need to be preprocessed to work correctly. You'll find a preprocessed
 package on the [project page](http://larsjung.de/h5ai).
 
-To report a bug or make a feature request
-please create [a new issue](http://github.com/lrsjng/h5ai/issues/new).
-
-* Website with download, docs and demo: <http://larsjung.de/h5ai>
-* Sources: <http://github.com/lrsjng/h5ai>
+* to report a bug or make a feature request please create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub
+* website with download, docs and demo: <http://larsjung.de/h5ai>
+* sources: <http://github.com/lrsjng/h5ai>
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
 It profits from these great projects:
