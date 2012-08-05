@@ -10,20 +10,20 @@ package on the [project page](http://larsjung.de/h5ai/).
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
 It profits from these great projects:
-[AmplifyJS](http://amplifyjs.com) (MIT/GPL),
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228) (GPL),
+[AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
+[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com),
-[jQuery](http://jquery.com) (MIT/GPL),
-[jQuery.fracs](http://larsjung.de/fracs/) (MIT),
-[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) (MIT),
-[jQuery.qrcode](http://larsjung.de/qrcode/) (MIT),
-[jQuery.scrollpanel](http://larsjung.de/scrollpanel/) (MIT),
-[markdown-js](http://github.com/evilstreak/markdown-js) (MIT),
-[Modernizr](http://www.modernizr.com) (MIT/BSD),
-[modulejs](http://larsjung.de/modulejs/) (MIT),
-[Moment.js](http://momentjs.com) (MIT),
-[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) (MIT/GPL),
-[Underscore.js](http://underscorejs.org) (MIT)
+[jQuery](http://jquery.com)&nbsp;(MIT/GPL),
+[jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
+[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
+[jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
+[jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
+[markdown-js](http://github.com/evilstreak/markdown-js)&nbsp;(MIT),
+[Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
+[modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
+[Moment.js](http://momentjs.com)&nbsp;(MIT),
+[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
+[Underscore.js](http://underscorejs.org)&nbsp;(MIT)
 
 
 ## Build
