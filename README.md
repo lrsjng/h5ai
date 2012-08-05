@@ -52,8 +52,8 @@ Run `makejs -t` to list all possible targets.
 * improves filter (now ignorecase, now only checks if chars in right order)
 * adds keyboard support to image preview (space, enter, backspace, left, right, up, down, f, esc)
 * adds text file preview and highlighting with [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) (keys: left, right, esc)
-* adds Markdown preview
-* adds new type and icon `markdown`
+* adds Markdown preview with [markdown-js](http://github.com/evilstreak/markdown-js)
+* adds new type `markdown`
 * changes language code `gr` to `el`
 * adds localization for filter placeholder
 * adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
