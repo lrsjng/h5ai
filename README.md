@@ -25,6 +25,20 @@ It profits from these great projects:
 [Underscore.js](http://underscorejs.org) (MIT)
 
 
+## Build
+
+A prebuilt package can be found on the [project page](http://larsjung.de/h5ai). But if you want to build
+h5ai yourself you have to install `fQuery` first:
+
+    > npm install -g fquery
+
+To build the project run the following command from this root directory
+
+    > makejs
+
+Run `makejs -t` to list all possible targets.
+
+
 ## Changelog
 
 
