@@ -3,8 +3,7 @@
 
 
 var path = require('path'),
-	child_process = require('child_process'),
-	moment = require('moment');
+	child_process = require('child_process');
 
 
 var version = '0.21-dev-37',
@@ -46,15 +45,18 @@ var version = '0.21-dev-37',
 	};
 
 
-module.exports = function (make, $) {
+module.exports = function (make) {
 
-	var stamp, replacements;
+	var Event = make.Event,
+		$ = make.fQuery,
+		moment = make.moment,
+		stamp, replacements;
 
 
 	make.defaults('build');
 
 
-	make.before = function () {
+	make.before(function () {
 
 		stamp = moment();
 
@@ -63,8 +65,8 @@ module.exports = function (make, $) {
 			stamp: stamp.format('YYYY-MM-DD HH:mm:ss')
 		};
 
-		$.info({ method: 'before', message: version + ' ' + replacements.stamp });
-	};
+		Event.info({ method: 'before', message: version + ' ' + replacements.stamp });
+	});
 
 
 	make.target('inc', [], 'increase build number, if any')
@@ -81,7 +83,7 @@ module.exports = function (make, $) {
 
 				version = newVersion;
 				replacements.version = version;
-				$.ok({ method: 'inc', message: 'version is now ' + version });
+				Event.ok({ method: 'inc', message: 'version is now ' + version });
 			}
 		});
 
@@ -163,10 +165,10 @@ module.exports = function (make, $) {
 			child_process.exec(command, options, function (error, stdout, stderr) {
 
 				if (error === null) {
-					$.ok({ method: 'zip', message: target });
+					Event.ok({ method: 'zip', message: target });
 					done();
 				} else {
-					$.error({ method: 'zip', message: stderr });
+					Event.error({ method: 'zip', message: stderr });
 					fail();
 				}
 			});
