@@ -6,13 +6,25 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			types: {
 				authors: 'plain',
 				copying: 'plain',
+				c: 'c',
+				cpp: 'cpp',
 				css: 'css',
+				h: 'c',
+				hpp: 'cpp',
 				install: 'plain',
+				log: 'plain',
+				java: 'java',
+				makefile: 'xml',
 				markdown: 'plain',
+				php: 'php',
+				python: 'python',
 				readme: 'plain',
+				rb: 'ruby',
+				rtf: 'plain',
 				script: 'shell',
 				text: 'plain',
-				js: 'js'
+				js: 'js',
+				xml: 'xml'
 			}
 		},
 
