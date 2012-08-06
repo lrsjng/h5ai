@@ -1,5 +1,5 @@
 
-module.define('core/format', [moment], function (moment) {
+modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 
 	var reParseSize = /^\s*([\.\d]+)\s*([kmgt]?)b?\s*$/i,
 		treshhold = 1000.0,

@@ -1,5 +1,5 @@
 
-module.define('view/spacing', [jQuery, 'core/settings', 'core/event'], function ($, allsettings, event) {
+modulejs.define('view/spacing', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
 	var defaults = {
 			maxWidth: 960,

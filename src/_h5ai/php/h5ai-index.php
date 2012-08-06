@@ -1,4 +1,4 @@
-<?php header("Content-type: text/html;h5ai=%BUILD_VERSION%"); ?>
+<?php header("Content-type: text/html;h5ai={{version}}"); ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
@@ -9,12 +9,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>Directory index · styled with h5ai</title>
 	<meta name="description" content="Directory index styled with h5ai (http://larsjung.de/h5ai)">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width">
 	<link rel="shortcut icon" type="image/png" href="/_h5ai/images/h5ai-16x16.png">
 	<link rel="apple-touch-icon" type="image/png" href="/_h5ai/images/h5ai-48x48.png">
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic">
 	<link rel="stylesheet" href="/_h5ai/css/styles.css">
-	<script src="/_h5ai/js/modernizr-2.5.3.min.js"></script>
+	<script src="/_h5ai/js/modernizr.js"></script>
 </head>
 <body id="h5ai-main">
 	<div id="topbar" class="clearfix">
@@ -25,17 +25,13 @@
 	</div>
 	<div id="bottombar" class="clearfix">
 		<span class="left">
-			<a id="h5ai-reference" href="http://larsjung.de/h5ai" title="h5ai project page">h5ai %BUILD_VERSION%</a>
+			<a id="h5ai-reference" href="http://larsjung.de/h5ai" title="h5ai project page">h5ai {{version}}</a>
 			<span class="hideOnJs noJsMsg"> ⚡ JavaScript is disabled! ⚡ </span>
 			<span class="oldBrowser"> ⚡ Some features disabled! Works best in <a href="http://browsehappy.com">modern browsers</a>. ⚡ </span>
 		</span>
 		<span class="right"></span>
 		<span class="center"></span>
 	</div>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="/_h5ai/js/jquery-1.7.2.min.js"><\/script>')</script>
-	<script src="/_h5ai/config.js"></script>
-	<script src="/_h5ai/js/scripts.js"></script>
 	<div id="data-generic-json" class="hidden">
 		<?php if (stripos($_SERVER["REQUEST_METHOD"], "HEAD") === false) {
 
@@ -66,5 +62,13 @@
 			echo $h5ai->getGenericJson();
 		} ?>
 	</div>
+	<div id="data-php-no-js-fallback" class="hideOnJs">
+		<?php if (stripos($_SERVER["REQUEST_METHOD"], "HEAD") === false) {
+
+			echo $h5ai->getNoJsFallback();
+		} ?>
+	</div>
+	<script src="/_h5ai/config.js"></script>
+	<script src="/_h5ai/js/scripts.js"></script>
 </body>
 </html>

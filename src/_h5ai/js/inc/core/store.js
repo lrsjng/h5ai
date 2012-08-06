@@ -1,5 +1,5 @@
 
-module.define('core/store', [amplify], function (amplify) {
+modulejs.define('core/store', ['amplify'], function (amplify) {
 
 	var put = function (key, value) {
 

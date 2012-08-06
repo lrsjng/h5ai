@@ -1,5 +1,5 @@
 
-module.define('ext/filter', [jQuery, 'core/settings', 'core/resource'], function ($, allsettings, resource) {
+modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], function (_, $, allsettings, resource) {
 
 	var defaults = {
 			enabled: false
@@ -61,7 +61,6 @@ module.define('ext/filter', [jQuery, 'core/settings', 'core/resource'], function
 		escapeRegExp = function (sequence) {
 
 			return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
-			// return sequence.replace(/[|()\[{.+*?^$\\]/g,"\\$0");
 		},
 
 		parseFilterSequence = function (sequence) {
@@ -72,10 +71,15 @@ module.define('ext/filter', [jQuery, 'core/settings', 'core/resource'], function
 
 			sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
 
-				return escapeRegExp(part);
+				return _.map(part.split(''), function (char) {
+
+					return escapeRegExp(char);
+				}).join('.*?');
+
+				// return escapeRegExp(part);
 			}).join('|');
 
-			return new RegExp(sequence);
+			return new RegExp(sequence, 'i');
 		},
 
 		update = function () {

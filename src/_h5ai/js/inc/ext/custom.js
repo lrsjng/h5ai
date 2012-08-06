@@ -1,5 +1,5 @@
 
-module.define('ext/custom', [jQuery, 'core/settings'], function ($, allsettings) {
+modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/ajax'], function (_, $, allsettings, ajax) {
 
 	var defaults = {
 			enabled: false,
@@ -16,23 +16,19 @@ module.define('ext/custom', [jQuery, 'core/settings'], function ($, allsettings)
 			}
 
 			if (_.isString(settings.header)) {
-				$.ajax({
-					url: settings.header,
-					dataType: 'html',
-					success: function (data) {
+				ajax.getHtml(settings.header, function (html) {
 
-						$('<div id="content-header">' + data + '</div>').prependTo('#content');
+					if (html) {
+						$('<div id="content-header">' + html + '</div>').prependTo('#content');
 					}
 				});
 			}
 
 			if (_.isString(settings.footer)) {
-				$.ajax({
-					url: settings.footer,
-					dataType: 'html',
-					success: function (data) {
+				ajax.getHtml(settings.footer, function (html) {
 
-						$('<div id="content-footer">' + data + '</div>').appendTo('#content');
+					if (html) {
+						$('<div id="content-footer">' + html + '</div>').appendTo('#content');
 					}
 				});
 			}

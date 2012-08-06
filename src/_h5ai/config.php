@@ -1,6 +1,6 @@
 <?php
 /*
- * h5ai %BUILD_VERSION%
+ * h5ai {{version}}
  *
  * PHP Configuration
  * filesystem paths and file ignore rules

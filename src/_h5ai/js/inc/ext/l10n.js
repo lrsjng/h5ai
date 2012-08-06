@@ -1,5 +1,5 @@
 
-module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function ($, allsettings, langs, format, store, event) {
+modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function (_, $, allsettings, langs, format, store, event) {
 
 	var defaults = {
 			enabled: true,
@@ -58,6 +58,8 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 
 				$this.text(format.formatDate($this.data('time')));
 			});
+
+			$('#filter input').attr('placeholder', currentLang.filter);
 		},
 
 		initLangSelector = function (langs) {
@@ -92,7 +94,9 @@ module.define('ext/l10n', [jQuery, 'core/settings', 'core/langs', 'core/format',
 						.css('top', '-' + $langOptions.outerHeight() + 'px')
 						.stop(true, true)
 						.fadeIn();
-					$langOptions.get(0).updateScrollbar();
+
+					// needs to be updated twice for initial fade in rendering :/
+					$langOptions.scrollpanel('update').scrollpanel('update');
 				},
 				function () {
 					$langOptions

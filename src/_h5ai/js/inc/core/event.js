@@ -1,5 +1,5 @@
 
-module.define('core/event', [amplify], function (amplify) {
+modulejs.define('core/event', ['amplify'], function (amplify) {
 
 	var sub = function (topic, callback) {
 

@@ -11,17 +11,18 @@
 	background-color: rgb(241,241,241);
 	border-right: 2px solid rgb(221,221,221);
 
-	> .scrollbar {
+	.sp-scrollbar {
 		margin: 8px 8px 8px 0;
 		width: 6px;
 		background-color: rgb(210,210,210);
 		.border-radius(3px);
+		cursor: pointer;
 
-		.drag {
+		.sp-thumb {
 			background-color: rgb(180,180,180);
 			.border-radius(3px);
 		}
-		&.dragOn .drag {
+		&.active .sp-thumb {
 			background-color: rgb(150,150,150);
 		}
 	}

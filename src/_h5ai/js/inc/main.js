@@ -2,13 +2,17 @@
 (function ($) {
 	'use strict';
 
+
+	// @include "core/ajax.js"
 	// @include "core/entry.js"
 	// @include "core/event.js"
 	// @include "core/format.js"
+	// @include "core/langs.js"
 	// @include "core/parser.js"
 	// @include "core/resource.js"
 	// @include "core/settings.js"
 	// @include "core/store.js"
+	// @include "core/types.js"
 
 	// @include "model/entry.js"
 
@@ -24,10 +28,12 @@
 	// @include "ext/download.js"
 	// @include "ext/filter.js"
 	// @include "ext/folderstatus.js"
+	// @include "ext/google-analytics.js"
 	// @include "ext/l10n.js"
 	// @include "ext/link-hover-states.js"
 	// @include "ext/mode.js"
 	// @include "ext/preview-img.js"
+	// @include "ext/preview-txt.js"
 	// @include "ext/qrcode.js"
 	// @include "ext/select.js"
 	// @include "ext/sort.js"
@@ -41,8 +47,21 @@
 
 
 	$(function () {
+		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, _ */
 
-		module.require($('body').attr('id'));
+		// Register predefined globals on doc ready, so the script order inside
+		// the document doesn't matter. `jQuery`, `moment` and `underscore` are
+		// itself functions, so they have to be wrapped to not be handled as
+		// constructors.
+		modulejs.define('config', H5AI_CONFIG);
+		modulejs.define('amplify', amplify);
+		modulejs.define('base64', Base64);
+		modulejs.define('$', function () { return jQuery; });
+		modulejs.define('modernizr', Modernizr);
+		modulejs.define('moment', function () { return moment; });
+		modulejs.define('_', function () { return _; });
+
+		modulejs.require($('body').attr('id'));
 	});
 
 }(jQuery));

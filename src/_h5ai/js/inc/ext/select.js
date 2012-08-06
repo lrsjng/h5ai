@@ -1,5 +1,5 @@
 
-module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($, allsettings, event) {
+modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
 	var defaults = {
 			enabled: false
@@ -90,7 +90,7 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 			event.preventDefault();
 			$(':focus').blur();
-			if (!event.ctrlKey) {
+			if (!event.ctrlKey && !event.metaKey) {
 				$('#extended .entry').removeClass('selected');
 				publish();
 			}
@@ -112,7 +112,7 @@ module.define('ext/select', [jQuery, 'core/settings', 'core/event'], function ($
 
 		noSelectionUnlessCtrl = function (event) {
 
-			if (!event.ctrlKey) {
+			if (!event.ctrlKey && !event.metaKey) {
 				noSelection(event);
 			}
 		},

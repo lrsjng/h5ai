@@ -1,5 +1,5 @@
 
-module.define('ext/qrcode', [jQuery, 'core/settings', 'core/event'], function ($, allsettings, event) {
+modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/event'], function (_, $, modernizr, allsettings, event) {
 
 	var defaults = {
 			enabled: false,
@@ -15,7 +15,7 @@ module.define('ext/qrcode', [jQuery, 'core/settings', 'core/event'], function ($
 		update = function (entry) {
 
 			$context.find('.qrcode').empty().qrcode({
-				render: Modernizr.canvas ? 'canvas' : 'div',
+				render: modernizr.canvas ? 'canvas' : 'div',
 				width: settings.size,
 				height: settings.size,
 				color: '#333',

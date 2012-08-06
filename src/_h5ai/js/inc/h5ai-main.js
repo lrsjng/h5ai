@@ -1,17 +1,19 @@
 
-module.define('h5ai-main', [jQuery, 'core/event', 'core/settings'], function ($, event, settings) {
+modulejs.define('h5ai-main', ['_', 'core/event', 'core/settings'], function (_, event, settings) {
 
 	event.pub('beforeView');
 
-	module.require('view/extended');
-	module.require('view/viewmode');
-	module.require('view/spacing');
+	modulejs.require('view/extended');
+	modulejs.require('view/spacing');
+	modulejs.require('view/viewmode');
 
 	event.pub('beforeExt');
 
-	_.each(module.getIds(/^ext\/.+/), function (id) {
+	_.each(modulejs.state(), function (state, id) {
 
-		module.require(id);
+		if (/^ext\/.+/.test(id)) {
+			modulejs.require(id);
+		}
 	});
 
 	event.pub('ready');

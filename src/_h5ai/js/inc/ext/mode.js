@@ -1,5 +1,5 @@
 
-module.define('ext/mode', [jQuery, 'core/settings', 'core/parser'], function ($, allsettings, parser) {
+modulejs.define('ext/mode', ['_', '$', 'core/settings', 'core/parser'], function (_, $, allsettings, parser) {
 
 	var defaults = {
 			enabled: false,

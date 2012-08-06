@@ -1,5 +1,5 @@
 
-module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event', 'core/entry', 'core/parser'], function ($, allsettings, resource, event, entry, parser) {
+modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry', 'core/parser'], function (_, $, allsettings, resource, event, entry, parser) {
 
 	var defaults = {
 			enabled: false,
@@ -101,15 +101,14 @@ module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event
 		createOnIndicatorClick = function (parser) {
 
 			var $tree = $('#tree'),
-				tree = $tree.get(0),
 				slide = function (entry, $indicator, $content, down) {
 
 					entry.isContentVisible = down;
 					$indicator.removeClass('open close').addClass(down ? 'open' : 'close');
-					tree.updateScrollbar(true);
+					$tree.scrollpanel('update', true);
 					$content[down ? 'slideDown' : 'slideUp'](function () {
 
-						tree.updateScrollbar();
+						$tree.scrollpanel('update');
 					});
 				};
 
@@ -175,7 +174,6 @@ module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event
 		adjustSpacing = function () {
 
 			var $tree = $('#tree'),
-				tree = $tree[0],
 				winHeight = $(window).height(),
 				navHeight = $('#topbar').outerHeight(),
 				footerHeight = $('#bottombar').outerHeight();
@@ -185,9 +183,7 @@ module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event
 				height: winHeight - navHeight - footerHeight - 16
 			});
 
-			if (tree.updateScrollbar) {
-				tree.updateScrollbar();
-			}
+			$tree.scrollpanel('update');
 		},
 
 		// creates the complete tree from entry down to the root
@@ -197,27 +193,33 @@ module.define('ext/tree', [jQuery, 'core/settings', 'core/resource', 'core/event
 				return;
 			}
 
-			var $tree = $('<div id="tree" />').appendTo('body');
+			var $tree = $('<div id="tree" />')
+				.appendTo('body')
+				.scrollpanel()
+				.on('click', '.indicator', createOnIndicatorClick(parser))
+				.on('mouseenter', function () {
+
+					shiftTree(true);
+				})
+				.on('mouseleave', function () {
+
+					shiftTree();
+				});
 
 			fetchTree(entry, parser, function (root) {
 
 				$tree
-					.append(update(root))
-					.scrollpanel()
+					.find('.sp-container').append(update(root)).end()
 					.show();
 
 				adjustSpacing();
 				shiftTree(false, true);
-				setTimeout(function () { $tree.get(0).updateScrollbar(); }, 1);
 			});
 
-			$tree
-				.on('click', '.indicator', createOnIndicatorClick(parser))
-				.on('mouseenter', function () { shiftTree(true); })
-				.on('mouseleave', function () { shiftTree(); });
-
 			event.sub('ready', adjustSpacing);
+
 			$(window).on('resize', function () {
+
 				adjustSpacing();
 				shiftTree();
 			});

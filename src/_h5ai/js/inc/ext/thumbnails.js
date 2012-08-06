@@ -1,5 +1,5 @@
 
-module.define('ext/thumbnails', [jQuery, 'core/settings', 'core/resource', 'core/entry'], function ($, allsettings, resource, entry) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/ajax'], function (_, allsettings, entry, ajax) {
 
 	var defaults = {
 			enabled: false,
@@ -11,46 +11,32 @@ module.define('ext/thumbnails', [jQuery, 'core/settings', 'core/resource', 'core
 
 		settings = _.extend({}, defaults, allsettings.thumbnails),
 
-		requestThumb = function ($img, data) {
-
-			$.getJSON(resource.api(), data, function (json) {
-
-				if (json.code === 0) {
-					$img.addClass('thumb').attr('src', json.absHref);
-				}
-			});
-		},
-
 		checkEntry = function (entry) {
 
 			if (entry.$extended) {
 
 				var type = null;
 
-				if ($.inArray(entry.type, settings.img) >= 0) {
+				if (_.indexOf(settings.img, entry.type) >= 0) {
 					type = 'img';
-				} else if ($.inArray(entry.type, settings.mov) >= 0) {
+				} else if (_.indexOf(settings.mov, entry.type) >= 0) {
 					type = 'mov';
-				} else if ($.inArray(entry.type, settings.doc) >= 0) {
+				} else if (_.indexOf(settings.doc, entry.type) >= 0) {
 					type = 'doc';
 				}
 
 				if (type) {
-					requestThumb(entry.$extended.find('.icon.small img'), {
-						action: 'getthumbsrc',
-						type: type,
-						href: entry.absHref,
-						mode: 'square',
-						width: 16,
-						height: 16
+					ajax.getThumbSrcSmall(type, entry.absHref, function (src) {
+
+						if (src) {
+							entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
+						}
 					});
-					requestThumb(entry.$extended.find('.icon.big img'), {
-						action: 'getthumbsrc',
-						type: type,
-						href: entry.absHref,
-						mode: 'rational',
-						width: 100,
-						height: 48
+					ajax.getThumbSrcBig(type, entry.absHref, function (src) {
+
+						if (src) {
+							entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
+						}
 					});
 				}
 			}

@@ -1,7 +1,10 @@
 
-@import "inc/h5bp-norm";
-@import "inc/mixins";
+@import "lib/h5bp-norm";
+@import "lib/mixins";
+@import "lib/sh/shCore";
+@import "lib/sh/shThemeDefault";
 
+html { overflow-y: auto; }
 ::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
 ::selection { background: #68A9FF; color: #fff; text-shadow: none; }
 
@@ -28,7 +31,8 @@ body {
 @import "inc/context";
 @import "inc/apache-autoindex-table";
 
-@import "inc/preview";
+@import "inc/preview-img";
+@import "inc/preview-txt";
 
 @import "inc/responsive";
 

@@ -1,5 +1,5 @@
 /*
- * h5ai %BUILD_VERSION%
+ * h5ai {{version}}
  *
  * Configuration
  * options, types and localization
@@ -63,7 +63,7 @@ var H5AI_CONFIG = {
 		 * in each folder.
 		 */
 		"custom": {
-			"enabled": false,
+			"enabled": true,
 			"header": "_h5ai.header.html",
 			"footer": "_h5ai.footer.html"
 		},
@@ -84,7 +84,11 @@ var H5AI_CONFIG = {
 
 		/*
 		 * Allow filtering the displayed files and folders.
-		 * Note: filters will be treated as JavaScript regular expressions
+		 * Will check entries for right order of characters, i.e.
+		 * "ab" matches "ab", "axb", "xaxbx" but not "ba".
+		 * Space separated sequences get OR-ed.
+		 *
+		 * Filters will be treated as JavaScript regular expressions
 		 * if you prefix them with "re:".
 		 */
 		"filter": {
@@ -97,7 +101,7 @@ var H5AI_CONFIG = {
 		 * Depends on du.
 		 */
 		"foldersize": {
-			"enabled": false
+			"enabled": true
 		},
 
 		/*
@@ -111,8 +115,26 @@ var H5AI_CONFIG = {
 		 * appropriate default index file.
 		 */
 		"folderstatus": {
-			"enabled": false,
+			"enabled": true,
 			"folders": {}
+		},
+
+		/*
+		 * Adds Google Analytics asynchronous tracking code.
+		 *
+		 * for example:
+		 * "gaq": [
+		 *   ["_setAccount", "UA-xxxxxx-x"],
+		 *   ["_setDomainName", ".your-domain.tld"],
+		 *   ["_trackPageview"],
+		 *   ["_trackPageLoadTime"]
+		 * ]
+		 *
+		 * see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
+		 */
+		"google-analytics": {
+			"enabled": true,
+			"gaq": []
 		},
 
 		/*
@@ -157,10 +179,44 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		 * Show text file preview on click.
+		 * "types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
+		 * be rendered as HTML.
+		 *
+		 * For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+		 */
+		"preview-txt": {
+			"enabled": true,
+			"types": {
+				"authors": "plain",
+				"copying": "plain",
+				"c": "c",
+				"cpp": "cpp",
+				"css": "css",
+				"h": "c",
+				"hpp": "cpp",
+				"install": "plain",
+				"log": "plain",
+				"java": "java",
+				"makefile": "xml",
+				"markdown": "plain",
+				"php": "php",
+				"python": "python",
+				"readme": "plain",
+				"rb": "ruby",
+				"rtf": "plain",
+				"script": "shell",
+				"text": "plain",
+				"js": "js",
+				"xml": "xml"
+			}
+		},
+
+		/*
 		 * Show QRCodes on hovering files.
 		 */
 		"qrcode": {
-			"enabled": false,
+			"enabled": true,
 			"size": 150
 		},
 
@@ -198,11 +254,11 @@ var H5AI_CONFIG = {
 		 * - doc thumbnails depend on convert
 		 */
 		"thumbnails": {
-			"enabled": false,
+			"enabled": true,
 			"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
 			"mov": ["video"],
 			"doc": ["pdf", "ps"],
-			"delay": 1000
+			"delay": 1
 		},
 
 		/*
@@ -268,6 +324,7 @@ var H5AI_CONFIG = {
 		"js":				[".js", ".json"],
 		"log":				[".log", "changelog"],
 		"makefile":			[".pom", "build.xml", "pom.xml"],
+		"markdown":			[".markdown", ".md"],
 		"package":			[],
 		"pdf":				[".pdf"],
 		"php":				[".php"],
@@ -288,7 +345,7 @@ var H5AI_CONFIG = {
 		"sql":				[],
 		"tar":				[".tar"],
 		"tex":				[".tex"],
-		"text":				[".diff", ".markdown", ".md", ".patch", ".text", ".txt"],
+		"text":				[".diff", ".patch", ".text", ".txt"],
 		"tiff":				[".tiff"],
 		"unknown":			[],
 		"vcal":				[".vcal"],
@@ -319,7 +376,8 @@ var H5AI_CONFIG = {
 			"files": "files",
 			"download": "download",
 			"noMatch": "no match",
-			"dateFormat": "YYYY-MM-DD HH:mm"
+			"dateFormat": "YYYY-MM-DD HH:mm",
+			"filter": "filter"
 		},
 
 		"bg": {
@@ -361,7 +419,24 @@ var H5AI_CONFIG = {
 			"files": "Dateien",
 			"download": "Download",
 			"noMatch": "keine Treffer",
-			"dateFormat": "DD.MM.YYYY HH:mm"
+			"dateFormat": "DD.MM.YYYY HH:mm",
+			"filter": "Filter"
+		},
+
+		"el": {
+			"lang": "ελληνικά",
+			"details": "λεπτομέρειες",
+			"icons": "εικονίδια",
+			"name": "Όνομα",
+			"lastModified": "Τελευταία τροποποίηση",
+			"size": "Μέγεθος",
+			"parentDirectory": "Προηγούμενος Κατάλογος",
+			"empty": "κενό",
+			"folders": "φάκελοι",
+			"files": "αρχεία",
+			"download": "μεταμόρφωση",
+			"noMatch": "κανένα αποτέλεσμα",
+			"dateFormat": "DD/MM/YYYY HH:mm"
 		},
 
 		"es": {
@@ -390,22 +465,24 @@ var H5AI_CONFIG = {
 			"folders": "Répertoires",
 			"files": "Fichiers",
 			"download": "télécharger",
-			"noMatch": "rien trouvé"
+			"noMatch": "rien trouvé",
+			"dateFormat": "DD/MM/YYYY HH:mm"
 		},
 
-		"gr": {
-			"lang": "ελληνικά",
-			"details": "Λεπτομέρειες",
-			"icons": "Εικονίδια",
-			"name": "Όνομα",
-			"lastModified": "Τελευταία Τροποποίηση",
-			"size": "Μέγεθος",
-			"parentDirectory": "Προηγούμενος Κατάλογος",
-			"empty": "κενό",
-			"folders": "Φάκελοι",
-			"files": "Αρχεία",
-			"download": "Μεταμόρφωση",
-			"noMatch": "Κανένα Ταίριασμα"
+		"hu": {
+			"lang": "magyar",
+			"details": "részletek",
+			"icons": "ikonok",
+			"name": "Név",
+			"lastModified": "Utoljára módosítva",
+			"size": "Méret",
+			"parentDirectory": "Szülő könyvtár",
+			"empty": "üres",
+			"folders": "mappák",
+			"files": "fájlok",
+			"download": "letöltés",
+			"noMatch": "nincs találat",
+			"dateFormat": "YYYY-MM-DD HH:mm"
 		},
 
 		"it": {

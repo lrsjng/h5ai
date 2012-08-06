@@ -1,8 +1,56 @@
 
-module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
+modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, types, ajax) {
 
-	var domain = document.domain,
-		location = document.location.pathname.replace(/[^\/]*$/, ''),
+	var doc = document,
+		domain = doc.domain,
+
+		forceEncoding = function (href) {
+
+			return href
+					.replace(/\/+/g, '/')
+					.replace(/'/g, '%27')
+					.replace(/\[/g, '%5B')
+					.replace(/\]/g, '%5D')
+					.replace(/\(/g, '%28')
+					.replace(/\)/g, '%29')
+					.replace(/\+/g, '%2B')
+					.replace(/\=/g, '%3D');
+		},
+
+
+		location = (function () {
+
+			var rePrePathname = /.*:\/\/[^\/]*/,
+				rePostPathname = /[^\/]*$/,
+
+				uriToPathname = function (uri) {
+
+					return uri.replace(rePrePathname, '').replace(rePostPathname, '');
+				},
+
+				testpathname = '/a b',
+				a = doc.createElement('a'),
+				isDecoded, location;
+
+			a.href = testpathname;
+			isDecoded = uriToPathname(a.href) === testpathname;
+
+			a.href = doc.location.href;
+			location = uriToPathname(a.href);
+
+			if (isDecoded) {
+				location = encodeURIComponent(location).replace(/%2F/ig, '/');
+			}
+
+			return forceEncoding(location);
+		}()),
+
+		folderstatus = (function () {
+
+			try { return modulejs.require('ext/folderstatus'); } catch (e) {}
+			return {};
+		}()),
+
 
 
 		// utils
@@ -15,9 +63,7 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			if (sequence.length > 1 && reEndsWithSlash.test(sequence)) {
 				sequence = sequence.slice(0, -1);
 			}
-			try {
-				sequence = decodeURI(sequence);
-			} catch (err) {}
+			try { sequence = decodeURIComponent(sequence); } catch (e) {}
 			return sequence;
 		},
 
@@ -29,90 +75,41 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 
 			var match;
 
-			sequence = sequence.replace(/\/+/g, '/');
 			if (sequence === '/') {
-				return {
-					parent: null,
-					parentname: null,
-					name: '/'
-				};
+				return { parent: null, name: '/' };
 			}
 			match = reSplitPath2.exec(sequence);
 			if (match) {
-				return {
-					parent: match[1],
-					parentname: match[2],
-					name: match[3]
-				};
+				return { parent: match[1], name: match[3] };
 			}
 			match = reSplitPath.exec(sequence);
 			if (match) {
-				return {
-					parent: '/',
-					parentname: '/',
-					name: match[1]
-				};
+				return { parent: '/', name: match[1] };
 			}
 		},
 
 
-		reContentType = /^text\/html;h5ai=/,
-
 		ajaxRequest = function (self, parser, callback) {
 
-			$.ajax({
-				url: self.absHref,
-				type: parser ? 'GET' : 'HEAD',
-				complete: function (xhr) {
+			ajax.getStatus(self.absHref, parser, function (response) {
 
-					if (xhr.status === 200 && reContentType.test(xhr.getResponseHeader('Content-Type'))) {
-						self.status = 'h5ai';
-						if (parser) {
-							parser.parse(self.absHref, xhr.responseText);
-						}
-					} else {
-						self.status = xhr.status;
-					}
-
-					callback(self);
+				self.status = response.status;
+				if (parser && response.status === 'h5ai') {
+					parser.parse(self.absHref, response.content);
 				}
+				callback(self);
 			});
 		},
 
 
 
-
-		// Entry
+		// Cache
 
 		cache = {},
 
-		Entry = function (absHref) {
+		getEntry = function (absHref, time, size, status, isContentFetched) {
 
-			var split = splitPath(absHref);
-
-			cache[absHref] = this;
-
-			this.absHref = absHref;
-			this.type = types.getType(absHref);
-			this.label = createLabel(absHref === '/' ? domain : split.name);
-			this.time = null;
-			this.size = null;
-			this.parent = null;
-			this.status = null;
-			this.content = {};
-
-			if (split.parent) {
-				this.parent = cache[split.parent] || new Entry(split.parent);
-				this.parent.content[this.absHref] = this;
-				if (_.keys(this.parent.content).length > 1) {
-					this.parent.isContentFetched = true;
-				}
-			}
-		},
-
-		get = function (absHref, time, size, status, isContentFetched) {
-
-			absHref = absHref || location;
+			absHref = forceEncoding(absHref || location);
 
 			var self = cache[absHref] || new Entry(absHref);
 
@@ -132,11 +129,9 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			return self;
 		},
 
-		folderstatus = module.isDefined('ext/folderstatus') ? module.require('ext/folderstatus') : {},
-
 		fetchStatus = function (absHref, callback) {
 
-			var self = cache[absHref] || new Entry(absHref);
+			var self = getEntry(absHref);
 
 			if (self.status || !self.isFolder()) {
 				callback(self);
@@ -150,7 +145,7 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 
 		fetchContent = function (absHref, parser, callback) {
 
-			var self = cache[absHref] || new Entry(absHref);
+			var self = getEntry(absHref);
 
 			if (self.isContentFetched) {
 				callback(self);
@@ -167,6 +162,33 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 			}
 		};
 
+
+
+	// Entry
+
+	var Entry = function (absHref) {
+
+		var split = splitPath(absHref);
+
+		cache[absHref] = this;
+
+		this.absHref = absHref;
+		this.type = types.getType(absHref);
+		this.label = createLabel(absHref === '/' ? domain : split.name);
+		this.time = null;
+		this.size = null;
+		this.parent = null;
+		this.status = null;
+		this.content = {};
+
+		if (split.parent) {
+			this.parent = getEntry(split.parent);
+			this.parent.content[this.absHref] = this;
+			if (_.keys(this.parent.content).length > 1) {
+				this.parent.isContentFetched = true;
+			}
+		}
+	};
 
 	_.extend(Entry.prototype, {
 
@@ -254,7 +276,9 @@ module.define('model/entry', [jQuery, 'core/types'], function ($, types) {
 		}
 	});
 
+
+
 	return {
-		get: get
+		get: getEntry
 	};
 });

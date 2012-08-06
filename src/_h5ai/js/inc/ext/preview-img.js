@@ -1,5 +1,5 @@
 
-module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'core/store', 'core/entry'], function ($, allsettings, resource, store, entry) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/entry'], function (_, $, allsettings, resource, store, entry) {
 
 	var defaults = {
 			enabled: false,
@@ -8,24 +8,24 @@ module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'cor
 
 		settings = _.extend({}, defaults, allsettings['preview-img']),
 
-		template = '<div id="preview-overlay" class="noSelection">' +
-						'<div id="preview-content">' +
-							'<img id="preview-img" />' +
+		template = '<div id="pv-img-overlay" class="noSelection">' +
+						'<div id="pv-img-content">' +
+							'<img id="pv-img-image" />' +
 						'</div>' +
-						'<div id="preview-close" />' +
-						'<div id="preview-prev" />' +
-						'<div id="preview-next" />' +
-						'<div id="preview-bottombar" class="clearfix">' +
-							'<ul id="preview-buttons">' +
-								'<li id="preview-bar-size" class="bar-left bar-label"></li>' +
-								'<li id="preview-bar-percent" class="bar-left bar-label"></li>' +
-								'<li id="preview-bar-label" class="bar-left bar-label"></li>' +
-								'<li id="preview-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '" /></li>' +
-								'<li id="preview-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/image') + '" /></a></li>' +
-								'<li id="preview-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '" /></li>' +
-								'<li id="preview-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '" /></li>' +
-								'<li id="preview-bar-idx" class="bar-right bar-label"></li>' +
-								'<li id="preview-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '" /></li>' +
+						'<div id="pv-img-close" />' +
+						'<div id="pv-img-prev" />' +
+						'<div id="pv-img-next" />' +
+						'<div id="pv-img-bottombar" class="clearfix">' +
+							'<ul id="pv-img-buttons">' +
+								'<li id="pv-img-bar-size" class="bar-left bar-label"></li>' +
+								'<li id="pv-img-bar-percent" class="bar-left bar-label"></li>' +
+								'<li id="pv-img-bar-label" class="bar-left bar-label"></li>' +
+								'<li id="pv-img-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '" /></li>' +
+								'<li id="pv-img-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '" /></a></li>' +
+								'<li id="pv-img-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '" /></li>' +
+								'<li id="pv-img-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '" /></li>' +
+								'<li id="pv-img-bar-idx" class="bar-right bar-label"></li>' +
+								'<li id="pv-img-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '" /></li>' +
 							'</ul>' +
 						'</div>' +
 					'</div>',
@@ -39,8 +39,8 @@ module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'cor
 		adjustSize = function () {
 
 			var rect = $(window).fracs('viewport'),
-				$container = $('#preview-content'),
-				$img = $('#preview-img'),
+				$container = $('#pv-img-content'),
+				$img = $('#pv-img-image'),
 				margin = isFullscreen ? 0 : 20,
 				barheight = isFullscreen ? 0 : 31;
 
@@ -60,26 +60,35 @@ module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'cor
 
 			rect = $img.fracs('rect');
 			if (!rect) {
-				// console.log('RECT FAILED!');
 				return;
 			}
-			rect = rect.relativeTo($('#preview-overlay').fracs('rect'));
+			rect = rect.relativeTo($('#pv-img-overlay').fracs('rect'));
 
-			$('#preview-prev').css({
-				'left': rect.left,
-				'top': rect.top,
-				'width': rect.width / 2,
-				'height': rect.height
+			$('#pv-img-prev').css({
+				left: rect.left,
+				top: rect.top,
+				width: rect.width / 2,
+				height: rect.height
 			});
-			$('#preview-next').css({
-				'left': rect.left + rect.width / 2,
-				'top': rect.top,
-				'width': rect.width / 2,
-				'height': rect.height
+			$('#pv-img-next').css({
+				left: rect.left + rect.width / 2,
+				top: rect.top,
+				width: rect.width / 2,
+				height: rect.height
 			});
+
+			if (isFullscreen) {
+				$('#pv-img-overlay').addClass('fullscreen');
+				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
+				$('#pv-img-bottombar').fadeOut(400);
+			} else {
+				$('#pv-img-overlay').removeClass('fullscreen');
+				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
+				$('#pv-img-bottombar').fadeIn(200);
+			}
 		},
 
-		preload = function (src, callback) {
+		preloadImg = function (src, callback) {
 
 			var $hidden = $('<div><img/></div>')
 							.css({
@@ -98,17 +107,17 @@ module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'cor
 								$hidden.remove();
 
 								callback(width, height);
+								// setTimeout(function () { callback(width, height); }, 1000); // for testing
 							})
 							.attr('src', src);
 		},
 
-		showImg = function (entries, idx) {
+		onIndexChange = function (idx) {
 
-			currentEntries = entries;
 			currentIdx = (idx + currentEntries.length) % currentEntries.length;
 
-			var $container = $('#preview-content'),
-				$img = $('#preview-img'),
+			var $container = $('#pv-img-content'),
+				$img = $('#pv-img-image'),
 				src = currentEntries[currentIdx].absHref,
 				spinnerTimeout = setTimeout(function () {
 
@@ -121,44 +130,84 @@ module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'cor
 					});
 				}, 200);
 
-			$('#preview-overlay').stop(true, true).fadeIn(200);
-			$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
-
-			preload(src, function (width, height) {
+			preloadImg(src, function (width, height) {
 
 				clearTimeout(spinnerTimeout);
 				$container.spin(false);
 
-				$img.attr('src', src).show();
+				$img.fadeOut(100, function () {
 
-				adjustSize();
+					$img.attr('src', src).fadeIn(200);
 
-				$('#preview-bar-label').text(currentEntries[currentIdx].label);
-				$('#preview-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
-				$('#preview-bar-size').text('' + width + 'x' + height);
-				$('#preview-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
-				$('#preview-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
+					// small timeout, so $img is visible and therefor $img.width is available
+					setTimeout(function () {
+						adjustSize();
+						$('#pv-img-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
+						$('#pv-img-bar-label').text(currentEntries[currentIdx].label);
+						$('#pv-img-bar-size').text('' + width + 'x' + height);
+						$('#pv-img-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
+						$('#pv-img-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
+					}, 1);
+				});
+
 			});
 		},
 
-		checkEntry = function (entry) {
+		onEnter = function (entries, idx) {
 
-			if (entry.$extended && $.inArray(entry.type, settings.types) >= 0) {
+			$(window).on('keydown', onKeydown);
+			$('#pv-img-overlay').stop(true, true).fadeIn(200);
 
-				var $a = entry.$extended.find('a');
-				$a.on('click', function (event) {
+			currentEntries = entries;
+			onIndexChange(idx);
+		},
+
+		onNext = function () {
+
+			onIndexChange(currentIdx + 1);
+		},
+
+		onPrevious = function () {
+
+			onIndexChange(currentIdx - 1);
+		},
+
+		onExit = function () {
+
+			$(window).off('keydown', onKeydown);
+			$('#pv-img-overlay').stop(true, true).fadeOut(200);
+		},
+
+		onFullscreen = function () {
+
+			isFullscreen = !isFullscreen;
+			store.put(storekey, isFullscreen);
+
+			adjustSize();
+		},
+
+		onKeydown = function (event) {
+
+			var key = event.which;
+
+			if (key === 27) { // esc
+				onExit();
+			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
+				onPrevious();
+			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
+				onNext();
+			} else if (key === 70) { // f
+				onFullscreen();
+			}
+		},
+
+		initEntry = function (entries, entry, idx) {
+
+			if (entry.$extended) {
+				entry.$extended.find('a').on('click', function (event) {
 
 					event.preventDefault();
-
-					var entries = _.filter(_.map($('#extended .entry'), function (entry) {
-
-							return $(entry).data('entry');
-						}), function (entry) {
-
-							return _.indexOf(settings.types, entry.type) >= 0;
-						});
-
-					showImg(entries, _.indexOf(entries, entry));
+					onEnter(entries, idx);
 				});
 			}
 		},
@@ -169,74 +218,61 @@ module.define('ext/preview-img', [jQuery, 'core/settings', 'core/resource', 'cor
 				return;
 			}
 
+			var imageEntries = _.filter(entry.content, function (entry) {
+
+				return _.indexOf(settings.types, entry.type) >= 0;
+			});
+			_.each(imageEntries, function (e, idx) {
+
+				initEntry(imageEntries, e, idx);
+			});
+
 			$(template).appendTo('body');
+			$('#pv-img-bar-prev, #pv-img-prev').on('click', onPrevious);
+			$('#pv-img-bar-next, #pv-img-next').on('click', onNext);
+			$('#pv-img-bar-close, #pv-img-close').on('click', onExit);
+			$('#pv-img-bar-fullscreen').on('click', onFullscreen);
+			$('#pv-img-overlay').on('keydown', onKeydown);
 
-			_.each(entry.content, checkEntry);
-
-			$('#preview-bar-prev, #preview-prev').on('click', function (event) {
-				// event.stopPropagation();
-				showImg(currentEntries, currentIdx - 1);
-			});
-			$('#preview-prev')
-				.on('mouseenter', function (event) {
-					// event.stopPropagation();
-					$('#preview-bar-prev').addClass('hover');
+			$('#pv-img-prev')
+				.on('mouseenter', function () {
+					$('#pv-img-bar-prev').addClass('hover');
 				})
-				.on('mouseleave', function (event) {
-					// event.stopPropagation();
-					$('#preview-bar-prev').removeClass('hover');
+				.on('mouseleave', function () {
+					$('#pv-img-bar-prev').removeClass('hover');
 				});
 
-			$('#preview-bar-next, #preview-next').on('click', function (event) {
-				// event.stopPropagation();
-				showImg(currentEntries, currentIdx + 1);
-			});
-			$('#preview-next')
-				.on('mouseenter', function (event) {
-					// event.stopPropagation();
-					$('#preview-bar-next').addClass('hover');
+			$('#pv-img-next')
+				.on('mouseenter', function () {
+					$('#pv-img-bar-next').addClass('hover');
 				})
-				.on('mouseleave', function (event) {
-					// event.stopPropagation();
-					$('#preview-bar-next').removeClass('hover');
+				.on('mouseleave', function () {
+					$('#pv-img-bar-next').removeClass('hover');
 				});
 
-			$('#preview-bar-close, #preview-close').on('click', function () {
-				// event.stopPropagation();
-				$('#preview-overlay').stop(true, true).fadeOut(200);
-			});
-			$('#preview-close')
-				.on('mouseenter', function (event) {
-					// event.stopPropagation();
-					$('#preview-bar-close').addClass('hover');
+			$('#pv-img-close')
+				.on('mouseenter', function () {
+					$('#pv-img-bar-close').addClass('hover');
 				})
-				.on('mouseleave', function (event) {
-					// event.stopPropagation();
-					$('#preview-bar-close').removeClass('hover');
+				.on('mouseleave', function () {
+					$('#pv-img-bar-close').removeClass('hover');
 				});
 
-			$('#preview-bar-fullscreen').on('click', function (event) {
-				// event.stopPropagation();
-				isFullscreen = !isFullscreen;
-				store.put(storekey, isFullscreen);
-				$('#preview-bar-fullscreen').find('img').attr('src', isFullscreen ? resource.image('preview/no-fullscreen') : resource.image('preview/fullscreen'));
-				adjustSize();
-			});
 
-			$('#preview-overlay')
-				.on('mousedown', function (event) {
+			$('#pv-img-overlay')
+				.on('click mousedown mousemove keydown keypress', function (event) {
 
 					event.stopPropagation();
 				})
 				.on('mousemove', function (event) {
 
 					if (isFullscreen) {
-						var rect = $('#preview-overlay').fracs('rect');
+						var rect = $('#pv-img-overlay').fracs('rect');
 
 						if (rect.bottom - event.pageY < 64) {
-							$('#preview-bottombar').fadeIn(200);
+							$('#pv-img-bottombar').fadeIn(200);
 						} else {
-							$('#preview-bottombar').fadeOut(400);
+							$('#pv-img-bottombar').fadeOut(400);
 						}
 					}
 				});

@@ -1,5 +1,5 @@
 
-module.define('ext/statusbar', [jQuery, 'core/settings', 'core/format', 'core/event', 'core/entry'], function ($, allsettings, format, event, entry) {
+modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, format, event, entry) {
 
 	var defaults = {
 			enabled: false
