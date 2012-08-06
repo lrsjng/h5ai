@@ -43,7 +43,7 @@ Run `makejs -t` to list all possible targets.
 
 ## Changelog
 
-### v0.21 - *2012-08-??*
+### v0.21 - *2012-08-06*
 
 * fixes misaligned image previews
 * adds no JavaScript fallback to PHP version
