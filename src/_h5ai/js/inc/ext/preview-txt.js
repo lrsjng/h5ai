@@ -200,9 +200,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 			if (key === 27) { // esc
 				onExit();
-			} else if (key === 37) { // left
+			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
 				onPrevious();
-			} else if (key === 39) { // right
+			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
 				onNext();
 			}
 		},

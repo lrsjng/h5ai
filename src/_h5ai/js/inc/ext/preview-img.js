@@ -76,6 +76,16 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				width: rect.width / 2,
 				height: rect.height
 			});
+
+			if (isFullscreen) {
+				$('#pv-img-overlay').addClass('fullscreen');
+				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
+				$('#pv-img-bottombar').fadeOut(400);
+			} else {
+				$('#pv-img-overlay').removeClass('fullscreen');
+				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
+				$('#pv-img-bottombar').fadeIn(200);
+			}
 		},
 
 		preloadImg = function (src, callback) {
@@ -174,14 +184,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			store.put(storekey, isFullscreen);
 
 			adjustSize();
-
-			if (isFullscreen) {
-				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
-				$('#pv-img-bottombar').fadeOut(400);
-			} else {
-				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
-				$('#pv-img-bottombar').fadeIn(200);
-			}
 		},
 
 		onKeydown = function (event) {

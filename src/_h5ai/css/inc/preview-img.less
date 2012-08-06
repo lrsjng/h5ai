@@ -8,8 +8,7 @@
 	bottom: 0;
 	z-index: 100;
 
-	// background-color: #111;
-	background-color: rgba(0,0,0,0.9);
+	background-color: rgba(0,0,0,0.5);
 
 	text-align: center;
 }
@@ -22,6 +21,17 @@
 #pv-img-image {
 	max-width: 100%;
 	max-height: 100%;
+	border: 2px solid #fff;
+	.border-radius(4px);
+}
+
+#pv-img-overlay.fullscreen {
+	background-color: #111;
+
+	#pv-img-image {
+		border: 0;
+		.border-radius(0);
+	}
 }
 
 #pv-img-close {
