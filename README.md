@@ -43,6 +43,11 @@ Run `makejs -t` to list all possible targets.
 
 ## Changelog
 
+### v0.22 - *2012-??-??*
+
+* 
+
+
 ### v0.21 - *2012-08-06*
 
 * fixes misaligned image previews
