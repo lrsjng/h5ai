@@ -403,7 +403,11 @@ var H5AI_CONFIG = {
 			"parentDirectory": "Nadřazený adresář",
 			"empty": "prázdný",
 			"folders": "složek",
-			"files": "souborů"
+			"files": "souborů",
+			"download": "stáhnout",
+			"noMatch": "žádná shoda",
+			"dateFormat": "DD.MM.YYYY HH:mm",
+			"filter": "filtr"
 		},
 
 		"de": {
@@ -436,7 +440,8 @@ var H5AI_CONFIG = {
 			"files": "αρχεία",
 			"download": "μεταμόρφωση",
 			"noMatch": "κανένα αποτέλεσμα",
-			"dateFormat": "DD/MM/YYYY HH:mm"
+			"dateFormat": "DD/MM/YYYY HH:mm",
+			"filter": "φίλτρο"
 		},
 
 		"es": {
