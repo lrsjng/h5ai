@@ -13,7 +13,7 @@ modulejs.define('core/event', ['amplify'], function (amplify) {
 
 		pub = function (topic, data) {
 
-			// console.log('EVENT PUB', topic, data);
+			console.log('EVENT PUB', topic, data);
 			amplify.publish(topic, data);
 		};
 

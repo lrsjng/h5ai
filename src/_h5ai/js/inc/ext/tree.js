@@ -186,6 +186,15 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			$tree.scrollpanel('update');
 		},
 
+		onContentChanged = function (entry) {
+
+			while (entry.parent) {
+				entry = entry.parent;
+			}
+
+			update(entry);
+		},
+
 		// creates the complete tree from entry down to the root
 		init = function (entry, parser) {
 
@@ -217,6 +226,9 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			});
 
 			event.sub('ready', adjustSpacing);
+			event.sub('entry.changed', onContentChanged);
+			event.sub('entry.created', onContentChanged);
+			event.sub('entry.removed', onContentChanged);
 
 			$(window).on('resize', function () {
 

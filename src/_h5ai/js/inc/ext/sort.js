@@ -1,5 +1,5 @@
 
-modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/store'], function (_, $, allsettings, resource, store) {
+modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/store'], function (_, $, allsettings, resource, event, store) {
 
 	var defaults = {
 			enabled: false,
@@ -68,6 +68,11 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/s
 			$all.removeClass('ascending').removeClass('descending');
 			order.head.addClass(order.clas);
 			$('#extended .entry').detach().sort(order.fn).appendTo('#extended > ul');
+		},
+
+		onContentChanged = function (entry) {
+
+			sortBy(store.get(storekey) || settings.order);
 		},
 
 		init = function () {
@@ -139,6 +144,9 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/s
 					sortBy('s' + ($size.hasClass('ascending') ? 'd' : 'a'));
 					event.preventDefault();
 				});
+
+			event.sub('entry.changed', onContentChanged);
+			event.sub('entry.created', onContentChanged);
 		};
 
 	init();

@@ -29,9 +29,9 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 		emptyTemplate = '<div class="empty l10n-empty">empty</div>',
 
 		// updates this single entry
-		update = function (entry) {
+		update = function (entry, force) {
 
-			if (entry.$extended && entry.status && entry.$extended.data('status') === entry.status) {
+			if (!force && entry.$extended && entry.status && entry.$extended.data('status') === entry.status) {
 				return entry.$extended;
 			}
 
@@ -125,6 +125,27 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			$extended
 				.on('mouseenter', '.entry a', onMouseenter)
 				.on('mouseleave', '.entry a', onMouseleave);
+
+			event.sub('entry.changed', function (entry) {
+
+				if (entry.isInCurrentFolder() && entry.$extended) {
+					update(entry, true);
+				}
+			});
+
+			event.sub('entry.created', function (entry) {
+
+				if (entry.isInCurrentFolder() && !entry.$extended) {
+					$ul.append(update(entry, true));
+				}
+			});
+
+			event.sub('entry.removed', function (entry) {
+
+				if (entry.isInCurrentFolder() && entry.$extended) {
+					entry.$extended.remove();
+				}
+			});
 		};
 
 	init(entry);

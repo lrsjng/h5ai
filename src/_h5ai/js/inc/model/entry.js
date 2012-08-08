@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, types, ajax) {
+modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], function (_, types, ajax, event) {
 
 	var doc = document,
 		domain = doc.domain,
@@ -111,22 +111,60 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 
 			absHref = forceEncoding(absHref || location);
 
+			var created = !cache[absHref],
+				changed = false;
+
 			var self = cache[absHref] || new Entry(absHref);
 
 			if (_.isNumber(time)) {
+				if (self.time !== time) {
+					changed = true;
+				}
 				self.time = time;
 			}
 			if (_.isNumber(size)) {
+				if (self.size !== size) {
+					changed = true;
+				}
 				self.size = size;
 			}
 			if (status) {
+				if (self.status !== status) {
+					changed = true;
+				}
 				self.status = status;
 			}
 			if (isContentFetched) {
 				self.isContentFetched = true;
 			}
 
+			if (created) {
+				event.pub('entry.created', self);
+			} else if (changed) {
+				event.pub('entry.changed', self);
+			}
+
 			return self;
+		},
+
+		removeEntry = function (absHref) {
+
+			absHref = forceEncoding(absHref || location);
+
+			var self = cache[absHref];
+
+			if (self) {
+				delete cache[absHref];
+				if (self.parent) {
+					delete self.parent.content[self.absHref];
+				}
+				_.each(self.content, function (entry) {
+
+					removeEntry(entry.absHref);
+				});
+
+				event.pub('entry.removed', self);
+			}
 		},
 
 		fetchStatus = function (absHref, callback) {
@@ -200,6 +238,11 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 		isCurrentFolder: function () {
 
 			return this.absHref === location;
+		},
+
+		isInCurrentFolder: function () {
+
+			return !!this.parent && this.parent.isCurrentFolder();
 		},
 
 		isDomain: function () {
@@ -276,9 +319,8 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax'], function (_, ty
 		}
 	});
 
-
-
-	return {
-		get: getEntry
+	return window.ENTRY = {
+		get: getEntry,
+		remove: removeEntry
 	};
 });

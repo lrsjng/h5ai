@@ -53,7 +53,19 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 			event.sub('statusbar', update);
 			$('#bottombar > .center').append($statusbar);
 
+			event.sub('entry.created', function () {
 
+				var stats = entry.getStats();
+				$folderTotal.text(stats.folders);
+				$fileTotal.text(stats.files);
+			});
+
+			event.sub('entry.removed', function () {
+
+				var stats = entry.getStats();
+				$folderTotal.text(stats.folders);
+				$fileTotal.text(stats.files);
+			});
 
 			event.sub('entry.mouseenter', function (entry) {
 

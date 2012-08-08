@@ -23,6 +23,7 @@
 	// @include "view/spacing.js"
 	// @include "view/viewmode.js"
 
+	// @include "ext/autoupdate.js"
 	// @include "ext/crumb.js"
 	// @include "ext/custom.js"
 	// @include "ext/download.js"

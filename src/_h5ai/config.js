@@ -52,6 +52,18 @@ var H5AI_CONFIG = {
 		 */
 
 		/*
+		 * Watch current folder content.
+		 * Folders possibly visible in the tree view that are not the
+		 * current folder might not be updated.
+		 *
+		 * Interval will be a least 1000 milliseconds.
+		 */
+		"autoupdate": {
+			"enabled": true,
+			"interval": 5000
+		},
+
+		/*
 		 * Show a clickable breadcrumb.
 		 */
 		"crumb": {

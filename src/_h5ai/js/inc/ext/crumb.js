@@ -1,5 +1,5 @@
 
-modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/entry'], function (_, $, allsettings, resource, entry) {
+modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry'], function (_, $, allsettings, resource, event, entry) {
 
 	var defaults = {
 			enabled: false
@@ -17,9 +17,9 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 		statusHintTemplate = '<span class="hint"></span>',
 
 		// updates the crumb for this single entry
-		update = function (entry) {
+		update = function (entry, force) {
 
-			if (entry.$crumb && entry.$crumb.data('status') === entry.status) {
+			if (!force && entry.$crumb && entry.$crumb.data('status') === entry.status) {
 				return entry.$crumb;
 			}
 
@@ -59,6 +59,13 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			return $html;
 		},
 
+		onContentChanged = function (entry) {
+
+			if (entry.$crumb) {
+				update(entry, true);
+			}
+		},
+
 		// creates the complete crumb from entry down to the root
 		init = function (entry) {
 
@@ -78,6 +85,10 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 					update(e);
 				});
 			});
+
+			event.sub('entry.created', onContentChanged);
+			event.sub('entry.removed', onContentChanged);
+			event.sub('entry.changed', onContentChanged);
 		};
 
 	init(entry);
