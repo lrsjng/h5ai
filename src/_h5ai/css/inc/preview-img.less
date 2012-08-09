@@ -18,11 +18,22 @@
 
 }
 
+// @check-white: rgba(255,255,255,0.5);
+// @check-black: rgba(0,0,0,0.2);
+@check-white: #f8f8f8;
+@check-black: #e8e8e8;
 #pv-img-image {
 	max-width: 100%;
 	max-height: 100%;
 	border: 2px solid #fff;
 	.border-radius(4px);
+
+	background-color: @check-white;
+	background-image:
+		-webkit-linear-gradient(45deg, @check-black 25%, transparent 25%, transparent 75%, @check-black 75%, @check-black),
+		-webkit-linear-gradient(45deg, @check-black 25%, transparent 25%, transparent 75%, @check-black 75%, @check-black);
+	background-size: 60px 60px;
+	background-position: 0 0, 30px 30px
 }
 
 #pv-img-overlay.fullscreen {

@@ -2,6 +2,7 @@
 // jQuery libs
 // -----------
 // @include "lib/jquery-1.7.2.min.js"
+// @include "lib/jquery.filedrop-0.1.0.js"
 // @include "lib/jquery.fracs-0.11.min.js"
 // @include "lib/jquery.mousewheel-3.0.6.js"
 // @include "lib/jquery.qrcode-0.2.min.js"

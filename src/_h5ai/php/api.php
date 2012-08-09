@@ -138,6 +138,41 @@ else if ($action === "getentries") {
 }
 
 
+else if ($action === "upload") {
+
+	list($href) = check_keys(array("href"));
+
+	json_fail(1, "wrong HTTP method", strtolower($_SERVER["REQUEST_METHOD"]) !== "post");
+	json_fail(2, "something went wrong", !array_key_exists("userfile", $_FILES));
+
+	$userfile = $_FILES["userfile"];
+
+	json_fail(3, "something went wrong: " . $userfile["error"], $userfile["error"] !== 0);
+
+	$upload_dir = $h5ai->getAbsPath($href);
+	$dest = $upload_dir . "/" . $userfile["name"];
+
+	json_fail(4, "already exists: " . $userfile["name"], file_exists($dest));
+	json_fail(5, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
+
+	json_exit();
+}
+
+
+else if ($action === "delete") {
+
+	list($href) = check_keys(array("href"));
+
+	$absPath = $h5ai->getAbsPath($href);
+
+	if (unlink($absPath)) {
+		json_exit();
+	} else {
+		json_fail(1, "deletion failed");
+	}
+}
+
+
 else {
 	json_fail(100, "unsupported action");
 }

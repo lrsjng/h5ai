@@ -1,5 +1,5 @@
 
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/ajax'], function (_, allsettings, entry, ajax) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/event', 'core/ajax'], function (_, allsettings, entry, event, ajax) {
 
 	var defaults = {
 			enabled: false,
@@ -52,6 +52,11 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/aja
 
 				_.each(entry.content, checkEntry);
 			}, settings.delay);
+
+			event.sub('entry.created', function (entry) {
+
+				checkEntry(entry);
+			});
 		};
 
 	init(entry);

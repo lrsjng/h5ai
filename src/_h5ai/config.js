@@ -60,7 +60,7 @@ var H5AI_CONFIG = {
 		 */
 		"autoupdate": {
 			"enabled": true,
-			"interval": 5000
+			"interval": 1000
 		},
 
 		/*
@@ -213,7 +213,7 @@ var H5AI_CONFIG = {
 				"java": "java",
 				"makefile": "xml",
 				"markdown": "plain",
-				"php": "php",
+				/*"php": "php",*/
 				"python": "python",
 				"readme": "plain",
 				"rb": "ruby",
@@ -331,7 +331,7 @@ var H5AI_CONFIG = {
 		"hpp":				[".hpp"],
 		"html":				[".htm", ".html", ".shtml"],
 		"ico":				[".ico"],
-		"image":			[".xpm"],
+		"image":			[".svg", ".xpm"],
 		"install":			["install"],
 		"java":				[".java"],
 		"jpg":				[".jpg", ".jpeg"],

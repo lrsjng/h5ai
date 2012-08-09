@@ -27,6 +27,7 @@
 	// @include "ext/crumb.js"
 	// @include "ext/custom.js"
 	// @include "ext/download.js"
+	// @include "ext/dropbox.js"
 	// @include "ext/filter.js"
 	// @include "ext/folderstatus.js"
 	// @include "ext/google-analytics.js"

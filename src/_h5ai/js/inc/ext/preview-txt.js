@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/entry'], function (_, $, allsettings, resource, store, entry) {
+modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/entry'], function (_, $, allsettings, resource, store, event, entry) {
 
 	var defaults = {
 			enabled: false,
@@ -16,7 +16,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				java: 'java',
 				makefile: 'xml',
 				markdown: 'plain',
-				php: 'php',
+				// php: 'php',
 				python: 'python',
 				readme: 'plain',
 				rb: 'ruby',
@@ -207,13 +207,20 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			}
 		},
 
-		initEntry = function (entries, entry, idx) {
+		initEntry = function (entry) {
 
-			if (entry.$extended) {
+			if (entry.$extended && _.indexOf(_.keys(settings.types), entry.type) >= 0) {
 				entry.$extended.find('a').on('click', function (event) {
 
 					event.preventDefault();
-					onEnter(entries, idx);
+
+					var matchedEntries = _.compact(_.map($('#extended .entry'), function (entry) {
+
+						entry = $(entry).data('entry');
+						return _.indexOf(_.keys(settings.types), entry.type) >= 0 ? entry : null;
+					}));
+
+					onEnter(matchedEntries, _.indexOf(matchedEntries, entry));
 				});
 			}
 		},
@@ -224,13 +231,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				return;
 			}
 
-			var imageEntries = _.filter(entry.content, function (entry) {
+			_.each(entry.content, function (e) {
 
-				return _.indexOf(_.keys(settings.types), entry.type) >= 0;
-			});
-			_.each(imageEntries, function (e, idx) {
-
-				initEntry(imageEntries, e, idx);
+				initEntry(e);
 			});
 
 			$(template).appendTo('body');
@@ -253,6 +256,11 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 					event.stopPropagation();
 				});
+
+			event.sub('entry.created', function (entry) {
+
+				initEntry(entry);
+			});
 
 			$(window).on('resize load', adjustSize);
 		};

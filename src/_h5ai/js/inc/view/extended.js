@@ -18,7 +18,7 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 						'</a>' +
 					'</li>',
 		hintTemplate = '<span class="hint"></span>',
-		listTemplate = '<ul>' +
+		listTemplate = '<ul class="clearfix">' +
 							'<li class="header">' +
 								'<a class="icon"></a>' +
 								'<a class="label" href="#"><span class="l10n-name"></span></a>' +
