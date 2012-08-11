@@ -8,6 +8,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], f
 
 			return href
 					.replace(/\/+/g, '/')
+					.replace(/ /g, '%20')
 					.replace(/'/g, '%27')
 					.replace(/\[/g, '%5B')
 					.replace(/\]/g, '%5D')
