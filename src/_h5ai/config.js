@@ -40,7 +40,7 @@ var H5AI_CONFIG = {
 		Set parent folder labels to real folder names.
 		*/
 		"view": {
-			"modes": ["details", "list", "icons"],
+			"modes": ["details", "icons"],
 			"setParentFolderLabels": true
 		},
 

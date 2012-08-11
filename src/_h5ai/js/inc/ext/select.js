@@ -125,6 +125,14 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			$selectionRect.hide().appendTo('body');
 
+			event.sub('entry.removed', function (entry) {
+
+				if (entry.$extended && entry.$extended.hasClass('selected')) {
+					entry.$extended.removeClass('selected');
+					publish();
+				}
+			});
+
 			$document
 				.on('mousedown', '.noSelection', noSelection)
 				.on('mousedown', '.noSelectionUnlessCtrl,input,a', noSelectionUnlessCtrl)
