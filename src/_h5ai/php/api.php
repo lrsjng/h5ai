@@ -151,10 +151,14 @@ else if ($action === "upload") {
 	json_fail(4, "folders not supported", file_get_contents($userfile["tmp_name"]) === "null");
 
 	$upload_dir = $h5ai->getAbsPath($href);
+	$code = $h5ai->getHttpCode($href);
+
+	json_fail(5, "upload dir no h5ai folder or ignored", $code !== "h5ai" || $h5ai->is_ignored($upload_dir));
+
 	$dest = $upload_dir . "/" . $userfile["name"];
 
-	json_fail(5, "already exists", file_exists($dest));
-	json_fail(6, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
+	json_fail(6, "already exists", file_exists($dest));
+	json_fail(7, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
 
 	json_exit();
 }
@@ -170,10 +174,21 @@ else if ($action === "delete") {
 	$errors = array();
 
 	foreach ($hrefs as $href) {
-		$absPath = $h5ai->getAbsPath($href);
 
-		if (!unlink($absPath)) {
-			$errors[] = $href;
+		$d = H5ai::normalize_path(dirname($href), true);
+		$n = basename($href);
+
+		$code = $h5ai->getHttpCode($d);
+		if ($code == 401) {
+		}
+
+		if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
+
+			$absPath = $h5ai->getAbsPath($href);
+
+			if (!unlink($absPath)) {
+				$errors[] = $href;
+			}
 		}
 	}
 

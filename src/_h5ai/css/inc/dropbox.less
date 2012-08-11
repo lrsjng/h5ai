@@ -2,12 +2,13 @@
 #content {
 	border: 1px dashed #fff;
 	border-radius: 8px;
+	.transition(all 0.2s ease-in-out);
 
 	&.hint {
-		border-color: #ccc;
+		border-color: #ddd;
 	}
 	&.match {
-		border-style: solid;
+		border-color: #aaa;
 	}
 }
 
@@ -25,7 +26,6 @@
 		.name {
 			display: inline-block;
 			white-space: nowrap;
-			// width: 320px;
 			overflow: hidden;
 
 			&:before {
