@@ -86,7 +86,7 @@ var H5AI_CONFIG = {
 
 		/*
 		File upload via drag'n'drop. Folders are not supported.
-		The working file size seems to be very broser dependent.
+		The working file size seems to be very browser dependent.
 
 		Max file size is in MB.
 		*/
