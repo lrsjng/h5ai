@@ -1,26 +1,26 @@
 /*
- * h5ai {{version}}
- *
- * Configuration
- * options, types and localization
- */
+h5ai {{version}}
+
+Configuration
+options, types and localization
+*/
 
 var H5AI_CONFIG = {
 
 	"options": {
 
 		/*
-		 * The absolute links to webroot and h5ai.
-		 * Do not change this unless you know what you are doing.
-		 */
+		The absolute links to webroot and h5ai.
+		Do not change this unless you know what you are doing.
+		*/
 		"rootAbsHref": "/",
 		"h5aiAbsHref": "/_h5ai/",
 
 		/*
-		 * Spacing of the main content.
-		 * Left and right will be added to a minimum of 30px. Top and bottom
-		 * are calculated relative to the top and bottom bar heights.
-		 */
+		Spacing of the main content.
+		Left and right will be added to a minimum of 30px. Top and bottom
+		are calculated relative to the top and bottom bar heights.
+		*/
 		"spacing": {
 			"maxWidth": 960,
 			"top": 50,
@@ -30,50 +30,55 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		 * An array of view modes the user may choose from. Currently there
-		 * are two possible values: "details" and "icons". The first value
-		 * indicates the default view mode. If only one value is given the
-		 * view mode is fixed and the selector buttons are hidden.
-		 * The user selected view mode is also stored local in modern browsers
-		 * so that it will be persistent.
-		 *
-		 * Set parent folder labels to real folder names.
-		 */
+		An array of view modes the user may choose from. Currently there
+		are two possible values: "details" and "icons". The first value
+		indicates the default view mode. If only one value is given the
+		view mode is fixed and the selector buttons are hidden.
+		The user selected view mode is also stored local in modern browsers
+		so that it will be persistent.
+
+		Set parent folder labels to real folder names.
+		*/
 		"view": {
-			"modes": ["details", "icons"],
+			"modes": ["details", "list", "icons"],
 			"setParentFolderLabels": true
 		},
 
 
 
+		/*** Extensions (in alphabetical order) ***/
 
 		/*
-		 * Extensions in alphabetical order.
-		 */
+		Watch current folder content.
+		Folders possibly visible in the tree view that are not the
+		current folder might not be updated.
 
-		/*
-		 * Watch current folder content.
-		 * Folders possibly visible in the tree view that are not the
-		 * current folder might not be updated.
-		 *
-		 * Interval will be a least 1000 milliseconds.
-		 */
+		Interval will be a least 1000 milliseconds.
+		*/
 		"autoupdate": {
 			"enabled": true,
 			"interval": 1000
 		},
 
 		/*
-		 * Show a clickable breadcrumb.
-		 */
+		Show a context menu when hovering a file entry.
+		*/
+		"context-menu": {
+			"enabled": true,
+			"deleteBtn": true
+		},
+
+		/*
+		Show a clickable breadcrumb.
+		*/
 		"crumb": {
 			"enabled": true
 		},
 
 		/*
-		 * Filenames of customized header and footer files to look for
-		 * in each folder.
-		 */
+		Filenames of customized header and footer files to look for
+		in each folder.
+		*/
 		"custom": {
 			"enabled": true,
 			"header": "_h5ai.header.html",
@@ -81,82 +86,92 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		 * EXPLICITLY: USE "shell" ON YOUR OWN RISK.
-		 *
-		 * Requires PHP on the server.
-		 * Enable packaged download of selected entries.
-		 * Execution: "php", "shell".
-		 * Supported formats: "tar", "zip".
-		 */
-		"download": {
+		File upload via drag'n'drop. Folders are not supported.
+		The working file size seems to be very broser dependent.
+
+		Max file size is in MB.
+		*/
+		"dropbox": {
 			"enabled": true,
-			"execution": "shell",
-			"format": "tar"
+			"maxfiles": 50,
+			"maxfilesize": 2000
 		},
 
 		/*
-		 * Allow filtering the displayed files and folders.
-		 * Will check entries for right order of characters, i.e.
-		 * "ab" matches "ab", "axb", "xaxbx" but not "ba".
-		 * Space separated sequences get OR-ed.
-		 *
-		 * Filters will be treated as JavaScript regular expressions
-		 * if you prefix them with "re:".
-		 */
+		Requires PHP on the server.
+		Enable packaged download of selected entries.
+		Execution: "php", "shell".
+		Supported formats: "tar", "zip".
+		*/
+		"download": {
+			"enabled": true,
+			"execution": "shell",
+			"format": "zip"
+		},
+
+		/*
+		Allow filtering the displayed files and folders.
+		Will check entries for right order of characters, i.e.
+		"ab" matches "ab", "axb", "xaxbx" but not "ba".
+		Space separated sequences get OR-ed.
+
+		Filters will be treated as JavaScript regular expressions
+		if you prefix them with "re:".
+		*/
 		"filter": {
 			"enabled": true
 		},
 
 		/*
-		 * Requires PHP on the server.
-		 * Calc the size of folders.
-		 * Depends on du.
-		 */
+		Requires PHP on the server.
+		Calc the size of folders.
+		Depends on du.
+		*/
 		"foldersize": {
 			"enabled": true
 		},
 
 		/*
-		 * Associative array of folders and their HTTP status codes to
-		 * avoid HEAD requests to that folders. The key (folder) must start
-		 * and end with a slash (/).
-		 * For example
-		 *   "/some/folder/": 200
-		 * will always return HTTP status 200 (OK), which will be interpreted
-		 * as a non auto indexed folder, that means a folder containing an
-		 * appropriate default index file.
-		 */
+		Associative array of folders and their HTTP status codes to
+		avoid HEAD requests to that folders. The key (folder) must start
+		and end with a slash (/).
+		For example
+			"/some/folder/": 200
+		will always return HTTP status 200 (OK), which will be interpreted
+		as a non auto indexed folder, that means a folder containing an
+		appropriate default index file.
+		*/
 		"folderstatus": {
 			"enabled": true,
 			"folders": {}
 		},
 
 		/*
-		 * Adds Google Analytics asynchronous tracking code.
-		 *
-		 * for example:
-		 * "gaq": [
-		 *   ["_setAccount", "UA-xxxxxx-x"],
-		 *   ["_setDomainName", ".your-domain.tld"],
-		 *   ["_trackPageview"],
-		 *   ["_trackPageLoadTime"]
-		 * ]
-		 *
-		 * see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
-		 */
+		Adds Google Analytics asynchronous tracking code.
+
+		for example:
+		"gaq": [
+			["_setAccount", "UA-xxxxxx-x"],
+			["_setDomainName", ".your-domain.tld"],
+			["_trackPageview"],
+			["_trackPageLoadTime"]
+		]
+
+		see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
+		*/
 		"google-analytics": {
 			"enabled": true,
 			"gaq": []
 		},
 
 		/*
-		 * Localization, for example "en", "de" etc. - see "langs" below for
-		 * possible values. Adjust it to your needs. If lang is not found in
-		 * "langs" it defaults to "en".
-		 *
-		 * Optionally try to use browser language, falls back to previous
-		 * specified language.
-		 */
+		Localization, for example "en", "de" etc. - see "langs" below for
+		possible values. Adjust it to your needs. If lang is not found in
+		"langs" it defaults to "en".
+
+		Optionally try to use browser language, falls back to previous
+		specified language.
+		*/
 		"l10n": {
 			"enabled": true,
 			"lang": "en",
@@ -164,39 +179,39 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		 * Link the hover effects between crumb, main view and tree.
-		 */
+		Link the hover effects between crumb, main view and tree.
+		*/
 		"link-hover-states": {
 			"enabled": true
 		},
 
 		/*
-		 * Shows the server mode in the bottom left corner.
-		 * display values:
-		 *   0: only show mode
-		 *   1: mode and servername
-		 *   2: mode, servername and -version
-		 */
+		Shows the server mode in the bottom left corner.
+		display values:
+			0: only show mode
+			1: mode and servername
+			2: mode, servername and -version
+		*/
 		"mode": {
 			"enabled": true,
 			"display": 2
 		},
 
 		/*
-		 * Show an image preview on click.
-		 */
+		Show an image preview on click.
+		*/
 		"preview-img": {
 			"enabled": true,
 			"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
 		},
 
 		/*
-		 * Show text file preview on click.
-		 * "types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
-		 * be rendered as HTML.
-		 *
-		 * For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
-		 */
+		Show text file preview on click.
+		"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
+		be rendered as HTML.
+
+		For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+		*/
 		"preview-txt": {
 			"enabled": true,
 			"types": {
@@ -226,46 +241,46 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		 * Show QRCodes on hovering files.
-		 */
+		Show QRCodes on hovering files.
+		*/
 		"qrcode": {
 			"enabled": true,
 			"size": 150
 		},
 
 		/*
-		 * Make entries selectable. At the moment only needed for packaged download.
-		 */
+		Make entries selectable. At the moment only needed for packaged download.
+		*/
 		"select": {
 			"enabled": true
 		},
 
 		/*
-		 * Default sort order is a two letter code. The first letter specifies
-		 * the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
-		 * second letter specifies the sort order: "a" for "ascending" or "d"
-		 * for "descending".
-		 */
+		Default sort order is a two letter code. The first letter specifies
+		the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
+		second letter specifies the sort order: "a" for "ascending" or "d"
+		for "descending".
+		*/
 		"sort": {
 			"enabled": true,
 			"order": "na"
 		},
 
 		/*
-		 * Show additional info in a statusbar.
-		 */
+		Show additional info in a statusbar.
+		*/
 		"statusbar": {
 			"enabled": true
 		},
 
 		/*
-		 * Requires PHP on the server.
-		 * Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
-		 * writable for the Apache Server.
-		 * - img thumbnails depend on PHP-GD
-		 * - mov thumbnails depend on ffmpeg
-		 * - doc thumbnails depend on convert
-		 */
+		Requires PHP on the server.
+		Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
+		writable for the Apache Server.
+		- img thumbnails depend on PHP-GD
+		- mov thumbnails depend on ffmpeg
+		- doc thumbnails depend on convert
+		*/
 		"thumbnails": {
 			"enabled": true,
 			"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
@@ -275,21 +290,21 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		 * Replace window title with current breadcrumb.
-		 */
+		Replace window title with current breadcrumb.
+		*/
 		"title": {
 			"enabled": true
 		},
 
 		/*
-		 * Show a folder tree.
-		 * Note that this tree might have side effects as it sends HEAD requests
-		 * to the folders, and therefore will invoke index.php scripts. Use
-		 * "folderstatus" above to avoid such requests.
-		 * It might also affect performance significantly.
-		 *
-		 * Slide tree bar into viewport if there is enough space.
-		 */
+		Show a folder tree.
+		Note that this tree might have side effects as it sends HEAD requests
+		to the folders, and therefore will invoke index.php scripts. Use
+		"folderstatus" above to avoid such requests.
+		It might also affect performance significantly.
+
+		Slide tree bar into viewport if there is enough space.
+		*/
 		"tree": {
 			"enabled": true,
 			"slide": true
@@ -297,9 +312,9 @@ var H5AI_CONFIG = {
 	},
 
 
-	/*
-	 * File types mapped to file extensions. In alphabetical order.
-	 */
+
+	/*** File types mapped to file extensions. In alphabetical order. ***/
+
 	"types": {
 		"archive":			[".tar.bz2", ".tar.gz", ".tgz"],
 		"audio":			[".aif", ".flac", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
@@ -369,14 +384,12 @@ var H5AI_CONFIG = {
 	},
 
 
-	/*
-	 * Available translations. "en" in first place as a reference, otherwise in alphabetical order.
-	 *
-	 * Date format is used in detailed view, for example: "YYYY-MM-DD HH:mm:ss"
-	 * Syntax as specified by Moment.js (http://momentjs.com)
-	 */
+
+	/*** Available translations. ***/
+
 	"langs": {
 
+		/* "en" in first place as a reference, otherwise in alphabetical order. */
 		"en": {
 			"lang": "english",
 			"details": "details",
@@ -390,7 +403,7 @@ var H5AI_CONFIG = {
 			"files": "files",
 			"download": "download",
 			"noMatch": "no match",
-			"dateFormat": "YYYY-MM-DD HH:mm",
+			"dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
 			"filter": "filter"
 		},
 
