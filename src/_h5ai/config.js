@@ -61,13 +61,6 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		Allow entry deletion.
-		*/
-		"delete": {
-			"enabled": true
-		},
-
-		/*
 		Show a clickable breadcrumb.
 		*/
 		"crumb": {
@@ -82,6 +75,13 @@ var H5AI_CONFIG = {
 			"enabled": true,
 			"header": "_h5ai.header.html",
 			"footer": "_h5ai.footer.html"
+		},
+
+		/*
+		Allow file deletion.
+		*/
+		"delete": {
+			"enabled": true
 		},
 
 		/*

@@ -6,7 +6,7 @@ var path = require('path'),
 	child_process = require('child_process');
 
 
-var version = '0.22-dev-3',
+var version = '0.22-dev-5',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
