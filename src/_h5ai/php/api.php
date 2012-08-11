@@ -162,14 +162,25 @@ else if ($action === "upload") {
 
 else if ($action === "delete") {
 
-	list($href) = check_keys(array("href"));
+	json_fail(1, "deletion disabled", !$options["delete"]["enabled"]);
 
-	$absPath = $h5ai->getAbsPath($href);
+	list($hrefs) = check_keys(array("hrefs"));
 
-	if (unlink($absPath)) {
-		json_exit();
+	$hrefs = explode(":", trim($hrefs));
+	$errors = array();
+
+	foreach ($hrefs as $href) {
+		$absPath = $h5ai->getAbsPath($href);
+
+		if (!unlink($absPath)) {
+			$errors[] = $href;
+		}
+	}
+
+	if ($errors->size) {
+		json_fail(1, "deletion failed for some");
 	} else {
-		json_fail(1, "deletion failed");
+		json_exit();
 	}
 }
 

@@ -61,11 +61,10 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		Show a context menu when hovering a file entry.
+		Allow entry deletion.
 		*/
-		"context-menu": {
-			"enabled": true,
-			"deleteBtn": true
+		"delete": {
+			"enabled": true
 		},
 
 		/*

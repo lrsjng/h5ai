@@ -24,9 +24,9 @@
 	// @include "view/viewmode.js"
 
 	// @include "ext/autoupdate.js"
-	// @include "ext/context-menu.js"
 	// @include "ext/crumb.js"
 	// @include "ext/custom.js"
+	// @include "ext/delete.js"
 	// @include "ext/download.js"
 	// @include "ext/dropbox.js"
 	// @include "ext/filter.js"
