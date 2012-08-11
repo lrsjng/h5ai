@@ -147,13 +147,14 @@ else if ($action === "upload") {
 
 	$userfile = $_FILES["userfile"];
 
-	json_fail(3, "something went wrong: " . $userfile["error"], $userfile["error"] !== 0);
+	json_fail(3, "something went wrong [" . $userfile["error"] . "]", $userfile["error"] !== 0);
+	json_fail(4, "folders not supported", file_get_contents($userfile["tmp_name"]) === "null");
 
 	$upload_dir = $h5ai->getAbsPath($href);
 	$dest = $upload_dir . "/" . $userfile["name"];
 
-	json_fail(4, "already exists: " . $userfile["name"], file_exists($dest));
-	json_fail(5, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
+	json_fail(5, "already exists", file_exists($dest));
+	json_fail(6, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
 
 	json_exit();
 }
