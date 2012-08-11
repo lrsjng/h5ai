@@ -12,14 +12,9 @@
 
 	.label {
 		text-align: center;
-		color: #eee;
+		color: #ddd;
 		font-size: 5em;
 		font-weight: bold;
-	}
-
-	&.hint {
-		// color: #ccc;
-		// border-color: #aaa;
 	}
 
 	&.match {
@@ -44,7 +39,7 @@
 		.name {
 			display: inline-block;
 			white-space: nowrap;
-			width: 320px;
+			// width: 320px;
 			overflow: hidden;
 
 			&:before {
@@ -58,7 +53,6 @@
 		}
 
 		.size {
-			// display: inline-block;
 			display: none;
 			float: right;
 			white-space: nowrap;
@@ -66,6 +60,18 @@
 			&:after {
 				content: ' bytes'
 			}
+		}
+
+		.error {
+			float: right;
+			white-space: nowrap;
+			color: #c55;
+		}
+
+		.finished {
+			float: right;
+			white-space: nowrap;
+			color: #008200;
 		}
 
 		.progress {
@@ -86,7 +92,6 @@
 		}
 
 		&.finished .name:before {
-			// content: '✓✔';
 			content: '✔';
 			color: #008200;
 		}
