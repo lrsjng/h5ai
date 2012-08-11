@@ -403,7 +403,8 @@ var H5AI_CONFIG = {
 			"download": "download",
 			"noMatch": "no match",
 			"dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
-			"filter": "filter"
+			"filter": "filter",
+			"delete": "delete"
 		},
 
 		"bg": {
@@ -450,7 +451,8 @@ var H5AI_CONFIG = {
 			"download": "Download",
 			"noMatch": "keine Treffer",
 			"dateFormat": "DD.MM.YYYY HH:mm",
-			"filter": "Filter"
+			"filter": "Filter",
+			"delete": "Löschen"
 		},
 
 		"el": {
