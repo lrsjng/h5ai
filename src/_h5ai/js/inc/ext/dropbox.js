@@ -9,7 +9,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 
 		settings = _.extend({}, defaults, allsettings.dropbox),
 
-		template = '<div id="dropbox"><div class="label">dropbox</div><ul id="uploads" /></div>',
+		template = '<ul id="uploads" />',
 
 		uploadTemplate = '<li class="upload clearfix">' +
 							'<span class="name"></span>' +
@@ -23,12 +23,10 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 				return;
 			}
 
-			var $dropbox = $(template).appendTo('#content');
+			var $content = $('#content').append(template);
 
 			var uploads = {},
-				afterUpload = function (err, file, timeout) {
-
-					timeout = timeout || 5000;
+				afterUpload = function (err, file) {
 
 					if (file) {
 						uploads[file.name]
@@ -41,12 +39,11 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 								uploads[file.name].remove();
 								delete uploads[file.name];
 							});
-						}, timeout);
+						}, 5000);
 					}
 				};
 
-			// $dropbox.filedrop({
-			$('html').filedrop({
+			$content.filedrop({
 
 				paramname: 'userfile',
 
@@ -58,19 +55,29 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 					href: entry.absHref
 				},
 
+				docEnter: function () {
+
+					$content.addClass('hint');
+				},
+
+				docLeave: function () {
+
+					$content.removeClass('hint');
+				},
+
 				dragOver: function () {
 
-					$dropbox.addClass('match');
+					$content.addClass('match');
 				},
 
 				dragLeave: function () {
 
-					$dropbox.removeClass('match');
+					$content.removeClass('match');
 				},
 
 				drop: function () {
 
-					$dropbox.removeClass('match');
+					$content.removeClass('hint match');
 				},
 
 
