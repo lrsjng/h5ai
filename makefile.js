@@ -6,7 +6,7 @@ var path = require('path'),
 	child_process = require('child_process');
 
 
-var version = '0.22-dev-1',
+var version = '0.22-dev-2',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
@@ -120,7 +120,7 @@ module.exports = function (make) {
 
 			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
 				.modified(mapper)
-				.mustache(replacements)
+				.handlebars(replacements)
 				.write($.OVERWRITE, mapper);
 
 			$(root + ': README*, LICENSE*')
@@ -146,7 +146,7 @@ module.exports = function (make) {
 
 			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
 				.modified(mapper)
-				.mustache(replacements)
+				.handlebars(replacements)
 				.write($.OVERWRITE, mapper);
 
 			$(root + ': README*, LICENSE*')
