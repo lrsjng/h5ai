@@ -18,7 +18,7 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 						'</a>' +
 					'</li>',
 		hintTemplate = '<span class="hint"></span>',
-		listTemplate = '<ul class="clearfix">' +
+		listTemplate = '<ul>' +
 							'<li class="header">' +
 								'<a class="icon"></a>' +
 								'<a class="label" href="#"><span class="l10n-name"></span></a>' +
@@ -100,7 +100,8 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 		init = function (entry) {
 
 			var $extended = $('#extended'),
-				$ul = $(listTemplate);
+				$ul = $(listTemplate),
+				$emtpy = $(emptyTemplate);
 
 			if (entry.parent) {
 				$ul.append(update(entry.parent));
@@ -117,9 +118,10 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			});
 
 			$extended.append($ul);
+			$extended.append($emtpy);
 
-			if (entry.isEmpty()) {
-				$extended.append($(emptyTemplate));
+			if (!entry.isEmpty()) {
+				$emtpy.hide();
 			}
 
 			$extended
@@ -136,14 +138,21 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			event.sub('entry.created', function (entry) {
 
 				if (entry.isInCurrentFolder() && !entry.$extended) {
-					$ul.append(update(entry, true));
+					update(entry, true).hide().appendTo($ul).slideDown(400);
+					$emtpy.slideUp(400);
 				}
 			});
 
 			event.sub('entry.removed', function (entry) {
 
 				if (entry.isInCurrentFolder() && entry.$extended) {
-					entry.$extended.remove();
+					entry.$extended.slideUp(400, function () {
+						entry.$extended.remove();
+
+						if (entry.parent.isEmpty()) {
+							$emtpy.slideDown(400);
+						}
+					});
 				}
 			});
 		};
