@@ -1,12 +1,12 @@
 
-modulejs.define('ext/autoupdate', ['_', '$', 'core/settings', 'core/event', 'core/refresh'], function (_, $, allsettings, event, refresh) {
+modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'core/refresh'], function (_, $, allsettings, event, refresh) {
 
 	var defaults = {
 			enabled: false,
 			interval: 5000
 		},
 
-		settings = _.extend({}, defaults, allsettings.autoupdate),
+		settings = _.extend({}, defaults, allsettings.autorefresh),
 
 		heartbeat = function () {
 

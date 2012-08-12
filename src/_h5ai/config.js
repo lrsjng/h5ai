@@ -55,7 +55,7 @@ var H5AI_CONFIG = {
 
 		Interval will be a least 1000 milliseconds.
 		*/
-		"autoupdate": {
+		"autorefresh": {
 			"enabled": true,
 			"interval": 5000
 		},

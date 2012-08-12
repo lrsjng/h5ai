@@ -24,7 +24,7 @@
 	// @include "view/spacing.js"
 	// @include "view/viewmode.js"
 
-	// @include "ext/autoupdate.js"
+	// @include "ext/autorefresh.js"
 	// @include "ext/crumb.js"
 	// @include "ext/custom.js"
 	// @include "ext/delete.js"
