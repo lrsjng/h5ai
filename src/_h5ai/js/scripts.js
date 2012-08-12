@@ -1,12 +1,8 @@
 
 // jQuery libs
 // -----------
-// @include "lib/jquery-1.8.0.min.js"
-// @include "lib/jquery.filedrop-0.1.0.js"
-// @include "lib/jquery.fracs-0.11.min.js"
-// @include "lib/jquery.mousewheel-3.0.6.js"
-// @include "lib/jquery.qrcode-0.2.min.js"
-// @include "lib/jquery.scrollpanel-0.1.min.js"
+// @include "lib/jquery-*.js"
+// @include "lib/jquery.*.js"
 
 // other libs
 // ----------
@@ -20,4 +16,25 @@
 
 // h5ai
 // ----
-// @include "inc/main.js"
+(function ($) {
+	'use strict';
+
+	// @include "inc/**/*.js"
+
+	$(function () {
+		/*global H5AI_CONFIG, amplify, Base64, jQuery, Modernizr, moment, _ */
+
+		// `jQuery`, `moment` and `underscore` are itself functions,
+		// so they have to be wrapped to not be handled as constructors.
+		modulejs.define('config', H5AI_CONFIG);
+		modulejs.define('amplify', amplify);
+		modulejs.define('base64', Base64);
+		modulejs.define('$', function () { return jQuery; });
+		modulejs.define('modernizr', Modernizr);
+		modulejs.define('moment', function () { return moment; });
+		modulejs.define('_', function () { return _; });
+
+		modulejs.require($('body').attr('id'));
+	});
+
+}(jQuery));

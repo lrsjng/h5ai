@@ -98,7 +98,7 @@ module.exports = function (make) {
 	make.target('lint', [], 'lint all JavaScript files with JSHint')
 		.sync(function () {
 
-			$(src + '/_h5ai/js: **/*.js, ! *.min.js, ! inc/lib/**')
+			$(src + '/_h5ai/js: **/*.js, ! lib/**')
 				.jshint(jshint);
 		});
 
