@@ -1,5 +1,5 @@
 
-modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/event', 'core/resource'], function (_, $, allsettings, entry, event, resource) {
+modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/event', 'core/resource', 'core/refresh'], function (_, $, allsettings, entry, event, resource, refresh) {
 
 	var defaults = {
 			enabled: false
@@ -46,6 +46,7 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 				}
 				failed();
 			}
+			refresh();
 		},
 
 		requestDeletion = function (hrefsStr) {

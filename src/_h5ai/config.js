@@ -57,7 +57,7 @@ var H5AI_CONFIG = {
 		*/
 		"autoupdate": {
 			"enabled": true,
-			"interval": 1000
+			"interval": 5000
 		},
 
 		/*
@@ -92,8 +92,8 @@ var H5AI_CONFIG = {
 		*/
 		"dropbox": {
 			"enabled": true,
-			"maxfiles": 50,
-			"maxfilesize": 2000
+			"maxfiles": 10,
+			"maxfilesize": 1000
 		},
 
 		/*

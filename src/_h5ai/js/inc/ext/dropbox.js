@@ -1,5 +1,5 @@
 
-modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/resource'], function (_, $, allsettings, entry, resource) {
+modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/resource', 'core/refresh'], function (_, $, allsettings, entry, resource, refresh) {
 
 	var defaults = {
 			enabled: false,
@@ -97,6 +97,11 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 				uploadFinished: function (i, file, response) {
 
 					afterUpload(response.code && response.msg, file);
+				},
+
+				afterAll: function () {
+
+					refresh();
 				},
 
 				error: function (err, file) {
