@@ -193,10 +193,37 @@ else if ($action === "delete") {
 	}
 
 	if ($errors->size) {
-		json_fail(1, "deletion failed for some");
+		json_fail(2, "deletion failed for some");
 	} else {
 		json_exit();
 	}
+}
+
+
+else if ($action === "rename") {
+
+	json_fail(1, "renaming disabled", !$options["rename"]["enabled"]);
+
+	list($href, $name) = check_keys(array("href", "name"));
+
+	$d = H5ai::normalize_path(dirname($href), true);
+	$n = basename($href);
+
+	$code = $h5ai->getHttpCode($d);
+	if ($code == 401) {
+	}
+
+	if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
+
+		$absPath = $h5ai->getAbsPath($href);
+		$folder = H5ai::normalize_path(dirname($absPath));
+
+		if (!rename($absPath, $folder . "/" . $name)) {
+			json_fail(2, "renaming failed");
+		}
+	}
+
+	json_exit();
 }
 
 

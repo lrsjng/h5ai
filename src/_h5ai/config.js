@@ -248,6 +248,13 @@ var H5AI_CONFIG = {
 		},
 
 		/*
+		Allow to rename files.
+		*/
+		"rename": {
+			"enabled": false
+		},
+
+		/*
 		Make entries selectable. At the moment only needed for packaged download and delete.
 		*/
 		"select": {
