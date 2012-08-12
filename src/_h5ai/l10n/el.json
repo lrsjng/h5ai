@@ -1,0 +1,16 @@
+{
+	"lang": "ελληνικά",
+	"details": "λεπτομέρειες",
+	"icons": "εικονίδια",
+	"name": "Όνομα",
+	"lastModified": "Τελευταία τροποποίηση",
+	"size": "Μέγεθος",
+	"parentDirectory": "Προηγούμενος Κατάλογος",
+	"empty": "κενό",
+	"folders": "φάκελοι",
+	"files": "αρχεία",
+	"download": "μεταμόρφωση",
+	"noMatch": "κανένα αποτέλεσμα",
+	"dateFormat": "DD/MM/YYYY HH:mm",
+	"filter": "φίλτρο"
+}

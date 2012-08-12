@@ -1,0 +1,16 @@
+{
+	"lang": "čeština",
+	"details": "podrobnosti",
+	"icons": "ikony",
+	"name": "Název",
+	"lastModified": "Upraveno",
+	"size": "Velikost",
+	"parentDirectory": "Nadřazený adresář",
+	"empty": "prázdný",
+	"folders": "složek",
+	"files": "souborů",
+	"download": "stáhnout",
+	"noMatch": "žádná shoda",
+	"dateFormat": "DD.MM.YYYY HH:mm",
+	"filter": "filtr"
+}

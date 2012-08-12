@@ -7,6 +7,23 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			useBrowserLang: true
 		},
 
+		defaultTranslations = {
+			lang: 'english',
+			details: 'details',
+			icons: 'icons',
+			name: 'Name',
+			lastModified: 'Last modified',
+			size: 'Size',
+			parentDirectory: 'Parent Directory',
+			empty: 'empty',
+			folders: 'folders',
+			files: 'files',
+			download: 'download',
+			noMatch: 'no match',
+			dateFormat: 'YYYY-MM-DD HH:mm',
+			filter: 'filter'
+		},
+
 		settings = _.extend({}, defaults, allsettings.l10n),
 
 		template = '<span id="langSelector">' +
@@ -17,7 +34,34 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 
 		storekey = 'h5ai.language',
 
+		loaded = {
+			en: _.extend({}, defaultTranslations)
+		},
 		currentLang = null,
+
+		loadLanguage = function (lang, callback) {
+
+			if (loaded[lang]) {
+
+				callback(loaded[lang]);
+			} else {
+
+				$.ajax({
+					url: allsettings.h5aiAbsHref + 'l10n/' + lang + '.json',
+					dataType: 'json',
+					success: function (json) {
+
+						loaded[lang] = _.extend({}, defaultTranslations, json);
+						callback(loaded[lang]);
+					},
+					error: function () {
+
+						loaded[lang] = _.extend({}, defaultTranslations);
+						callback(loaded[lang]);
+					}
+				});
+			}
+		},
 
 		localize = function (langs, lang, useBrowserLang) {
 
@@ -40,26 +84,26 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 				lang = 'en';
 			}
 
-			currentLang = langs[lang];
-			if (currentLang) {
+			loadLanguage(lang, function (currentLang) {
+
 				$.each(currentLang, function (key, value) {
 					$('.l10n-' + key).text(value);
 				});
 				$('.lang').text(lang);
 				$('.langOption').removeClass('current');
 				$('.langOption.' + lang).addClass('current');
-			}
 
-			format.setDefaultDateFormat(currentLang.dateFormat);
+				format.setDefaultDateFormat(currentLang.dateFormat);
 
-			$('#extended .entry .date').each(function () {
+				$('#extended .entry .date').each(function () {
 
-				var $this = $(this);
+					var $this = $(this);
 
-				$this.text(format.formatDate($this.data('time')));
+					$this.text(format.formatDate($this.data('time')));
+				});
+
+				$('#filter input').attr('placeholder', currentLang.filter);
 			});
-
-			$('#filter input').attr('placeholder', currentLang.filter);
 		},
 
 		initLangSelector = function (langs) {
@@ -77,7 +121,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			$.each(sortedLangsKeys, function (idx, lang) {
 				$(langOptionTemplate)
 					.addClass(lang)
-					.text(lang + ' - ' + langs[lang].lang)
+					.text(lang + ' - ' + (_.isString(langs[lang]) ? langs[lang] : langs[lang].lang))
 					.appendTo($ul)
 					.click(function () {
 						store.put(storekey, lang);

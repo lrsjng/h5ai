@@ -248,7 +248,7 @@ var H5AI_CONFIG = {
 		},
 
 		/*
-		Make entries selectable. At the moment only needed for packaged download.
+		Make entries selectable. At the moment only needed for packaged download and delete.
 		*/
 		"select": {
 			"enabled": true
@@ -312,7 +312,7 @@ var H5AI_CONFIG = {
 
 
 
-	/*** File types mapped to file extensions. In alphabetical order. ***/
+	/*** File types mapped to file extensions ***/
 
 	"types": {
 		"archive":			[".tar.bz2", ".tar.gz", ".tgz"],
@@ -384,343 +384,33 @@ var H5AI_CONFIG = {
 
 
 
-	/*** Available translations. ***/
+	/*** Available translations ***/
 
 	"langs": {
+		/* defaults */
+		"en": "english",
 
-		/* "en" in first place as a reference, otherwise in alphabetical order. */
-		"en": {
-			"lang": "english",
-			"details": "details",
-			"icons": "icons",
-			"name": "Name",
-			"lastModified": "Last modified",
-			"size": "Size",
-			"parentDirectory": "Parent Directory",
-			"empty": "empty",
-			"folders": "folders",
-			"files": "files",
-			"download": "download",
-			"noMatch": "no match",
-			"dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
-			"filter": "filter",
-			"delete": "delete"
-		},
-
-		"bg": {
-			"lang": "български",
-			"details": "детайли",
-			"icons": "икони",
-			"name": "Име",
-			"lastModified": "Последна промяна",
-			"size": "Размер",
-			"parentDirectory": "Предходна директория",
-			"empty": "празно",
-			"folders": "папки",
-			"files": "файлове"
-		},
-
-		"cs": {
-			"lang": "čeština",
-			"details": "podrobnosti",
-			"icons": "ikony",
-			"name": "Název",
-			"lastModified": "Upraveno",
-			"size": "Velikost",
-			"parentDirectory": "Nadřazený adresář",
-			"empty": "prázdný",
-			"folders": "složek",
-			"files": "souborů",
-			"download": "stáhnout",
-			"noMatch": "žádná shoda",
-			"dateFormat": "DD.MM.YYYY HH:mm",
-			"filter": "filtr"
-		},
-
-		"de": {
-			"lang": "deutsch",
-			"details": "Details",
-			"icons": "Icons",
-			"name": "Name",
-			"lastModified": "Geändert",
-			"size": "Größe",
-			"parentDirectory": "Übergeordnetes Verzeichnis",
-			"empty": "leer",
-			"folders": "Ordner",
-			"files": "Dateien",
-			"download": "Download",
-			"noMatch": "keine Treffer",
-			"dateFormat": "DD.MM.YYYY HH:mm",
-			"filter": "Filter",
-			"delete": "Löschen"
-		},
-
-		"el": {
-			"lang": "ελληνικά",
-			"details": "λεπτομέρειες",
-			"icons": "εικονίδια",
-			"name": "Όνομα",
-			"lastModified": "Τελευταία τροποποίηση",
-			"size": "Μέγεθος",
-			"parentDirectory": "Προηγούμενος Κατάλογος",
-			"empty": "κενό",
-			"folders": "φάκελοι",
-			"files": "αρχεία",
-			"download": "μεταμόρφωση",
-			"noMatch": "κανένα αποτέλεσμα",
-			"dateFormat": "DD/MM/YYYY HH:mm",
-			"filter": "φίλτρο"
-		},
-
-		"es": {
-			"lang": "español",
-			"details": "Detalles",
-			"icons": "Íconos",
-			"name": "Nombre",
-			"lastModified": "Última modificación",
-			"size": "Tamaño",
-			"parentDirectory": "Directorio superior",
-			"empty": "vacío",
-			"folders": "Directorios",
-			"files": "Archivos",
-			"download": "Descargar"
-		},
-
-		"fr": {
-			"lang": "français",
-			"details": "détails",
-			"icons": "icônes",
-			"name": "Nom",
-			"lastModified": "Dernière modification",
-			"size": "Taille",
-			"parentDirectory": "Dossier parent",
-			"empty": "vide",
-			"folders": "Répertoires",
-			"files": "Fichiers",
-			"download": "télécharger",
-			"noMatch": "rien trouvé",
-			"dateFormat": "DD/MM/YYYY HH:mm"
-		},
-
-		"hu": {
-			"lang": "magyar",
-			"details": "részletek",
-			"icons": "ikonok",
-			"name": "Név",
-			"lastModified": "Utoljára módosítva",
-			"size": "Méret",
-			"parentDirectory": "Szülő könyvtár",
-			"empty": "üres",
-			"folders": "mappák",
-			"files": "fájlok",
-			"download": "letöltés",
-			"noMatch": "nincs találat",
-			"dateFormat": "YYYY-MM-DD HH:mm"
-		},
-
-		"it": {
-			"lang": "italiano",
-			"details": "dettagli",
-			"icons": "icone",
-			"name": "Nome",
-			"lastModified": "Ultima modifica",
-			"size": "Dimensione",
-			"parentDirectory": "Cartella Superiore",
-			"empty": "vuota",
-			"folders": "cartelle",
-			"files": "file"
-		},
-
-		"ja": {
-			"lang": "日本語",
-			"details": "詳細",
-			"icons": "アイコン",
-			"name": "名前",
-			"lastModified": "変更日",
-			"size": "サイズ",
-			"parentDirectory": "親フォルダ",
-			"empty": "項目なし",
-			"folders": "フォルダ",
-			"files": "ファイル",
-			"download": "ダウンロード",
-			"noMatch": "一致なし"
-		},
-
-		"lv": {
-			"lang": "latviešu",
-			"details": "detaļas",
-			"icons": "ikonas",
-			"name": "Nosaukums",
-			"lastModified": "Pēdējoreiz modificēts",
-			"size": "Izmērs",
-			"parentDirectory": "Vecākdirektorijs",
-			"empty": "tukšs",
-			"folders": "mapes",
-			"files": "faili",
-			"download": "lejupielādēt",
-			"noMatch": "nav sakritības",
-			"dateFormat": "YYYY-MM-DD HH:mm"
-		},
-
-		"nb": {
-			"lang": "norwegian",
-			"details": "detaljer",
-			"icons": "ikoner",
-			"name": "Navn",
-			"lastModified": "Sist endret",
-			"size": "Størrelse",
-			"parentDirectory": "Overordnet mappe",
-			"empty": "tom",
-			"folders": "mapper",
-			"files": "filer",
-			"download": "last ned",
-			"noMatch": "ingen treff"
-		},
-
-		"nl": {
-			"lang": "nederlands",
-			"details": "details",
-			"icons": "iconen",
-			"name": "Naam",
-			"lastModified": "Laatste wijziging",
-			"size": "Grootte",
-			"parentDirectory": "Bovenliggende map",
-			"empty": "lege"
-		},
-
-		"pl": {
-			"lang": "polski",
-			"details": "szczegóły",
-			"icons": "ikony",
-			"name": "Nazwa",
-			"lastModified": "Ostatnia modyfikacja",
-			"size": "Rozmiar",
-			"parentDirectory": "Katalog nadrzędny",
-			"empty": "pusty",
-			"folders": "foldery",
-			"files": "pliki"
-		},
-
-		"pt": {
-			"lang": "português",
-			"details": "detalhes",
-			"icons": "ícones",
-			"name": "Nome",
-			"lastModified": "Última modificação",
-			"size": "Tamanho",
-			"parentDirectory": "Diretório superior",
-			"empty": "vazio",
-			"folders": "pastas",
-			"files": "arquivos"
-		},
-
-		"ro": {
-			"lang": "română",
-			"details": "detalii",
-			"icons": "pictograme",
-			"name": "nume",
-			"lastModified": "ultima modificare",
-			"size": "mărime",
-			"parentDirectory": "dosar părinte",
-			"empty": "gol",
-			"folders": "dosar",
-			"files": "fişiere",
-			"download": "descarcă",
-			"noMatch": "0 rezultate"
-		},
-
-		"ru": {
-			"lang": "русский",
-			"details": "детали",
-			"icons": "иконки",
-			"name": "Имя",
-			"lastModified": "Последние изменения",
-			"size": "Размер",
-			"parentDirectory": "Главная директория",
-			"empty": "пусто",
-			"folders": "папки",
-			"files": "файлы"
-		},
-
-		"sk": {
-			"lang": "slovenčina",
-			"details": "podrobnosti",
-			"icons": "ikony",
-			"name": "Názov",
-			"lastModified": "Upravené",
-			"size": "Velkosť",
-			"parentDirectory": "Nadriadený priečinok",
-			"empty": "prázdny",
-			"folders": "priečinkov",
-			"files": "súborov"
-		},
-
-		"sr": {
-			"lang": "srpski",
-			"details": "detalji",
-			"icons": "ikone",
-			"name": "Ime",
-			"lastModified": "Poslednja modifikacija",
-			"size": "Veličina",
-			"parentDirectory": "Roditeljski direktorijum",
-			"empty": "prazno",
-			"folders": "direktorijum",
-			"files": "fajlovi",
-			"download": "download",
-			"noMatch": "bez poklapanja"
-		},
-
-		"sv": {
-			"lang": "svenska",
-			"details": "detaljerad",
-			"icons": "ikoner",
-			"name": "Filnamn",
-			"lastModified": "Senast ändrad",
-			"size": "Filstorlek",
-			"parentDirectory": "Till överordnad mapp",
-			"empty": "tom"
-		},
-
-		"tr": {
-			"lang": "türkçe",
-			"details": "detaylar",
-			"icons": "ikonlar",
-			"name": "İsim",
-			"lastModified": "Son Düzenleme",
-			"size": "Boyut",
-			"parentDirectory": "Üst Dizin",
-			"empty": "boş",
-			"folders": "klasörler",
-			"files": "dosyalar",
-			"download": "indir"
-		},
-
-		"zh-cn": {
-			"lang": "简体中文",
-			"details": "详情",
-			"icons": "图标",
-			"name": "文件名",
-			"lastModified": "上次修改",
-			"size": "大小",
-			"parentDirectory": "上层文件夹",
-			"empty": "空文件夹",
-			"folders": "文件夹",
-			"files": "文件",
-			"download": "下载"
-		},
-
-		"zh-tw": {
-			"lang": "正體中文",
-			"details": "詳細資料",
-			"icons": "圖示",
-			"name": "檔名",
-			"lastModified": "上次修改",
-			"size": "大小",
-			"parentDirectory": "上層目錄",
-			"empty": "空資料夾",
-			"folders": "資料夾",
-			"files": "檔案",
-			"download": "下載"
-		}
+		"bg": "български",
+		"cs": "čeština",
+		"de": "deutsch",
+		"el": "ελληνικά",
+		"es": "español",
+		"fr": "français",
+		"hu": "magyar",
+		"it": "italiano",
+		"ja": "日本語",
+		"lv": "latviešu",
+		"nb": "norwegian",
+		"nl": "nederlands",
+		"pl": "polski",
+		"pt": "português",
+		"ro": "română",
+		"ru": "русский",
+		"sk": "slovenčina",
+		"sr": "srpski",
+		"sv": "svenska",
+		"tr": "türkçe",
+		"zh-cn": "简体中文",
+		"zh-tw": "正體中文"
 	}
 };
