@@ -1,5 +1,5 @@
 
-modulejs.define('ext/autoupdate', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'model/entry'], function (_, $, allsettings, event, resource, Entry) {
+modulejs.define('ext/autoupdate', ['_', '$', 'core/settings', 'core/event', 'core/refresh'], function (_, $, allsettings, event, refresh) {
 
 	var defaults = {
 			enabled: false,
@@ -8,41 +8,9 @@ modulejs.define('ext/autoupdate', ['_', '$', 'core/settings', 'core/event', 'cor
 
 		settings = _.extend({}, defaults, allsettings.autoupdate),
 
-		parseJson = function (entry, json) {
-
-			var found = {};
-
-			_.each(json.entries, function (jsonEntry) {
-
-				found[jsonEntry.absHref] = true;
-				Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
-			});
-
-			_.each(entry.content, function (e) {
-				if (!found[e.absHref]) {
-					Entry.remove(e.absHref);
-				}
-			});
-		},
-
 		heartbeat = function () {
 
-			var entry = Entry.get();
-
-			$.ajax({
-				url: resource.api(),
-				data: {
-					action: 'getentries',
-					href: entry.absHref,
-					content: 1
-				},
-				dataType: 'json',
-				success: function (json) {
-
-					parseJson(entry, json);
-				}
-			});
-
+			refresh();
 			setTimeout(heartbeat, settings.interval);
 		},
 

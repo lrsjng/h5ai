@@ -44,6 +44,27 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 			});
 		},
 
+		getEntries = function (href, content, callback) {
+
+			$.ajax({
+				url: resource.api(),
+				data: {
+					action: 'getentries',
+					href: href,
+					content: content
+				},
+				dataType: 'json',
+				success: function (json) {
+
+					callback(json);
+				},
+				error: function () {
+
+					callback();
+				}
+			});
+		},
+
 		getArchive = function (data, callback) {
 
 			$.ajax({
@@ -149,6 +170,7 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 	return {
 		getStatus: getStatus,
 		getChecks: getChecks,
+		getEntries: getEntries,
 		getArchive: getArchive,
 		getThumbSrcSmall: getThumbSrcSmall,
 		getThumbSrcBig: getThumbSrcBig,

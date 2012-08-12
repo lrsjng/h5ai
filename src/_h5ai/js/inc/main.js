@@ -9,6 +9,7 @@
 	// @include "core/format.js"
 	// @include "core/langs.js"
 	// @include "core/parser.js"
+	// @include "core/refresh.js"
 	// @include "core/resource.js"
 	// @include "core/settings.js"
 	// @include "core/store.js"
