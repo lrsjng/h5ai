@@ -36,7 +36,7 @@ var version = '0.22-dev-8',
 
 	mapper = function (blob) {
 
-		return blob.source.replace(src, build).replace(/\.less$/, '.css');
+		return blob.source.replace(src, build).replace(/\.less$/, '.css').replace(/\.jade$/, '.html');
 	},
 
 	mapperRoot = function (blob) {
@@ -118,7 +118,13 @@ module.exports = function (make) {
 				.cssmin()
 				.write($.OVERWRITE, mapper);
 
-			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
+			$(src + ': **/*.jade')
+				.modified(mapper)
+				.handlebars(replacements)
+				.jade()
+				.write($.OVERWRITE, mapper);
+
+			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**, ! **/*.jade')
 				.modified(mapper)
 				.handlebars(replacements)
 				.write($.OVERWRITE, mapper);
@@ -144,7 +150,13 @@ module.exports = function (make) {
 				// .cssmin()
 				.write($.OVERWRITE, mapper);
 
-			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
+			$(src + ': **/*.jade')
+				.modified(mapper)
+				.handlebars(replacements)
+				.jade()
+				.write($.OVERWRITE, mapper);
+
+			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**, ! **/*.jade')
 				.modified(mapper)
 				.handlebars(replacements)
 				.write($.OVERWRITE, mapper);

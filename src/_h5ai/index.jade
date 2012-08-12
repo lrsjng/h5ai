@@ -1,0 +1,81 @@
+doctype 5
+//if lt IE 9
+	<html class="no-js oldie" lang="en">
+//[if gt IE 8]><!
+html.no-js( lang="en" )
+	//<![endif]
+
+	head
+		meta( charset="utf-8" )
+		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
+		title h5ai {{version}} server details
+		meta( name="description", content="h5ai server details" )
+		meta( name="viewport", content="width=device-width" )
+		link( rel="shortcut icon", type="image/png", href="/_h5ai/images/h5ai-16x16.png" )
+		link( rel="apple-touch-icon", type="image/png", href="/_h5ai/images/h5ai-48x48.png" )
+		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
+		link( rel="stylesheet", href="/_h5ai/css/styles.css" )
+		script( src="/_h5ai/js/modernizr.js" )
+
+	body#h5ai-info
+
+		h1 h5ai
+		span.build-version version {{version}}
+		span.build-stamp {{stamp}}
+
+		h2 server supports
+		ul#tests
+			li.test( data-id="php" )
+				span.test-label php version
+				span.test-result ?
+				div.test-info PHP version >= 5.2.1
+			li.test( data-id="cache" )
+				span.test-label cache
+				span.test-result ?
+				div.test-info _h5ai/cache writable for the server
+			li.test( data-id="thumbs" )
+				span.test-label image thumbs
+				span.test-result ?
+				div.test-info PHP GD extension with JPEG support available
+			li.test( data-id="ffmpeg" )
+				span.test-label movie thumbs
+				span.test-result ?
+				div.test-info ffmpeg executable in a shell
+			li.test( data-id="convert" )
+				span.test-label pdf thumbs
+				span.test-result ?
+				div.test-info convert executable in a shell
+			li.test( data-id="temp" )
+				span.test-label temp directory
+				span.test-result ?
+				div.test-info temporary directory writable for the server
+			li.test( data-id="archive" )
+				span.test-label php tar and zip
+				span.test-result ?
+				div.test-info PHP Phar extension available
+			li.test( data-id="tar" )
+				span.test-label shell tar
+				span.test-result ?
+				div.test-info tar executable in a shell
+			li.test( data-id="zip" )
+				span.test-label shell zip
+				span.test-result ?
+				div.test-info zip executable in a shell
+			li.test( data-id="du" )
+				span.test-label folder size
+				span.test-result ?
+				div.test-info du executable in a shell
+
+		div#bottombar.clearfix
+			span.left
+				a#h5ai-reference( href="http://larsjung.de/h5ai", title="h5ai project page" ) h5ai {{version}}
+				span.hideOnJs.noJsMsg ⚡ JavaScript is disabled! ⚡
+				span.oldBrowser
+					| ⚡ Some features disabled! Works best in 
+					a( href="http://browsehappy.com" ) modern browsers
+					| . ⚡
+			span.right
+			span.center
+
+		script( src="/_h5ai/config.js" )
+		script( src="/_h5ai/js/scripts.js" )

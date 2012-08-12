@@ -282,7 +282,7 @@ var H5AI_CONFIG = {
 		/*
 		Requires PHP on the server.
 		Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
-		writable for the Apache Server.
+		writable for the web Server.
 		- img thumbnails depend on PHP-GD
 		- mov thumbnails depend on ffmpeg
 		- doc thumbnails depend on convert

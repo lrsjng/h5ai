@@ -12,7 +12,7 @@ $H5AI_CONFIG = array(
 
 	/*
 	 * This configuration assumes that h5ai is installed
-	 * in the webroot directory of the Apache server.
+	 * in the webroot directory of the web server.
 	 */
 	"ROOT_ABS_PATH" => dirname(dirname(__FILE__)),
 
