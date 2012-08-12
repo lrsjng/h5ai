@@ -155,7 +155,7 @@ else if ($action === "upload") {
 
 	json_fail(5, "upload dir no h5ai folder or ignored", $code !== "h5ai" || $h5ai->is_ignored($upload_dir));
 
-	$dest = $upload_dir . "/" . $userfile["name"];
+	$dest = $upload_dir . "/" . utf8_encode($userfile["name"]);
 
 	json_fail(6, "already exists", file_exists($dest));
 	json_fail(7, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
