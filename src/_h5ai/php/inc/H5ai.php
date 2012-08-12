@@ -160,7 +160,7 @@ class H5ai {
 		if (is_dir($path)) {
 			if ($dir = opendir($path)) {
 				while (($file = readdir($dir)) !== false) {
-					if (!$this->is_ignored($file)) {
+					if (!$this->is_ignored($file) && !$this->is_ignored($this->getAbsHref($path) . $file)) {
 						$content[] = $file;
 					}
 				}
