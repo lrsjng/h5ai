@@ -1,6 +1,8 @@
 
 Options -Indexes
 
+DirectoryIndex index.html
+
 <IfModule mod_expires.c>
 	Header set Cache-Control "public"
 	ExpiresActive on
