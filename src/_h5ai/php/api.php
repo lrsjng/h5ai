@@ -31,6 +31,9 @@ function check_keys($keys) {
 	return $values;
 }
 
+function delete_tempfile($file) {
+	@unlink($file);
+}
 
 list($action) = check_keys(array("action"));
 
@@ -83,15 +86,16 @@ else if ($action === "getarchive") {
 	json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
 	list($id, $as) = check_keys(array("id", "as"));
-	json_fail(2, "file not found", !preg_match("/^h5ai-selection-/", $id));
+	json_fail(2, "file not found", !preg_match("/^package-/", $id));
 
-	$target = H5ai::normalize_path(sys_get_temp_dir(), true) . $id;
+	$target = $h5ai->getTempAbsPath() . "/" . $id;
 	json_fail(3, "file not found", !file_exists($target));
 
 	header("Content-Type: application/octet-stream");
 	header("Content-Length: " . filesize($target));
 	header("Content-Disposition: attachment; filename=\"$as\"");
 	header("Connection: close");
+	register_shutdown_function("delete_tempfile", $target);
 	readfile($target);
 }
 
@@ -105,8 +109,8 @@ else if ($action === "getchecks") {
 		$gdinfo = gd_info();
 		$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 	}
-	$cache = @is_writable($h5ai->getH5aiAbsPath() . "/cache");
-	$temp = @is_writable(sys_get_temp_dir());
+	$cache = @is_writable($h5ai->getCacheAbsPath());
+	$temp = @is_writable($h5ai->getTempAbsPath());
 	$tar = @preg_match("/tar$/", `which tar`) > 0;
 	$zip = @preg_match("/zip$/", `which zip`) > 0;
 	$convert = @preg_match("/convert$/", `which convert`) > 0;

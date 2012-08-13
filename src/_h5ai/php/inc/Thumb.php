@@ -72,7 +72,7 @@ class Thumb {
 			return null;
 		}
 
-		$captureAbsPath = $this->h5ai->getH5aiAbsPath() . "/cache/capture-" . sha1($sourceAbsPath) . ".jpg";
+		$captureAbsPath = $this->h5ai->getCacheAbsPath() . "/capture-" . sha1($sourceAbsPath) . ".jpg";
 
 		if (!file_exists($captureAbsPath) || filemtime($sourceAbsPath) >= filemtime($captureAbsPath)) {
 			$cmd = str_replace("[SOURCE]", $sourceAbsPath, $cmd);
