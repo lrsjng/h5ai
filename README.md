@@ -49,7 +49,9 @@ Run `makejs -t` to list all possible targets.
 * adds drag'n'drop upload (PHP)
 * adds file deletion (PHP)
 * PHP ignore patterns might include paths now
+* temp download packages are now stored in the `_h5ai/cache` and deleted as soon as possible
 * localization now in separate files
+* updates translations
 * updates [jQuery](http://jquery.com) to 1.8.0
 
 
