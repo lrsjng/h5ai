@@ -47,10 +47,10 @@ class Thumb {
 			return null;
 		}
 
-		$name = "cache/thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".jpg";
-		// $name = "cache/thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".png";
-		$thumbAbsHref = $this->h5ai->getH5aiAbsHref() . $name;
-		$thumbAbsPath = $this->h5ai->getH5aiAbsPath() . "/" . $name;
+		$name = "thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".jpg";
+		// $name = "thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".png";
+		$thumbAbsPath = $this->h5ai->getCacheAbsPath() . "/" . $name;
+		$thumbAbsHref = $this->h5ai->getCacheAbsHref() . $name;
 
 		if (!file_exists($thumbAbsPath) || filemtime($sourceAbsPath) >= filemtime($thumbAbsPath)) {
 			$image = new Image();

@@ -86,19 +86,6 @@ class H5ai {
 	}
 
 
-	public function getCacheAbsPath() {
-
-		return $this->h5aiAbsPath . '/cache';
-	}
-
-
-	public function getTempAbsPath() {
-
-		// return H5ai::normalize_path(sys_get_temp_dir());
-		return $this->h5aiAbsPath . '/cache';
-	}
-
-
 	public function getRootAbsHref() {
 
 		return $this->rootAbsHref;
@@ -108,6 +95,25 @@ class H5ai {
 	public function getH5aiAbsHref() {
 
 		return $this->h5aiAbsHref;
+	}
+
+
+	public function getCacheAbsPath() {
+
+		return $this->h5aiAbsPath . '/cache';
+	}
+
+
+	public function getCacheAbsHref() {
+
+		return $this->h5aiAbsHref . 'cache/';
+	}
+
+
+	public function getTempAbsPath() {
+
+		// return H5ai::normalize_path(sys_get_temp_dir());
+		return $this->h5aiAbsPath . '/cache';
 	}
 
 
