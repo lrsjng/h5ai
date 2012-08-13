@@ -48,7 +48,6 @@ class Thumb {
 		}
 
 		$name = "thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".jpg";
-		// $name = "thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".png";
 		$thumbAbsPath = $this->h5ai->getCacheAbsPath() . "/" . $name;
 		$thumbAbsHref = $this->h5ai->getCacheAbsHref() . $name;
 
@@ -57,9 +56,6 @@ class Thumb {
 			$image->setSource($sourceAbsPath);
 			$image->thumb($mode, $width, $height);
 			$image->saveDestJpeg($thumbAbsPath, 80);
-
-			// $image->saveDestPng($thumbAbsPath, 9);
-			// Magic::thumb($mode, $sourceAbsPath, $thumbAbsPath, $width, $height);
 		}
 
 		return file_exists($thumbAbsPath) ? $thumbAbsHref : null;
