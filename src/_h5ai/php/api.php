@@ -105,13 +105,13 @@ else if ($action === "getchecks") {
 		$gdinfo = gd_info();
 		$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 	}
-	$cache = is_writable($h5ai->getH5aiAbsPath() . "/cache");
-	$temp = is_writable(sys_get_temp_dir());
-	$tar = preg_match("/tar$/", `which tar`) > 0;
-	$zip = preg_match("/zip$/", `which zip`) > 0;
-	$convert = preg_match("/convert$/", `which convert`) > 0;
-	$ffmpeg = preg_match("/ffmpeg$/", `which ffmpeg`) > 0;
-	$du = preg_match("/du$/", `which du`) > 0;
+	$cache = @is_writable($h5ai->getH5aiAbsPath() . "/cache");
+	$temp = @is_writable(sys_get_temp_dir());
+	$tar = @preg_match("/tar$/", `which tar`) > 0;
+	$zip = @preg_match("/zip$/", `which zip`) > 0;
+	$convert = @preg_match("/convert$/", `which convert`) > 0;
+	$ffmpeg = @preg_match("/ffmpeg$/", `which ffmpeg`) > 0;
+	$du = @preg_match("/du$/", `which du`) > 0;
 
 	json_exit(array(
 		"php" => $php,
