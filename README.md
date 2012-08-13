@@ -50,7 +50,7 @@ Run `makejs -t` to list all possible targets.
 * adds file deletion (PHP)
 * PHP ignore patterns might include paths now
 * localization now in separate files
-* updates jQuery to 1.8.0
+* updates [jQuery](http://jquery.com) to 1.8.0
 
 
 ### v0.21 - *2012-08-06*

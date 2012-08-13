@@ -11,5 +11,6 @@
 	"files": "faili",
 	"download": "lejupielādēt",
 	"noMatch": "nav sakritības",
-	"dateFormat": "YYYY-MM-DD HH:mm"
+	"dateFormat": "YYYY-MM-DD HH:mm",
+	"filter": "filtrēt"
 }
