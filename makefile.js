@@ -36,7 +36,7 @@ var version = '0.22-dev-8',
 
 	mapper = function (blob) {
 
-		return blob.source.replace(src, build).replace(/\.less$/, '.css').replace(/\.jade$/, '.html');
+		return blob.source.replace(src, build).replace(/\.less$/, '.css').replace(/\.jade$/, '');
 	},
 
 	mapperRoot = function (blob) {
