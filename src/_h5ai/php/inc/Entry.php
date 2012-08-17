@@ -8,7 +8,7 @@ class Entry {
 	private static $cache = array();
 
 
-	private static function startsWith($sequence, $part) {
+	private static function starts_with($sequence, $part) {
 
 		return (substr($sequence, 0, strlen($part)) === $part);
 	}
@@ -22,7 +22,7 @@ class Entry {
 
 	public static function get($h5ai, $absPath, $absHref) {
 
-		if (!Entry::startsWith($absHref, $h5ai->getRootAbsHref())) {
+		if (!Entry::starts_with($absHref, $h5ai->getRootAbsHref())) {
 			error_log("ILLEGAL REQUEST: " . $absHref . ", " . $absPath . ", " . $h5ai->getRootAbsHref());
 			return null;
 		}
@@ -75,7 +75,7 @@ class Entry {
 
 		$this->parent = null;
 		$parentAbsHref = H5ai::normalize_path(dirname($this->absHref), true);
-		if ($this->absHref !== "/" && Entry::startsWith($parentAbsHref, $h5ai->getRootAbsHref())) {
+		if ($this->absHref !== "/" && Entry::starts_with($parentAbsHref, $h5ai->getRootAbsHref())) {
 			$this->parent = Entry::get($this->h5ai, H5ai::normalize_path(dirname($this->absPath)), $parentAbsHref);
 		}
 
