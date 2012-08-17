@@ -61,6 +61,12 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					$img.attr('src', resource.icon('folder-home'));
 				}
 
+				// is it the root?
+				if (entry.isRoot()) {
+					$html.addClass('root');
+					$img.attr('src', resource.icon('folder-home'));
+				}
+
 				// is it the current folder?
 				if (entry.isCurrentFolder()) {
 					$html.addClass('current');

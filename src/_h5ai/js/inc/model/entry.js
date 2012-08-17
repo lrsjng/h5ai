@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], function (_, types, ajax, event) {
+modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event', 'core/settings'], function (_, types, ajax, event, settings) {
 
 	var doc = document,
 		domain = doc.domain,
@@ -59,33 +59,36 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], f
 		reEndsWithSlash = /\/$/,
 
 
+		startsWith = function (sequence, part) {
+
+			return sequence.length >= part.length && sequence.slice(0, part.length) === part;
+		},
+
+
 		createLabel = function (sequence) {
 
-			if (sequence.length > 1 && reEndsWithSlash.test(sequence)) {
-				sequence = sequence.slice(0, -1);
-			}
+			sequence = sequence.replace(reEndsWithSlash, '');
 			try { sequence = decodeURIComponent(sequence); } catch (e) {}
 			return sequence;
 		},
 
 
-		reSplitPath = /^\/([^\/]+\/?)$/,
-		reSplitPath2 = /^(\/(?:.*\/)*?([^\/]+)\/)([^\/]+\/?)$/,
+		reSplitPath = /^(.*\/)([^\/]+\/?)$/,
 
 		splitPath = function (sequence) {
-
-			var match;
 
 			if (sequence === '/') {
 				return { parent: null, name: '/' };
 			}
-			match = reSplitPath2.exec(sequence);
+
+			var match = reSplitPath.exec(sequence);
 			if (match) {
-				return { parent: match[1], name: match[3] };
-			}
-			match = reSplitPath.exec(sequence);
-			if (match) {
-				return { parent: '/', name: match[1] };
+				var split = { parent: match[1], name: match[2] };
+
+				if (split.parent && !startsWith(split.parent, settings.rootAbsHref)) {
+					split.parent = null;
+				}
+				return split;
 			}
 		},
 
@@ -111,6 +114,10 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], f
 		getEntry = function (absHref, time, size, status, isContentFetched) {
 
 			absHref = forceEncoding(absHref || location);
+
+			if (!startsWith(absHref, settings.rootAbsHref)) {
+				return null;
+			}
 
 			var created = !cache[absHref],
 				changed = false;
@@ -251,6 +258,16 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], f
 			return this.absHref === '/';
 		},
 
+		isRoot: function () {
+
+			return this.absHref === settings.rootAbsHref;
+		},
+
+		isH5ai: function () {
+
+			return this.absHref === settings.h5aiAbsHref;
+		},
+
 		isEmpty: function () {
 
 			return _.keys(this.content).length === 0;
@@ -320,7 +337,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event'], f
 		}
 	});
 
-	return window.ENTRY = {
+	return {
 		get: getEntry,
 		remove: removeEntry
 	};

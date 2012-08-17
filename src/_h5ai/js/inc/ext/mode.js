@@ -1,5 +1,5 @@
 
-modulejs.define('ext/mode', ['_', '$', 'core/settings', 'core/parser'], function (_, $, allsettings, parser) {
+modulejs.define('ext/mode', ['_', '$', 'core/mode', 'core/settings'], function (_, $, mode, allsettings) {
 
 	var defaults = {
 			enabled: false,
@@ -16,14 +16,14 @@ modulejs.define('ext/mode', ['_', '$', 'core/settings', 'core/parser'], function
 
 			var info = '';
 
-			if (parser.mode) {
-				info += parser.mode;
+			if (mode.id) {
+				info += mode.id;
 			}
-			if (settings.display > 0 && parser.server.name) {
-				info += (info ? ' on ' : '') + parser.server.name;
+			if (settings.display > 0 && mode.serverName) {
+				info += (info ? ' on ' : '') + mode.serverName;
 			}
-			if (settings.display > 1 && parser.server.version) {
-				info += (info ? '-' : '') + parser.server.version;
+			if (settings.display > 1 && mode.serverVersion) {
+				info += (info ? '-' : '') + mode.serverVersion;
 			}
 
 			if (info) {

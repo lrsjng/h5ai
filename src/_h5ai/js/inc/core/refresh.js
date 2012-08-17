@@ -1,5 +1,5 @@
 
-modulejs.define('core/refresh', ['_', 'core/ajax', 'model/entry'], function (_, ajax, Entry) {
+modulejs.define('core/refresh', ['_', 'core/mode', 'core/ajax', 'model/entry'], function (_, mode, ajax, Entry) {
 
 	var parseJson = function (entry, json) {
 
@@ -19,6 +19,10 @@ modulejs.define('core/refresh', ['_', 'core/ajax', 'model/entry'], function (_, 
 		},
 
 		refresh = function () {
+
+			if (mode.id !== 'php') {
+				return;
+			}
 
 			var entry = Entry.get();
 			ajax.getEntries(entry.absHref, 1, function (json) {

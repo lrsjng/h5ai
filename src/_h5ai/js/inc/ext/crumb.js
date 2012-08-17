@@ -39,6 +39,11 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 				$a.find('img').attr('src', resource.image('home'));
 			}
 
+			if (entry.isRoot()) {
+				$html.addClass('root');
+				$a.find('img').attr('src', resource.image('home'));
+			}
+
 			if (entry.isCurrentFolder()) {
 				$html.addClass('current');
 			}

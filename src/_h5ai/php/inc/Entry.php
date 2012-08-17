@@ -8,6 +8,12 @@ class Entry {
 	private static $cache = array();
 
 
+	private static function startsWith($sequence, $part) {
+
+		return (substr($sequence, 0, strlen($part)) === $part);
+	}
+
+
 	public static function get_cache() {
 
 		return Entry::$cache;
@@ -15,6 +21,11 @@ class Entry {
 
 
 	public static function get($h5ai, $absPath, $absHref) {
+
+		if (!Entry::startsWith($absHref, $h5ai->getRootAbsHref())) {
+			error_log("ILLEGAL REQUEST: " . $absHref . ", " . $absPath . ", " . $h5ai->getRootAbsHref());
+			return null;
+		}
 
 		if (array_key_exists($absHref, Entry::$cache)) {
 			return Entry::$cache[$absHref];
@@ -63,8 +74,9 @@ class Entry {
 		}
 
 		$this->parent = null;
-		if ($this->absHref !== "/") {
-			$this->parent = Entry::get($this->h5ai, H5ai::normalize_path(dirname($this->absPath)), H5ai::normalize_path(dirname($this->absHref), true));
+		$parentAbsHref = H5ai::normalize_path(dirname($this->absHref), true);
+		if ($this->absHref !== "/" && Entry::startsWith($parentAbsHref, $h5ai->getRootAbsHref())) {
+			$this->parent = Entry::get($this->h5ai, H5ai::normalize_path(dirname($this->absPath)), $parentAbsHref);
 		}
 
 		$this->isContentFetched = false;

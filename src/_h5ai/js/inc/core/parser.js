@@ -9,14 +9,7 @@ modulejs.define('core/parser', ['$'], function ($) {
 	}
 
 	return {
-		id: 'none',
-		mode: null,
-		server: {
-			name: null,
-			version: null
-		},
-		parse: function () {
-			return [];
-		}
+		dataType: 'N/A',
+		parse: function () { return []; }
 	};
 });

@@ -10,10 +10,9 @@ var H5AI_CONFIG = {
 	"options": {
 
 		/*
-		The absolute links to webroot and h5ai.
-		Do not change this unless you know what you are doing.
+		The absolute link to h5ai.
+		Must point to the "_h5ai" directory.
 		*/
-		"rootAbsHref": "/",
 		"h5aiAbsHref": "/_h5ai/",
 
 		/*

@@ -1,5 +1,5 @@
 
-modulejs.define('parser/apache-autoindex', ['_', '$', 'core/settings', 'core/format', 'model/entry'], function (_, $, settings, format, Entry) {
+modulejs.define('parser/apache-autoindex', ['_', '$', 'core/mode', 'core/settings', 'core/format', 'model/entry'], function (_, $, mode, settings, format, Entry) {
 
 	var parseTableRow = function (absHref, tr) {
 
@@ -35,13 +35,13 @@ modulejs.define('parser/apache-autoindex', ['_', '$', 'core/settings', 'core/for
 			return parseTable(absHref, $id.find('table'));
 		};
 
+	mode.id = 'aai';
+	mode.dataType = 'apache-autoindex';
+	mode.serverName = 'apache';
+	mode.serverVersion = null;
+
 	return {
-		id: 'apache-autoindex',
-		mode: 'aai',
-		server: {
-			name: 'apache',
-			version: null
-		},
+		dataType: 'apache-autoindex',
 		parse: parse
 	};
 });
