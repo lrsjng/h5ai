@@ -2,7 +2,6 @@
 modulejs.define('core/settings', ['config', '_'], function (config, _) {
 
 	var defaults = {
-			rootAbsHref: '/',
 			h5aiAbsHref: '/_h5ai/'
 		};
 

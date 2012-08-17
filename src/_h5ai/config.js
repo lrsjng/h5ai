@@ -47,7 +47,7 @@ var H5AI_CONFIG = {
 
 		/*** Extensions (in alphabetical order) ***/
 
-		/*
+		/* [php]
 		Watch current folder content.
 		Folders possibly visible in the tree view that are not the
 		current folder might not be updated.
@@ -59,14 +59,14 @@ var H5AI_CONFIG = {
 			"interval": 5000
 		},
 
-		/*
+		/* [all]
 		Show a clickable breadcrumb.
 		*/
 		"crumb": {
 			"enabled": true
 		},
 
-		/*
+		/* [all]
 		Filenames of customized header and footer files to look for
 		in each folder.
 		*/
@@ -76,14 +76,14 @@ var H5AI_CONFIG = {
 			"footer": "_h5ai.footer.html"
 		},
 
-		/*
+		/* [php]
 		Allow file deletion.
 		*/
 		"delete": {
 			"enabled": true
 		},
 
-		/*
+		/* [php]
 		File upload via drag'n'drop. Folders are not supported.
 		The working file size seems to be very browser dependent.
 
@@ -95,19 +95,18 @@ var H5AI_CONFIG = {
 			"maxfilesize": 1000
 		},
 
-		/*
-		Requires PHP on the server.
+		/* [php]
 		Enable packaged download of selected entries.
 		Execution: "php", "shell".
 		Supported formats: "tar", "zip".
 		*/
 		"download": {
 			"enabled": true,
-			"execution": "shell",
+			"execution": "php",
 			"format": "zip"
 		},
 
-		/*
+		/* [all]
 		Allow filtering the displayed files and folders.
 		Will check entries for right order of characters, i.e.
 		"ab" matches "ab", "axb", "xaxbx" but not "ba".
@@ -120,8 +119,7 @@ var H5AI_CONFIG = {
 			"enabled": true
 		},
 
-		/*
-		Requires PHP on the server.
+		/* [php]
 		Calc the size of folders.
 		Depends on du.
 		*/
@@ -129,7 +127,7 @@ var H5AI_CONFIG = {
 			"enabled": true
 		},
 
-		/*
+		/* [all]
 		Associative array of folders and their HTTP status codes to
 		avoid HEAD requests to that folders. The key (folder) must start
 		and end with a slash (/).
@@ -144,7 +142,7 @@ var H5AI_CONFIG = {
 			"folders": {}
 		},
 
-		/*
+		/* [all]
 		Adds Google Analytics asynchronous tracking code.
 
 		for example:
@@ -162,7 +160,7 @@ var H5AI_CONFIG = {
 			"gaq": []
 		},
 
-		/*
+		/* [all]
 		Localization, for example "en", "de" etc. - see "langs" below for
 		possible values. Adjust it to your needs. If lang is not found in
 		"langs" it defaults to "en".
@@ -176,14 +174,14 @@ var H5AI_CONFIG = {
 			"useBrowserLang": true
 		},
 
-		/*
+		/* [all]
 		Link the hover effects between crumb, main view and tree.
 		*/
 		"link-hover-states": {
 			"enabled": true
 		},
 
-		/*
+		/* [all]
 		Shows the server mode in the bottom left corner.
 		display values:
 			0: only show mode
@@ -195,7 +193,7 @@ var H5AI_CONFIG = {
 			"display": 2
 		},
 
-		/*
+		/* [all]
 		Show an image preview on click.
 		*/
 		"preview-img": {
@@ -203,7 +201,7 @@ var H5AI_CONFIG = {
 			"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
 		},
 
-		/*
+		/* [all]
 		Show text file preview on click.
 		"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
 		be rendered as HTML.
@@ -238,7 +236,7 @@ var H5AI_CONFIG = {
 			}
 		},
 
-		/*
+		/* [all]
 		Show QRCodes on hovering files.
 		*/
 		"qrcode": {
@@ -246,21 +244,21 @@ var H5AI_CONFIG = {
 			"size": 150
 		},
 
-		/*
+		/* [php]
 		Allow to rename files.
 		*/
 		"rename": {
 			"enabled": false
 		},
 
-		/*
+		/* [all]
 		Make entries selectable. At the moment only needed for packaged download and delete.
 		*/
 		"select": {
 			"enabled": true
 		},
 
-		/*
+		/* [all]
 		Default sort order is a two letter code. The first letter specifies
 		the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
 		second letter specifies the sort order: "a" for "ascending" or "d"
@@ -271,15 +269,14 @@ var H5AI_CONFIG = {
 			"order": "na"
 		},
 
-		/*
+		/* [all]
 		Show additional info in a statusbar.
 		*/
 		"statusbar": {
 			"enabled": true
 		},
 
-		/*
-		Requires PHP on the server.
+		/* [php]
 		Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
 		writable for the web Server.
 		- img thumbnails depend on PHP-GD
@@ -294,14 +291,14 @@ var H5AI_CONFIG = {
 			"delay": 1
 		},
 
-		/*
+		/* [all]
 		Replace window title with current breadcrumb.
 		*/
 		"title": {
 			"enabled": true
 		},
 
-		/*
+		/* [all]
 		Show a folder tree.
 		Note that this tree might have side effects as it sends HEAD requests
 		to the folders, and therefore will invoke index.php scripts. Use
