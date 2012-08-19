@@ -30,9 +30,13 @@ html.no-js( lang="en" )
 				span.test-result ?
 				div.test-info PHP version >= 5.2.1
 			li.test( data-id="cache" )
-				span.test-label cache
+				span.test-label cache directory
 				span.test-result ?
-				div.test-info _h5ai/cache writable for the server
+				div.test-info web server has write access
+			li.test( data-id="temp" )
+				span.test-label temp directory
+				span.test-result ?
+				div.test-info web server has write access
 			li.test( data-id="thumbs" )
 				span.test-label image thumbs
 				span.test-result ?
@@ -40,15 +44,11 @@ html.no-js( lang="en" )
 			li.test( data-id="ffmpeg" )
 				span.test-label movie thumbs
 				span.test-result ?
-				div.test-info ffmpeg executable in a shell
+				div.test-info command 'ffmpeg' available
 			li.test( data-id="convert" )
 				span.test-label pdf thumbs
 				span.test-result ?
-				div.test-info convert executable in a shell
-			li.test( data-id="temp" )
-				span.test-label temp directory
-				span.test-result ?
-				div.test-info temporary directory writable for the server
+				div.test-info command 'convert' available
 			li.test( data-id="archive" )
 				span.test-label php tar and zip
 				span.test-result ?
@@ -56,15 +56,15 @@ html.no-js( lang="en" )
 			li.test( data-id="tar" )
 				span.test-label shell tar
 				span.test-result ?
-				div.test-info tar executable in a shell
+				div.test-info command 'tar' available
 			li.test( data-id="zip" )
 				span.test-label shell zip
 				span.test-result ?
-				div.test-info zip executable in a shell
+				div.test-info command 'zip' available
 			li.test( data-id="du" )
 				span.test-label folder size
 				span.test-result ?
-				div.test-info du executable in a shell
+				div.test-info command 'du' available
 
 		div#bottombar.clearfix
 			span.left
