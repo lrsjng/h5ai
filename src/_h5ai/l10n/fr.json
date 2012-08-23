@@ -11,5 +11,7 @@
 	"files": "Fichiers",
 	"download": "télécharger",
 	"noMatch": "rien trouvé",
-	"dateFormat": "DD/MM/YYYY HH:mm"
+	"dateFormat": "DD/MM/YYYY HH:mm",
+	"filter": "filtre",
+	"delete": "supprimer"
 }
