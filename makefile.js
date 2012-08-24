@@ -6,7 +6,7 @@ var path = require('path'),
 	child_process = require('child_process');
 
 
-var version = '0.22-dev-11',
+var version = '0.22-dev',
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
@@ -69,22 +69,34 @@ module.exports = function (make) {
 	});
 
 
-	make.target('inc', [], 'increase build number, if any')
-		.sync(function () {
+	make.target('git-hash', [], 'get git hash tag')
+		.async(function (done, fail) {
 
-			var re = /-(\d+)$/;
-			var match = version.match(re);
-
-			if (match) {
-				var number = parseInt(match[1], 10) + 1;
-				var newVersion = version.replace(re, '-' + number);
-
-				$('makefile.js').replace([[version, newVersion]]).write($.OVERWRITE, 'makefile.js');
-
-				version = newVersion;
-				replacements.version = version;
-				Event.ok({ method: 'inc', message: 'version is now ' + version });
+			if (!/-dev$/.test(version)) {
+				done();
+				return;
 			}
+
+			var hash = '',
+				cmd = 'git',
+				args = ['rev-parse', '--short', 'HEAD'],
+				options = {},
+				proc = child_process.spawn(cmd, args, options);
+
+			proc.stdout.on('data', function (data) {
+				hash += ('' + data).replace(/\s*/g, '');
+			});
+			proc.on('exit', function (code) {
+				if (code) {
+					Event.error({ method: 'git-hash', message: cmd + ' exit code ' + code });
+					fail();
+				} else {
+					version += '-' + hash;
+					replacements.version = version;
+					Event.ok({ method: 'git-hash', message: 'version is now ' + version });
+					done();
+				}
+			});
 		});
 
 
@@ -103,7 +115,7 @@ module.exports = function (make) {
 		});
 
 
-	make.target('build', [], 'build all updated files')
+	make.target('build', ['git-hash'], 'build all updated files')
 		.sync(function () {
 
 			$(src + ': _h5ai/js/*.js')
@@ -135,7 +147,7 @@ module.exports = function (make) {
 		});
 
 
-	make.target('build-uncompressed', [], 'build all updated files without compression')
+	make.target('build-uncompressed', ['git-hash'], 'build all updated files without compression')
 		.sync(function () {
 
 			$(src + ': _h5ai/js/*.js')
@@ -167,7 +179,7 @@ module.exports = function (make) {
 		});
 
 
-	make.target('release', ['inc', 'clean', 'build'], 'create a zipball')
+	make.target('release', ['clean', 'build'], 'create a zipball')
 		.async(function (done, fail) {
 
 			var target = path.join(build, 'h5ai-' + version + '.zip'),
@@ -178,9 +190,6 @@ module.exports = function (make) {
 
 			Event.info({ method: 'exec', message: cmd + ' ' + args.join(' ') });
 
-			// proc.stdout.on('data', function (data) {
-				// process.stdout.write(data);
-			// });
 			proc.stderr.on('data', function (data) {
 				process.stderr.write(data);
 			});
