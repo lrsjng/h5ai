@@ -13,7 +13,7 @@ DirectoryIndex index.html
 	# cache.manifest needs re-requests in FF 3.6 (thx Remy ~Introducing HTML5)
 	ExpiresByType text/cache-manifest       "access plus 0 seconds"
 
-	# your document html 
+	# your document html
 	ExpiresByType text/html                 "access plus 0 seconds"
 
 	# data
