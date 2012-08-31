@@ -1,0 +1,24 @@
+
+html { overflow-y: auto; }
+::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
+::selection { background: #68A9FF; color: #fff; text-shadow: none; }
+
+body {
+	font-family: Ubuntu, sans-serif;
+	font-size: 13px;
+	color: #555;
+	background-color: #fff;
+	margin: 30px;
+}
+
+html.js .hideOnJs, html.no-js .hideOnNoJs {
+	display: none;
+}
+html.oldie {
+	.oldBrowser {
+		display: inline !important;
+	}
+	#tree {
+		display: none !important;
+	}
+}

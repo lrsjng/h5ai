@@ -10,20 +10,20 @@ package on the [project page](http://larsjung.de/h5ai/).
 
 h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
 It profits from these great projects:
-[AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
-[HTML5 ★ Boilerplate](http://html5boilerplate.com),
-[jQuery](http://jquery.com)&nbsp;(MIT/GPL),
-[jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
-[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
-[jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
-[jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
-[markdown-js](http://github.com/evilstreak/markdown-js)&nbsp;(MIT),
-[Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
-[modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
-[Moment.js](http://momentjs.com)&nbsp;(MIT),
-[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
-[Underscore.js](http://underscorejs.org)&nbsp;(MIT)
+[AmplifyJS](http://amplifyjs.com)&#160;(MIT/GPL),
+[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&#160;(GPL),
+[HTML5 ★ Boilerplate](http://html5boilerplate.com)&#160;(MIT),
+[jQuery](http://jquery.com)&#160;(MIT/GPL),
+[jQuery.fracs](http://larsjung.de/fracs/)&#160;(MIT),
+[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&#160;(MIT),
+[jQuery.qrcode](http://larsjung.de/qrcode/)&#160;(MIT),
+[jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&#160;(MIT),
+[markdown-js](http://github.com/evilstreak/markdown-js)&#160;(MIT),
+[Modernizr](http://www.modernizr.com)&#160;(MIT/BSD),
+[modulejs](http://larsjung.de/modulejs/)&#160;(MIT),
+[Moment.js](http://momentjs.com)&#160;(MIT),
+[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&#160;(MIT/GPL),
+[Underscore.js](http://underscorejs.org)&#160;(MIT)
 
 
 ## Build
@@ -53,6 +53,7 @@ Run `makejs -t` to list all possible targets.
 * localization now in separate files
 * updates translations
 * updates [jQuery](http://jquery.com) to 1.8.0
+* updates [HTML5 ★ Boilerplate](http://html5boilerplate.com) to 4.0.0
 
 
 ### v0.21 - *2012-08-06*

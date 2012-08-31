@@ -1,21 +1,11 @@
 
-@import "lib/h5bp-norm";
+@import "lib/h5bp-normalize";
+@import "lib/h5bp-main";
 @import "lib/mixins";
 @import "lib/sh/shCore";
 @import "lib/sh/shThemeDefault";
 
-html { overflow-y: auto; }
-::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
-::selection { background: #68A9FF; color: #fff; text-shadow: none; }
-
-body {
-	font-family: Ubuntu, sans-serif;
-	font-size: 13px;
-	color: #555;
-	background-color: #fff;
-	margin: 30px;
-}
-
+@import "inc/general";
 
 @import "inc/topbar";
 @import "inc/download";
@@ -40,16 +30,3 @@ body {
 @import "inc/responsive";
 
 @import "inc/h5ai-info";
-
-
-html.js .hideOnJs, html.no-js .hideOnNoJs {
-	display: none;
-}
-html.oldie {
-	.oldBrowser {
-		display: inline !important;
-	}
-	#tree {
-		display: none !important;
-	}
-}
