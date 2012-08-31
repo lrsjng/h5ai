@@ -1,30 +1,21 @@
 |<?php
 |	header("Content-type: text/html;h5ai={{version}}");
-|	
 |	$h5ai_php = str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php";
-|	
 |	if (!file_exists($h5ai_php)) {
-|		
 |		function find_h5ai($path, $h5ai) {
-|			
 |			if (file_exists($path . $h5ai)) {
 |				return $path . $h5ai;
 |			}
-|			
 |			$parent = str_replace("\\", "/", dirname($path));
 |			if ($parent !== $path) {
 |				return find_h5ai($parent, $h5ai);
 |			}
-|			
 |			error_log("h5ai not found: " . __FILE__);
 |		}
-|		
 |		$h5ai_php = find_h5ai(str_replace("\\", "/", dirname(__FILE__)), "/_h5ai/php/inc/H5ai.php");
 |	}
-|	
 |	require_once($h5ai_php);
 |	$h5ai = new H5ai(__FILE__);
-|	
 |	$h5aiAbsHref = $h5ai->getH5aiAbsHref();
 |	$isHeadRequest = stripos($_SERVER["REQUEST_METHOD"], "HEAD");
 |?>
