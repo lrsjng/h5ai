@@ -52,6 +52,7 @@ Run `makejs -t` to list all possible targets.
 * temp download packages are now stored in the `_h5ai/cache` and deleted as soon as possible
 * localization now in separate files
 * updates translations
+* adds `he` translation by [Tomer Cohen](https://github.com/tomer)
 * updates [jQuery](http://jquery.com) to 1.8.0
 * updates [HTML5 ★ Boilerplate](http://html5boilerplate.com) to 4.0.0
 
