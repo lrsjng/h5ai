@@ -399,6 +399,7 @@ var H5AI_CONFIG = {
 		"el": "ελληνικά",
 		"es": "español",
 		"fr": "français",
+		"he": "עברית",
 		"hu": "magyar",
 		"it": "italiano",
 		"ja": "日本語",

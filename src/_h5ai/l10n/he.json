@@ -1,4 +1,3 @@
-/* only here as a reference, these values are the hardcoded defaults */
 {
 	"lang": "עברית",
 	"details": "פרטים",
@@ -12,7 +11,7 @@
 	"files": "קבצים",
 	"download": "הורדה",
 	"noMatch": "אין תוצאות",
-	"dateFormat": "DD.MM.YYYY HH:mm", /* syntax as specified on http://momentjs.com */
+	"dateFormat": "DD.MM.YYYY HH:mm",
 	"filter": "סינון",
 	"delete": "מחיקה"
 }
