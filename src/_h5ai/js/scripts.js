@@ -6,13 +6,13 @@
 
 // other libs
 // ----------
-// @include "lib/underscore-1.3.3.js"
-// @include "lib/amplify-1.1.0.min.js"
-// @include "lib/modulejs-0.2.js"
-// @include "lib/moment-1.7.0.js"
-// @include "lib/json2-2011.10.19.js"
+// @include "lib/underscore-*.js"
+// @include "lib/amplify-*.min.js"
+// @include "lib/modulejs-*.js"
+// @include "lib/moment-*.js"
+// @include "lib/json2-*.js"
 // @include "lib/base64.js"
-// @include "lib/spin-1.2.5.min.js"
+// @include "lib/spin-*.min.js"
 
 // h5ai
 // ----

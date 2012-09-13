@@ -22,9 +22,9 @@ It profits from these great projects:
 [Modernizr](http://www.modernizr.com)&#160;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&#160;(MIT),
 [Moment.js](http://momentjs.com)&#160;(MIT),
+[spin.js](http://fgnass.github.com/spin.js/)&#160;(MIT),
 [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&#160;(MIT/GPL),
 [Underscore.js](http://underscorejs.org)&#160;(MIT)
-
 
 ## Build
 
