@@ -3,10 +3,8 @@ modulejs.define('ext/piwik-analytics', ['_', 'core/settings'], function (_, alls
 
 	var defaults = {
 			enabled: false,
-			piwik: {
-				"baseURL": "not-set",
-				"idSite": 0
-			}
+			"baseURL": "not-set",
+			"idSite": 0
 		},
 
 		template = function(baseURL, idSite) {
@@ -33,7 +31,7 @@ modulejs.define('ext/piwik-analytics', ['_', 'core/settings'], function (_, alls
 
 			var $body = $('body');
 
-			body.append(template(settings.baseURL, settings.idSite));
+			$body.append(template(settings.baseURL, settings.idSite));
 		};
 
 	init();
