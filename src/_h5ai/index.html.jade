@@ -8,7 +8,7 @@ html.no-js( lang="en" )
 	head
 		meta( charset="utf-8" )
 		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
-		title h5ai {{version}} server details
+		title {{pkg.name}} {{pkg.version}} server details
 		meta( name="description", content="h5ai server details" )
 		meta( name="viewport", content="width=device-width" )
 		link( rel="shortcut icon", type="image/png", href="images/h5ai-16x16.png" )
@@ -19,8 +19,8 @@ html.no-js( lang="en" )
 
 	body#h5ai-info
 
-		h1 h5ai
-		span.build-version version {{version}}
+		h1 {{pkg.name}}
+		span.build-version version {{pkg.version}}
 		span.build-stamp {{stamp}}
 
 		h2 server supports
@@ -68,7 +68,7 @@ html.no-js( lang="en" )
 
 		div#bottombar.clearfix
 			span.left
-				a#h5ai-reference( href="http://larsjung.de/h5ai", title="h5ai project page" ) h5ai {{version}}
+				a#h5ai-reference( href="http://larsjung.de/h5ai", title="h5ai project page" ) {{pkg.name}} {{pkg.version}}
 				span.hideOnJs.noJsMsg ⚡ JavaScript is disabled! ⚡
 				span.oldBrowser
 					| ⚡ Some features disabled! Works best in 

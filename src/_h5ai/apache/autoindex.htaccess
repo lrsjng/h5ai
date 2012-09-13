@@ -1,5 +1,5 @@
 ################################
-# h5ai {{version}}
+# {{pkg.name}} {{pkg.version}}
 # customized .htaccess
 ################################
 
@@ -19,5 +19,5 @@ IndexOptions  NameWidth=*
 IndexOptions  SuppressDescription
 IndexOptions  SuppressHTMLPreamble
 IndexOptions  SuppressRules
-IndexOptions  Type=text/html;h5ai={{version}}
+IndexOptions  Type=text/html;h5ai={{pkg.version}}
 IndexOptions  XHTML

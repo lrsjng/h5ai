@@ -1,5 +1,5 @@
 /*
-h5ai {{version}}
+{{pkg.name}} {{pkg.version}}
 
 Configuration
 options, types and localization
