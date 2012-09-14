@@ -195,10 +195,11 @@ var H5AI_CONFIG = {
 
 		/* [all]
 		Adds Piwik tracker javascript code.
+		baseURL without protocol
 		*/
 		"piwik-analytics": {
 			"enabled": false,
-			"baseURL": "mydomain.tld/piwik", /* no protocol */
+			"baseURL": "mydomain.tld/piwik",
 			"idSite": 1
 		},
 

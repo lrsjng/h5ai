@@ -53,8 +53,7 @@ Run `makejs -t` to list all possible targets.
 * localization now in separate files
 * updates translations
 * adds `he` translation by [Tomer Cohen](https://github.com/tomer)
-* updates [jQuery](http://jquery.com) to 1.8.0
-* updates [HTML5 ★ Boilerplate](http://html5boilerplate.com) to 4.0.0
+* updates 3rd party libs
 
 
 ### v0.21 - *2012-08-06*
