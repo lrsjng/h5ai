@@ -2,13 +2,21 @@
 modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 
 	var reParseSize = /^\s*([\.\d]+)\s*([kmgt]?)b?\s*$/i,
-		treshhold = 1000.0,
-		kilo = 1000.0,
-		sizeUnits = ['B', 'KB', 'MB', 'GB', 'TB'],
+		decimalMetric = {
+			t: 1000.0,
+			k: 1000.0,
+			u: ['B', 'KB', 'MB', 'GB', 'TB']
+		},
+		binaryMetric = {
+			t: 1024.0,
+			k: 1024.0,
+			u: ['B', 'KiB', 'MiB', 'GiB', 'TiB']
+		},
 
 		parseSize = function (str) {
 
 			var match = reParseSize.exec(str),
+				kilo = decimalMetric.k,
 				val, unit;
 
 			if (!match) {
@@ -29,20 +37,35 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 			return val;
 		},
 
-		formatSize = function (size) {
+		defaultMetric = decimalMetric,
+
+		setDefaultMetric = function (metric) {
+
+			if (!metric) {
+				defaultMetric = decimalMetric;
+			} else if (metric === true) {
+				defaultMetric = binaryMetric;
+			} else {
+				defaultMetric = metric;
+			}
+		},
+
+		formatSize = function (size, metric) {
+
+			metric = metric || defaultMetric;
 
 			if (!_.isNumber(size) || size < 0) {
 				return '';
 			}
 
 			var i = 0,
-				maxI = sizeUnits.length - 1;
+				maxI = metric.u.length - 1;
 
-			while (size >= treshhold && i < maxI) {
-				size /= kilo;
+			while (size >= metric.t && i < maxI) {
+				size /= metric.k;
 				i += 1;
 			}
-			return (i <= 1 ? Math.round(size) : size.toFixed(1)).toString() + ' ' + sizeUnits[i];
+			return (i <= 1 ? Math.round(size) : size.toFixed(1)).toString() + ' ' + metric.u[i];
 		},
 
 		defaultDateFormat = 'YYYY-MM-DD HH:mm',
@@ -72,6 +95,7 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 
 	return {
 		parseSize: parseSize,
+		setDefaultMetric: setDefaultMetric,
 		formatSize: formatSize,
 		setDefaultDateFormat: setDefaultDateFormat,
 		parseDate: parseDate,

@@ -3,7 +3,8 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 
 	var defaults = {
 			modes: ['details', 'icons'],
-			setParentFolderLabels: false
+			setParentFolderLabels: false,
+			binaryPrefix: false
 		},
 
 		settings = _.extend({}, defaults, allsettings.view),
@@ -102,6 +103,8 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			var $extended = $('#extended'),
 				$ul = $(listTemplate),
 				$emtpy = $(emptyTemplate);
+
+			format.setDefaultMetric(settings.binaryUnits);
 
 			if (entry.parent) {
 				$ul.append(update(entry.parent));

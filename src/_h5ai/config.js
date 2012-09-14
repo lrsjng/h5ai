@@ -38,10 +38,13 @@ var H5AI_CONFIG = {
 		so that it will be persistent.
 
 		Set parent folder labels to real folder names.
+		Binary prefix set to true uses 1024B=1KiB when formatting
+		file sizes (see http://en.wikipedia.org/wiki/Binary_prefix).
 		*/
 		"view": {
 			"modes": ["details", "icons"],
-			"setParentFolderLabels": true
+			"setParentFolderLabels": true,
+			"binaryPrefix": false
 		},
 
 
