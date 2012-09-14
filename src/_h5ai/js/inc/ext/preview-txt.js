@@ -205,6 +205,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
 				onNext();
 			}
+
+			event.stopImmediatePropagation();
+			return false;
 		},
 
 		initEntry = function (entry) {
@@ -240,7 +243,6 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			$('#pv-txt-bar-prev').on('click', onPrevious);
 			$('#pv-txt-bar-next').on('click', onNext);
 			$('#pv-txt-bar-close, #pv-txt-close').on('click', onExit);
-			$('#pv-txt-overlay').on('keydown', onKeydown);
 
 			$('#pv-txt-close')
 				.on('mouseenter', function () {
@@ -252,9 +254,11 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 
 			$('#pv-txt-overlay')
+				.on('keydown', onKeydown)
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
-					event.stopPropagation();
+					event.stopImmediatePropagation();
+					return false;
 				});
 
 			event.sub('entry.created', function (entry) {

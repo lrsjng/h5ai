@@ -104,7 +104,7 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 				$ul = $(listTemplate),
 				$emtpy = $(emptyTemplate);
 
-			format.setDefaultMetric(settings.binaryUnits);
+			format.setDefaultMetric(settings.binaryPrefix);
 
 			if (entry.parent) {
 				$ul.append(update(entry.parent));

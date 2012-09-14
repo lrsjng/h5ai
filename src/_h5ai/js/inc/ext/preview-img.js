@@ -198,6 +198,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			} else if (key === 70) { // f
 				onFullscreen();
 			}
+
+			event.stopImmediatePropagation();
+			return false;
 		},
 
 		initEntry = function (entry) {
@@ -234,7 +237,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			$('#pv-img-bar-next, #pv-img-next').on('click', onNext);
 			$('#pv-img-bar-close, #pv-img-close').on('click', onExit);
 			$('#pv-img-bar-fullscreen').on('click', onFullscreen);
-			$('#pv-img-overlay').on('keydown', onKeydown);
 
 			$('#pv-img-prev')
 				.on('mouseenter', function () {
@@ -260,11 +262,12 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 					$('#pv-img-bar-close').removeClass('hover');
 				});
 
-
 			$('#pv-img-overlay')
+				.on('keydown', onKeydown)
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
-					event.stopPropagation();
+					event.stopImmediatePropagation();
+					return false;
 				})
 				.on('mousemove', function (event) {
 

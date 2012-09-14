@@ -121,6 +121,23 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 					checkState(false);
 				})
 				.on('keyup', update);
+
+			$(document)
+				.on('keydown', function (event) {
+
+					if (event.which === 27) {
+						$input.attr('value','').blur();
+						checkState(false);
+					}
+				})
+				.on('keypress', function (event) {
+
+					$input.focus();
+				})
+				.on('keyup', function (event) {
+
+					checkState(false);
+				});
 		};
 
 	init();
