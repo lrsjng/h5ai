@@ -1,5 +1,6 @@
 /*
 {{pkg.name}} {{pkg.version}}
+{{pkg.url}}
 
 Configuration
 options, types and localization
