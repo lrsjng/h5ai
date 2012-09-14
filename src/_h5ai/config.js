@@ -194,6 +194,15 @@ var H5AI_CONFIG = {
 		},
 
 		/* [all]
+		Adds Piwik tracker javascript code.
+		*/
+		"piwik-analytics": {
+			"enabled": false,
+			"baseURL": "mydomain.tld/piwik", /* no protocol */
+			"idSite": 1
+		},
+
+		/* [all]
 		Show an image preview on click.
 		*/
 		"preview-img": {
