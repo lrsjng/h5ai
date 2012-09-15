@@ -31,9 +31,9 @@ var H5AI_CONFIG = {
 
 		/*
 		An array of view modes the user may choose from. Currently there
-		are two possible values: "details" and "icons". The first value
-		indicates the default view mode. If only one value is given the
-		view mode is fixed and the selector buttons are hidden.
+		are two possible values: "details", "icons", "grid", and "list".
+		The first value indicates the default view mode. If only one value
+		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
 
