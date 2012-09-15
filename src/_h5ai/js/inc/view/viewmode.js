@@ -2,7 +2,7 @@
 modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store'], function (_, $, allsettings, resource, store) {
 
 	var defaults = {
-			modes: ['details', 'list', 'icons'],
+			modes: ['details', 'list', 'grid', 'icons'],
 			setParentFolderLabels: false
 		},
 

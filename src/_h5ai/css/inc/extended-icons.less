@@ -1,0 +1,48 @@
+
+#extended.view-icons {
+	padding: 3px;
+
+	li {
+
+		&.entry {
+			float: left;
+
+			a, a:active, a:visited {
+				margin: 8px;
+				padding: 8px;
+				width: 100px;
+				height: 120px;
+				float: left;
+				border-radius: 5px;
+				border: 2px solid rgba(0,0,0,0);
+				text-align: center;
+
+				&:hover, &.hover {
+					border-color: #eee;
+				}
+			}
+		}
+
+		.icon.big {
+			display: block;
+			height: 48px;
+			margin-bottom: 6px;
+		}
+
+		.label {
+			text-align: center;
+			word-wrap: break-word;
+			white-space: normal;
+		}
+
+		.date, .size {
+			display: none;
+		}
+	}
+
+	.empty, .no-match {
+		margin: 0 120px;
+		padding: 16px;
+		height: 120px;
+	}
+}

@@ -1,0 +1,47 @@
+
+#extended.view-details {
+
+	li {
+		white-space: nowrap;
+		clear: both;
+
+		&.header {
+			display: list-item;
+		}
+
+		&.entry {
+
+			a, a:active, a:visited {
+				border-bottom: 1px solid #e8e8e8;
+			}
+		}
+
+		.icon, .label, .date, .size {
+			padding: 6px;
+		}
+
+		.icon.small {
+			display: inline-block;
+			position: absolute;
+			left: 0;
+			top: -2px;
+			width: 16px;
+		}
+
+		.label {
+			margin: 0 270px 0 24px;
+		}
+
+		.date {
+			position: absolute;
+			right: 100px;
+			top: 0;
+		}
+
+		.size {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+}

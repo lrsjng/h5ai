@@ -10,6 +10,8 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 		defaultTranslations = {
 			lang: 'english',
 			details: 'details',
+			list: "list",
+			grid: "grid",
 			icons: 'icons',
 			name: 'Name',
 			lastModified: 'Last modified',

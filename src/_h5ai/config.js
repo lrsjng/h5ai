@@ -42,7 +42,7 @@ var H5AI_CONFIG = {
 		file sizes (see http://en.wikipedia.org/wiki/Binary_prefix).
 		*/
 		"view": {
-			"modes": ["details", "icons"],
+			"modes": ["details", "list", "grid", "icons"],
 			"setParentFolderLabels": true,
 			"binaryPrefix": false
 		},

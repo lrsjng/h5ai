@@ -2,6 +2,8 @@
 {
 	"lang": "english",
 	"details": "details",
+	"list": "list",
+	"grid": "grid",
 	"icons": "icons",
 	"name": "Name",
 	"lastModified": "Last modified",

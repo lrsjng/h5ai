@@ -1,0 +1,44 @@
+
+#extended.view-grid {
+	padding: 3px;
+
+	li {
+
+		&.entry {
+			float: left;
+
+			a, a:active, a:visited {
+				margin: 2px;
+				padding: 8px;
+				width: 164px;
+				height: 24px;
+				float: left;
+				border-radius: 5px;
+				border: 2px solid rgba(0,0,0,0);
+				white-space: nowrap;
+
+				&:hover, &.hover {
+					border-color: #eee;
+				}
+			}
+		}
+
+		.icon.small {
+			display: inline-block;
+			position: relative;
+			left: 0;
+			top: -2px;
+			width: 16px;
+		}
+
+		.label {
+			display: inline-block;
+			padding-left: 6px;
+			max-width: 140px;
+		}
+
+		.date, .size {
+			display: none;
+		}
+	}
+}
