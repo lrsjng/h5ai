@@ -333,6 +333,7 @@ var H5AI_CONFIG = {
 
 	"types": {
 		"archive":			[".tar.bz2", ".tar.gz", ".tgz"],
+		"apk":				[".apk"],
 		"audio":			[".aif", ".flac", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
 		"authors":			["authors"],
 		"bin":				[".class", ".o", ".so"],
@@ -340,7 +341,7 @@ var H5AI_CONFIG = {
 		"bmp":				[".bmp"],
 		"c":				[".c"],
 		"calc":				[".ods", ".ots", ".xlr", ".xls", ".xlsx"],
-		"cd":				[".cue", ".iso"],
+		"cd":				[".cue", ".iso", ".mdf", ".mds", ".mdx", ".ccd"],
 		"copying":			["copying", "license"],
 		"cpp":				[".cpp"],
 		"css":				[".css", ".less"],
@@ -394,7 +395,7 @@ var H5AI_CONFIG = {
 		"tiff":				[".tiff"],
 		"unknown":			[],
 		"vcal":				[".vcal"],
-		"video":			[".avi", ".flv", ".mkv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
+		"video":			[".avi", ".flv", ".mkv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv", ".3gp"],
 		"xml":				[".xml"],
 		"zip":				[".7z", ".bz2", ".jar", ".lzma", ".war", ".z", ".Z", ".zip"]
 	},
