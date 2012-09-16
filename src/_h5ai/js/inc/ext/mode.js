@@ -1,12 +1,10 @@
 
 modulejs.define('ext/mode', ['_', '$', 'core/mode', 'core/settings'], function (_, $, mode, allsettings) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			display: 0
-		},
-
-		settings = _.extend({}, defaults, allsettings.mode),
+		}, allsettings.mode),
 
 		init = function () {
 

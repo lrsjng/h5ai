@@ -1,14 +1,10 @@
 
 modulejs.define('ext/folderstatus', ['_', 'core/settings'], function (_, allsettings) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			folders: {}
-		},
+		}, allsettings.folderstatus);
 
-		settings = _.extend({}, defaults, allsettings.folderstatus),
-
-		folders = settings.enabled ? settings.folders : defaults.folders;
-
-	return folders;
+	return settings.enabled ? settings.folders : {};
 });

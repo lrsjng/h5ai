@@ -1,12 +1,10 @@
 
 modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/entry'], function (_, $, allsettings, resource, store, event, entry) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			types: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff']
-		},
-
-		settings = _.extend({}, defaults, allsettings['preview-img']),
+		}, allsettings['preview-img']),
 
 		template = '<div id="pv-img-overlay" class="noSelection">' +
 						'<div id="pv-img-content">' +
@@ -139,7 +137,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 					$img.attr('src', src).fadeIn(200);
 
-					// small timeout, so $img is visible and therefor $img.width is available
+					// small timeout, so $img is visible and therefore $img.width is available
 					setTimeout(function () {
 						adjustSize();
 						$('#pv-img-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
@@ -199,8 +197,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				onFullscreen();
 			}
 
+			event.preventDefault();
 			event.stopImmediatePropagation();
-			return false;
 		},
 
 		initEntry = function (entry) {
@@ -227,10 +225,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				return;
 			}
 
-			_.each(entry.content, function (e) {
-
-				initEntry(e);
-			});
+			_.each(entry.content, initEntry);
 
 			$(template).appendTo('body');
 			$('#pv-img-bar-prev, #pv-img-prev').on('click', onPrevious);
@@ -264,11 +259,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			$('#pv-img-overlay')
 				.on('keydown', onKeydown)
-				.on('click mousedown mousemove keydown keypress', function (event) {
-
-					event.stopImmediatePropagation();
-					return false;
-				})
 				.on('mousemove', function (event) {
 
 					if (isFullscreen) {
@@ -280,12 +270,13 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 							$('#pv-img-bottombar').fadeOut(400);
 						}
 					}
+				})
+				.on('click mousedown mousemove keydown keypress', function (event) {
+
+					event.stopImmediatePropagation();
 				});
 
-			event.sub('entry.created', function (entry) {
-
-				initEntry(entry);
-			});
+			event.sub('entry.created', initEntry);
 
 			$(window).on('resize load', adjustSize);
 		};

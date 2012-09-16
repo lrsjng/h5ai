@@ -1,13 +1,11 @@
 
 modulejs.define('ext/piwik-analytics', ['_', '$', 'core/settings'], function (_, $, allsettings) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			baseURL: 'not-set',
 			idSite: 0
-		},
-
-		settings = _.extend({}, defaults, allsettings['piwik-analytics']),
+		}, allsettings['piwik-analytics']),
 
 		init = function () {
 

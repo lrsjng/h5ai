@@ -1,11 +1,9 @@
 
 modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/event', 'core/resource', 'core/refresh'], function (_, $, allsettings, entry, event, resource, refresh) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings['delete']),
+		}, allsettings['delete']),
 
 		deleteBtnTemplate = '<li id="delete">' +
 									'<a href="#">' +

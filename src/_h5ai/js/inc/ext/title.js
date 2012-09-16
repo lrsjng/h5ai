@@ -1,11 +1,9 @@
 
 modulejs.define('ext/title', ['_', 'core/settings', 'core/entry'], function (_, allsettings, entry) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings.title),
+		}, allsettings.title),
 
 		init = function (entry) {
 

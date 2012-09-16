@@ -1,15 +1,13 @@
 
 modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/event', 'core/ajax'], function (_, allsettings, entry, event, ajax) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff'],
 			mov: ['video'],
 			doc: ['pdf', 'ps'],
 			delay: 1000
-		},
-
-		settings = _.extend({}, defaults, allsettings.thumbnails),
+		}, allsettings.thumbnails),
 
 		checkEntry = function (entry) {
 

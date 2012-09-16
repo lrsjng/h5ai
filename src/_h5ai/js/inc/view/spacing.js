@@ -1,15 +1,13 @@
 
 modulejs.define('view/spacing', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
-	var defaults = {
+	var settings = _.extend({
 			maxWidth: 960,
 			top: 50,
 			right: "auto",
 			bottom: 50,
 			left: "auto"
-		},
-
-		settings = _.extend({}, defaults, allsettings.spacing),
+		}, allsettings.spacing),
 
 		adjustSpacing = function () {
 

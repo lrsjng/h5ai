@@ -1,11 +1,9 @@
 
 modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings.select),
+		}, allsettings.select),
 
 		x = 0, y = 0,
 		l = 0, t = 0, w = 0, h = 0,

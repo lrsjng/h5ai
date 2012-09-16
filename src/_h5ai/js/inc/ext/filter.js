@@ -1,11 +1,9 @@
 
 modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], function (_, $, allsettings, resource) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings.filter),
+		}, allsettings.filter),
 
 		template = '<li id="filter">' +
 						'<span class="element">' +
@@ -47,17 +45,6 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 			$(noMatch).fadeOut(duration);
 		},
 
-		checkState = function (focus) {
-
-			var val = $input.val();
-
-			if (val || focus) {
-				$filter.addClass('current');
-			} else {
-				$filter.removeClass('current');
-			}
-		},
-
 		escapeRegExp = function (sequence) {
 
 			return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
@@ -75,8 +62,6 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 
 					return escapeRegExp(char);
 				}).join('.*?');
-
-				// return escapeRegExp(part);
 			}).join('|');
 
 			return new RegExp(sequence, 'i');
@@ -88,10 +73,11 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 
 			if (val) {
 				filter(parseFilterSequence(val));
+				$filter.addClass('current');
 			} else {
 				filter();
+				$filter.removeClass('current');
 			}
-			checkState($input.is(':focus'));
 		},
 
 		init = function () {
@@ -100,7 +86,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 				return;
 			}
 
-			$filter = $(template);
+			$filter = $(template).appendTo('#navbar');
 			$input = $filter.find('input');
 			$noMatch = $(noMatchTemplate).appendTo('#extended');
 
@@ -108,35 +94,25 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 				.on('click', function () {
 
 					$input.focus();
-				})
-				.appendTo('#navbar');
+				});
 
 			$input
 				.on('focus', function () {
 
-					checkState(true);
+					$filter.addClass('current');
 				})
-				.on('blur', function () {
-
-					checkState(false);
-				})
-				.on('keyup', update);
+				.on('blur keyup', update);
 
 			$(document)
 				.on('keydown', function (event) {
 
 					if (event.which === 27) {
 						$input.attr('value','').blur();
-						checkState(false);
 					}
 				})
 				.on('keypress', function (event) {
 
 					$input.focus();
-				})
-				.on('keyup', function (event) {
-
-					checkState(false);
 				});
 		};
 

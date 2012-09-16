@@ -1,12 +1,10 @@
 
 modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/store'], function (_, $, allsettings, resource, event, store) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			order: 'na'
-		},
-
-		settings = _.extend({}, defaults, allsettings.sort),
+		}, allsettings.sort),
 
 		storekey = 'h5ai.sortorder',
 

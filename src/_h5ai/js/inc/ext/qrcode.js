@@ -1,12 +1,10 @@
 
 modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/event'], function (_, $, modernizr, allsettings, event) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			size: 150
-		},
-
-		settings = _.extend({}, defaults, allsettings.qrcode),
+		}, allsettings.qrcode),
 
 		template = '<div id="qrcode"/>',
 

@@ -1,11 +1,11 @@
 
 modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function (_, $, allsettings, langs, format, store, event) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: true,
 			lang: 'en',
 			useBrowserLang: true
-		},
+		}, allsettings.l10n),
 
 		defaultTranslations = {
 			lang: 'english',
@@ -25,8 +25,6 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			dateFormat: 'YYYY-MM-DD HH:mm',
 			filter: 'filter'
 		},
-
-		settings = _.extend({}, defaults, allsettings.l10n),
 
 		template = '<span id="langSelector">' +
 						'<span class="lang">en</span> - <span class="l10n-lang">english</span>' +

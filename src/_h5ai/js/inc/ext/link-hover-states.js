@@ -1,11 +1,9 @@
 
 modulejs.define('ext/link-hover-states', ['_', '$', 'core/settings'], function (_, $, allsettings) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings['link-hover-states']),
+		}, allsettings['link-hover-states']),
 
 		selector = "a[href^='/']",
 

@@ -1,11 +1,9 @@
 
 modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, format, event, entry) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings.statusbar),
+		}, allsettings.statusbar),
 
 		template = '<span class="statusbar">' +
 						'<span class="status default">' +

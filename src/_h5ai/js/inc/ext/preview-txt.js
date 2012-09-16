@@ -1,7 +1,7 @@
 
 modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/entry'], function (_, $, allsettings, resource, store, event, entry) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			types: {
 				authors: 'plain',
@@ -26,9 +26,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				js: 'js',
 				xml: 'xml'
 			}
-		},
-
-		settings = _.extend({}, defaults, allsettings['preview-txt']),
+		}, allsettings['preview-txt']),
 
 		template = '<div id="pv-txt-overlay" class="noSelection">' +
 						'<div id="pv-txt-close"/>' +
@@ -206,8 +204,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				onNext();
 			}
 
+			event.preventDefault();
 			event.stopImmediatePropagation();
-			return false;
 		},
 
 		initEntry = function (entry) {
@@ -234,10 +232,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				return;
 			}
 
-			_.each(entry.content, function (e) {
-
-				initEntry(e);
-			});
+			_.each(entry.content, initEntry);
 
 			$(template).appendTo('body');
 			$('#pv-txt-bar-prev').on('click', onPrevious);
@@ -258,13 +253,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
 					event.stopImmediatePropagation();
-					return false;
 				});
 
-			event.sub('entry.created', function (entry) {
-
-				initEntry(entry);
-			});
+			event.sub('entry.created', initEntry);
 
 			$(window).on('resize load', adjustSize);
 		};

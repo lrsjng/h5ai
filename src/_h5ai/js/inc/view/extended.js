@@ -1,13 +1,11 @@
 
 modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, resource, format, event, entry) {
 
-	var defaults = {
+	var settings = _.extend({
 			modes: ['details', 'icons'],
 			setParentFolderLabels: false,
 			binaryPrefix: false
-		},
-
-		settings = _.extend({}, defaults, allsettings.view),
+		}, allsettings.view),
 
 		template = '<li class="entry">' +
 						'<a>' +

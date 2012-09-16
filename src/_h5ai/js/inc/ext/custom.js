@@ -1,13 +1,11 @@
 
 modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/ajax'], function (_, $, allsettings, ajax) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			header: '_h5ai.header.html',
 			footer: '_h5ai.footer.html'
-		},
-
-		settings = _.extend({}, defaults, allsettings.custom),
+		}, allsettings.custom),
 
 		init = function () {
 

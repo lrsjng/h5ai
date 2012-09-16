@@ -1,11 +1,9 @@
 
 modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry'], function (_, $, allsettings, resource, event, entry) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false
-		},
-
-		settings = _.extend({}, defaults, allsettings.crumb),
+		}, allsettings.crumb),
 
 		template = '<li class="crumb">' +
 						'<a>' +

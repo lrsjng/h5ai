@@ -1,15 +1,13 @@
 
 modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/resource', 'core/refresh'], function (_, $, allsettings, entry, resource, refresh) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			maxfiles: 5,
 			maxfilesize: 20
-		},
+		}, allsettings.dropbox),
 
-		settings = _.extend({}, defaults, allsettings.dropbox),
-
-		template = '<ul id="uploads" />',
+		template = '<ul id="uploads"/>',
 
 		uploadTemplate = '<li class="upload clearfix">' +
 							'<span class="name"/>' +

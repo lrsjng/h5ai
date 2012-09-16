@@ -1,12 +1,10 @@
 
 modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry', 'core/parser'], function (_, $, allsettings, resource, event, entry, parser) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			slide: true
-		},
-
-		settings = _.extend({}, defaults, allsettings.tree),
+		}, allsettings.tree),
 
 		template = '<div class="entry">' +
 						'<span class="indicator none">' +

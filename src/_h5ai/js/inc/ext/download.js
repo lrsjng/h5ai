@@ -1,13 +1,11 @@
 
 modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/ajax'], function (_, $, allsettings, resource, event, ajax) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			execution: 'php',
 			format: 'zip'
-		},
-
-		settings = _.extend({}, defaults, allsettings.download),
+		}, allsettings.download),
 
 		// formats = ['tar', 'zip'],
 

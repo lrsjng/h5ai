@@ -1,12 +1,10 @@
 
 modulejs.define('ext/google-analytics', ['_', 'core/settings'], function (_, allsettings) {
 
-	var defaults = {
+	var settings = _.extend({
 			enabled: false,
 			gaq: []
-		},
-
-		settings = _.extend({}, defaults, allsettings['google-analytics']),
+		}, allsettings['google-analytics']),
 
 		init = function () {
 
