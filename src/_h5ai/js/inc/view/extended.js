@@ -11,23 +11,23 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 
 		template = '<li class="entry">' +
 						'<a>' +
-							'<span class="icon small"><img /></span>' +
-							'<span class="icon big"><img /></span>' +
-							'<span class="label" />' +
-							'<span class="date" />' +
-							'<span class="size" />' +
+							'<span class="icon small"><img/></span>' +
+							'<span class="icon big"><img/></span>' +
+							'<span class="label"/>' +
+							'<span class="date"/>' +
+							'<span class="size"/>' +
 						'</a>' +
 					'</li>',
-		hintTemplate = '<span class="hint"></span>',
+		hintTemplate = '<span class="hint"/>',
 		listTemplate = '<ul>' +
 							'<li class="header">' +
-								'<a class="icon"></a>' +
+								'<a class="icon"/>' +
 								'<a class="label" href="#"><span class="l10n-name"></span></a>' +
 								'<a class="date" href="#"><span class="l10n-lastModified"></span></a>' +
 								'<a class="size" href="#"><span class="l10n-size"></span></a>' +
 							'</li>' +
 						'</ul>',
-		emptyTemplate = '<div class="empty l10n-empty">empty</div>',
+		emptyTemplate = '<div class="empty l10n-empty"/>',
 
 		// updates this single entry
 		update = function (entry, force) {

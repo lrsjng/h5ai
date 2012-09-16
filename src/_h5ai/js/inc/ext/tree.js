@@ -10,14 +10,14 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 		template = '<div class="entry">' +
 						'<span class="indicator none">' +
-							'<img src="' + resource.image('tree') + '" />' +
+							'<img src="' + resource.image('tree') + '"/>' +
 						'</span>' +
 						'<a>' +
-							'<span class="icon"><img /></span>' +
-							'<span class="label"></span>' +
+							'<span class="icon"><img/></span>' +
+							'<span class="label"/>' +
 						'</a>' +
 					'</span>',
-		statusHintTemplate = '<span class="hint"></span>',
+		statusHintTemplate = '<span class="hint"/>',
 
 		// updates the tree for this single entry
 		update = function (entry) {

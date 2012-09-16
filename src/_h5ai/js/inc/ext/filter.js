@@ -9,11 +9,11 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 
 		template = '<li id="filter">' +
 						'<span class="element">' +
-							'<img src="' + resource.image('filter') + '" alt="filter" />' +
-							'<input type="text" value="" placeholder="filter" />' +
+							'<img src="' + resource.image('filter') + '" alt="filter"/>' +
+							'<input type="text" value="" placeholder="filter"/>' +
 						'</span>' +
 					'</li>',
-		noMatchTemplate = '<div class="no-match l10n-noMatch">no match</div>',
+		noMatchTemplate = '<div class="no-match l10n-noMatch"/>',
 
 		$filter, $input, $noMatch,
 

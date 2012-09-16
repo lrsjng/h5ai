@@ -8,7 +8,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
 		settings = _.extend({}, defaults, allsettings.qrcode),
 
-		template = '<div id="qrcode"></div>',
+		template = '<div id="qrcode"/>',
 
 		$qrcode, hideTimeoutId,
 

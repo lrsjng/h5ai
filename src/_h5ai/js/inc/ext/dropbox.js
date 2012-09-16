@@ -12,9 +12,9 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 		template = '<ul id="uploads" />',
 
 		uploadTemplate = '<li class="upload clearfix">' +
-							'<span class="name"></span>' +
-							'<span class="size"></span>' +
-							'<div class="progress"><div class="bar"></div></div>' +
+							'<span class="name"/>' +
+							'<span class="size"/>' +
+							'<div class="progress"><div class="bar"/></div>' +
 						'</li>',
 
 		init = function () {

@@ -10,22 +10,22 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 		template = '<div id="pv-img-overlay" class="noSelection">' +
 						'<div id="pv-img-content">' +
-							'<img id="pv-img-image" />' +
+							'<img id="pv-img-image"/>' +
 						'</div>' +
-						'<div id="pv-img-close" />' +
-						'<div id="pv-img-prev" />' +
-						'<div id="pv-img-next" />' +
+						'<div id="pv-img-close"/>' +
+						'<div id="pv-img-prev"/>' +
+						'<div id="pv-img-next"/>' +
 						'<div id="pv-img-bottombar" class="clearfix">' +
 							'<ul id="pv-img-buttons">' +
-								'<li id="pv-img-bar-size" class="bar-left bar-label"></li>' +
-								'<li id="pv-img-bar-percent" class="bar-left bar-label"></li>' +
-								'<li id="pv-img-bar-label" class="bar-left bar-label"></li>' +
-								'<li id="pv-img-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '" /></li>' +
-								'<li id="pv-img-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '" /></a></li>' +
-								'<li id="pv-img-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '" /></li>' +
-								'<li id="pv-img-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '" /></li>' +
-								'<li id="pv-img-bar-idx" class="bar-right bar-label"></li>' +
-								'<li id="pv-img-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '" /></li>' +
+								'<li id="pv-img-bar-size" class="bar-left bar-label"/>' +
+								'<li id="pv-img-bar-percent" class="bar-left bar-label"/>' +
+								'<li id="pv-img-bar-label" class="bar-left bar-label"/>' +
+								'<li id="pv-img-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '"/></li>' +
+								'<li id="pv-img-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '"/></a></li>' +
+								'<li id="pv-img-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '"/></li>' +
+								'<li id="pv-img-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '"/></li>' +
+								'<li id="pv-img-bar-idx" class="bar-right bar-label"/>' +
+								'<li id="pv-img-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '"/></li>' +
 							'</ul>' +
 						'</div>' +
 					'</div>',

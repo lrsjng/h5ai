@@ -31,25 +31,25 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 		settings = _.extend({}, defaults, allsettings['preview-txt']),
 
 		template = '<div id="pv-txt-overlay" class="noSelection">' +
-						'<div id="pv-txt-close" />' +
+						'<div id="pv-txt-close"/>' +
 						'<div id="pv-txt-content">' +
-							'<div id="pv-txt-text" />' +
+							'<div id="pv-txt-text"/>' +
 						'</div>' +
 						'<div id="pv-txt-bottombar" class="clearfix">' +
 							'<ul id="pv-txt-buttons">' +
-								'<li id="pv-txt-bar-size" class="bar-left bar-label"></li>' +
-								'<li id="pv-txt-bar-label" class="bar-left bar-label"></li>' +
-								'<li id="pv-txt-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '" /></li>' +
-								'<li id="pv-txt-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '" /></a></li>' +
-								'<li id="pv-txt-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '" /></li>' +
-								'<li id="pv-txt-bar-idx" class="bar-right bar-label"></li>' +
-								'<li id="pv-txt-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '" /></li>' +
+								'<li id="pv-txt-bar-size" class="bar-left bar-label"/>' +
+								'<li id="pv-txt-bar-label" class="bar-left bar-label"/>' +
+								'<li id="pv-txt-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '"/></li>' +
+								'<li id="pv-txt-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '"/></a></li>' +
+								'<li id="pv-txt-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '"/></li>' +
+								'<li id="pv-txt-bar-idx" class="bar-right bar-label"/>' +
+								'<li id="pv-txt-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '"/></li>' +
 							'</ul>' +
 						'</div>' +
 					'</div>',
 
-		templateText = '<pre id="pv-txt-text" />',
-		templateMarkdown = '<div id="pv-txt-text" class="markdown" />',
+		templateText = '<pre id="pv-txt-text"/>',
+		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
 		currentEntries = [],
 		currentIdx = 0,

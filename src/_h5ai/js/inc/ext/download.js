@@ -13,13 +13,13 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 		downloadBtnTemplate = '<li id="download">' +
 									'<a href="#">' +
-										'<img src="' + resource.image('download') + '" alt="download" />' +
+										'<img src="' + resource.image('download') + '" alt="download"/>' +
 										'<span class="l10n-download">download</span>' +
 									'</a>' +
 								'</li>',
 		authTemplate = '<div id="download-auth">' +
-							'<input id="download-auth-user" type="text" value="" placeholder="user" />' +
-							'<input id="download-auth-password" type="text" value="" placeholder="password" />' +
+							'<input id="download-auth-user" type="text" value="" placeholder="user"/>' +
+							'<input id="download-auth-password" type="text" value="" placeholder="password"/>' +
 						'</div>',
 
 		selectedHrefsStr = '',

@@ -12,8 +12,8 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
 		template = '<li id="view-[MODE]" class="view">' +
 						'<a href="#">' +
-							'<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]" />' +
-							'<span class="l10n-[MODE]">[MODE]</span>' +
+							'<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]"/>' +
+							'<span class="l10n-[MODE]"/>' +
 						'</a>' +
 					'</li>',
 

@@ -30,9 +30,9 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 
 		template = '<span id="langSelector">' +
 						'<span class="lang">en</span> - <span class="l10n-lang">english</span>' +
-						'<span class="langOptions"> <ul /> </span>' +
+						'<span class="langOptions"><ul/></span>' +
 					'</span>',
-		langOptionTemplate = '<li class="langOption" />',
+		langOptionTemplate = '<li class="langOption"/>',
 
 		storekey = 'h5ai.language',
 

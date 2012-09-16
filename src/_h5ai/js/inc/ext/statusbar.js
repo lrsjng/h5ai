@@ -9,13 +9,13 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 
 		template = '<span class="statusbar">' +
 						'<span class="status default">' +
-							'<span class="folderTotal"></span> <span class="l10n-folders">folders</span>' +
-							'<span class="sep">·</span>' +
-							'<span class="fileTotal"></span> <span class="l10n-files">files</span>' +
+							'<span class="folderTotal"/> <span class="l10n-folders"/>' +
+							'<span class="sep"/>' +
+							'<span class="fileTotal"/> <span class="l10n-files"/>' +
 						'</span>' +
-						'<span class="status dynamic"></span>' +
+						'<span class="status dynamic"/>' +
 					'</span>',
-		sepTemplate = '<span class="sep">·</span>',
+		sepTemplate = '<span class="sep"/>',
 
 		$statusDynamic,
 		$statusDefault,

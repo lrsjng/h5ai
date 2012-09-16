@@ -11,7 +11,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 		l = 0, t = 0, w = 0, h = 0,
 		shrink = 1/3,
 		$document = $(document),
-		$selectionRect = $('<div id="selection-rect"></div>'),
+		$selectionRect = $('<div id="selection-rect"/>'),
 
 		publish = function () {
 

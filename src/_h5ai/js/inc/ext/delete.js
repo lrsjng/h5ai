@@ -9,13 +9,13 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 
 		deleteBtnTemplate = '<li id="delete">' +
 									'<a href="#">' +
-										'<img src="' + resource.image('delete') + '" alt="delete" />' +
+										'<img src="' + resource.image('delete') + '" alt="delete"/>' +
 										'<span class="l10n-delete">delete</span>' +
 									'</a>' +
 								'</li>',
 		authTemplate = '<div id="delete-auth">' +
-							'<input id="delete-auth-user" type="text" value="" placeholder="user" />' +
-							'<input id="delete-auth-password" type="text" value="" placeholder="password" />' +
+							'<input id="delete-auth-user" type="text" value="" placeholder="user"/>' +
+							'<input id="delete-auth-password" type="text" value="" placeholder="password"/>' +
 						'</div>',
 
 		selectedHrefsStr = '',

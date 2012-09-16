@@ -9,12 +9,12 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 
 		template = '<li class="crumb">' +
 						'<a>' +
-							'<img src="' + resource.image('crumb') + '" alt=">" />' +
-							'<span />' +
+							'<img src="' + resource.image('crumb') + '" alt=">"/>' +
+							'<span/>' +
 						'</a>' +
 					'</li>',
-		pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page" />',
-		statusHintTemplate = '<span class="hint"></span>',
+		pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page"/>',
+		statusHintTemplate = '<span class="hint"/>',
 
 		// updates the crumb for this single entry
 		update = function (entry, force) {
