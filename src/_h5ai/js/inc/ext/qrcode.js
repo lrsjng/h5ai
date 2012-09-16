@@ -8,13 +8,13 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
 		settings = _.extend({}, defaults, allsettings.qrcode),
 
-		template = '<div id="context"><div class="qrcode" /></div>',
+		template = '<div id="qrcode"></div>',
 
-		$context, hideTimeoutId,
+		$qrcode, hideTimeoutId,
 
 		update = function (entry) {
 
-			$context.find('.qrcode').empty().qrcode({
+			$qrcode.empty().qrcode({
 				render: modernizr.canvas ? 'canvas' : 'div',
 				width: settings.size,
 				height: settings.size,
@@ -28,7 +28,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 			if (!entry.isFolder()) {
 				update(entry);
 				clearTimeout(hideTimeoutId);
-				$context.stop(true, true).fadeIn(400);
+				$qrcode.stop(true, true).fadeIn(400);
 			}
 		},
 
@@ -36,7 +36,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
 			hideTimeoutId = setTimeout(function () {
 
-				$context.stop(true, true).fadeOut(400);
+				$qrcode.stop(true, true).fadeOut(400);
 			}, 200);
 		},
 
@@ -46,7 +46,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 				return;
 			}
 
-			$context = $(template).appendTo('body');
+			$qrcode = $(template).appendTo('body');
 
 			event.sub('entry.mouseenter', onMouseenter);
 			event.sub('entry.mouseleave', onMouseleave);

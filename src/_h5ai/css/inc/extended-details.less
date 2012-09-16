@@ -2,8 +2,6 @@
 #extended.view-details {
 
 	li {
-		white-space: nowrap;
-		clear: both;
 
 		&.header {
 			display: list-item;
@@ -14,10 +12,11 @@
 			a, a:active, a:visited {
 				border-bottom: 1px solid #e8e8e8;
 			}
-		}
 
-		.icon, .label, .date, .size {
-			padding: 6px;
+			// needs to be here, to not conflict with header fields
+			.icon, .label, .date, .size {
+				padding: 6px;
+			}
 		}
 
 		.icon.small {

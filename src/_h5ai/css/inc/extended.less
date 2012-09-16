@@ -13,7 +13,7 @@
 	display: none;
 
 	a, a:active, a:visited {
-		color: #555;
+		color: #333;
 		cursor: pointer;
 		text-decoration: none;
 	}
@@ -26,20 +26,21 @@
 
 	li {
 		position: relative;
+		white-space: nowrap;
 
 		&.header {
 			display: none;
 			font-size: 13px;
 
 			a, a:active, a:visited {
-				padding-bottom: 18px;
+				padding: 6px 6px 18px 6px;
 				opacity: 0.4;
 				.transition(all 0.2s ease-in-out);
 
-				img.ascending, img.descending {
+				img {
+					display: none;
 					position: relative;
 					top: -2px;
-					display: none;
 					width: 12px;
 					height: 12px;
 					padding: 0 8px;
@@ -66,6 +67,7 @@
 				&:hover, &.hover {
 					color: #e80;
 					background-color: #f6f6f6;
+					border-color: #e8e8e8;
 				}
 			}
 
@@ -139,19 +141,16 @@
 			display: block;
 			overflow: hidden;
 			text-align: left;
-			white-space: nowrap;
 		}
 
 		.date {
 			text-align: right;
 			width: 160px;
-			white-space: nowrap;
 		}
 
 		.size {
 			text-align: right;
 			width: 80px;
-			white-space: nowrap;
 		}
 	}
 
