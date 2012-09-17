@@ -3,11 +3,10 @@
 {{pkg.url}}
 
 Configuration
-options, types and localization
+options, types and langs
 */
 
-var H5AI_CONFIG = {
-
+{
 	"options": {
 
 		/*
@@ -431,4 +430,4 @@ var H5AI_CONFIG = {
 		"zh-cn": "简体中文",
 		"zh-tw": "正體中文"
 	}
-};
+}

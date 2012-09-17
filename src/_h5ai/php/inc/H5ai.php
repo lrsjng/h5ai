@@ -28,10 +28,8 @@ class H5ai {
 
 		$str = file_exists($file) ? file_get_contents($file) : "";
 
-		// remove comments and change expression to pure json
-		$str = preg_replace("/\/\*.*?\*\//s", "", $str);
-		$str = preg_replace("/^.*H5AI_CONFIG\s*=\s*/s", "", $str);
-		$str = preg_replace("/;.*/s", "", $str);
+		// remove comments to get pure json
+		$str = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", "", $str);
 		$config = json_decode($str, true);
 
 		return $config;
@@ -63,7 +61,7 @@ class H5ai {
 		$this->ignore_patterns = $H5AI_CONFIG["IGNORE_PATTERNS"];
 		$this->index_files = $H5AI_CONFIG["INDEX_FILES"];
 
-		$this->config = H5ai::load_config($this->h5aiAbsPath . "/config.js");
+		$this->config = H5ai::load_config($this->h5aiAbsPath . "/config.json");
 		$this->options = $this->config["options"];
 
 		$this->h5aiAbsHref = H5ai::normalize_path($this->options["h5aiAbsHref"], true);
