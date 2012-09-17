@@ -22,7 +22,7 @@
 	// @include "inc/**/*.js"
 
 	$.ajax({
-		url: $('script[src$="/js/scripts.js"]').attr('src').replace(/\/js\/scripts.js$/, '/config.json'),
+		url: $('script[src$="scripts.js"]').attr('src').replace(/scripts.js$/, '../config.json'),
 		complete: function (data) {
 
 			var config = JSON.parse(data.responseText.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, ''));
@@ -42,7 +42,7 @@
 
 				modulejs.require($('body').attr('id'));
 			});
-		}}
-	);
+		}
+	});
 
 }(jQuery));
