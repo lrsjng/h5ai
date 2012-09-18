@@ -29,12 +29,17 @@ It profits from these great projects:
 ## Build
 
 A prebuilt package can be found on the [project page](http://larsjung.de/h5ai/). If you want to build
-h5ai yourself you need to install [fQuery](http://larsjung.de/fquery/) first:
+h5ai yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
     > npm install -g fquery
 
-To build the project run the following command inside the project's root directory
+This will install fQuery and its command line tool `makejs`. Run `makejs --help` to see if everything
+worked fine.
 
+To clone and build the project run the following commands:
+
+    > git clone git://github.com/lrsjng/h5ai.git
+    > cd h5ai
     > makejs
 
 Run `makejs -t` to list all possible targets.
