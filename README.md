@@ -36,14 +36,16 @@ h5ai yourself you need to install the build tool [fQuery](http://larsjung.de/fqu
 This will install fQuery and its command line tool `makejs`. Run `makejs --help` to see if everything
 worked fine.
 
-To clone and build the project run the following commands:
+To clone and build the project run the following commands.
+You'll find a new directory `build` including the processed files.
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
     > makejs
 
-Run `makejs -t` to list all possible targets.
+To create an fresh zipball run
 
+    > makejs release
 
 
 ## Changelog
