@@ -2,7 +2,7 @@
 modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function (_, $, allsettings, langs, format, store, event) {
 
 	var settings = _.extend({
-			enabled: true,
+			enabled: false,
 			lang: 'en',
 			useBrowserLang: true
 		}, allsettings.l10n),
@@ -28,7 +28,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 		},
 
 		template = '<span id="langSelector">' +
-						'<span class="lang">en</span> - <span class="l10n-lang">english</span>' +
+						'<span class="l10n-isoCode"/> - <span class="l10n-lang"/>' +
 						'<span class="langOptions"><ul/></span>' +
 					'</span>',
 		langOptionTemplate = '<li class="langOption"/>',
@@ -49,7 +49,6 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			$.each(currentLang, function (key, value) {
 				$('.l10n-' + key).text(value);
 			});
-			$('.lang').text(currentLang.isoCode);
 			$('.langOption').removeClass('current');
 			$('.langOption.' + currentLang.isoCode).addClass('current');
 
