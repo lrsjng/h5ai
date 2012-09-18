@@ -8,6 +8,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 		}, allsettings.l10n),
 
 		defaultTranslations = {
+			isoCode: 'en',
 			lang: 'english',
 			details: 'details',
 			list: "list",
@@ -37,73 +38,79 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 		loaded = {
 			en: _.extend({}, defaultTranslations)
 		},
-		currentLang = null,
+		currentLang = loaded.en,
 
-		loadLanguage = function (lang, callback) {
+		update = function (lang) {
 
-			if (loaded[lang]) {
+			if (lang) {
+				currentLang = lang;
+			}
 
-				callback(loaded[lang]);
+			$.each(currentLang, function (key, value) {
+				$('.l10n-' + key).text(value);
+			});
+			$('.lang').text(currentLang.isoCode);
+			$('.langOption').removeClass('current');
+			$('.langOption.' + currentLang.isoCode).addClass('current');
+
+			format.setDefaultDateFormat(currentLang.dateFormat);
+
+			$('#extended .entry .date').each(function () {
+
+				var $this = $(this);
+
+				$this.text(format.formatDate($this.data('time')));
+			});
+
+			$('#filter input').attr('placeholder', currentLang.filter);
+		},
+
+		loadLanguage = function (isoCode, callback) {
+
+			if (loaded[isoCode]) {
+
+				callback(loaded[isoCode]);
 			} else {
 
 				$.ajax({
-					url: allsettings.h5aiAbsHref + 'l10n/' + lang + '.json',
+					url: allsettings.h5aiAbsHref + 'l10n/' + isoCode + '.json',
 					dataType: 'json',
 					success: function (json) {
 
-						loaded[lang] = _.extend({}, defaultTranslations, json);
-						callback(loaded[lang]);
+						loaded[isoCode] = _.extend({}, defaultTranslations, json, {isoCode: isoCode});
+						callback(loaded[isoCode]);
 					},
 					error: function () {
 
-						loaded[lang] = _.extend({}, defaultTranslations);
-						callback(loaded[lang]);
+						loaded[isoCode] = _.extend({}, defaultTranslations, {isoCode: isoCode});
+						callback(loaded[isoCode]);
 					}
 				});
 			}
 		},
 
-		localize = function (langs, lang, useBrowserLang) {
+		localize = function (langs, isoCode, useBrowserLang) {
 
-			var storedLang = store.get(storekey);
+			var storedIsoCode = store.get(storekey);
 
-			if (langs[storedLang]) {
-				lang = storedLang;
+			if (langs[storedIsoCode]) {
+				isoCode = storedIsoCode;
 			} else if (useBrowserLang) {
 				var browserLang = navigator.language || navigator.browserLanguage;
 				if (browserLang) {
 					if (langs[browserLang]) {
-						lang = browserLang;
+						isoCode = browserLang;
 					} else if (browserLang.length > 2 && langs[browserLang.substr(0, 2)]) {
-						lang = browserLang.substr(0, 2);
+						isoCode = browserLang.substr(0, 2);
 					}
 				}
 			}
 
-			if (!langs[lang]) {
-				lang = 'en';
+			if (!langs[isoCode]) {
+				isoCode = 'en';
 			}
 
-			loadLanguage(lang, function (currentLang) {
-
-				$.each(currentLang, function (key, value) {
-					$('.l10n-' + key).text(value);
-				});
-				$('.lang').text(lang);
-				$('.langOption').removeClass('current');
-				$('.langOption.' + lang).addClass('current');
-
-				format.setDefaultDateFormat(currentLang.dateFormat);
-
-				$('#extended .entry .date').each(function () {
-
-					var $this = $(this);
-
-					$this.text(format.formatDate($this.data('time')));
-				});
-
-				$('#filter input').attr('placeholder', currentLang.filter);
-			});
+			loadLanguage(isoCode, update);
 		},
 
 		initLangSelector = function (langs) {
@@ -111,21 +118,21 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			var $langSelector = $(template).appendTo('#bottombar .right'),
 				$langOptions = $langSelector.find('.langOptions'),
 				$ul = $langOptions.find('ul'),
-				sortedLangsKeys = [];
+				isoCodes = [];
 
-			$.each(langs, function (lang) {
-				sortedLangsKeys.push(lang);
+			$.each(langs, function (isoCode) {
+				isoCodes.push(isoCode);
 			});
-			sortedLangsKeys.sort();
+			isoCodes.sort();
 
-			$.each(sortedLangsKeys, function (idx, lang) {
+			$.each(isoCodes, function (idx, isoCode) {
 				$(langOptionTemplate)
-					.addClass(lang)
-					.text(lang + ' - ' + (_.isString(langs[lang]) ? langs[lang] : langs[lang].lang))
+					.addClass(isoCode)
+					.text(isoCode + ' - ' + (_.isString(langs[isoCode]) ? langs[isoCode] : langs[isoCode].lang))
 					.appendTo($ul)
 					.click(function () {
-						store.put(storekey, lang);
-						localize(langs, lang, false);
+						store.put(storekey, isoCode);
+						localize(langs, isoCode, false);
 					});
 			});
 			$langOptions
@@ -153,6 +160,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 		init = function () {
 
 			if (!settings.enabled) {
+				event.sub('ready', function () { update(); });
 				return;
 			}
 
