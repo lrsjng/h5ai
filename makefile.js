@@ -54,7 +54,7 @@ module.exports = function (make) {
 		moment = make.moment;
 
 
-	make.version('>=0.8');
+	make.version('>=0.8.1');
 	make.defaults('build');
 
 
@@ -73,7 +73,7 @@ module.exports = function (make) {
 
 		$.git(root, function (err, result) {
 
-			pkg.version += '-' + result.revListMasterHead.length + '-' + result.revParseHead.slice(0, 7);
+			pkg.version += '-' + result.revListOriginMasterHead.length + '-' + result.revParseHead.slice(0, 7);
 			Event.info({
 				method: 'check-version',
 				message: 'version set to ' + pkg.version
