@@ -19,6 +19,7 @@
 - var h5ai = "<?php echo $h5aiAbsHref; ?>"
 - var json = "<?php if (!$isHeadRequest) { echo $h5ai->getGenericJson(); }?>"
 - var fallback = "<?php if (!$isHeadRequest) { echo $h5ai->getNoJsFallback(); }?>"
+- var config = "<?php if (!$isHeadRequest) { echo $h5ai->getCustomConfig(); }?>"
 
 doctype 5
 //if lt IE 9
@@ -62,4 +63,4 @@ html.no-js( lang="en" )
 
 		div#data-php-no-js-fallback.hideOnJs !{fallback}
 
-		script( src!="#{h5ai}js/scripts.js" )
+		script( src!="#{h5ai}js/scripts.js", data-config!="#{config}" )

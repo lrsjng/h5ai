@@ -7,6 +7,9 @@ modulejs.define('parser/generic-json', ['_', '$', 'core/mode', 'core/settings', 
 			mode.serverName = json.serverName;
 			mode.serverVersion = json.serverVersion;
 
+			if (!settings.custom) {
+				settings.custom = {};
+			}
 			if (_.has(json, 'customHeader')) {
 				settings.custom.header = json.customHeader;
 			}

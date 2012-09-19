@@ -21,28 +21,63 @@
 
 	// @include "inc/**/*.js"
 
-	$.ajax({
-		url: $('script[src$="scripts.js"]').attr('src').replace(/scripts.js$/, '../config.json'),
-		complete: function (data) {
+	var	$scriptTag = $('script[src$="scripts.js"]'),
+		globalConfigHref = $scriptTag.attr('src').replace(/scripts.js$/, '../config.json'),
+		localConfigHref = $scriptTag.data('config') || './_h5ai.config.json',
 
-			var config = JSON.parse(data.responseText.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, ''));
+		ajaxOpts = {dataType: 'text'},
+
+		parse = function (response) {
+
+			return response.replace ? JSON.parse(response.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
+		},
+
+		extendLevel1 = function (a, b) {
+
+			$.each(b, function (key) {
+
+				$.extend(a[key], b[key]);
+			});
+		},
+
+		run = function (config) {
+			/*global amplify, Base64, jQuery, Modernizr, moment, _ */
+
+			// `jQuery`, `moment` and `underscore` are itself functions,
+			// so they have to be wrapped to not be handled as constructors.
+			modulejs.define('config', config);
+			modulejs.define('amplify', amplify);
+			modulejs.define('base64', Base64);
+			modulejs.define('$', function () { return jQuery; });
+			modulejs.define('modernizr', Modernizr);
+			modulejs.define('moment', function () { return moment; });
+			modulejs.define('_', function () { return _; });
 
 			$(function () {
-				/*global amplify, Base64, jQuery, Modernizr, moment, _ */
-
-				// `jQuery`, `moment` and `underscore` are itself functions,
-				// so they have to be wrapped to not be handled as constructors.
-				modulejs.define('config', config);
-				modulejs.define('amplify', amplify);
-				modulejs.define('base64', Base64);
-				modulejs.define('$', function () { return jQuery; });
-				modulejs.define('modernizr', Modernizr);
-				modulejs.define('moment', function () { return moment; });
-				modulejs.define('_', function () { return _; });
 
 				modulejs.require($('body').attr('id'));
 			});
+		},
+
+		config = {
+			options: {},
+			types: {},
+			langs: {}
+		};
+
+	$.ajax(globalConfigHref, ajaxOpts).always(function (g) {
+
+		extendLevel1(config, parse(g));
+		if (localConfigHref === 'ignore') {
+			run(config);
+			return;
 		}
+
+		$.ajax(localConfigHref, ajaxOpts).always(function (l) {
+
+			extendLevel1(config, parse(l));
+			run(config);
+		});
 	});
 
 }(jQuery));

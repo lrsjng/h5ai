@@ -26,13 +26,28 @@ class H5ai {
 
 	private static final function load_config($file) {
 
-		$str = file_exists($file) ? file_get_contents($file) : "";
+		if (!file_exists($file)) {
+			return array();
+		}
+
+		$str = file_get_contents($file);
 
 		// remove comments to get pure json
 		$str = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", "", $str);
-		$config = json_decode($str, true);
 
-		return $config;
+		return json_decode($str, true);
+	}
+
+
+	private static final function merge_config($a, $b) {
+
+		$result = array_merge(array(), $a);
+
+		foreach ($b as $key => $value) {
+			$result[$key] = array_merge($result[$key], $b[$key]);
+		}
+
+		return $result;
 	}
 
 
@@ -61,7 +76,8 @@ class H5ai {
 		$this->ignore_patterns = $H5AI_CONFIG["IGNORE_PATTERNS"];
 		$this->index_files = $H5AI_CONFIG["INDEX_FILES"];
 
-		$this->config = H5ai::load_config($this->h5aiAbsPath . "/config.json");
+		$this->config = array("options" => array(), "types" => array(), "langs" => array());
+		$this->config = H5ai::merge_config($this->config, H5ai::load_config($this->h5aiAbsPath . "/config.json"));
 		$this->options = $this->config["options"];
 
 		$this->h5aiAbsHref = H5ai::normalize_path($this->options["h5aiAbsHref"], true);
@@ -69,6 +85,9 @@ class H5ai {
 
 		$this->absHref = H5ai::normalize_path(preg_replace('/[^\\/]*$/', '', getenv("REQUEST_URI")), true);
 		$this->absPath = $this->getAbsPath($this->absHref);
+
+		$this->config = H5ai::merge_config($this->config, H5ai::load_config($this->absPath . "/_h5ai.config.json"));
+		$this->options = $this->config["options"];
 	}
 
 
@@ -282,6 +301,14 @@ class H5ai {
 		);
 
 		return json_encode($json) . "\n";
+	}
+
+
+	public function getCustomConfig() {
+
+		$config = "_h5ai.config.json";
+		$config = $this->fileExists($config ? $this->absPath . "/" . $config : "ignore") ? $config : "ignore";
+		return $config;
 	}
 
 
