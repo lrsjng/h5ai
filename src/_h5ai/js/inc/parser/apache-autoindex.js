@@ -6,7 +6,7 @@ modulejs.define('parser/apache-autoindex', ['_', '$', 'core/mode', 'core/setting
 			var $tds = $(tr).find('td'),
 				$a = $tds.eq(1).find('a'),
 				label = $a.text(),
-				time = format.parseDate($tds.eq(2).text(), 'YYYY-MM-DD HH:mm'),
+				time = format.parseDate($tds.eq(2).text(), ['YYYY-MM-DD HH:mm', 'DD-MMM-YYYY HH:mm']),
 				size = format.parseSize($tds.eq(3).text());
 
 			absHref = absHref + $a.attr('href');
