@@ -25,8 +25,6 @@
 		globalConfigHref = $scriptTag.attr('src').replace(/scripts.js$/, '../config.json'),
 		localConfigHref = $scriptTag.data('config') || './_h5ai.config.json',
 
-		ajaxOpts = {dataType: 'text'},
-
 		parse = function (response) {
 
 			return response.replace ? JSON.parse(response.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
@@ -37,6 +35,33 @@
 			$.each(b, function (key) {
 
 				$.extend(a[key], b[key]);
+			});
+		},
+
+		loadConfig = function (callback) {
+
+			var ajaxOpts = {
+					dataType: 'text'
+				},
+				config = {
+					options: {},
+					types: {},
+					langs: {}
+				};
+
+			$.ajax(globalConfigHref, ajaxOpts).always(function (g) {
+
+				extendLevel1(config, parse(g));
+				if (localConfigHref === 'ignore') {
+					callback(config);
+					return;
+				}
+
+				$.ajax(localConfigHref, ajaxOpts).always(function (l) {
+
+					extendLevel1(config, parse(l));
+					callback(config);
+				});
 			});
 		},
 
@@ -57,27 +82,8 @@
 
 				modulejs.require($('body').attr('id'));
 			});
-		},
-
-		config = {
-			options: {},
-			types: {},
-			langs: {}
 		};
 
-	$.ajax(globalConfigHref, ajaxOpts).always(function (g) {
-
-		extendLevel1(config, parse(g));
-		if (localConfigHref === 'ignore') {
-			run(config);
-			return;
-		}
-
-		$.ajax(localConfigHref, ajaxOpts).always(function (l) {
-
-			extendLevel1(config, parse(l));
-			run(config);
-		});
-	});
+	loadConfig(run);
 
 }(jQuery));

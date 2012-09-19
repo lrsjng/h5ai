@@ -198,7 +198,7 @@ options, types and langs
 
 		/* [all]
 		Adds Piwik tracker javascript code.
-		baseURL without protocol
+		"baseURL" without protocol
 		*/
 		"piwik-analytics": {
 			"enabled": false,
