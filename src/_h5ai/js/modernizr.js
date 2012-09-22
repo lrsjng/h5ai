@@ -1,2 +1,0 @@
-
-// @include "lib/modernizr-*.js"

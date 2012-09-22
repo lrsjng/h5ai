@@ -6,6 +6,7 @@
 
 // other libs
 // ----------
+// @include "lib/modernizr-*.js"
 // @include "lib/underscore-*.js"
 // @include "lib/amplify-*.min.js"
 // @include "lib/modulejs-*.js"
