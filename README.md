@@ -13,7 +13,7 @@ It profits from these great projects:
 [AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
-[jQuery](http://jquery.com)&nbsp;(MIT/GPL),
+[jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
 [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
