@@ -116,7 +116,7 @@ module.exports = function (make) {
 			.jade()
 			.write($.OVERWRITE, mapSrc);
 
-		$(src + ': **, ! _h5ai/client/**, ! **/*.jade')
+		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
 			.modified(mapSrc)
 			.handlebars(handlebarsEnv)
 			.write($.OVERWRITE, mapSrc);
