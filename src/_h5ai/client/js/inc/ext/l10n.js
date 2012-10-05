@@ -72,7 +72,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			} else {
 
 				$.ajax({
-					url: allsettings.h5aiAbsHref + 'l10n/' + isoCode + '.json',
+					url: allsettings.h5aiAbsHref + 'conf/l10n/' + isoCode + '.json',
 					dataType: 'json',
 					success: function (json) {
 
