@@ -44,7 +44,7 @@ if ($action === "getthumbsrc") {
 		json_fail(1, "thumbnails disabled");
 	}
 
-	H5ai::req_once("/php/inc/Thumb.php");
+	H5ai::req_once("/server/php/inc/Thumb.php");
 	if (!Thumb::is_supported()) {
 		json_fail(2, "thumbnails not supported");
 	}
@@ -67,7 +67,7 @@ else if ($action === "archive") {
 
 	list($execution, $format, $hrefs) = check_keys(array("execution", "format", "hrefs"));
 
-	H5ai::req_once("/php/inc/Archive.php");
+	H5ai::req_once("/server/php/inc/Archive.php");
 	$archive = new Archive($h5ai);
 
 	$hrefs = explode(":", trim($hrefs));

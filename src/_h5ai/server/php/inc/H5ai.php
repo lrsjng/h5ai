@@ -1,11 +1,11 @@
 <?php
 
 
-define("H5AI_ABS_PATH", H5ai::normalize_path(dirname(dirname(dirname(__FILE__)))));
+define("H5AI_ABS_PATH", H5ai::normalize_path(dirname(dirname(dirname(dirname(__FILE__))))));
 
 
-H5ai::req_once("/config.php");
-H5ai::req_once("/php/inc/Entry.php");
+H5ai::req_once("/conf/config.php");
+H5ai::req_once("/server/php/inc/Entry.php");
 
 
 class H5ai {
@@ -77,7 +77,7 @@ class H5ai {
 		$this->index_files = $H5AI_CONFIG["INDEX_FILES"];
 
 		$this->config = array("options" => array(), "types" => array(), "langs" => array());
-		$this->config = H5ai::merge_config($this->config, H5ai::load_config($this->h5aiAbsPath . "/config.json"));
+		$this->config = H5ai::merge_config($this->config, H5ai::load_config($this->h5aiAbsPath . "/conf/config.json"));
 		$this->options = $this->config["options"];
 
 		$this->h5aiAbsHref = H5ai::normalize_path($this->options["h5aiAbsHref"], true);
@@ -292,7 +292,7 @@ class H5ai {
 		$footer = $this->fileExists($footer ? $this->absPath . "/" . $footer : null) ? $footer : null;
 
 		$json = array(
-			"id" => $this->requested_from === $this->h5aiAbsPath . "/php/h5ai-index.php" ? "php" : "idx.php",
+			"id" => $this->requested_from === $this->h5aiAbsPath . "/server/php/index.php" ? "php" : "idx.php",
 			"serverName" => strtolower(preg_replace("/\\/.*$/", "", getenv("SERVER_SOFTWARE"))),
 			"serverVersion" => strtolower(preg_replace("/^.*\\//", "", preg_replace("/\\s.*$/", "", getenv("SERVER_SOFTWARE")))),
 			"customHeader" => $header,

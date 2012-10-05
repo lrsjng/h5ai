@@ -23,7 +23,7 @@
 	// @include "inc/**/*.js"
 
 	var	$scriptTag = $('script[src$="scripts.js"]'),
-		globalConfigHref = $scriptTag.attr('src').replace(/scripts.js$/, '../config.json'),
+		globalConfigHref = $scriptTag.attr('src').replace(/scripts.js$/, '../../conf/config.json'),
 		localConfigHref = $scriptTag.data('config') || './_h5ai.config.json',
 
 		parse = function (response) {

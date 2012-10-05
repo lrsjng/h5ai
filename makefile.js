@@ -91,21 +91,21 @@ module.exports = function (make) {
 
 	make.target('lint', [], 'lint all JavaScript files with JSHint').sync(function () {
 
-		$(path.join(src, '_h5ai', 'js') + ': **/*.js, ! lib/**')
+		$(src + '/_h5ai/client/js: **/*.js, ! lib/**')
 			.jshint(jshint);
 	});
 
 
 	make.target('build', ['check-version'], 'build all updated files').sync(function () {
 
-		$(src + ': _h5ai/js/*.js')
-			.modified(mapSrc, $(src + ': _h5ai/js/**'))
+		$(src + ': _h5ai/client/js/*.js')
+			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
 			.uglifyjs()
 			.write($.OVERWRITE, mapSrc);
 
-		$(src + ': _h5ai/css/*.less')
-			.modified(mapSrc, $(src + ': _h5ai/css/**'))
+		$(src + ': _h5ai/client/css/*.less')
+			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
 			.cssmin()
 			.write($.OVERWRITE, mapSrc);
@@ -116,7 +116,7 @@ module.exports = function (make) {
 			.jade()
 			.write($.OVERWRITE, mapSrc);
 
-		$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**, ! **/*.jade')
+		$(src + ': **, ! _h5ai/client/**, ! **/*.jade')
 			.modified(mapSrc)
 			.handlebars(handlebarsEnv)
 			.write($.OVERWRITE, mapSrc);
@@ -129,14 +129,14 @@ module.exports = function (make) {
 
 	make.target('build-uncompressed', ['check-version'], 'build all updated files without compression').sync(function () {
 
-		$(src + ': _h5ai/js/*.js')
-			.modified(mapSrc, $(src + ': _h5ai/js/**'))
+		$(src + ': _h5ai/client/js/*.js')
+			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
 			// .uglifyjs()
 			.write($.OVERWRITE, mapSrc);
 
-		$(src + ': _h5ai/css/*.less')
-			.modified(mapSrc, $(src + ': _h5ai/css/**'))
+		$(src + ': _h5ai/client/css/*.less')
+			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
 			// .cssmin()
 			.write($.OVERWRITE, mapSrc);
@@ -147,7 +147,7 @@ module.exports = function (make) {
 			.jade()
 			.write($.OVERWRITE, mapSrc);
 
-		$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**, ! **/*.jade')
+		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
 			.modified(mapSrc)
 			.handlebars(handlebarsEnv)
 			.write($.OVERWRITE, mapSrc);
@@ -160,7 +160,7 @@ module.exports = function (make) {
 
 	make.target('release', ['clean', 'build'], 'create a zipball').async(function (done, fail) {
 
-		$(build + ': _h5ai/**').shzip({
+		$(build + ': **').shzip({
 			target: path.join(build, 'h5ai-' + pkg.version + '.zip'),
 			dir: build,
 			callback: done

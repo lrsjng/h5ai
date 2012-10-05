@@ -26,12 +26,17 @@
 }
 
 #pv-txt-text {
+	word-break: break-all;
+
 	.syntaxhighlighter {
 		overflow: visible !important;
 
 		.gutter .line {
 			border-right: none !important;
 		}
+		// .code .line, table td.code .container textarea {
+		// 	white-space: normal !important;
+		// }
 	}
 
 	&.markdown {
