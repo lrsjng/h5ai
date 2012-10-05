@@ -161,7 +161,7 @@ module.exports = function (make) {
 	make.target('release', ['clean', 'build'], 'create a zipball').async(function (done, fail) {
 
 		$(build + ': **').shzip({
-			target: path.join(build, 'h5ai-' + pkg.version + '.zip'),
+			target: path.join(build, pkg.name + '-' + pkg.version + '.zip'),
 			dir: build,
 			callback: done
 		});
