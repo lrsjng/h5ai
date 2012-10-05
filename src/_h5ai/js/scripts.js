@@ -8,12 +8,12 @@
 // ----------
 // @include "lib/modernizr-*.js"
 // @include "lib/underscore-*.js"
-// @include "lib/amplify-*.min.js"
+// @include "lib/amplify-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 // @include "lib/json2-*.js"
 // @include "lib/base64.js"
-// @include "lib/spin-*.min.js"
+// @include "lib/spin-*.js"
 
 // h5ai
 // ----
