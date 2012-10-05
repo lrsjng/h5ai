@@ -1,16 +1,6 @@
 |<?php
 |	header("Content-type: text/html;{{pkg.name}}={{pkg.version}}");
-|	$h5ai_php = str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php";
-|	if (!file_exists($h5ai_php)) {
-|		function find_h5ai($path, $h5ai) {
-|			if (file_exists($path . $h5ai)) { return $path . $h5ai; }
-|			$parent = str_replace("\\", "/", dirname($path));
-|			if ($parent !== $path) { return find_h5ai($parent, $h5ai); }
-|			error_log("h5ai not found: " . __FILE__);
-|		}
-|		$h5ai_php = find_h5ai(str_replace("\\", "/", dirname(__FILE__)), "/_{{pkg.name}}/server/php/inc/H5ai.php");
-|	}
-|	require_once($h5ai_php);
+|	require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php");
 |	$h5ai = new H5ai(__FILE__);
 |	$h5aiAbsHref = $h5ai->getH5aiAbsHref();
 |	$isHeadRequest = stripos($_SERVER["REQUEST_METHOD"], "HEAD");
@@ -50,7 +40,7 @@ html.no-js( lang="en" )
 
 		div#bottombar.clearfix
 			span.left
-				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} project page" )
+				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
 					| {{pkg.name}} {{pkg.version}}
 				span.hideOnJs.noJsMsg
 					| ⚡ JavaScript is disabled! ⚡
