@@ -9,13 +9,13 @@ html.no-js( lang="en" )
 		meta( charset="utf-8" )
 		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
 		title {{pkg.name}} {{pkg.version}} server details
-		meta( name="description", content="h5ai server details" )
+		meta( name="description", content="{{pkg.name}} server details" )
 		meta( name="viewport", content="width=device-width" )
-		link( rel="shortcut icon", href="images/h5ai-16x16.ico" )
-		link( rel="apple-touch-icon", type="image/png", href="images/h5ai-48x48.png" )
+		link( rel="shortcut icon", href="client/images/app-16x16.ico" )
+		link( rel="apple-touch-icon", type="image/png", href="client/images/app-48x48.png" )
 		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
-		link( rel="stylesheet", href="css/styles.css" )
-		script( src="js/scripts.js" )
+		link( rel="stylesheet", href="client/css/styles.css" )
+		script( src="client/js/scripts.js" )
 
 	body#h5ai-info
 
@@ -68,8 +68,10 @@ html.no-js( lang="en" )
 
 		div#bottombar.clearfix
 			span.left
-				a#h5ai-reference( href="http://larsjung.de/h5ai", title="h5ai project page" ) {{pkg.name}} {{pkg.version}}
-				span.hideOnJs.noJsMsg ⚡ JavaScript is disabled! ⚡
+				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} project page" )
+					| {{pkg.name}} {{pkg.version}}
+				span.hideOnJs.noJsMsg
+					| ⚡ JavaScript is disabled! ⚡
 				span.oldBrowser
 					| ⚡ Some features disabled! Works best in 
 					a( href="http://browsehappy.com" ) modern browsers
