@@ -29,7 +29,7 @@ class Archive {
 			return 404;
 		}
 
-		$target = $this->h5ai->getTempAbsPath() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
+		$target = $this->h5ai->getCacheAbsPath() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
 
 		try {
 			if ($execution === "shell") {

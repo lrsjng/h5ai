@@ -127,13 +127,6 @@ class H5ai {
 	}
 
 
-	public function getTempAbsPath() {
-
-		// return H5ai::normalize_path(sys_get_temp_dir());
-		return $this->h5aiAbsPath . '/cache';
-	}
-
-
 	public function getOptions() {
 
 		return $this->options;

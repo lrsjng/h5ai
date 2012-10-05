@@ -88,7 +88,7 @@ else if ($action === "getarchive") {
 	list($id, $as) = check_keys(array("id", "as"));
 	json_fail(2, "file not found", !preg_match("/^package-/", $id));
 
-	$target = $h5ai->getTempAbsPath() . "/" . $id;
+	$target = $h5ai->getCacheAbsPath() . "/" . $id;
 	json_fail(3, "file not found", !file_exists($target));
 
 	header("Content-Type: application/octet-stream");
@@ -110,7 +110,6 @@ else if ($action === "getchecks") {
 		$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 	}
 	$cache = @is_writable($h5ai->getCacheAbsPath());
-	$temp = @is_writable($h5ai->getTempAbsPath());
 	$tar = @preg_match("/tar$/", `which tar`) > 0;
 	$zip = @preg_match("/zip$/", `which zip`) > 0;
 	$convert = @preg_match("/convert$/", `which convert`) > 0;
@@ -121,7 +120,6 @@ else if ($action === "getchecks") {
 		"php" => $php,
 		"cache" => $cache,
 		"thumbs" => $gd,
-		"temp" => $temp,
 		"archive" => $archive,
 		"tar" => $tar,
 		"zip" => $zip,
