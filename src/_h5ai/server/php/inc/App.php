@@ -1,111 +1,101 @@
 <?php
 
-class H5ai {
+class App {
 
-	private static $H5AI_CONTENT_TYPE = "Content-Type: text/html;h5ai=";
+	public static $MAGIC_SEQUENCE = "={{pkg.name}}=";
+	public static $FILE_PREFIX = "_{{pkg.name}}";
 
-
-	private $h5aiAbsPath, $rootAbsPath,
-			$h5aiAbsHref, $rootAbsHref,
-			$absHref, $absPath,
-			$ignore_names, $ignore_patterns, $index_files,
-			$config, $options;
+	private static $RE_DELIMITER = "|";
+	private static $CACHE_DIR = "cache";
 
 
-	public function __construct($app_abs_path, $app_abs_href) {
+	private $app_abs_path, $root_abs_path,
+			$app_abs_href, $root_abs_href,
+			$abs_href, $abs_path,
+			$options;
 
-		$this->h5aiAbsPath = normalize_path($app_abs_path);
-		$this->rootAbsPath = normalize_path(dirname($app_abs_path));
 
-		$this->h5aiAbsHref = normalize_path($app_abs_href, true);
-		$this->rootAbsHref = normalize_path(dirname($app_abs_href), true);
+	public function __construct($app_abs_path, $app_abs_href, $abs_href) {
 
-		$this->absHref = normalize_path(preg_replace('/[^\\/]*$/', '', getenv("REQUEST_URI")), true);
-		$this->absPath = $this->getAbsPath($this->absHref);
+		$this->app_abs_path = normalize_path($app_abs_path);
+		$this->root_abs_path = normalize_path(dirname($this->app_abs_path));
 
-		global $H5AI_CONFIG;
-		$this->ignore_names = $H5AI_CONFIG["IGNORE"];
-		$this->ignore_patterns = $H5AI_CONFIG["IGNORE_PATTERNS"];
-		$this->index_files = $H5AI_CONFIG["INDEX_FILES"];
+		$this->app_abs_href = normalize_path($app_abs_href, true);
+		$this->root_abs_href = normalize_path(dirname($this->app_abs_href), true);
 
-		$this->config = array("options" => array(), "types" => array(), "langs" => array());
-		$this->config = merge_config($this->config, load_commented_json($this->h5aiAbsPath . "/conf/config.json"));
-		$this->options = $this->config["options"];
+		$this->abs_href = normalize_path($abs_href, true);
+		$this->abs_path = $this->get_abs_path($this->abs_href);
 
-		$this->config = merge_config($this->config, load_commented_json($this->absPath . "/_h5ai.config.json"));
-		$this->options = $this->config["options"];
+		$config = array("options" => array(), "types" => array(), "langs" => array());
+		$config = merge_config($config, load_commented_json($this->app_abs_path . "/conf/config.json"));
+		$config = merge_config($config, load_commented_json($this->abs_path . "/" . App::$FILE_PREFIX . ".config.json"));
+		$this->options = $config["options"];
 	}
 
 
-	public function getRootAbsPath() {
+	public function get_root_abs_path() {
 
-		return $this->rootAbsPath;
+		return $this->root_abs_path;
 	}
 
 
-	public function getH5aiAbsPath() {
+	public function get_root_abs_href() {
 
-		return $this->h5aiAbsPath;
+		return $this->root_abs_href;
 	}
 
 
-	public function getRootAbsHref() {
+	public function get_app_abs_href() {
 
-		return $this->rootAbsHref;
+		return $this->app_abs_href;
 	}
 
 
-	public function getH5aiAbsHref() {
+	public function get_cache_abs_path() {
 
-		return $this->h5aiAbsHref;
+		return $this->app_abs_path . '/' . App::$CACHE_DIR;
 	}
 
 
-	public function getCacheAbsPath() {
+	public function get_cache_abs_href() {
 
-		return $this->h5aiAbsPath . '/cache';
+		return $this->app_abs_href . App::$CACHE_DIR . '/';
 	}
 
 
-	public function getCacheAbsHref() {
-
-		return $this->h5aiAbsHref . 'cache/';
-	}
-
-
-	public function getOptions() {
+	public function get_options() {
 
 		return $this->options;
 	}
 
 
-	public function getAbsHref($absPath = null, $endWithSlash = true) {
+	public function get_abs_href($abs_path = null, $trailing_slash = true) {
 
-		if ($absPath === null) {
-			return $this->absHref;
+		if ($abs_path === null) {
+			return $this->abs_href;
 		}
 
-		$absPath = substr($absPath, strlen($this->rootAbsPath));
+		$abs_path = substr($abs_path, strlen($this->root_abs_path));
 
-		$parts = explode("/", $absPath);
-		$encodedParts = array();
+		$parts = explode("/", $abs_path);
+		$encoded_parts = array();
 		foreach ($parts as $part) {
-			$encodedParts[] = rawurlencode($part);
+			$encoded_parts[] = rawurlencode($part);
 		}
 
-		return normalize_path($this->rootAbsHref . implode("/", $encodedParts), $endWithSlash);
+		return normalize_path($this->root_abs_href . implode("/", $encoded_parts), $trailing_slash);
 	}
 
 
-	public function getAbsPath($absHref = null) {
+	public function get_abs_path($abs_href = null) {
 
-		if ($absHref === null) {
-			return $this->absPath;
+		if ($abs_href === null) {
+			return $this->abs_path;
 		}
 
-		$absHref = substr($absHref, strlen($this->rootAbsHref));
+		$abs_href = substr($abs_href, strlen($this->root_abs_href));
 
-		return normalize_path($this->rootAbsPath . "/" . rawurldecode($absHref));
+		return normalize_path($this->root_abs_path . "/" . rawurldecode($abs_href));
 	}
 
 
@@ -116,10 +106,8 @@ class H5ai {
 			return true;
 		}
 
-		if (in_array($name, $this->ignore_names)) {
-			return true;
-		}
-		foreach ($this->ignore_patterns as $re) {
+		foreach ($this->options["view"]["ignore"] as $re) {
+			$re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
 			if (preg_match($re, $name)) {
 				return true;
 			}
@@ -135,7 +123,7 @@ class H5ai {
 		if (is_dir($path)) {
 			if ($dir = opendir($path)) {
 				while (($file = readdir($dir)) !== false) {
-					if (!$this->is_ignored($file) && !$this->is_ignored($this->getAbsHref($path) . $file)) {
+					if (!$this->is_ignored($file) && !$this->is_ignored($this->get_abs_href($path) . $file)) {
 						$content[] = $file;
 					}
 				}
@@ -146,20 +134,16 @@ class H5ai {
 	}
 
 
-	public function getHttpCode($absHref) {
+	public function get_http_code($abs_href) {
 
-		if (!is_dir($this->getAbsPath($absHref))) {
-			return null;
+		if (!is_dir($this->get_abs_path($abs_href))) {
+			return 500;
 		}
 
-		$absPath = $this->getAbsPath($absHref);
+		$abs_path = $this->get_abs_path($abs_href);
 
-		foreach ($this->index_files as $if) {
-			if (file_exists($absPath . "/" . $if)) {
-				if ($if === "index.php") {
-					$fileheader = file_get_contents($absPath . "/" . $if, false, null, -1, 50);
-					return stripos($fileheader, H5ai::$H5AI_CONTENT_TYPE) === false ? 200 : "h5ai";
-				}
+		foreach ($this->options["view"]["indexFiles"] as $if) {
+			if (file_exists($abs_path . "/" . $if)) {
 				return 200;
 			}
 		}
@@ -173,14 +157,14 @@ class H5ai {
 	}
 
 
-	public function getGenericJson() {
+	public function get_generic_json() {
 
-		$entries = $this->getEntries($this->absHref, 1);
+		$entries = $this->get_entries($this->abs_href, 1);
 
 		$header = $this->options["custom"]["header"];
 		$footer = $this->options["custom"]["footer"];
-		$header = $this->fileExists($header ? $this->absPath . "/" . $header : null) ? $header : null;
-		$footer = $this->fileExists($footer ? $this->absPath . "/" . $footer : null) ? $footer : null;
+		$header = $this->fileExists($header ? $this->abs_path . "/" . $header : null) ? $header : null;
+		$footer = $this->fileExists($footer ? $this->abs_path . "/" . $footer : null) ? $footer : null;
 
 		$json = array(
 			"id" => "php",
@@ -195,24 +179,26 @@ class H5ai {
 	}
 
 
-	public function getCustomConfig() {
+	public function get_custom_config() {
 
-		$config = "_h5ai.config.json";
-		$config = $this->fileExists($config ? $this->absPath . "/" . $config : "ignore") ? $config : "ignore";
+		$config = App::$FILE_PREFIX . ".config.json";
+		$config = $this->fileExists($config ? $this->abs_path . "/" . $config : "ignore") ? $config : "ignore";
 		return $config;
 	}
 
 
-	public function getEntries($absHref, $content) {
+	public function get_entries($abs_href, $what) {
 
-		$folder = Entry::get($this, $this->getAbsPath($absHref), $absHref);
-		if ($content > 1 && $folder !== null) {
+		$folder = Entry::get($this, $this->get_abs_path($abs_href), $abs_href);
+
+		if ($what > 1 && $folder !== null) {
 			foreach ($folder->getContent() as $entry) {
 				$entry->getContent();
 			}
 			$folder = $folder->getParent();
 		}
-		while ($content > 0 && $folder !== null) {
+
+		while ($what > 0 && $folder !== null) {
 			$folder->getContent();
 			$folder = $folder->getParent();
 		}
@@ -227,11 +213,11 @@ class H5ai {
 	}
 
 
-	public function getNoJsFallback() {
+	public function get_no_js_fallback() {
 
-		date_default_timezone_set ("UTC");
+		date_default_timezone_set("UTC");
 
-		function _cmp($entry1, $entry2) {
+		function _cmp_no_js_fallback($entry1, $entry2) {
 
 			if ($entry1->isFolder && !$entry2->isFolder) {
 				return -1;
@@ -243,9 +229,9 @@ class H5ai {
 			return strcasecmp($entry1->absHref, $entry2->absHref);
 		}
 
-		$folder = Entry::get($this, $this->absPath, $this->absHref);
+		$folder = Entry::get($this, $this->abs_path, $this->abs_href);
 		$entries = $folder->getContent();
-		uasort($entries, "_cmp");
+		uasort($entries, "_cmp_no_js_fallback");
 
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";

@@ -1,15 +1,14 @@
 |<?php
 |	header("Content-type: text/html;{{pkg.name}}={{pkg.version}}");
 |	require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php");
-|	$h5ai = $APP;
-|	$h5aiAbsHref = $h5ai->getH5aiAbsHref();
-|	$isHeadRequest = stripos($_SERVER["REQUEST_METHOD"], "HEAD");
+|	$app_abs_href = $APP->get_app_abs_href();
+|	$is_head_request = stripos($_SERVER["REQUEST_METHOD"], "HEAD");
 |?>
 
-- var appHref = "<?php echo $h5aiAbsHref; ?>client"
-- var json = "<?php if (!$isHeadRequest) { echo $h5ai->getGenericJson(); }?>"
-- var fallback = "<?php if (!$isHeadRequest) { echo $h5ai->getNoJsFallback(); }?>"
-- var config = "<?php if (!$isHeadRequest) { echo $h5ai->getCustomConfig(); }?>"
+- var appHref = "<?php echo $app_abs_href; ?>client"
+- var json = "<?php if (!$is_head_request) { echo $APP->get_generic_json(); }?>"
+- var fallback = "<?php if (!$is_head_request) { echo $APP->get_no_js_fallback(); }?>"
+- var config = "<?php if (!$is_head_request) { echo $APP->get_custom_config(); }?>"
 
 doctype 5
 //if lt IE 9

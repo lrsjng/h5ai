@@ -8,6 +8,7 @@ function normalize_path($path, $trailing_slash = false) {
 
 define("APP_ABS_PATH", normalize_path(dirname(dirname(dirname(dirname(__FILE__))))));
 define("APP_ABS_HREF", normalize_path(dirname(dirname(dirname(getenv("SCRIPT_NAME")))), true));
+define("ABS_HREF", normalize_path(preg_replace('/[^\\/]*$/', '', getenv("REQUEST_URI")), true));
 
 function normalized_require_once($lib) {
 
@@ -17,8 +18,7 @@ function normalized_require_once($lib) {
 normalized_require_once("/server/php/inc/util.php");
 normalized_require_once("/server/php/inc/App.php");
 normalized_require_once("/server/php/inc/Entry.php");
-normalized_require_once("/conf/config.php");
 
-$APP = new H5ai(APP_ABS_PATH, APP_ABS_HREF);
+$APP = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
 ?>

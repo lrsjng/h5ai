@@ -16,8 +16,8 @@ class Entry {
 
 	public static function get($h5ai, $absPath, $absHref) {
 
-		if (!starts_with($absHref, $h5ai->getRootAbsHref())) {
-			error_log("ILLEGAL REQUEST: " . $absHref . ", " . $absPath . ", " . $h5ai->getRootAbsHref());
+		if (!starts_with($absHref, $h5ai->get_root_abs_href())) {
+			error_log("ILLEGAL REQUEST: " . $absHref . ", " . $absPath . ", " . $h5ai->get_root_abs_href());
 			return null;
 		}
 
@@ -58,7 +58,7 @@ class Entry {
 
 		if ($this->isFolder) {
 			$this->size = null;
-			$options = $h5ai->getOptions();
+			$options = $h5ai->get_options();
 			if ($options["foldersize"]["enabled"]) {
 				$cmd = str_replace("[DIR]", $this->absPath, Entry::$FOLDER_SIZE_CMD);
 				$this->size = intval(preg_replace("/\s.*$/", "", `$cmd`), 10);
@@ -69,7 +69,7 @@ class Entry {
 
 		$this->parent = null;
 		$parentAbsHref = normalize_path(dirname($this->absHref), true);
-		if ($this->absHref !== "/" && starts_with($parentAbsHref, $h5ai->getRootAbsHref())) {
+		if ($this->absHref !== "/" && starts_with($parentAbsHref, $h5ai->get_root_abs_href())) {
 			$this->parent = Entry::get($this->h5ai, normalize_path(dirname($this->absPath)), $parentAbsHref);
 		}
 
@@ -88,7 +88,7 @@ class Entry {
 		);
 
 		if ($withStatus && $this->isFolder) {
-			$obj["status"] = $this->h5ai->getHttpCode($this->absHref);
+			$obj["status"] = $this->h5ai->get_http_code($this->absHref);
 			$obj["content"] = $this->isContentFetched;
 		}
 
@@ -106,7 +106,7 @@ class Entry {
 
 		$content = array();
 
-		if ($this->h5ai->getHttpCode($this->absHref) !== "h5ai") {
+		if ($this->h5ai->get_http_code($this->absHref) !== "h5ai") {
 			return $content;
 		}
 

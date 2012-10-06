@@ -57,6 +57,7 @@ To create an fresh zipball run
 * adds auto-refresh (PHP)
 * adds drag'n'drop upload (PHP)
 * adds file deletion (PHP)
+* cleans and improves PHP code
 * PHP ignore patterns might include paths now
 * adds optional binary prefixes for file sizes
 * improves filter: autofocus on keypress, clear on `ESC`

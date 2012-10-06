@@ -2,7 +2,7 @@
 
 require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php");
 $h5ai = $APP;
-$options = $h5ai->getOptions();
+$options = $h5ai->get_options();
 
 
 list($action) = use_request_params(array("action"));
@@ -58,7 +58,7 @@ else if ($action === "getarchive") {
 	list($id, $as) = use_request_params(array("id", "as"));
 	json_fail(2, "file not found", !preg_match("/^package-/", $id));
 
-	$target = $h5ai->getCacheAbsPath() . "/" . $id;
+	$target = $h5ai->get_cache_abs_path() . "/" . $id;
 	json_fail(3, "file not found", !file_exists($target));
 
 	header("Content-Type: application/octet-stream");
@@ -79,7 +79,7 @@ else if ($action === "getchecks") {
 		$gdinfo = gd_info();
 		$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 	}
-	$cache = @is_writable($h5ai->getCacheAbsPath());
+	$cache = @is_writable($h5ai->get_cache_abs_path());
 	$tar = @preg_match("/tar$/", `which tar`) > 0;
 	$zip = @preg_match("/zip$/", `which zip`) > 0;
 	$convert = @preg_match("/convert$/", `which convert`) > 0;
@@ -106,7 +106,7 @@ else if ($action === "getentries") {
 
 	$content = intval($content, 10);
 
-	json_exit(array("entries" => $h5ai->getEntries($href, $content)));
+	json_exit(array("entries" => $h5ai->get_entries($href, $content)));
 }
 
 
@@ -122,8 +122,8 @@ else if ($action === "upload") {
 	json_fail(3, "something went wrong [" . $userfile["error"] . "]", $userfile["error"] !== 0);
 	json_fail(4, "folders not supported", file_get_contents($userfile["tmp_name"]) === "null");
 
-	$upload_dir = $h5ai->getAbsPath($href);
-	$code = $h5ai->getHttpCode($href);
+	$upload_dir = $h5ai->get_abs_path($href);
+	$code = $h5ai->get_http_code($href);
 
 	json_fail(5, "upload dir no h5ai folder or ignored", $code !== "h5ai" || $h5ai->is_ignored($upload_dir));
 
@@ -150,13 +150,13 @@ else if ($action === "delete") {
 		$d = normalize_path(dirname($href), true);
 		$n = basename($href);
 
-		$code = $h5ai->getHttpCode($d);
+		$code = $h5ai->get_http_code($d);
 		if ($code == 401) {
 		}
 
 		if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
 
-			$absPath = $h5ai->getAbsPath($href);
+			$absPath = $h5ai->get_abs_path($href);
 
 			if (!unlink($absPath)) {
 				$errors[] = $href;
@@ -181,13 +181,13 @@ else if ($action === "rename") {
 	$d = normalize_path(dirname($href), true);
 	$n = basename($href);
 
-	$code = $h5ai->getHttpCode($d);
+	$code = $h5ai->get_http_code($d);
 	if ($code == 401) {
 	}
 
 	if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
 
-		$absPath = $h5ai->getAbsPath($href);
+		$absPath = $h5ai->get_abs_path($href);
 		$folder = normalize_path(dirname($absPath));
 
 		if (!rename($absPath, $folder . "/" . $name)) {

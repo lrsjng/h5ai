@@ -29,7 +29,7 @@ class Archive {
 			return 404;
 		}
 
-		$target = $this->h5ai->getCacheAbsPath() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
+		$target = $this->h5ai->get_cache_abs_path() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
 
 		try {
 			if ($execution === "shell") {
@@ -41,7 +41,7 @@ class Archive {
 				} else {
 					return null;
 				}
-				$cmd = str_replace("[ROOTDIR]", "\"" . $this->h5ai->getRootAbsPath() . "\"", $cmd);
+				$cmd = str_replace("[ROOTDIR]", "\"" . $this->h5ai->get_root_abs_path() . "\"", $cmd);
 				$cmd = str_replace("[TARGET]", "\"" . $target . "\"", $cmd);
 				$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
 				$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
@@ -74,15 +74,15 @@ class Archive {
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
-			$code = $this->h5ai->getHttpCode($d);
+			$code = $this->h5ai->get_http_code($d);
 			if ($code == 401) {
 				$this->sc401 = true;
 			}
 
 			if ($code == "h5ai" && !$this->h5ai->is_ignored($n)) {
 
-				$realFile = $this->h5ai->getAbsPath($href);
-				$archivedFile = preg_replace("!^" . normalize_path($this->h5ai->getRootAbsPath(), true) . "!", "", $realFile);
+				$realFile = $this->h5ai->get_abs_path($href);
+				$archivedFile = preg_replace("!^" . normalize_path($this->h5ai->get_root_abs_path(), true) . "!", "", $realFile);
 
 				if (is_dir($realFile)) {
 					$this->add_dir($realFile, $archivedFile);
@@ -104,7 +104,7 @@ class Archive {
 
 	private function add_dir($realDir, $archivedDir) {
 
-		$code = $this->h5ai->getHttpCode($this->h5ai->getAbsHref($realDir));
+		$code = $this->h5ai->get_http_code($this->h5ai->get_abs_href($realDir));
 		if ($code == 401) {
 			$this->sc401 = true;
 		}

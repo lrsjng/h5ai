@@ -27,7 +27,7 @@ class Thumb {
 
 	public function thumb($type, $sourceAbsHref, $mode, $width, $height) {
 
-		$sourceAbsPath = $this->h5ai->getAbsPath($sourceAbsHref);
+		$sourceAbsPath = $this->h5ai->get_abs_path($sourceAbsHref);
 
 		if ($type === "img") {
 			$captureAbsPath = $sourceAbsPath;
@@ -48,8 +48,8 @@ class Thumb {
 		}
 
 		$name = "thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".jpg";
-		$thumbAbsPath = $this->h5ai->getCacheAbsPath() . "/" . $name;
-		$thumbAbsHref = $this->h5ai->getCacheAbsHref() . $name;
+		$thumbAbsPath = $this->h5ai->get_cache_abs_path() . "/" . $name;
+		$thumbAbsHref = $this->h5ai->get_cache_abs_href() . $name;
 
 		if (!file_exists($thumbAbsPath) || filemtime($sourceAbsPath) >= filemtime($thumbAbsPath)) {
 			$image = new Image();
@@ -68,7 +68,7 @@ class Thumb {
 			return null;
 		}
 
-		$captureAbsPath = $this->h5ai->getCacheAbsPath() . "/capture-" . sha1($sourceAbsPath) . ".jpg";
+		$captureAbsPath = $this->h5ai->get_cache_abs_path() . "/capture-" . sha1($sourceAbsPath) . ".jpg";
 
 		if (!file_exists($captureAbsPath) || filemtime($sourceAbsPath) >= filemtime($captureAbsPath)) {
 			$cmd = str_replace("[SOURCE]", $sourceAbsPath, $cmd);

@@ -10,10 +10,10 @@ options, types and langs
 	"options": {
 
 		/*
-		The absolute link to h5ai.
-		Must point to the "_h5ai" directory.
+		The absolute link to {{pkg.name}}.
+		Must point to the "_{{pkg.name}}" directory.
 		*/
-		"h5aiAbsHref": "/_h5ai/",
+		"h5aiAbsHref": "/_{{pkg.name}}/",
 
 		/*
 		Spacing of the main content.
@@ -43,7 +43,9 @@ options, types and langs
 		"view": {
 			"modes": ["details", "list", "grid", "icons"],
 			"setParentFolderLabels": true,
-			"binaryPrefix": false
+			"binaryPrefix": false,
+			"indexFiles": ["index.html", "index.htm", "index.php"],
+			"ignore": ["^\\.", "^_{{pkg.name}}"]
 		},
 
 
@@ -75,8 +77,8 @@ options, types and langs
 		*/
 		"custom": {
 			"enabled": true,
-			"header": "_h5ai.header.html",
-			"footer": "_h5ai.footer.html"
+			"header": "_{{pkg.name}}.header.html",
+			"footer": "_{{pkg.name}}.footer.html"
 		},
 
 		/* [php]
