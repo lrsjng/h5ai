@@ -131,21 +131,6 @@ options, types and langs
 		},
 
 		/* [all]
-		Associative array of folders and their HTTP status codes to
-		avoid HEAD requests to that folders. The key (folder) must start
-		and end with a slash (/).
-		For example
-			"/some/folder/": 200
-		will always return HTTP status 200 (OK), which will be interpreted
-		as a non auto indexed folder, that means a folder containing an
-		appropriate default index file.
-		*/
-		"folderstatus": {
-			"enabled": true,
-			"folders": {}
-		},
-
-		/* [all]
 		Adds Google Analytics asynchronous tracking code.
 
 		for example:
@@ -313,10 +298,7 @@ options, types and langs
 
 		/* [all]
 		Show a folder tree.
-		Note that this tree might have side effects as it sends HEAD requests
-		to the folders, and therefore will invoke index.php scripts. Use
-		"folderstatus" above to avoid such requests.
-		It might also affect performance significantly.
+		Note that this might affect performance significantly.
 
 		Slide tree bar into viewport if there is enough space.
 		*/

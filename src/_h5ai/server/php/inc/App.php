@@ -152,20 +152,6 @@ class H5ai {
 			return null;
 		}
 
-		if ($this->options["folderstatus"]["enabled"]) {
-			$folders = $this->options["folderstatus"]["folders"];
-			if (array_key_exists($absHref, $folders)) {
-				return $folders[$absHref];
-			}
-		}
-
-		// return $this->fetchHttpCode($absHref);
-		return $this->guessHttpCode($absHref);
-	}
-
-
-	public function guessHttpCode($absHref) {
-
 		$absPath = $this->getAbsPath($absHref);
 
 		foreach ($this->index_files as $if) {
@@ -178,40 +164,6 @@ class H5ai {
 			}
 		}
 		return "h5ai";
-	}
-
-
-	public function fetchHttpCode($absHref) {
-
-		$host = getenv("HTTP_HOST");
-		$port = getenv("SERVER_PORT");
-		$msg = "HEAD $absHref HTTP/1.1\r\nHost: $host\r\nConnection: Close\r\n";
-		if (isset($_SERVER['PHP_AUTH_USER'])) {
-			$msg .= "Authorization: Basic " . base64_encode($_SERVER['PHP_AUTH_USER'] . ":" . $_SERVER['PHP_AUTH_PW']) . "\r\n";
-		}
-		$msg .= "\r\n";
-
-		$errno = "";
-		$errstr = "";
-		$socket = fsockopen($host, $port, $errno, $errstr, 30);
-		if($socket === 0) {
-			return null;
-		}
-
-		fwrite($socket, $msg);
-		$content = fgets($socket);
-		$code = intval(trim(substr($content, 9, 4)));
-		if ($code === 200) {
-			while ($content !== false && stripos($content, "Content-Type") === false) {
-				$content = fgets($socket);
-			}
-			if (stripos($content, H5ai::$H5AI_CONTENT_TYPE) !== false) {
-				$code = "h5ai";
-			}
-		}
-		fclose($socket);
-
-		return $code;
 	}
 
 
