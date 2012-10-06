@@ -5,7 +5,7 @@ modulejs.define('core/refresh', ['_', 'core/mode', 'core/ajax', 'model/entry'], 
 
 			var found = {};
 
-			_.each(json.entries, function (jsonEntry) {
+			_.each(json, function (jsonEntry) {
 
 				found[jsonEntry.absHref] = true;
 				Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);

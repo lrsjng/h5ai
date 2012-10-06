@@ -29,13 +29,14 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 			$.ajax({
 				url: resource.api(),
 				data: {
-					action: 'getchecks'
+					action: 'get',
+					checks: true
 				},
 				type: 'POST',
 				dataType: 'json',
 				success: function (json) {
 
-					callback(json);
+					callback(json.checks);
 				},
 				error: function () {
 
@@ -44,19 +45,21 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 			});
 		},
 
-		getEntries = function (href, content, callback) {
+		getEntries = function (href, what, callback) {
 
 			$.ajax({
 				url: resource.api(),
 				data: {
-					action: 'getentries',
-					href: href,
-					content: content
+					action: 'get',
+					entries: true,
+					entriesHref: href,
+					entriesWhat: what
 				},
+				type: 'POST',
 				dataType: 'json',
 				success: function (json) {
 
-					callback(json);
+					callback(json.entries);
 				},
 				error: function () {
 
@@ -154,6 +157,7 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 
 			$.ajax({
 				url: url,
+				type: 'POST',
 				dataType: 'html',
 				success: function (html) {
 

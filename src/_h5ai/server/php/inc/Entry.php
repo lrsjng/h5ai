@@ -6,6 +6,13 @@ class Entry {
 
 	public static function cmp($entry1, $entry2) {
 
+		if ($entry1->is_folder && !$entry2->is_folder) {
+			return -1;
+		}
+		if (!$entry1->is_folder && $entry2->is_folder) {
+			return 1;
+		}
+
 		return strcasecmp($entry1->abs_path, $entry2->abs_path);
 	}
 

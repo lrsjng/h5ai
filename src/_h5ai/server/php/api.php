@@ -1,14 +1,76 @@
 <?php
 
 require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php");
-$h5ai = $APP;
-$options = $h5ai->get_options();
+$app = $APP;
+$options = $app->get_options();
 
 
 list($action) = use_request_params(array("action"));
 
 
-if ($action === "getthumbsrc") {
+if ($action === "get") {
+
+	$response = array();
+
+	if (array_key_exists("options", $_REQUEST)) {
+
+		use_request_params("options");
+		$response["options"] = $app->get_options();
+	}
+
+	if (array_key_exists("types", $_REQUEST)) {
+
+		use_request_params("types");
+		$response["types"] = $app->get_types();
+	}
+
+	if (array_key_exists("langs", $_REQUEST)) {
+
+		use_request_params("langs");
+		$response["langs"] = $app->get_l10n_list();
+	}
+
+	if (array_key_exists("l10n", $_REQUEST)) {
+
+		list($iso_codes) = use_request_params("l10nCodes", "l10n");
+		$iso_codes = explode(",", $iso_codes);
+		$response["l10n"] = $app->get_l10n($iso_codes);
+	}
+
+	if (array_key_exists("checks", $_REQUEST)) {
+
+		use_request_params("checks");
+		$response["checks"] = $app->get_server_checks();
+	}
+
+	if (array_key_exists("server", $_REQUEST)) {
+
+		use_request_params("server");
+		$response["server"] = $app->get_server_details();
+	}
+
+	if (array_key_exists("custom", $_REQUEST)) {
+
+		list($abs_href) = use_request_params("customHref", "custom");
+		$response["custom"] = $app->get_customizations($abs_href);
+	}
+
+	if (array_key_exists("entries", $_REQUEST)) {
+
+		list($abs_href, $what) = use_request_params("entriesHref", "entriesWhat", "entries");
+		$what = intval($what, 10);
+		$response["entries"] = $app->get_entries($abs_href, $what);
+	}
+
+	if (count($_REQUEST)) {
+		$response["unused"] = $_REQUEST;
+	}
+
+	json_exit($response);
+}
+
+
+else if ($action === "getthumbsrc") {
 
 	if (!$options["thumbnails"]["enabled"]) {
 		json_fail(1, "thumbnails disabled");
@@ -21,7 +83,7 @@ if ($action === "getthumbsrc") {
 
 	list($type, $srcAbsHref, $mode, $width, $height) = use_request_params(array("type", "href", "mode", "width", "height"));
 
-	$thumb = new Thumb($h5ai);
+	$thumb = new Thumb($app);
 	$thumbHref = $thumb->thumb($type, $srcAbsHref, $mode, $width, $height);
 	if ($thumbHref === null) {
 		json_fail(3, "thumbnail creation failed");
@@ -38,7 +100,7 @@ else if ($action === "archive") {
 	list($execution, $format, $hrefs) = use_request_params(array("execution", "format", "hrefs"));
 
 	normalized_require_once("/server/php/inc/Archive.php");
-	$archive = new Archive($h5ai);
+	$archive = new Archive($app);
 
 	$hrefs = explode(":", trim($hrefs));
 	$target = $archive->create($execution, $format, $hrefs);
@@ -58,7 +120,7 @@ else if ($action === "getarchive") {
 	list($id, $as) = use_request_params(array("id", "as"));
 	json_fail(2, "file not found", !preg_match("/^package-/", $id));
 
-	$target = $h5ai->get_cache_abs_path() . "/" . $id;
+	$target = $app->get_cache_abs_path() . "/" . $id;
 	json_fail(3, "file not found", !file_exists($target));
 
 	header("Content-Type: application/octet-stream");
@@ -67,46 +129,6 @@ else if ($action === "getarchive") {
 	header("Connection: close");
 	register_shutdown_function("delete_tempfile", $target);
 	readfile($target);
-}
-
-
-else if ($action === "getchecks") {
-
-	$php = version_compare(PHP_VERSION, "5.2.1") >= 0;
-	$archive = class_exists("PharData");
-	$gd = false;
-	if (function_exists("gd_info")) {
-		$gdinfo = gd_info();
-		$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
-	}
-	$cache = @is_writable($h5ai->get_cache_abs_path());
-	$tar = @preg_match("/tar$/", `which tar`) > 0;
-	$zip = @preg_match("/zip$/", `which zip`) > 0;
-	$convert = @preg_match("/convert$/", `which convert`) > 0;
-	$ffmpeg = @preg_match("/ffmpeg$/", `which ffmpeg`) > 0;
-	$du = @preg_match("/du$/", `which du`) > 0;
-
-	json_exit(array(
-		"php" => $php,
-		"cache" => $cache,
-		"thumbs" => $gd,
-		"archive" => $archive,
-		"tar" => $tar,
-		"zip" => $zip,
-		"convert" => $convert,
-		"ffmpeg" => $ffmpeg,
-		"du" => $du
-	));
-}
-
-
-else if ($action === "getentries") {
-
-	list($href, $content) = use_request_params(array("href", "content"));
-
-	$content = intval($content, 10);
-
-	json_exit(array("entries" => $h5ai->get_entries($href, $content)));
 }
 
 
@@ -122,10 +144,10 @@ else if ($action === "upload") {
 	json_fail(3, "something went wrong [" . $userfile["error"] . "]", $userfile["error"] !== 0);
 	json_fail(4, "folders not supported", file_get_contents($userfile["tmp_name"]) === "null");
 
-	$upload_dir = $h5ai->get_abs_path($href);
-	$code = $h5ai->get_http_code($href);
+	$upload_dir = $app->get_abs_path($href);
+	$code = $app->get_http_code($href);
 
-	json_fail(5, "upload dir no h5ai folder or ignored", $code !== "h5ai" || $h5ai->is_ignored($upload_dir));
+	json_fail(5, "upload dir no h5ai folder or ignored", $code !== "h5ai" || $app->is_ignored($upload_dir));
 
 	$dest = $upload_dir . "/" . utf8_encode($userfile["name"]);
 
@@ -150,13 +172,13 @@ else if ($action === "delete") {
 		$d = normalize_path(dirname($href), true);
 		$n = basename($href);
 
-		$code = $h5ai->get_http_code($d);
+		$code = $app->get_http_code($d);
 		if ($code == 401) {
 		}
 
-		if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
+		if ($code == "h5ai" && !$app->is_ignored($n)) {
 
-			$absPath = $h5ai->get_abs_path($href);
+			$absPath = $app->get_abs_path($href);
 
 			if (!unlink($absPath)) {
 				$errors[] = $href;
@@ -181,13 +203,13 @@ else if ($action === "rename") {
 	$d = normalize_path(dirname($href), true);
 	$n = basename($href);
 
-	$code = $h5ai->get_http_code($d);
+	$code = $app->get_http_code($d);
 	if ($code == 401) {
 	}
 
-	if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
+	if ($code == "h5ai" && !$app->is_ignored($n)) {
 
-		$absPath = $h5ai->get_abs_path($href);
+		$absPath = $app->get_abs_path($href);
 		$folder = normalize_path(dirname($absPath));
 
 		if (!rename($absPath, $folder . "/" . $name)) {
