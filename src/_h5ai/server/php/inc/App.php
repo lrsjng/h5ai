@@ -80,7 +80,9 @@ class App {
 		$parts = explode("/", $abs_path);
 		$encoded_parts = array();
 		foreach ($parts as $part) {
-			$encoded_parts[] = rawurlencode($part);
+			if ($part) {
+				$encoded_parts[] = rawurlencode($part);
+			}
 		}
 
 		return normalize_path($this->root_abs_href . implode("/", $encoded_parts), $trailing_slash);
@@ -147,7 +149,7 @@ class App {
 				return 200;
 			}
 		}
-		return "h5ai";
+		return App::$MAGIC_SEQUENCE;
 	}
 
 
@@ -189,27 +191,30 @@ class App {
 
 	public function get_entries($abs_href, $what) {
 
-		$folder = Entry::get($this, $this->get_abs_path($abs_href), $abs_href);
+		$cache = array();
+		$folder = Entry::get($this, $this->get_abs_path($abs_href), $cache);
 
-		if ($what > 1 && $folder !== null) {
-			foreach ($folder->getContent() as $entry) {
-				$entry->getContent();
+		// add content of subfolders
+		if ($what >= 2 && $folder !== null) {
+			foreach ($folder->get_content($cache) as $entry) {
+				$entry->get_content($cache);
 			}
-			$folder = $folder->getParent();
+			$folder = $folder->get_parent($cache);
 		}
 
-		while ($what > 0 && $folder !== null) {
-			$folder->getContent();
-			$folder = $folder->getParent();
-		}
-		Entry::sort();
-
-		$entries = array();
-		foreach (Entry::get_cache() as $entry) {
-			$entries[] = $entry->toJsonObject(true);
+		// add content of this folder and all parent folders
+		while ($what >= 1 && $folder !== null) {
+			$folder->get_content($cache);
+			$folder = $folder->get_parent($cache);
 		}
 
-		return $entries;
+		uasort($cache, array("Entry", "cmp"));
+		$result = array();
+		foreach ($cache as $p => $entry) {
+			$result[] = $entry->to_json_object();
+		}
+
+		return $result;
 	}
 
 
@@ -217,31 +222,32 @@ class App {
 
 		date_default_timezone_set("UTC");
 
-		function _cmp_no_js_fallback($entry1, $entry2) {
+		// function _cmp_no_js_fallback($entry1, $entry2) {
 
-			if ($entry1->isFolder && !$entry2->isFolder) {
-				return -1;
-			}
-			if (!$entry1->isFolder && $entry2->isFolder) {
-				return 1;
-			}
+		// 	if ($entry1->isFolder && !$entry2->isFolder) {
+		// 		return -1;
+		// 	}
+		// 	if (!$entry1->isFolder && $entry2->isFolder) {
+		// 		return 1;
+		// 	}
 
-			return strcasecmp($entry1->absHref, $entry2->absHref);
-		}
+		// 	return strcasecmp($entry1->abs_href, $entry2->abs_href);
+		// }
 
-		$folder = Entry::get($this, $this->abs_path, $this->abs_href);
-		$entries = $folder->getContent();
-		uasort($entries, "_cmp_no_js_fallback");
+		$cache = array();
+		$folder = Entry::get($this, $this->abs_path, $cache);
+		$entries = $folder->get_content($cache);
+		uasort($entries, array("Entry", "cmp"));
 
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
-		if ($folder->parent) {
+		if ($folder->get_parent($cache)) {
 			$html .= "<tr><td></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
 		}
 		foreach ($entries as $entry) {
 			$html .= "<tr>";
-			$html .= "<td></td>";
-			$html .= "<td><a href=\"" . $entry->absHref . "\">" . basename($entry->absPath) . ($entry->isFolder ? "/" : "") . "</a></td>";
+			$html .= "<td>" . ($entry->is_folder ? "[D]" : "[F]") . "</td>";
+			$html .= "<td><a href=\"" . $entry->abs_href . "\">" . basename($entry->abs_path) . ($entry->is_folder ? "/" : "") . "</a></td>";
 			$html .= "<td>" . date("Y-m-d H:i", $entry->date) . "</td>";
 			$html .= "<td>" . ($entry->size !== null ? intval($entry->size / 1000) . " KB" : "" ) . "</td>";
 			$html .= "</tr>";

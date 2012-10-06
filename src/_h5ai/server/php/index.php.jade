@@ -1,14 +1,9 @@
-|<?php
-|	header("Content-type: text/html;{{pkg.name}}={{pkg.version}}");
-|	require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php");
-|	$app_abs_href = $APP->get_app_abs_href();
-|	$is_head_request = stripos($_SERVER["REQUEST_METHOD"], "HEAD");
-|?>
+|<?php require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php"); ?>
 
-- var appHref = "<?php echo $app_abs_href; ?>client"
-- var json = "<?php if (!$is_head_request) { echo $APP->get_generic_json(); }?>"
-- var fallback = "<?php if (!$is_head_request) { echo $APP->get_no_js_fallback(); }?>"
-- var config = "<?php if (!$is_head_request) { echo $APP->get_custom_config(); }?>"
+- var href = "<?php echo $APP->get_app_abs_href(); ?>"
+- var json = "<?php echo $APP->get_generic_json(); ?>"
+- var fallback = "<?php echo $APP->get_no_js_fallback(); ?>"
+- var config = "<?php echo $APP->get_custom_config(); ?>"
 
 doctype 5
 //if lt IE 9
@@ -20,14 +15,14 @@ html.no-js( lang="en" )
 	head
 		meta( charset="utf-8" )
 		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
-		title Directory index · styled with {{pkg.name}} {{pkg.version}}
-		meta( name="description", content="Directory index styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})" )
+		title index · styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})
+		meta( name="description", content="index styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})" )
 		meta( name="viewport", content="width=device-width" )
-		link( rel="shortcut icon", href!="#{appHref}/images/app-16x16.ico" )
-		link( rel="apple-touch-icon", type="image/png", href!="#{appHref}/images/app-48x48.png" )
+		link( rel="shortcut icon", href!="#{href}client/images/app-16x16.ico" )
+		link( rel="apple-touch-icon", type="image/png", href!="#{href}client/images/app-48x48.png" )
 		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
-		link( rel="stylesheet", href!="#{appHref}/css/styles.css" )
-		script( src!="#{appHref}/js/scripts.js", data-config!="#{config}" )
+		link( rel="stylesheet", href!="#{href}client/css/styles.css" )
+		script( src!="#{href}client/js/scripts.js", data-config!="#{config}" )
 
 	body#h5ai-main
 

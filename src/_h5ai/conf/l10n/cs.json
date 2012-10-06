@@ -1,16 +1,19 @@
 {
 	"lang": "čeština",
-	"details": "podrobnosti",
-	"icons": "ikony",
+	"details": "Podrobnosti",
+	"list": "Dlaždice",
+	"grid": "Seznam",
+	"icons": "Velké ikony",
 	"name": "Název",
-	"lastModified": "Upraveno",
+	"lastModified": "Datum změny",
 	"size": "Velikost",
 	"parentDirectory": "Nadřazený adresář",
-	"empty": "prázdný",
+	"empty": "Prázdná složka",
 	"folders": "složek",
 	"files": "souborů",
-	"download": "stáhnout",
-	"noMatch": "žádná shoda",
+	"download": "Stáhnout",
+	"noMatch": "Žádná shoda",
 	"dateFormat": "DD.MM.YYYY HH:mm",
-	"filter": "filtr"
+	"filter": "Filtr",
+	"delete": "Odstranit"
 }

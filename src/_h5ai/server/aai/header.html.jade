@@ -1,5 +1,5 @@
 
-- var appHref = "/_{{pkg.name}}/client"
+- var href = "/_{{pkg.name}}/"
 
 doctype 5
 //if lt IE 9
@@ -11,14 +11,14 @@ doctype 5
 head
 	meta( charset="utf-8" )
 	meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
-	title Directory index · styled with {{pkg.name}} {{pkg.version}}
-	meta( name="description", content="Directory index styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})" )
+	title index · styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})
+	meta( name="description", content="index styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})" )
 	meta( name="viewport", content="width=device-width" )
-	link( rel="shortcut icon", href="#{appHref}/images/app-16x16.ico" )
-	link( rel="apple-touch-icon", type="image/png", href="#{appHref}/images/app-48x48.png" )
+	link( rel="shortcut icon", href="#{href}client/images/app-16x16.ico" )
+	link( rel="apple-touch-icon", type="image/png", href="#{href}client/images/app-48x48.png" )
 	link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
-	link( rel="stylesheet", href="#{appHref}/css/styles.css" )
-	script( src="#{appHref}/js/scripts.js" )
+	link( rel="stylesheet", href="#{href}client/css/styles.css" )
+	script( src="#{href}client/js/scripts.js" )
 
 |<body id="h5ai-main">
 
