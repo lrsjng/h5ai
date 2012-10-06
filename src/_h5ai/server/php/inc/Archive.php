@@ -71,7 +71,7 @@ class Archive {
 
 		foreach ($hrefs as $href) {
 
-			$d = H5ai::normalize_path(dirname($href), true);
+			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
 			$code = $this->h5ai->getHttpCode($d);
@@ -82,7 +82,7 @@ class Archive {
 			if ($code == "h5ai" && !$this->h5ai->is_ignored($n)) {
 
 				$realFile = $this->h5ai->getAbsPath($href);
-				$archivedFile = preg_replace("!^" . H5ai::normalize_path($this->h5ai->getRootAbsPath(), true) . "!", "", $realFile);
+				$archivedFile = preg_replace("!^" . normalize_path($this->h5ai->getRootAbsPath(), true) . "!", "", $realFile);
 
 				if (is_dir($realFile)) {
 					$this->add_dir($realFile, $archivedFile);

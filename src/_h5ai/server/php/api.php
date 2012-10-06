@@ -1,41 +1,11 @@
 <?php
 
-require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php");
-
-
-$h5ai = new H5ai(__FILE__);
+require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php");
+$h5ai = $APP;
 $options = $h5ai->getOptions();
 
 
-function json_exit($obj) {
-
-	$obj["code"] = 0;
-	echo json_encode($obj);
-	exit;
-}
-
-function json_fail($code, $msg = "", $cond = true) {
-
-	if ($cond) {
-		echo json_encode(array("code" => $code, "msg" => $msg));
-		exit;
-	}
-}
-
-function check_keys($keys) {
-	$values = array();
-	foreach ($keys as $key) {
-		json_fail(101, "parameter '$key' is missing", !array_key_exists($key, $_REQUEST));
-		$values[] = $_REQUEST[$key];
-	}
-	return $values;
-}
-
-function delete_tempfile($file) {
-	@unlink($file);
-}
-
-list($action) = check_keys(array("action"));
+list($action) = use_request_params(array("action"));
 
 
 if ($action === "getthumbsrc") {
@@ -44,12 +14,12 @@ if ($action === "getthumbsrc") {
 		json_fail(1, "thumbnails disabled");
 	}
 
-	H5ai::req_once("/server/php/inc/Thumb.php");
+	normalized_require_once("/server/php/inc/Thumb.php");
 	if (!Thumb::is_supported()) {
 		json_fail(2, "thumbnails not supported");
 	}
 
-	list($type, $srcAbsHref, $mode, $width, $height) = check_keys(array("type", "href", "mode", "width", "height"));
+	list($type, $srcAbsHref, $mode, $width, $height) = use_request_params(array("type", "href", "mode", "width", "height"));
 
 	$thumb = new Thumb($h5ai);
 	$thumbHref = $thumb->thumb($type, $srcAbsHref, $mode, $width, $height);
@@ -65,9 +35,9 @@ else if ($action === "archive") {
 
 	json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-	list($execution, $format, $hrefs) = check_keys(array("execution", "format", "hrefs"));
+	list($execution, $format, $hrefs) = use_request_params(array("execution", "format", "hrefs"));
 
-	H5ai::req_once("/server/php/inc/Archive.php");
+	normalized_require_once("/server/php/inc/Archive.php");
 	$archive = new Archive($h5ai);
 
 	$hrefs = explode(":", trim($hrefs));
@@ -85,7 +55,7 @@ else if ($action === "getarchive") {
 
 	json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-	list($id, $as) = check_keys(array("id", "as"));
+	list($id, $as) = use_request_params(array("id", "as"));
 	json_fail(2, "file not found", !preg_match("/^package-/", $id));
 
 	$target = $h5ai->getCacheAbsPath() . "/" . $id;
@@ -132,7 +102,7 @@ else if ($action === "getchecks") {
 
 else if ($action === "getentries") {
 
-	list($href, $content) = check_keys(array("href", "content"));
+	list($href, $content) = use_request_params(array("href", "content"));
 
 	$content = intval($content, 10);
 
@@ -142,7 +112,7 @@ else if ($action === "getentries") {
 
 else if ($action === "upload") {
 
-	list($href) = check_keys(array("href"));
+	list($href) = use_request_params(array("href"));
 
 	json_fail(1, "wrong HTTP method", strtolower($_SERVER["REQUEST_METHOD"]) !== "post");
 	json_fail(2, "something went wrong", !array_key_exists("userfile", $_FILES));
@@ -170,14 +140,14 @@ else if ($action === "delete") {
 
 	json_fail(1, "deletion disabled", !$options["delete"]["enabled"]);
 
-	list($hrefs) = check_keys(array("hrefs"));
+	list($hrefs) = use_request_params(array("hrefs"));
 
 	$hrefs = explode(":", trim($hrefs));
 	$errors = array();
 
 	foreach ($hrefs as $href) {
 
-		$d = H5ai::normalize_path(dirname($href), true);
+		$d = normalize_path(dirname($href), true);
 		$n = basename($href);
 
 		$code = $h5ai->getHttpCode($d);
@@ -206,9 +176,9 @@ else if ($action === "rename") {
 
 	json_fail(1, "renaming disabled", !$options["rename"]["enabled"]);
 
-	list($href, $name) = check_keys(array("href", "name"));
+	list($href, $name) = use_request_params(array("href", "name"));
 
-	$d = H5ai::normalize_path(dirname($href), true);
+	$d = normalize_path(dirname($href), true);
 	$n = basename($href);
 
 	$code = $h5ai->getHttpCode($d);
@@ -218,7 +188,7 @@ else if ($action === "rename") {
 	if ($code == "h5ai" && !$h5ai->is_ignored($n)) {
 
 		$absPath = $h5ai->getAbsPath($href);
-		$folder = H5ai::normalize_path(dirname($absPath));
+		$folder = normalize_path(dirname($absPath));
 
 		if (!rename($absPath, $folder . "/" . $name)) {
 			json_fail(2, "renaming failed");

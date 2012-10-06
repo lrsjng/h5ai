@@ -1,7 +1,7 @@
 |<?php
 |	header("Content-type: text/html;{{pkg.name}}={{pkg.version}}");
-|	require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/H5ai.php");
-|	$h5ai = new H5ai(__FILE__);
+|	require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php");
+|	$h5ai = $APP;
 |	$h5aiAbsHref = $h5ai->getH5aiAbsHref();
 |	$isHeadRequest = stripos($_SERVER["REQUEST_METHOD"], "HEAD");
 |?>

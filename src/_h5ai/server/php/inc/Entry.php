@@ -8,12 +8,6 @@ class Entry {
 	private static $cache = array();
 
 
-	private static function starts_with($sequence, $part) {
-
-		return (substr($sequence, 0, strlen($part)) === $part);
-	}
-
-
 	public static function get_cache() {
 
 		return Entry::$cache;
@@ -22,7 +16,7 @@ class Entry {
 
 	public static function get($h5ai, $absPath, $absHref) {
 
-		if (!Entry::starts_with($absHref, $h5ai->getRootAbsHref())) {
+		if (!starts_with($absHref, $h5ai->getRootAbsHref())) {
 			error_log("ILLEGAL REQUEST: " . $absHref . ", " . $absPath . ", " . $h5ai->getRootAbsHref());
 			return null;
 		}
@@ -55,10 +49,10 @@ class Entry {
 
 		$this->h5ai = $h5ai;
 
-		$this->absPath = H5ai::normalize_path($absPath);
+		$this->absPath = normalize_path($absPath);
 
 		$this->isFolder = is_dir($this->absPath);
-		$this->absHref = H5ai::normalize_path($absHref, $this->isFolder);
+		$this->absHref = normalize_path($absHref, $this->isFolder);
 
 		$this->date = filemtime($this->absPath);
 
@@ -74,9 +68,9 @@ class Entry {
 		}
 
 		$this->parent = null;
-		$parentAbsHref = H5ai::normalize_path(dirname($this->absHref), true);
-		if ($this->absHref !== "/" && Entry::starts_with($parentAbsHref, $h5ai->getRootAbsHref())) {
-			$this->parent = Entry::get($this->h5ai, H5ai::normalize_path(dirname($this->absPath)), $parentAbsHref);
+		$parentAbsHref = normalize_path(dirname($this->absHref), true);
+		if ($this->absHref !== "/" && starts_with($parentAbsHref, $h5ai->getRootAbsHref())) {
+			$this->parent = Entry::get($this->h5ai, normalize_path(dirname($this->absPath)), $parentAbsHref);
 		}
 
 		$this->isContentFetched = false;

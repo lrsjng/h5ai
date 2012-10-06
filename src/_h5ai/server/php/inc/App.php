@@ -1,75 +1,27 @@
 <?php
 
-
-define("H5AI_ABS_PATH", H5ai::normalize_path(dirname(dirname(dirname(dirname(__FILE__))))));
-
-
-H5ai::req_once("/conf/config.php");
-H5ai::req_once("/server/php/inc/Entry.php");
-
-
 class H5ai {
-
-
-	public static final function normalize_path($path, $endWithSlash = false) {
-
-		$path = str_replace("\\", "/", $path);
-		return preg_match("#^(\w:)?/$#", $path) ? $path : (preg_replace('#/$#', '', $path) . ($endWithSlash ? "/" : ""));
-	}
-
-
-	public static final function req_once($lib) {
-
-		require_once(H5AI_ABS_PATH . $lib);
-	}
-
-
-	private static final function load_config($file) {
-
-		if (!file_exists($file)) {
-			return array();
-		}
-
-		$str = file_get_contents($file);
-
-		// remove comments to get pure json
-		$str = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", "", $str);
-
-		return json_decode($str, true);
-	}
-
-
-	private static final function merge_config($a, $b) {
-
-		$result = array_merge(array(), $a);
-
-		foreach ($b as $key => $value) {
-			$result[$key] = array_merge($result[$key], $b[$key]);
-		}
-
-		return $result;
-	}
-
 
 	private static $H5AI_CONTENT_TYPE = "Content-Type: text/html;h5ai=";
 
 
+	private $h5aiAbsPath, $rootAbsPath,
+			$h5aiAbsHref, $rootAbsHref,
+			$absHref, $absPath,
+			$ignore_names, $ignore_patterns, $index_files,
+			$config, $options;
 
 
-	private $requested_from,
-			$h5aiAbsPath,
-			$rootAbsPath, $ignore_names, $ignore_patterns, $index_files,
-			$config, $options,
-			$rootAbsHref, $h5aiAbsHref,
-			$absHref, $absPath;
+	public function __construct($app_abs_path, $app_abs_href) {
 
+		$this->h5aiAbsPath = normalize_path($app_abs_path);
+		$this->rootAbsPath = normalize_path(dirname($app_abs_path));
 
-	public function __construct($requested_from) {
+		$this->h5aiAbsHref = normalize_path($app_abs_href, true);
+		$this->rootAbsHref = normalize_path(dirname($app_abs_href), true);
 
-		$this->requested_from = H5ai::normalize_path($requested_from);
-
-		$this->h5aiAbsPath = H5ai::normalize_path(H5AI_ABS_PATH);
-		$this->rootAbsPath = H5ai::normalize_path(dirname(H5AI_ABS_PATH));
+		$this->absHref = normalize_path(preg_replace('/[^\\/]*$/', '', getenv("REQUEST_URI")), true);
+		$this->absPath = $this->getAbsPath($this->absHref);
 
 		global $H5AI_CONFIG;
 		$this->ignore_names = $H5AI_CONFIG["IGNORE"];
@@ -77,16 +29,10 @@ class H5ai {
 		$this->index_files = $H5AI_CONFIG["INDEX_FILES"];
 
 		$this->config = array("options" => array(), "types" => array(), "langs" => array());
-		$this->config = H5ai::merge_config($this->config, H5ai::load_config($this->h5aiAbsPath . "/conf/config.json"));
+		$this->config = merge_config($this->config, load_commented_json($this->h5aiAbsPath . "/conf/config.json"));
 		$this->options = $this->config["options"];
 
-		$this->h5aiAbsHref = H5ai::normalize_path($this->options["h5aiAbsHref"], true);
-		$this->rootAbsHref = H5ai::normalize_path(dirname($this->options["h5aiAbsHref"]), true);
-
-		$this->absHref = H5ai::normalize_path(preg_replace('/[^\\/]*$/', '', getenv("REQUEST_URI")), true);
-		$this->absPath = $this->getAbsPath($this->absHref);
-
-		$this->config = H5ai::merge_config($this->config, H5ai::load_config($this->absPath . "/_h5ai.config.json"));
+		$this->config = merge_config($this->config, load_commented_json($this->absPath . "/_h5ai.config.json"));
 		$this->options = $this->config["options"];
 	}
 
@@ -147,7 +93,7 @@ class H5ai {
 			$encodedParts[] = rawurlencode($part);
 		}
 
-		return H5ai::normalize_path($this->rootAbsHref . implode("/", $encodedParts), $endWithSlash);
+		return normalize_path($this->rootAbsHref . implode("/", $encodedParts), $endWithSlash);
 	}
 
 
@@ -159,7 +105,7 @@ class H5ai {
 
 		$absHref = substr($absHref, strlen($this->rootAbsHref));
 
-		return H5ai::normalize_path($this->rootAbsPath . "/" . rawurldecode($absHref));
+		return normalize_path($this->rootAbsPath . "/" . rawurldecode($absHref));
 	}
 
 
@@ -285,7 +231,7 @@ class H5ai {
 		$footer = $this->fileExists($footer ? $this->absPath . "/" . $footer : null) ? $footer : null;
 
 		$json = array(
-			"id" => $this->requested_from === $this->h5aiAbsPath . "/server/php/index.php" ? "php" : "idx.php",
+			"id" => "php",
 			"serverName" => strtolower(preg_replace("/\\/.*$/", "", getenv("SERVER_SOFTWARE"))),
 			"serverVersion" => strtolower(preg_replace("/^.*\\//", "", preg_replace("/\\s.*$/", "", getenv("SERVER_SOFTWARE")))),
 			"customHeader" => $header,
