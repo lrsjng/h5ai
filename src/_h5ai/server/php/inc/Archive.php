@@ -6,12 +6,12 @@ class Archive {
 	private static $ZIP_CMD = "$(cd [ROOTDIR] && zip [TARGET] [FILES])";
 
 
-	private $h5ai, $dirs, $files, $sc401;
+	private $app, $dirs, $files, $sc401;
 
 
-	public function __construct($h5ai) {
+	public function __construct($app) {
 
-		$this->h5ai = $h5ai;
+		$this->app = $app;
 	}
 
 
@@ -19,17 +19,14 @@ class Archive {
 
 		$this->dirs = array();
 		$this->files = array();
-		$this->sc401 = false;
 
 		$this->add_hrefs($hrefs);
 
-		if ($this->sc401) {
-			return 401;
-		} else if (count($this->dirs) === 0 && count($this->files) === 0) {
+		if (count($this->dirs) === 0 && count($this->files) === 0) {
 			return 404;
 		}
 
-		$target = $this->h5ai->get_cache_abs_path() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
+		$target = $this->app->get_cache_abs_path() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
 
 		try {
 			if ($execution === "shell") {
@@ -41,21 +38,21 @@ class Archive {
 				} else {
 					return null;
 				}
-				$cmd = str_replace("[ROOTDIR]", "\"" . $this->h5ai->get_root_abs_path() . "\"", $cmd);
+				$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_root_abs_path() . "\"", $cmd);
 				$cmd = str_replace("[TARGET]", "\"" . $target . "\"", $cmd);
 				$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
 				$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
 
-				`$cmd`;
+				shell_exec($cmd);
 
 			} else if ($execution === "php") {
 
 				$archive = new PharData($target);
-				foreach ($this->dirs as $archivedDir) {
-					$archive->addEmptyDir($archivedDir);
+				foreach ($this->dirs as $archived_dir) {
+					$archive->addEmptyDir($archived_dir);
 				}
-				foreach ($this->files as $realFile => $archivedFile) {
-					$archive->addFile($realFile, $archivedFile); // very, very slow :/
+				foreach ($this->files as $real_file => $archived_file) {
+					$archive->addFile($real_file, $archived_file); // very, very slow :/
 				}
 
 			}
@@ -74,54 +71,48 @@ class Archive {
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
-			$code = $this->h5ai->get_http_code($d);
-			if ($code == 401) {
-				$this->sc401 = true;
-			}
+			$code = $this->app->get_http_code($d);
 
-			if ($code == "h5ai" && !$this->h5ai->is_ignored($n)) {
+			if ($code == App::$MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
 
-				$realFile = $this->h5ai->get_abs_path($href);
-				$archivedFile = preg_replace("!^" . normalize_path($this->h5ai->get_root_abs_path(), true) . "!", "", $realFile);
+				$real_file = $this->app->get_abs_path($href);
+				$archived_file = preg_replace("!^" . normalize_path($this->app->get_root_abs_path(), true) . "!", "", $real_file);
 
-				if (is_dir($realFile)) {
-					$this->add_dir($realFile, $archivedFile);
+				if (is_dir($real_file)) {
+					$this->add_dir($real_file, $archived_file);
 				} else {
-					$this->add_file($realFile, $archivedFile);
+					$this->add_file($real_file, $archived_file);
 				}
 			}
 		}
 	}
 
 
-	private function add_file($realFile, $archivedFile) {
+	private function add_file($real_file, $archived_file) {
 
-		if (is_readable($realFile)) {
-			$this->files[$realFile] = $archivedFile;
+		if (is_readable($real_file)) {
+			$this->files[$real_file] = $archived_file;
 		}
 	}
 
 
-	private function add_dir($realDir, $archivedDir) {
+	private function add_dir($real_dir, $archived_dir) {
 
-		$code = $this->h5ai->get_http_code($this->h5ai->get_abs_href($realDir));
-		if ($code == 401) {
-			$this->sc401 = true;
-		}
+		$code = $this->app->get_http_code($this->app->get_abs_href($real_dir));
 
-		if ($code == "h5ai") {
-			$this->dirs[] = $archivedDir;
+		if ($code == App::$MAGIC_SEQUENCE) {
+			$this->dirs[] = $archived_dir;
 
-			$files = $this->h5ai->read_dir($realDir);
+			$files = $this->app->read_dir($real_dir);
 			foreach ($files as $file) {
 
-				$realFile = $realDir . "/" . $file;
-				$archivedFile = $archivedDir . "/" . $file;
+				$real_file = $real_dir . "/" . $file;
+				$archived_file = $archived_dir . "/" . $file;
 
-				if (is_dir($realFile)) {
-					$this->add_dir($realFile, $archivedFile);
+				if (is_dir($real_file)) {
+					$this->add_dir($real_file, $archived_file);
 				} else {
-					$this->add_file($realFile, $archivedFile);
+					$this->add_file($real_file, $archived_file);
 				}
 			}
 		}

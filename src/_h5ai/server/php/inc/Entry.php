@@ -87,9 +87,9 @@ class Entry {
 
 	public function get_parent(&$cache) {
 
-		$parentAbsPath = normalize_path(dirname($this->abs_path));
-		if (starts_with($parentAbsPath, $this->app->get_root_abs_path())) {
-			return Entry::get($this->app, $parentAbsPath, $cache);
+		$parent_abs_path = normalize_path(dirname($this->abs_path));
+		if (starts_with($parent_abs_path, $this->app->get_root_abs_path())) {
+			return Entry::get($this->app, $parent_abs_path, $cache);
 		}
 		return null;
 	}

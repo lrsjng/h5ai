@@ -2,8 +2,8 @@
 
 class Thumb {
 
-	private static $FFMPEG = "ffmpeg -i \"[SOURCE]\" -an -ss 3 -vframes 1 \"[TARGET]\"";
-	private static $CONVERT = "convert -strip \"[SOURCE][0]\" \"[TARGET]\"";
+	private static $FFMPEG_CMD = "ffmpeg -i \"[SOURCE]\" -an -ss 3 -vframes 1 \"[TARGET]\"";
+	private static $CONVERT_CMD = "convert -strip \"[SOURCE][0]\" \"[TARGET]\"";
 
 	public static final function is_supported() {
 
@@ -16,67 +16,67 @@ class Thumb {
 	}
 
 
-	private $h5ai;
+	private $app;
 
 
-	public function __construct($h5ai) {
+	public function __construct($app) {
 
-		$this->h5ai = $h5ai;
+		$this->app = $app;
 	}
 
 
-	public function thumb($type, $sourceAbsHref, $mode, $width, $height) {
+	public function thumb($type, $source_abs_href, $mode, $width, $height) {
 
-		$sourceAbsPath = $this->h5ai->get_abs_path($sourceAbsHref);
+		$source_abs_path = $this->app->get_abs_path($source_abs_href);
 
 		if ($type === "img") {
-			$captureAbsPath = $sourceAbsPath;
+			$capture_abs_path = $source_abs_path;
 		} else if ($type === "mov") {
-			$captureAbsPath = $this->capture(Thumb::$FFMPEG, $sourceAbsPath);
+			$capture_abs_path = $this->capture(Thumb::$FFMPEG_CMD, $source_abs_path);
 		} else if ($type === "doc") {
-			$captureAbsPath = $this->capture(Thumb::$CONVERT, $sourceAbsPath);
+			$capture_abs_path = $this->capture(Thumb::$CONVERT_CMD, $source_abs_path);
 		}
 
-		return $this->thumb_href($captureAbsPath, $mode, $width, $height);
+		return $this->thumb_href($capture_abs_path, $mode, $width, $height);
 	}
 
 
-	private function thumb_href($sourceAbsPath, $mode, $width, $height) {
+	private function thumb_href($source_abs_path, $mode, $width, $height) {
 
-		if (!file_exists($sourceAbsPath)) {
+		if (!file_exists($source_abs_path)) {
 			return null;
 		}
 
-		$name = "thumb-" . sha1("$sourceAbsPath-$width-$height-$mode") . ".jpg";
-		$thumbAbsPath = $this->h5ai->get_cache_abs_path() . "/" . $name;
-		$thumbAbsHref = $this->h5ai->get_cache_abs_href() . $name;
+		$name = "thumb-" . sha1("$source_abs_path-$width-$height-$mode") . ".jpg";
+		$thumb_abs_path = $this->app->get_cache_abs_path() . "/" . $name;
+		$thumb_abs_href = $this->app->get_cache_abs_href() . $name;
 
-		if (!file_exists($thumbAbsPath) || filemtime($sourceAbsPath) >= filemtime($thumbAbsPath)) {
+		if (!file_exists($thumb_abs_path) || filemtime($source_abs_path) >= filemtime($thumb_abs_path)) {
 			$image = new Image();
-			$image->setSource($sourceAbsPath);
+			$image->set_source($source_abs_path);
 			$image->thumb($mode, $width, $height);
-			$image->saveDestJpeg($thumbAbsPath, 80);
+			$image->save_dest_jpeg($thumb_abs_path, 80);
 		}
 
-		return file_exists($thumbAbsPath) ? $thumbAbsHref : null;
+		return file_exists($thumb_abs_path) ? $thumb_abs_href : null;
 	}
 
 
-	private function capture($cmd, $sourceAbsPath) {
+	private function capture($cmd, $source_abs_path) {
 
-		if (!file_exists($sourceAbsPath)) {
+		if (!file_exists($source_abs_path)) {
 			return null;
 		}
 
-		$captureAbsPath = $this->h5ai->get_cache_abs_path() . "/capture-" . sha1($sourceAbsPath) . ".jpg";
+		$capture_abs_path = $this->app->get_cache_abs_path() . "/capture-" . sha1($source_abs_path) . ".jpg";
 
-		if (!file_exists($captureAbsPath) || filemtime($sourceAbsPath) >= filemtime($captureAbsPath)) {
-			$cmd = str_replace("[SOURCE]", $sourceAbsPath, $cmd);
-			$cmd = str_replace("[TARGET]", $captureAbsPath, $cmd);
+		if (!file_exists($capture_abs_path) || filemtime($source_abs_path) >= filemtime($capture_abs_path)) {
+			$cmd = str_replace("[SOURCE]", $source_abs_path, $cmd);
+			$cmd = str_replace("[TARGET]", $capture_abs_path, $cmd);
 			`$cmd`;
 		}
 
-		return file_exists($captureAbsPath) ? $captureAbsPath : null;
+		return file_exists($capture_abs_path) ? $capture_abs_path : null;
 	}
 }
 
@@ -143,7 +143,7 @@ class Magic {
 
 class Image {
 
-	private $sourceFile, $source, $width, $height, $type, $dest;
+	private $source_file, $source, $width, $height, $type, $dest;
 
 
 	public static final function is_supported() {
@@ -159,7 +159,7 @@ class Image {
 
 	public function __construct($filename = null) {
 
-		$this->sourceFile = null;
+		$this->source_file = null;
 		$this->source = null;
 		$this->width = null;
 		$this->height = null;
@@ -167,43 +167,43 @@ class Image {
 
 		$this->dest = null;
 
-		$this->setSource($filename);
+		$this->set_source($filename);
 	}
 
 
 	public function __destruct() {
 
-		$this->releaseSource();
-		$this->releaseDest();
+		$this->release_source();
+		$this->release_dest();
 	}
 
 
-	public function setSource($filename) {
+	public function set_source($filename) {
 
-		$this->releaseSource();
-		$this->releaseDest();
+		$this->release_source();
+		$this->release_dest();
 
 		if (is_null($filename)) {
 			return;
 		}
 
-		$this->sourceFile = $filename;
+		$this->source_file = $filename;
 
-		list($this->width, $this->height, $this->type) = @getimagesize($this->sourceFile);
+		list($this->width, $this->height, $this->type) = @getimagesize($this->source_file);
 
 		if (!$this->width || !$this->height) {
-			$this->sourceFile = null;
+			$this->source_file = null;
 			$this->width = null;
 			$this->height = null;
 			$this->type = null;
 			return;
 		}
 
-		$this->source = imagecreatefromstring(file_get_contents($this->sourceFile));
+		$this->source = imagecreatefromstring(file_get_contents($this->source_file));
 	}
 
 
-	public function saveDestJpeg($filename, $quality = 80) {
+	public function save_dest_jpeg($filename, $quality = 80) {
 
 		if (!is_null($this->dest)) {
 			@imagejpeg($this->dest, $filename, $quality);
@@ -212,7 +212,7 @@ class Image {
 	}
 
 
-	public function saveDestPng($filename, $quality = 9) {
+	public function save_dest_png($filename, $quality = 9) {
 
 		if (!is_null($this->dest)) {
 			@imagepng($this->dest, $filename, $quality);
@@ -221,7 +221,7 @@ class Image {
 	}
 
 
-	public function releaseDest() {
+	public function release_dest() {
 
 		if (!is_null($this->dest)) {
 			@imagedestroy($this->dest);
@@ -230,11 +230,11 @@ class Image {
 	}
 
 
-	public function releaseSource() {
+	public function release_source() {
 
 		if (!is_null($this->source)) {
 			@imagedestroy($this->source);
-			$this->sourceFile = null;
+			$this->source_file = null;
 			$this->source = null;
 			$this->width = null;
 			$this->height = null;
@@ -243,29 +243,29 @@ class Image {
 	}
 
 
-	private function magic($destX, $destY, $srcX, $srcY, $destWidth, $destHeight, $srcWidth, $srcHeight, $canWidth = null, $canHeight = null, $color = null) {
+	private function magic($dest_x, $dest_y, $src_x, $src_y, $dest_width, $dest_height, $src_width, $src_height, $can_width = null, $can_height = null, $color = null) {
 
 		if (is_null($this->source)) {
 			return;
 		}
 
-		if ($canWidth === 0) {
-			$canWidth = 1;
+		if ($can_width === 0) {
+			$can_width = 1;
 		}
-		if ($canHeight === 0) {
-			$canHeight = 1;
+		if ($can_height === 0) {
+			$can_height = 1;
 		}
-		if ($destWidth === 0) {
-			$destWidth = 1;
+		if ($dest_width === 0) {
+			$dest_width = 1;
 		}
-		if ($destHeight === 0) {
-			$destHeight = 1;
+		if ($dest_height === 0) {
+			$dest_height = 1;
 		}
 
-		if (!is_null($canWidth) && !is_null($canHeight)) {
-			$this->dest = imagecreatetruecolor($canWidth, $canHeight);
+		if (!is_null($can_width) && !is_null($can_height)) {
+			$this->dest = imagecreatetruecolor($can_width, $can_height);
 		} else {
-			$this->dest = imagecreatetruecolor($destWidth, $destHeight);
+			$this->dest = imagecreatetruecolor($dest_width, $dest_height);
 		}
 
 		if (is_null($color)) {
@@ -274,7 +274,7 @@ class Image {
 		$icol = imagecolorallocate($this->dest, $color[0], $color[1], $color[2]);
 		imagefill($this->dest, 0, 0, $icol);
 
-		imagecopyresampled($this->dest, $this->source, $destX, $destY, $srcX, $srcY, $destWidth, $destHeight, $srcWidth, $srcHeight);
+		imagecopyresampled($this->dest, $this->source, $dest_x, $dest_y, $src_x, $src_y, $dest_width, $dest_height, $src_width, $src_height);
 	}
 
 
@@ -284,18 +284,18 @@ class Image {
 			$height = $width;
 		}
 		if ($mode === "square") {
-			$this->squareThumb($width);
+			$this->square_thumb($width);
 		} elseif ($mode === "rational") {
-			$this->rationalThumb($width, $height);
+			$this->rational_thumb($width, $height);
 		} elseif ($mode === "center") {
-			$this->centerThumb($width, $height, $color);
+			$this->center_thumb($width, $height, $color);
 		} else {
-			$this->freeThumb($width, $height);
+			$this->free_thumb($width, $height);
 		}
 	}
 
 
-	public function squareThumb($width) {
+	public function square_thumb($width) {
 
 		if (is_null($this->source)) {
 			return;
@@ -309,7 +309,7 @@ class Image {
 	}
 
 
-	public function rationalThumb($width, $height) {
+	public function rational_thumb($width, $height) {
 
 		if (is_null($this->source)) {
 			return;
@@ -333,7 +333,7 @@ class Image {
 	}
 
 
-	public function centerThumb($width, $height, $color = null) {
+	public function center_thumb($width, $height, $color = null) {
 
 		if (is_null($this->source)) {
 			return;
@@ -360,7 +360,7 @@ class Image {
 	}
 
 
-	public function freeThumb($width, $height) {
+	public function free_thumb($width, $height) {
 
 		if (is_null($this->source)) {
 			return;
