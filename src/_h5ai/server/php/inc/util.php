@@ -1,6 +1,6 @@
 <?php
 
-function json_exit($obj) {
+function json_exit($obj = array()) {
 
 	$obj["code"] = 0;
 	echo json_encode($obj);

@@ -58,12 +58,14 @@ To create an fresh zipball run
 * adds drag'n'drop upload (PHP)
 * adds file deletion (PHP)
 * cleans and improves PHP code
+* PHP no longer respects htaccess restrictions (so be careful)
 * PHP ignore patterns might include paths now
+* improves separation between aai and php mode
 * adds optional binary prefixes for file sizes
 * improves filter: autofocus on keypress, clear on `ESC`
 * adds ctrl-click file selection
 * adds Piwik analytics support
-* temp download packages are now stored in the `_h5ai/cache` and deleted as soon as possible
+* temp download packages are now stored in the `cache`-folder and deleted as soon as possible
 * localization now in separate files
 * updates translations
 * adds `he` translation by [Tomer Cohen](https://github.com/tomer)

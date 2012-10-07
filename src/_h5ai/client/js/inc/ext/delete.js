@@ -1,5 +1,5 @@
 
-modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/event', 'core/resource', 'core/refresh'], function (_, $, allsettings, entry, event, resource, refresh) {
+modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'core/refresh', 'core/server'], function (_, $, allsettings, event, resource, refresh, server) {
 
 	var settings = _.extend({
 			enabled: false
@@ -8,16 +8,12 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 		deleteBtnTemplate = '<li id="delete">' +
 									'<a href="#">' +
 										'<img src="' + resource.image('delete') + '" alt="delete"/>' +
-										'<span class="l10n-delete">delete</span>' +
+										'<span class="l10n-delete"/>' +
 									'</a>' +
 								'</li>',
-		authTemplate = '<div id="delete-auth">' +
-							'<input id="delete-auth-user" type="text" value="" placeholder="user"/>' +
-							'<input id="delete-auth-password" type="text" value="" placeholder="password"/>' +
-						'</div>',
 
 		selectedHrefsStr = '',
-		$delete, $img, $deleteAuth, $deleteUser, $deletePassword,
+		$delete, $img,
 
 		failed = function () {
 
@@ -33,15 +29,6 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 			$img.attr('src', resource.image('delete'));
 
 			if (!json || json.code) {
-				if (json && json.code === 401) {
-					$deleteAuth
-						.css({
-							left: $delete.offset().left,
-							top: $delete.offset().top + $delete.outerHeight()
-						})
-						.show();
-					$deleteUser.focus();
-				}
 				failed();
 			}
 			refresh();
@@ -51,17 +38,7 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 
 			$delete.addClass('current');
 			$img.attr('src', resource.image('loading.gif', true));
-			$.ajax({
-				url: resource.api(),
-				data: {
-					action: 'delete',
-					hrefs: hrefsStr,
-					user: $deleteUser.val(),
-					password: $deletePassword.val()
-				},
-				dataType: 'json',
-				success: handleResponse
-			});
+			server.request({action: 'delete', hrefs: hrefsStr}, handleResponse);
 		},
 
 		onSelection = function (entries) {
@@ -75,13 +52,12 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 				$delete.appendTo('#navbar').show();
 			} else {
 				$delete.hide();
-				$deleteAuth.hide();
 			}
 		},
 
 		init = function () {
 
-			if (!settings.enabled) {
+			if (!settings.enabled || !server.apiHref) {
 				return;
 			}
 
@@ -89,15 +65,10 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/entry', 'core/ev
 				.find('a').on('click', function (event) {
 
 					event.preventDefault();
-					$deleteAuth.hide();
 					requestDeletion(selectedHrefsStr);
 				}).end()
 				.appendTo('#navbar');
 			$img = $delete.find('img');
-
-			$deleteAuth = $(authTemplate).appendTo('body');
-			$deleteUser = $deleteAuth.find('#delete-auth-user');
-			$deletePassword = $deleteAuth.find('#delete-auth-password');
 
 			event.sub('selection', onSelection);
 		};

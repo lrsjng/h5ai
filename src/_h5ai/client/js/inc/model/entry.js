@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event', 'core/settings'], function (_, types, ajax, event, settings) {
+modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/settings'], function ($, _, types, event, settings) {
 
 	var doc = document,
 		domain = doc.domain,
@@ -93,9 +93,30 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/ajax', 'core/event', 'c
 		},
 
 
+		reContentType = /^text\/html;h5ai=/,
+		getStatus = function (href, withContent, callback) {
+
+			$.ajax({
+				url: href,
+				type: withContent ? 'GET' : 'HEAD',
+				complete: function (xhr) {
+
+					var res = {
+						status: xhr.status,
+						content: xhr.responseText
+					};
+
+					if (xhr.status === 200 && reContentType.test(xhr.getResponseHeader('Content-Type'))) {
+						res.status = 'h5ai';
+					}
+
+					callback(res);
+				}
+			});
+		},
 		ajaxRequest = function (self, parser, callback) {
 
-			ajax.getStatus(self.absHref, parser, function (response) {
+			getStatus(self.absHref, parser, function (response) {
 
 				self.status = response.status;
 				if (parser && response.status === 'h5ai') {

@@ -1,11 +1,7 @@
 
-modulejs.define('parser/generic-json', ['_', '$', 'core/mode', 'core/settings', 'model/entry'], function (_, $, mode, settings, Entry) {
+modulejs.define('parser/generic-json', ['_', '$', 'core/settings', 'model/entry'], function (_, $, settings, Entry) {
 
 	var parseJson = function (absHref, json) {
-
-			mode.id = json.id;
-			mode.serverName = json.serverName;
-			mode.serverVersion = json.serverVersion;
 
 			if (!settings.custom) {
 				settings.custom = {};
@@ -39,8 +35,6 @@ modulejs.define('parser/generic-json', ['_', '$', 'core/mode', 'core/settings', 
 
 			return parseJsonStr(absHref, $id.text());
 		};
-
-	mode.dataType = 'generic-json';
 
 	return {
 		dataType: 'generic-json',

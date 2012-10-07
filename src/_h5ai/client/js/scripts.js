@@ -12,7 +12,6 @@
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 // @include "lib/json2-*.js"
-// @include "lib/base64.js"
 // @include "lib/spin-*.js"
 
 // app
@@ -46,7 +45,6 @@
 			// so they have to be wrapped to not be handled as constructors.
 			modulejs.define('config', config);
 			modulejs.define('amplify', amplify);
-			modulejs.define('base64', Base64);
 			modulejs.define('$', function () { return jQuery; });
 			modulejs.define('modernizr', Modernizr);
 			modulejs.define('moment', function () { return moment; });
@@ -72,19 +70,17 @@
 			loadCommentedJson(appHref + 'conf/types.json', function (types) {
 				loadCommentedJson(appHref + 'conf/langs.json', function (langs) {
 
-					var config = {
-							options: options,
-							types: types,
-							langs: langs,
-							server: {
-								backend: backend,
-								apiHref: null,
-								name: 'apache',
-								version: null
-							}
-						};
-
-					run(config);
+					run({
+						options: options,
+						types: types,
+						langs: langs,
+						server: {
+							backend: backend,
+							apiHref: null,
+							name: 'apache',
+							version: null
+						}
+					});
 				});
 			});
 		});

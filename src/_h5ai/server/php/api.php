@@ -146,7 +146,7 @@ else if ($action === "upload") {
 	$upload_dir = $APP->get_abs_path($href);
 	$code = $APP->get_http_code($href);
 
-	json_fail(5, "upload dir no h5ai folder or ignored", $code !== "h5ai" || $APP->is_ignored($upload_dir));
+	json_fail(5, "upload dir no h5ai folder or ignored", $code !== App::$MAGIC_SEQUENCE || $APP->is_ignored($upload_dir));
 
 	$dest = $upload_dir . "/" . utf8_encode($userfile["name"]);
 
@@ -173,7 +173,7 @@ else if ($action === "delete") {
 
 		$code = $APP->get_http_code($d);
 
-		if ($code == "h5ai" && !$APP->is_ignored($n)) {
+		if ($code == App::$MAGIC_SEQUENCE && !$APP->is_ignored($n)) {
 
 			$abs_path = $APP->get_abs_path($href);
 
@@ -183,7 +183,7 @@ else if ($action === "delete") {
 		}
 	}
 
-	if ($errors->size) {
+	if (count($errors)) {
 		json_fail(2, "deletion failed for some");
 	} else {
 		json_exit();
@@ -202,7 +202,7 @@ else if ($action === "rename") {
 
 	$code = $APP->get_http_code($d);
 
-	if ($code == "h5ai" && !$APP->is_ignored($n)) {
+	if ($code == App::$MAGIC_SEQUENCE && !$APP->is_ignored($n)) {
 
 		$abs_path = $APP->get_abs_path($href);
 		$folder = normalize_path(dirname($abs_path));

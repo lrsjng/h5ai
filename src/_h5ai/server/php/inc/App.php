@@ -169,9 +169,6 @@ class App {
 		$footer = $this->fileExists($footer ? $this->abs_path . "/" . $footer : null) ? $footer : null;
 
 		$json = array(
-			"id" => "php",
-			"serverName" => strtolower(preg_replace("/\\/.*$/", "", getenv("SERVER_SOFTWARE"))),
-			"serverVersion" => strtolower(preg_replace("/^.*\\//", "", preg_replace("/\\s.*$/", "", getenv("SERVER_SOFTWARE")))),
 			"customHeader" => $header,
 			"customFooter" => $footer,
 			"entries" => $entries

@@ -1,5 +1,5 @@
 
-modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/ajax'], function (_, $, allsettings, resource, event, ajax) {
+modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server'], function (_, $, allsettings, resource, event, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -12,16 +12,12 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 		downloadBtnTemplate = '<li id="download">' +
 									'<a href="#">' +
 										'<img src="' + resource.image('download') + '" alt="download"/>' +
-										'<span class="l10n-download">download</span>' +
+										'<span class="l10n-download"/>' +
 									'</a>' +
 								'</li>',
-		authTemplate = '<div id="download-auth">' +
-							'<input id="download-auth-user" type="text" value="" placeholder="user"/>' +
-							'<input id="download-auth-password" type="text" value="" placeholder="password"/>' +
-						'</div>',
 
 		selectedHrefsStr = '',
-		$download, $img, $downloadAuth, $downloadUser, $downloadPassword,
+		$download, $img,
 
 		failed = function () {
 
@@ -36,24 +32,11 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			$download.removeClass('current');
 			$img.attr('src', resource.image('download'));
 
-			if (json) {
-				if (json.code === 0) {
-					setTimeout(function () { // wait here so the img above can be updated in time
+			if (json && json.code === 0) {
+				setTimeout(function () { // wait here so the img above can be updated in time
 
-						window.location = resource.api() + '?action=getarchive&id=' + json.id + '&as=h5ai-selection.' + settings.format;
-					}, 200);
-				} else {
-					if (json.code === 401) {
-						$downloadAuth
-							.css({
-								left: $download.offset().left,
-								top: $download.offset().top + $download.outerHeight()
-							})
-							.show();
-						$downloadUser.focus();
-					}
-					failed();
-				}
+					window.location = server.apiHref + '?action=getarchive&id=' + json.id + '&as=h5ai-selection.' + settings.format;
+				}, 200);
 			} else {
 				failed();
 			}
@@ -63,12 +46,12 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 			$download.addClass('current');
 			$img.attr('src', resource.image('loading.gif', true));
-			ajax.getArchive({
+
+			server.request({
+				action: 'archive',
 				execution: settings.execution,
 				format: settings.format,
-				hrefs: hrefsStr,
-				user: $downloadUser.val(),
-				password: $downloadPassword.val()
+				hrefs: hrefsStr
 			}, handleResponse);
 		},
 
@@ -83,13 +66,12 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 				$download.appendTo('#navbar').show();
 			} else {
 				$download.hide();
-				$downloadAuth.hide();
 			}
 		},
 
 		init = function () {
 
-			if (!settings.enabled) {
+			if (!settings.enabled || !server.apiHref) {
 				return;
 			}
 
@@ -97,15 +79,10 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 				.find('a').on('click', function (event) {
 
 					event.preventDefault();
-					$downloadAuth.hide();
 					requestArchive(selectedHrefsStr);
 				}).end()
 				.appendTo('#navbar');
 			$img = $download.find('img');
-
-			$downloadAuth = $(authTemplate).appendTo('body');
-			$downloadUser = $downloadAuth.find('#download-auth-user');
-			$downloadPassword = $downloadAuth.find('#download-auth-password');
 
 			event.sub('selection', onSelection);
 		};
