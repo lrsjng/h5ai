@@ -1,5 +1,5 @@
 
-modulejs.define('ext/mode', ['_', '$', 'core/mode', 'core/settings'], function (_, $, mode, allsettings) {
+modulejs.define('ext/mode', ['_', '$', 'core/settings', 'core/server'], function (_, $, allsettings, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -14,18 +14,18 @@ modulejs.define('ext/mode', ['_', '$', 'core/mode', 'core/settings'], function (
 
 			var info = '';
 
-			if (mode.id) {
-				info += mode.id;
+			if (server.backend) {
+				info += server.backend;
 			}
-			if (settings.display > 0 && mode.serverName) {
-				info += (info ? ' on ' : '') + mode.serverName;
+			if (settings.display > 0 && server.name) {
+				info += (info ? ' on ' : '') + server.name;
 			}
-			if (settings.display > 1 && mode.serverVersion) {
-				info += (info ? '-' : '') + mode.serverVersion;
+			if (settings.display > 1 && server.version) {
+				info += (info ? '-' : '') + server.version;
 			}
 
 			if (info) {
-				$('#h5ai-reference').append(' (' + info + ')');
+				$('#bottombar .left').append('<span id="server-mode"> (' + info + ') </span>');
 			}
 		};
 

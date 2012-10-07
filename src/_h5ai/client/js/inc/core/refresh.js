@@ -1,11 +1,11 @@
 
-modulejs.define('core/refresh', ['_', 'core/mode', 'core/ajax', 'model/entry'], function (_, mode, ajax, Entry) {
+modulejs.define('core/refresh', ['_', 'core/server', 'model/entry'], function (_, server, Entry) {
 
 	var parseJson = function (entry, json) {
 
 			var found = {};
 
-			_.each(json, function (jsonEntry) {
+			_.each(json.entries, function (jsonEntry) {
 
 				found[jsonEntry.absHref] = true;
 				Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
@@ -18,16 +18,18 @@ modulejs.define('core/refresh', ['_', 'core/mode', 'core/ajax', 'model/entry'], 
 			});
 		},
 
-		refresh = function () {
-
-			if (mode.id !== 'php') {
-				return;
-			}
+		refresh = function (callback) {
 
 			var entry = Entry.get();
-			ajax.getEntries(entry.absHref, 1, function (json) {
 
+			server.request({action: 'get', entries: true, entriesHref: entry.absHref, entriesWhat: 1}, function (json) {
+
+				if (json) {
 					parseJson(entry, json);
+				}
+				if (_.isFunction(callback)) {
+					callback(entry);
+				}
 			});
 		};
 

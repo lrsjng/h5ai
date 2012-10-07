@@ -1,5 +1,5 @@
 
-modulejs.define('h5ai-info', ['$', 'core/ajax'], function ($, ajax) {
+modulejs.define('h5ai-info', ['$', 'core/server'], function ($, server) {
 
 	var setCheckResult = function (id, result) {
 
@@ -14,7 +14,7 @@ modulejs.define('h5ai-info', ['$', 'core/ajax'], function ($, ajax) {
 
 		init = function () {
 
-			ajax.getChecks(function (json) {
+			server.request({action: 'get', checks: true}, function (json) {
 
 				if (json) {
 					$('.test').each(function () {

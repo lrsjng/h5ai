@@ -15,54 +15,27 @@
 // @include "lib/base64.js"
 // @include "lib/spin-*.js"
 
-// h5ai
-// ----
+// app
+// ---
 (function ($) {
 	'use strict';
 
 	// @include "inc/**/*.js"
 
-	var	$scriptTag = $('script[src$="scripts.js"]'),
-		globalConfigHref = $scriptTag.attr('src').replace(/scripts.js$/, '../../conf/config.json'),
-		localConfigHref = $scriptTag.data('config') || './_h5ai.config.json',
+	var	filename = 'client/js/scripts.js',
+		$scriptTag = $('script[src$="' + filename + '"]'),
+		src = $scriptTag.attr('src'),
+		main = $scriptTag.data('main'),
+		backend = $scriptTag.data('backend'),
 
-		parse = function (response) {
+		appHref = src.substr(0, src.length - filename.length),
 
-			return response.replace ? JSON.parse(response.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
-		},
+		loadCommentedJson = function (href, callback) {
 
-		extendLevel1 = function (a, b) {
+			$.ajax(href, {dataType: 'text'}).always(function (response) {
 
-			$.each(b, function (key) {
-
-				$.extend(a[key], b[key]);
-			});
-		},
-
-		loadConfig = function (callback) {
-
-			var ajaxOpts = {
-					dataType: 'text'
-				},
-				config = {
-					options: {},
-					types: {},
-					langs: {}
-				};
-
-			$.ajax(globalConfigHref, ajaxOpts).always(function (g) {
-
-				extendLevel1(config, parse(g));
-				if (localConfigHref === 'ignore') {
-					callback(config);
-					return;
-				}
-
-				$.ajax(localConfigHref, ajaxOpts).always(function (l) {
-
-					extendLevel1(config, parse(l));
-					callback(config);
-				});
+				var json = response.replace ? JSON.parse(response.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
+				callback(json);
 			});
 		},
 
@@ -79,12 +52,42 @@
 			modulejs.define('moment', function () { return moment; });
 			modulejs.define('_', function () { return _; });
 
-			$(function () {
-
-				modulejs.require($('body').attr('id'));
-			});
+			$(function () { modulejs.require(main); });
 		};
 
-	loadConfig(run);
+
+	if (backend === 'php') {
+
+		$.getJSON(appHref + 'server/php/api.php', {
+			action: 'get',
+			options: true,
+			types: true,
+			langs: true,
+			server: true
+		}, run);
+
+	} else if (backend === 'aai') {
+
+		loadCommentedJson(appHref + 'conf/options.json', function (options) {
+			loadCommentedJson(appHref + 'conf/types.json', function (types) {
+				loadCommentedJson(appHref + 'conf/langs.json', function (langs) {
+
+					var config = {
+							options: options,
+							types: types,
+							langs: langs,
+							server: {
+								backend: backend,
+								apiHref: null,
+								name: 'apache',
+								version: null
+							}
+						};
+
+					run(config);
+				});
+			});
+		});
+	}
 
 }(jQuery));

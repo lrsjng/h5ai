@@ -97,62 +97,6 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 			});
 		},
 
-		getThumbSrc = function (data, callback) {
-
-			$.ajax({
-				url: resource.api(),
-				data: {
-					action: 'getthumbsrc',
-					type: data.type,
-					href: data.href,
-					mode: data.mode,
-					width: data.width,
-					height: data.height
-				},
-				type: 'POST',
-				dataType: 'json',
-				success: function (json) {
-
-					if (json.code === 0) {
-						callback(json.absHref);
-					}
-					callback();
-				},
-				error: function () {
-
-					callback();
-				}
-			});
-		},
-
-		getThumbSrcSmall = function (type, href, callback) {
-
-			getThumbSrc(
-				{
-					type: type,
-					href: href,
-					mode: 'square',
-					width: 16,
-					height: 16
-				},
-				callback
-			);
-		},
-
-		getThumbSrcBig = function (type, href, callback) {
-
-			getThumbSrc(
-				{
-					type: type,
-					href: href,
-					mode: 'rational',
-					width: 100,
-					height: 48
-				},
-				callback
-			);
-		},
-
 		getHtml = function (url, callback) {
 
 			$.ajax({
@@ -176,8 +120,6 @@ modulejs.define('core/ajax', ['$', 'amplify', 'base64', 'core/resource'], functi
 		getChecks: getChecks,
 		getEntries: getEntries,
 		getArchive: getArchive,
-		getThumbSrcSmall: getThumbSrcSmall,
-		getThumbSrcBig: getThumbSrcBig,
 		getHtml: getHtml
 	};
 });

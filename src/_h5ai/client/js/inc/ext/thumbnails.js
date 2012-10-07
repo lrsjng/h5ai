@@ -1,5 +1,5 @@
 
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/event', 'core/ajax'], function (_, allsettings, entry, event, ajax) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/event', 'core/server'], function (_, allsettings, entry, event, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -24,13 +24,13 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 				}
 
 				if (type) {
-					ajax.getThumbSrcSmall(type, entry.absHref, function (src) {
+					server.requestThumbSmall(type, entry.absHref, function (src) {
 
 						if (src) {
 							entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
 						}
 					});
-					ajax.getThumbSrcBig(type, entry.absHref, function (src) {
+					server.requestThumbBig(type, entry.absHref, function (src) {
 
 						if (src) {
 							entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
