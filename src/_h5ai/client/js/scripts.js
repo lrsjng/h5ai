@@ -56,7 +56,8 @@
 
 	if (backend === 'php') {
 
-		$.getJSON(appHref + 'server/php/api.php', {
+		$.getJSON('.', {
+			api: true,
 			action: 'get',
 			options: true,
 			types: true,

@@ -21,4 +21,12 @@ normalized_require_once("/server/php/inc/Entry.php");
 
 $APP = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
+if (array_key_exists("api", $_REQUEST)) {
+
+	use_request_params("api");
+	normalized_require_once("/server/php/inc/Api.php");
+	$api = new Api($APP);
+	$api->apply();
+}
+
 ?>

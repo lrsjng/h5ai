@@ -150,28 +150,9 @@ class App {
 	}
 
 
-	private function fileExists($file) {
-
-		return is_string($file) && file_exists($file);
-	}
-
-
 	public function get_generic_json() {
 
-		$entries = $this->get_entries($this->abs_href, 1);
-
-		$header = $this->options["custom"]["header"];
-		$footer = $this->options["custom"]["footer"];
-		$header = $this->fileExists($header ? $this->abs_path . "/" . $header : null) ? $header : null;
-		$footer = $this->fileExists($footer ? $this->abs_path . "/" . $footer : null) ? $footer : null;
-
-		$json = array(
-			"customHeader" => $header,
-			"customFooter" => $footer,
-			"entries" => $entries
-		);
-
-		return json_encode($json) . "\n";
+		return json_encode(array("entries" => $this->get_entries($this->abs_href, 1))) . "\n";
 	}
 
 
