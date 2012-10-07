@@ -1,11 +1,7 @@
 
 modulejs.define('core/resource', ['core/settings'], function (settings) {
 
-	var api = function () {
-
-			return settings.h5aiAbsHref + 'server/php/api.php';
-		},
-		image = function (id, noPngExt) {
+	var image = function (id, noPngExt) {
 
 			return settings.h5aiAbsHref + 'client/images/' + id + (noPngExt ? '' : '.png');
 		},
@@ -15,7 +11,6 @@ modulejs.define('core/resource', ['core/settings'], function (settings) {
 		};
 
 	return {
-		api: api,
 		image: image,
 		icon: icon
 	};

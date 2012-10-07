@@ -17,6 +17,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					'</span>',
 		statusHintTemplate = '<span class="hint"/>',
 
+		magicSequence = '=h5ai=',
+
 		// updates the tree for this single entry
 		update = function (entry) {
 
@@ -40,11 +42,11 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				var subfolders = entry.getSubfolders();
 
 				// indicator
-				if (!entry.status || (entry.status === 'h5ai' && !entry.isContentFetched) || subfolders.length) {
+				if (!entry.status || (entry.status === magicSequence && !entry.isContentFetched) || subfolders.length) {
 
 					$indicator.removeClass('none');
 
-					if (!entry.status || (entry.status === 'h5ai' && !entry.isContentFetched)) {
+					if (!entry.status || (entry.status === magicSequence && !entry.isContentFetched)) {
 						$indicator.addClass('unknown');
 					} else if (entry.isContentVisible) {
 						$indicator.addClass('open');
@@ -73,7 +75,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 				// does it have subfolders?
 				if (subfolders.length) {
-					var $ul = $('<ul class="content" />').appendTo($html);
+					var $ul = $('<ul class="content"/>').appendTo($html);
 					_.each(subfolders, function (e) {
 						$('<li />').append(update(e)).appendTo($ul);
 					});
@@ -206,7 +208,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				return;
 			}
 
-			var $tree = $('<div id="tree" />')
+			var $tree = $('<div id="tree"/>')
 				.appendTo('body')
 				.scrollpanel()
 				.on('click', '.indicator', createOnIndicatorClick(parser))

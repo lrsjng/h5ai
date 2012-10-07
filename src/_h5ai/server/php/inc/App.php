@@ -26,10 +26,7 @@ class App {
 		$this->abs_href = normalize_path($abs_href, true);
 		$this->abs_path = $this->get_abs_path($this->abs_href);
 
-		$config = array("options" => array(), "types" => array(), "langs" => array());
-		$config = merge_config($config, load_commented_json($this->app_abs_path . "/conf/config.json"));
-		$config = merge_config($config, load_commented_json($this->abs_path . "/" . App::$FILE_PREFIX . ".config.json"));
-		$this->options = $config["options"];
+		$this->options = load_commented_json($this->app_abs_path . "/conf/options.json");
 	}
 
 
@@ -178,14 +175,6 @@ class App {
 	}
 
 
-	public function get_custom_config() {
-
-		$config = App::$FILE_PREFIX . ".config.json";
-		$config = $this->fileExists($config ? $this->abs_path . "/" . $config : "ignore") ? $config : "ignore";
-		return $config;
-	}
-
-
 	public function get_entries($abs_href, $what) {
 
 		$cache = array();
@@ -227,12 +216,12 @@ class App {
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
 		if ($folder->get_parent($cache)) {
-			$html .= "<tr><td>[^]</td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
+			$html .= "<tr><td>UP</td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
 		}
 		foreach ($entries as $entry) {
 			$html .= "<tr>";
-			$html .= "<td>" . ($entry->is_folder ? "[D]" : "[F]") . "</td>";
-			$html .= "<td><a href=\"" . $entry->abs_href . "\">" . basename($entry->abs_path) . ($entry->is_folder ? "/" : "") . "</a></td>";
+			$html .= "<td>" . ($entry->is_folder ? "DIR" : "FILE") . "</td>";
+			$html .= "<td><a href=\"" . $entry->abs_href . "\">" . basename($entry->abs_path) . "</a></td>";
 			$html .= "<td>" . date("Y-m-d H:i", $entry->date) . "</td>";
 			$html .= "<td>" . ($entry->size !== null ? intval($entry->size / 1000) . " KB" : "" ) . "</td>";
 			$html .= "</tr>";

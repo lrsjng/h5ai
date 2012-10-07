@@ -12,6 +12,8 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 			k: 1024.0,
 			u: ['B', 'KiB', 'MiB', 'GiB', 'TiB']
 		},
+		defaultMetric = decimalMetric,
+		defaultDateFormat = 'YYYY-MM-DD HH:mm',
 
 		parseSize = function (str) {
 
@@ -36,8 +38,6 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 			}
 			return val;
 		},
-
-		defaultMetric = decimalMetric,
 
 		setDefaultMetric = function (metric) {
 
@@ -67,8 +67,6 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 			}
 			return (i <= 1 ? Math.round(size) : size.toFixed(1)).toString() + ' ' + metric.u[i];
 		},
-
-		defaultDateFormat = 'YYYY-MM-DD HH:mm',
 
 		setDefaultDateFormat = function (dateFormat) {
 

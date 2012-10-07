@@ -67,7 +67,7 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 
 			event.sub('entry.mouseenter', function (entry) {
 
-				if (entry.isParentFolder) {
+				if (entry.isCurrentParentFolder()) {
 					return;
 				}
 

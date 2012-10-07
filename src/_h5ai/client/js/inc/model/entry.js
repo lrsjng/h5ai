@@ -1,67 +1,11 @@
 
-modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/settings'], function ($, _, types, event, settings) {
+modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/settings', 'core/location'], function ($, _, types, event, settings, location) {
 
-	var doc = document,
-		domain = doc.domain,
-
-		forceEncoding = function (href) {
-
-			return href
-					.replace(/\/+/g, '/')
-					.replace(/ /g, '%20')
-					.replace(/'/g, '%27')
-					.replace(/\[/g, '%5B')
-					.replace(/\]/g, '%5D')
-					.replace(/\(/g, '%28')
-					.replace(/\)/g, '%29')
-					.replace(/\+/g, '%2B')
-					.replace(/\=/g, '%3D');
-		},
-
-
-		location = (function () {
-
-			var rePrePathname = /.*:\/\/[^\/]*/,
-				rePostPathname = /[^\/]*$/,
-
-				uriToPathname = function (uri) {
-
-					return uri.replace(rePrePathname, '').replace(rePostPathname, '');
-				},
-
-				testpathname = '/a b',
-				a = doc.createElement('a'),
-				isDecoded, location;
-
-			a.href = testpathname;
-			isDecoded = uriToPathname(a.href) === testpathname;
-
-			a.href = doc.location.href;
-			location = uriToPathname(a.href);
-
-			if (isDecoded) {
-				location = encodeURIComponent(location).replace(/%2F/ig, '/');
-			}
-
-			return forceEncoding(location);
-		}()),
-
-		folderstatus = (function () {
-
-			try { return modulejs.require('ext/folderstatus'); } catch (e) {}
-			return {};
-		}()),
-
-
-
-		// utils
-
-		reEndsWithSlash = /\/$/,
-
+	var reEndsWithSlash = /\/$/,
 
 		startsWith = function (sequence, part) {
 
-			return sequence.length >= part.length && sequence.slice(0, part.length) === part;
+			return sequence.slice && part.length && sequence.slice(0, part.length) === part;
 		},
 
 
@@ -92,7 +36,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 			}
 		},
 
-
+		magicSequence = '=h5ai=',
 		reContentType = /^text\/html;h5ai=/,
 		getStatus = function (href, withContent, callback) {
 
@@ -107,7 +51,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 					};
 
 					if (xhr.status === 200 && reContentType.test(xhr.getResponseHeader('Content-Type'))) {
-						res.status = 'h5ai';
+						res.status = magicSequence;
 					}
 
 					callback(res);
@@ -119,7 +63,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 			getStatus(self.absHref, parser, function (response) {
 
 				self.status = response.status;
-				if (parser && response.status === 'h5ai') {
+				if (parser && response.status === magicSequence) {
 					parser.parse(self.absHref, response.content);
 				}
 				callback(self);
@@ -134,7 +78,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		getEntry = function (absHref, time, size, status, isContentFetched) {
 
-			absHref = forceEncoding(absHref || location);
+			absHref = location.forceEncoding(absHref || location.absHref);
 
 			if (!startsWith(absHref, settings.rootAbsHref)) {
 				return null;
@@ -178,7 +122,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		removeEntry = function (absHref) {
 
-			absHref = forceEncoding(absHref || location);
+			absHref = location.forceEncoding(absHref || location.absHref);
 
 			var self = cache[absHref];
 
@@ -202,9 +146,6 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 			if (self.status || !self.isFolder()) {
 				callback(self);
-			} else if (folderstatus[absHref]) {
-				self.status = folderstatus[absHref];
-				callback(self);
 			} else {
 				ajaxRequest(self, null, callback);
 			}
@@ -220,7 +161,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 				fetchStatus(absHref, function (self) {
 
 					self.isContentFetched = true;
-					if (self.status === 'h5ai') {
+					if (self.status === magicSequence) {
 						ajaxRequest(self, parser, callback);
 					} else {
 						callback(self);
@@ -241,7 +182,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		this.absHref = absHref;
 		this.type = types.getType(absHref);
-		this.label = createLabel(absHref === '/' ? domain : split.name);
+		this.label = createLabel(absHref === '/' ? location.domain : split.name);
 		this.time = null;
 		this.size = null;
 		this.parent = null;
@@ -266,12 +207,17 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		isCurrentFolder: function () {
 
-			return this.absHref === location;
+			return this.absHref === location.absHref;
 		},
 
 		isInCurrentFolder: function () {
 
 			return !!this.parent && this.parent.isCurrentFolder();
+		},
+
+		isCurrentParentFolder: function () {
+
+			return this === getEntry().parent;
 		},
 
 		isDomain: function () {

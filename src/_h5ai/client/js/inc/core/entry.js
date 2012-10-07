@@ -4,12 +4,7 @@ modulejs.define('core/entry', ['$', 'core/parser', 'model/entry'], function ($, 
 	var entry = Entry.get();
 
 	parser.parse(entry.absHref, $('body'));
-	$('#data-apache-autoindex').remove();
-
-	entry.status = 'h5ai';
-	if (entry.parent) {
-		entry.parent.isParentFolder = true;
-	}
+	entry.status = '=h5ai=';
 
 	return entry;
 });

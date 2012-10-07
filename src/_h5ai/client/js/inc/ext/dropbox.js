@@ -1,5 +1,5 @@
 
-modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/resource', 'core/refresh'], function (_, $, allsettings, entry, resource, refresh) {
+modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/refresh', 'core/server'], function (_, $, allsettings, entry, refresh, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -17,7 +17,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 
 		init = function () {
 
-			if (!settings.enabled) {
+			if (!settings.enabled || !server.apiHref) {
 				return;
 			}
 
@@ -47,7 +47,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 
 				maxfiles: settings.maxfiles,
 				maxfilesize: settings.maxfilesize,
-				url: resource.api(),
+				url: server.apiHref,
 				data: {
 					action: 'upload',
 					href: entry.absHref

@@ -66,7 +66,7 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 				}
 			}
 
-			if (entry.isParentFolder) {
+			if (entry.isCurrentParentFolder()) {
 				$imgSmall.attr('src', resource.icon('folder-parent'));
 				$imgBig.attr('src', resource.icon('folder-parent', true));
 				if (!settings.setParentFolderLabels) {

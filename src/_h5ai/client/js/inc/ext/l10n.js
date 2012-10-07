@@ -24,7 +24,8 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			download: 'download',
 			noMatch: 'no match',
 			dateFormat: 'YYYY-MM-DD HH:mm',
-			filter: 'filter'
+			filter: 'filter',
+			'delete': 'delete'
 		},
 
 		template = '<span id="langSelector">' +

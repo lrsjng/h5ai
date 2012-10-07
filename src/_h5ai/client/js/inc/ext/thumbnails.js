@@ -9,6 +9,22 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 			delay: 1000
 		}, allsettings.thumbnails),
 
+		requestThumbSmall = function (type, href, callback) {
+
+			server.request({action: 'getthumbsrc', type: type, href: href, mode: 'square', width: 16, height: 16}, function (json) {
+
+				callback(json && json.code === 0 ? json.absHref : null);
+			});
+		},
+
+		requestThumbBig = function (type, href, callback) {
+
+			server.request({action: 'getthumbsrc', type: type, href: href, mode: 'rational', width: 100, height: 48}, function (json) {
+
+				callback(json && json.code === 0 ? json.absHref : null);
+			});
+		},
+
 		checkEntry = function (entry) {
 
 			if (entry.$extended) {
@@ -24,13 +40,13 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 				}
 
 				if (type) {
-					server.requestThumbSmall(type, entry.absHref, function (src) {
+					requestThumbSmall(type, entry.absHref, function (src) {
 
 						if (src) {
 							entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
 						}
 					});
-					server.requestThumbBig(type, entry.absHref, function (src) {
+					requestThumbBig(type, entry.absHref, function (src) {
 
 						if (src) {
 							entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
@@ -42,7 +58,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 
 		init = function (entry) {
 
-			if (!settings.enabled) {
+			if (!settings.enabled || !server.apiHref) {
 				return;
 			}
 
