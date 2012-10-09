@@ -17,7 +17,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 
 		init = function () {
 
-			if (!settings.enabled || !server.apiHref) {
+			if (!settings.enabled || !server.api) {
 				return;
 			}
 
@@ -47,7 +47,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 
 				maxfiles: settings.maxfiles,
 				maxfilesize: settings.maxfilesize,
-				url: server.apiHref,
+				url: server.api,
 				data: {
 					action: 'upload',
 					href: entry.absHref

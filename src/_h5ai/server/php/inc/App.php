@@ -292,7 +292,7 @@ class App {
 
 		return array(
 			"backend" => "php",
-			"apiHref" => $this->app_abs_href . "server/php/api.php",
+			"api" => true,
 			"name" => strtolower(preg_replace("/\\/.*$/", "", getenv("SERVER_SOFTWARE"))),
 			"version" => strtolower(preg_replace("/^.*\\//", "", preg_replace("/\\s.*$/", "", getenv("SERVER_SOFTWARE"))))
 		);

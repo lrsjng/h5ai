@@ -77,6 +77,7 @@ class Archive {
 
 				$real_file = $this->app->get_abs_path($href);
 				$archived_file = preg_replace("!^" . normalize_path($this->app->get_root_abs_path(), true) . "!", "", $real_file);
+				// $archived_file = preg_replace("!^" . normalize_path($this->app->get_abs_path(), true) . "!", "", $real_file);
 
 				if (is_dir($real_file)) {
 					$this->add_dir($real_file, $archived_file);

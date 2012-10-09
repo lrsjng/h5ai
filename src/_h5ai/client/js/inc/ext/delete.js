@@ -57,7 +57,7 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 
 		init = function () {
 
-			if (!settings.enabled || !server.apiHref) {
+			if (!settings.enabled || !server.api) {
 				return;
 			}
 

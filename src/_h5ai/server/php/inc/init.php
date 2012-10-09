@@ -19,14 +19,25 @@ normalized_require_once("/server/php/inc/util.php");
 normalized_require_once("/server/php/inc/App.php");
 normalized_require_once("/server/php/inc/Entry.php");
 
-$APP = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
+$app = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
-if (array_key_exists("api", $_REQUEST)) {
+if (count($_REQUEST)) {
 
-	use_request_params("api");
+	header("Content-type: application/json;h5ai={{pkg.version}}");
+
 	normalized_require_once("/server/php/inc/Api.php");
-	$api = new Api($APP);
+	$api = new Api($app);
 	$api->apply();
+
+	json_fail(100, "unsupported request");
+
+} else {
+
+	header("Content-type: text/html;h5ai={{pkg.version}}");
+
+	$HREF = $app->get_app_abs_href();
+	$JSON = $app->get_generic_json();
+	$FALLBACK = $app->get_no_js_fallback();
 }
 
 ?>

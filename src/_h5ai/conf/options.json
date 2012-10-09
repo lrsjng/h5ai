@@ -104,7 +104,7 @@ Options
 	*/
 	"download": {
 		"enabled": true,
-		"execution": "php",
+		"execution": "shell",
 		"format": "zip"
 	},
 

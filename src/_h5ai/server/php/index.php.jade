@@ -1,9 +1,8 @@
 |<?php require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php"); ?>
-|<?php header("Content-type: text/html;h5ai={{pkg.version}}"); ?>
 
-- var href = "<?php echo $APP->get_app_abs_href(); ?>"
-- var json = "<?php echo $APP->get_generic_json(); ?>"
-- var fallback = "<?php echo $APP->get_no_js_fallback(); ?>"
+- var href = "<?php echo $HREF; ?>"
+- var json = "<?php echo $JSON; ?>"
+- var fallback = "<?php echo $FALLBACK; ?>"
 
 doctype 5
 //if lt IE 9

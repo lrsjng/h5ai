@@ -11,7 +11,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 
 		requestThumbSmall = function (type, href, callback) {
 
-			server.request({action: 'getthumbsrc', type: type, href: href, mode: 'square', width: 16, height: 16}, function (json) {
+			server.request({action: 'getThumbHref', type: type, href: href, mode: 'square', width: 16, height: 16}, function (json) {
 
 				callback(json && json.code === 0 ? json.absHref : null);
 			});
@@ -19,7 +19,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 
 		requestThumbBig = function (type, href, callback) {
 
-			server.request({action: 'getthumbsrc', type: type, href: href, mode: 'rational', width: 100, height: 48}, function (json) {
+			server.request({action: 'getThumbHref', type: type, href: href, mode: 'rational', width: 100, height: 48}, function (json) {
 
 				callback(json && json.code === 0 ? json.absHref : null);
 			});
@@ -58,7 +58,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 
 		init = function (entry) {
 
-			if (!settings.enabled || !server.apiHref) {
+			if (!settings.enabled || !server.api) {
 				return;
 			}
 

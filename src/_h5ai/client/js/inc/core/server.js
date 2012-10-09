@@ -5,9 +5,7 @@ modulejs.define('core/server', ['$', '_', 'config'], function ($, _, config) {
 
 		request: function (data, callback) {
 
-			data.api = true;
-
-			if (server.apiHref) {
+			if (server.api) {
 				$.ajax({
 					url: '.',
 					data: data,

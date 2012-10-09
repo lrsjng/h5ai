@@ -35,7 +35,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			if (json && json.code === 0) {
 				setTimeout(function () { // wait here so the img above can be updated in time
 
-					window.location = server.apiHref + '?action=getarchive&id=' + json.id + '&as=h5ai-selection.' + settings.format;
+					window.location = '?action=getArchive&id=' + json.id + '&as=package.' + settings.format;
 				}, 200);
 			} else {
 				failed();
@@ -48,7 +48,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			$img.attr('src', resource.image('loading.gif', true));
 
 			server.request({
-				action: 'archive',
+				action: 'createArchive',
 				execution: settings.execution,
 				format: settings.format,
 				hrefs: hrefsStr
@@ -71,7 +71,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 		init = function () {
 
-			if (!settings.enabled || !server.apiHref) {
+			if (!settings.enabled || !server.api) {
 				return;
 			}
 

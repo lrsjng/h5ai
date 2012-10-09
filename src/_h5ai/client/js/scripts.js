@@ -57,7 +57,6 @@
 	if (backend === 'php') {
 
 		$.getJSON('.', {
-			api: true,
 			action: 'get',
 			options: true,
 			types: true,
@@ -77,7 +76,7 @@
 						langs: langs,
 						server: {
 							backend: backend,
-							apiHref: null,
+							api: false,
 							name: 'apache',
 							version: null
 						}

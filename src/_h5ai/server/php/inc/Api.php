@@ -77,7 +77,7 @@ class Api {
 		}
 
 
-		else if ($action === "getthumbsrc") {
+		else if ($action === "getThumbHref") {
 
 			if (!$options["thumbnails"]["enabled"]) {
 				json_fail(1, "thumbnails disabled");
@@ -100,7 +100,7 @@ class Api {
 		}
 
 
-		else if ($action === "archive") {
+		else if ($action === "createArchive") {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
@@ -120,7 +120,7 @@ class Api {
 		}
 
 
-		else if ($action === "getarchive") {
+		else if ($action === "getArchive") {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
@@ -221,11 +221,6 @@ class Api {
 			}
 
 			json_exit();
-		}
-
-
-		else {
-			json_fail(100, "unsupported action");
 		}
 	}
 }
