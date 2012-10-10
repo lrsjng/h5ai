@@ -197,11 +197,11 @@ class App {
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
 		if ($folder->get_parent($cache)) {
-			$html .= "<tr><td>UP</td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
+			$html .= "<tr><td><img src=\"" . $this->app_abs_href . "client/icons/16x16/folder-parent.png\"/></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
 		}
 		foreach ($entries as $entry) {
 			$html .= "<tr>";
-			$html .= "<td>" . ($entry->is_folder ? "DIR" : "FILE") . "</td>";
+			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/16x16/" . ($entry->is_folder ? "folder" : "default") . ".png\"/></td>";
 			$html .= "<td><a href=\"" . $entry->abs_href . "\">" . basename($entry->abs_path) . "</a></td>";
 			$html .= "<td>" . date("Y-m-d H:i", $entry->date) . "</td>";
 			$html .= "<td>" . ($entry->size !== null ? intval($entry->size / 1000) . " KB" : "" ) . "</td>";

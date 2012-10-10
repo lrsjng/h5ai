@@ -23,7 +23,7 @@ $app = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
 if (count($_REQUEST)) {
 
-	header("Content-type: application/json;h5ai={{pkg.version}}");
+	header("Content-type: application/json");
 
 	normalized_require_once("/server/php/inc/Api.php");
 	$api = new Api($app);
@@ -32,8 +32,6 @@ if (count($_REQUEST)) {
 	json_fail(100, "unsupported request");
 
 } else {
-
-	header("Content-type: text/html;h5ai={{pkg.version}}");
 
 	$HREF = $app->get_app_abs_href();
 	$JSON = $app->get_generic_json();

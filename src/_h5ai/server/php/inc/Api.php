@@ -40,7 +40,7 @@ class Api {
 			if (array_key_exists("l10n", $_REQUEST)) {
 
 				list($iso_codes) = use_request_params("l10nCodes", "l10n");
-				$iso_codes = explode(",", $iso_codes);
+				$iso_codes = explode(":", $iso_codes);
 				$response["l10n"] = $this->app->get_l10n($iso_codes);
 			}
 
@@ -58,14 +58,14 @@ class Api {
 
 			if (array_key_exists("custom", $_REQUEST)) {
 
-				list($abs_href) = use_request_params("customHref", "custom");
+				list($abs_href) = use_optional_request_params("customHref", "custom");
 				$response["custom"] = $this->app->get_customizations($abs_href);
 			}
 
 			if (array_key_exists("entries", $_REQUEST)) {
 
-				list($abs_href, $what) = use_request_params("entriesHref", "entriesWhat", "entries");
-				$what = intval($what, 10);
+				list($abs_href, $what) = use_optional_request_params("entriesHref", "entriesWhat", "entries");
+				$what = is_numeric($what) ? intval($what, 10) : 1;
 				$response["entries"] = $this->app->get_entries($abs_href, $what);
 			}
 

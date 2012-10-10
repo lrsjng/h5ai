@@ -1,5 +1,5 @@
 
-modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event'], function (_, $, allsettings, langs, format, store, event) {
+modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event', 'core/server'], function (_, $, allsettings, langs, format, store, event, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -72,19 +72,11 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 				callback(loaded[isoCode]);
 			} else {
 
-				$.ajax({
-					url: allsettings.h5aiAbsHref + 'conf/l10n/' + isoCode + '.json',
-					dataType: 'json',
-					success: function (json) {
+				server.request({action: 'get', l10n: true, l10nCodes: isoCode}, function (response) {
 
-						loaded[isoCode] = _.extend({}, defaultTranslations, json, {isoCode: isoCode});
-						callback(loaded[isoCode]);
-					},
-					error: function () {
-
-						loaded[isoCode] = _.extend({}, defaultTranslations, {isoCode: isoCode});
-						callback(loaded[isoCode]);
-					}
+					var json = response.l10n && response.l10n[isoCode] ? response.l10n[isoCode] : {};
+					loaded[isoCode] = _.extend({}, defaultTranslations, json, {isoCode: isoCode});
+					callback(loaded[isoCode]);
 				});
 			}
 		},

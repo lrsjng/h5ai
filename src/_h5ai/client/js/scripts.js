@@ -29,15 +29,6 @@
 
 		appHref = src.substr(0, src.length - filename.length),
 
-		loadCommentedJson = function (href, callback) {
-
-			$.ajax(href, {dataType: 'text'}).always(function (response) {
-
-				var json = response.replace ? JSON.parse(response.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
-				callback(json);
-			});
-		},
-
 		run = function (config) {
 			/*global amplify, Base64, jQuery, Modernizr, moment, _ */
 
@@ -66,22 +57,35 @@
 
 	} else if (backend === 'aai') {
 
-		loadCommentedJson(appHref + 'conf/options.json', function (options) {
-			loadCommentedJson(appHref + 'conf/types.json', function (types) {
-				loadCommentedJson(appHref + 'conf/langs.json', function (langs) {
+		var loadJson = function (href) {
 
-					run({
-						options: options,
-						types: types,
-						langs: langs,
-						server: {
-							backend: backend,
-							api: false,
-							name: 'apache',
-							version: null
-						}
-					});
+				var deferred = $.Deferred();
+
+				$.ajax(href, {dataType: 'text'}).always(function (content) {
+
+					var json = content.replace ? JSON.parse(content.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
+					deferred.resolve(json);
 				});
+
+				return deferred;
+			};
+
+		$.when(
+			loadJson(appHref + 'conf/options.json'),
+			loadJson(appHref + 'conf/types.json'),
+			loadJson(appHref + 'conf/langs.json')
+		).done(function (options, types, langs) {
+
+			run({
+				options: options,
+				types: types,
+				langs: langs,
+				server: {
+					backend: backend,
+					api: false,
+					name: 'apache',
+					version: null
+				}
 			});
 		});
 	}

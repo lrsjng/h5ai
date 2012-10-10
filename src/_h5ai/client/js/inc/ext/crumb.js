@@ -82,11 +82,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			_.each(crumb, function (e) {
 
 				$ul.append(update(e));
-
-				e.fetchStatus(function (e) {
-
-					update(e);
-				});
 			});
 
 			event.sub('entry.created', onContentChanged);

@@ -1,5 +1,5 @@
 
-modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry', 'core/parser'], function (_, $, allsettings, resource, event, entry, parser) {
+modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry'], function (_, $, allsettings, resource, event, entry) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -104,7 +104,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			return $html;
 		},
 
-		createOnIndicatorClick = function (parser) {
+		createOnIndicatorClick = function () {
 
 			var $tree = $('#tree'),
 				slide = function (entry, $indicator, $content, down) {
@@ -127,7 +127,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 				if ($indicator.hasClass('unknown')) {
 
-					entry.fetchContent(parser, function (entry) {
+					entry.fetchContent(function (entry) {
 
 						entry.isContentVisible = false;
 
@@ -164,13 +164,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			}
 		},
 
-		fetchTree = function (entry, parser, callback) {
+		fetchTree = function (entry, callback) {
 
 			entry.isContentVisible = true;
-			entry.fetchContent(parser, function (entry) {
+			entry.fetchContent(function (entry) {
 
 				if (entry.parent) {
-					fetchTree(entry.parent, parser, callback);
+					fetchTree(entry.parent, callback);
 				} else {
 					callback(entry);
 				}
@@ -202,7 +202,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 		},
 
 		// creates the complete tree from entry down to the root
-		init = function (entry, parser) {
+		init = function (entry) {
 
 			if (!settings.enabled) {
 				return;
@@ -211,7 +211,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			var $tree = $('<div id="tree"/>')
 				.appendTo('body')
 				.scrollpanel()
-				.on('click', '.indicator', createOnIndicatorClick(parser))
+				.on('click', '.indicator', createOnIndicatorClick())
 				.on('mouseenter', function () {
 
 					shiftTree(true);
@@ -221,7 +221,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					shiftTree();
 				});
 
-			fetchTree(entry, parser, function (root) {
+			fetchTree(entry, function (root) {
 
 				$tree
 					.find('.sp-container').append(update(root)).end()
@@ -243,5 +243,5 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			});
 		};
 
-	init(entry, parser);
+	init(entry);
 });

@@ -112,10 +112,8 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 
 				$ul.append(update(e));
 
-				e.fetchStatus(function (e) {
-
-					update(e);
-				});
+				// needed by aai
+				e.fetchStatus(function (e) { update(e); });
 			});
 
 			$extended.append($ul);

@@ -1,5 +1,5 @@
 
-modulejs.define('ext/custom', ['_', '$', 'core/settings'], function (_, $, allsettings) {
+modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server'], function (_, $, allsettings, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -7,46 +7,23 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings'], function (_, $, allse
 			footer: '_h5ai.footer.html'
 		}, allsettings.custom),
 
-		getHtml = function (url, callback) {
-
-			$.ajax({
-				url: url,
-				type: 'POST',
-				dataType: 'html',
-				success: function (html) {
-
-					callback(html);
-				},
-				error: function () {
-
-					callback();
-				}
-			});
-		},
-
 		init = function () {
 
 			if (!settings.enabled) {
 				return;
 			}
 
-			if (_.isString(settings.header)) {
-				getHtml(settings.header, function (html) {
+			server.request({action: 'get', custom: true}, function (response) {
 
-					if (html) {
-						$('<div id="content-header">' + html + '</div>').prependTo('#content');
+				if (response) {
+					if (response.custom.header) {
+						$('<div id="content-header">' + response.custom.header + '</div>').prependTo('#content');
 					}
-				});
-			}
-
-			if (_.isString(settings.footer)) {
-				getHtml(settings.footer, function (html) {
-
-					if (html) {
-						$('<div id="content-footer">' + html + '</div>').appendTo('#content');
+					if (response.custom.footer) {
+						$('<div id="content-footer">' + response.custom.footer + '</div>').appendTo('#content');
 					}
-				});
-			}
+				}
+			});
 		};
 
 	init();

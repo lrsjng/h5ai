@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/settings', 'core/location'], function ($, _, types, event, settings, location) {
+modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/settings', 'core/location', 'core/server'], function ($, _, types, event, settings, location, server) {
 
 	var reEndsWithSlash = /\/$/,
 
@@ -34,40 +34,6 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 				}
 				return split;
 			}
-		},
-
-		magicSequence = '=h5ai=',
-		reContentType = /^text\/html;h5ai=/,
-		getStatus = function (href, withContent, callback) {
-
-			$.ajax({
-				url: href,
-				type: withContent ? 'GET' : 'HEAD',
-				complete: function (xhr) {
-
-					var res = {
-						status: xhr.status,
-						content: xhr.responseText
-					};
-
-					if (xhr.status === 200 && reContentType.test(xhr.getResponseHeader('Content-Type'))) {
-						res.status = magicSequence;
-					}
-
-					callback(res);
-				}
-			});
-		},
-		ajaxRequest = function (self, parser, callback) {
-
-			getStatus(self.absHref, parser, function (response) {
-
-				self.status = response.status;
-				if (parser && response.status === magicSequence) {
-					parser.parse(self.absHref, response.content);
-				}
-				callback(self);
-			});
 		},
 
 
@@ -144,28 +110,38 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 			var self = getEntry(absHref);
 
-			if (self.status || !self.isFolder()) {
+			if (self.status !== null) {
 				callback(self);
 			} else {
-				ajaxRequest(self, null, callback);
+				server.request({action: 'get', entries: true, entriesHref: self.absHref, entriesWhat: 0}, function (response) {
+
+					if (response.entries) {
+						_.each(response.entries, function (entry) {
+							getEntry(entry.absHref, entry.time, entry.size, entry.status, entry.content);
+						});
+					}
+
+					callback(self);
+				});
 			}
 		},
 
-		fetchContent = function (absHref, parser, callback) {
+		fetchContent = function (absHref, callback) {
 
 			var self = getEntry(absHref);
 
 			if (self.isContentFetched) {
 				callback(self);
 			} else {
-				fetchStatus(absHref, function (self) {
+				server.request({action: 'get', entries: true, entriesHref: self.absHref, entriesWhat: 1}, function (response) {
 
-					self.isContentFetched = true;
-					if (self.status === magicSequence) {
-						ajaxRequest(self, parser, callback);
-					} else {
-						callback(self);
+					if (response.entries) {
+						_.each(response.entries, function (entry) {
+							getEntry(entry.absHref, entry.time, entry.size, entry.status, entry.content);
+						});
 					}
+
+					callback(self);
 				});
 			}
 		};
@@ -245,9 +221,9 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 			return fetchStatus(this.absHref, callback);
 		},
 
-		fetchContent: function (parser, callback) {
+		fetchContent: function (callback) {
 
-			return fetchContent(this.absHref, parser, callback);
+			return fetchContent(this.absHref, callback);
 		},
 
 		getCrumb: function () {

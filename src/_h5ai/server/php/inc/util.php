@@ -30,6 +30,24 @@ function use_request_params($keys) {
 	return $values;
 }
 
+function use_optional_request_params($keys) {
+
+	if (!is_array($keys)) {
+		$keys = func_get_args();
+	}
+
+	$values = array();
+	foreach ($keys as $key) {
+		if (array_key_exists($key, $_REQUEST)) {
+			$values[] = $_REQUEST[$key];
+			unset($_REQUEST[$key]);
+		} else {
+			$values[] = null;
+		}
+	}
+	return $values;
+}
+
 function delete_tempfile($file) {
 
 	@unlink($file);
