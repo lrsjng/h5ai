@@ -3,7 +3,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 	var settings = _.extend({
 			enabled: false,
-			slide: true
+			slide: true,
+			maxSubfolders: 50
 		}, allsettings.tree),
 
 		template = '<div class="entry">' +
@@ -75,10 +76,17 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 				// does it have subfolders?
 				if (subfolders.length) {
-					var $ul = $('<ul class="content"/>').appendTo($html);
+					var $ul = $('<ul class="content"/>').appendTo($html),
+						counter = 0;
 					_.each(subfolders, function (e) {
-						$('<li />').append(update(e)).appendTo($ul);
+						counter += 1;
+						if (counter <= settings.maxSubfolders) {
+							$('<li/>').append(update(e)).appendTo($ul);
+						}
 					});
+					if (subfolders.length > settings.maxSubfolders) {
+						$('<li class="summary">… ' + (subfolders.length - settings.maxSubfolders) + ' more subfolders</li>').appendTo($ul);
+					}
 					if (!entry.isContentVisible) {
 						$ul.hide();
 					}
@@ -232,9 +240,11 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			});
 
 			event.sub('ready', adjustSpacing);
-			event.sub('entry.changed', onContentChanged);
-			event.sub('entry.created', onContentChanged);
-			event.sub('entry.removed', onContentChanged);
+
+			// strong negative performance impact in aai mode
+			// event.sub('entry.changed', onContentChanged);
+			// event.sub('entry.created', onContentChanged);
+			// event.sub('entry.removed', onContentChanged);
 
 			$(window).on('resize', function () {
 

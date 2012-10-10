@@ -33,16 +33,20 @@ Options
 	The user selected view mode is also stored local in modern browsers
 	so that it will be persistent.
 
-	Set parent folder labels to real folder names.
-	Binary prefix set to true uses 1024B=1KiB when formatting
-	file sizes (see http://en.wikipedia.org/wiki/Binary_prefix).
+	- setParentFolderLabels [all]: set parent folder labels to real folder names
+	- binaryPrefix [all]: set to true uses 1024B=1KiB when formatting file sizes
+		(see http://en.wikipedia.org/wiki/Binary_prefix)
+	- indexFiles [php]: consider folder with those files as non {{pkg.name}} folders
+	- ignore [php]: don't list items matching these regular expressions
+	- maxFolders [aai]: max folders to trigger folder status checks
 	*/
 	"view": {
 		"modes": ["details", "list", "grid", "icons"],
 		"setParentFolderLabels": true,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
-		"ignore": ["^\\.", "^_{{pkg.name}}"]
+		"ignore": ["^\\.", "^_{{pkg.name}}"],
+		"maxFolders": 16
 	},
 
 
@@ -274,7 +278,7 @@ Options
 	},
 
 	/* [php]
-	Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
+	Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
 	writable for the web Server.
 	- img thumbnails depend on PHP-GD
 	- mov thumbnails depend on ffmpeg
@@ -303,6 +307,7 @@ Options
 	*/
 	"tree": {
 		"enabled": true,
-		"slide": true
+		"slide": true,
+		"maxSubfolders": 50
 	}
 }

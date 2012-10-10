@@ -4,7 +4,9 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 	var settings = _.extend({
 			modes: ['details', 'icons'],
 			setParentFolderLabels: false,
-			binaryPrefix: false
+			binaryPrefix: false,
+			maxFolders: 16,
+			delay: 2000
 		}, allsettings.view),
 
 		template = '<li class="entry">' +
@@ -111,9 +113,6 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			_.each(entry.content, function (e) {
 
 				$ul.append(update(e));
-
-				// needed by aai
-				e.fetchStatus(function (e) { update(e); });
 			});
 
 			$extended.append($ul);
@@ -154,6 +153,20 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 					});
 				}
 			});
+
+
+			// needed by aai
+			if (_.size(entry.content) <= settings.maxFolders) {
+
+				_.each(entry.content, function (e) {
+
+					if (e.isFolder() && e.status === null) {
+						setTimeout(function () {
+							e.fetchStatus(function (e) { update(e); });
+						}, settings.delay);
+					}
+				});
+			}
 		};
 
 	init(entry);
