@@ -24,8 +24,7 @@
 	var	filename = 'client/js/scripts.js',
 		$scriptTag = $('script[src$="' + filename + '"]'),
 		src = $scriptTag.attr('src'),
-		main = $scriptTag.data('main'),
-		backend = $scriptTag.data('backend'),
+		mode = $scriptTag.data('mode'),
 
 		appHref = src.substr(0, src.length - filename.length),
 
@@ -41,11 +40,16 @@
 			modulejs.define('moment', function () { return moment; });
 			modulejs.define('_', function () { return _; });
 
-			$(function () { modulejs.require(main); });
+			$(function () { modulejs.require('main'); });
 		};
 
 
-	if (backend === 'php') {
+	if (mode === 'info') {
+
+		modulejs.define('$', function () { return jQuery; });
+		$(function () { modulejs.require('info'); });
+
+	} else if (mode === 'php') {
 
 		$.getJSON('.', {
 			action: 'get',
@@ -55,7 +59,7 @@
 			server: true
 		}, run);
 
-	} else if (backend === 'aai') {
+	} else if (mode === 'aai') {
 
 		var loadJson = function (href) {
 
@@ -81,7 +85,7 @@
 				types: types,
 				langs: langs,
 				server: {
-					backend: backend,
+					backend: mode,
 					api: false,
 					name: 'apache',
 					version: null

@@ -1,5 +1,5 @@
 
-modulejs.define('h5ai-info', ['$', 'core/server'], function ($, server) {
+modulejs.define('info', ['$'], function ($) {
 
 	var setCheckResult = function (id, result) {
 
@@ -14,12 +14,12 @@ modulejs.define('h5ai-info', ['$', 'core/server'], function ($, server) {
 
 		init = function () {
 
-			server.request({action: 'get', checks: true}, function (json) {
+			$.getJSON('server/php/index.php', {action: 'get', checks: true}, function (json) {
 
 				if (json) {
 					$('.test').each(function () {
 
-						setCheckResult(this, json[$(this).data('id')]);
+						setCheckResult(this, json.checks[$(this).data('id')]);
 					});
 				}
 			});
