@@ -63,15 +63,11 @@ modulejs.define('core/server-request-mock-aai', ['$', '_', 'core/settings', 'cor
 
 		parse = function (absHref, html) {
 
-			var id = '#data-apache-autoindex',
-				$html = $(html),
-				$id = $html.filter(id);
+			html = '<div id="body-mock">' + html.replace(/^[\s\S]*<body.*?>|<\/body>[\s\S]*$/g, '') + '</div>';
+			console.log(html, $(html));
+			var $table = $(html).find('#data-apache-autoindex table');
 
-			if (!$id.length) {
-				$id = $html.find(id);
-			}
-
-			return _.compact(_.map($id.find('table').find('td').closest('tr'), function (tr) {
+			return _.compact(_.map($table.find('td').closest('tr'), function (tr) {
 
 				var $tds = $(tr).find('td'),
 					$a = $tds.eq(1).find('a');
