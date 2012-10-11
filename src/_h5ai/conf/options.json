@@ -223,16 +223,17 @@ Options
 			"install": "plain",
 			"log": "plain",
 			"java": "java",
+			"js": "js",
+			"json": "js",
 			"makefile": "xml",
 			"markdown": "plain",
-			/*"php": "php",*/
+			// "php": "php",
 			"python": "python",
 			"readme": "plain",
 			"rb": "ruby",
 			"rtf": "plain",
 			"script": "shell",
 			"text": "plain",
-			"js": "js",
 			"xml": "xml"
 		}
 	},
