@@ -22,9 +22,9 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 		listTemplate = '<ul>' +
 							'<li class="header">' +
 								'<a class="icon"/>' +
-								'<a class="label" href="#"><span class="l10n-name"></span></a>' +
-								'<a class="date" href="#"><span class="l10n-lastModified"></span></a>' +
-								'<a class="size" href="#"><span class="l10n-size"></span></a>' +
+								'<a class="label" href="#"><span class="l10n-name"/></a>' +
+								'<a class="date" href="#"><span class="l10n-lastModified"/></a>' +
+								'<a class="size" href="#"><span class="l10n-size"/></a>' +
 							'</li>' +
 						'</ul>',
 		emptyTemplate = '<div class="empty l10n-empty"/>',

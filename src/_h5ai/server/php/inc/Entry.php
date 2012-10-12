@@ -51,7 +51,7 @@ class Entry {
 		$this->is_folder = is_dir($this->abs_path);
 		$this->abs_href = $this->app->get_abs_href($abs_path, $this->is_folder);
 
-		$this->date = filemtime($this->abs_path);
+		$this->date = @filemtime($this->abs_path);
 
 		if ($this->is_folder) {
 			$this->size = null;
@@ -61,7 +61,7 @@ class Entry {
 				$this->size = intval(preg_replace("/\s.*$/", "", `$cmd`), 10);
 			}
 		} else {
-			$this->size = filesize($this->abs_path);
+			$this->size = @filesize($this->abs_path);
 		}
 
 		$this->is_content_fetched = false;
