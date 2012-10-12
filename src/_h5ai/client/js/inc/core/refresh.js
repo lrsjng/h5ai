@@ -7,8 +7,8 @@ modulejs.define('core/refresh', ['_', 'core/server', 'model/entry'], function (_
 
 			_.each(json.entries, function (jsonEntry) {
 
-				found[jsonEntry.absHref] = true;
-				Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
+				var e = Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
+				found[e.absHref] = true;
 			});
 
 			_.each(entry.content, function (e) {
