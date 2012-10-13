@@ -78,15 +78,13 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 		adjustSize = function () {
 
-			var rect = $(window).fracs('viewport'),
+			var $window = $(window),
 				$container = $('#pv-txt-content'),
 				margin = 20,
 				barheight = 31;
 
 			$container.css({
-				// width: rect.width - 2 * margin,
-				height: rect.height - 2 * margin - barheight - 32,
-				// left: margin,
+				height: $window.height() - 2 * margin - barheight - 32,
 				top: margin
 			});
 		},

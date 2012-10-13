@@ -73,13 +73,15 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 		selectionStart = function (event) {
 
-			var view = $(document).fracs('viewport');
+			var $window = $(window),
+				viewRight = $window.scrollLeft() + $window.width(),
+				viewBottom = $window.scrollTop() + $window.height();
 
 			x = event.pageX;
 			y = event.pageY;
 
 			// only on left button and don't block the scrollbars
-			if (event.button !== 0 || x >= view.right || y >= view.bottom) {
+			if (event.button !== 0 || x >= viewRight || y >= viewBottom) {
 				return;
 			}
 
