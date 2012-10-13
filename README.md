@@ -51,6 +51,7 @@ To create an fresh zipball run
 
 
 ## Changelog
+(**h5ai** uses [semantic versioning](http://semver.org/))
 
 ### v0.22 - *2012-??-??*
 
