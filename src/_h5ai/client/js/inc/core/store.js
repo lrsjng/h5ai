@@ -1,14 +1,25 @@
 
-modulejs.define('core/store', ['amplify'], function (amplify) {
+modulejs.define('core/store', ['_'], function (_) {
 
-	var put = function (key, value) {
+	var store = window.localStorage,
 
-			amplify.store(key, value);
+		put = function (key, value) {
+
+			if (store && _.isString(key)) {
+				store[key] = JSON.stringify({data: value});
+			}
 		},
 
 		get = function (key) {
 
-			return amplify.store(key);
+			if (store && _.isString(key)) {
+				var json = store[key],
+					obj = {};
+
+				try { obj = JSON.parse(json); } catch (e) {}
+
+				return obj.data;
+			}
 		};
 
 	return {

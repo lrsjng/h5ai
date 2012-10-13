@@ -8,7 +8,6 @@
 // ----------
 // @include "lib/modernizr-*.js"
 // @include "lib/underscore-*.js"
-// @include "lib/amplify-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 // @include "lib/json2-*.js"
@@ -19,12 +18,9 @@
 (function () {
 	'use strict';
 
-	/*global amplify, jQuery, Modernizr, moment, _ */
-	// `jQuery`, `moment` and `underscore` are itself functions,
-	// so they have to be wrapped to not be handled as constructors.
-	modulejs.define('amplify', amplify);
+	/*global jQuery, Modernizr, moment, _ */
 	modulejs.define('$', function () { return jQuery; });
-	modulejs.define('modernizr', Modernizr);
+	modulejs.define('modernizr', function () { return Modernizr; });
 	modulejs.define('moment', function () { return moment; });
 	modulejs.define('_', function () { return _; });
 

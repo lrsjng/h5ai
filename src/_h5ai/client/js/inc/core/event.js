@@ -1,20 +1,37 @@
 
-modulejs.define('core/event', ['amplify'], function (amplify) {
+modulejs.define('core/event', ['_'], function (_) {
 
-	var sub = function (topic, callback) {
+	var subscriptions = {},
 
-			amplify.subscribe(topic, callback);
+		sub = function (topic, callback) {
+
+			if (_.isString(topic) && _.isFunction(callback)) {
+
+				if (!subscriptions[topic]) {
+					subscriptions[topic] = [];
+				}
+				subscriptions[topic].push(callback);
+			}
 		},
 
 		unsub = function (topic, callback) {
 
-			amplify.unsubscribe(topic, callback);
+			if (_.isString(topic) && _.isFunction(callback) && subscriptions[topic]) {
+
+				subscriptions[topic] = _.without(subscriptions[topic], callback);
+			}
 		},
 
 		pub = function (topic, data) {
 
 			// console.log('EVENT PUB', topic, data);
-			amplify.publish(topic, data);
+			if (_.isString(topic) && subscriptions[topic]) {
+
+				_.each(subscriptions[topic], function (callback) {
+
+					callback(data);
+				});
+			}
 		};
 
 	return {
