@@ -38,7 +38,8 @@ class Archive {
 				} else {
 					return null;
 				}
-				$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_root_abs_path() . "\"", $cmd);
+				// $cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_root_abs_path() . "\"", $cmd);
+				$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_abs_path() . "\"", $cmd);
 				$cmd = str_replace("[TARGET]", "\"" . $target . "\"", $cmd);
 				$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
 				$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
@@ -76,8 +77,8 @@ class Archive {
 			if ($code == App::$MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
 
 				$real_file = $this->app->get_abs_path($href);
-				$archived_file = preg_replace("!^" . normalize_path($this->app->get_root_abs_path(), true) . "!", "", $real_file);
-				// $archived_file = preg_replace("!^" . normalize_path($this->app->get_abs_path(), true) . "!", "", $real_file);
+				// $archived_file = preg_replace("!^" . normalize_path($this->app->get_root_abs_path(), true) . "!", "", $real_file);
+				$archived_file = preg_replace("!^" . normalize_path($this->app->get_abs_path(), true) . "!", "", $real_file);
 
 				if (is_dir($real_file)) {
 					$this->add_dir($real_file, $archived_file);

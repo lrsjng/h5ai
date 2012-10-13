@@ -1,10 +1,11 @@
 
-modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server'], function (_, $, allsettings, resource, event, server) {
+modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server', 'core/entry'], function (_, $, allsettings, resource, event, server, entry) {
 
 	var settings = _.extend({
 			enabled: false,
 			execution: 'php',
-			format: 'zip'
+			format: 'zip',
+			packageName: 'package'
 		}, allsettings.download),
 
 		// formats = ['tar', 'zip'],
@@ -35,7 +36,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			if (json && json.code === 0) {
 				setTimeout(function () { // wait here so the img above can be updated in time
 
-					window.location = '?action=getArchive&id=' + json.id + '&as=package.' + settings.format;
+					window.location = '?action=getArchive&id=' + json.id + '&as=' + (settings.packageName || entry.label) + '.' + settings.format;
 				}, 200);
 			} else {
 				failed();
