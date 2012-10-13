@@ -54,6 +54,9 @@ To create an fresh zipball run
 
 ### v0.22 - *2012-??-??*
 
+* general changes h5ai directory layout and configuration
+* splits configuration file (`config.json`) into files `options.json`, `types.json` and `langs.json`
+* localization now in separate files
 * adds auto-refresh (PHP)
 * adds drag'n'drop upload (PHP)
 * adds file deletion (PHP)
@@ -61,12 +64,15 @@ To create an fresh zipball run
 * PHP no longer respects htaccess restrictions (so be careful)
 * PHP ignore patterns might include paths now
 * improves separation between aai and php mode
+* improves performance in aai mode
 * adds optional binary prefixes for file sizes
 * improves filter: autofocus on keypress, clear on `ESC`
+* splits type `js` into `js` and `json`
+* prevents some errors with files > 2GB on 32bit OS
+* adds max subfolder size in tree view
 * adds ctrl-click file selection
-* adds Piwik analytics support
+* adds Piwik analytics extension
 * temp download packages are now stored in the `cache`-folder and deleted as soon as possible
-* localization now in separate files
 * updates translations
 * adds `he` translation by [Tomer Cohen](https://github.com/tomer)
 * updates 3rd party libs
