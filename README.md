@@ -8,7 +8,7 @@ package on the [project page](http://larsjung.de/h5ai/).
 * website with download, docs and demo: <http://larsjung.de/h5ai>
 * sources: <http://github.com/lrsjng/h5ai>
 
-h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
+**h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
 It profits from these great projects:
 [AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
@@ -31,7 +31,7 @@ It profits from these great projects:
 A prebuilt package of the latest release can be found on the [project page](http://larsjung.de/h5ai/).
 There is also a repository of the [latest dev builds](http://release.larsjung.de/h5ai/dev/).
 
-If you want to build h5ai yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
+If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
     > npm install -g fquery
 
