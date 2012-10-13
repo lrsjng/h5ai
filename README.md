@@ -38,10 +38,10 @@ You'll find a new directory `build` including a fresh zipball.
 **h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
 
 It profits from these great projects:
-[AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
+[jQuery.filedrop](http://www.github.com/weixiyen/jquery-filedrop)&nbsp;(MIT),
 [jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
 [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
