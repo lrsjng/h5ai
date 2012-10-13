@@ -73,6 +73,8 @@ It profits from these great projects:
 * improves performance in aai mode
 * adds optional binary prefixes for file sizes
 * improves filter: autofocus on keypress, clear on `ESC`
+* download packages now packaged relative to current folder
+* download package name changable
 * splits type `js` into `js` and `json`
 * prevents some errors with files > 2GB on 32bit OS
 * adds max subfolder size in tree view
