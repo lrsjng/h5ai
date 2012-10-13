@@ -7,8 +7,8 @@ create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
 ## Install
 
-**Note:** please don't use files from the `src` folder for installation.
-They need to be preprocessed to work correctly.
+(**note:** please don't use files from the `src` folder for installation,
+they need to be preprocessed to work correctly)
 
 You'll find a preprocessed package, as well as detailed installation
 instructions on the [project page](http://larsjung.de/h5ai/).
@@ -16,8 +16,7 @@ instructions on the [project page](http://larsjung.de/h5ai/).
 
 ## Build
 
-A prebuilt package of the latest release can be found on the [project page](http://larsjung.de/h5ai/).
-There is also a repository of the [latest dev builds](http://release.larsjung.de/h5ai/dev/).
+(there are repositories of the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/))
 
 If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
@@ -27,14 +26,10 @@ This will install fQuery and its command line tool `makejs`. Run `makejs --help`
 worked fine.
 
 To clone and build the project run the following commands.
-You'll find a new directory `build` including the processed files.
+You'll find a new directory `build` including a fresh zipball.
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
-    > makejs
-
-To create an fresh zipball run
-
     > makejs release
 
 
