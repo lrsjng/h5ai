@@ -8,7 +8,7 @@ package on the [project page](http://larsjung.de/h5ai/).
 * website with download, docs and demo: <http://larsjung.de/h5ai>
 * sources: <http://github.com/lrsjng/h5ai>
 
-h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
+h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
 It profits from these great projects:
 [AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
