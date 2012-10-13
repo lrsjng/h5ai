@@ -1,30 +1,18 @@
 # h5ai
+a modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee
 
-Please don't use files from the `src` folder for installation.
-They need to be preprocessed to work correctly. You'll find a preprocessed
-package on the [project page](http://larsjung.de/h5ai/).
+The preferred way to report a bug or make a feature request is to
+create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
-* to report a bug or make a feature request please create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub
-* website with download, docs and demo: <http://larsjung.de/h5ai>
-* sources: <http://github.com/lrsjng/h5ai>
 
-**h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
-It profits from these great projects:
-[AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
-[HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
-[jQuery](http://jquery.com)&nbsp;(MIT),
-[jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
-[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
-[jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
-[jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
-[markdown-js](http://github.com/evilstreak/markdown-js)&nbsp;(MIT),
-[Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
-[modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
-[Moment.js](http://momentjs.com)&nbsp;(MIT),
-[spin.js](http://fgnass.github.com/spin.js/)&nbsp;(MIT),
-[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
-[Underscore.js](http://underscorejs.org)&nbsp;(MIT)
+## Install
+
+**Note:** please don't use files from the `src` folder for installation.
+They need to be preprocessed to work correctly.
+
+You'll find a preprocessed package, as well as detailed installation
+instructions on the [project page](http://larsjung.de/h5ai/).
+
 
 ## Build
 
@@ -48,6 +36,27 @@ You'll find a new directory `build` including the processed files.
 To create an fresh zipball run
 
     > makejs release
+
+
+## License
+
+**h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
+It profits from these great projects:
+[AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
+[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
+[HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
+[jQuery](http://jquery.com)&nbsp;(MIT),
+[jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
+[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
+[jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
+[jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
+[markdown-js](http://github.com/evilstreak/markdown-js)&nbsp;(MIT),
+[Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
+[modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
+[Moment.js](http://momentjs.com)&nbsp;(MIT),
+[spin.js](http://fgnass.github.com/spin.js/)&nbsp;(MIT),
+[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
+[Underscore.js](http://underscorejs.org)&nbsp;(MIT)
 
 
 ## Changelog
