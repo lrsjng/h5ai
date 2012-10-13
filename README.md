@@ -1,5 +1,5 @@
 # h5ai
-a modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee
+**a modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee**
 
 The preferred way to report a bug or make a feature request is to
 create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
@@ -41,6 +41,7 @@ To create an fresh zipball run
 ## License
 
 **h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
+
 It profits from these great projects:
 [AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
