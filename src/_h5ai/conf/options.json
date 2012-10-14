@@ -6,8 +6,9 @@ Options
 */
 
 {
-	/*
+	/* [all]
 	Spacing of the main content.
+
 	Left and right will be added to a minimum of 30px. Top and bottom
 	are calculated relative to the top and bottom bar heights.
 	*/
@@ -19,28 +20,25 @@ Options
 		"left": "auto"
 	},
 
-	/*
-	An array of view modes the user may choose from. Currently there
-	are two possible values: "details", "icons", "grid", and "list".
-	The first value indicates the default view mode. If only one value
-	is given the view mode is fixed and the selector buttons are hidden.
-	The user selected view mode is also stored local in modern browsers
-	so that it will be persistent.
+	/* [all]
+	General view options.
 
-	- setParentFolderLabels [all]: set parent folder labels to real folder names
-	- binaryPrefix [all]: set to true uses 1024B=1KiB when formatting file sizes
-		(see http://en.wikipedia.org/wiki/Binary_prefix)
-	- indexFiles [php]: consider folder with those files as non {{pkg.name}} folders
-	- ignore [php]: don't list items matching these regular expressions
-	- maxFolders [aai]: max folders to trigger folder status checks
+	- modes: array of "details", "icons", "grid" and/or "list"
+		the first value indicates the default view mode. If only one value
+		is given the view mode is fixed and the selector buttons are hidden.
+		The user selected view mode is also stored local in modern browsers
+		so that it will be persistent.
+	- setParentFolderLabels: set parent folder labels to real folder names
+	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+	- indexFiles [php only]: consider folder with those files as non {{pkg.name}} folders
+	- ignore [php only]: don't list items matching these regular expressions
 	*/
 	"view": {
-		"modes": ["details", "list", "grid", "icons"],
+		"modes": ["details", "icons"],
 		"setParentFolderLabels": true,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
-		"ignore": ["^\\.", "^_{{pkg.name}}"],
-		"maxFolders": 16
+		"ignore": ["^\\.", "^_{{pkg.name}}"]
 	},
 
 
@@ -48,14 +46,12 @@ Options
 	/*** Extensions (in alphabetical order) ***/
 
 	/* [php]
-	Watch current folder content.
-	Folders possibly visible in the tree view that are not the
-	current folder might not be updated.
+	Watch and update current folder content.
 
 	- interval: number, update interval in milliseconds, at least 1000
 	*/
 	"autorefresh": {
-		"enabled": true,
+		"enabled": false,
 		"interval": 5000
 	},
 
@@ -71,7 +67,7 @@ Options
 	in each folder.
 	*/
 	"custom": {
-		"enabled": true,
+		"enabled": false,
 		"header": "_{{pkg.name}}.header.html",
 		"footer": "_{{pkg.name}}.footer.html"
 	},
@@ -80,7 +76,7 @@ Options
 	Allow file deletion.
 	*/
 	"delete": {
-		"enabled": true
+		"enabled": false
 	},
 
 	/* [php, EXPERIMENTAL]
@@ -91,7 +87,7 @@ Options
 	- maxfilesize: number, file size is in MB
 	*/
 	"dropbox": {
-		"enabled": true,
+		"enabled": false,
 		"maxfiles": 10,
 		"maxfilesize": 1000
 	},
@@ -104,7 +100,7 @@ Options
 	- packageName: basename of the download package, null for current foldername
 	*/
 	"download": {
-		"enabled": true,
+		"enabled": false,
 		"execution": "shell",
 		"format": "zip",
 		"packageName": null
@@ -130,6 +126,18 @@ Options
 		"enabled": true
 	},
 
+	/* [aai]
+	Fetch status for subfolders of the current folder.
+
+	- maxChecks: number, max number of status requests in the current folder
+	- delay: number, delay in milliseconds after "dom-ready" before starting the requests
+	*/
+	"folderstatus": {
+		"enabled": false,
+		"maxChecks": 16,
+		"delay": 2000
+	},
+
 	/* [all]
 	Adds Google Analytics asynchronous tracking code.
 
@@ -144,7 +152,7 @@ Options
 	see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
 	*/
 	"google-analytics": {
-		"enabled": true,
+		"enabled": false,
 		"gaq": []
 	},
 
@@ -178,7 +186,7 @@ Options
 		2: mode, servername and -version
 	*/
 	"mode": {
-		"enabled": true,
+		"enabled": false,
 		"display": 2
 	},
 
@@ -248,7 +256,7 @@ Options
 	- size: width and height in pixel
 	*/
 	"qrcode": {
-		"enabled": true,
+		"enabled": false,
 		"size": 150
 	},
 

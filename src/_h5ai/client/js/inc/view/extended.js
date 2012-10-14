@@ -2,11 +2,8 @@
 modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, resource, format, event, entry) {
 
 	var settings = _.extend({
-			modes: ['details', 'icons'],
 			setParentFolderLabels: false,
-			binaryPrefix: false,
-			maxFolders: 16,
-			delay: 2000
+			binaryPrefix: false
 		}, allsettings.view),
 
 		template = '<li class="entry">' +
@@ -153,20 +150,6 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 					});
 				}
 			});
-
-
-			// needed by aai
-			if (_.size(entry.content) <= settings.maxFolders) {
-
-				_.each(entry.content, function (e) {
-
-					if (e.isFolder() && e.status === null) {
-						setTimeout(function () {
-							e.fetchStatus(function (e) { update(e); });
-						}, settings.delay);
-					}
-				});
-			}
 		};
 
 	init(entry);

@@ -82,13 +82,10 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			_.each(crumb, function (e) {
 
 				$ul.append(update(e));
-
-				// needed by aai
-				// e.fetchStatus(function (e) { update(e); });
 			});
 
-			event.sub('entry.created', onContentChanged);
-			event.sub('entry.removed', onContentChanged);
+			// event.sub('entry.created', onContentChanged);
+			// event.sub('entry.removed', onContentChanged);
 			event.sub('entry.changed', onContentChanged);
 		};
 

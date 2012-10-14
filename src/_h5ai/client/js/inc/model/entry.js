@@ -110,6 +110,10 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 			var self = getEntry(absHref);
 
+			if (!_.isFunction(callback)) {
+				callback = function () {};
+			}
+
 			if (self.status !== null) {
 				callback(self);
 			} else {
@@ -129,6 +133,10 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 		fetchContent = function (absHref, callback) {
 
 			var self = getEntry(absHref);
+
+			if (!_.isFunction(callback)) {
+				callback = function () {};
+			}
 
 			if (self.isContentFetched) {
 				callback(self);
