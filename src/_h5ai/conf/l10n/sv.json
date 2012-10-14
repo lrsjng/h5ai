@@ -1,0 +1,10 @@
+{
+	"lang": "svenska",
+	"details": "detaljerad",
+	"icons": "ikoner",
+	"name": "Filnamn",
+	"lastModified": "Senast ändrad",
+	"size": "Filstorlek",
+	"parentDirectory": "Till överordnad mapp",
+	"empty": "tom"
+}

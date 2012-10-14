@@ -1,0 +1,19 @@
+{
+	"lang": "deutsch",
+	"details": "Details",
+	"list": "Liste",
+	"grid": "Gitter",
+	"icons": "Icons",
+	"name": "Name",
+	"lastModified": "Geändert",
+	"size": "Größe",
+	"parentDirectory": "Übergeordnetes Verzeichnis",
+	"empty": "leer",
+	"folders": "Ordner",
+	"files": "Dateien",
+	"download": "Download",
+	"noMatch": "keine Treffer",
+	"dateFormat": "DD.MM.YYYY HH:mm",
+	"filter": "Filter",
+	"delete": "Löschen"
+}

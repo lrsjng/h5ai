@@ -1,0 +1,159 @@
+
+#pv-txt-overlay {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
+
+	background-color: rgba(0,0,0,0.5);
+
+	text-align: center;
+}
+
+#pv-txt-content {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 10px;
+	background-color: #fff;
+	border: 2px solid #fff;
+	.border-radius(4px);
+	text-align: left;
+	overflow: auto;
+	position: relative;
+}
+
+#pv-txt-text {
+	word-break: break-all;
+
+	.syntaxhighlighter {
+		overflow: visible !important;
+
+		.gutter .line {
+			border-right: none !important;
+		}
+		// .code .line, table td.code .container textarea {
+		// 	white-space: normal !important;
+		// }
+	}
+
+	&.markdown {
+		font-size: 16px;
+		padding: 8px 24px;
+
+		a, a:active, a:visited {
+			color: #2080FF;
+			text-decoration: none;
+			cursor: pointer;
+
+			&:hover {
+				color: #68A9FF;
+			}
+		}
+
+		pre, code {
+			font-family: "Ubuntu Mono", monospace;
+		}
+		code {
+			color: #008200;
+		}
+	}
+}
+
+#pv-txt-close {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+#pv-txt-prev {
+	position: fixed;
+	cursor: pointer;
+}
+
+#pv-txt-next {
+	position: fixed;
+	cursor: pointer;
+}
+
+#pv-txt-buttons, #pv-txt-topbuttons {
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;
+
+	img {
+		position: relative;
+		top: -2px;
+		width: 16px;
+		height: 16px;
+	}
+	img + span, img + input {
+		margin-left: 6px;
+	}
+	input {
+		background-color: rgba(255,255,255,0.1);
+		border: none;
+		color: #ccc;
+	}
+
+	.bar-label {
+		display: block;
+		color: #ccc;
+		height: 30px;
+		line-height: 30px;
+		padding: 0 10px;
+		opacity: 0.7;
+		.transition(all 0.2s ease-in-out);
+	}
+
+	.bar-highlight {
+		background-color: rgba(255,255,255,0.1);
+		opacity: 1.0;
+	}
+
+	@bar-sep-border: 1px solid rgba(255,255,255,0.05);
+
+	.bar-button {
+		.bar-label;
+		cursor: pointer;
+		&:hover, &.hover {
+			.bar-highlight;
+		}
+	}
+
+	.bar-left {
+		float: left;
+		border-right: @bar-sep-border;
+	}
+
+	.bar-right {
+		float: right;
+		border-left: @bar-sep-border;
+	}
+}
+
+// #pv-txt-topbar {
+// 	position: fixed;
+// 	z-index: 5;
+// 	width: 100%;
+// 	left: 0;
+// 	top: 0;
+// 	.vert-gradient(rgb(37,37,37), rgb(24,24,24));
+// 	border-bottom: 1px solid rgb(27,27,27);
+// }
+
+#pv-txt-bottombar {
+	position: fixed;
+	z-index: 5;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	.vert-gradient(rgb(27,27,27), rgb(14,14,14));
+	border-top: 1px solid rgb(45,45,45);
+}

@@ -1,0 +1,19 @@
+{
+	"lang": "čeština",
+	"details": "Podrobnosti",
+	"list": "Dlaždice",
+	"grid": "Seznam",
+	"icons": "Velké ikony",
+	"name": "Název",
+	"lastModified": "Datum změny",
+	"size": "Velikost",
+	"parentDirectory": "Nadřazený adresář",
+	"empty": "Prázdná složka",
+	"folders": "složek",
+	"files": "souborů",
+	"download": "Stáhnout",
+	"noMatch": "Žádná shoda",
+	"dateFormat": "DD.MM.YYYY HH:mm",
+	"filter": "Filtr",
+	"delete": "Odstranit"
+}

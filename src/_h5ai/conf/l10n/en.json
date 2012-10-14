@@ -1,0 +1,20 @@
+/* only here as a reference, these values are the hardcoded defaults */
+{
+	"lang": "english",
+	"details": "details",
+	"list": "list",
+	"grid": "grid",
+	"icons": "icons",
+	"name": "Name",
+	"lastModified": "Last modified",
+	"size": "Size",
+	"parentDirectory": "Parent Directory",
+	"empty": "empty",
+	"folders": "folders",
+	"files": "files",
+	"download": "download",
+	"noMatch": "no match",
+	"dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
+	"filter": "filter",
+	"delete": "delete"
+}

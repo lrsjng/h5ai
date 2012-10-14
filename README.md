@@ -1,19 +1,47 @@
 # h5ai
+**a modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee**
 
-Please don't use files from the `src` folder for installation.
-They need to be preprocessed to work correctly. You'll find a preprocessed
-package on the [project page](http://larsjung.de/h5ai/).
+The preferred way to report a bug or make a feature request is to
+create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
-* to report a bug or make a feature request please create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub
-* website with download, docs and demo: <http://larsjung.de/h5ai>
-* sources: <http://github.com/lrsjng/h5ai>
 
-h5ai is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/master/LICENSE.txt).
+## Install
+
+(**note:** please don't use files from the `src` folder for installation,
+they need to be preprocessed to work correctly)
+
+You'll find a preprocessed package, as well as detailed installation
+instructions on the [project page](http://larsjung.de/h5ai/).
+
+
+## Build
+
+(there are repositories of the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/))
+
+If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
+
+    > npm install -g fquery
+
+This will install fQuery and its command line tool `makejs`. Run `makejs --help` to see if everything
+worked fine.
+
+To clone and build the project run the following commands.
+You'll find a new directory `build` including a fresh zipball.
+
+    > git clone git://github.com/lrsjng/h5ai.git
+    > cd h5ai
+    > makejs release
+
+
+## License
+
+**h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
+
 It profits from these great projects:
-[AmplifyJS](http://amplifyjs.com)&nbsp;(MIT/GPL),
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
-[HTML5 ★ Boilerplate](http://html5boilerplate.com),
-[jQuery](http://jquery.com)&nbsp;(MIT/GPL),
+[HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
+[jQuery](http://jquery.com)&nbsp;(MIT),
+[jQuery.filedrop](http://www.github.com/weixiyen/jquery-filedrop)&nbsp;(MIT),
 [jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
 [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
@@ -22,26 +50,41 @@ It profits from these great projects:
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
+[spin.js](http://fgnass.github.com/spin.js/)&nbsp;(MIT),
 [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
 [Underscore.js](http://underscorejs.org)&nbsp;(MIT)
 
 
-## Build
-
-A prebuilt package can be found on the [project page](http://larsjung.de/h5ai/). If you want to build
-h5ai yourself you need to install [fQuery](http://larsjung.de/fquery/) first:
-
-    > npm install -g fquery
-
-To build the project run the following command inside the project's root directory
-
-    > makejs
-
-Run `makejs -t` to list all possible targets.
-
-
-
 ## Changelog
+(**h5ai** uses [semantic versioning](http://semver.org/))
+
+### v0.22 - *2012-??-??*
+
+* general changes h5ai directory layout and configuration
+* splits configuration file (`config.json`) into files `options.json`, `types.json` and `langs.json`
+* localization now in separate files
+* adds auto-refresh
+* adds drag'n'drop upload (PHP, experimental)
+* adds file deletion (PHP, experimental)
+* cleans and improves PHP code
+* PHP no longer respects htaccess restrictions (so be careful)
+* PHP ignore patterns might include paths now
+* improves separation between aai and php mode
+* improves performance in aai mode
+* adds optional binary prefixes for file sizes
+* improves filter: autofocus on keypress, clear on `ESC`
+* download packages now packaged relative to current folder
+* download package name changable
+* splits type `js` into `js` and `json`
+* prevents some errors with files > 2GB on 32bit OS
+* adds max subfolder size in tree view
+* adds ctrl-click file selection
+* adds Piwik analytics extension
+* temp download packages are now stored in the `cache`-folder and deleted as soon as possible
+* updates translations
+* adds `he` translation by [Tomer Cohen](https://github.com/tomer)
+* updates 3rd party libs
+
 
 ### v0.21 - *2012-08-06*
 

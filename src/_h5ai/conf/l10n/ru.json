@@ -1,0 +1,19 @@
+{
+	"lang": "русский",
+	"details": "Детали",
+	"list": "Список",
+	"grid": "Сетка",
+	"icons": "Иконки",
+	"name": "Имя",
+	"lastModified": "Последние изменения",
+	"size": "Размер",
+	"parentDirectory": "Главная директория",
+	"empty": "Пусто",
+	"folders": "Папки",
+	"files": "Файлы",
+	"download": "Скачать",
+	"noMatch": "Нет совпадений",
+	"dateFormat": "YYYY-MM-DD HH:mm",
+	"filter": "Фильтр",
+	"delete": "Удалить"
+}

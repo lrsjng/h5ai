@@ -1,0 +1,168 @@
+
+#selection-rect {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	border: 1px dashed rgba(240,100,0,0.5);
+	background-color: rgba(240,100,0,0.2);
+}
+
+#extended {
+	display: none;
+
+	a, a:active, a:visited {
+		color: #333;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		position: relative;
+		white-space: nowrap;
+
+		&.header {
+			display: none;
+			font-size: 13px;
+
+			a, a:active, a:visited {
+				padding: 6px 6px 18px 6px;
+				opacity: 0.4;
+				.transition(all 0.2s ease-in-out);
+
+				img {
+					display: none;
+					position: relative;
+					top: -2px;
+					width: 12px;
+					height: 12px;
+					padding: 0 8px;
+				}
+				&:hover {
+					color: #555;
+					opacity: 0.9;
+				}
+				&.ascending img.ascending {
+					display: inline;
+				}
+				&.descending img.descending {
+					display: inline;
+				}
+			}
+		}
+
+		&.entry {
+
+			a, a:active, a:visited {
+				display: block;
+				overflow: hidden;
+
+				&:hover, &.hover {
+					color: #e80;
+					background-color: #f6f6f6;
+					border-color: #e8e8e8;
+				}
+			}
+
+			&.selected:not(.selecting), &.selecting:not(.selected) {
+
+				a, a:active, a:visited {
+					border-color: rgba(240,100,0,0.2);
+					background-color: rgba(240,100,0,0.2);
+
+					&:hover, &.hover {
+						border-color: rgba(240,100,0,0.2);
+						background-color: rgba(240,100,0,0.2);
+					}
+				}
+			}
+		}
+
+		&.error {
+
+			a, a:active, a:visited {
+				color: #aaa;
+
+				&:hover, &.hover {
+					color: #e80;
+				}
+			}
+
+			.label .hint {
+				padding: 0 6px;
+				font-size: 0.9em;
+				color: #c55;
+			}
+		}
+
+		&.folder-parent {
+
+			.date, .size {
+				display: none;
+			}
+		}
+
+		.icon {
+			display: none;
+			text-align: center;
+
+			img {
+
+				&.thumb {
+					.box-shadow(0 0 0 1px #ddd);
+				}
+			}
+
+			&.small {
+
+				img {
+					max-width: 16px;
+					max-height: 16px;
+				}
+			}
+
+			&.big {
+
+				img {
+					max-width: 100px;
+					max-height: 48px;
+				}
+			}
+		}
+
+		.label {
+			display: block;
+			overflow: hidden;
+			text-align: left;
+		}
+
+		.date {
+			text-align: right;
+			width: 160px;
+		}
+
+		.size {
+			text-align: right;
+			width: 80px;
+		}
+	}
+
+	.empty, .no-match {
+		margin: 50px 0;
+		text-align: center;
+		color: #ddd;
+		font-size: 5em;
+		font-weight: bold;
+	}
+
+	.no-match {
+		display: none;
+	}
+}

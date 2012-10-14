@@ -1,0 +1,334 @@
+/*
+{{pkg.name}} {{pkg.version}}
+{{pkg.url}}
+
+Options
+*/
+
+{
+	/* [all]
+	Spacing of the main content.
+
+	Left and right will be added to a minimum of 30px. Top and bottom
+	are calculated relative to the top and bottom bar heights.
+	*/
+	"spacing": {
+		"maxWidth": 960,
+		"top": 50,
+		"right": "auto",
+		"bottom": 50,
+		"left": "auto"
+	},
+
+	/* [all]
+	General view options.
+
+	- modes: array of "details", "icons", "grid" and/or "list"
+		the first value indicates the default view mode. If only one value
+		is given the view mode is fixed and the selector buttons are hidden.
+		The user selected view mode is also stored local in modern browsers
+		so that it will be persistent.
+	- setParentFolderLabels: set parent folder labels to real folder names
+	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+	- indexFiles [php only]: consider folder with those files as non {{pkg.name}} folders
+	- ignore [php only]: don't list items matching these regular expressions
+	*/
+	"view": {
+		"modes": ["details", "icons"],
+		"setParentFolderLabels": true,
+		"binaryPrefix": false,
+		"indexFiles": ["index.html", "index.htm", "index.php"],
+		"ignore": ["^\\.", "^_{{pkg.name}}"]
+	},
+
+
+
+	/*** Extensions (in alphabetical order) ***/
+
+	/* [php]
+	Watch and update current folder content.
+
+	- interval: number, update interval in milliseconds, at least 1000
+	*/
+	"autorefresh": {
+		"enabled": false,
+		"interval": 5000
+	},
+
+	/* [all]
+	Show a clickable breadcrumb.
+	*/
+	"crumb": {
+		"enabled": true
+	},
+
+	/* [all]
+	Filenames of customized header and footer files to look for
+	in each folder.
+	*/
+	"custom": {
+		"enabled": false,
+		"header": "_{{pkg.name}}.header.html",
+		"footer": "_{{pkg.name}}.footer.html"
+	},
+
+	/* [php, EXPERIMENTAL]
+	Allow file deletion.
+	*/
+	"delete": {
+		"enabled": false
+	},
+
+	/* [php, EXPERIMENTAL]
+	File upload via drag'n'drop. Folders are not supported.
+	The working file size seems to be very browser dependent.
+
+	- maxfiles: number, max number of files per upload
+	- maxfilesize: number, file size is in MB
+	*/
+	"dropbox": {
+		"enabled": false,
+		"maxfiles": 10,
+		"maxfilesize": 1000
+	},
+
+	/* [php]
+	Enable packaged download of selected entries.
+
+	- execution: "php" or "shell"
+	- format: "tar" or "zip"
+	- packageName: basename of the download package, null for current foldername
+	*/
+	"download": {
+		"enabled": false,
+		"execution": "shell",
+		"format": "zip",
+		"packageName": null
+	},
+
+	/* [all]
+	Allow filtering the displayed files and folders.
+	Will check entries for right order of characters, i.e.
+	"ab" matches "ab", "axb", "xaxbx" but not "ba".
+	Space separated sequences get OR-ed.
+
+	Filters will be treated as JavaScript regular expressions
+	if you prefix them with "re:".
+	*/
+	"filter": {
+		"enabled": true
+	},
+
+	/* [php]
+	Calc the size of folders.
+	*/
+	"foldersize": {
+		"enabled": true
+	},
+
+	/* [aai]
+	Fetch status for subfolders of the current folder.
+
+	- maxChecks: number, max number of status requests in the current folder
+	- delay: number, delay in milliseconds after "dom-ready" before starting the requests
+	*/
+	"folderstatus": {
+		"enabled": false,
+		"maxChecks": 16,
+		"delay": 2000
+	},
+
+	/* [all]
+	Adds Google Analytics asynchronous tracking code.
+
+	for example:
+	"gaq": [
+		["_setAccount", "UA-xxxxxx-x"],
+		["_setDomainName", ".your-domain.tld"],
+		["_trackPageview"],
+		["_trackPageLoadTime"]
+	]
+
+	see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
+	*/
+	"google-analytics": {
+		"enabled": false,
+		"gaq": []
+	},
+
+	/* [all]
+	Localization, for example "en", "de" etc. - see "langs" below for
+	possible values. Adjust it to your needs. If lang is not found in
+	"langs" it defaults to "en".
+
+	- lang: default language
+	- useBroserLang: boolean, try to use browser language
+	*/
+	"l10n": {
+		"enabled": true,
+		"lang": "en",
+		"useBrowserLang": true
+	},
+
+	/* [all]
+	Link the hover effects between crumb, main view and tree.
+	*/
+	"link-hover-states": {
+		"enabled": true
+	},
+
+	/* [all]
+	Shows the server mode in the bottom left corner.
+
+	- display:
+		0: only show mode
+		1: mode and servername
+		2: mode, servername and -version
+	*/
+	"mode": {
+		"enabled": false,
+		"display": 2
+	},
+
+	/* [all]
+	Adds Piwik tracker javascript code.
+
+	- baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
+	- idSite: number
+	*/
+	"piwik-analytics": {
+		"enabled": false,
+		"baseURL": "some/url",
+		"idSite": 1
+	},
+
+	/* [all]
+	Show an image preview on click.
+
+	- types: array of types
+	*/
+	"preview-img": {
+		"enabled": true,
+		"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
+	},
+
+	/* [all]
+	Show text file preview on click.
+	"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
+	be rendered as HTML.
+
+	For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+
+	- types: maps types to brushes
+	*/
+	"preview-txt": {
+		"enabled": true,
+		"types": {
+			"authors": "plain",
+			"copying": "plain",
+			"c": "c",
+			"cpp": "cpp",
+			"css": "css",
+			"diff": "diff",
+			"h": "c",
+			"hpp": "cpp",
+			"install": "plain",
+			"log": "plain",
+			"java": "java",
+			"js": "js",
+			"json": "js",
+			"makefile": "xml",
+			"markdown": "plain",
+			// "php": "php",
+			"python": "python",
+			"readme": "plain",
+			"rb": "ruby",
+			"rtf": "plain",
+			"script": "shell",
+			"text": "plain",
+			"xml": "xml"
+		}
+	},
+
+	/* [all]
+	Show QRCodes on hovering files.
+
+	- size: width and height in pixel
+	*/
+	"qrcode": {
+		"enabled": false,
+		"size": 150
+	},
+
+	/* [php, EXPERIMENTAL]
+	Allow to rename files.
+	No GUI yet.
+	*/
+	"rename": {
+		"enabled": false
+	},
+
+	/* [all]
+	Make entries selectable. At the moment only needed for packaged download and delete.
+	*/
+	"select": {
+		"enabled": true
+	},
+
+	/* [all]
+	Default sort order is a two letter code. The first letter specifies
+	the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
+	second letter specifies the sort order: "a" for "ascending" or "d"
+	for "descending".
+
+	- order: "na", "nd", "da", "dd", "sa" or "sd"
+	*/
+	"sort": {
+		"enabled": true,
+		"order": "na"
+	},
+
+	/* [all]
+	Show additional info in a statusbar.
+	*/
+	"statusbar": {
+		"enabled": true
+	},
+
+	/* [php]
+	Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
+	writable for the web Server.
+
+	- img: array of types
+	- mov: array of types
+	- doc: array of types
+	- delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
+	*/
+	"thumbnails": {
+		"enabled": true,
+		"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+		"mov": ["video"],
+		"doc": ["pdf", "ps"],
+		"delay": 1
+	},
+
+	/* [all]
+	Replace window title with current breadcrumb.
+	*/
+	"title": {
+		"enabled": true
+	},
+
+	/* [all]
+	Show a folder tree.
+	Note that this might affect performance significantly.
+
+	- slide: boolean, slide tree bar into viewport if there is enough space
+	- maxSubfolders: max number of subfolders to show in tree
+	*/
+	"tree": {
+		"enabled": true,
+		"slide": true,
+		"maxSubfolders": 50
+	}
+}

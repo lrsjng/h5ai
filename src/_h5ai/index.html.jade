@@ -1,0 +1,76 @@
+doctype 5
+//if lt IE 9
+	<html class="no-js oldie" lang="en">
+//[if gt IE 8]><!
+html.no-js( lang="en" )
+	//<![endif]
+
+	head
+		meta( charset="utf-8" )
+		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
+		title {{pkg.name}} {{pkg.version}} server details
+		meta( name="description", content="{{pkg.name}} server details" )
+		meta( name="viewport", content="width=device-width" )
+		link( rel="shortcut icon", href="client/images/app-16x16.ico" )
+		link( rel="apple-touch-icon", type="image/png", href="client/images/app-48x48.png" )
+		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
+		link( rel="stylesheet", href="client/css/styles.css" )
+		script( src="client/js/scripts.js", data-mode="info" )
+
+	body#h5ai-info
+
+		h1 {{pkg.name}}
+		span.build-version version {{pkg.version}}
+		span.build-stamp {{stamp}}
+
+		h2 server supports
+		ul#tests
+			li.test( data-id="php" )
+				span.test-label php version
+				span.test-result ?
+				div.test-info PHP version >= 5.2.1
+			li.test( data-id="cache" )
+				span.test-label cache directory
+				span.test-result ?
+				div.test-info web server has write access
+			li.test( data-id="thumbs" )
+				span.test-label image thumbs
+				span.test-result ?
+				div.test-info PHP GD extension with JPEG support available
+			li.test( data-id="ffmpeg" )
+				span.test-label movie thumbs
+				span.test-result ?
+				div.test-info command 'ffmpeg' available
+			li.test( data-id="convert" )
+				span.test-label pdf thumbs
+				span.test-result ?
+				div.test-info command 'convert' available
+			li.test( data-id="archive" )
+				span.test-label php tar and zip
+				span.test-result ?
+				div.test-info PHP Phar extension available
+			li.test( data-id="tar" )
+				span.test-label shell tar
+				span.test-result ?
+				div.test-info command 'tar' available
+			li.test( data-id="zip" )
+				span.test-label shell zip
+				span.test-result ?
+				div.test-info command 'zip' available
+			li.test( data-id="du" )
+				span.test-label folder size
+				span.test-result ?
+				div.test-info command 'du' available
+
+		div#bottombar.clearfix
+			span.left
+				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
+					| {{pkg.name}} {{pkg.version}}
+				span.hideOnJs.noJsMsg
+					| ⚡ JavaScript is disabled! ⚡
+				span.oldBrowser
+					| ⚡ Some features disabled! Works best in 
+					a( href="http://browsehappy.com" ) modern browsers
+					| . ⚡
+			span.right
+			span.center

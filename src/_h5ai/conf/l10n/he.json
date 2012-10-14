@@ -1,0 +1,17 @@
+{
+	"lang": "עברית",
+	"details": "פרטים",
+	"icons": "צלמיות",
+	"name": "שם",
+	"lastModified": "שינוי אחרון",
+	"size": "גודל",
+	"parentDirectory": "תיקיית הורה",
+	"empty": "ריק",
+	"folders": "תיקיות",
+	"files": "קבצים",
+	"download": "הורדה",
+	"noMatch": "אין תוצאות",
+	"dateFormat": "DD.MM.YYYY HH:mm",
+	"filter": "סינון",
+	"delete": "מחיקה"
+}

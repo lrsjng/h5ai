@@ -1,0 +1,23 @@
+################################
+# {{pkg.name}} {{pkg.version}}
+# customized .htaccess
+################################
+
+Options       +Indexes
+Options       +FollowSymLinks
+
+HeaderName    /_{{pkg.name}}/server/aai/header.html
+ReadmeName    /_{{pkg.name}}/server/aai/footer.html
+
+IndexIgnore   _{{pkg.name}}*
+
+IndexOptions  Charset=UTF-8
+IndexOptions  FancyIndexing
+IndexOptions  FoldersFirst
+IndexOptions  HTMLTable
+IndexOptions  NameWidth=*
+IndexOptions  SuppressDescription
+IndexOptions  SuppressHTMLPreamble
+IndexOptions  SuppressRules
+IndexOptions  Type=text/html;{{pkg.name}}={{pkg.version}}
+IndexOptions  XHTML

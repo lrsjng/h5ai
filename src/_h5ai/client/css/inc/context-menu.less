@@ -1,0 +1,32 @@
+
+#extended .context-menu {
+
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-color: rgb(241,241,241);
+	border: 1px solid rgb(210,210,210);
+	color: #999;
+	z-index: 10;
+	font-size: 0.9em;
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		text-align: left;
+
+		li {
+			padding: 8px 12px 10px 12px;
+			white-space: nowrap;
+			border-top: 1px solid rgb(231,231,231);
+			.transition(all 0.2s ease-in-out);
+
+			&:hover {
+				color: #e80;
+				background-color: rgba(255,255,255,0.8);
+			}
+		}
+	}
+}

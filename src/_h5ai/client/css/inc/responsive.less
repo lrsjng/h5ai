@@ -1,0 +1,57 @@
+
+@media only screen and (max-width: 500px) {
+#topbar {
+	.view span {
+		display: none;
+	}
+}
+#extended.view-icons {
+	padding: 0;
+	border: none;
+	margin: 0 -14px;
+}
+}
+
+@media only screen and (max-width: 350px) {
+#topbar {
+	.crumb {
+		display: none;
+	}
+	.current {
+		display: block;
+	}
+}
+#extended.view-details {
+	.header .label, .entry .label {
+		margin-right: 110px;
+	}
+	.header .date, .entry .date {
+		display: none;
+	}
+}
+#bottombar {
+	.center {
+		display: none;
+	}
+}
+}
+
+@media print {
+a[href]:after {
+	content: "";
+}
+#topbar {
+	position: static;
+	margin-bottom: 2em;
+	.view, #download {
+		display: none;
+	}
+}
+#bottombar {
+	position: static;
+	margin-top: 2em;
+}
+#tree {
+	display: none !important;
+}
+}

@@ -3,10 +3,8 @@
 
 
 var path = require('path'),
-	child_process = require('child_process');
 
-
-var version = '0.21',
+	pkg = require('./package.json'),
 
 	root = path.resolve(__dirname),
 	src = path.join(root, 'src'),
@@ -34,14 +32,18 @@ var version = '0.21',
 		]
 	},
 
-	mapper = function (blob) {
-
-		return blob.source.replace(src, build).replace(/\.less$/, '.css');
+	handlebarsEnv = {
+		pkg: pkg
 	},
 
-	mapperRoot = function (blob) {
+	mapSrc = function (blob) {
 
-		return blob.source.replace(root, build + '/_h5ai');
+		return blob.source.replace(src, build).replace(/\.less$/, '.css').replace(/\.jade$/, '');
+	},
+
+	mapRoot = function (blob) {
+
+		return blob.source.replace(root, path.join(build, '_h5ai'));
 	};
 
 
@@ -49,137 +51,119 @@ module.exports = function (make) {
 
 	var Event = make.Event,
 		$ = make.fQuery,
-		moment = make.moment,
-		stamp, replacements;
+		moment = make.moment;
 
 
+	make.version('>=0.8.1');
 	make.defaults('build');
 
 
 	make.before(function () {
 
-		stamp = moment();
-
-		replacements = {
-			version: version,
-			stamp: stamp.format('YYYY-MM-DD HH:mm:ss')
-		};
-
-		Event.info({ method: 'before', message: version + ' ' + replacements.stamp });
+		handlebarsEnv.stamp = moment().format('YYYY-MM-DD HH:mm:ss');
 	});
 
 
-	make.target('inc', [], 'increase build number, if any')
-		.sync(function () {
+	make.target('check-version', [], 'add git info to dev builds').async(function (done, fail) {
 
-			var re = /-(\d+)$/;
-			var match = version.match(re);
+		if (!/-dev$/.test(pkg.version)) {
+			done();
+			return;
+		}
 
-			if (match) {
-				var number = parseInt(match[1], 10) + 1;
-				var newVersion = version.replace(re, '-' + number);
+		$.git(root, function (err, result) {
 
-				$('makefile.js').replace([[version, newVersion]]).write($.OVERWRITE, 'makefile.js');
-
-				version = newVersion;
-				replacements.version = version;
-				Event.ok({ method: 'inc', message: 'version is now ' + version });
-			}
-		});
-
-
-	make.target('clean', [], 'delete build folder')
-		.sync(function () {
-
-			$.rmfr($.I_AM_SURE, build);
-		});
-
-
-	make.target('lint', [], 'lint all JavaScript files with JSHint')
-		.sync(function () {
-
-			$(src + '/_h5ai/js: **/*.js, ! *.min.js, ! inc/lib/**')
-				.jshint(jshint);
-		});
-
-
-	make.target('build', [], 'build all updated files')
-		.sync(function () {
-
-			$(src + ': _h5ai/js/*.js')
-				.modified(mapper, $(src + ': _h5ai/js/**'))
-				.includify()
-				.uglifyjs()
-				.write($.OVERWRITE, mapper);
-
-			$(src + ': _h5ai/css/*.less')
-				.modified(mapper, $(src + ': _h5ai/css/**'))
-				.less()
-				.cssmin()
-				.write($.OVERWRITE, mapper);
-
-			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
-				.modified(mapper)
-				.mustache(replacements)
-				.write($.OVERWRITE, mapper);
-
-			$(root + ': README*, LICENSE*')
-				.modified(mapperRoot)
-				.write($.OVERWRITE, mapperRoot);
-		});
-
-
-	make.target('build-uncompressed', [], 'build all updated files without compression')
-		.sync(function () {
-
-			$(src + ': _h5ai/js/*.js')
-				.modified(mapper, $(src + ': _h5ai/js/**'))
-				.includify()
-				// .uglifyjs()
-				.write($.OVERWRITE, mapper);
-
-			$(src + ': _h5ai/css/*.less')
-				.modified(mapper, $(src + ': _h5ai/css/**'))
-				.less()
-				// .cssmin()
-				.write($.OVERWRITE, mapper);
-
-			$(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**')
-				.modified(mapper)
-				.mustache(replacements)
-				.write($.OVERWRITE, mapper);
-
-			$(root + ': README*, LICENSE*')
-				.modified(mapperRoot)
-				.write($.OVERWRITE, mapperRoot);
-		});
-
-
-	make.target('release', ['inc', 'clean', 'build'], 'create a zipball')
-		.async(function (done, fail) {
-
-			var target = path.join(build, 'h5ai-' + version + '.zip'),
-				cmd = 'zip',
-				args = ['-ro', target, '_h5ai'],
-				options = { cwd: build },
-				proc = child_process.spawn(cmd, args, options);
-
-			Event.info({ method: 'exec', message: cmd + ' ' + args.join(' ') });
-
-			// proc.stdout.on('data', function (data) {
-				// process.stdout.write(data);
-			// });
-			proc.stderr.on('data', function (data) {
-				process.stderr.write(data);
+			pkg.version += '-' + result.revListOriginMasterHead.length + '-' + result.revParseHead.slice(0, 7);
+			Event.info({
+				method: 'check-version',
+				message: 'version set to ' + pkg.version
 			});
-			proc.on('exit', function (code) {
-				if (code) {
-					Event.error({ method: 'exec', message: cmd + ' exit code ' + code });
-					fail();
-				} else {
-					Event.ok({ method: 'exec', message: 'created zipball ' + target });
-					done();
-				}
-			});
+			done();
 		});
+	});
+
+
+	make.target('clean', [], 'delete build folder').sync(function () {
+
+		$.rmfr($.I_AM_SURE, build);
+	});
+
+
+	make.target('lint', [], 'lint all JavaScript files with JSHint').sync(function () {
+
+		$(src + '/_h5ai/client/js: **/*.js, ! lib/**')
+			.jshint(jshint);
+	});
+
+
+	make.target('build', ['check-version'], 'build all updated files').sync(function () {
+
+		$(src + ': _h5ai/client/js/*.js')
+			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
+			.includify()
+			.uglifyjs()
+			.write($.OVERWRITE, mapSrc);
+
+		$(src + ': _h5ai/client/css/*.less')
+			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
+			.less()
+			.cssmin()
+			.write($.OVERWRITE, mapSrc);
+
+		$(src + ': **/*.jade')
+			.modified(mapSrc)
+			.handlebars(handlebarsEnv)
+			.jade()
+			.write($.OVERWRITE, mapSrc);
+
+		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
+			.modified(mapSrc)
+			.handlebars(handlebarsEnv)
+			.write($.OVERWRITE, mapSrc);
+
+		$(root + ': README*, LICENSE*')
+			.modified(mapRoot)
+			.write($.OVERWRITE, mapRoot);
+	});
+
+
+	make.target('build-uncompressed', ['check-version'], 'build all updated files without compression').sync(function () {
+
+		$(src + ': _h5ai/client/js/*.js')
+			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
+			.includify()
+			// .uglifyjs()
+			.write($.OVERWRITE, mapSrc);
+
+		$(src + ': _h5ai/client/css/*.less')
+			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
+			.less()
+			// .cssmin()
+			.write($.OVERWRITE, mapSrc);
+
+		$(src + ': **/*.jade')
+			.modified(mapSrc)
+			.handlebars(handlebarsEnv)
+			.jade()
+			.write($.OVERWRITE, mapSrc);
+
+		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
+			.modified(mapSrc)
+			.handlebars(handlebarsEnv)
+			.write($.OVERWRITE, mapSrc);
+
+		$(root + ': README*, LICENSE*')
+			.modified(mapRoot)
+			.write($.OVERWRITE, mapRoot);
+	});
+
+
+	make.target('release', ['clean', 'build'], 'create a zipball').async(function (done, fail) {
+
+		$(build + ': **').shzip({
+			target: path.join(build, pkg.name + '-' + pkg.version + '.zip'),
+			dir: build,
+			callback: done
+		});
+	});
 };

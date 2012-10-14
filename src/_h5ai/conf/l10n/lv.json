@@ -1,0 +1,17 @@
+{
+	"lang": "latviešu",
+	"details": "detaļas",
+	"icons": "ikonas",
+	"name": "Nosaukums",
+	"lastModified": "Pēdējoreiz modificēts",
+	"size": "Izmērs",
+	"parentDirectory": "Vecākdirektorijs",
+	"empty": "tukšs",
+	"folders": "mapes",
+	"files": "faili",
+	"download": "lejupielādēt",
+	"noMatch": "nav sakritības",
+	"dateFormat": "YYYY-MM-DD HH:mm",
+	"filter": "filtrēt",
+	"delete": "izdzēst"
+}
