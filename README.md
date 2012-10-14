@@ -58,6 +58,11 @@ It profits from these great projects:
 ## Changelog
 (**h5ai** uses [semantic versioning](http://semver.org/))
 
+### v0.23 - *2012-??-??*
+
+* 
+
+
 ### v0.22 - *2012-10-14*
 
 * general changes h5ai directory layout and configuration
