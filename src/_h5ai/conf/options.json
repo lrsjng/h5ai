@@ -7,12 +7,6 @@ Options
 
 {
 	/*
-	The absolute link to {{pkg.name}}.
-	Must point to the "_{{pkg.name}}" directory.
-	*/
-	"h5aiAbsHref": "/_{{pkg.name}}/",
-
-	/*
 	Spacing of the main content.
 	Left and right will be added to a minimum of 30px. Top and bottom
 	are calculated relative to the top and bottom bar heights.
@@ -82,14 +76,14 @@ Options
 		"footer": "_{{pkg.name}}.footer.html"
 	},
 
-	/* [php]
+	/* [php, EXPERIMENTAL]
 	Allow file deletion.
 	*/
 	"delete": {
 		"enabled": true
 	},
 
-	/* [php]
+	/* [php, EXPERIMENTAL]
 	File upload via drag'n'drop. Folders are not supported.
 	The working file size seems to be very browser dependent.
 
@@ -258,8 +252,9 @@ Options
 		"size": 150
 	},
 
-	/* [php]
+	/* [php, EXPERIMENTAL]
 	Allow to rename files.
+	No GUI yet.
 	*/
 	"rename": {
 		"enabled": false

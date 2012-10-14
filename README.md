@@ -63,9 +63,9 @@ It profits from these great projects:
 * general changes h5ai directory layout and configuration
 * splits configuration file (`config.json`) into files `options.json`, `types.json` and `langs.json`
 * localization now in separate files
-* adds auto-refresh (PHP)
-* adds drag'n'drop upload (PHP)
-* adds file deletion (PHP)
+* adds auto-refresh
+* adds drag'n'drop upload (PHP, experimental)
+* adds file deletion (PHP, experimental)
 * cleans and improves PHP code
 * PHP no longer respects htaccess restrictions (so be careful)
 * PHP ignore patterns might include paths now
