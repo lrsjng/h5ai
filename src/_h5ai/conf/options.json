@@ -6,7 +6,7 @@ Options
 */
 
 {
-	/* [all]
+	/*
 	Spacing of the main content.
 
 	Left and right will be added to a minimum of 30px. Top and bottom
@@ -20,7 +20,7 @@ Options
 		"left": "auto"
 	},
 
-	/* [all]
+	/*
 	General view options.
 
 	- modes: array of "details", "icons", "grid" and/or "list"
@@ -45,7 +45,7 @@ Options
 
 	/*** Extensions (in alphabetical order) ***/
 
-	/* [php]
+	/*
 	Watch and update current folder content.
 
 	- interval: number, update interval in milliseconds, at least 1000
@@ -55,14 +55,14 @@ Options
 		"interval": 5000
 	},
 
-	/* [all]
+	/*
 	Show a clickable breadcrumb.
 	*/
 	"crumb": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Filenames of customized header and footer files to look for
 	in each folder.
 	*/
@@ -72,14 +72,14 @@ Options
 		"footer": "_{{pkg.name}}.footer.html"
 	},
 
-	/* [php, EXPERIMENTAL]
+	/* [EXPERIMENTAL]
 	Allow file deletion.
 	*/
 	"delete": {
 		"enabled": false
 	},
 
-	/* [php, EXPERIMENTAL]
+	/* [EXPERIMENTAL]
 	File upload via drag'n'drop. Folders are not supported.
 	The working file size seems to be very browser dependent.
 
@@ -92,7 +92,7 @@ Options
 		"maxfilesize": 1000
 	},
 
-	/* [php]
+	/*
 	Enable packaged download of selected entries.
 
 	- execution: "php" or "shell"
@@ -106,7 +106,7 @@ Options
 		"packageName": null
 	},
 
-	/* [all]
+	/*
 	Allow filtering the displayed files and folders.
 	Will check entries for right order of characters, i.e.
 	"ab" matches "ab", "axb", "xaxbx" but not "ba".
@@ -119,26 +119,14 @@ Options
 		"enabled": true
 	},
 
-	/* [php]
+	/*
 	Calc the size of folders.
 	*/
 	"foldersize": {
 		"enabled": true
 	},
 
-	/* [aai]
-	Fetch status for subfolders of the current folder.
-
-	- maxChecks: number, max number of status requests in the current folder
-	- delay: number, delay in milliseconds after "dom-ready" before starting the requests
-	*/
-	"folderstatus": {
-		"enabled": false,
-		"maxChecks": 16,
-		"delay": 2000
-	},
-
-	/* [all]
+	/*
 	Adds Google Analytics asynchronous tracking code.
 
 	for example:
@@ -156,7 +144,7 @@ Options
 		"gaq": []
 	},
 
-	/* [all]
+	/*
 	Localization, for example "en", "de" etc. - see "langs" below for
 	possible values. Adjust it to your needs. If lang is not found in
 	"langs" it defaults to "en".
@@ -170,14 +158,14 @@ Options
 		"useBrowserLang": true
 	},
 
-	/* [all]
+	/*
 	Link the hover effects between crumb, main view and tree.
 	*/
 	"link-hover-states": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Shows the server mode in the bottom left corner.
 
 	- display:
@@ -190,7 +178,7 @@ Options
 		"display": 2
 	},
 
-	/* [all]
+	/*
 	Adds Piwik tracker javascript code.
 
 	- baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
@@ -202,7 +190,7 @@ Options
 		"idSite": 1
 	},
 
-	/* [all]
+	/*
 	Show an image preview on click.
 
 	- types: array of types
@@ -212,7 +200,7 @@ Options
 		"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
 	},
 
-	/* [all]
+	/*
 	Show text file preview on click.
 	"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
 	be rendered as HTML.
@@ -250,7 +238,7 @@ Options
 		}
 	},
 
-	/* [all]
+	/*
 	Show QRCodes on hovering files.
 
 	- size: width and height in pixel
@@ -260,7 +248,7 @@ Options
 		"size": 150
 	},
 
-	/* [php, EXPERIMENTAL]
+	/* [EXPERIMENTAL]
 	Allow to rename files.
 	No GUI yet.
 	*/
@@ -268,14 +256,14 @@ Options
 		"enabled": false
 	},
 
-	/* [all]
+	/*
 	Make entries selectable. At the moment only needed for packaged download and delete.
 	*/
 	"select": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Default sort order is a two letter code. The first letter specifies
 	the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
 	second letter specifies the sort order: "a" for "ascending" or "d"
@@ -288,14 +276,14 @@ Options
 		"order": "na"
 	},
 
-	/* [all]
+	/*
 	Show additional info in a statusbar.
 	*/
 	"statusbar": {
 		"enabled": true
 	},
 
-	/* [php]
+	/*
 	Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
 	writable for the web Server.
 
@@ -312,14 +300,14 @@ Options
 		"delay": 1
 	},
 
-	/* [all]
+	/*
 	Replace window title with current breadcrumb.
 	*/
 	"title": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Show a folder tree.
 	Note that this might affect performance significantly.
 

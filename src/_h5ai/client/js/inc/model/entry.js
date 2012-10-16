@@ -106,30 +106,6 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 			}
 		},
 
-		fetchStatus = function (absHref, callback) {
-
-			var self = getEntry(absHref);
-
-			if (!_.isFunction(callback)) {
-				callback = function () {};
-			}
-
-			if (self.status !== null) {
-				callback(self);
-			} else {
-				server.request({action: 'get', entries: true, entriesHref: self.absHref, entriesWhat: 0}, function (response) {
-
-					if (response.entries) {
-						_.each(response.entries, function (entry) {
-							getEntry(entry.absHref, entry.time, entry.size, entry.status, entry.content);
-						});
-					}
-
-					callback(self);
-				});
-			}
-		},
-
 		fetchContent = function (absHref, callback) {
 
 			var self = getEntry(absHref);
@@ -222,11 +198,6 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 		isEmpty: function () {
 
 			return _.keys(this.content).length === 0;
-		},
-
-		fetchStatus: function (callback) {
-
-			return fetchStatus(this.absHref, callback);
 		},
 
 		fetchContent: function (callback) {
