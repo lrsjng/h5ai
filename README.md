@@ -59,7 +59,7 @@ It profits from these great projects:
 (**h5ai** uses [semantic versioning](http://semver.org/))
 
 
-### v0.23
+### develop branch
 
 * 
 
