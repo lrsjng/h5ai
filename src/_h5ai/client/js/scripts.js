@@ -31,9 +31,7 @@
 	// @include "inc/**/*.js"
 
 	var	$ = jQuery,
-		filename = 'client/js/scripts.js',
-		$script = $('script[src$="' + filename + '"]'),
-		mode = $script.data('mode');
+		mode = $('script[src$="scripts.js"]').data('mode');
 
 	if (mode === 'info') {
 
@@ -41,7 +39,7 @@
 
 	} else {
 
-		$.getJSON('.', {action: 'get', options: true, types: true, langs: true, server: true}, function (config) {
+		$.getJSON('.', {action: 'get', options: true, types: true, langs: true, server: true, entries: true}, function (config) {
 
 			modulejs.define('config', config);
 			$(function () { modulejs.require('main'); });

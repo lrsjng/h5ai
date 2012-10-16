@@ -35,7 +35,6 @@ if (array_key_exists("action", $_REQUEST)) {
 } else {
 
 	$HREF = $app->get_app_abs_href();
-	$JSON = $app->get_generic_json();
 	$FALLBACK = $app->get_no_js_fallback();
 }
 

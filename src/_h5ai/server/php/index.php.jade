@@ -1,7 +1,6 @@
 |<?php require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php"); ?>
 
 - var href = "<?php echo $HREF; ?>"
-- var json = "<?php echo $JSON; ?>"
 - var fallback = "<?php echo $FALLBACK; ?>"
 
 doctype 5
@@ -21,9 +20,9 @@ html.no-js( lang="en" )
 		link( rel="apple-touch-icon", type="image/png", href!="#{href}client/images/app-48x48.png" )
 		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
 		link( rel="stylesheet", href!="#{href}client/css/styles.css" )
-		script( src!="#{href}client/js/scripts.js", data-mode="php" )
+		script( src!="#{href}client/js/scripts.js" )
 
-	body#h5ai-main
+	body
 
 		div#topbar.clearfix
 			ul#navbar
@@ -44,6 +43,4 @@ html.no-js( lang="en" )
 			span.right
 			span.center
 
-		div#data-generic-json.hidden !{json}
-
-		div#data-php-no-js-fallback.hideOnJs !{fallback}
+		div#no-js-fallback.hideOnJs !{fallback}
