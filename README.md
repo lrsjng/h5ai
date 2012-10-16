@@ -58,6 +58,12 @@ It profits from these great projects:
 ## Changelog
 (**h5ai** uses [semantic versioning](http://semver.org/))
 
+
+### v0.23
+
+* 
+
+
 ### v0.22.1 - *2012-10-16*
 
 * bug fix concerning API requests in PHP mode
