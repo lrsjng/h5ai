@@ -39,48 +39,9 @@
 
 		$(function () { modulejs.require('info'); });
 
-	} else if (mode === 'php') {
+	} else {
 
 		$.getJSON('.', {action: 'get', options: true, types: true, langs: true, server: true}, function (config) {
-
-			modulejs.define('config', config);
-			$(function () { modulejs.require('main'); });
-		});
-
-	} else if (mode === 'aai') {
-
-		var src = $script.attr('src'),
-			appHref = src.substr(0, src.length - filename.length),
-			loadJson = function (href) {
-
-				var deferred = $.Deferred();
-
-				$.ajax(href, {dataType: 'text'}).always(function (content) {
-
-					var json = content.replace ? JSON.parse(content.replace(/\/\*[\s\S]*?\*\/|\/\/.*?(\n|$)/g, '')) : {};
-					deferred.resolve(json);
-				});
-
-				return deferred;
-			};
-
-		$.when(
-			loadJson(appHref + 'conf/options.json'),
-			loadJson(appHref + 'conf/types.json'),
-			loadJson(appHref + 'conf/langs.json')
-		).done(function (options, types, langs) {
-
-			var config = {
-					options: options,
-					types: types,
-					langs: langs,
-					server: {
-						backend: mode,
-						api: false,
-						name: 'apache',
-						version: null
-					}
-				};
 
 			modulejs.define('config', config);
 			$(function () { modulejs.require('main'); });
