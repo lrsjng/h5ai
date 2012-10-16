@@ -1,5 +1,5 @@
 
-modulejs.define('core/store', ['_', 'modernizr'], function (_, modernizr) {
+modulejs.define('core/store', ['modernizr'], function (modernizr) {
 
 	var store = modernizr.localstorage ? window.localStorage : null,
 

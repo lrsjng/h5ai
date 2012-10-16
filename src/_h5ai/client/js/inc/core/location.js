@@ -1,5 +1,5 @@
 
-modulejs.define('core/location', ['$', 'core/event'], function ($, event) {
+modulejs.define('core/location', [], function () {
 
 	var doc = document,
 
