@@ -28,7 +28,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 						'</div>' +
 					'</div>',
 
-		storekey = 'h5ai.preview-img.isFullscreen',
+		storekey = 'preview-img.isFullscreen',
 
 		currentEntries = [],
 		currentIdx = 0,

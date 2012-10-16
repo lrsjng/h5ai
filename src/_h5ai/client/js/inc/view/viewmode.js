@@ -7,7 +7,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 			modes: modes
 		}, allsettings.view),
 
-		storekey = 'h5ai.viewmode',
+		storekey = 'viewmode',
 
 		template = '<li id="view-[MODE]" class="view">' +
 						'<a href="#">' +

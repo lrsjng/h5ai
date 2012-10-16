@@ -6,7 +6,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			order: 'na'
 		}, allsettings.sort),
 
-		storekey = 'h5ai.sortorder',
+		storekey = 'sort.order',
 
 		type = function (entry) {
 
