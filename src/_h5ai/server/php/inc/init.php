@@ -21,7 +21,8 @@ normalized_require_once("/server/php/inc/Entry.php");
 
 $app = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
-if (count($_REQUEST)) {
+// if (count($_REQUEST)) {
+if (array_key_exists("action", $_REQUEST)) {
 
 	header("Content-type: application/json");
 

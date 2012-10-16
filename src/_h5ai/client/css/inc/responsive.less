@@ -1,24 +1,17 @@
 
 @media only screen and (max-width: 500px) {
-#topbar {
-	.view span {
-		display: none;
-	}
+body {
+	margin: 8px;
 }
-#extended.view-icons {
-	padding: 0;
-	border: none;
-	margin: 0 -14px;
-}
-}
-
-@media only screen and (max-width: 350px) {
 #topbar {
 	.crumb {
 		display: none;
 	}
 	.current {
 		display: block;
+	}
+	.view span {
+		display: none;
 	}
 }
 #extended.view-details {
@@ -29,10 +22,18 @@
 		display: none;
 	}
 }
+#extended.view-icons {
+	padding: 0;
+	border: none;
+	margin: 0 -14px;
+}
 #bottombar {
 	.center {
 		display: none;
 	}
+}
+#tree {
+	display: none !important;
 }
 }
 
