@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/entry'], function (_, $, allsettings, resource, store, event, entry) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/location'], function (_, $, allsettings, resource, store, event, location) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -219,13 +219,16 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			}
 		},
 
-		init = function (entry) {
+		onLocationChanged = function (item) {
+
+			_.each(item.content, initEntry);
+		},
+
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
 			}
-
-			_.each(entry.content, initEntry);
 
 			$(template).appendTo('body');
 			$('#pv-img-bar-prev, #pv-img-prev').on('click', onPrevious);
@@ -276,10 +279,11 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 					event.stopImmediatePropagation();
 				});
 
+			event.sub('location.changed', onLocationChanged);
 			event.sub('entry.created', initEntry);
 
 			$(window).on('resize load', adjustSize);
 		};
 
-	init(entry);
+	init();
 });

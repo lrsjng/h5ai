@@ -163,10 +163,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 				}
 			});
 
-			event.sub('location.changed', function () {
-
-				onLocationChanged(location.getItem());
-			});
+			event.sub('location.changed', onLocationChanged);
 
 			$content.appendTo('body');
 		};

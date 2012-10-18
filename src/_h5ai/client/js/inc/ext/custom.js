@@ -34,8 +34,6 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/e
 			$('<div id="content-footer"/>').hide().appendTo('#content');
 
 			event.sub('location.changed', onLocationChanged);
-
-			onLocationChanged();
 		};
 
 	init();

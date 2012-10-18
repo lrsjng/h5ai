@@ -7,8 +7,6 @@ modulejs.define('main', ['_', 'core/event'], function (_, event) {
 	modulejs.require('view/spacing');
 	modulejs.require('view/viewmode');
 
-	modulejs.require('core/location').setLocation(document.location.href, true);
-
 	event.pub('beforeExt');
 
 	_.each(modulejs.state(), function (state, id) {
@@ -17,6 +15,8 @@ modulejs.define('main', ['_', 'core/event'], function (_, event) {
 			modulejs.require(id);
 		}
 	});
+
+	modulejs.require('core/location').setLocation(document.location.href, true);
 
 	event.pub('ready');
 });

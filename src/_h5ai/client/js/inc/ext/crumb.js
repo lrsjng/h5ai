@@ -105,12 +105,7 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			// event.sub('entry.removed', onContentChanged);
 			event.sub('entry.changed', onContentChanged);
 
-			event.sub('location.changed', function () {
-
-				onLocationChanged(location.getItem());
-			});
-
-			onLocationChanged(location.getItem());
+			event.sub('location.changed', onLocationChanged);
 		};
 
 	init();

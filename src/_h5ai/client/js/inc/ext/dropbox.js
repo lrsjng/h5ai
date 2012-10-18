@@ -1,5 +1,5 @@
 
-modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/refresh', 'core/server'], function (_, $, allsettings, entry, refresh, server) {
+modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'core/refresh', 'core/server'], function (_, $, allsettings, location, refresh, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -50,7 +50,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 				url: server.api,
 				data: {
 					action: 'upload',
-					href: entry.absHref
+					href: location.getAbsHref()
 				},
 
 				docEnter: function () {

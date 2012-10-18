@@ -1,5 +1,5 @@
 
-modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, format, event, entry) {
+modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'core/event', 'core/location'], function (_, $, allsettings, format, event, location) {
 
 	var settings = _.extend({
 			enabled: false
@@ -29,7 +29,7 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 			}
 		},
 
-		init = function (entry) {
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
@@ -42,25 +42,28 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 			$statusDefault = $statusbar.find('.status.default');
 			$statusDynamic = $statusbar.find('.status.dynamic');
 
-			var stats = entry.getStats();
-			$folderTotal.text(stats.folders);
-			$fileTotal.text(stats.files);
+			event.sub('location.changed', function (item) {
 
-			update();
+				var stats = item.getStats();
+				$folderTotal.text(stats.folders);
+				$fileTotal.text(stats.files);
+
+				update();
+			});
 
 			event.sub('statusbar', update);
 			$('#bottombar > .center').append($statusbar);
 
 			event.sub('entry.created', function () {
 
-				var stats = entry.getStats();
+				var stats = location.getItem().getStats();
 				$folderTotal.text(stats.folders);
 				$fileTotal.text(stats.files);
 			});
 
 			event.sub('entry.removed', function () {
 
-				var stats = entry.getStats();
+				var stats = location.getItem().getStats();
 				$folderTotal.text(stats.folders);
 				$fileTotal.text(stats.files);
 			});
@@ -89,5 +92,5 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 			});
 		};
 
-	init(entry);
+	init();
 });

@@ -1,5 +1,5 @@
 
-modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server', 'core/entry'], function (_, $, allsettings, resource, event, server, entry) {
+modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server', 'core/location'], function (_, $, allsettings, resource, event, server, location) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -36,7 +36,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			if (json && json.code === 0) {
 				setTimeout(function () { // wait here so the img above can be updated in time
 
-					window.location = '?action=getArchive&id=' + json.id + '&as=' + (settings.packageName || entry.label) + '.' + settings.format;
+					window.location = '?action=getArchive&id=' + json.id + '&as=' + (settings.packageName || location.getItem().label) + '.' + settings.format;
 				}, 200);
 			} else {
 				failed();

@@ -1,5 +1,5 @@
 
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/event', 'core/server'], function (_, allsettings, entry, event, server) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server'], function (_, allsettings, event, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -56,22 +56,26 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 			}
 		},
 
-		init = function (entry) {
+		onLocationChanged = function (item) {
+
+			setTimeout(function () {
+
+				_.each(item.content, checkEntry);
+			}, settings.delay);
+		},
+
+		init = function () {
 
 			if (!settings.enabled || !server.api) {
 				return;
 			}
 
-			setTimeout(function () {
-
-				_.each(entry.content, checkEntry);
-			}, settings.delay);
-
+			event.sub('location.changed', onLocationChanged);
 			event.sub('entry.created', function (entry) {
 
 				checkEntry(entry);
 			});
 		};
 
-	init(entry);
+	init();
 });

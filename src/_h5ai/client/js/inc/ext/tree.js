@@ -1,5 +1,5 @@
 
-modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry'], function (_, $, allsettings, resource, event, entry) {
+modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location'], function (_, $, allsettings, resource, event, location) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -34,7 +34,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				.data('entry', entry)
 				.data('status', entry.status);
 
-			$a.attr('href', entry.absHref);
+			location.setLink($a, entry);
 			$img.attr('src', resource.icon(entry.type));
 			$label.text(entry.label);
 
@@ -207,10 +207,24 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			}
 
 			update(entry);
+			adjustSpacing();
+			shiftTree(false, true);
+		},
+
+		onLocationChanged = function (item) {
+
+			fetchTree(item, function (root) {
+
+				$('#tree')
+					.find('.sp-container').append(update(root)).end()
+					.show();
+				adjustSpacing();
+				shiftTree(false, true);
+			});
 		},
 
 		// creates the complete tree from entry down to the root
-		init = function (entry) {
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
@@ -229,22 +243,14 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					shiftTree();
 				});
 
-			fetchTree(entry, function (root) {
-
-				$tree
-					.find('.sp-container').append(update(root)).end()
-					.show();
-
-				adjustSpacing();
-				shiftTree(false, true);
-			});
-
-			event.sub('ready', adjustSpacing);
+			event.sub('location.changed', onLocationChanged);
 
 			// strong negative performance impact in aai mode
 			// event.sub('entry.changed', onContentChanged);
 			// event.sub('entry.created', onContentChanged);
 			// event.sub('entry.removed', onContentChanged);
+
+			event.sub('ready', adjustSpacing);
 
 			$(window).on('resize', function () {
 
@@ -253,5 +259,5 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			});
 		};
 
-	init(entry);
+	init();
 });
