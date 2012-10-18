@@ -1,5 +1,5 @@
 
-modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server'], function (_, $, allsettings, server) {
+modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/event'], function (_, $, allsettings, server, event) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -7,23 +7,35 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server'], functi
 			footer: '_h5ai.footer.html'
 		}, allsettings.custom),
 
+		onLocationChanged = function () {
+
+			$('#content-header, #content-footer').stop(true, true).slideUp(200);
+
+			server.request({action: 'get', custom: true}, function (response) {
+
+				if (response) {
+					if (response.custom.header) {
+						$('#content-header').html(response.custom.header).stop(true, true).slideDown(400);
+					}
+					if (response.custom.footer) {
+						$('#content-footer').html(response.custom.footer).stop(true, true).slideDown(400);
+					}
+				}
+			});
+		},
+
 		init = function () {
 
 			if (!settings.enabled) {
 				return;
 			}
 
-			server.request({action: 'get', custom: true}, function (response) {
+			$('<div id="content-header"/>').hide().prependTo('#content');
+			$('<div id="content-footer"/>').hide().appendTo('#content');
 
-				if (response) {
-					if (response.custom.header) {
-						$('<div id="content-header">' + response.custom.header + '</div>').prependTo('#content');
-					}
-					if (response.custom.footer) {
-						$('<div id="content-footer">' + response.custom.footer + '</div>').appendTo('#content');
-					}
-				}
-			});
+			event.sub('location.changed', onLocationChanged);
+
+			onLocationChanged();
 		};
 
 	init();

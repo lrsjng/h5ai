@@ -38,7 +38,8 @@ Options
 		"setParentFolderLabels": true,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
-		"ignore": ["^\\.", "^_{{pkg.name}}"]
+		"ignore": ["^\\.", "^_{{pkg.name}}"],
+		"smartBrowsing": true
 	},
 
 
@@ -67,7 +68,7 @@ Options
 	in each folder.
 	*/
 	"custom": {
-		"enabled": false,
+		"enabled": true,
 		"header": "_{{pkg.name}}.header.html",
 		"footer": "_{{pkg.name}}.footer.html"
 	},

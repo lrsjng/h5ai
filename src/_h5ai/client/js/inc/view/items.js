@@ -1,5 +1,5 @@
 
-modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, resource, format, event, entry) {
+modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/location'], function (_, $, allsettings, resource, format, event, location) {
 
 	var settings = _.extend({
 			setParentFolderLabels: false,
@@ -25,6 +25,7 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 							'</li>' +
 						'</ul>',
 		emptyTemplate = '<div class="empty l10n-empty"/>',
+		contentTemplate = '<div id="content"><div id="extended" class="clearfix"/></div>',
 
 		// updates this single entry
 		update = function (entry, force) {
@@ -40,14 +41,14 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 				$label = $html.find('.label'),
 				$date = $html.find('.date'),
 				$size = $html.find('.size');
-				// escapedHref = entry.absHref.replace(/'/g, "%27").replace(/"/g, "%22");
 
 			$html
 				.addClass(entry.isFolder() ? 'folder' : 'file')
 				.data('entry', entry)
 				.data('status', entry.status);
 
-			$a.attr('href', entry.absHref);
+			location.setLink($a, entry);
+
 			$imgSmall.attr('src', resource.icon(entry.type)).attr('alt', entry.type);
 			$imgBig.attr('src', resource.icon(entry.type, true)).attr('alt', entry.type);
 			$label.text(entry.label);
@@ -94,32 +95,42 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			event.pub('entry.mouseleave', entry);
 		},
 
-		// creates the view for entry content
-		init = function (entry) {
+		onLocationChanged = function (item) {
 
 			var $extended = $('#extended'),
-				$ul = $(listTemplate),
-				$emtpy = $(emptyTemplate);
+				$ul = $extended.find('ul'),
+				$empty = $extended.find('.empty');
 
-			format.setDefaultMetric(settings.binaryPrefix);
+			$ul.find('.entry').remove();
 
-			if (entry.parent) {
-				$ul.append(update(entry.parent));
+			if (item.parent) {
+				$ul.append(update(item.parent));
 			}
 
-			_.each(entry.content, function (e) {
+			_.each(item.content, function (e) {
 
 				$ul.append(update(e));
 			});
 
-			$extended.append($ul);
-			$extended.append($emtpy);
-
-			if (!entry.isEmpty()) {
-				$emtpy.hide();
+			if (item.isEmpty()) {
+				$empty.show();
+			} else {
+				$empty.hide();
 			}
+		},
+
+		init = function () {
+
+			var $content = $(contentTemplate),
+				$extended = $content.find('#extended'),
+				$ul = $(listTemplate),
+				$emtpy = $(emptyTemplate).hide();
+
+			format.setDefaultMetric(settings.binaryPrefix);
 
 			$extended
+				.append($ul)
+				.append($emtpy)
 				.on('mouseenter', '.entry a', onMouseenter)
 				.on('mouseleave', '.entry a', onMouseleave);
 
@@ -133,24 +144,32 @@ modulejs.define('view/extended', ['_', '$', 'core/settings', 'core/resource', 'c
 			event.sub('entry.created', function (entry) {
 
 				if (entry.isInCurrentFolder() && !entry.$extended) {
-					update(entry, true).hide().appendTo($ul).slideDown(400);
-					$emtpy.slideUp(400);
+					$emtpy.fadeOut(100, function () {
+						update(entry, true).hide().appendTo($ul).fadeIn(400);
+					});
 				}
 			});
 
 			event.sub('entry.removed', function (entry) {
 
 				if (entry.isInCurrentFolder() && entry.$extended) {
-					entry.$extended.slideUp(400, function () {
+					entry.$extended.fadeOut(400, function () {
 						entry.$extended.remove();
 
 						if (entry.parent.isEmpty()) {
-							$emtpy.slideDown(400);
+							$emtpy.fadeIn(100);
 						}
 					});
 				}
 			});
+
+			event.sub('location.changed', function () {
+
+				onLocationChanged(location.getItem());
+			});
+
+			$content.appendTo('body');
 		};
 
-	init(entry);
+	init();
 });

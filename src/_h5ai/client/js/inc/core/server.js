@@ -1,5 +1,5 @@
 
-modulejs.define('core/server', ['$', '_', 'config'], function ($, _, config) {
+modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function ($, _, config, location) {
 
 	var server = _.extend({}, config.server, {
 
@@ -7,7 +7,7 @@ modulejs.define('core/server', ['$', '_', 'config'], function ($, _, config) {
 
 			if (server.api) {
 				$.ajax({
-					url: '.',
+					url: location.getAbsHref(),
 					data: data,
 					type: 'POST',
 					dataType: 'json',

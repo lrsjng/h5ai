@@ -1,5 +1,5 @@
 
-modulejs.define('core/refresh', ['_', 'core/server', 'model/entry'], function (_, server, Entry) {
+modulejs.define('core/refresh', ['_', 'config', 'core/server', 'model/entry', 'core/location'], function (_, config, server, Entry, location) {
 
 	var parseJson = function (entry, json) {
 
@@ -20,7 +20,7 @@ modulejs.define('core/refresh', ['_', 'core/server', 'model/entry'], function (_
 
 		refresh = function (callback) {
 
-			var entry = Entry.get();
+			var entry = Entry.get(location.getAbsHref());
 
 			server.request({action: 'get', entries: true, entriesHref: entry.absHref, entriesWhat: 1}, function (json) {
 

@@ -1,5 +1,5 @@
 
-modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/entry'], function (_, $, allsettings, resource, event, entry) {
+modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location'], function (_, $, allsettings, resource, event, location) {
 
 	var settings = _.extend({
 			enabled: false
@@ -26,11 +26,11 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 
 			$html
 				.addClass(entry.isFolder() ? 'folder' : 'file')
+				.data('item', entry)
 				.data('status', entry.status);
 
-			$a
-				.attr('href', entry.absHref)
-				.find('span').text(entry.label).end();
+			location.setLink($a, entry);
+			$a.find('span').text(entry.label).end();
 
 			if (entry.isDomain()) {
 				$html.addClass('domain');
@@ -69,25 +69,49 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			}
 		},
 
-		// creates the complete crumb from entry down to the root
-		init = function (entry) {
+		onLocationChanged = function (item) {
+
+			var crumb = item.getCrumb(),
+				$ul = $('#navbar'),
+				found = false;
+
+			$ul.find('.crumb').each(function () {
+
+				var $html = $(this);
+				if ($html.data('item') === item) {
+					found = true;
+					$html.addClass('current');
+				} else {
+					$html.removeClass('current');
+				}
+			});
+
+			if (!found) {
+				$ul.find('.crumb').remove();
+				_.each(crumb, function (e) {
+
+					$ul.append(update(e));
+				});
+			}
+		},
+
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
 			}
 
-			var crumb = entry.getCrumb(),
-				$ul = $('#navbar');
-
-			_.each(crumb, function (e) {
-
-				$ul.append(update(e));
-			});
-
 			// event.sub('entry.created', onContentChanged);
 			// event.sub('entry.removed', onContentChanged);
 			event.sub('entry.changed', onContentChanged);
+
+			event.sub('location.changed', function () {
+
+				onLocationChanged(location.getItem());
+			});
+
+			onLocationChanged(location.getItem());
 		};
 
-	init(entry);
+	init();
 });

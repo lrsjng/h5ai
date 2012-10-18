@@ -1,5 +1,6 @@
 
-modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/settings', 'core/location', 'core/server'], function ($, _, types, event, settings, location, server) {
+modulejs.define('model/entry', ['$', '_', 'config', 'core/types', 'core/event', 'core/settings', 'core/server', 'core/location'], function ($, _, config, types, event, settings, server, location) {
+
 
 	var reEndsWithSlash = /\/$/,
 
@@ -44,7 +45,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		getEntry = function (absHref, time, size, status, isContentFetched) {
 
-			absHref = location.forceEncoding(absHref || location.absHref);
+			absHref = location.forceEncoding(absHref);
 
 			if (!startsWith(absHref, settings.rootAbsHref)) {
 				return null;
@@ -88,7 +89,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		removeEntry = function (absHref) {
 
-			absHref = location.forceEncoding(absHref || location.absHref);
+			absHref = location.forceEncoding(absHref);
 
 			var self = cache[absHref];
 
@@ -128,6 +129,14 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 					callback(self);
 				});
 			}
+		},
+
+		init = function () {
+
+			_.each(config.entries || [], function (entry) {
+
+				getEntry(entry.absHref, entry.time, entry.size, entry.status, entry.content);
+			});
 		};
 
 
@@ -142,7 +151,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		this.absHref = absHref;
 		this.type = types.getType(absHref);
-		this.label = createLabel(absHref === '/' ? location.domain : split.name);
+		this.label = createLabel(absHref === '/' ? location.getDomain() : split.name);
 		this.time = null;
 		this.size = null;
 		this.parent = null;
@@ -167,7 +176,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		isCurrentFolder: function () {
 
-			return this.absHref === location.absHref;
+			return this.absHref === location.getAbsHref();
 		},
 
 		isInCurrentFolder: function () {
@@ -177,7 +186,7 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 
 		isCurrentParentFolder: function () {
 
-			return this === getEntry().parent;
+			return this === getEntry(location.getAbsHref()).parent;
 		},
 
 		isDomain: function () {
@@ -258,6 +267,9 @@ modulejs.define('model/entry', ['$', '_', 'core/types', 'core/event', 'core/sett
 			};
 		}
 	});
+
+
+	init();
 
 	return {
 		get: getEntry,
