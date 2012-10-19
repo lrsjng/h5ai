@@ -34,7 +34,7 @@ Options
 	- ignore [php only]: don't list items matching these regular expressions
 	*/
 	"view": {
-		"modes": ["details", "icons"],
+		"modes": ["details", "icons", "grid", "list"],
 		"setParentFolderLabels": true,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
