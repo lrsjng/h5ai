@@ -74,14 +74,9 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 		setLocation = function (newAbsHref, keepBrowserUrl) {
 
 			newAbsHref = encodedHref(newAbsHref);
+
 			if (absHref !== newAbsHref) {
 				absHref = newAbsHref;
-
-				notify.set('loading...');
-				modulejs.require('core/refresh')(function () {
-					notify.set();
-					event.pub('location.changed', getItem());
-				});
 
 				if (history) {
 					if (keepBrowserUrl) {
@@ -91,6 +86,12 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 					}
 				}
 			}
+
+			notify.set('loading...');
+			modulejs.require('core/refresh')(function () {
+				notify.set();
+				event.pub('location.changed', getItem());
+			});
 		},
 
 		setLink = function ($el, item) {
