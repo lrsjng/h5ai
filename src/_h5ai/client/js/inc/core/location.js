@@ -76,10 +76,12 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 			newAbsHref = encodedHref(newAbsHref);
 			if (absHref !== newAbsHref) {
 				absHref = newAbsHref;
-				event.pub('location.changed', getItem());
 
 				notify.set('loading...');
-				modulejs.require('core/refresh')(function () { notify.set(); });
+				modulejs.require('core/refresh')(function () {
+					notify.set();
+					event.pub('location.changed', getItem());
+				});
 
 				if (history) {
 					if (keepBrowserUrl) {

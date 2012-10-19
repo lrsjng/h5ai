@@ -27,32 +27,29 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 		checkEntry = function (entry) {
 
-			if (entry.$extended) {
+			var type = null;
 
-				var type = null;
+			if (_.indexOf(settings.img, entry.type) >= 0) {
+				type = 'img';
+			} else if (_.indexOf(settings.mov, entry.type) >= 0) {
+				type = 'mov';
+			} else if (_.indexOf(settings.doc, entry.type) >= 0) {
+				type = 'doc';
+			}
 
-				if (_.indexOf(settings.img, entry.type) >= 0) {
-					type = 'img';
-				} else if (_.indexOf(settings.mov, entry.type) >= 0) {
-					type = 'mov';
-				} else if (_.indexOf(settings.doc, entry.type) >= 0) {
-					type = 'doc';
-				}
+			if (type) {
+				requestThumbSmall(type, entry.absHref, function (src) {
 
-				if (type) {
-					requestThumbSmall(type, entry.absHref, function (src) {
+					if (src && entry.$extended) {
+						entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
+					}
+				});
+				requestThumbBig(type, entry.absHref, function (src) {
 
-						if (src) {
-							entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
-						}
-					});
-					requestThumbBig(type, entry.absHref, function (src) {
-
-						if (src) {
-							entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
-						}
-					});
-				}
+					if (src && entry.$extended) {
+						entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
+					}
+				});
 			}
 		},
 

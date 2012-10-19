@@ -1,5 +1,5 @@
 
-modulejs.define('core/refresh', ['_', 'config', 'core/server', 'model/entry', 'core/location'], function (_, config, server, Entry, location) {
+modulejs.define('core/refresh', ['_', 'core/server', 'model/entry', 'core/location'], function (_, server, Entry, location) {
 
 	var parseJson = function (entry, json) {
 
