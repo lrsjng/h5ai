@@ -39,10 +39,16 @@
 
 	} else {
 
-		$.getJSON('.', {action: 'get', options: true, types: true, langs: true, server: true, entries: true}, function (config) {
+		$.ajax({
+			url: '.',
+			data: {action: 'get', options: true, types: true, langs: true, server: true},
+			type: 'POST',
+			dataType: 'json',
+			success: function (config) {
 
-			modulejs.define('config', config);
-			$(function () { modulejs.require('main'); });
+				modulejs.define('config', config);
+				$(function () { modulejs.require('main'); });
+			}
 		});
 	}
 

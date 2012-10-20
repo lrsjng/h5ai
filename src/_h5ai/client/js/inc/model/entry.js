@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['$', '_', 'config', 'core/types', 'core/event', 'core/settings', 'core/server', 'core/location'], function ($, _, config, types, event, settings, server, location) {
+modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings', 'core/server', 'core/location'], function (_, types, event, settings, server, location) {
 
 
 	var reEndsWithSlash = /\/$/,
@@ -129,14 +129,6 @@ modulejs.define('model/entry', ['$', '_', 'config', 'core/types', 'core/event', 
 					callback(self);
 				});
 			}
-		},
-
-		init = function () {
-
-			_.each(config.entries || [], function (entry) {
-
-				getEntry(entry.absHref, entry.time, entry.size, entry.status, entry.content);
-			});
 		};
 
 
@@ -267,9 +259,6 @@ modulejs.define('model/entry', ['$', '_', 'config', 'core/types', 'core/event', 
 			};
 		}
 	});
-
-
-	init();
 
 	return {
 		get: getEntry,
