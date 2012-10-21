@@ -155,7 +155,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 								var $text = $('#pv-txt-text'),
 									$lineNos = $text.find('td.gutter .line').addClass('cntlinenr'),
 									$codeLines = $text.find('td.code .line').addClass('cntline'),
-									$table = $('<table/>'),
+									$table = $('<table/>').addClass('syntaxhighlighter'),
 									i, $tr;
 
 								for (i = 0; i < $lineNos.length; i += 1) {
@@ -165,7 +165,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 									$table.append($tr);
 								}
 
-								$text.find('table').replaceWith($table);
+								$text.find('.syntaxhighlighter').replaceWith($table);
 							}
 						});
 					}

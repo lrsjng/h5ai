@@ -29,7 +29,6 @@
 	word-break: break-all;
 
 	.syntaxhighlighter {
-		overflow: visible !important;
 
 		tr:hover {
 			background-color: rgba(0,0,0,0.05);
@@ -67,10 +66,10 @@
 		.plain {
 			color: #000;
 		}
-		.comments, .comments a {
+		.comments {
 			color: #008200;
 		}
-		.string, .string a {
+		.string {
 			color: #1111ff;
 		}
 		.keyword {
@@ -96,14 +95,24 @@
 			color: #006699;
 			font-weight: bold;
 		}
-		.color1, .color1 a {
+		.color1 {
 			color: #999;
 		}
-		.color2, .color2 a {
+		.color2 {
 			color: #ff1493;
 		}
-		.color3, .color3 a {
+		.color3 {
 			color: #ff1111;
+		}
+
+		a, a:active, a:visited {
+			color: #2080FF;
+			text-decoration: none;
+			cursor: pointer;
+
+			&:hover {
+				color: #68A9FF;
+			}
 		}
 	}
 
