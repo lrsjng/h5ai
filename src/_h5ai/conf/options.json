@@ -30,8 +30,10 @@ Options
 		so that it will be persistent.
 	- setParentFolderLabels: set parent folder labels to real folder names
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- indexFiles [php only]: consider folder with those files as non {{pkg.name}} folders
-	- ignore [php only]: don't list items matching these regular expressions
+	- indexFiles: consider folder with those files as non {{pkg.name}} folders
+	- ignore: don't list items matching these regular expressions
+	- smartBrowsing: use browser history if available (no need to reload the whole page)
+	- extInNewWindow: open non-h5ai links in new window/tab
 	*/
 	"view": {
 		"modes": ["details", "icons", "grid", "list"],
@@ -39,7 +41,8 @@ Options
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
 		"ignore": ["^\\.", "^_{{pkg.name}}"],
-		"smartBrowsing": true
+		"smartBrowsing": true,
+		"extInNewWindow": true
 	},
 
 

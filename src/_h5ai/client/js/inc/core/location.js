@@ -2,7 +2,8 @@
 modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event', 'core/notify'], function (_, modernizr, allsettings, event, notify) {
 
 	var settings = _.extend({
-			smartBrowsing: false
+			smartBrowsing: true,
+			extInNewWindow: true
 		}, allsettings.view),
 
 		doc = document,
@@ -106,7 +107,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 				});
 			}
 
-			if (item.status !== '=h5ai=') {
+			if (settings.extInNewWindow && item.status !== '=h5ai=') {
 				$el.attr('target', '_blank');
 			}
 		};
