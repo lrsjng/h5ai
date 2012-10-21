@@ -151,6 +151,21 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 							if (sh) {
 								sh.highlight({}, $nText[0]);
+
+								var $text = $('#pv-txt-text'),
+									$lineNos = $text.find('td.gutter .line').addClass('cntlinenr'),
+									$codeLines = $text.find('td.code .line').addClass('cntline'),
+									$table = $('<table/>'),
+									i, $tr;
+
+								for (i = 0; i < $lineNos.length; i += 1) {
+									$tr = $('<tr/>');
+									$('<td/>').addClass('nr').append($lineNos.eq(i)).appendTo($tr);
+									$('<td/>').addClass('line').append($codeLines.eq(i)).appendTo($tr);
+									$table.append($tr);
+								}
+
+								$text.find('table').replaceWith($table);
 							}
 						});
 					}

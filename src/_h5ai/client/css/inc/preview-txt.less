@@ -31,10 +31,82 @@
 	.syntaxhighlighter {
 		overflow: visible !important;
 
-		.gutter .line {
-			border-right: none !important;
+		tr:hover {
+			background-color: rgba(0,0,0,0.05);
+
+			.nr {
+				color: #333;
+			}
+		}
+
+		td {
+			vertical-align: top;
+			font-family: "Ubuntu Mono";
+			font-size: 16px;
+			line-height: 1.2em;
+			color: #999;
+			word-break: normal;
+
+			&.nr {
+				text-align: right;
+				padding: 0 8px 0 4px;
+			}
+
+			&.line {
+				width: 100%;
+				padding: 0 4px 0 8px;
+			}
+
+			code {
+				font-family: "Ubuntu Mono";
+				font-size: 16px;
+				line-height: 1.2em;
+			}
+		}
+
+		.plain {
+			color: #000;
+		}
+		.comments, .comments a {
+			color: #008200;
+		}
+		.string, .string a {
+			color: #1111ff;
+		}
+		.keyword {
+			color: #006699;
+			font-weight: bold;
+		}
+		.preprocessor {
+			color: #999;
+		}
+		.variable {
+			color: #aa7700;
+		}
+		.value {
+			color: #009900;
+		}
+		.functions {
+			color: #ff1493;
+		}
+		.constants {
+			color: #0066cc;
+		}
+		.script {
+			color: #006699;
+			font-weight: bold;
+		}
+		.color1, .color1 a {
+			color: #999;
+		}
+		.color2, .color2 a {
+			color: #ff1493;
+		}
+		.color3, .color3 a {
+			color: #ff1111;
 		}
 	}
+
 
 	&.markdown {
 		font-size: 16px;
