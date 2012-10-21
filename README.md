@@ -61,7 +61,8 @@ It profits from these great projects:
 
 ### develop branch
 
-* 
+* removes `aai` mode!
+* adds smart browsing
 
 
 ### v0.22.1 - *2012-10-16*
