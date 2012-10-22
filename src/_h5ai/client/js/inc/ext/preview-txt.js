@@ -46,11 +46,48 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 						'</div>' +
 					'</div>',
 
-		templateText = '<pre id="pv-txt-text"/>',
+		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
 		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
 		currentEntries = [],
 		currentIdx = 0,
+
+		// adapted from SyntaxHighlighter
+		getHighlightedLines = function (sh, alias, content) {
+
+			var brushes = sh.vars.discoveredBrushes,
+				Brush, brush;
+
+			if (!brushes) {
+				brushes = {};
+
+				_.each(sh.brushes, function (info, brush) {
+
+					var aliases = info.aliases;
+
+					if (aliases) {
+						info.brushName = brush.toLowerCase();
+
+						for (var i = 0; i < aliases.length; i += 1) {
+							brushes[aliases[i]] = brush;
+						}
+					}
+				});
+
+				sh.vars.discoveredBrushes = brushes;
+			}
+
+			Brush = sh.brushes[brushes[alias || 'plain']];
+
+			if (!Brush) {
+				return $();
+			}
+
+			brush = new Brush();
+			brush.init({toolbar: false, gutter: false});
+
+			return $(brush.getHtml(content)).find('.line');
+		},
 
 		loadScript = function (url, globalId, callback) {
 
@@ -134,7 +171,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 					var $nText;
 
 					if (current.type === 'markdown') {
-						$nText = $(templateMarkdown).hide();
+						$nText = $(templateMarkdown).hide().text(content);
 						$text.replaceWith($nText);
 
 						loadMarkdown(function (md) {
@@ -144,28 +181,22 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 							}
 						});
 					} else {
-						$nText = $(templateText).hide().addClass('toolbar: false; brush:').addClass(settings.types[current.type] || 'plain').text(content);
+						$nText = $(templateText).hide().text(content);
 						$text.replaceWith($nText);
 
 						loadSyntaxhighlighter(function (sh) {
 
 							if (sh) {
-								sh.highlight({}, $nText[0]);
+								var $table = $('<table/>');
 
-								var $text = $('#pv-txt-text'),
-									$lineNos = $text.find('td.gutter .line').addClass('cntlinenr'),
-									$codeLines = $text.find('td.code .line').addClass('cntline'),
-									$table = $('<table/>').addClass('syntaxhighlighter'),
-									i, $tr;
+								getHighlightedLines(sh, settings.types[current.type], content).each(function (i) {
+									$('<tr/>')
+										.append($('<td/>').addClass('nr').append(i + 1))
+										.append($('<td/>').addClass('line').append(this))
+										.appendTo($table);
+								});
 
-								for (i = 0; i < $lineNos.length; i += 1) {
-									$tr = $('<tr/>');
-									$('<td/>').addClass('nr').append($lineNos.eq(i)).appendTo($tr);
-									$('<td/>').addClass('line').append($codeLines.eq(i)).appendTo($tr);
-									$table.append($tr);
-								}
-
-								$text.find('.syntaxhighlighter').replaceWith($table);
+								$nText.empty().append($table);
 							}
 						});
 					}
