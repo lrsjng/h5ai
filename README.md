@@ -63,7 +63,7 @@ It profits from these great projects:
 
 * removes `aai` mode!
 * adds smart browsing
-* add line wrap and line highlighting on hover to text preview
+* add line wrap and line highlighting (on hover) to text preview
 
 
 ### v0.22.1 - *2012-10-16*

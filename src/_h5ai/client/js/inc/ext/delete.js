@@ -1,5 +1,5 @@
 
-modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'core/refresh', 'core/server'], function (_, $, allsettings, event, resource, refresh, server) {
+modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'core/location', 'core/server'], function (_, $, allsettings, event, resource, location, server) {
 
 	var settings = _.extend({
 			enabled: false
@@ -31,7 +31,7 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 			if (!json || json.code) {
 				failed();
 			}
-			refresh();
+			location.refresh();
 		},
 
 		requestDeletion = function (hrefsStr) {

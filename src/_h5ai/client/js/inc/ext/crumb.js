@@ -14,7 +14,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 		pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page"/>',
 		statusHintTemplate = '<span class="hint"/>',
 
-		// updates the crumb for this single entry
 		update = function (entry, force) {
 
 			if (!force && entry.$crumb && entry.$crumb.data('status') === entry.status) {
@@ -62,13 +61,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			return $html;
 		},
 
-		onContentChanged = function (entry) {
-
-			if (entry.$crumb) {
-				update(entry, true);
-			}
-		},
-
 		onLocationChanged = function (item) {
 
 			var crumb = item.getCrumb(),
@@ -100,10 +92,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 			if (!settings.enabled) {
 				return;
 			}
-
-			// event.sub('entry.created', onContentChanged);
-			// event.sub('entry.removed', onContentChanged);
-			event.sub('entry.changed', onContentChanged);
 
 			event.sub('location.changed', onLocationChanged);
 		};

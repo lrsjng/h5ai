@@ -1,5 +1,5 @@
 
-modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'core/refresh', 'core/server'], function (_, $, allsettings, location, refresh, server) {
+modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'core/server'], function (_, $, allsettings, location, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -99,7 +99,7 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'cor
 
 				afterAll: function () {
 
-					refresh();
+					location.refresh();
 				},
 
 				error: function (err, file) {

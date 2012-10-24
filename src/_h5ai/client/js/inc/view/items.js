@@ -119,6 +119,36 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			}
 		},
 
+		onLocationRefreshed = function (item) {
+
+			var $extended = $('#extended'),
+				$ul = $extended.find('ul'),
+				$empty = $extended.find('.empty'),
+				$items = $ul.find('.entry:not(.folder-parent)'),
+				currentItems = _.map($items.get(), function (i) { return $(i).data('entry'); }),
+				refreshedItems = _.values(item.content),
+				create = _.difference(refreshedItems, currentItems),
+				remove = _.difference(currentItems, refreshedItems);
+
+			_.each(create, function (item) {
+
+				update(item, true).hide().appendTo($ul).fadeIn(400);
+			});
+
+			_.each(remove, function (item) {
+
+				item.$extended.fadeOut(400, function () {
+					item.$extended.remove();
+				});
+			});
+
+			if (item.isEmpty()) {
+				setTimeout(function () { $empty.show(); }, 400);
+			} else {
+				$empty.hide();
+			}
+		},
+
 		init = function () {
 
 			var $content = $(contentTemplate),
@@ -134,36 +164,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 				.on('mouseenter', '.entry a', onMouseenter)
 				.on('mouseleave', '.entry a', onMouseleave);
 
-			event.sub('entry.changed', function (entry) {
-
-				if (entry.isInCurrentFolder() && entry.$extended) {
-					update(entry, true);
-				}
-			});
-
-			event.sub('entry.created', function (entry) {
-
-				if (entry.isInCurrentFolder() && !entry.$extended) {
-					$emtpy.fadeOut(100, function () {
-						update(entry, true).hide().appendTo($ul).fadeIn(400);
-					});
-				}
-			});
-
-			event.sub('entry.removed', function (entry) {
-
-				if (entry.isInCurrentFolder() && entry.$extended) {
-					entry.$extended.fadeOut(400, function () {
-						entry.$extended.remove();
-
-						if (entry.parent.isEmpty()) {
-							$emtpy.fadeIn(100);
-						}
-					});
-				}
-			});
-
 			event.sub('location.changed', onLocationChanged);
+			event.sub('location.refreshed', onLocationRefreshed);
 
 			$content.appendTo('body');
 		};

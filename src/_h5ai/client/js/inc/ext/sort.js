@@ -143,8 +143,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					event.preventDefault();
 				});
 
-			event.sub('entry.changed', onContentChanged);
-			event.sub('entry.created', onContentChanged);
+			event.sub('location.changed', onContentChanged);
+			event.sub('location.refreshed', onContentChanged);
 		};
 
 	init();

@@ -72,6 +72,36 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 			return modulejs.require('model/entry').get(absHref);
 		},
 
+		load = function (callback) {
+
+			modulejs.require('core/server').request({action: 'get', entries: true, entriesHref: absHref, entriesWhat: 1}, function (json) {
+
+				var Entry = modulejs.require('model/entry'),
+					entry = Entry.get(absHref);
+
+				if (json) {
+
+					var found = {};
+
+					_.each(json.entries, function (jsonEntry) {
+
+						var e = Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
+						found[e.absHref] = true;
+					});
+
+					_.each(entry.content, function (e) {
+
+						if (!found[e.absHref]) {
+							Entry.remove(e.absHref);
+						}
+					});
+				}
+				if (_.isFunction(callback)) {
+					callback(entry);
+				}
+			});
+		},
+
 		setLocation = function (newAbsHref, keepBrowserUrl) {
 
 			newAbsHref = encodedHref(newAbsHref);
@@ -89,9 +119,16 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 			}
 
 			notify.set('loading...');
-			modulejs.require('core/refresh')(function () {
+			load(function () {
 				notify.set();
 				event.pub('location.changed', getItem());
+			});
+		},
+
+		refresh = function () {
+
+			load(function () {
+				event.pub('location.refreshed', getItem());
 			});
 		},
 
@@ -123,13 +160,19 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 	}
 
 
+	event.sub('ready', function () {
+
+		setLocation(document.location.href, true);
+	});
+
+
 	return {
 		forceEncoding: forceEncoding,
-		encodedHref: encodedHref,
 		getDomain: getDomain,
 		getAbsHref: getAbsHref,
 		getItem: getItem,
 		setLocation: setLocation,
+		refresh: refresh,
 		setLink: setLink
 	};
 });

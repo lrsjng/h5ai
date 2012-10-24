@@ -1,5 +1,5 @@
 
-modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'core/refresh'], function (_, $, allsettings, event, refresh) {
+modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'core/location'], function (_, $, allsettings, event, location) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -8,7 +8,7 @@ modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'co
 
 		heartbeat = function () {
 
-			refresh();
+			location.refresh();
 			setTimeout(heartbeat, settings.interval);
 		},
 

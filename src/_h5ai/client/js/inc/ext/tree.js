@@ -20,7 +20,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 		magicSequence = '=h5ai=',
 
-		// updates the tree for this single entry
 		update = function (entry) {
 
 			var $html = $(template),
@@ -223,7 +222,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			});
 		},
 
-		// creates the complete tree from entry down to the root
 		init = function () {
 
 			if (!settings.enabled) {
@@ -243,14 +241,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					shiftTree();
 				});
 
-			event.sub('location.changed', onLocationChanged);
-
-			// strong negative performance impact in aai mode
-			// event.sub('entry.changed', onContentChanged);
-			// event.sub('entry.created', onContentChanged);
-			// event.sub('entry.removed', onContentChanged);
-
 			event.sub('ready', adjustSpacing);
+			event.sub('location.changed', onLocationChanged);
 
 			$(window).on('resize', function () {
 
