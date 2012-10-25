@@ -61,6 +61,11 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 			}, settings.delay);
 		},
 
+		onLocationRefreshed = function (item, added, removed) {
+
+			_.each(added, checkEntry);
+		},
+
 		init = function () {
 
 			if (!settings.enabled || !server.api) {
@@ -68,10 +73,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 			}
 
 			event.sub('location.changed', onLocationChanged);
-			event.sub('entry.created', function (entry) {
-
-				checkEntry(entry);
-			});
+			event.sub('location.refreshed', onLocationRefreshed);
 		};
 
 	init();

@@ -51,37 +51,19 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 				return null;
 			}
 
-			var created = !cache[absHref],
-				changed = false;
-
 			var self = cache[absHref] || new Entry(absHref);
 
 			if (_.isNumber(time)) {
-				if (self.time !== time) {
-					changed = true;
-				}
 				self.time = time;
 			}
 			if (_.isNumber(size)) {
-				if (self.size !== size) {
-					changed = true;
-				}
 				self.size = size;
 			}
 			if (status) {
-				if (self.status !== status) {
-					changed = true;
-				}
 				self.status = status;
 			}
 			if (isContentFetched) {
 				self.isContentFetched = true;
-			}
-
-			if (created) {
-				event.pub('entry.created', self);
-			} else if (changed) {
-				event.pub('entry.changed', self);
 			}
 
 			return self;
@@ -102,8 +84,6 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 
 					removeEntry(entry.absHref);
 				});
-
-				event.pub('entry.removed', self);
 			}
 		},
 

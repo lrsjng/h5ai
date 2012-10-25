@@ -6,10 +6,22 @@ modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'co
 			interval: 5000
 		}, allsettings.autorefresh),
 
+		timeoutId = null,
+
 		heartbeat = function () {
 
 			location.refresh();
-			setTimeout(heartbeat, settings.interval);
+		},
+
+		before = function () {
+
+			clearTimeout(timeoutId);
+		},
+
+		after = function () {
+
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(heartbeat, settings.interval);
 		},
 
 		init = function () {
@@ -20,10 +32,10 @@ modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'co
 
 			settings.interval = Math.max(1000, settings.interval);
 
-			event.sub('ready', function () {
-
-				setTimeout(heartbeat, settings.interval);
-			});
+			event.sub('location.beforeChange', before);
+			event.sub('location.beforeRefresh', before);
+			event.sub('location.changed', after);
+			event.sub('location.refreshed', after);
 		};
 
 	init();

@@ -24,12 +24,14 @@ modulejs.define('core/event', ['_'], function (_) {
 
 		pub = function (topic, data) {
 
-			// console.log('EVENT PUB', topic, data);
+			var args = Array.prototype.slice.call(arguments, 1);
+
+			// console.log('EVENT PUB', topic, args);
 			if (_.isString(topic) && subscriptions[topic]) {
 
 				_.each(subscriptions[topic], function (callback) {
 
-					callback(data);
+					callback.apply(topic, args);
 				});
 			}
 		};

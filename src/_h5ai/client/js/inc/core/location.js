@@ -104,6 +104,8 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 		setLocation = function (newAbsHref, keepBrowserUrl) {
 
+			event.pub('location.beforeChange');
+
 			newAbsHref = encodedHref(newAbsHref);
 
 			if (absHref !== newAbsHref) {
@@ -127,8 +129,19 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 		refresh = function () {
 
+
+			var item = getItem(),
+				oldItems = _.values(item.content);
+
+			event.pub('location.beforeRefresh');
+
 			load(function () {
-				event.pub('location.refreshed', getItem());
+
+				var newItems = _.values(item.content),
+					added = _.difference(newItems, oldItems),
+					removed = _.difference(oldItems, newItems);
+
+				event.pub('location.refreshed', item, added, removed);
 			});
 		},
 

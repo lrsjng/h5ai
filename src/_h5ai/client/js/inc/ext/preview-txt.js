@@ -275,6 +275,11 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			_.each(item.content, initEntry);
 		},
 
+		onLocationRefreshed = function (item, added, removed) {
+
+			_.each(added, initEntry);
+		},
+
 		init = function () {
 
 			if (!settings.enabled) {
@@ -303,7 +308,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				});
 
 			event.sub('location.changed', onLocationChanged);
-			event.sub('entry.created', initEntry);
+			event.sub('location.refreshed', onLocationRefreshed);
 
 			$(window).on('resize load', adjustSize);
 		};

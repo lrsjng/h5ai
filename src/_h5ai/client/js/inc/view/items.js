@@ -119,23 +119,18 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			}
 		},
 
-		onLocationRefreshed = function (item) {
+		onLocationRefreshed = function (item, added, removed) {
 
 			var $extended = $('#extended'),
 				$ul = $extended.find('ul'),
-				$empty = $extended.find('.empty'),
-				$items = $ul.find('.entry:not(.folder-parent)'),
-				currentItems = _.map($items.get(), function (i) { return $(i).data('entry'); }),
-				refreshedItems = _.values(item.content),
-				create = _.difference(refreshedItems, currentItems),
-				remove = _.difference(currentItems, refreshedItems);
+				$empty = $extended.find('.empty');
 
-			_.each(create, function (item) {
+			_.each(added, function (item) {
 
 				update(item, true).hide().appendTo($ul).fadeIn(400);
 			});
 
-			_.each(remove, function (item) {
+			_.each(removed, function (item) {
 
 				item.$extended.fadeOut(400, function () {
 					item.$extended.remove();

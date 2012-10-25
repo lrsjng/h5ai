@@ -111,6 +111,23 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 			}
 		},
 
+		onLocationRefreshed = function (item, added, removed) {
+
+			var selectionChanged = false;
+
+			_.each(removed, function (item) {
+
+				if (item.$extended && item.$extended.hasClass('selected')) {
+					item.$extended.removeClass('selected');
+					selectionChanged = true;
+				}
+			});
+
+			if (selectionChanged) {
+				publish();
+			}
+		},
+
 		init = function () {
 
 			if (!settings.enabled) {
@@ -119,13 +136,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			$selectionRect.hide().appendTo('body');
 
-			event.sub('entry.removed', function (entry) {
-
-				if (entry.$extended && entry.$extended.hasClass('selected')) {
-					entry.$extended.removeClass('selected');
-					publish();
-				}
-			});
+			event.sub('location.refreshed', onLocationRefreshed);
 
 			$document
 				.on('mousedown', '.noSelection', noSelection)
