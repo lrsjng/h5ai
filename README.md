@@ -7,8 +7,8 @@ create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
 ## Install
 
-(**note:** please don't use files from the `src` folder for installation,
-they need to be preprocessed to work correctly)
+( **note:** please don't use files from the `src` folder for installation,
+they need to be preprocessed to work correctly )
 
 You'll find a preprocessed package, as well as detailed installation
 instructions on the [project page](http://larsjung.de/h5ai/).
@@ -16,7 +16,7 @@ instructions on the [project page](http://larsjung.de/h5ai/).
 
 ## Build
 
-(there are repositories of the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/))
+( there are repositories of the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/) )
 
 If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
@@ -56,7 +56,7 @@ It profits from these great projects:
 
 
 ## Changelog
-(**h5ai** uses [semantic versioning](http://semver.org/))
+( **h5ai** uses [semantic versioning](http://semver.org/) )
 
 
 ### develop branch
