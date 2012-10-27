@@ -7,7 +7,20 @@
 
 			a, a:active, a:visited {
 				height: 56px;
-				border-bottom: 1px solid #e8e8e8;
+				padding: 4px 0;
+				border-top: 1px solid @item-border-col-sep;
+				border-bottom: 1px solid @item-border-col-sep;
+
+				&:hover, &.hover {
+					border-color: @item-border-col-hover;
+				}
+			}
+		}
+
+		&.entry + .entry {
+
+			a, a:active, a:visited {
+				border-top: none;
 			}
 		}
 
@@ -19,7 +32,7 @@
 			display: inline-block;
 			position: absolute;
 			left: 0;
-			top: -2px;
+			top: 2px;
 			width: 100px;
 		}
 

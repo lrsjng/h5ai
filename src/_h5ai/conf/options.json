@@ -80,7 +80,7 @@ Options
 	Allow file deletion.
 	*/
 	"delete": {
-		"enabled": false
+		"enabled": true
 	},
 
 	/* [EXPERIMENTAL]
@@ -91,7 +91,7 @@ Options
 	- maxfilesize: number, file size is in MB
 	*/
 	"dropbox": {
-		"enabled": false,
+		"enabled": true,
 		"maxfiles": 10,
 		"maxfilesize": 1000
 	},
