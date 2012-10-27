@@ -48,7 +48,7 @@ It profits from these great projects:
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
 [jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
 [markdown-js](http://github.com/evilstreak/markdown-js)&nbsp;(MIT),
-[Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
+[Modernizr](http://www.modernizr.com)&nbsp;(MIT),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
 [spin.js](http://fgnass.github.com/spin.js/)&nbsp;(MIT),
