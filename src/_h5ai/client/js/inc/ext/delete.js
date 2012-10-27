@@ -45,9 +45,9 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 
 			selectedHrefsStr = '';
 			if (entries.length) {
-				selectedHrefsStr = _.map(entries, function (entry) {
+				selectedHrefsStr = _.map(entries, function (item) {
 
-					return entry.absHref;
+					return item.absHref;
 				}).join(':');
 				$delete.appendTo('#navbar').show();
 			} else {

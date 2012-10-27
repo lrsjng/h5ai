@@ -55,7 +55,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 
 			format.setDefaultDateFormat(currentLang.dateFormat);
 
-			$('#extended .entry .date').each(function () {
+			$('#items .item .date').each(function () {
 
 				var $this = $(this);
 

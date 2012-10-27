@@ -69,35 +69,35 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 		getItem = function () {
 
-			return modulejs.require('model/entry').get(absHref);
+			return modulejs.require('model/item').get(absHref);
 		},
 
 		load = function (callback) {
 
 			modulejs.require('core/server').request({action: 'get', entries: true, entriesHref: absHref, entriesWhat: 1}, function (json) {
 
-				var Entry = modulejs.require('model/entry'),
-					entry = Entry.get(absHref);
+				var Item = modulejs.require('model/item'),
+					item = Item.get(absHref);
 
 				if (json) {
 
 					var found = {};
 
-					_.each(json.entries, function (jsonEntry) {
+					_.each(json.entries, function (jsonItem) {
 
-						var e = Entry.get(jsonEntry.absHref, jsonEntry.time, jsonEntry.size, jsonEntry.status, jsonEntry.content);
+						var e = Item.get(jsonItem.absHref, jsonItem.time, jsonItem.size, jsonItem.status, jsonItem.content);
 						found[e.absHref] = true;
 					});
 
-					_.each(entry.content, function (e) {
+					_.each(item.content, function (e) {
 
 						if (!found[e.absHref]) {
-							Entry.remove(e.absHref);
+							Item.remove(e.absHref);
 						}
 					});
 				}
 				if (_.isFunction(callback)) {
-					callback(entry);
+					callback(item);
 				}
 			});
 		},

@@ -55,7 +55,7 @@ Options
 	- interval: number, update interval in milliseconds, at least 1000
 	*/
 	"autorefresh": {
-		"enabled": true,
+		"enabled": false,
 		"interval": 5000
 	},
 

@@ -14,49 +14,48 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 		pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page"/>',
 		statusHintTemplate = '<span class="hint"/>',
 
-		update = function (entry, force) {
+		update = function (item, force) {
 
-			if (!force && entry.$crumb && entry.$crumb.data('status') === entry.status) {
-				return entry.$crumb;
+			if (!force && item.$crumb) {
+				return item.$crumb;
 			}
 
 			var $html = $(template),
 				$a = $html.find('a');
 
 			$html
-				.addClass(entry.isFolder() ? 'folder' : 'file')
-				.data('item', entry)
-				.data('status', entry.status);
+				.addClass(item.isFolder() ? 'folder' : 'file')
+				.data('item', item);
 
-			location.setLink($a, entry);
-			$a.find('span').text(entry.label).end();
+			location.setLink($a, item);
+			$a.find('span').text(item.label).end();
 
-			if (entry.isDomain()) {
+			if (item.isDomain()) {
 				$html.addClass('domain');
 				$a.find('img').attr('src', resource.image('home'));
 			}
 
-			if (entry.isRoot()) {
+			if (item.isRoot()) {
 				$html.addClass('root');
 				$a.find('img').attr('src', resource.image('home'));
 			}
 
-			if (entry.isCurrentFolder()) {
+			if (item.isCurrentFolder()) {
 				$html.addClass('current');
 			}
 
-			if (_.isNumber(entry.status)) {
-				if (entry.status === 200) {
+			if (_.isNumber(item.status)) {
+				if (item.status === 200) {
 					$a.append($(pageHintTemplate));
 				} else {
-					$a.append($(statusHintTemplate).text('(' + entry.status + ')'));
+					$a.append($(statusHintTemplate).text('(' + item.status + ')'));
 				}
 			}
 
-			if (entry.$crumb) {
-				entry.$crumb.replaceWith($html);
+			if (item.$crumb) {
+				item.$crumb.replaceWith($html);
 			}
-			entry.$crumb = $html;
+			item.$crumb = $html;
 
 			return $html;
 		},

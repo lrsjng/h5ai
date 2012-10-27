@@ -54,25 +54,25 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 			event.sub('location.changed', onLocationChanged);
 			event.sub('location.refreshed', onLocationChanged);
 
-			event.sub('entry.mouseenter', function (entry) {
+			event.sub('item.mouseenter', function (item) {
 
-				if (entry.isCurrentParentFolder()) {
+				if (item.isCurrentParentFolder()) {
 					return;
 				}
 
-				var $span = $('<span/>').append(entry.label);
+				var $span = $('<span/>').append(item.label);
 
-				if (_.isNumber(entry.time)) {
-					$span.append(sepTemplate).append(format.formatDate(entry.time));
+				if (_.isNumber(item.time)) {
+					$span.append(sepTemplate).append(format.formatDate(item.time));
 				}
-				if (_.isNumber(entry.size)) {
-					$span.append(sepTemplate).append(format.formatSize(entry.size));
+				if (_.isNumber(item.size)) {
+					$span.append(sepTemplate).append(format.formatSize(item.size));
 				}
 
 				update($span);
 			});
 
-			event.sub('entry.mouseleave', function (entry) {
+			event.sub('item.mouseleave', function (item) {
 
 				update();
 			});

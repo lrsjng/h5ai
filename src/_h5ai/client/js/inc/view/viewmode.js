@@ -20,7 +20,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
 			var contentWidth = $('#content').width(),
 				$extended = $('#extended'),
-				itemWidth = ($extended.hasClass('view-icons') || $extended.hasClass('view-grid')) ? ($extended.find('.entry').eq(0).width() || 1) : 1;
+				itemWidth = ($extended.hasClass('view-icons') || $extended.hasClass('view-grid')) ? ($extended.find('.item').eq(0).width() || 1) : 1;
 
 			$extended.width(Math.floor(contentWidth / itemWidth) * itemWidth);
 		},

@@ -252,32 +252,32 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			event.stopImmediatePropagation();
 		},
 
-		initEntry = function (entry) {
+		initItem = function (item) {
 
-			if (entry.$extended && _.indexOf(_.keys(settings.types), entry.type) >= 0) {
-				entry.$extended.find('a').on('click', function (event) {
+			if (item.$extended && _.indexOf(_.keys(settings.types), item.type) >= 0) {
+				item.$extended.find('a').on('click', function (event) {
 
 					event.preventDefault();
 
-					var matchedEntries = _.compact(_.map($('#extended .entry'), function (entry) {
+					var matchedEntries = _.compact(_.map($('#item .item'), function (item) {
 
-						entry = $(entry).data('entry');
-						return _.indexOf(_.keys(settings.types), entry.type) >= 0 ? entry : null;
+						item = $(item).data('item');
+						return _.indexOf(_.keys(settings.types), item.type) >= 0 ? item : null;
 					}));
 
-					onEnter(matchedEntries, _.indexOf(matchedEntries, entry));
+					onEnter(matchedEntries, _.indexOf(matchedEntries, item));
 				});
 			}
 		},
 
 		onLocationChanged = function (item) {
 
-			_.each(item.content, initEntry);
+			_.each(item.content, initItem);
 		},
 
 		onLocationRefreshed = function (item, added, removed) {
 
-			_.each(added, initEntry);
+			_.each(added, initItem);
 		},
 
 		init = function () {

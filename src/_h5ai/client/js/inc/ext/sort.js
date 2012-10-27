@@ -8,13 +8,13 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 		storekey = 'sort.order',
 
-		type = function (entry) {
+		type = function (item) {
 
-			var $entry = $(entry);
+			var $item = $(item);
 
-			if ($entry.hasClass('folder-parent')) {
+			if ($item.hasClass('folder-parent')) {
 				return 0;
-			} else if ($entry.hasClass('folder')) {
+			} else if ($item.hasClass('folder')) {
 				return 1;
 			}
 			return 2;
@@ -22,17 +22,17 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 		cmpFn = function (rev, getVal) {
 
-			return function (entry1, entry2) {
+			return function (item1, item2) {
 
 				var res, val1, val2;
 
-				res = type(entry1) - type(entry2);
+				res = type(item1) - type(item2);
 				if (res !== 0) {
 					return res;
 				}
 
-				val1 = getVal(entry1);
-				val2 = getVal(entry2);
+				val1 = getVal(item1);
+				val2 = getVal(item2);
 				if (val1 < val2) {
 					return rev ? 1 : -1;
 				} else if (val1 > val2) {
@@ -42,17 +42,17 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			};
 		},
 
-		getName = function (entry) {
+		getName = function (item) {
 
-			return $(entry).find('.label').text().toLowerCase();
+			return $(item).find('.label').text().toLowerCase();
 		},
-		getTime = function (entry) {
+		getTime = function (item) {
 
-			return $(entry).find('.date').data('time');
+			return $(item).find('.date').data('time');
 		},
-		getSize = function (entry) {
+		getSize = function (item) {
 
-			return $(entry).find('.size').data('bytes');
+			return $(item).find('.size').data('bytes');
 		},
 
 		$all, orders,
@@ -65,10 +65,10 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 			$all.removeClass('ascending').removeClass('descending');
 			order.head.addClass(order.clas);
-			$('#extended .entry').detach().sort(order.fn).appendTo('#extended > ul');
+			$('#items .item').detach().sort(order.fn).appendTo('#items');
 		},
 
-		onContentChanged = function (entry) {
+		onContentChanged = function (item) {
 
 			sortBy(store.get(storekey) || settings.order);
 		},
@@ -81,7 +81,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 			var $ascending = $('<img src="' + resource.image('ascending') + '" class="sort ascending" alt="ascending" />'),
 				$descending = $('<img src="' + resource.image('descending') + '" class="sort descending" alt="descending" />'),
-				$header = $('#extended li.header'),
+				$header = $('#items li.header'),
 				$label = $header.find('a.label'),
 				$date = $header.find('a.date'),
 				$size = $header.find('a.size');

@@ -26,7 +26,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 			}
 		},
 
-		update = function (entry) {
+		update = function (item) {
 
 			loadQrCodeExtension(function () {
 				$qrcode.empty().qrcode({
@@ -34,21 +34,21 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 					width: settings.size,
 					height: settings.size,
 					color: '#333',
-					text: 'http://' + document.domain + entry.absHref
+					text: 'http://' + document.domain + item.absHref
 				});
 			});
 		},
 
-		onMouseenter = function (entry) {
+		onMouseenter = function (item) {
 
-			if (!entry.isFolder()) {
-				update(entry);
+			if (!item.isFolder()) {
+				update(item);
 				clearTimeout(hideTimeoutId);
 				$qrcode.stop(true, true).fadeIn(400);
 			}
 		},
 
-		onMouseleave = function (entry) {
+		onMouseleave = function (item) {
 
 			hideTimeoutId = setTimeout(function () {
 
@@ -64,8 +64,8 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
 			$qrcode = $(template).appendTo('body');
 
-			event.sub('entry.mouseenter', onMouseenter);
-			event.sub('entry.mouseleave', onMouseleave);
+			event.sub('item.mouseenter', onMouseenter);
+			event.sub('item.mouseleave', onMouseleave);
 		};
 
 	init();

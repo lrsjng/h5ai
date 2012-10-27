@@ -60,9 +60,9 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 			selectedHrefsStr = '';
 			if (entries.length) {
-				selectedHrefsStr = _.map(entries, function (entry) {
+				selectedHrefsStr = _.map(entries, function (item) {
 
-					return entry.absHref;
+					return item.absHref;
 				}).join(':');
 				$download.appendTo('#navbar').show();
 			} else {

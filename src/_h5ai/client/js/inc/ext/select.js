@@ -13,9 +13,9 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 		publish = function () {
 
-			var entries = _.map($('#extended .entry.selected'), function (entryElement) {
+			var entries = _.map($('#items .item.selected'), function (itemElement) {
 
-				return $(entryElement).data('entry');
+				return $(itemElement).data('item');
 			});
 
 			event.pub('selection', entries);
@@ -35,13 +35,13 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 				.show();
 
 			var selRect = $selectionRect.fracs('rect');
-			$('#extended .entry').removeClass('selecting').each(function () {
+			$('#items .item').removeClass('selecting').each(function () {
 
-				var $entry = $(this),
-					rect = $entry.find('a').fracs('rect'),
+				var $item = $(this),
+					rect = $item.find('a').fracs('rect'),
 					inter = selRect.intersection(rect);
-				if (inter && !$entry.hasClass('folder-parent')) {
-					$entry.addClass('selecting');
+				if (inter && !$item.hasClass('folder-parent')) {
+					$item.addClass('selecting');
 				}
 			});
 		},
@@ -50,8 +50,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			event.preventDefault();
 			$document.off('mousemove', selectionUpdate);
-			$('#extended .entry.selecting.selected').removeClass('selecting').removeClass('selected');
-			$('#extended .entry.selecting').removeClass('selecting').addClass('selected');
+			$('#items .item.selecting.selected').removeClass('selecting').removeClass('selected');
+			$('#items .item.selecting').removeClass('selecting').addClass('selected');
 			publish();
 
 			$selectionRect
@@ -87,7 +87,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			$(':focus').blur();
 			if (!event.ctrlKey && !event.metaKey) {
-				$('#extended .entry').removeClass('selected');
+				$('#items .item').removeClass('selected');
 				publish();
 			}
 

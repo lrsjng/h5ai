@@ -22,7 +22,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 				duration = 200;
 
 			if (re) {
-				$('#extended .entry').each(function () {
+				$('#items .item').each(function () {
 
 					var label = $(this).find('.label').text();
 
@@ -33,7 +33,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 					}
 				});
 			} else {
-				match = $('#extended .entry');
+				match = $('#items .item');
 			}
 
 			if ($(match).length) {

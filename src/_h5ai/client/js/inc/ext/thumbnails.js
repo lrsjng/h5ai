@@ -25,31 +25,41 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 			});
 		},
 
-		checkEntry = function (entry) {
+		checkItem = function (item) {
 
 			var type = null;
 
-			if (_.indexOf(settings.img, entry.type) >= 0) {
+			if (_.indexOf(settings.img, item.type) >= 0) {
 				type = 'img';
-			} else if (_.indexOf(settings.mov, entry.type) >= 0) {
+			} else if (_.indexOf(settings.mov, item.type) >= 0) {
 				type = 'mov';
-			} else if (_.indexOf(settings.doc, entry.type) >= 0) {
+			} else if (_.indexOf(settings.doc, item.type) >= 0) {
 				type = 'doc';
 			}
 
 			if (type) {
-				requestThumbSmall(type, entry.absHref, function (src) {
+				if (item.thumbSmall) {
+					item.$extended.find('.icon.small img').addClass('thumb').attr('src', item.thumbSmall);
+				} else {
+					requestThumbSmall(type, item.absHref, function (src) {
 
-					if (src && entry.$extended) {
-						entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
-					}
-				});
-				requestThumbBig(type, entry.absHref, function (src) {
+						if (src && item.$extended) {
+							item.thumbSmall = src;
+							item.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
+						}
+					});
+				}
+				if (item.thumbBig) {
+					item.$extended.find('.icon.big img').addClass('thumb').attr('src', item.thumbBig);
+				} else {
+					requestThumbBig(type, item.absHref, function (src) {
 
-					if (src && entry.$extended) {
-						entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
-					}
-				});
+						if (src && item.$extended) {
+							item.thumbBig = src;
+							item.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
+						}
+					});
+				}
 			}
 		},
 
@@ -57,13 +67,13 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 			setTimeout(function () {
 
-				_.each(item.content, checkEntry);
+				_.each(item.content, checkItem);
 			}, settings.delay);
 		},
 
 		onLocationRefreshed = function (item, added, removed) {
 
-			_.each(added, checkEntry);
+			_.each(added, checkItem);
 		},
 
 		init = function () {

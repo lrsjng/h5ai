@@ -1,5 +1,5 @@
 
-modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings', 'core/server', 'core/location'], function (_, types, event, settings, server, location) {
+modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings', 'core/server', 'core/location'], function (_, types, event, settings, server, location) {
 
 
 	var reEndsWithSlash = /\/$/,
@@ -39,11 +39,9 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 
 
 
-		// Cache
-
 		cache = {},
 
-		getEntry = function (absHref, time, size, status, isContentFetched) {
+		getItem = function (absHref, time, size, status, isContentFetched) {
 
 			absHref = location.forceEncoding(absHref);
 
@@ -51,7 +49,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 				return null;
 			}
 
-			var self = cache[absHref] || new Entry(absHref);
+			var self = cache[absHref] || new Item(absHref);
 
 			if (_.isNumber(time)) {
 				self.time = time;
@@ -69,7 +67,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 			return self;
 		},
 
-		removeEntry = function (absHref) {
+		removeItem = function (absHref) {
 
 			absHref = location.forceEncoding(absHref);
 
@@ -80,16 +78,16 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 				if (self.parent) {
 					delete self.parent.content[self.absHref];
 				}
-				_.each(self.content, function (entry) {
+				_.each(self.content, function (item) {
 
-					removeEntry(entry.absHref);
+					removeItem(item.absHref);
 				});
 			}
 		},
 
 		fetchContent = function (absHref, callback) {
 
-			var self = getEntry(absHref);
+			var self = getItem(absHref);
 
 			if (!_.isFunction(callback)) {
 				callback = function () {};
@@ -101,8 +99,8 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 				server.request({action: 'get', entries: true, entriesHref: self.absHref, entriesWhat: 1}, function (response) {
 
 					if (response.entries) {
-						_.each(response.entries, function (entry) {
-							getEntry(entry.absHref, entry.time, entry.size, entry.status, entry.content);
+						_.each(response.entries, function (item) {
+							getItem(item.absHref, item.time, item.size, item.status, item.content);
 						});
 					}
 
@@ -113,9 +111,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 
 
 
-	// Entry
-
-	var Entry = function (absHref) {
+	var Item = function (absHref) {
 
 		var split = splitPath(absHref);
 
@@ -131,7 +127,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 		this.content = {};
 
 		if (split.parent) {
-			this.parent = getEntry(split.parent);
+			this.parent = getItem(split.parent);
 			this.parent.content[this.absHref] = this;
 			if (_.keys(this.parent.content).length > 1) {
 				this.parent.isContentFetched = true;
@@ -139,7 +135,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 		}
 	};
 
-	_.extend(Entry.prototype, {
+	_.extend(Item.prototype, {
 
 		isFolder: function () {
 
@@ -158,7 +154,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 
 		isCurrentParentFolder: function () {
 
-			return this === getEntry(location.getAbsHref()).parent;
+			return this === getItem(location.getAbsHref()).parent;
 		},
 
 		isDomain: function () {
@@ -188,12 +184,12 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 
 		getCrumb: function () {
 
-			var entry = this,
-				crumb = [entry];
+			var item = this,
+				crumb = [item];
 
-			while (entry.parent) {
-				entry = entry.parent;
-				crumb.unshift(entry);
+			while (item.parent) {
+				item = item.parent;
+				crumb.unshift(item);
 			}
 
 			return crumb;
@@ -201,12 +197,12 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 
 		getSubfolders: function () {
 
-			return _.sortBy(_.filter(this.content, function (entry) {
+			return _.sortBy(_.filter(this.content, function (item) {
 
-				return entry.isFolder();
-			}), function (entry) {
+				return item.isFolder();
+			}), function (item) {
 
-				return entry.label.toLowerCase();
+				return item.label.toLowerCase();
 			});
 		},
 
@@ -215,9 +211,9 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 			var folders = 0,
 				files = 0;
 
-			_.each(this.content, function (entry) {
+			_.each(this.content, function (item) {
 
-				if (entry.isFolder()) {
+				if (item.isFolder()) {
 					folders += 1;
 				} else {
 					files += 1;
@@ -225,11 +221,11 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 			});
 
 			var depth = 0,
-				entry = this;
+				item = this;
 
-			while (entry.parent) {
+			while (item.parent) {
 				depth += 1;
-				entry = entry.parent;
+				item = item.parent;
 			}
 
 			return {
@@ -241,7 +237,7 @@ modulejs.define('model/entry', ['_', 'core/types', 'core/event', 'core/settings'
 	});
 
 	return {
-		get: getEntry,
-		remove: removeEntry
+		get: getItem,
+		remove: removeItem
 	};
 });
