@@ -41,11 +41,11 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 			server.request({action: 'delete', hrefs: hrefsStr}, handleResponse);
 		},
 
-		onSelection = function (entries) {
+		onSelection = function (items) {
 
 			selectedHrefsStr = '';
-			if (entries.length) {
-				selectedHrefsStr = _.map(entries, function (item) {
+			if (items.length) {
+				selectedHrefsStr = _.map(items, function (item) {
 
 					return item.absHref;
 				}).join(':');

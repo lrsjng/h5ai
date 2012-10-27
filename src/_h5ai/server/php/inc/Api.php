@@ -62,11 +62,11 @@ class Api {
 				$response["custom"] = $this->app->get_customizations($abs_href);
 			}
 
-			if (array_key_exists("entries", $_REQUEST)) {
+			if (array_key_exists("items", $_REQUEST)) {
 
-				list($abs_href, $what) = use_optional_request_params("entriesHref", "entriesWhat", "entries");
+				list($abs_href, $what) = use_optional_request_params("itemsHref", "itemsWhat", "items");
 				$what = is_numeric($what) ? intval($what, 10) : 1;
-				$response["entries"] = $this->app->get_entries($abs_href, $what);
+				$response["items"] = $this->app->get_items($abs_href, $what);
 			}
 
 			if (count($_REQUEST)) {

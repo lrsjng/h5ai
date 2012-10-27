@@ -56,11 +56,11 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			}, handleResponse);
 		},
 
-		onSelection = function (entries) {
+		onSelection = function (items) {
 
 			selectedHrefsStr = '';
-			if (entries.length) {
-				selectedHrefsStr = _.map(entries, function (item) {
+			if (items.length) {
+				selectedHrefsStr = _.map(items, function (item) {
 
 					return item.absHref;
 				}).join(':');

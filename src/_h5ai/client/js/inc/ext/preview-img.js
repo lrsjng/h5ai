@@ -150,12 +150,12 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			});
 		},
 
-		onEnter = function (entries, idx) {
+		onEnter = function (items, idx) {
 
 			$(window).on('keydown', onKeydown);
 			$('#pv-img-overlay').stop(true, true).fadeIn(200);
 
-			currentEntries = entries;
+			currentEntries = items;
 			onIndexChange(idx);
 		},
 

@@ -13,12 +13,12 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 		publish = function () {
 
-			var entries = _.map($('#items .item.selected'), function (itemElement) {
+			var items = _.map($('#items .item.selected'), function (itemElement) {
 
 				return $(itemElement).data('item');
 			});
 
-			event.pub('selection', entries);
+			event.pub('selection', items);
 		},
 
 		selectionUpdate = function (event) {

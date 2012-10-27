@@ -96,10 +96,10 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 			if (self.isContentFetched) {
 				callback(self);
 			} else {
-				server.request({action: 'get', entries: true, entriesHref: self.absHref, entriesWhat: 1}, function (response) {
+				server.request({action: 'get', items: true, itemsHref: self.absHref, itemsWhat: 1}, function (response) {
 
-					if (response.entries) {
-						_.each(response.entries, function (item) {
+					if (response.items) {
+						_.each(response.items, function (item) {
 							getItem(item.absHref, item.time, item.size, item.status, item.content);
 						});
 					}

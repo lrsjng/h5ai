@@ -1,0 +1,1 @@
+<?php require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php"); ?>

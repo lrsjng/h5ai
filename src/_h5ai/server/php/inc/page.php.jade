@@ -1,7 +1,6 @@
-|<?php require_once(str_replace("\\", "/", dirname(__FILE__)) . "/inc/init.php"); ?>
 
-- var href = "<?php echo $HREF; ?>"
-- var fallback = "<?php echo $FALLBACK; ?>"
+- var href = "<?php global $HREF; echo $HREF; ?>"
+- var fallback = "<?php global $FALLBACK; echo $FALLBACK; ?>"
 
 doctype 5
 //if lt IE 9

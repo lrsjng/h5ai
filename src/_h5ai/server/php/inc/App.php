@@ -152,19 +152,19 @@ class App {
 
 	public function get_generic_json() {
 
-		return json_encode(array("entries" => $this->get_entries($this->abs_href, 1))) . "\n";
+		return json_encode(array("items" => $this->get_items($this->abs_href, 1))) . "\n";
 	}
 
 
-	public function get_entries($abs_href, $what) {
+	public function get_items($abs_href, $what) {
 
 		$cache = array();
-		$folder = Entry::get($this, $this->get_abs_path($abs_href), $cache);
+		$folder = Item::get($this, $this->get_abs_path($abs_href), $cache);
 
 		// add content of subfolders
 		if ($what >= 2 && $folder !== null) {
-			foreach ($folder->get_content($cache) as $entry) {
-				$entry->get_content($cache);
+			foreach ($folder->get_content($cache) as $item) {
+				$item->get_content($cache);
 			}
 			$folder = $folder->get_parent($cache);
 		}
@@ -175,10 +175,10 @@ class App {
 			$folder = $folder->get_parent($cache);
 		}
 
-		uasort($cache, array("Entry", "cmp"));
+		uasort($cache, array("Item", "cmp"));
 		$result = array();
-		foreach ($cache as $p => $entry) {
-			$result[] = $entry->to_json_object();
+		foreach ($cache as $p => $item) {
+			$result[] = $item->to_json_object();
 		}
 
 		return $result;
@@ -190,21 +190,21 @@ class App {
 		date_default_timezone_set("UTC");
 
 		$cache = array();
-		$folder = Entry::get($this, $this->abs_path, $cache);
-		$entries = $folder->get_content($cache);
-		uasort($entries, array("Entry", "cmp"));
+		$folder = Item::get($this, $this->abs_path, $cache);
+		$items = $folder->get_content($cache);
+		uasort($items, array("Item", "cmp"));
 
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
 		if ($folder->get_parent($cache)) {
 			$html .= "<tr><td><img src=\"" . $this->app_abs_href . "client/icons/16x16/folder-parent.png\"/></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
 		}
-		foreach ($entries as $entry) {
+		foreach ($items as $item) {
 			$html .= "<tr>";
-			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/16x16/" . ($entry->is_folder ? "folder" : "default") . ".png\"/></td>";
-			$html .= "<td><a href=\"" . $entry->abs_href . "\">" . basename($entry->abs_path) . "</a></td>";
-			$html .= "<td>" . date("Y-m-d H:i", $entry->date) . "</td>";
-			$html .= "<td>" . ($entry->size !== null ? intval($entry->size / 1000) . " KB" : "" ) . "</td>";
+			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/16x16/" . ($item->is_folder ? "folder" : "default") . ".png\"/></td>";
+			$html .= "<td><a href=\"" . $item->abs_href . "\">" . basename($item->abs_path) . "</a></td>";
+			$html .= "<td>" . date("Y-m-d H:i", $item->date) . "</td>";
+			$html .= "<td>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
 			$html .= "</tr>";
 		}
 		$html .= "</table>";

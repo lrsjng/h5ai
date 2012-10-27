@@ -17,7 +17,7 @@ function normalized_require_once($lib) {
 
 normalized_require_once("/server/php/inc/util.php");
 normalized_require_once("/server/php/inc/App.php");
-normalized_require_once("/server/php/inc/Entry.php");
+normalized_require_once("/server/php/inc/Item.php");
 
 $app = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
@@ -33,8 +33,12 @@ if (array_key_exists("action", $_REQUEST)) {
 
 } else {
 
+	header("Content-type: text/html");
+
 	$HREF = $app->get_app_abs_href();
 	$FALLBACK = $app->get_no_js_fallback();
+
+	normalized_require_once("/server/php/inc/page.php");
 }
 
 ?>

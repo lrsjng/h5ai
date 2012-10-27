@@ -1,19 +1,19 @@
 <?php
 
-class Entry {
+class Item {
 
 	private static $FOLDER_SIZE_CMD = "du -sb \"[DIR]\"";
 
-	public static function cmp($entry1, $entry2) {
+	public static function cmp($item1, $item2) {
 
-		if ($entry1->is_folder && !$entry2->is_folder) {
+		if ($item1->is_folder && !$item2->is_folder) {
 			return -1;
 		}
-		if (!$entry1->is_folder && $entry2->is_folder) {
+		if (!$item1->is_folder && $item2->is_folder) {
 			return 1;
 		}
 
-		return strcasecmp($entry1->abs_path, $entry2->abs_path);
+		return strcasecmp($item1->abs_path, $item2->abs_path);
 	}
 
 	public static function get($app, $abs_path, &$cache) {
@@ -27,12 +27,12 @@ class Entry {
 			return $cache[$abs_path];
 		}
 
-		$entry = new Entry($app, $abs_path);
+		$item = new Item($app, $abs_path);
 
 		if (is_array($cache)) {
-			$cache[$abs_path] = $entry;
+			$cache[$abs_path] = $item;
 		}
-		return $entry;
+		return $item;
 	}
 
 
@@ -57,7 +57,7 @@ class Entry {
 			$this->size = null;
 			$options = $app->get_options();
 			if ($options["foldersize"]["enabled"]) {
-				$cmd = str_replace("[DIR]", $this->abs_path, Entry::$FOLDER_SIZE_CMD);
+				$cmd = str_replace("[DIR]", $this->abs_path, Item::$FOLDER_SIZE_CMD);
 				$this->size = intval(preg_replace("/\s.*$/", "", `$cmd`), 10);
 			}
 		} else {
@@ -89,7 +89,7 @@ class Entry {
 
 		$parent_abs_path = normalize_path(dirname($this->abs_path));
 		if (starts_with($parent_abs_path, $this->app->get_root_abs_path())) {
-			return Entry::get($this->app, $parent_abs_path, $cache);
+			return Item::get($this->app, $parent_abs_path, $cache);
 		}
 		return null;
 	}
@@ -105,8 +105,8 @@ class Entry {
 
 		$files = $this->app->read_dir($this->abs_path);
 		foreach ($files as $file) {
-			$entry = Entry::get($this->app, $this->abs_path . "/" . $file, $cache);
-			$content[$entry->abs_path] = $entry;
+			$item = Item::get($this->app, $this->abs_path . "/" . $file, $cache);
+			$content[$item->abs_path] = $item;
 		}
 
 		$this->is_content_fetched = true;

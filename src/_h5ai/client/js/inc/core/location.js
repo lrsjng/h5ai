@@ -74,7 +74,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 		load = function (callback) {
 
-			modulejs.require('core/server').request({action: 'get', entries: true, entriesHref: absHref, entriesWhat: 1}, function (json) {
+			modulejs.require('core/server').request({action: 'get', items: true, itemsHref: absHref, itemsWhat: 1}, function (json) {
 
 				var Item = modulejs.require('model/item'),
 					item = Item.get(absHref);
@@ -83,7 +83,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 					var found = {};
 
-					_.each(json.entries, function (jsonItem) {
+					_.each(json.items, function (jsonItem) {
 
 						var e = Item.get(jsonItem.absHref, jsonItem.time, jsonItem.size, jsonItem.status, jsonItem.content);
 						found[e.absHref] = true;
