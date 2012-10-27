@@ -81,7 +81,7 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 				$ul.find('.crumb').remove();
 				_.each(crumb, function (e) {
 
-					$ul.append(update(e));
+					$ul.append(update(e, true));
 				});
 			}
 		},

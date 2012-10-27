@@ -259,7 +259,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 					event.preventDefault();
 
-					var matchedEntries = _.compact(_.map($('#item .item'), function (item) {
+					var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
 
 						item = $(item).data('item');
 						return _.indexOf(_.keys(settings.types), item.type) >= 0 ? item : null;
