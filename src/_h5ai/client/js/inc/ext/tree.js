@@ -161,8 +161,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 		shiftTree = function (forceVisible, dontAnimate) {
 
 			var $tree = $("#tree"),
-				$extended = $("#extended"),
-				left = ((settings.slide && $tree.outerWidth() < $extended.offset().left) || forceVisible || !$extended.is(':visible')) ? 0 : 18 - $tree.outerWidth();
+				$view = $("#view"),
+				left = ((settings.slide && $tree.outerWidth() < $view.offset().left) || forceVisible || !$view.is(':visible')) ? 0 : 18 - $tree.outerWidth();
 
 			if (dontAnimate) {
 				$tree.stop().css({ left: left });
@@ -197,17 +197,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			});
 
 			$tree.scrollpanel('update');
-		},
-
-		onContentChanged = function (item) {
-
-			while (item.parent) {
-				item = item.parent;
-			}
-
-			update(item);
-			adjustSpacing();
-			shiftTree(false, true);
 		},
 
 		onLocationChanged = function (item) {

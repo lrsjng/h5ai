@@ -88,7 +88,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 
 			$filter = $(template).appendTo('#navbar');
 			$input = $filter.find('input');
-			$noMatch = $(noMatchTemplate).appendTo('#extended');
+			$noMatch = $(noMatchTemplate).appendTo('#view');
 
 			$filter
 				.on('click', function () {

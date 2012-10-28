@@ -39,24 +39,24 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 			if (type) {
 				if (item.thumbSmall) {
-					item.$extended.find('.icon.small img').addClass('thumb').attr('src', item.thumbSmall);
+					item.$view.find('.icon.small img').addClass('thumb').attr('src', item.thumbSmall);
 				} else {
 					requestThumbSmall(type, item.absHref, function (src) {
 
-						if (src && item.$extended) {
+						if (src && item.$view) {
 							item.thumbSmall = src;
-							item.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
+							item.$view.find('.icon.small img').addClass('thumb').attr('src', src);
 						}
 					});
 				}
 				if (item.thumbBig) {
-					item.$extended.find('.icon.big img').addClass('thumb').attr('src', item.thumbBig);
+					item.$view.find('.icon.big img').addClass('thumb').attr('src', item.thumbBig);
 				} else {
 					requestThumbBig(type, item.absHref, function (src) {
 
-						if (src && item.$extended) {
+						if (src && item.$view) {
 							item.thumbBig = src;
-							item.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
+							item.$view.find('.icon.big img').addClass('thumb').attr('src', src);
 						}
 					});
 				}

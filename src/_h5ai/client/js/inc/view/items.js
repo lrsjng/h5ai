@@ -16,22 +16,24 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 						'</a>' +
 					'</li>',
 		hintTemplate = '<span class="hint"/>',
-		itemsTemplate = '<ul id="items" class="clearfix">' +
-							'<li class="header">' +
-								'<a class="icon"/>' +
-								'<a class="label" href="#"><span class="l10n-name"/></a>' +
-								'<a class="date" href="#"><span class="l10n-lastModified"/></a>' +
-								'<a class="size" href="#"><span class="l10n-size"/></a>' +
-							'</li>' +
-						'</ul>',
-		emptyTemplate = '<div class="empty l10n-empty"/>',
-		contentTemplate = '<div id="content"><div id="extended"/></div>',
+		contentTemplate = '<div id="content">' +
+							'<div id="view">' +
+								'<ul id="items" class="clearfix">' +
+									'<li class="header">' +
+										'<a class="icon"/>' +
+										'<a class="label" href="#"><span class="l10n-name"/></a>' +
+										'<a class="date" href="#"><span class="l10n-lastModified"/></a>' +
+										'<a class="size" href="#"><span class="l10n-size"/></a>' +
+									'</li>' +
+								'</ul>' +
+								'<div class="empty l10n-empty"/>' +
+							'</div>' +
+						'</div>',
 
-		// updates this single item
 		update = function (item, force) {
 
-			if (!force && item.$extended) {
-				return item.$extended;
+			if (!force && item.$view) {
+				return item.$view;
 			}
 
 			var $html = $(itemTemplate),
@@ -74,10 +76,10 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 				$html.addClass('folder-parent');
 			}
 
-			if (item.$extended) {
-				item.$extended.replaceWith($html);
+			if (item.$view) {
+				item.$view.replaceWith($html);
 			}
-			item.$extended = $html;
+			item.$view = $html;
 
 			return $html;
 		},
@@ -96,9 +98,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 		onLocationChanged = function (item) {
 
-			var $extended = $('#extended'),
-				$items = $('#items'),
-				$empty = $extended.find('.empty');
+			var $items = $('#items'),
+				$empty = $('#view').find('.empty');
 
 			$items.find('.item').remove();
 
@@ -120,9 +121,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 		onLocationRefreshed = function (item, added, removed) {
 
-			var $extended = $('#extended'),
-				$items = $('#items'),
-				$empty = $extended.find('.empty');
+			var $items = $('#items'),
+				$empty = $('#view').find('.empty');
 
 			_.each(added, function (item) {
 
@@ -131,8 +131,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			_.each(removed, function (item) {
 
-				item.$extended.fadeOut(400, function () {
-					item.$extended.remove();
+				item.$view.fadeOut(400, function () {
+					item.$view.remove();
 				});
 			});
 
@@ -146,15 +146,11 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 		init = function () {
 
 			var $content = $(contentTemplate),
-				$extended = $content.find('#extended'),
-				$items = $(itemsTemplate),
-				$emtpy = $(emptyTemplate).hide();
+				$view = $content.find('#view'),
+				$items = $view.find('#items'),
+				$emtpy = $view.find('.empty').hide();
 
 			format.setDefaultMetric(settings.binaryPrefix);
-
-			$extended
-				.append($items)
-				.append($emtpy);
 
 			$items
 				.on('mouseenter', '.item a', onMouseenter)

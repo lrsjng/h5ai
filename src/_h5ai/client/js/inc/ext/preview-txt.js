@@ -254,8 +254,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 		initItem = function (item) {
 
-			if (item.$extended && _.indexOf(_.keys(settings.types), item.type) >= 0) {
-				item.$extended.find('a').on('click', function (event) {
+			if (item.$view && _.indexOf(_.keys(settings.types), item.type) >= 0) {
+				item.$view.find('a').on('click', function (event) {
 
 					event.preventDefault();
 

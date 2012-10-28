@@ -59,7 +59,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 				.animate(
 					{
 						left: l + w * 0.5 * shrink,
-						top: t + h  * 0.5 * shrink,
+						top: t + h * 0.5 * shrink,
 						width: w * (1 - shrink),
 						height: h * (1 - shrink),
 						opacity: 0
@@ -111,14 +111,19 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 			}
 		},
 
+		onLocationChanged = function () {
+
+			publish();
+		},
+
 		onLocationRefreshed = function (item, added, removed) {
 
 			var selectionChanged = false;
 
 			_.each(removed, function (item) {
 
-				if (item.$extended && item.$extended.hasClass('selected')) {
-					item.$extended.removeClass('selected');
+				if (item.$view && item.$view.hasClass('selected')) {
+					item.$view.removeClass('selected');
 					selectionChanged = true;
 				}
 			});
@@ -136,6 +141,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			$selectionRect.hide().appendTo('body');
 
+			event.sub('location.changed', onLocationChanged);
 			event.sub('location.refreshed', onLocationRefreshed);
 
 			$document

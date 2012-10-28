@@ -120,11 +120,18 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 				}
 			}
 
-			notify.set('loading...');
-			load(function () {
-				notify.set();
-				event.pub('location.changed', getItem());
-			});
+			var item = getItem();
+			if (item.isLocationLoaded) {
+				event.pub('location.changed', item);
+				refresh();
+			} else {
+				notify.set('loading...');
+				load(function () {
+					item.isLocationLoaded = true;
+					notify.set();
+					event.pub('location.changed', item);
+				});
+			}
 		},
 
 		refresh = function () {

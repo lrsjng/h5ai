@@ -203,8 +203,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 		initItem = function (item) {
 
-			if (item.$extended && _.indexOf(settings.types, item.type) >= 0) {
-				item.$extended.find('a').on('click', function (event) {
+			if (item.$view && _.indexOf(settings.types, item.type) >= 0) {
+				item.$view.find('a').on('click', function (event) {
 
 					event.preventDefault();
 

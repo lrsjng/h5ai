@@ -19,15 +19,15 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 		adjustSpacing = function () {
 
 			var contentWidth = $('#content').width(),
-				$extended = $('#extended'),
-				itemWidth = ($extended.hasClass('view-icons') || $extended.hasClass('view-grid')) ? ($extended.find('.item').eq(0).width() || 1) : 1;
+				$view = $('#view'),
+				itemWidth = ($view.hasClass('view-icons') || $view.hasClass('view-grid')) ? ($view.find('.item').eq(0).width() || 1) : 1;
 
-			$extended.width(Math.floor(contentWidth / itemWidth) * itemWidth);
+			$view.width(Math.floor(contentWidth / itemWidth) * itemWidth);
 		},
 
 		update = function (viewmode) {
 
-			var $extended = $('#extended');
+			var $view = $('#view');
 
 			viewmode = _.indexOf(settings.modes, viewmode) >= 0 ? viewmode : settings.modes[0];
 			store.put(storekey, viewmode);
@@ -35,10 +35,10 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 			_.each(modes, function (mode) {
 				if (mode === viewmode) {
 					$('#view-' + mode).addClass('current');
-					$extended.addClass('view-' + mode).show();
+					$view.addClass('view-' + mode).show();
 				} else {
 					$('#view-' + mode).removeClass('current');
-					$extended.removeClass('view-' + mode);
+					$view.removeClass('view-' + mode);
 				}
 			});
 
