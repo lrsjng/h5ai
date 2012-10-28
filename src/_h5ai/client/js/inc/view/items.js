@@ -16,7 +16,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 						'</a>' +
 					'</li>',
 		hintTemplate = '<span class="hint"/>',
-		itemsTemplate = '<ul id="items">' +
+		itemsTemplate = '<ul id="items" class="clearfix">' +
 							'<li class="header">' +
 								'<a class="icon"/>' +
 								'<a class="label" href="#"><span class="l10n-name"/></a>' +
@@ -25,7 +25,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 							'</li>' +
 						'</ul>',
 		emptyTemplate = '<div class="empty l10n-empty"/>',
-		contentTemplate = '<div id="content"><div id="extended" class="clearfix"/></div>',
+		contentTemplate = '<div id="content"><div id="extended"/></div>',
 
 		// updates this single item
 		update = function (item, force) {

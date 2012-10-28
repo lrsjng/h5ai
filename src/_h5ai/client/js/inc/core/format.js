@@ -14,15 +14,9 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 		defaultMetric = decimalMetric,
 		defaultDateFormat = 'YYYY-MM-DD HH:mm',
 
-		setDefaultMetric = function (metric) {
+		setDefaultMetric = function (useBinaryMetric) {
 
-			if (!metric) {
-				defaultMetric = decimalMetric;
-			} else if (metric === true) {
-				defaultMetric = binaryMetric;
-			} else {
-				defaultMetric = metric;
-			}
+			defaultMetric = useBinaryMetric ? binaryMetric : decimalMetric;
 		},
 
 		formatSize = function (size, metric) {
@@ -48,13 +42,9 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 			defaultDateFormat = dateFormat;
 		},
 
-		formatDate = function (millis, dateFormat) {
+		formatDate = function (millis) {
 
-			if (!_.isNumber(millis) || !millis) {
-				return '';
-			}
-
-			return moment(millis).format(dateFormat || defaultDateFormat);
+			return _.isNumber(millis) && millis ? moment(millis).format(defaultDateFormat) : '';
 		};
 
 	return {

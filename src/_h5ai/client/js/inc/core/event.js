@@ -1,7 +1,8 @@
 
 modulejs.define('core/event', ['_'], function (_) {
 
-	var subscriptions = {},
+	var slice = Array.prototype.slice,
+		subscriptions = {},
 
 		sub = function (topic, callback) {
 
@@ -24,7 +25,7 @@ modulejs.define('core/event', ['_'], function (_) {
 
 		pub = function (topic, data) {
 
-			var args = Array.prototype.slice.call(arguments, 1);
+			var args = slice.call(arguments, 1);
 
 			// console.log('EVENT PUB', topic, args);
 			if (_.isString(topic) && subscriptions[topic]) {

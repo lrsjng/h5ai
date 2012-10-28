@@ -65,7 +65,14 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 			$all.removeClass('ascending').removeClass('descending');
 			order.head.addClass(order.clas);
-			$('#items .item').detach().sort(order.fn).appendTo('#items');
+			var current = $('#items .item');
+			var sorted = $('#items .item').sort(order.fn);
+			for (var i = 0, l = current.length; i < l; i += 1) {
+				if (current[i] !== sorted[i]) {
+					sorted.detach().sort(order.fn).appendTo('#items');
+					break;
+				}
+			}
 		},
 
 		onContentChanged = function (item) {
