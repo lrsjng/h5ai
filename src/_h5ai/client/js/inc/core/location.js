@@ -121,13 +121,13 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 			}
 
 			var item = getItem();
-			if (item.isLocationLoaded) {
+			if (item.isLoaded) {
 				event.pub('location.changed', item);
 				refresh();
 			} else {
 				notify.set('loading...');
 				load(function () {
-					item.isLocationLoaded = true;
+					item.isLoaded = true;
 					notify.set();
 					event.pub('location.changed', item);
 				});
@@ -135,7 +135,6 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 		},
 
 		refresh = function () {
-
 
 			var item = getItem(),
 				oldItems = _.values(item.content);

@@ -7,7 +7,8 @@ function normalize_path($path, $trailing_slash = false) {
 }
 
 define("APP_ABS_PATH", normalize_path(dirname(dirname(dirname(__FILE__)))));
-define("APP_ABS_HREF", normalize_path(dirname(dirname(dirname(getenv("SCRIPT_NAME")))), true));
+// define("APP_ABS_HREF", normalize_path(dirname(dirname(dirname(getenv("SCRIPT_NAME")))), true));
+define("APP_ABS_HREF", normalize_path(dirname(dirname(dirname(preg_replace('#^.*//#', '/', getenv("SCRIPT_NAME"))))), true)); // fixes lighttpd issues
 define("ABS_HREF", normalize_path(preg_replace('/[^\\/]*$/', '', getenv("REQUEST_URI")), true));
 
 function normalized_require_once($lib) {
