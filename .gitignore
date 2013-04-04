@@ -4,3 +4,5 @@ local
 *.sublime-*
 
 test
+.DS_Store
+.idea
