@@ -21,8 +21,13 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'cor
 				return;
 			}
 
-			var $content = $('#content').append(template),
-				data = {};
+			var $content = $('#content').append(template);
+
+			// init default values, data.href will be updated in location.change event
+			var data = {
+				action: 'upload',
+				href: location.getAbsHref()
+			};
 
 			var uploads = {},
 				afterUpload = function (err, file) {
@@ -110,15 +115,12 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'cor
 			});
 
 			event.sub('location.changed', function (item) {
+				// progress should be visible even if the location has changed, so don't empty it
+				// $('#uploads').empty();
 
-				$('#uploads').empty();
-				data = {
-					action: 'upload',
-					href: item.absHref
-				};
+				data.href = item.absHref;
 			});
 		};
 
-	// disabled while broken
-	// init();
+	init();
 });
