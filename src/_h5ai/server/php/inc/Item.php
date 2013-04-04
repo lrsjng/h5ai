@@ -2,7 +2,8 @@
 
 class Item {
 
-	private static $FOLDER_SIZE_CMD = "du -sb \"[DIR]\"";
+    // use standard options, -b is not available on BSD (e.g. Mac OS)
+	private static $FOLDER_SIZE_CMD = "du -sk \"[DIR]\"";
 
 	public static function cmp($item1, $item2) {
 
@@ -58,7 +59,7 @@ class Item {
 			$options = $app->get_options();
 			if ($options["foldersize"]["enabled"]) {
 				$cmd = str_replace("[DIR]", $this->abs_path, Item::$FOLDER_SIZE_CMD);
-				$this->size = intval(preg_replace("/\s.*$/", "", `$cmd`), 10);
+				$this->size = 1024 * intval(preg_replace("/\s.*$/", "", `$cmd`), 10);
 			}
 		} else {
 			$this->size = @filesize($this->abs_path);
