@@ -1,4 +1,33 @@
 
+@col: rgb(85,85,85);
+@col-back: rgb(255,255,255);
+@col-hover: rgb(29,119,194);
+@col-border: rgba(0,0,0,0.05);
+@col-border-strong: rgba(0,0,0,0.1);
+
+@col-error: rgb(204,51,51);
+
+@col-link: rgb(29,119,194);
+@col-link-hover: rgb(29,119,194);
+
+@col-widget-back: rgb(245,245,245);
+@col-widget-back-highlight: rgba(255,255,255,0.8);
+@col-widget-back-hover: rgba(255,255,255,0.8);
+@col-widget-back-sel: rgba(255,255,255,0.8);
+@col-widget-sep: @col-border;
+
+@col-sb-back: rgb(210,210,210);
+@col-sb-thumb: rgb(180,180,180);
+@col-sb-thumb-active: rgb(150,150,150);
+
+
+@border-widget: 1px solid @col-border;
+@border-widget-sep: 1px solid @col-widget-sep;
+
+
+
+
+
 @font-family: Ubuntu, sans-serif;
 @font-family-mono: "Ubuntu Mono", monospace;
 
@@ -9,10 +38,10 @@ html { overflow-y: auto; }
 
 body {
 	font-family: @font-family;
-	font-weight: 300;
+	// font-weight: 400;
 	font-size: 13px;
-	color: #555;
-	background-color: #fff;
+	color: @col;
+	background-color: @col-back;
 	margin: 30px;
 }
 

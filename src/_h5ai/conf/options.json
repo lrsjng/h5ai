@@ -104,7 +104,7 @@ Options
 	- packageName: basename of the download package, null for current foldername
 	*/
 	"download": {
-		"enabled": false,
+		"enabled": true,
 		"execution": "shell",
 		"format": "zip",
 		"packageName": null
@@ -178,7 +178,7 @@ Options
 		2: mode, servername and -version
 	*/
 	"mode": {
-		"enabled": false,
+		"enabled": true,
 		"display": 2
 	},
 
@@ -248,7 +248,7 @@ Options
 	- size: width and height in pixel
 	*/
 	"qrcode": {
-		"enabled": false,
+		"enabled": true,
 		"size": 150
 	},
 
