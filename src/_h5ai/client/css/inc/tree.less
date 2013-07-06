@@ -8,8 +8,11 @@
 	z-index: 3;
 	overflow: auto;
 	padding: 8px;
-	background-color: rgb(241,241,241);
-	border-right: 2px solid rgb(221,221,221);
+	// background-color: rgb(241,241,241);
+	// border-right: 2px solid rgb(221,221,221);
+	// border-right: 1px solid rgb(216,216,216);
+	background-color: rgb(245,245,245);
+	border-right: 1px solid rgba(0,0,0,0.05);
 
 	.sp-scrollbar {
 		margin: 8px 8px 8px 0;
@@ -63,13 +66,15 @@
 		padding: 4px 6px;
 		color: #555;
 		border: 1px solid rgba(0,0,0,0);
-		.border-radius(5px);
+		.border-radius(3px);
 		text-decoration: none;
 		opacity: 0.7;
 
 		&:hover, &.hover {
 			color: #e80;
-			background-color: rgba(255,255,255,0.5);
+			// background-color: rgba(255,255,255,0.5);
+			background-color: rgba(255,255,255,0.8);
+			// border-color: rgba(0,0,0,0.05);
 			opacity: 1;
 		}
 	}
@@ -100,8 +105,10 @@
 	}
 	.current {
 		> a, > a:active, > a:visited {
-			background-color: rgba(255,255,255,0.5);
-			border-color: rgb(221,221,221);
+			// background-color: rgba(255,255,255,0.5);
+			// border-color: rgb(221,221,221);
+			background-color: rgba(255,255,255,0.8);
+			border-color: rgba(0,0,0,0.05);
 			opacity: 1;
 		}
 	}
