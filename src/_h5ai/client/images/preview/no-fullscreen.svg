@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg7384" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="16.024" width="16.085" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata90">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Gnome Symbolic Icon Theme</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <title id="title9167">Gnome Symbolic Icon Theme</title>
+ <g id="layer12" transform="translate(-60.952 -646.98)">
+  <path id="path12113-8" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m71.781 647a1.0001 1.0001 0 0 0 -0.781 1v4a1.0001 1.0001 0 0 0 1 1h4a1.0001 1.0001 0 1 0 0 -2h-3v-3a1.0001 1.0001 0 0 0 -1.2188 -1z"/>
+  <path id="path12147-8" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m75.875 647a1.0001 1.0001 0 0 0 -0.59375 0.28125l-4 4a1.0165 1.0165 0 1 0 1.4375 1.4375l4-4a1.0001 1.0001 0 0 0 -0.843 -1.72z"/>
+  <rect id="rect12919-5" style="color:#000000;enable-background:new;fill:#bdbdbd" height="1" width="1" y="652" x="71"/>
+  <path id="rect13039" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m61.906 653a1.0001 1.0001 0 0 0 -0.906 1v8a1.0001 1.0001 0 0 0 1 1h8a1.0001 1.0001 0 0 0 1 -1v-8a1.0001 1.0001 0 0 0 -1 -1h-8a1.0001 1.0001 0 0 0 -0.09375 0zm1.094 2h6v6h-6v-6z"/>
+  <path id="path13041" style="fill-rule:evenodd;block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m61.906 655a1.0011 1.0011 0 1 0 0.094 2h8a1.0001 1.0001 0 1 0 0 -2h-8a1.0001 1.0001 0 0 0 -0.09375 0z"/>
+  <rect id="rect4479-2-9-9-0-8-6" style="color:#000000;fill:#bebebe" height="1" width="1" y="652" x="76"/>
+  <rect id="rect4479-2-9-9-0-8-6-6" style="color:#000000;fill:#bebebe" height="1" width="1" y="647" x="71"/>
+  <rect id="rect4479-2-9-9-0-8-6-9" style="color:#000000;fill:#bebebe" height="1" width="1" y="662" x="70"/>
+  <rect id="rect4479-2-9-9-0-8-6-4" style="color:#000000;fill:#bebebe" height="1" width="1" y="662" x="61"/>
+ </g>
+</svg>

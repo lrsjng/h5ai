@@ -16,7 +16,7 @@ instructions on the [project page](http://larsjung.de/h5ai/).
 
 ## Build
 
-( there are repositories of the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/) )
+( there are repositories for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/) )
 
 If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
@@ -39,6 +39,7 @@ You'll find a new directory `build` including a fresh zipball.
 
 It profits from these great projects:
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
+[Gnome Symbolic Icon Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.filedrop](http://www.github.com/weixiyen/jquery-filedrop)&nbsp;(MIT),
@@ -64,6 +65,8 @@ It profits from these great projects:
 * removes `aai` mode!
 * adds smart browsing
 * add line wrap and line highlighting (on hover) to text preview
+* new design (colors, images)
+* now uses `SVG` images for the interface
 
 
 ### v0.22.1 - *2012-10-16*
