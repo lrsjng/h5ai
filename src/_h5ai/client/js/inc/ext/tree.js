@@ -59,21 +59,19 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				// is it the domain?
 				if (item.isDomain()) {
 					$html.addClass('domain');
-					// $img.attr('src', resource.icon('folder-home'));
 					$img.attr('src', resource.image('home'));
 				}
 
 				// is it the root?
 				if (item.isRoot()) {
 					$html.addClass('root');
-					// $img.attr('src', resource.icon('folder-home'));
 					$img.attr('src', resource.image('home'));
 				}
 
 				// is it the current folder?
 				if (item.isCurrentFolder()) {
 					$html.addClass('current');
-					// $img.attr('src', resource.icon('folder-open'));
+					// $img.attr('src', resource.image('folder-open'));
 				}
 
 				// does it have subfolders?
