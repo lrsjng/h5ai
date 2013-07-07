@@ -1,4 +1,3 @@
-
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -19,7 +18,7 @@
     content: "";
     display: block;
     width: 0;
-    height: 100%;
+    height: 150%;
 }
 
 /*
@@ -102,7 +101,7 @@
 
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
-   Theses examples override the primary ('mobile first') styles.
+   These examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
 
@@ -110,8 +109,10 @@
     /* Style adjustments for viewports that meet the condition */
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-       only screen and (min-resolution: 144dpi) {
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
     /* Style adjustments for high resolution devices */
 }
 
@@ -124,7 +125,7 @@
     * {
         background: transparent !important;
         color: #000 !important; /* Black prints faster: h5bp.com/s */
-        box-shadow:none !important;
+        box-shadow: none !important;
         text-shadow: none !important;
     }
 
