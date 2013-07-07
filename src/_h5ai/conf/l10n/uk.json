@@ -1,0 +1,19 @@
+{
+	"lang": "українська",
+	"details": "Деталі",
+	"list": "Список",
+	"grid": "Гратка",
+	"icons": "Піктограми",
+	"name": "Ім'я",
+	"lastModified": "Останні зміни",
+	"size": "Розмір",
+	"parentDirectory": "Головна тека",
+	"empty": "Порожньо",
+	"folders": "Тек(и))",
+	"files": "Файли(ів)",
+	"download": "Завантажити",
+	"noMatch": "Немає співпадінь",
+	"dateFormat": "YYYY-MM-DD HH:mm",
+	"filter": "Фільтр",
+	"delete": "Вилучити"
+}
