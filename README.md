@@ -67,6 +67,8 @@ It profits from these great projects:
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
 * now uses `SVG` images for the interface
+* updates H5BP to 4.2.0
+* updates jQuery to 1.10.2
 
 
 ### v0.22.1 - *2012-10-16*
