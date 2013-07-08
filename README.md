@@ -71,6 +71,7 @@ It profits from these great projects:
 * updates jQuery to 1.10.2
 * adds `uk` translation by Viktor Matveenko
 
+
 ### v0.22.1 - *2012-10-16*
 
 * bug fix concerning API requests in PHP mode
