@@ -29,88 +29,23 @@
      inkscape:window-width="1871"
      inkscape:window-height="1056"
      id="namedview8"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="41.7193"
-     inkscape:cx="7.0082337"
-     inkscape:cy="6.0488188"
+     inkscape:cx="8.5832742"
+     inkscape:cy="6.2608582"
      inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg7384"
      showguides="true"
      inkscape:guide-bbox="true">
-    <sodipodi:guide
-       orientation="1,0"
-       position="12.991589,15.652228"
-       id="guide3079" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-8.3414631,15.005046"
-       id="guide3081" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-7.9579475,13.998317"
-       id="guide3083" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-6.6875523,12.991589"
-       id="guide3085" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-5.6328845,12.00883"
-       id="guide3087" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-3.8351554,0"
-       id="guide3089" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-7.1190073,1.0067283"
-       id="guide3091" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-6.5677037,1.9894869"
-       id="guide3093" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-4.0988224,11.002102"
-       id="guide3095" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="1.9894869,16.203532"
-       id="guide3097" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="13.998317,15.700168"
-       id="guide3099" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="2.9962152,16.754835"
-       id="guide3101" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="11.002102,6.6396128"
-       id="guide3103" />
-    <sodipodi:guide
-       orientation="-0.70710678,0.70710678"
-       position="-13.926408,17.473927"
-       id="guide2996" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="9.9953738,8.7249786"
-       id="guide2998" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-8.6770392,8.005887"
-       id="guide3000" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-9.0845244,6.9751889"
-       id="guide3002" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="8.9886455,13.710681"
-       id="guide3001" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid3001"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
      id="metadata90">
@@ -128,7 +63,7 @@
      id="title9167">Gnome Symbolic Icon Theme</title>
   <path
      style="fill:#555555"
-     d="m 0,3.0202639 0,11.9690921 16.03125,0 C 16.00846,10.830947 16.06793,7.1384904 16.02005,2.9854394 l -4.994297,0 -2.0479394,-1.9891452 -6.992271,0 z m 2.0105131,1.9749264 8.9974509,0 2.981523,3.0054929 0,5.9989748 -11.9789739,0 z m 10.9956629,9.0184767 0,-5.000263 -3.0132855,0 0,-3.0182137 -6.9823774,0 0,8.0184767"
+     d="M 0,3 0,15 16,15 16,3 11,3 9,1 2,1 z m 2,2 9,0 3,3 0,6 -12,0 z m 11,9 0,-5 -3,0 0,-3 -7,0 0,8"
      id="rect3845"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cccccccccccccccccccc" />
