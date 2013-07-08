@@ -1,11 +1,7 @@
 
 modulejs.define('core/notify', ['$'], function ($) {
 
-	var test = null,
-
-		template = '<div id="notify"/>',
-
-		id = 0,
+	var template = '<div id="notify"/>',
 
 		set = function (content) {
 

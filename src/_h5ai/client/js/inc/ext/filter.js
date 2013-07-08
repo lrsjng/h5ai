@@ -108,7 +108,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
 				})
 				.on('keypress', updt);
 
-			event.sub('location.changed', updf)
+			event.sub('location.changed', updf);
 		};
 
 	init();
