@@ -63,12 +63,13 @@ It profits from these great projects:
 ### develop branch
 
 * removes `aai` mode!
+* drops support for IE7+8!
 * adds smart browsing
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
 * now uses `SVG` images for the interface
 * updates H5BP to 4.2.0
-* updates jQuery to 1.10.2
+* updates jQuery to 2.0.3
 * adds `uk` translation by Viktor Matveenko
 
 

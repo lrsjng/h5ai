@@ -1,13 +1,4 @@
 
-// jQuery libs
-// -----------
-// @include "lib/jquery-*.js"
-// @include "lib/jquery.filedrop-*.js"
-// @include "lib/jquery.fracs-*.js"
-// @include "lib/jquery.mousewheel-*.js"
-// @include "lib/jquery.scrollpanel-*.js"
-// @include "lib/jquery.spin-*.js"
-
 // other libs
 // ----------
 // @include "lib/modernizr-*.js"
@@ -16,6 +7,15 @@
 // @include "lib/moment-*.js"
 // @include "lib/json2-*.js"
 // @include "lib/spin-*.js"
+
+// jQuery libs
+// -----------
+// @include "lib/jquery-*.js"
+// @include "lib/jquery.filedrop-*.js"
+// @include "lib/jquery.fracs-*.js"
+// @include "lib/jquery.mousewheel-*.js"
+// @include "lib/jquery.scrollpanel-*.js"
+// @include "lib/jquery.spin-*.js"
 
 // app
 // ---
