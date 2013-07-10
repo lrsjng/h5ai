@@ -27,6 +27,9 @@ class App {
 		$this->abs_path = $this->get_abs_path($this->abs_href);
 
 		$this->options = load_commented_json($this->app_abs_path . "/conf/options.json");
+
+		$this->is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] === 443);
+		$this->prot_host = 'http' . ($this->is_https ? 's' : '') . '://' . getenv('HTTP_HOST');
 	}
 
 
@@ -146,7 +149,15 @@ class App {
 				return 200;
 			}
 		}
-		return App::$MAGIC_SEQUENCE;
+
+		try {
+			$res = json_decode(file_get_contents($this->prot_host . $abs_href . '?version'));
+			if ($res->version === '{{pkg.version}}' && $res->href === $this->app_abs_href) {
+				return App::$MAGIC_SEQUENCE;
+			}
+		} catch (Exception $e) {}
+
+		return 200;
 	}
 
 

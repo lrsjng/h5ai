@@ -20,6 +20,15 @@ function normalized_require_once($lib) {
 }
 
 
+/* Fast exit on version check */
+
+if (array_key_exists("version", $_REQUEST)) {
+
+	echo json_encode(array("code" => 0, "version" => "{{pkg.version}}", "href" => APP_ABS_HREF));
+	exit;
+}
+
+
 /* Load Libs */
 
 normalized_require_once("/server/php/inc/util.php");
