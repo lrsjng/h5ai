@@ -1,7 +1,7 @@
 <?php
 
 
-// bootstrap
+/* Bootstrap */
 
 function normalize_path($path, $trailing_slash = false) {
 
@@ -20,19 +20,19 @@ function normalized_require_once($lib) {
 }
 
 
-// load libs
+/* Load Libs */
 
 normalized_require_once("/server/php/inc/util.php");
 normalized_require_once("/server/php/inc/App.php");
 normalized_require_once("/server/php/inc/Item.php");
 
 
-// init
+/* Init */
 
 $app = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
 
 
-// run
+/* Run */
 
 if (array_key_exists("action", $_REQUEST)) {
 
