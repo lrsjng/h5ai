@@ -1,5 +1,8 @@
 <?php
 
+
+// bootstrap
+
 function normalize_path($path, $trailing_slash = false) {
 
 	$path = str_replace("\\", "/", $path);
@@ -16,11 +19,20 @@ function normalized_require_once($lib) {
 	require_once(APP_ABS_PATH . $lib);
 }
 
+
+// load libs
+
 normalized_require_once("/server/php/inc/util.php");
 normalized_require_once("/server/php/inc/App.php");
 normalized_require_once("/server/php/inc/Item.php");
 
+
+// init
+
 $app = new App(APP_ABS_PATH, APP_ABS_HREF, ABS_HREF);
+
+
+// run
 
 if (array_key_exists("action", $_REQUEST)) {
 
