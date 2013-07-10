@@ -20,7 +20,9 @@ instructions on the [project page](http://larsjung.de/h5ai/).
 
 If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
-    > npm install -g fquery
+```bash
+npm install -g fquery
+```
 
 This will install fQuery and its command line tool `makejs`. Run `makejs --help` to see if everything
 worked fine.
@@ -28,9 +30,11 @@ worked fine.
 To clone and build the project run the following commands.
 You'll find a new directory `build` including a fresh zipball.
 
-    > git clone git://github.com/lrsjng/h5ai.git
-    > cd h5ai
-    > makejs release
+```bash
+git clone git://github.com/lrsjng/h5ai.git
+cd h5ai
+makejs release
+```
 
 
 ## License
