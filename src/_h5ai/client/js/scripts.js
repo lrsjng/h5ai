@@ -35,8 +35,6 @@
 
 	if ($('html').hasClass('no-browser')) {
 
-		$(function () { $('#no-js-fallback').removeClass('hideOnJs'); });
-
 	} else if (mode === 'info') {
 
 		$(function () { modulejs.require('info'); });

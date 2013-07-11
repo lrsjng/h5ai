@@ -1,5 +1,6 @@
 
-#no-js-fallback {
+#fallback {
+	display: none;
 	max-width: 960px;
 	margin: 80px auto;
 
@@ -77,5 +78,13 @@
 			width: 70px;
 			min-width: 70px;
 		}
+	}
+}
+
+
+html.no-js, html.no-browser {
+
+	#fallback {
+		display: block;
 	}
 }
