@@ -33,7 +33,11 @@
 	var	$ = jQuery,
 		mode = $('script[src$="scripts.js"]').data('mode');
 
-	if (mode === 'info') {
+	if ($('html').hasClass('no-browser')) {
+
+		$(function () { $('#no-js-fallback').removeClass('hideOnJs'); })
+
+	} else if (mode === 'info') {
 
 		$(function () { modulejs.require('info'); });
 

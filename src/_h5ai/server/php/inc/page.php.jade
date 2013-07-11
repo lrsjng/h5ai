@@ -4,7 +4,7 @@
 
 doctype 5
 //if lt IE 9
-	<html class="no-js oldie" lang="en">
+	<html class="no-js no-browser" lang="en">
 //[if gt IE 8]><!
 html.no-js( lang="en" )
 	//<![endif]
@@ -32,7 +32,7 @@ html.no-js( lang="en" )
 					| {{pkg.name}} {{pkg.version}}
 				span.hideOnJs.noJsMsg
 					| ⚡ JavaScript disabled! ⚡
-				span.unsupportedBrowserMsg
+				span.noBrowserMsg
 					| ⚡ Unsupported browser! Works best in 
 					a( href="http://browsehappy.com" ) modern browsers
 					| . ⚡
