@@ -150,14 +150,17 @@ class App {
 			}
 		}
 
+		$rc = 200;
+		ob_start();
 		try {
 			$res = json_decode(file_get_contents($this->prot_host . $abs_href . '?version'));
 			if ($res->version === '{{pkg.version}}' && $res->href === $this->app_abs_href) {
-				return App::$MAGIC_SEQUENCE;
+				$rc = App::$MAGIC_SEQUENCE;
 			}
 		} catch (Exception $e) {}
+		ob_end_clean();
 
-		return 200;
+		return $rc;
 	}
 
 
