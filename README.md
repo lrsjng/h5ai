@@ -63,7 +63,7 @@ It profits from these great projects:
 ### develop branch
 
 * removes `aai` mode!
-* drops support for IE7+8!
+* drops support for IE7+8 (simple fallback, same as no javascript)
 * adds smart browsing
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
