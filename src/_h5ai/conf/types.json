@@ -26,8 +26,6 @@ File types mapped to file extensions
 	"eps":				[".eps"],
 	"exe":				[".bat", ".cmd", ".exe"],
 	"folder":			[],
-	"folder-home":		[],
-	"folder-open":		[],
 	"folder-page":		[],
 	"folder-parent":	[],
 	"gif":				[".gif"],
