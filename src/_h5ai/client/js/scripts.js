@@ -35,7 +35,7 @@
 
 	if ($('html').hasClass('no-browser')) {
 
-		$(function () { $('#no-js-fallback').removeClass('hideOnJs'); })
+		$(function () { $('#no-js-fallback').removeClass('hideOnJs'); });
 
 	} else if (mode === 'info') {
 
