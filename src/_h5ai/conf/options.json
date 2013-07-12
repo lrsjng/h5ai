@@ -137,8 +137,7 @@ Options
 	"gaq": [
 		["_setAccount", "UA-xxxxxx-x"],
 		["_setDomainName", ".your-domain.tld"],
-		["_trackPageview"],
-		["_trackPageLoadTime"]
+		["_trackPageview"], ["_trackPageLoadTime"]
 	]
 
 	see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612

@@ -1,6 +1,6 @@
-
-build
-local
 *.sublime-*
-
+/build
+/node_modules
+/npm-debug.log
+local
 test
