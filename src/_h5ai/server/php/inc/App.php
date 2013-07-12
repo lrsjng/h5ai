@@ -289,6 +289,7 @@ class App {
 		$du = @preg_match("/du$/", `which du`) > 0;
 
 		return array(
+			"idx" => $this->app_abs_href . "server/php/index.php",
 			"php" => $php,
 			"cache" => $cache,
 			"thumbs" => $gd,
