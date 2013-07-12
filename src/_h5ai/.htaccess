@@ -1,10 +1,9 @@
-
 Options -Indexes
 
 DirectoryIndex index.html
 
 <IfModule mod_expires.c>
-	Header set Cache-Control "public"
+	#Header set Cache-Control "public"
 	ExpiresActive on
 
 	# Perhaps better to whitelist expires rules? Perhaps.
