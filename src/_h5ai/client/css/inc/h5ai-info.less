@@ -7,6 +7,16 @@ body#h5ai-info {
 	max-width: 600px;
 	text-align: center;
 
+	a, a:active, a:visited {
+		color: @col;
+		text-decoration: none;
+		.transition(all 0.2s ease-in-out);
+
+		&:hover {
+			color: @col-hover;
+		}
+	}
+
 	.build-version {
 		display: block;
 	}
