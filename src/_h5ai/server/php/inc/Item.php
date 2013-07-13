@@ -88,7 +88,7 @@ class Item {
 	public function get_parent(&$cache) {
 
 		$parent_abs_path = normalize_path(dirname($this->abs_path));
-		if (starts_with($parent_abs_path, $this->app->get_root_abs_path())) {
+		if ($parent_abs_path !== $this->abs_path && starts_with($parent_abs_path, $this->app->get_root_abs_path())) {
 			return Item::get($this->app, $parent_abs_path, $cache);
 		}
 		return null;

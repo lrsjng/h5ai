@@ -27,9 +27,6 @@ class App {
 		$this->abs_path = $this->get_abs_path($this->abs_href);
 
 		$this->options = load_commented_json($this->app_abs_path . "/conf/options.json");
-
-		$this->is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] === 443);
-		$this->prot_host = 'http' . ($this->is_https ? 's' : '') . '://' . getenv('HTTP_HOST');
 	}
 
 
@@ -138,11 +135,11 @@ class App {
 
 	public function get_http_code($abs_href) {
 
-		if (!is_dir($this->get_abs_path($abs_href))) {
+		$abs_path = $this->get_abs_path($abs_href);
+
+		if (!is_dir($abs_path)) {
 			return 500;
 		}
-
-		$abs_path = $this->get_abs_path($abs_href);
 
 		foreach ($this->options["view"]["indexFiles"] as $if) {
 			if (file_exists($abs_path . "/" . $if)) {
@@ -150,17 +147,18 @@ class App {
 			}
 		}
 
-		$rc = 200;
-		ob_start();
-		try {
-			$res = json_decode(file_get_contents($this->prot_host . $abs_href . '?version'));
-			if ($res->version === '{{pkg.version}}' && $res->href === $this->app_abs_href) {
-				$rc = App::$MAGIC_SEQUENCE;
+		$p = $abs_path;
+		while ($p !== $this->root_abs_path) {
+			if (@is_dir($p . "/_h5ai/server")) {
+				return 200;
 			}
-		} catch (Exception $e) {}
-		ob_end_clean();
-
-		return $rc;
+			$pp = normalize_path(dirname($p));
+			if ($pp === $p) {
+				return 200;
+			}
+			$p = $pp;
+		}
+		return App::$MAGIC_SEQUENCE;
 	}
 
 
