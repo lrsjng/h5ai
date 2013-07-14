@@ -135,7 +135,22 @@ class Api {
 			header("Content-Disposition: attachment; filename=\"$as\"");
 			header("Connection: close");
 			register_shutdown_function("delete_tempfile", $target);
+
 			readfile($target);
+
+			// Patch by Zhao Lei
+			// Max size of download file is limited by memory_limit(default: 128M)
+			// in php.ini if we use readfile().
+			// To solve this problem, we can change to send data with small segments.
+			// if ($fd = fopen($target, 'rb')) {
+			// 	set_time_limit(0);
+			// 	while (!feof($fd)) {
+			// 		print fread($fd, 1024 * 64);
+			// 		ob_flush();
+			// 		flush();
+			// 	}
+			// 	fclose($fd);
+			// }
 		}
 
 
