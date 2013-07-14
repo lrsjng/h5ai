@@ -1,6 +1,8 @@
 {
 	"lang": "polski",
 	"details": "szczegóły",
+	"list": "lista",
+	"grid": "kafelki",
 	"icons": "ikony",
 	"name": "Nazwa",
 	"lastModified": "Ostatnia modyfikacja",
@@ -8,5 +10,10 @@
 	"parentDirectory": "Katalog nadrzędny",
 	"empty": "pusty",
 	"folders": "foldery",
-	"files": "pliki"
+	"files": "pliki",
+	"download": "pobierz",
+	"noMatch": "nie pasuje",
+	"dateFormat": "YYYY-MM-DD HH:mm",
+	"filter": "filtr",
+	"delete": "usuń"
 }

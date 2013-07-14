@@ -71,6 +71,7 @@ It profits from these great projects:
 * updates H5BP to 4.2.0
 * updates jQuery to 2.0.3
 * adds `uk` translation by Viktor Matveenko
+* updates to `pl` translation by Mark
 
 
 ### v0.22.1 - *2012-10-16*
