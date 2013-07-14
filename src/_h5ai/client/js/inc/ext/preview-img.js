@@ -145,7 +145,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 						$('#pv-img-bar-size').text('' + width + 'x' + height);
 						$('#pv-img-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
 						$('#pv-img-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
-					}, 1);
+					}, 30);
 				});
 			});
 		},
