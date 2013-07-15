@@ -10,6 +10,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 						'<div id="pv-img-content">' +
 							'<img id="pv-img-image"/>' +
 						'</div>' +
+						'<div id="pv-spinner">' +
+							'<img src="' + resource.image('spinner') + '"/>' +
+						'</div>' +
 						'<div id="pv-img-close"/>' +
 						'<div id="pv-img-prev"/>' +
 						'<div id="pv-img-next"/>' +
@@ -38,11 +41,13 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			var rect = $(window).fracs('viewport'),
 				$container = $('#pv-img-content'),
+				$spinner = $('#pv-spinner'),
+				$spinnerimg = $spinner.find('img').width(100).height(100),
 				$img = $('#pv-img-image'),
 				margin = isFullscreen ? 0 : 20,
 				barheight = isFullscreen ? 0 : 31;
 
-			$container.css({
+			$container.add($spinner).css({
 				width: rect.width - 2 * margin,
 				height: rect.height - 2 * margin - barheight,
 				left: margin,
@@ -54,6 +59,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			$img.css({
 				margin: '' + tb + 'px ' + lr + 'px'
+			});
+			$spinnerimg.css({
+				margin: '' + (($spinner.height() - $spinnerimg.height()) / 2) + 'px ' + (($spinner.width() - $spinnerimg.height()) / 2) + 'px'
 			});
 
 			rect = $img.fracs('rect');
@@ -75,6 +83,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				height: rect.height
 			});
 
+			$('#pv-img-bar-percent').text('' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%');
 			if (isFullscreen) {
 				$('#pv-img-overlay').addClass('fullscreen');
 				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
@@ -88,22 +97,13 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 		preloadImg = function (src, callback) {
 
-			var $hidden = $('<div><img/></div>')
-							.css({
-								position: 'absolute',
-								overflow: 'hidden',
-								width: 0,
-								height: 0
-							})
-							.appendTo('body'),
-				$img = $hidden.find('img')
-							.one('load', function () {
+			var $img = $('<img/>')
+				.one('load', function () {
 
-								$hidden.remove();
-								callback($img);
-								// setTimeout(function () { callback($img); }, 1000); // for testing
-							})
-							.attr('src', src);
+					callback($img);
+					// setTimeout(function () { callback($img); }, 1000); // for testing
+				})
+				.attr('src', src);
 		},
 
 		onIndexChange = function (idx) {
@@ -113,36 +113,24 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			var $container = $('#pv-img-content'),
 				$img = $('#pv-img-image'),
 				src = currentEntries[currentIdx].absHref,
-				spinnerTimeout = setTimeout(function () {
-
-					$container.spin({
-						length: 12,
-						width: 4,
-						radius: 24,
-						color: '#ccc',
-						shadow: true
-					});
-				}, 200);
+				spinnerTimeout = setTimeout(function () { $('#pv-spinner').show(); }, 200);
 
 			preloadImg(src, function ($preloaded_img) {
 
 				clearTimeout(spinnerTimeout);
-				$container.spin(false);
+				$('#pv-spinner').hide();
 
 				$('#pv-img-image').fadeOut(100, function () {
-
-					var width = $preloaded_img.width(),
-						height = $preloaded_img.height();
 
 					$('#pv-img-image').replaceWith($preloaded_img.hide());
 					$preloaded_img.attr('id', 'pv-img-image').fadeIn(200);
 
 					// small timeout, so $preloaded_img is visible and therefore $preloaded_img.width is available
 					setTimeout(function () {
+
 						adjustSize();
-						$('#pv-img-bar-percent').text('' + (100 * $preloaded_img.width() / width).toFixed(0) + '%');
 						$('#pv-img-bar-label').text(currentEntries[currentIdx].label);
-						$('#pv-img-bar-size').text('' + width + 'x' + height);
+						$('#pv-img-bar-size').text('' + $preloaded_img[0].naturalWidth + 'x' + $preloaded_img[0].naturalHeight);
 						$('#pv-img-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
 						$('#pv-img-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
 					}, 10);
@@ -153,9 +141,11 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 		onEnter = function (items, idx) {
 
 			$(window).on('keydown', onKeydown);
+			$('#pv-img-image').hide();
 			$('#pv-img-overlay').stop(true, true).fadeIn(200);
 
 			currentEntries = items;
+			adjustSize();
 			onIndexChange(idx);
 		},
 
