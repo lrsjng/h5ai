@@ -99,13 +99,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				$img = $hidden.find('img')
 							.one('load', function () {
 
-								var width = $img.width(),
-									height = $img.height();
-
 								$hidden.remove();
-
-								callback(width, height);
-								// setTimeout(function () { callback(width, height); }, 1000); // for testing
+								callback($img);
+								// setTimeout(function () { callback($img); }, 1000); // for testing
 							})
 							.attr('src', src);
 		},
@@ -128,24 +124,28 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 					});
 				}, 200);
 
-			preloadImg(src, function (width, height) {
+			preloadImg(src, function ($preloaded_img) {
 
 				clearTimeout(spinnerTimeout);
 				$container.spin(false);
 
-				$img.fadeOut(100, function () {
+				$('#pv-img-image').fadeOut(100, function () {
 
-					$img.attr('src', src).fadeIn(200);
+					var width = $preloaded_img.width(),
+						height = $preloaded_img.height();
 
-					// small timeout, so $img is visible and therefore $img.width is available
+					$('#pv-img-image').replaceWith($preloaded_img.hide());
+					$preloaded_img.attr('id', 'pv-img-image').fadeIn(200);
+
+					// small timeout, so $preloaded_img is visible and therefore $preloaded_img.width is available
 					setTimeout(function () {
 						adjustSize();
-						$('#pv-img-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
+						$('#pv-img-bar-percent').text('' + (100 * $preloaded_img.width() / width).toFixed(0) + '%');
 						$('#pv-img-bar-label').text(currentEntries[currentIdx].label);
 						$('#pv-img-bar-size').text('' + width + 'x' + height);
 						$('#pv-img-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
 						$('#pv-img-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
-					}, 30);
+					}, 10);
 				});
 			});
 		},
