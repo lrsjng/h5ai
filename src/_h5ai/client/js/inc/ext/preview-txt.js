@@ -33,6 +33,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 						'<div id="pv-txt-content">' +
 							'<div id="pv-txt-text"/>' +
 						'</div>' +
+						'<div id="pv-txt-spinner">' +
+							'<img src="' + resource.image('spinner') + '"/>' +
+						'</div>' +
 						'<div id="pv-txt-bottombar" class="clearfix">' +
 							'<ul id="pv-txt-buttons">' +
 								'<li id="pv-txt-bar-size" class="bar-left bar-label"/>' +
@@ -117,12 +120,25 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 			var $window = $(window),
 				$container = $('#pv-txt-content'),
+				$spinner = $('#pv-txt-spinner'),
+				$spinnerimg = $spinner.find('img').width(100).height(100),
 				margin = 20,
 				barheight = 31;
 
 			$container.css({
 				height: $window.height() - 2 * margin - barheight - 32,
 				top: margin
+			});
+
+			$spinner.css({
+				width: $window.width() - 2 * margin,
+				height: $window.height() - 2 * margin - barheight,
+				left: margin,
+				top: margin
+			});
+
+			$spinnerimg.css({
+				margin: '' + (($spinner.height() - $spinnerimg.height()) / 2) + 'px ' + (($spinner.width() - $spinnerimg.height()) / 2) + 'px'
 			});
 		},
 
@@ -133,8 +149,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				dataType: 'text',
 				success: function (content) {
 
-					callback(content);
-					// setTimeout(function () { callback(content); }, 1000); // for testing
+					// callback(content);
+					setTimeout(function () { callback(content); }, 1000); // for testing
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 
@@ -150,21 +166,12 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			var $container = $('#pv-txt-content'),
 				$text = $('#pv-txt-text'),
 				current = currentEntries[currentIdx],
-				spinnerTimeout = setTimeout(function () {
-
-					$container.spin({
-						length: 12,
-						width: 4,
-						radius: 24,
-						color: '#ccc',
-						shadow: true
-					});
-				}, 200);
+				spinnerTimeout = setTimeout(function () { $('#pv-txt-spinner').show(); }, 200);
 
 			preloadText(current.absHref, function (content) {
 
 				clearTimeout(spinnerTimeout);
-				$container.spin(false);
+				$('#pv-txt-spinner').hide();
 
 				$text.fadeOut(100, function () {
 
