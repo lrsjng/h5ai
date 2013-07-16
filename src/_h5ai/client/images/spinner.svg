@@ -5,61 +5,26 @@
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	version="1.1"
-	width="36"
-	height="36"
-	viewBox="-18 -18 36 36"
+	width="100"
+	height="100"
+	viewBox="-50 -50 100 100"
 >
 	<defs>
-		<circle id="c" cx="10" cy="10" r="4" style="fill:#ffffff;stroke:#cccccc;stroke-width:0.2;" />
+		<circle id="c" cx="0" cy="-35" r="10" style="fill:#ddd;stroke:#aaa;stroke-width:1" />
 	</defs>
-	<g id="a">
-		<use
-			xlink:href="#c"
-			style="opacity:1;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(45)"
-			style="opacity:0.3;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(90)"
-			style="opacity:0.4;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(135)"
-			style="opacity:0.5;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(180)"
-			style="opacity:0.6;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(225)"
-			style="opacity:0.7;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(270)"
-			style="opacity:0.8;"
-		/>
-		<use
-			xlink:href="#c"
-			transform="rotate(315)"
-			style="opacity:0.9;"
-		/>
+	<g>
+		<use xlink:href="#c" style="opacity:1;" />
+		<use xlink:href="#c" transform="rotate(45)" style="opacity:0.6;" />
+		<use xlink:href="#c" transform="rotate(90)" style="opacity:0.6;" />
+		<use xlink:href="#c" transform="rotate(135)" style="opacity:0.6;" />
+		<use xlink:href="#c" transform="rotate(180)" style="opacity:0.6;" />
+		<use xlink:href="#c" transform="rotate(225)" style="opacity:0.6;" />
+		<use xlink:href="#c" transform="rotate(270)" style="opacity:0.9;" />
+		<use xlink:href="#c" transform="rotate(315)" style="opacity:0.95;" />
 		<animateTransform
-			attributeName="transform"
-			attributeType="XML"
-			type="rotate"
-			begin="0s"
-			dur="0.7s"
-			repeatCount="indefinite"
-			calcMode="discrete"
+			attributeName="transform" attributeType="XML"
+			type="rotate" begin="0s" dur="0.7s"
+			repeatCount="indefinite" calcMode="discrete"
 			values="0; 45; 90; 135; 180; 225; 270; 315"
 			keyTimes="0.0; 0.1; 0.2; 0.3; 0.4; 0.5; 0.6; 0.7"
 		/>
