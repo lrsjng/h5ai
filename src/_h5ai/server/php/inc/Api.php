@@ -109,7 +109,7 @@ class Api {
 			normalized_require_once("/server/php/inc/Archive.php");
 			$archive = new Archive($this->app);
 
-			$hrefs = explode(":", trim($hrefs));
+			$hrefs = explode("|:|", trim($hrefs));
 			$target = $archive->create($format, $hrefs);
 
 			if (!is_string($target)) {
@@ -160,7 +160,7 @@ class Api {
 			normalized_require_once("/server/php/inc/Archive.php");
 			$archive = new Archive($this->app);
 
-			$hrefs = explode(":", trim($hrefs));
+			$hrefs = explode("|:|", trim($hrefs));
 
 			header("Content-Type: application/octet-stream");
 			header("Content-Disposition: attachment; filename=\"$as\"");
@@ -206,7 +206,7 @@ class Api {
 
 			list($hrefs) = use_request_params(array("hrefs"));
 
-			$hrefs = explode(":", trim($hrefs));
+			$hrefs = explode("|:|", trim($hrefs));
 			$errors = array();
 
 			foreach ($hrefs as $href) {

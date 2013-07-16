@@ -63,7 +63,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 				selectedHrefsStr = _.map(items, function (item) {
 
 					return item.absHref;
-				}).join(':');
+				}).join('|:|');
 				$download.appendTo('#navbar').show();
 			} else {
 				$download.hide();
@@ -82,9 +82,9 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			} else if (exe === 'SHELL') {
 
 				var query = '?action=passArchive';
-				query += '&as=' + (settings.packageName || location.getItem().label) + '.' + settings.format;
+				query += '&as=' + encodeURIComponent((settings.packageName || location.getItem().label) + '.' + settings.format);
 				query += '&format=' + settings.format;
-				query += '&hrefs=' + selectedHrefsStr;
+				query += '&hrefs=' + encodeURIComponent(selectedHrefsStr);
 				window.location = query;
 			}
 		},
