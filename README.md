@@ -51,7 +51,6 @@ It profits from these great projects:
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
-[spin.js](http://fgnass.github.com/spin.js/)&nbsp;(MIT),
 [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
 [Underscore.js](http://underscorejs.org)&nbsp;(MIT)
 
@@ -72,6 +71,7 @@ It profits from these great projects:
 * updates jQuery to 2.0.3
 * adds `uk` translation by Viktor Matveenko
 * updates to `pl` translation by Mark
+* improves previews
 
 
 ### v0.22.1 - *2012-10-16*
