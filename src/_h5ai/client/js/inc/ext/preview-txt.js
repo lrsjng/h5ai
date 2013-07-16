@@ -149,8 +149,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				dataType: 'text',
 				success: function (content) {
 
-					// callback(content);
-					setTimeout(function () { callback(content); }, 1000); // for testing
+					callback(content);
+					// setTimeout(function () { callback(content); }, 1000); // for testing
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 

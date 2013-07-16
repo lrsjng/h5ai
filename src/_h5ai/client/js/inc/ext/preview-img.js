@@ -100,8 +100,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			var $img = $('<img/>')
 				.one('load', function () {
 
-					// callback($img);
-					setTimeout(function () { callback($img); }, 1000); // for testing
+					callback($img);
+					// setTimeout(function () { callback($img); }, 1000); // for testing
 				})
 				.attr('src', src);
 		},
