@@ -104,13 +104,13 @@ class Api {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-			list($execution, $format, $hrefs) = use_request_params(array("execution", "format", "hrefs"));
+			list($format, $hrefs) = use_request_params(array("format", "hrefs"));
 
 			normalized_require_once("/server/php/inc/Archive.php");
 			$archive = new Archive($this->app);
 
 			$hrefs = explode(":", trim($hrefs));
-			$target = $archive->create($execution, $format, $hrefs);
+			$target = $archive->create($format, $hrefs);
 
 			if (!is_string($target)) {
 				json_fail($target, "package creation failed");
@@ -151,6 +151,29 @@ class Api {
 			// 	}
 			// 	fclose($fd);
 			// }
+		}
+
+
+		else if ($action === "passArchive") {
+
+			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
+
+			list($as, $format, $hrefs) = use_request_params(array("as", "format", "hrefs"));
+
+			normalized_require_once("/server/php/inc/Archive.php");
+			$archive = new Archive($this->app);
+
+			$hrefs = explode(":", trim($hrefs));
+
+			header("Content-Type: application/octet-stream");
+			header("Content-Disposition: attachment; filename=\"$as\"");
+			header("Connection: close");
+			$rc = $archive->shell_passthru($format, $hrefs);
+
+			if ($rc !== 0) {
+				json_fail($target, "package creation failed");
+			}
+			exit;
 		}
 
 

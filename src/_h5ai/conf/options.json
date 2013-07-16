@@ -106,7 +106,7 @@ Options
 	"download": {
 		"enabled": true,
 		"execution": "shell",
-		"format": "zip",
+		"format": "tar",
 		"packageName": null
 	},
 

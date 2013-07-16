@@ -70,6 +70,25 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			}
 		},
 
+		onClick = function (event) {
+
+			var exe = settings.execution.toUpperCase();
+
+			if (exe === 'PHP') {
+
+				event.preventDefault();
+				requestArchive(selectedHrefsStr);
+
+			} else if (exe === 'SHELL') {
+
+				var query = '?action=passArchive';
+				query += '&as=' + (settings.packageName || location.getItem().label) + '.' + settings.format;
+				query += '&format=' + settings.format;
+				query += '&hrefs=' + selectedHrefsStr;
+				window.location = query;
+			}
+		},
+
 		init = function () {
 
 			if (!settings.enabled || !server.api) {
@@ -77,11 +96,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			}
 
 			$download = $(downloadBtnTemplate)
-				.find('a').on('click', function (event) {
-
-					event.preventDefault();
-					requestArchive(selectedHrefsStr);
-				}).end()
+				.find('a').on('click', onClick).end()
 				.appendTo('#navbar');
 			$img = $download.find('img');
 
