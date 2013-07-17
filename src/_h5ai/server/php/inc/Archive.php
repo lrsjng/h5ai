@@ -96,7 +96,8 @@ class Archive {
 			$size = filesize($file);
 			$filesizes[$file] = $size;
 
-			$total_size += 512 + $size + (512 - ($size % 512));
+			$total_size += 512 + $size;
+			if ($size % 512 != 0) $total_size += 512 - ($size % 512);
 
 		}
 
