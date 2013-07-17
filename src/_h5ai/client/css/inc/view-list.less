@@ -3,17 +3,28 @@
 
 	li {
 
+		&.header {
+			display: list-item;
+		}
+
 		&.item {
 
 			a, a:active, a:visited {
-				height: 56px;
-				padding: 4px 0;
 				border-top: 1px solid @item-border-col-sep;
 				border-bottom: 1px solid @item-border-col-sep;
+				height: 60px;
 
 				&:hover, &.hover {
 					border-color: @item-border-col-hover;
 				}
+			}
+
+			// needs to be here, to not conflict with header fields
+			.icon {
+				padding: 8px 6px;
+			}
+			.label, .date, .size {
+				padding: 18px 6px;
 			}
 		}
 
@@ -24,29 +35,28 @@
 			}
 		}
 
-		.icon, .label, .date, .size {
-			padding: 6px;
-		}
-
 		.icon.big {
 			display: inline-block;
 			position: absolute;
 			left: 0;
-			top: 2px;
+			top: -2px;
 			width: 100px;
 		}
 
 		.label {
-			margin: 0 0 0 106px;
+			margin: 0 270px 0 110px;
 		}
 
 		.date {
-			margin: 0 0 0 106px;
+			position: absolute;
+			right: 100px;
+			top: 0;
 		}
 
-		.date, .size {
-			position: relative;
-			top: -6px;
+		.size {
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 	}
 }
