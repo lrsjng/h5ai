@@ -178,17 +178,22 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			var key = event.which;
 
 			if (key === 27) { // esc
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onExit();
 			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onPrevious();
 			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onNext();
 			} else if (key === 70) { // f
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onFullscreen();
 			}
-
-			event.preventDefault();
-			event.stopImmediatePropagation();
 		},
 
 		initItem = function (item) {
