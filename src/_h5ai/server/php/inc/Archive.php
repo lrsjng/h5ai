@@ -86,7 +86,11 @@ class Archive {
 		foreach (array_values($this->files) as $file) {
 
 			// TAR supports filenames up to 253 chars, but the name should be split ubti a 154-byte prefix and 99-byte name
-			assert(substr($file, 0, strlen($root_path)) == $root_path);
+			if (substr($file, 0, strlen($root_path)) != $root_path) {
+				$file = $this->app->get_abs_path().'/'.$file;
+			}
+			if (!file_exists($file)) continue;
+
 			$local_filename = normalize_path(substr($file, strlen($root_path) + 1));
 			$filename_parts = array('', substr($local_filename, -99));
 			if (strlen($local_filename) > 99) $filename_parts[0] = substr($local_filename, 0, -99);
