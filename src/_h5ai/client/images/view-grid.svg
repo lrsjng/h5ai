@@ -1,116 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg7384"
-   height="16"
-   width="16"
-   version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="view-grid.svg">
-  <defs
-     id="defs17" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1871"
-     inkscape:window-height="1056"
-     id="namedview15"
-     showgrid="true"
-     inkscape:zoom="29.5"
-     inkscape:cx="16.04625"
-     inkscape:cy="8.0017242"
-     inkscape:window-x="49"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg7384">
-    <inkscape:grid
-       type="xygrid"
-       id="grid2994"
-       empspacing="5"
-       visible="true"
-       enabled="true"
-       snapvisiblegridlinesonly="true" />
-  </sodipodi:namedview>
-  <metadata
-     id="metadata90">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gnome Symbolic Icon Theme</dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <title
-     id="title9167">Gnome Symbolic Icon Theme</title>
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect3773"
-     width="4"
-     height="2"
-     x="3"
-     y="3"
-     rx="0"
-     ry="0" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect3773-3"
-     width="4"
-     height="2"
-     x="3"
-     y="7"
-     rx="0"
-     ry="0" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect3773-1"
-     width="4"
-     height="2"
-     x="3"
-     y="11"
-     rx="0"
-     ry="0" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect3773-7"
-     width="4"
-     height="2"
-     x="9"
-     y="2.9999995"
-     rx="0"
-     ry="0" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect3773-3-6"
-     width="4"
-     height="2"
-     x="9"
-     y="6.9999995"
-     rx="0"
-     ry="0" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect3773-1-6"
-     width="4"
-     height="2"
-     x="9"
-     y="11"
-     rx="0"
-     ry="0" />
+	xmlns="http://www.w3.org/2000/svg"
+	version="1.1"
+	width="16"
+	height="16"
+>
+	<rect x="3" y="3" width="4" height="2" style="fill:#555555" />
+	<rect x="3" y="7" width="4" height="2" style="fill:#555555" />
+	<rect x="3" y="11" width="4" height="2" style="fill:#555555" />
+	<rect x="9" y="3" width="4" height="2" style="fill:#555555" />
+	<rect x="9" y="7" width="4" height="2" style="fill:#555555" />
+	<rect x="9" y="11" width="4" height="2" style="fill:#555555" />
 </svg>
