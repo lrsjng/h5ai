@@ -280,11 +280,11 @@ class App {
 			$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 		}
 		$cache = @is_writable($this->get_cache_abs_path());
-		$tar = @preg_match("/tar$/", `which tar`) > 0;
-		$zip = @preg_match("/zip$/", `which zip`) > 0;
-		$convert = @preg_match("/convert$/", `which convert`) > 0;
-		$ffmpeg = @preg_match("/ffmpeg$/", `which ffmpeg`) > 0;
-		$du = @preg_match("/du$/", `which du`) > 0;
+		$tar = @preg_match("/tar(.exe)?$/i", `which tar`) > 0;
+		$zip = @preg_match("/zip(.exe)?$/i", `which zip`) > 0;
+		$convert = @preg_match("/convert(.exe)?$/i", `which convert`) > 0;
+		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", `which ffmpeg`) > 0;
+		$du = @preg_match("/du(.exe)?$/i", `which du`) > 0;
 
 		return array(
 			"idx" => $this->app_abs_href . "server/php/index.php",
