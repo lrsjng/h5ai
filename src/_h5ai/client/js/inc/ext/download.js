@@ -73,10 +73,10 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 			var type = settings.type,
 				extension = type === 'shell-zip' ? 'zip' : 'tar',
-				query = '?action=passArchive'
-					+ '&as=' + encodeURIComponent((settings.packageName || location.getItem().label) + '.' + extension)
-					+ '&type=' + type
-					+ '&hrefs=' + encodeURIComponent(selectedHrefsStr),
+				query = '?action=passArchive' +
+					'&as=' + encodeURIComponent((settings.packageName || location.getItem().label) + '.' + extension) +
+					'&type=' + type +
+					'&hrefs=' + encodeURIComponent(selectedHrefsStr),
 				$iframe = $('<iframe src="' + query + '" style="display: none;" />');
 
 			$iframe.appendTo('body');

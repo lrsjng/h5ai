@@ -88,7 +88,7 @@ class Archive {
 
 		// POSIX.1-1988 UStar implementation, by @TvdW
 
-		$root_path = $this->app->get_root_abs_path();
+		$root_path = $this->app->get_abs_path();
 
 		// Build a list of filesizes so we can predict the total size
 		$filesizes = array();
