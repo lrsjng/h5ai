@@ -3,8 +3,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 	var settings = _.extend({
 			enabled: false,
-			execution: 'php',
-			format: 'zip',
+			type: 'php-tar',
 			packageName: 'package'
 		}, allsettings.download),
 
@@ -50,7 +49,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 			server.request({
 				action: 'createArchive',
-				execution: settings.execution,
+				type: settings.type,
 				format: settings.format,
 				hrefs: hrefsStr
 			}, handleResponse);
@@ -72,21 +71,16 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 		onClick = function (event) {
 
-			var exe = settings.execution.toUpperCase();
+			var type = settings.type,
+				extension = type === 'shell-zip' ? 'zip' : 'tar',
+				query = '?action=passArchive'
+					+ '&as=' + encodeURIComponent((settings.packageName || location.getItem().label) + '.' + extension)
+					+ '&type=' + type
+					+ '&hrefs=' + encodeURIComponent(selectedHrefsStr),
+				$iframe = $('<iframe src="' + query + '" style="display: none;" />');
 
-			if (exe === 'PHP') {
-
-				event.preventDefault();
-				requestArchive(selectedHrefsStr);
-
-			} else if (exe === 'SHELL') {
-
-				var query = '?action=passArchive';
-				query += '&as=' + encodeURIComponent((settings.packageName || location.getItem().label) + '.' + settings.format);
-				query += '&format=' + settings.format;
-				query += '&hrefs=' + encodeURIComponent(selectedHrefsStr);
-				window.location = query;
-			}
+			$iframe.appendTo('body');
+			setTimeout(function () { $iframe.remove(); }, 1000);
 		},
 
 		init = function () {

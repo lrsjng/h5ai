@@ -14,7 +14,7 @@ class Archive {
 	}
 
 
-	public function create($format, $hrefs) {
+	public function output($type, $hrefs) {
 
 		$this->dirs = array();
 		$this->files = array();
@@ -22,62 +22,69 @@ class Archive {
 		$this->add_hrefs($hrefs);
 
 		if (count($this->dirs) === 0 && count($this->files) === 0) {
-			return 404;
-		}
-
-		$target = $this->app->get_cache_abs_path() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
-
-		try {
-			$archive = new PharData($target);
-			foreach ($this->dirs as $archived_dir) {
-				$archive->addEmptyDir($archived_dir);
-			}
-			foreach ($this->files as $real_file => $archived_file) {
-				$archive->addFile($real_file, $archived_file); // very, very slow :/
-			}
-		} catch (Exeption $err) {
 			return 500;
 		}
 
-		return @filesize($target) ? $target : null;
+		if ($type === "php-tar") {
+
+			return $this->php_tar();
+
+		} else if ($type === "shell-tar") {
+
+			return $this->shell_cmd(Archive::$TAR_PASSTHRU_CMD);
+
+		} else if ($type === "shell-zip") {
+
+			return $this->shell_cmd(Archive::$ZIP_PASSTHRU_CMD);
+		}
+		return 500;
 	}
 
 
-	public function shell_passthru($format, $hrefs) {
+	// public function create($format, $hrefs) {
 
-		$this->dirs = array();
-		$this->files = array();
+	// 	$this->dirs = array();
+	// 	$this->files = array();
 
-		$this->add_hrefs($hrefs);
+	// 	$this->add_hrefs($hrefs);
 
-		if (count($this->dirs) === 0 && count($this->files) === 0) {
-			return 500;
-		}
+	// 	if (count($this->dirs) === 0 && count($this->files) === 0) {
+	// 		return 404;
+	// 	}
 
+	// 	$target = $this->app->get_cache_abs_path() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
+
+	// 	try {
+	// 		$archive = new PharData($target);
+	// 		foreach ($this->dirs as $archived_dir) {
+	// 			$archive->addEmptyDir($archived_dir);
+	// 		}
+	// 		foreach ($this->files as $real_file => $archived_file) {
+	// 			$archive->addFile($real_file, $archived_file); // very, very slow :/
+	// 		}
+	// 	} catch (Exeption $err) {
+	// 		return 500;
+	// 	}
+
+	// 	return @filesize($target) ? $target : null;
+	// }
+
+
+	private function shell_cmd($cmd) {
+
+		$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_abs_path() . "\"", $cmd);
+		$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
+		$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
 		try {
-
-			if ($format === "tar") {
-				$cmd = Archive::$TAR_PASSTHRU_CMD;
-			} else if ($format === "zip") {
-				$cmd = Archive::$ZIP_PASSTHRU_CMD;
-			} else {
-				return 500;
-			}
-			$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_abs_path() . "\"", $cmd);
-			$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
-			$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
-
 			passthru($cmd);
-
 		} catch (Exeption $err) {
 			return 500;
 		}
-
 		return 0;
 	}
 
 
-	private function create_tar() {
+	private function php_tar() {
 
 		// POSIX.1-1988 UStar implementation, by @TvdW
 
@@ -113,7 +120,7 @@ class Archive {
 
 			$size = $filesizes[$file];
 
-			$file_header = 
+			$file_header =
 				 str_pad($filename_parts[1], 100, "\0") // first filename part
 				."0000755\0"."0000000\0"."0000000\0" // File mode and uid/gid
 				.str_pad(decoct($size), 11, "0", STR_PAD_LEFT)."\0" // File size
@@ -140,7 +147,6 @@ class Archive {
 		}
 
 		return 0;
-
 	}
 
 

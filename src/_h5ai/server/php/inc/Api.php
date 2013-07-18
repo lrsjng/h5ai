@@ -155,7 +155,7 @@ class Api {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-			list($as, $format, $hrefs) = use_request_params(array("as", "format", "hrefs"));
+			list($as, $type, $hrefs) = use_request_params(array("as", "type", "hrefs"));
 
 			normalized_require_once("/server/php/inc/Archive.php");
 			$archive = new Archive($this->app);
@@ -165,10 +165,10 @@ class Api {
 			header("Content-Type: application/octet-stream");
 			header("Content-Disposition: attachment; filename=\"$as\"");
 			header("Connection: close");
-			$rc = $archive->shell_passthru($format, $hrefs);
+			$rc = $archive->output($type, $hrefs);
 
 			if ($rc !== 0) {
-				json_fail($target, "package creation failed");
+				json_fail("packaging failed");
 			}
 			exit;
 		}
