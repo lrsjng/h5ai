@@ -2,6 +2,7 @@
 
 class Archive {
 
+	private static $SEGMENT_SIZE = 16777216;  // 1024 * 1024 * 16 = 16MiB
 	private static $TAR_PASSTHRU_CMD = "cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]";
 	private static $ZIP_PASSTHRU_CMD = "cd [ROOTDIR] && zip - -- [FILES]";
 
@@ -59,6 +60,7 @@ class Archive {
 
 		// POSIX.1-1988 UStar implementation, by @TvdW
 
+		set_time_limit(0);
 		$root_path = $this->app->get_abs_path();
 
 		// Build a list of filesizes so we can predict the total size
@@ -110,7 +112,16 @@ class Archive {
 			$file_header = substr_replace($file_header, $checksum, 148, 8);
 
 			echo $file_header;
-			readfile($file);
+
+			// Send file content in segments to not hit PHP's memory limit (default: 128M)
+			if ($fd = fopen($file, 'rb')) {
+				while (!feof($fd)) {
+					print fread($fd, Archive::$SEGMENT_SIZE);
+					ob_flush();
+					flush();
+				}
+				fclose($fd);
+			}
 
 			$pad_file = 512 - ($size % 512);
 			if ($pad_file) echo str_repeat("\0", $pad_file);
