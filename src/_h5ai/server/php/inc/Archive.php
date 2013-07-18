@@ -57,7 +57,7 @@ class Archive {
 		try {
 
 			if ($format === "tar") {
-				$cmd = Archive::$TAR_PASSTHRU_CMD;
+				return $this->create_tar();
 			} else if ($format === "zip") {
 				$cmd = Archive::$ZIP_PASSTHRU_CMD;
 			} else {
@@ -74,6 +74,73 @@ class Archive {
 		}
 
 		return 0;
+	}
+
+
+	private function create_tar() {
+
+		// POSIX.1-1988 UStar implementation, by @TvdW
+
+		$root_path = $this->app->get_root_abs_path();
+
+		// Build a list of filesizes so we can predict the total size
+		$filesizes = array();
+		$total_size = 0;
+		foreach (array_values($this->files) as $file) {
+
+			if (substr($file, 0, strlen($root_path)) != $root_path) {
+				$file = $this->app->get_abs_path().'/'.$file;
+			}
+			if (!file_exists($file)) continue;
+
+			$size = filesize($file);
+			$filesizes[$file] = $size;
+
+			$total_size += 512 + $size;
+			if ($size % 512 != 0) $total_size += 512 - ($size % 512);
+
+		}
+
+		header('Content-Length: '.$total_size);
+
+		foreach (array_keys($filesizes) as $file) {
+
+			// TAR supports filenames up to 253 chars, but the name should be split ubti a 154-byte prefix and 99-byte name
+			$local_filename = normalize_path(substr($file, strlen($root_path) + 1));
+			$filename_parts = array('', substr($local_filename, -99));
+			if (strlen($local_filename) > 99) $filename_parts[0] = substr($local_filename, 0, -99);
+			if (strlen($filename_parts[0]) > 154) $filename_parts[0] = substr($filename_parts[0], -154);
+
+			$size = $filesizes[$file];
+
+			$file_header = 
+				 str_pad($filename_parts[1], 100, "\0") // first filename part
+				."0000755\0"."0000000\0"."0000000\0" // File mode and uid/gid
+				.str_pad(decoct($size), 11, "0", STR_PAD_LEFT)."\0" // File size
+				.str_pad(decoct(time()), 11, "0", STR_PAD_LEFT)."\0" // Modification time
+				."        " // checksum (filled in later)
+				."0" // file type
+				.str_repeat("\0", 100)
+				."ustar 00"
+				.str_repeat("\0", 92)
+				.str_pad($filename_parts[0], 155, "\0");
+			assert(strlen($file_header) == 512);
+
+			// Checksum
+			$checksum = array_sum(array_map('ord', str_split($file_header)));
+			$checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT)."\0 ";
+			$file_header = substr_replace($file_header, $checksum, 148, 8);
+
+			echo $file_header;
+			readfile($file);
+
+			$pad_file = 512 - ($size % 512);
+			if ($pad_file) echo str_repeat("\0", $pad_file);
+
+		}
+
+		return 0;
+
 	}
 
 
