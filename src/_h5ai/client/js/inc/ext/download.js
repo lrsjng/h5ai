@@ -46,7 +46,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			var type = settings.type,
 				extension = (type === 'shell-zip') ? 'zip' : 'tar',
 				query = {
-					action: 'passArchive',
+					action: 'download',
 					as: (settings.packageName || location.getItem().label) + '.' + extension,
 					type: type,
 					hrefs: selectedHrefsStr

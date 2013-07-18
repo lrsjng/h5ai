@@ -100,7 +100,7 @@ class Api {
 		}
 
 
-		else if ($action === "passArchive") {
+		else if ($action === "download") {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
