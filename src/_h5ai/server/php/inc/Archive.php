@@ -57,7 +57,7 @@ class Archive {
 		try {
 
 			if ($format === "tar") {
-				return $this->create_tar();
+				$cmd = Archive::$TAR_PASSTHRU_CMD;
 			} else if ($format === "zip") {
 				$cmd = Archive::$ZIP_PASSTHRU_CMD;
 			} else {
