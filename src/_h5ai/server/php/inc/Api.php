@@ -100,57 +100,6 @@ class Api {
 		}
 
 
-		else if ($action === "createArchive") {
-
-			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
-
-			list($format, $hrefs) = use_request_params(array("format", "hrefs"));
-
-			normalized_require_once("/server/php/inc/Archive.php");
-			$archive = new Archive($this->app);
-
-			$hrefs = explode("|:|", trim($hrefs));
-			$target = $archive->create($format, $hrefs);
-
-			if (!is_string($target)) {
-				json_fail($target, "package creation failed");
-			}
-
-			json_exit(array("id" => basename($target), "size" => filesize($target)));
-		}
-
-
-		else if ($action === "getArchive") {
-
-			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
-
-			list($id, $as) = use_request_params(array("id", "as"));
-			json_fail(2, "file not found", !preg_match("/^package-/", $id));
-
-			$target = $this->app->get_cache_abs_path() . "/" . $id;
-			json_fail(3, "file not found", !file_exists($target));
-
-			header("Content-Type: application/octet-stream");
-			header("Content-Length: " . filesize($target));
-			header("Content-Disposition: attachment; filename=\"$as\"");
-			header("Connection: close");
-			register_shutdown_function("delete_tempfile", $target);
-
-			// readfile($target);
-
-			// Send data in small segments of 16MB to not hit PHP's memory limit (default: 128M)
-			if ($fd = fopen($target, 'rb')) {
-				set_time_limit(0);
-				while (!feof($fd)) {
-					print fread($fd, 1024 * 1024 * 16);
-					ob_flush();
-					flush();
-				}
-				fclose($fd);
-			}
-		}
-
-
 		else if ($action === "passArchive") {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);

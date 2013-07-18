@@ -27,34 +27,6 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			}, 1000);
 		},
 
-		handleResponse = function (json) {
-
-			$download.removeClass('current');
-			$img.attr('src', resource.image('download'));
-
-			if (json && json.code === 0) {
-				setTimeout(function () { // wait here so the img above can be updated in time
-
-					window.location = '?action=getArchive&id=' + json.id + '&as=' + (settings.packageName || location.getItem().label) + '.' + settings.format;
-				}, 200);
-			} else {
-				failed();
-			}
-		},
-
-		requestArchive = function (hrefsStr) {
-
-			$download.addClass('current');
-			$img.attr('src', resource.image('loading.gif', true));
-
-			server.request({
-				action: 'createArchive',
-				type: settings.type,
-				format: settings.format,
-				hrefs: hrefsStr
-			}, handleResponse);
-		},
-
 		onSelection = function (items) {
 
 			selectedHrefsStr = '';
@@ -72,15 +44,19 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 		onClick = function (event) {
 
 			var type = settings.type,
-				extension = type === 'shell-zip' ? 'zip' : 'tar',
-				query = '?action=passArchive' +
-					'&as=' + encodeURIComponent((settings.packageName || location.getItem().label) + '.' + extension) +
-					'&type=' + type +
-					'&hrefs=' + encodeURIComponent(selectedHrefsStr),
-				$iframe = $('<iframe src="' + query + '" style="display: none;" />');
+				extension = (type === 'shell-zip') ? 'zip' : 'tar',
+				query = {
+					action: 'passArchive',
+					as: (settings.packageName || location.getItem().label) + '.' + extension,
+					type: type,
+					hrefs: selectedHrefsStr
+				},
+				$form = $('<form action="#" method="post" style="display:none;" />');
 
-			$iframe.appendTo('body');
-			setTimeout(function () { $iframe.remove(); }, 1000);
+			for (var key in query) {
+				$form.append('<input type="hidden" name="' + key + '" value="' + query[key] + '" />')
+			}
+			$form.appendTo('body').submit().remove();
 		},
 
 		init = function () {

@@ -41,35 +41,6 @@ class Archive {
 	}
 
 
-	// public function create($format, $hrefs) {
-
-	// 	$this->dirs = array();
-	// 	$this->files = array();
-
-	// 	$this->add_hrefs($hrefs);
-
-	// 	if (count($this->dirs) === 0 && count($this->files) === 0) {
-	// 		return 404;
-	// 	}
-
-	// 	$target = $this->app->get_cache_abs_path() . "/package-" . sha1(microtime(true) . rand()) .  "." . $format;
-
-	// 	try {
-	// 		$archive = new PharData($target);
-	// 		foreach ($this->dirs as $archived_dir) {
-	// 			$archive->addEmptyDir($archived_dir);
-	// 		}
-	// 		foreach ($this->files as $real_file => $archived_file) {
-	// 			$archive->addFile($real_file, $archived_file); // very, very slow :/
-	// 		}
-	// 	} catch (Exeption $err) {
-	// 		return 500;
-	// 	}
-
-	// 	return @filesize($target) ? $target : null;
-	// }
-
-
 	private function shell_cmd($cmd) {
 
 		$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_abs_path() . "\"", $cmd);
