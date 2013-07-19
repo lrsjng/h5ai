@@ -63,7 +63,10 @@ It profits from these great projects:
 
 * removes `aai` mode!
 * drops support for IE7+8 (simple fallback, same as no javascript)
-* adds smart browsing
+* uses History API if available (way faster browsing)
+* faster thumbnail generation if EXIF thumbnails available
+* improves previews
+* improves packaged downloads
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
 * now uses `SVG` images for the interface
@@ -71,7 +74,6 @@ It profits from these great projects:
 * updates jQuery to 2.0.3
 * adds `uk` translation by Viktor Matveenko
 * updates to `pl` translation by Mark
-* improves previews
 
 
 ### v0.22.1 - *2012-10-16*
