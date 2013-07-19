@@ -111,6 +111,7 @@ class Api {
 
 			$hrefs = explode("|:|", trim($hrefs));
 
+			set_time_limit(0);
 			header("Content-Type: application/octet-stream");
 			header("Content-Disposition: attachment; filename=\"$as\"");
 			header("Connection: close");

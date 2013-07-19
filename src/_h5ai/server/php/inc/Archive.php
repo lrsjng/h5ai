@@ -28,7 +28,7 @@ class Archive {
 
 		if ($type === "php-tar") {
 
-			return $this->php_tar();
+			return $this->php_tar($this->dirs, $this->files);
 
 		} else if ($type === "shell-tar") {
 
@@ -56,79 +56,125 @@ class Archive {
 	}
 
 
-	private function php_tar() {
+	private function php_tar($dirs, $files) {
 
-		// POSIX.1-1988 UStar implementation, by @TvdW
-
-		set_time_limit(0);
-		$root_path = $this->app->get_abs_path();
-
-		// Build a list of filesizes so we can predict the total size
 		$filesizes = array();
 		$total_size = 0;
-		foreach (array_values($this->files) as $file) {
+		foreach (array_keys($files) as $real_file) {
 
-			if (substr($file, 0, strlen($root_path)) != $root_path) {
-				$file = $this->app->get_abs_path().'/'.$file;
-			}
-			if (!file_exists($file)) continue;
+			$size = filesize($real_file);
 
-			$size = filesize($file);
-			$filesizes[$file] = $size;
-
+			$filesizes[$real_file] = $size;
 			$total_size += 512 + $size;
-			if ($size % 512 != 0) $total_size += 512 - ($size % 512);
-
+			if ($size % 512 != 0) {
+				$total_size += 512 - ($size % 512);
+			}
 		}
 
-		header('Content-Length: '.$total_size);
+		header("Content-Length: " . $total_size);
 
-		foreach (array_keys($filesizes) as $file) {
+		foreach ($dirs as $archived_dir) {
 
-			// TAR supports filenames up to 253 chars, but the name should be split ubti a 154-byte prefix and 99-byte name
-			$local_filename = normalize_path(substr($file, strlen($root_path) + 1));
-			$filename_parts = array('', substr($local_filename, -99));
-			if (strlen($local_filename) > 99) $filename_parts[0] = substr($local_filename, 0, -99);
-			if (strlen($filename_parts[0]) > 154) $filename_parts[0] = substr($filename_parts[0], -154);
+			echo $this->php_tar_dirheader($archived_dir);
+		}
+		foreach ($files as $real_file => $archived_file) {
 
-			$size = $filesizes[$file];
-
-			$file_header =
-				 str_pad($filename_parts[1], 100, "\0") // first filename part
-				."0000755\0"."0000000\0"."0000000\0" // File mode and uid/gid
-				.str_pad(decoct($size), 11, "0", STR_PAD_LEFT)."\0" // File size
-				.str_pad(decoct(time()), 11, "0", STR_PAD_LEFT)."\0" // Modification time
-				."        " // checksum (filled in later)
-				."0" // file type
-				.str_repeat("\0", 100)
-				."ustar 00"
-				.str_repeat("\0", 92)
-				.str_pad($filename_parts[0], 155, "\0");
-			assert(strlen($file_header) == 512);
-
-			// Checksum
-			$checksum = array_sum(array_map('ord', str_split($file_header)));
-			$checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT)."\0 ";
-			$file_header = substr_replace($file_header, $checksum, 148, 8);
-
-			echo $file_header;
-
-			// Send file content in segments to not hit PHP's memory limit (default: 128M)
-			if ($fd = fopen($file, 'rb')) {
-				while (!feof($fd)) {
-					print fread($fd, Archive::$SEGMENT_SIZE);
-					ob_flush();
-					flush();
-				}
-				fclose($fd);
+			if ($filesizes[$real_file] === 0) {
+				continue;
 			}
 
-			$pad_file = 512 - ($size % 512);
-			if ($pad_file) echo str_repeat("\0", $pad_file);
+			echo $this->php_tar_fileheader($real_file, $archived_file);
+			$this->print_file($real_file);
 
+			$pad_file = 512 - ($filesizes[$real_file] % 512);
+			if ($pad_file) {
+				echo str_repeat("\0", $pad_file);
+			}
 		}
 
 		return 0;
+	}
+
+
+	private function php_tar_dirheader($archived_dir) {
+
+		$name = substr(basename($archived_dir), -99);
+		$prefix = substr(normalize_path(dirname($archived_dir)), -154);
+		if ($prefix === '.') {
+			$prefix = '';
+		}
+
+		$dir_header =
+			str_pad($name, 100, "\0")  // filename [100]
+			. "0000755\0"  // file mode [8]
+			. "0000000\0"  // uid [8]
+			. "0000000\0"  // gid [8]
+			. "00000000000\0"  // file size [12]
+			. "00000000000\0"  // file modification time [12]
+			. "        "  // checksum [8]
+			. "5"  // file type [1]
+			. str_repeat("\0", 100)  // linkname [100]
+			. "ustar\0"  // magic [6]
+			. "00"  // version [2]
+			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]  ?92?
+			. str_pad($prefix, 155, "\0")  // filename [155]
+			. str_repeat("\0", 12);  // fill [12]
+		assert(strlen($dir_header) === 512);
+
+		// checksum
+		$checksum = array_sum(array_map('ord', str_split($dir_header)));
+		$checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT) . "\0 ";
+		$dir_header = substr_replace($dir_header, $checksum, 148, 8);
+
+		return $dir_header;
+	}
+
+
+	private function php_tar_fileheader($real_file, $archived_file) {
+
+		$name = substr(basename($archived_file), -99);
+		$prefix = substr(normalize_path(dirname($archived_file)), -154);
+		if ($prefix === '.') {
+			$prefix = '';
+		}
+
+		$file_header =
+			str_pad($name, 100, "\0")  // filename [100]
+			. "0000755\0"  // file mode [8]
+			. "0000000\0"  // uid [8]
+			. "0000000\0"  // gid [8]
+			. str_pad(decoct(@filesize($real_file)), 11, "0", STR_PAD_LEFT) . "\0"  // file size [12]
+			. str_pad(decoct(@filemtime($real_file)), 11, "0", STR_PAD_LEFT) . "\0"  // file modification time [12]
+			. "        "  // checksum [8]
+			. "0"  // file type [1]
+			. str_repeat("\0", 100)  // linkname [100]
+			. "ustar\0"  // magic [6]
+			. "00"  // version [2]
+			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]  ?92?
+			. str_pad($prefix, 155, "\0")  // filename [155]
+			. str_repeat("\0", 12);  // fill [12]
+		assert(strlen($file_header) === 512);
+
+		// checksum
+		$checksum = array_sum(array_map('ord', str_split($file_header)));
+		$checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT) . "\0 ";
+		$file_header = substr_replace($file_header, $checksum, 148, 8);
+
+		return $file_header;
+	}
+
+
+	private function print_file($file) {
+
+		// Send file content in segments to not hit PHP's memory limit (default: 128M)
+		if ($fd = fopen($file, 'rb')) {
+			while (!feof($fd)) {
+				print fread($fd, Archive::$SEGMENT_SIZE);
+				ob_flush();
+				flush();
+			}
+			fclose($fd);
+		}
 	}
 
 
