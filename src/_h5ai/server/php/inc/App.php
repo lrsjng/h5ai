@@ -273,7 +273,6 @@ class App {
 	public function get_server_checks() {
 
 		$php = version_compare(PHP_VERSION, "5.2.1") >= 0;
-		$archive = class_exists("PharData");
 		$gd = false;
 		if (function_exists("gd_info")) {
 			$gdinfo = gd_info();
@@ -291,7 +290,6 @@ class App {
 			"php" => $php,
 			"cache" => $cache,
 			"thumbs" => $gd,
-			"archive" => $archive,
 			"tar" => $tar,
 			"zip" => $zip,
 			"convert" => $convert,
