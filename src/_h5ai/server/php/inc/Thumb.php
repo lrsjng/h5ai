@@ -56,24 +56,13 @@ class Thumb {
 			$image = new Image();
 
 			$et = false;
-			if (function_exists('exif_thumbnail')) {
+			if (function_exists("exif_thumbnail")) {
 				$et = exif_thumbnail($source_abs_path);
 			}
 			if($et !== false) {
 				file_put_contents($thumb_abs_path, $et);
 				$image->set_source($thumb_abs_path);
-				$exif = exif_read_data($source_abs_path);
-				switch(@$exif['Orientation']) {
-					case 3:
-						$image->rotate(180);
-						break;
-					case 6:
-						$image->rotate(270);
-						break;
-					case 8:
-						$image->rotate(90);
-						break;
-				}
+				$image->normalize_exif_orientation($source_abs_path);
 			} else {
 				$image->set_source($source_abs_path);
 			}
@@ -399,11 +388,39 @@ class Image {
 
 	public function rotate($angle) {
 
-		if (is_null($this->source)) {
+		if (is_null($this->source) || ($angle !== 90 && $angle !== 180 && $angle !== 270)) {
 			return;
 		}
 
 		$this->source = imagerotate($this->source, $angle, 0);
+		if ( $angle === 90 || $angle === 270 ) {
+			list($this->width, $this->height) = array($this->height, $this->width);
+		}
+	}
+
+
+	public function normalize_exif_orientation($exif_source_file = null) {
+
+		if (is_null($this->source) || !function_exists("exif_read_data")) {
+			return;
+		}
+
+		if ($exif_source_file === null) {
+			$exif_source_file = $this->source_file;
+		}
+
+		$exif = exif_read_data($exif_source_file);
+		switch(@$exif["Orientation"]) {
+			case 3:
+				$this->rotate(180);
+				break;
+			case 6:
+				$this->rotate(270);
+				break;
+			case 8:
+				$this->rotate(90);
+				break;
+		}
 	}
 }
 
