@@ -52,8 +52,32 @@ class Thumb {
 		$thumb_abs_href = $this->app->get_cache_abs_href() . $name;
 
 		if (!file_exists($thumb_abs_path) || filemtime($source_abs_path) >= filemtime($thumb_abs_path)) {
+
 			$image = new Image();
-			$image->set_source($source_abs_path);
+
+			$et = false;
+			if (function_exists('exif_thumbnail')) {
+				$et = exif_thumbnail($source_abs_path);
+			}
+			if($et !== false) {
+				file_put_contents($thumb_abs_path, $et);
+				$image->set_source($thumb_abs_path);
+				$exif = exif_read_data($source_abs_path);
+				switch(@$exif['Orientation']) {
+					case 3:
+						$image->rotate(180);
+						break;
+					case 6:
+						$image->rotate(270);
+						break;
+					case 8:
+						$image->rotate(90);
+						break;
+				}
+			} else {
+				$image->set_source($source_abs_path);
+			}
+
 			$image->thumb($mode, $width, $height);
 			$image->save_dest_jpeg($thumb_abs_path, 80);
 		}
@@ -370,6 +394,16 @@ class Image {
 		$h = intval($height);
 
 		$this->magic(0, 0, 0, 0, $w, $h, $this->width, $this->height);
+	}
+
+
+	public function rotate($angle) {
+
+		if (is_null($this->source)) {
+			return;
+		}
+
+		$this->source = imagerotate($this->source, $angle, 0);
 	}
 }
 
