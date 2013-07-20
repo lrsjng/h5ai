@@ -79,16 +79,12 @@ class Archive {
 		}
 		foreach ($files as $real_file => $archived_file) {
 
-			if ($filesizes[$real_file] === 0) {
-				continue;
-			}
-
 			echo $this->php_tar_fileheader($real_file, $archived_file);
 			$this->print_file($real_file);
 
-			$pad_file = 512 - ($filesizes[$real_file] % 512);
-			if ($pad_file) {
-				echo str_repeat("\0", $pad_file);
+			$size = $filesizes[$real_file];
+			if ($size % 512 != 0) {
+				echo str_repeat("\0", 512 - ($size % 512));
 			}
 		}
 
