@@ -32,7 +32,7 @@ Options
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
 	- indexFiles: consider folder with those files as non {{pkg.name}} folders
 	- ignore: don't list items matching these regular expressions
-	- smartBrowsing: use browser history if available (no need to reload the whole page)
+	- smartBrowsing: use History API if available (no need to reload the whole page)
 	- extInNewWindow: open non-h5ai links in new window/tab
 	*/
 	"view": {
@@ -67,13 +67,16 @@ Options
 	},
 
 	/*
-	Filenames of customized header and footer files to look for
-	in each folder.
+	Allow customized header and footer files.
+	First looks for	files "_h5ai.header.html" and "_h5ai.footer.html"
+	in the current directory.
+	If not found it looks in all parent	directories (starting in the
+	current directory) for files "_h5ai.headers.html" and "_h5ai.footers.html"
+	until it finds one.
+	Note the different filenames: header (only current) - headers (recursive)!
 	*/
 	"custom": {
-		"enabled": true,
-		"header": "_{{pkg.name}}.header.html",
-		"footer": "_{{pkg.name}}.footer.html"
+		"enabled": true
 	},
 
 	/* [EXPERIMENTAL]

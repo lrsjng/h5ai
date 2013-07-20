@@ -65,8 +65,9 @@ It profits from these great projects:
 * drops support for IE7+8 (simple fallback, same as no javascript)
 * uses History API if available (way faster browsing)
 * faster thumbnail generation if EXIF thumbnails available
-* improves previews
-* improves packaged downloads
+* adds optional custom headers/footers that are propageted to all subfolders
+* some fixes on previews
+* speeds up packaged downloads
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
 * now uses `SVG` images for the interface

@@ -312,12 +312,40 @@ class App {
 
 	public function get_customizations($abs_href) {
 
-		$abs_path = $this->get_abs_path($abs_href);
+		if (!$this->options["custom"]["enabled"]) {
+			return array(
+				"header" => null,
+				"footer" => null
+			);
+		}
 
+		$abs_path = $this->get_abs_path($abs_href);
 		$file = $abs_path . "/" . App::$FILE_PREFIX . ".header.html";
-		$header = is_string($file) && file_exists($file) ? file_get_contents($file) : null;
+		$header = is_readable($file) ? file_get_contents($file) : null;
 		$file = $abs_path . "/" . App::$FILE_PREFIX . ".footer.html";
-		$footer = is_string($file) && file_exists($file) ? file_get_contents($file) : null;
+		$footer = is_readable($file) ? file_get_contents($file) : null;
+
+		$p = $abs_path;
+		while ($header === null || $footer === null) {
+
+			if ($header === null) {
+				$file = $p . "/" . App::$FILE_PREFIX . ".headers.html";
+				$header = is_readable($file) ? file_get_contents($file) : null;
+			}
+			if ($footer === null) {
+				$file = $p . "/" . App::$FILE_PREFIX . ".footers.html";
+				$footer = is_readable($file) ? file_get_contents($file) : null;
+			}
+
+			if ($p === $this->root_abs_path) {
+				break;
+			}
+			$pp = normalize_path(dirname($p));
+			if ($pp === $p) {
+				break;
+			}
+			$p = $pp;
+		}
 
 		return array(
 			"header" => $header,
