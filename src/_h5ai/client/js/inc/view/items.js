@@ -3,6 +3,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 	var settings = _.extend({
 			setParentFolderLabels: false,
+			hideParentFolderLinks: false,
 			binaryPrefix: false
 		}, allsettings.view),
 
@@ -112,7 +113,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			$items.find('.item').remove();
 
-			if (item.parent) {
+			if (item.parent && !settings.hideParentFolderLinks) {
 				$items.append(update(item.parent, true));
 			}
 
