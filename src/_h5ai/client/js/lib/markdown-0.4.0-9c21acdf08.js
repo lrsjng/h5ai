@@ -3,6 +3,8 @@
 // Copyright (c) 2009-2010 Ash Berlin
 // Copyright (c) 2011 Christoph Dorn <christoph@christophdorn.com> (http://www.christophdorn.com)
 
+/*jshint browser:true, devel:true */
+
 (function( expose ) {
 
 /**
@@ -32,7 +34,7 @@
  *
  *  [JsonML]: http://jsonml.org/ "JSON Markup Language"
  **/
-var Markdown = expose.Markdown = function Markdown(dialect) {
+var Markdown = expose.Markdown = function(dialect) {
   switch (typeof dialect) {
     case "undefined":
       this.dialect = Markdown.dialects.Gruber;
@@ -41,7 +43,7 @@ var Markdown = expose.Markdown = function Markdown(dialect) {
       this.dialect = dialect;
       break;
     default:
-      if (dialect in Markdown.dialects) {
+      if ( dialect in Markdown.dialects ) {
         this.dialect = Markdown.dialects[dialect];
       }
       else {
@@ -125,7 +127,7 @@ function mk_block_toSource() {
 
 // node
 function mk_block_inspect() {
-  var util = require('util');
+  var util = require("util");
   return "Markdown.mk_block( " +
           util.inspect(this.toString()) +
           ", " +
@@ -146,7 +148,7 @@ var mk_block = Markdown.mk_block = function(block, trail, line) {
   s.inspect = mk_block_inspect;
   s.toSource = mk_block_toSource;
 
-  if (line != undefined)
+  if ( line != undefined )
     s.lineNumber = line;
 
   return s;
@@ -154,14 +156,16 @@ var mk_block = Markdown.mk_block = function(block, trail, line) {
 
 function count_lines( str ) {
   var n = 0, i = -1;
-  while ( ( i = str.indexOf('\n', i+1) ) !== -1) n++;
+  while ( ( i = str.indexOf("\n", i + 1) ) !== -1 ) n++;
   return n;
 }
 
 // Internal - split source into rough blocks
 Markdown.prototype.split_blocks = function splitBlocks( input, startLine ) {
+  input = input.replace(/(\r\n|\n|\r)/g, "\n");
   // [\s\S] matches _anything_ (newline or space)
-  var re = /([\s\S]+?)($|\n(?:\s*\n|$)+)/g,
+  // [^] is equivalent but doesn't work in IEs.
+  var re = /([\s\S]+?)($|\n#|\n(?:\s*\n|$)+)/g,
       blocks = [],
       m;
 
@@ -174,6 +178,10 @@ Markdown.prototype.split_blocks = function splitBlocks( input, startLine ) {
   }
 
   while ( ( m = re.exec(input) ) !== null ) {
+    if (m[2] == "\n#") {
+      m[2] = "\n";
+      re.lastIndex--;
+    }
     blocks.push( mk_block( m[1], m[2], line_no ) );
     line_no += count_lines( m[0] );
   }
@@ -267,9 +275,9 @@ Markdown.prototype.toTree = function toTree( source, custom_root ) {
 Markdown.prototype.debug = function () {
   var args = Array.prototype.slice.call( arguments);
   args.unshift(this.debug_indent);
-  if (typeof print !== "undefined")
+  if ( typeof print !== "undefined" )
       print.apply( print, args );
-  if (typeof console !== "undefined" && typeof console.log !== "undefined")
+  if ( typeof console !== "undefined" && typeof console.log !== "undefined" )
       console.log.apply( null, args );
 }
 
@@ -278,7 +286,7 @@ Markdown.prototype.loop_re_over_block = function( re, block, cb ) {
   var m,
       b = block.valueOf();
 
-  while ( b.length && (m = re.exec(b) ) != null) {
+  while ( b.length && (m = re.exec(b) ) != null ) {
     b = b.substr( m[0].length );
     cb.call(this, m);
   }
@@ -350,24 +358,24 @@ Markdown.dialects.Gruber = {
         var b = this.loop_re_over_block(
                   re, block.valueOf(), function( m ) { ret.push( m[1] ); } );
 
-        if (b.length) {
+        if ( b.length ) {
           // Case alluded to in first comment. push it back on as a new block
           next.unshift( mk_block(b, block.trailing) );
           break block_search;
         }
-        else if (next.length) {
+        else if ( next.length ) {
           // Check the next block - it might be code too
           if ( !next[0].match( re ) ) break block_search;
 
           // Pull how how many blanks lines follow - minus two to account for .join
-          ret.push ( block.trailing.replace(/[^\n]/g, '').substring(2) );
+          ret.push ( block.trailing.replace(/[^\n]/g, "").substring(2) );
 
           block = next.shift();
         }
         else {
           break block_search;
         }
-      } while (true);
+      } while ( true );
 
       return [ [ "code_block", ret.join("\n") ] ];
     },
@@ -439,7 +447,7 @@ Markdown.dialects.Gruber = {
       // Add inline content `inline` to `li`. inline comes from processInline
       // so is an array of content
       function add(li, loose, inline, nl) {
-        if (loose) {
+        if ( loose ) {
           li.push( [ "para" ].concat(inline) );
           return;
         }
@@ -449,12 +457,12 @@ Markdown.dialects.Gruber = {
                    : li;
 
         // If there is already some content in this list, add the new line in
-        if (nl && li.length > 1) inline.unshift(nl);
+        if ( nl && li.length > 1 ) inline.unshift(nl);
 
-        for (var i=0; i < inline.length; i++) {
+        for ( var i = 0; i < inline.length; i++ ) {
           var what = inline[i],
               is_str = typeof what == "string";
-          if (is_str && add_to.length > 1 && typeof add_to[add_to.length-1] == "string" ) {
+          if ( is_str && add_to.length > 1 && typeof add_to[add_to.length-1] == "string" ) {
             add_to[ add_to.length-1 ] += what;
           }
           else {
@@ -479,7 +487,9 @@ Markdown.dialects.Gruber = {
 
             ret.push( mk_block( x, b.trailing, b.lineNumber ) );
           }
-          break;
+          else {
+            break;
+          }
         }
         return ret;
       }
@@ -489,17 +499,17 @@ Markdown.dialects.Gruber = {
         var list = s.list;
         var last_li = list[list.length-1];
 
-        if (last_li[1] instanceof Array && last_li[1][0] == "para") {
+        if ( last_li[1] instanceof Array && last_li[1][0] == "para" ) {
           return;
         }
-        if (i+1 == stack.length) {
+        if ( i + 1 == stack.length ) {
           // Last stack frame
           // Keep the same array, but replace the contents
-          last_li.push( ["para"].concat( last_li.splice(1) ) );
+          last_li.push( ["para"].concat( last_li.splice(1, last_li.length - 1) ) );
         }
         else {
           var sublist = last_li.pop();
-          last_li.push( ["para"].concat( last_li.splice(1) ), sublist );
+          last_li.push( ["para"].concat( last_li.splice(1, last_li.length - 1) ), sublist );
         }
       }
 
@@ -527,7 +537,7 @@ Markdown.dialects.Gruber = {
 
         // Loop to search over block looking for inner block elements and loose lists
         loose_search:
-        while( true ) {
+        while ( true ) {
           // Split into lines preserving new lines at end of line
           var lines = block.split( /(?=\n)/ );
 
@@ -537,7 +547,7 @@ Markdown.dialects.Gruber = {
 
           // Loop over the lines in this block looking for tight lists.
           tight_search:
-          for (var line_no=0; line_no < lines.length; line_no++) {
+          for ( var line_no = 0; line_no < lines.length; line_no++ ) {
             var nl = "",
                 l = lines[line_no].replace(/^\n/, function(n) { nl = n; return ""; });
 
@@ -573,10 +583,10 @@ Markdown.dialects.Gruber = {
                 // stack, put it there, else put it one deeper then the
                 // wanted_depth deserves.
                 var found = false;
-                for (i = 0; i < stack.length; i++) {
+                for ( i = 0; i < stack.length; i++ ) {
                   if ( stack[ i ].indent != m[1] ) continue;
                   list = stack[ i ].list;
-                  stack.splice( i+1 );
+                  stack.splice( i+1, stack.length - (i+1) );
                   found = true;
                   break;
                 }
@@ -584,8 +594,8 @@ Markdown.dialects.Gruber = {
                 if (!found) {
                   //print("not found. l:", uneval(l));
                   wanted_depth++;
-                  if (wanted_depth <= stack.length) {
-                    stack.splice(wanted_depth);
+                  if ( wanted_depth <= stack.length ) {
+                    stack.splice(wanted_depth, stack.length - wanted_depth);
                     //print("Desired depth now", wanted_depth, "stack:", stack.length);
                     list = stack[wanted_depth-1].list;
                     //print("list:", uneval(list) );
@@ -605,7 +615,7 @@ Markdown.dialects.Gruber = {
             }
 
             // Add content
-            if (l.length > m[0].length) {
+            if ( l.length > m[0].length ) {
               li_accumulate += nl + l.substr( m[0].length );
             }
           } // tight_search
@@ -622,7 +632,7 @@ Markdown.dialects.Gruber = {
           var contained = get_contained_blocks( stack.length, next );
 
           // Deal with code blocks or properly nested lists
-          if (contained.length > 0) {
+          if ( contained.length > 0 ) {
             // Make sure all listitems up the stack are paragraphs
             forEach( stack, paragraphify, this);
 
@@ -637,7 +647,7 @@ Markdown.dialects.Gruber = {
             // Check for an HR following a list: features/lists/hr_abutting
             var hr = this.dialect.block.horizRule( block, next );
 
-            if (hr) {
+            if ( hr ) {
               ret.push.apply(ret, hr);
               break;
             }
@@ -661,33 +671,51 @@ Markdown.dialects.Gruber = {
 
       var jsonml = [];
 
-      // separate out the leading abutting block, if any
+      // separate out the leading abutting block, if any. I.e. in this case:
+      //
+      //  a
+      //  > b
+      //
       if ( block[ 0 ] != ">" ) {
         var lines = block.split( /\n/ ),
-            prev = [];
+            prev = [],
+            line_no = block.lineNumber;
 
         // keep shifting lines until you find a crotchet
         while ( lines.length && lines[ 0 ][ 0 ] != ">" ) {
             prev.push( lines.shift() );
+            line_no++;
         }
 
-        // reassemble!
-        block = lines.join( "\n" );
-        jsonml.push.apply( jsonml, this.processBlock( prev.join( "\n" ), [] ) );
+        var abutting = mk_block( prev.join( "\n" ), "\n", block.lineNumber );
+        jsonml.push.apply( jsonml, this.processBlock( abutting, [] ) );
+        // reassemble new block of just block quotes!
+        block = mk_block( lines.join( "\n" ), block.trailing, line_no );
       }
+
 
       // if the next block is also a blockquote merge it in
       while ( next.length && next[ 0 ][ 0 ] == ">" ) {
         var b = next.shift();
-        block = new String(block + block.trailing + b);
-        block.trailing = b.trailing;
+        block = mk_block( block + block.trailing + b, b.trailing, block.lineNumber );
       }
 
       // Strip off the leading "> " and re-process as a block.
-      var input = block.replace( /^> ?/gm, '' ),
-          old_tree = this.tree;
-      jsonml.push( this.toTree( input, [ "blockquote" ] ) );
+      var input = block.replace( /^> ?/gm, "" ),
+          old_tree = this.tree,
+          processedBlock = this.toTree( input, [ "blockquote" ] ),
+          attr = extract_attr( processedBlock );
 
+      // If any link references were found get rid of them
+      if ( attr && attr.references ) {
+        delete attr.references;
+        // And then remove the attribute object if it's empty
+        if ( isEmpty( attr ) ) {
+          processedBlock.splice( 1, 1 );
+        }
+      }
+
+      jsonml.push( processedBlock );
       return jsonml;
     },
 
@@ -712,21 +740,21 @@ Markdown.dialects.Gruber = {
 
       var b = this.loop_re_over_block(re, block, function( m ) {
 
-        if ( m[2] && m[2][0] == '<' && m[2][m[2].length-1] == '>' )
+        if ( m[2] && m[2][0] == "<" && m[2][m[2].length-1] == ">" )
           m[2] = m[2].substring( 1, m[2].length - 1 );
 
         var ref = attrs.references[ m[1].toLowerCase() ] = {
           href: m[2]
         };
 
-        if (m[4] !== undefined)
+        if ( m[4] !== undefined )
           ref.title = m[4];
-        else if (m[5] !== undefined)
+        else if ( m[5] !== undefined )
           ref.title = m[5];
 
       } );
 
-      if (b.length)
+      if ( b.length )
         next.unshift( mk_block( b, block.trailing ) );
 
       return [];
@@ -777,7 +805,7 @@ Markdown.dialects.Gruber.inline = {
 
       function add(x) {
         //D:self.debug("  adding output", uneval(x));
-        if (typeof x == "string" && typeof out[out.length-1] == "string")
+        if ( typeof x == "string" && typeof out[out.length-1] == "string" )
           out[ out.length-1 ] += x;
         else
           out.push(x);
@@ -801,7 +829,7 @@ Markdown.dialects.Gruber.inline = {
       // [ length of input processed, node/children to add... ]
       // Only esacape: \ ` * _ { } [ ] ( ) # * + - . !
       if ( text.match( /^\\[\\`\*_{}\[\]()#\+.!\-]/ ) )
-        return [ 2, text[1] ];
+        return [ 2, text.charAt( 1 ) ];
       else
         // Not an esacpe
         return [ 1, "\\" ];
@@ -814,10 +842,10 @@ Markdown.dialects.Gruber.inline = {
 
       // ![Alt text](/path/to/img.jpg "Optional title")
       //      1          2            3       4         <--- captures
-      var m = text.match( /^!\[(.*?)\][ \t]*\([ \t]*(\S*)(?:[ \t]+(["'])(.*?)\3)?[ \t]*\)/ );
+      var m = text.match( /^!\[(.*?)\][ \t]*\([ \t]*([^")]*?)(?:[ \t]+(["'])(.*?)\3)?[ \t]*\)/ );
 
       if ( m ) {
-        if ( m[2] && m[2][0] == '<' && m[2][m[2].length-1] == '>' )
+        if ( m[2] && m[2][0] == "<" && m[2][m[2].length-1] == ">" )
           m[2] = m[2].substring( 1, m[2].length - 1 );
 
         m[2] = this.dialect.inline.__call__.call( this, m[2], /\\/ )[0];
@@ -846,10 +874,10 @@ Markdown.dialects.Gruber.inline = {
 
       var orig = String(text);
       // Inline content is possible inside `link text`
-      var res = Markdown.DialectHelpers.inline_until_char.call( this, text.substr(1), ']' );
+      var res = Markdown.DialectHelpers.inline_until_char.call( this, text.substr(1), "]" );
 
       // No closing ']' found. Just consume the [
-      if ( !res ) return [ 1, '[' ];
+      if ( !res ) return [ 1, "[" ];
 
       var consumed = 1 + res[ 0 ],
           children = res[ 1 ],
@@ -866,23 +894,23 @@ Markdown.dialects.Gruber.inline = {
       // back based on if there a matching ones in the url
       //    ([here](/url/(test))
       // The parens have to be balanced
-      var m = text.match( /^\s*\([ \t]*(\S+)(?:[ \t]+(["'])(.*?)\2)?[ \t]*\)/ );
+      var m = text.match( /^\s*\([ \t]*([^"']*)(?:[ \t]+(["'])(.*?)\2)?[ \t]*\)/ );
       if ( m ) {
         var url = m[1];
         consumed += m[0].length;
 
-        if ( url && url[0] == '<' && url[url.length-1] == '>' )
+        if ( url && url[0] == "<" && url[url.length-1] == ">" )
           url = url.substring( 1, url.length - 1 );
 
         // If there is a title we don't have to worry about parens in the url
         if ( !m[3] ) {
           var open_parens = 1; // One open that isn't in the capture
-          for (var len = 0; len < url.length; len++) {
+          for ( var len = 0; len < url.length; len++ ) {
             switch ( url[len] ) {
-            case '(':
+            case "(":
               open_parens++;
               break;
-            case ')':
+            case ")":
               if ( --open_parens == 0) {
                 consumed -= url.length - len;
                 url = url.substring(0, len);
@@ -931,7 +959,7 @@ Markdown.dialects.Gruber.inline = {
         return [ consumed, link ];
       }
 
-      // Just consume the '['
+      // Just consume the "["
       return [ 1, "[" ];
     },
 
@@ -986,7 +1014,7 @@ function strong_em( tag, md ) {
 
   return function ( text, orig_match ) {
 
-    if (this[state_slot][0] == md) {
+    if ( this[state_slot][0] == md ) {
       // Most recent em is of this type
       //D:this.debug("closing", md);
       this[state_slot].shift();
@@ -1012,7 +1040,7 @@ function strong_em( tag, md ) {
       //D:this.debug("processInline from", tag + ": ", uneval( res ) );
 
       var check = this[state_slot].shift();
-      if (last instanceof CloseTag) {
+      if ( last instanceof CloseTag ) {
         res.pop();
         // We matched! Huzzah.
         var consumed = text.length - last.len_after;
@@ -1064,7 +1092,7 @@ Markdown.buildInlinePatterns = function(d) {
 
   var fn = d.__call__;
   d.__call__ = function(text, pattern) {
-    if (pattern != undefined) {
+    if ( pattern != undefined ) {
       return fn.call(this, text, pattern);
     }
     else
@@ -1080,7 +1108,7 @@ Markdown.DialectHelpers.inline_until_char = function( text, want ) {
       nodes = [];
 
   while ( true ) {
-    if ( text[ consumed ] == want ) {
+    if ( text.charAt( consumed ) == want ) {
       // Found the character we were looking for
       consumed++;
       return [ consumed, nodes ];
@@ -1091,7 +1119,7 @@ Markdown.DialectHelpers.inline_until_char = function( text, want ) {
       return null;
     }
 
-    res = this.dialect.inline.__oneElement__.call(this, text.substr( consumed ) );
+    var res = this.dialect.inline.__oneElement__.call(this, text.substr( consumed ) );
     consumed += res[ 0 ];
     // Add any returned nodes.
     nodes.push.apply( nodes, res.slice( 1 ) );
@@ -1125,11 +1153,11 @@ Markdown.dialects.Maruku.processMetaHash = function processMetaHash( meta_string
     // class: .foo
     else if ( /^\./.test( meta[ i ] ) ) {
       // if class already exists, append the new one
-      if ( attr['class'] ) {
-        attr['class'] = attr['class'] + meta[ i ].replace( /./, " " );
+      if ( attr["class"] ) {
+        attr["class"] = attr["class"] + meta[ i ].replace( /./, " " );
       }
       else {
-        attr['class'] = meta[ i ].substring( 1 );
+        attr["class"] = meta[ i ].substring( 1 );
       }
     }
     // attribute: foo=bar
@@ -1334,7 +1362,7 @@ Markdown.buildBlockOrder ( Markdown.dialects.Maruku.block );
 Markdown.buildInlinePatterns( Markdown.dialects.Maruku.inline );
 
 var isArray = Array.isArray || function(obj) {
-  return Object.prototype.toString.call(obj) == '[object Array]';
+  return Object.prototype.toString.call(obj) == "[object Array]";
 };
 
 var forEach;
@@ -1350,6 +1378,16 @@ else {
       cb.call(thisp || arr, arr[i], i, arr);
     }
   }
+}
+
+var isEmpty = function( obj ) {
+  for ( var key in obj ) {
+    if ( hasOwnProperty.call( obj, key ) ) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function extract_attr( jsonml ) {
@@ -1423,7 +1461,7 @@ function render_tree( jsonml ) {
   }
 
   while ( jsonml.length ) {
-    content.push( arguments.callee( jsonml.shift() ) );
+    content.push( render_tree( jsonml.shift() ) );
   }
 
   var tag_attrs = "";
@@ -1447,7 +1485,7 @@ function convert_tree_to_html( tree, references, options ) {
   // shallow clone
   var jsonml = tree.slice( 0 );
 
-  if (typeof options.preprocessTreeNode === "function") {
+  if ( typeof options.preprocessTreeNode === "function" ) {
       jsonml = options.preprocessTreeNode(jsonml, references);
   }
 
@@ -1492,7 +1530,7 @@ function convert_tree_to_html( tree, references, options ) {
       jsonml[ 0 ] = "pre";
       i = attrs ? 2 : 1;
       var code = [ "code" ];
-      code.push.apply( code, jsonml.splice( i ) );
+      code.push.apply( code, jsonml.splice( i, jsonml.length - i ) );
       jsonml[ i ] = code;
       break;
     case "inlinecode":
@@ -1574,7 +1612,7 @@ function convert_tree_to_html( tree, references, options ) {
   }
 
   for ( ; i < jsonml.length; ++i ) {
-    jsonml[ i ] = arguments.callee( jsonml[ i ], references, options );
+    jsonml[ i ] = convert_tree_to_html( jsonml[ i ], references, options );
   }
 
   return jsonml;
@@ -1599,7 +1637,7 @@ function merge_text_nodes( jsonml ) {
     }
     // if it's not a string recurse
     else {
-      arguments.callee( jsonml[ i ] );
+      merge_text_nodes( jsonml[ i ] );
       ++i;
     }
   }

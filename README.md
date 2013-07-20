@@ -76,6 +76,7 @@ It profits from these great projects:
 * updates jQuery to 2.0.3
 * updates jQuery.mousewheel to 3.1.3
 * updates Moment.js to 2.1.0
+* updates markdown-js to 0.4.0-9c21acdf08
 * adds `uk` translation by Viktor Matveenko
 * updates to `pl` translation by Mark
 
