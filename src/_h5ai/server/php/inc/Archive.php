@@ -79,10 +79,11 @@ class Archive {
 		}
 		foreach ($files as $real_file => $archived_file) {
 
-			echo $this->php_tar_fileheader($real_file, $archived_file);
+			$size = $filesizes[$real_file];
+
+			echo $this->php_tar_fileheader($real_file, $archived_file, $size);
 			$this->print_file($real_file);
 
-			$size = $filesizes[$real_file];
 			if ($size % 512 != 0) {
 				echo str_repeat("\0", 512 - ($size % 512));
 			}
@@ -98,9 +99,9 @@ class Archive {
 	}
 
 
-	private function php_tar_fileheader($real_file, $archived_file) {
+	private function php_tar_fileheader($real_file, $archived_file, $size) {
 
-		return $this->php_tar_header($archived_file, @filesize($real_file), @filemtime($real_file), 0);
+		return $this->php_tar_header($archived_file, $size, @filemtime($real_file), 0);
 	}
 
 
