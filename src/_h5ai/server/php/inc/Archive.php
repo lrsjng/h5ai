@@ -75,13 +75,13 @@ class Archive {
 
 		foreach ($dirs as $archived_dir) {
 
-			echo $this->php_tar_dirheader($archived_dir);
+			echo $this->php_tar_header($archived_dir, 0, 0, 5);
 		}
 		foreach ($files as $real_file => $archived_file) {
 
 			$size = $filesizes[$real_file];
 
-			echo $this->php_tar_fileheader($real_file, $archived_file, $size);
+			echo $this->php_tar_header($archived_file, $size, @filemtime($real_file), 0);
 			$this->print_file($real_file);
 
 			if ($size % 512 != 0) {
@@ -90,18 +90,6 @@ class Archive {
 		}
 
 		return 0;
-	}
-
-
-	private function php_tar_dirheader($archived_dir) {
-
-		return $this->php_tar_header($archived_dir, 0, 0, 5);
-	}
-
-
-	private function php_tar_fileheader($real_file, $archived_file, $size) {
-
-		return $this->php_tar_header($archived_file, $size, @filemtime($real_file), 0);
 	}
 
 
