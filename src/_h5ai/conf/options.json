@@ -199,7 +199,7 @@ Options
 	*/
 	"preview-img": {
 		"enabled": true,
-		"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
+		"types": ["bmp", "gif", "ico", "image", "jpg", "png"]
 	},
 
 	/*
@@ -296,7 +296,7 @@ Options
 	*/
 	"thumbnails": {
 		"enabled": true,
-		"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+		"img": ["bmp", "gif", "ico", "image", "jpg", "png"],
 		"mov": ["video"],
 		"doc": ["pdf", "ps"],
 		"delay": 1
