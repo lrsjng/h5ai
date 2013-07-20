@@ -22,7 +22,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
 				duration = 200;
 
 			if (re) {
-				$('#items .item').each(function () {
+				$('#items .item').not('.folder-parent').each(function () {
 
 					var label = $(this).find('.label').text();
 
@@ -33,12 +33,12 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
 					}
 				});
 			} else {
-				match = $('#items .item');
+				match = $('#items .item').not('.folder-parent');
 			}
 
-			if ($(match).length) {
+			if (match.length) {
 				$noMatch.hide();
-			} else {
+			} else if (noMatch.length) {
 				setTimeout(function () { $noMatch.show(); }, duration);
 			}
 			$(match).fadeIn(duration);
