@@ -60,7 +60,7 @@ if (array_key_exists("action", $_REQUEST)) {
 	header("Content-type: text/html;charset=utf-8");
 
 	$HREF = $app->get_app_abs_href();
-	$FALLBACK = $app->get_no_js_fallback();
+	$FALLBACK = $app->get_fallback();
 
 	normalized_require_once("/server/php/inc/page.php");
 }

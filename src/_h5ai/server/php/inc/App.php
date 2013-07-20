@@ -197,7 +197,7 @@ class App {
 	}
 
 
-	public function get_no_js_fallback() {
+	public function get_fallback() {
 
 		date_default_timezone_set("UTC");
 
