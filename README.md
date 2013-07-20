@@ -75,6 +75,7 @@ It profits from these great projects:
 * updates H5BP to 4.2.0
 * updates jQuery to 2.0.3
 * updates jQuery.mousewheel to 3.1.3
+* updates Moment.js to 2.1.0
 * adds `uk` translation by Viktor Matveenko
 * updates to `pl` translation by Mark
 
