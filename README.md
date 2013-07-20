@@ -72,6 +72,7 @@ It profits from these great projects:
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
 * now uses `SVG` images for the interface
+* fixes filter (ignore parent folder, display of `no match`)
 * updates H5BP to 4.2.0
 * updates jQuery to 2.0.3
 * updates jQuery.mousewheel to 3.1.3
