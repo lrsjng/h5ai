@@ -59,7 +59,7 @@ class Archive {
 	private function php_tar($dirs, $files) {
 
 		$filesizes = array();
-		$total_size = 0;
+		$total_size = 512 * count($dirs);
 		foreach (array_keys($files) as $real_file) {
 
 			$size = filesize($real_file);
