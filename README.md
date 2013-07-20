@@ -66,6 +66,7 @@ It profits from these great projects:
 * uses History API if available (way faster browsing)
 * faster thumbnail generation if EXIF thumbnails available
 * adds optional custom headers/footers that are propageted to all subfolders
+* optional hide parent folder links
 * some fixes on previews
 * speeds up packaged downloads
 * add line wrap and line highlighting (on hover) to text preview
