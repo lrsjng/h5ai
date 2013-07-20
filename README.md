@@ -74,6 +74,7 @@ It profits from these great projects:
 * now uses `SVG` images for the interface
 * updates H5BP to 4.2.0
 * updates jQuery to 2.0.3
+* updates jQuery.mousewheel to 3.1.3
 * adds `uk` translation by Viktor Matveenko
 * updates to `pl` translation by Mark
 
