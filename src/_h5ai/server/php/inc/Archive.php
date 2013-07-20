@@ -94,69 +94,47 @@ class Archive {
 
 	private function php_tar_dirheader($archived_dir) {
 
-		$name = substr(basename($archived_dir), -99);
-		$prefix = substr(normalize_path(dirname($archived_dir)), -154);
-		if ($prefix === '.') {
-			$prefix = '';
-		}
-
-		$dir_header =
-			str_pad($name, 100, "\0")  // filename [100]
-			. "0000755\0"  // file mode [8]
-			. "0000000\0"  // uid [8]
-			. "0000000\0"  // gid [8]
-			. "00000000000\0"  // file size [12]
-			. "00000000000\0"  // file modification time [12]
-			. "        "  // checksum [8]
-			. "5"  // file type [1]
-			. str_repeat("\0", 100)  // linkname [100]
-			. "ustar\0"  // magic [6]
-			. "00"  // version [2]
-			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]  ?92?
-			. str_pad($prefix, 155, "\0")  // filename [155]
-			. str_repeat("\0", 12);  // fill [12]
-		assert(strlen($dir_header) === 512);
-
-		// checksum
-		$checksum = array_sum(array_map('ord', str_split($dir_header)));
-		$checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT) . "\0 ";
-		$dir_header = substr_replace($dir_header, $checksum, 148, 8);
-
-		return $dir_header;
+		return $this->php_tar_header($archived_dir, 0, 0, 5);
 	}
 
 
 	private function php_tar_fileheader($real_file, $archived_file) {
 
-		$name = substr(basename($archived_file), -99);
-		$prefix = substr(normalize_path(dirname($archived_file)), -154);
+		return $this->php_tar_header($archived_file, @filesize($real_file), @filemtime($real_file), 0);
+	}
+
+
+	private function php_tar_header($filename, $size, $mtime, $type) {
+
+		$name = substr(basename($filename), -99);
+		$prefix = substr(normalize_path(dirname($filename)), -154);
 		if ($prefix === '.') {
 			$prefix = '';
 		}
 
-		$file_header =
+		$header =
 			str_pad($name, 100, "\0")  // filename [100]
 			. "0000755\0"  // file mode [8]
 			. "0000000\0"  // uid [8]
 			. "0000000\0"  // gid [8]
-			. str_pad(decoct(@filesize($real_file)), 11, "0", STR_PAD_LEFT) . "\0"  // file size [12]
-			. str_pad(decoct(@filemtime($real_file)), 11, "0", STR_PAD_LEFT) . "\0"  // file modification time [12]
+			. str_pad(decoct($size), 11, "0", STR_PAD_LEFT) . "\0"  // file size [12]
+			. str_pad(decoct($mtime), 11, "0", STR_PAD_LEFT) . "\0"  // file modification time [12]
 			. "        "  // checksum [8]
-			. "0"  // file type [1]
+			. str_pad($type, 1)  // file type [1]
 			. str_repeat("\0", 100)  // linkname [100]
 			. "ustar\0"  // magic [6]
 			. "00"  // version [2]
 			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]  ?92?
 			. str_pad($prefix, 155, "\0")  // filename [155]
 			. str_repeat("\0", 12);  // fill [12]
-		assert(strlen($file_header) === 512);
+		assert(strlen($header) === 512);
 
 		// checksum
-		$checksum = array_sum(array_map('ord', str_split($file_header)));
+		$checksum = array_sum(array_map('ord', str_split($header)));
 		$checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT) . "\0 ";
-		$file_header = substr_replace($file_header, $checksum, 148, 8);
+		$header = substr_replace($header, $checksum, 148, 8);
 
-		return $file_header;
+		return $header;
 	}
 
 
