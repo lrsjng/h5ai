@@ -15,14 +15,18 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'cor
 							'<div class="progress"><div class="bar"/></div>' +
 						'</li>',
 
+		data = {
+			action: 'upload',
+			href: ''
+		},
+
 		init = function () {
 
 			if (!settings.enabled || !server.api) {
 				return;
 			}
 
-			var $content = $('#content').append(template),
-				data = {};
+			var $content = $('#content').append(template);
 
 			var uploads = {},
 				afterUpload = function (err, file) {
@@ -111,14 +115,10 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'cor
 
 			event.sub('location.changed', function (item) {
 
-				$('#uploads').empty();
-				data = {
-					action: 'upload',
-					href: item.absHref
-				};
+				// $('#uploads').empty();
+				data.href = item.absHref;
 			});
 		};
 
-	// disabled while broken
-	// init();
+	init();
 });
