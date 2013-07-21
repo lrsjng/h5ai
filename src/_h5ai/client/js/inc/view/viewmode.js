@@ -1,5 +1,5 @@
 
-modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store'], function (_, $, allsettings, resource, store) {
+modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event'], function (_, $, allsettings, resource, store, event) {
 
 	var modes = ['details', 'list', 'grid', 'icons'],
 
@@ -66,6 +66,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
 			update(store.get(storekey));
 
+			event.sub('location.changed', adjustSpacing);
 			$(window).on('resize', adjustSpacing);
 		};
 
