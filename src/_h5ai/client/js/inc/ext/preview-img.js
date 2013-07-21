@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/entry'], function (_, $, allsettings, resource, store, event, entry) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/location'], function (_, $, allsettings, resource, store, event, location) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -9,6 +9,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 		template = '<div id="pv-img-overlay" class="noSelection">' +
 						'<div id="pv-img-content">' +
 							'<img id="pv-img-image"/>' +
+						'</div>' +
+						'<div id="pv-spinner">' +
+							'<img src="' + resource.image('spinner') + '"/>' +
 						'</div>' +
 						'<div id="pv-img-close"/>' +
 						'<div id="pv-img-prev"/>' +
@@ -28,7 +31,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 						'</div>' +
 					'</div>',
 
-		storekey = 'h5ai.preview-img.isFullscreen',
+		storekey = 'preview-img.isFullscreen',
 
 		currentEntries = [],
 		currentIdx = 0,
@@ -38,11 +41,13 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			var rect = $(window).fracs('viewport'),
 				$container = $('#pv-img-content'),
+				$spinner = $('#pv-spinner'),
+				$spinnerimg = $spinner.find('img').width(100).height(100),
 				$img = $('#pv-img-image'),
 				margin = isFullscreen ? 0 : 20,
 				barheight = isFullscreen ? 0 : 31;
 
-			$container.css({
+			$container.add($spinner).css({
 				width: rect.width - 2 * margin,
 				height: rect.height - 2 * margin - barheight,
 				left: margin,
@@ -54,6 +59,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 			$img.css({
 				margin: '' + tb + 'px ' + lr + 'px'
+			});
+			$spinnerimg.css({
+				margin: '' + (($spinner.height() - $spinnerimg.height()) / 2) + 'px ' + (($spinner.width() - $spinnerimg.height()) / 2) + 'px'
 			});
 
 			rect = $img.fracs('rect');
@@ -75,6 +83,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 				height: rect.height
 			});
 
+			$('#pv-img-bar-percent').text('' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%');
 			if (isFullscreen) {
 				$('#pv-img-overlay').addClass('fullscreen');
 				$('#pv-img-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
@@ -88,26 +97,13 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 
 		preloadImg = function (src, callback) {
 
-			var $hidden = $('<div><img/></div>')
-							.css({
-								position: 'absolute',
-								overflow: 'hidden',
-								width: 0,
-								height: 0
-							})
-							.appendTo('body'),
-				$img = $hidden.find('img')
-							.one('load', function () {
+			var $img = $('<img/>')
+				.one('load', function () {
 
-								var width = $img.width(),
-									height = $img.height();
-
-								$hidden.remove();
-
-								callback(width, height);
-								// setTimeout(function () { callback(width, height); }, 1000); // for testing
-							})
-							.attr('src', src);
+					callback($img);
+					// setTimeout(function () { callback($img); }, 1000); // for testing
+				})
+				.attr('src', src);
 		},
 
 		onIndexChange = function (idx) {
@@ -117,45 +113,39 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			var $container = $('#pv-img-content'),
 				$img = $('#pv-img-image'),
 				src = currentEntries[currentIdx].absHref,
-				spinnerTimeout = setTimeout(function () {
+				spinnerTimeout = setTimeout(function () { $('#pv-spinner').show(); }, 200);
 
-					$container.spin({
-						length: 12,
-						width: 4,
-						radius: 24,
-						color: '#ccc',
-						shadow: true
-					});
-				}, 200);
-
-			preloadImg(src, function (width, height) {
+			preloadImg(src, function ($preloaded_img) {
 
 				clearTimeout(spinnerTimeout);
-				$container.spin(false);
+				$('#pv-spinner').hide();
 
-				$img.fadeOut(100, function () {
+				$('#pv-img-image').fadeOut(100, function () {
 
-					$img.attr('src', src).fadeIn(200);
+					$('#pv-img-image').replaceWith($preloaded_img.hide());
+					$preloaded_img.attr('id', 'pv-img-image').fadeIn(200);
 
-					// small timeout, so $img is visible and therefore $img.width is available
+					// small timeout, so $preloaded_img is visible and therefore $preloaded_img.width is available
 					setTimeout(function () {
+
 						adjustSize();
-						$('#pv-img-bar-percent').text('' + (100 * $img.width() / width).toFixed(0) + '%');
 						$('#pv-img-bar-label').text(currentEntries[currentIdx].label);
-						$('#pv-img-bar-size').text('' + width + 'x' + height);
+						$('#pv-img-bar-size').text('' + $preloaded_img[0].naturalWidth + 'x' + $preloaded_img[0].naturalHeight);
 						$('#pv-img-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
 						$('#pv-img-bar-original').find('a').attr('href', currentEntries[currentIdx].absHref);
-					}, 1);
+					}, 10);
 				});
 			});
 		},
 
-		onEnter = function (entries, idx) {
+		onEnter = function (items, idx) {
 
 			$(window).on('keydown', onKeydown);
+			$('#pv-img-image').hide();
 			$('#pv-img-overlay').stop(true, true).fadeIn(200);
 
-			currentEntries = entries;
+			currentEntries = items;
+			adjustSize();
 			onIndexChange(idx);
 		},
 
@@ -188,44 +178,57 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 			var key = event.which;
 
 			if (key === 27) { // esc
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onExit();
 			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onPrevious();
 			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onNext();
 			} else if (key === 70) { // f
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onFullscreen();
 			}
-
-			event.preventDefault();
-			event.stopImmediatePropagation();
 		},
 
-		initEntry = function (entry) {
+		initItem = function (item) {
 
-			if (entry.$extended && _.indexOf(settings.types, entry.type) >= 0) {
-				entry.$extended.find('a').on('click', function (event) {
+			if (item.$view && _.indexOf(settings.types, item.type) >= 0) {
+				item.$view.find('a').on('click', function (event) {
 
 					event.preventDefault();
 
-					var matchedEntries = _.compact(_.map($('#extended .entry'), function (entry) {
+					var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
 
-						entry = $(entry).data('entry');
-						return _.indexOf(settings.types, entry.type) >= 0 ? entry : null;
+						item = $(item).data('item');
+						return _.indexOf(settings.types, item.type) >= 0 ? item : null;
 					}));
 
-					onEnter(matchedEntries, _.indexOf(matchedEntries, entry));
+					onEnter(matchedEntries, _.indexOf(matchedEntries, item));
 				});
 			}
 		},
 
-		init = function (entry) {
+		onLocationChanged = function (item) {
+
+			_.each(item.content, initItem);
+		},
+
+		onLocationRefreshed = function (item, added, removed) {
+
+			_.each(added, initItem);
+		},
+
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
 			}
-
-			_.each(entry.content, initEntry);
 
 			$(template).appendTo('body');
 			$('#pv-img-bar-prev, #pv-img-prev').on('click', onPrevious);
@@ -276,10 +279,11 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/resource', 
 					event.stopImmediatePropagation();
 				});
 
-			event.sub('entry.created', initEntry);
+			event.sub('location.changed', onLocationChanged);
+			event.sub('location.refreshed', onLocationRefreshed);
 
 			$(window).on('resize load', adjustSize);
 		};
 
-	init(entry);
+	init();
 });

@@ -135,16 +135,28 @@ class App {
 
 	public function get_http_code($abs_href) {
 
-		if (!is_dir($this->get_abs_path($abs_href))) {
+		$abs_path = $this->get_abs_path($abs_href);
+
+		if (!is_dir($abs_path)) {
 			return 500;
 		}
-
-		$abs_path = $this->get_abs_path($abs_href);
 
 		foreach ($this->options["view"]["indexFiles"] as $if) {
 			if (file_exists($abs_path . "/" . $if)) {
 				return 200;
 			}
+		}
+
+		$p = $abs_path;
+		while ($p !== $this->root_abs_path) {
+			if (@is_dir($p . "/_h5ai/server")) {
+				return 200;
+			}
+			$pp = normalize_path(dirname($p));
+			if ($pp === $p) {
+				return 200;
+			}
+			$p = $pp;
 		}
 		return App::$MAGIC_SEQUENCE;
 	}
@@ -152,19 +164,19 @@ class App {
 
 	public function get_generic_json() {
 
-		return json_encode(array("entries" => $this->get_entries($this->abs_href, 1))) . "\n";
+		return json_encode(array("items" => $this->get_items($this->abs_href, 1))) . "\n";
 	}
 
 
-	public function get_entries($abs_href, $what) {
+	public function get_items($abs_href, $what) {
 
 		$cache = array();
-		$folder = Entry::get($this, $this->get_abs_path($abs_href), $cache);
+		$folder = Item::get($this, $this->get_abs_path($abs_href), $cache);
 
 		// add content of subfolders
 		if ($what >= 2 && $folder !== null) {
-			foreach ($folder->get_content($cache) as $entry) {
-				$entry->get_content($cache);
+			foreach ($folder->get_content($cache) as $item) {
+				$item->get_content($cache);
 			}
 			$folder = $folder->get_parent($cache);
 		}
@@ -175,36 +187,36 @@ class App {
 			$folder = $folder->get_parent($cache);
 		}
 
-		uasort($cache, array("Entry", "cmp"));
+		uasort($cache, array("Item", "cmp"));
 		$result = array();
-		foreach ($cache as $p => $entry) {
-			$result[] = $entry->to_json_object();
+		foreach ($cache as $p => $item) {
+			$result[] = $item->to_json_object();
 		}
 
 		return $result;
 	}
 
 
-	public function get_no_js_fallback() {
+	public function get_fallback() {
 
 		date_default_timezone_set("UTC");
 
 		$cache = array();
-		$folder = Entry::get($this, $this->abs_path, $cache);
-		$entries = $folder->get_content($cache);
-		uasort($entries, array("Entry", "cmp"));
+		$folder = Item::get($this, $this->abs_path, $cache);
+		$items = $folder->get_content($cache);
+		uasort($items, array("Item", "cmp"));
 
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
 		if ($folder->get_parent($cache)) {
 			$html .= "<tr><td><img src=\"" . $this->app_abs_href . "client/icons/16x16/folder-parent.png\"/></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
 		}
-		foreach ($entries as $entry) {
+		foreach ($items as $item) {
 			$html .= "<tr>";
-			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/16x16/" . ($entry->is_folder ? "folder" : "default") . ".png\"/></td>";
-			$html .= "<td><a href=\"" . $entry->abs_href . "\">" . basename($entry->abs_path) . "</a></td>";
-			$html .= "<td>" . date("Y-m-d H:i", $entry->date) . "</td>";
-			$html .= "<td>" . ($entry->size !== null ? intval($entry->size / 1000) . " KB" : "" ) . "</td>";
+			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/16x16/" . ($item->is_folder ? "folder" : "default") . ".png\"/></td>";
+			$html .= "<td><a href=\"" . $item->abs_href . "\">" . basename($item->abs_path) . "</a></td>";
+			$html .= "<td>" . date("Y-m-d H:i", $item->date) . "</td>";
+			$html .= "<td>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
 			$html .= "</tr>";
 		}
 		$html .= "</table>";
@@ -261,24 +273,23 @@ class App {
 	public function get_server_checks() {
 
 		$php = version_compare(PHP_VERSION, "5.2.1") >= 0;
-		$archive = class_exists("PharData");
 		$gd = false;
 		if (function_exists("gd_info")) {
 			$gdinfo = gd_info();
 			$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 		}
 		$cache = @is_writable($this->get_cache_abs_path());
-		$tar = @preg_match("/tar$/", `which tar`) > 0;
-		$zip = @preg_match("/zip$/", `which zip`) > 0;
-		$convert = @preg_match("/convert$/", `which convert`) > 0;
-		$ffmpeg = @preg_match("/ffmpeg$/", `which ffmpeg`) > 0;
-		$du = @preg_match("/du$/", `which du`) > 0;
+		$tar = @preg_match("/tar(.exe)?$/i", `which tar`) > 0;
+		$zip = @preg_match("/zip(.exe)?$/i", `which zip`) > 0;
+		$convert = @preg_match("/convert(.exe)?$/i", `which convert`) > 0;
+		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", `which ffmpeg`) > 0;
+		$du = @preg_match("/du(.exe)?$/i", `which du`) > 0;
 
 		return array(
+			"idx" => $this->app_abs_href . "server/php/index.php",
 			"php" => $php,
 			"cache" => $cache,
 			"thumbs" => $gd,
-			"archive" => $archive,
 			"tar" => $tar,
 			"zip" => $zip,
 			"convert" => $convert,
@@ -301,12 +312,40 @@ class App {
 
 	public function get_customizations($abs_href) {
 
-		$abs_path = $this->get_abs_path($abs_href);
+		if (!$this->options["custom"]["enabled"]) {
+			return array(
+				"header" => null,
+				"footer" => null
+			);
+		}
 
+		$abs_path = $this->get_abs_path($abs_href);
 		$file = $abs_path . "/" . App::$FILE_PREFIX . ".header.html";
-		$header = is_string($file) && file_exists($file) ? file_get_contents($file) : null;
+		$header = is_readable($file) ? file_get_contents($file) : null;
 		$file = $abs_path . "/" . App::$FILE_PREFIX . ".footer.html";
-		$footer = is_string($file) && file_exists($file) ? file_get_contents($file) : null;
+		$footer = is_readable($file) ? file_get_contents($file) : null;
+
+		$p = $abs_path;
+		while ($header === null || $footer === null) {
+
+			if ($header === null) {
+				$file = $p . "/" . App::$FILE_PREFIX . ".headers.html";
+				$header = is_readable($file) ? file_get_contents($file) : null;
+			}
+			if ($footer === null) {
+				$file = $p . "/" . App::$FILE_PREFIX . ".footers.html";
+				$footer = is_readable($file) ? file_get_contents($file) : null;
+			}
+
+			if ($p === $this->root_abs_path) {
+				break;
+			}
+			$pp = normalize_path(dirname($p));
+			if ($pp === $p) {
+				break;
+			}
+			$p = $pp;
+		}
 
 		return array(
 			"header" => $header,

@@ -1,0 +1,41 @@
+
+#view.view-grid {
+
+	li {
+
+		&.item {
+			float: left;
+
+			a, a:active, a:visited {
+				float: left;
+				margin: 2px;
+				padding: 8px;
+				width: 164px;
+				height: 24px;
+				border: 1px solid rgba(0,0,0,0);
+
+				&:hover, &.hover {
+					border-color: @item-border-col-hover;
+				}
+			}
+		}
+
+		.icon.small {
+			display: inline-block;
+			position: absolute;
+			left: 11px;
+			top: 9px;
+			width: 16px;
+		}
+
+		.label {
+			display: block;
+			max-width: 140px;
+			margin: 0 0 0 24px;
+		}
+
+		.date, .size {
+			display: none;
+		}
+	}
+}

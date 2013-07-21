@@ -1,0 +1,58 @@
+
+#view.view-details {
+
+	li {
+
+		&.header {
+			display: list-item;
+		}
+
+		&.item {
+
+			a, a:active, a:visited {
+				border-top: 1px solid @item-border-col-sep;
+				border-bottom: 1px solid @item-border-col-sep;
+
+				&:hover, &.hover {
+					border-color: @item-border-col-hover;
+				}
+			}
+
+			// needs to be here, to not conflict with header fields
+			.icon, .label, .date, .size {
+				padding: 8px 6px;
+			}
+		}
+
+		&.item + .item {
+
+			a, a:active, a:visited {
+				border-top: none;
+			}
+		}
+
+		.icon.small {
+			display: inline-block;
+			position: absolute;
+			left: 0;
+			top: -2px;
+			width: 16px;
+		}
+
+		.label {
+			margin: 0 270px 0 24px;
+		}
+
+		.date {
+			position: absolute;
+			right: 100px;
+			top: 0;
+		}
+
+		.size {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+}

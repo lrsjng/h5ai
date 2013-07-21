@@ -1,5 +1,5 @@
 
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/event', 'core/server'], function (_, allsettings, entry, event, server) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server'], function (_, allsettings, event, server) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -25,53 +25,66 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/entry', 'core/eve
 			});
 		},
 
-		checkEntry = function (entry) {
+		checkItem = function (item) {
 
-			if (entry.$extended) {
+			var type = null;
 
-				var type = null;
+			if (_.indexOf(settings.img, item.type) >= 0) {
+				type = 'img';
+			} else if (_.indexOf(settings.mov, item.type) >= 0) {
+				type = 'mov';
+			} else if (_.indexOf(settings.doc, item.type) >= 0) {
+				type = 'doc';
+			}
 
-				if (_.indexOf(settings.img, entry.type) >= 0) {
-					type = 'img';
-				} else if (_.indexOf(settings.mov, entry.type) >= 0) {
-					type = 'mov';
-				} else if (_.indexOf(settings.doc, entry.type) >= 0) {
-					type = 'doc';
-				}
+			if (type) {
+				if (item.thumbSmall) {
+					item.$view.find('.icon.small img').addClass('thumb').attr('src', item.thumbSmall);
+				} else {
+					requestThumbSmall(type, item.absHref, function (src) {
 
-				if (type) {
-					requestThumbSmall(type, entry.absHref, function (src) {
-
-						if (src) {
-							entry.$extended.find('.icon.small img').addClass('thumb').attr('src', src);
+						if (src && item.$view) {
+							item.thumbSmall = src;
+							item.$view.find('.icon.small img').addClass('thumb').attr('src', src);
 						}
 					});
-					requestThumbBig(type, entry.absHref, function (src) {
+				}
+				if (item.thumbBig) {
+					item.$view.find('.icon.big img').addClass('thumb').attr('src', item.thumbBig);
+				} else {
+					requestThumbBig(type, item.absHref, function (src) {
 
-						if (src) {
-							entry.$extended.find('.icon.big img').addClass('thumb').attr('src', src);
+						if (src && item.$view) {
+							item.thumbBig = src;
+							item.$view.find('.icon.big img').addClass('thumb').attr('src', src);
 						}
 					});
 				}
 			}
 		},
 
-		init = function (entry) {
+		onLocationChanged = function (item) {
+
+			setTimeout(function () {
+
+				_.each(item.content, checkItem);
+			}, settings.delay);
+		},
+
+		onLocationRefreshed = function (item, added, removed) {
+
+			_.each(added, checkItem);
+		},
+
+		init = function () {
 
 			if (!settings.enabled || !server.api) {
 				return;
 			}
 
-			setTimeout(function () {
-
-				_.each(entry.content, checkEntry);
-			}, settings.delay);
-
-			event.sub('entry.created', function (entry) {
-
-				checkEntry(entry);
-			});
+			event.sub('location.changed', onLocationChanged);
+			event.sub('location.refreshed', onLocationRefreshed);
 		};
 
-	init(entry);
+	init();
 });

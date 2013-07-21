@@ -77,6 +77,7 @@ function load_commented_json($file) {
 	return json_decode($str, true);
 }
 
+/* unused
 function merge_config($a, $b) {
 
 	$result = array_merge(array(), $a);
@@ -87,5 +88,6 @@ function merge_config($a, $b) {
 
 	return $result;
 }
+*/
 
 ?>

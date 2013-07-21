@@ -1,8 +1,7 @@
 
 modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 
-	var reParseSize = /^\s*([\.\d]+)\s*([kmgt]?)b?\s*$/i,
-		decimalMetric = {
+	var decimalMetric = {
 			t: 1000.0,
 			k: 1000.0,
 			u: ['B', 'KB', 'MB', 'GB', 'TB']
@@ -15,39 +14,9 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 		defaultMetric = decimalMetric,
 		defaultDateFormat = 'YYYY-MM-DD HH:mm',
 
-		parseSize = function (str) {
+		setDefaultMetric = function (useBinaryMetric) {
 
-			var match = reParseSize.exec(str),
-				kilo = decimalMetric.k,
-				val, unit;
-
-			if (!match) {
-				return null;
-			}
-
-			val = parseFloat(match[1]);
-			unit = match[2].toLowerCase();
-			if (unit === 'k') {
-				val *= kilo;
-			} else if (unit === 'm') {
-				val *= kilo * kilo;
-			} else if (unit === 'g') {
-				val *= kilo * kilo * kilo;
-			} else if (unit === 't') {
-				val *= kilo * kilo * kilo * kilo;
-			}
-			return val;
-		},
-
-		setDefaultMetric = function (metric) {
-
-			if (!metric) {
-				defaultMetric = decimalMetric;
-			} else if (metric === true) {
-				defaultMetric = binaryMetric;
-			} else {
-				defaultMetric = metric;
-			}
+			defaultMetric = useBinaryMetric ? binaryMetric : decimalMetric;
 		},
 
 		formatSize = function (size, metric) {
@@ -73,30 +42,15 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 			defaultDateFormat = dateFormat;
 		},
 
-		parseDate = function (str, dateFormat) {
+		formatDate = function (millis) {
 
-			try { // problems with ie < 9 :(
-				return moment(str, dateFormat || defaultDateFormat).valueOf() || null;
-			} catch (err) {}
-
-			return Date.parse(str).valueOf() || null;
-		},
-
-		formatDate = function (millis, dateFormat) {
-
-			if (!_.isNumber(millis) || !millis) {
-				return '';
-			}
-
-			return moment(millis).format(dateFormat || defaultDateFormat);
+			return _.isNumber(millis) && millis ? moment(millis).format(defaultDateFormat) : '';
 		};
 
 	return {
-		parseSize: parseSize,
 		setDefaultMetric: setDefaultMetric,
 		formatSize: formatSize,
 		setDefaultDateFormat: setDefaultDateFormat,
-		parseDate: parseDate,
 		formatDate: formatDate
 	};
 });

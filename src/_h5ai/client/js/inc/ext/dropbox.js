@@ -1,5 +1,5 @@
 
-modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/refresh', 'core/server'], function (_, $, allsettings, entry, refresh, server) {
+modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'core/server', 'core/event'], function (_, $, allsettings, location, server, event) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -14,6 +14,11 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 							'<span class="size"/>' +
 							'<div class="progress"><div class="bar"/></div>' +
 						'</li>',
+
+		data = {
+			action: 'upload',
+			href: ''
+		},
 
 		init = function () {
 
@@ -41,71 +46,77 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/entry', 'core/r
 					}
 				};
 
-			$content.filedrop({
+			event.sub('ready', function () {
 
-				paramname: 'userfile',
+				$content.filedrop({
 
-				maxfiles: settings.maxfiles,
-				maxfilesize: settings.maxfilesize,
-				url: server.api,
-				data: {
-					action: 'upload',
-					href: entry.absHref
-				},
+					paramname: 'userfile',
 
-				docEnter: function () {
+					maxfiles: settings.maxfiles,
+					maxfilesize: settings.maxfilesize,
+					url: location.getAbsHref(),
+					data: data,
 
-					$content.addClass('hint');
-				},
+					docEnter: function () {
 
-				docLeave: function () {
+						$content.addClass('hint');
+					},
 
-					$content.removeClass('hint');
-				},
+					docLeave: function () {
 
-				dragOver: function () {
+						$content.removeClass('hint');
+					},
 
-					$content.addClass('match');
-				},
+					dragOver: function () {
 
-				dragLeave: function () {
+						$content.addClass('match');
+					},
 
-					$content.removeClass('match');
-				},
+					dragLeave: function () {
 
-				drop: function () {
+						$content.removeClass('match');
+					},
 
-					$content.removeClass('hint match');
-				},
+					drop: function () {
+
+						$content.removeClass('hint match');
+					},
 
 
-				beforeEach: function (file) {
+					beforeEach: function (file) {
 
-					uploads[file.name] = $(uploadTemplate).appendTo('#uploads')
-						.find('.name').text(file.name).end()
-						.find('.size').text(file.size).end()
-						.find('.progress .bar').css('width', 0).end();
-				},
+						uploads[file.name] = $(uploadTemplate).appendTo('#uploads')
+							.find('.name').text(file.name).end()
+							.find('.size').text(file.size).end()
+							.find('.progress .bar').css('width', 0).end();
+					},
 
-				progressUpdated: function (i, file, progress) {
+					progressUpdated: function (i, file, progress) {
 
-					uploads[file.name].find('.progress .bar').css('width', '' + progress + '%');
-				},
+						uploads[file.name].find('.progress .bar').css('width', '' + progress + '%');
+					},
 
-				uploadFinished: function (i, file, response) {
+					uploadFinished: function (i, file, response) {
 
-					afterUpload(response.code && response.msg, file);
-				},
+						afterUpload(response.code && response.msg, file);
+					},
 
-				afterAll: function () {
+					afterAll: function () {
 
-					refresh();
-				},
+						location.refresh();
+					},
 
-				error: function (err, file) {
+					error: function (err, file) {
 
-					afterUpload(err, file);
-				}
+						afterUpload(err, file);
+					}
+				});
+			});
+
+			event.sub('location.changed', function (item) {
+
+				// $('#uploads').empty();
+				data.href = item.absHref;
 			});
 		};
 

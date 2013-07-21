@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/entry'], function (_, $, allsettings, resource, store, event, entry) {
+modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/location'], function (_, $, allsettings, resource, store, event, location) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -33,6 +33,9 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 						'<div id="pv-txt-content">' +
 							'<div id="pv-txt-text"/>' +
 						'</div>' +
+						'<div id="pv-txt-spinner">' +
+							'<img src="' + resource.image('spinner') + '"/>' +
+						'</div>' +
 						'<div id="pv-txt-bottombar" class="clearfix">' +
 							'<ul id="pv-txt-buttons">' +
 								'<li id="pv-txt-bar-size" class="bar-left bar-label"/>' +
@@ -46,11 +49,48 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 						'</div>' +
 					'</div>',
 
-		templateText = '<pre id="pv-txt-text"/>',
+		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
 		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
 		currentEntries = [],
 		currentIdx = 0,
+
+		// adapted from SyntaxHighlighter
+		getHighlightedLines = function (sh, alias, content) {
+
+			var brushes = sh.vars.discoveredBrushes,
+				Brush, brush;
+
+			if (!brushes) {
+				brushes = {};
+
+				_.each(sh.brushes, function (info, brush) {
+
+					var aliases = info.aliases;
+
+					if (aliases) {
+						info.brushName = brush.toLowerCase();
+
+						for (var i = 0; i < aliases.length; i += 1) {
+							brushes[aliases[i]] = brush;
+						}
+					}
+				});
+
+				sh.vars.discoveredBrushes = brushes;
+			}
+
+			Brush = sh.brushes[brushes[alias || 'plain']];
+
+			if (!Brush) {
+				return $();
+			}
+
+			brush = new Brush();
+			brush.init({toolbar: false, gutter: false});
+
+			return $(brush.getHtml(content)).find('.line');
+		},
 
 		loadScript = function (url, globalId, callback) {
 
@@ -80,12 +120,25 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 
 			var $window = $(window),
 				$container = $('#pv-txt-content'),
+				$spinner = $('#pv-txt-spinner'),
+				$spinnerimg = $spinner.find('img').width(100).height(100),
 				margin = 20,
 				barheight = 31;
 
 			$container.css({
 				height: $window.height() - 2 * margin - barheight - 32,
 				top: margin
+			});
+
+			$spinner.css({
+				width: $window.width() - 2 * margin,
+				height: $window.height() - 2 * margin - barheight,
+				left: margin,
+				top: margin
+			});
+
+			$spinnerimg.css({
+				margin: '' + (($spinner.height() - $spinnerimg.height()) / 2) + 'px ' + (($spinner.width() - $spinnerimg.height()) / 2) + 'px'
 			});
 		},
 
@@ -113,28 +166,19 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			var $container = $('#pv-txt-content'),
 				$text = $('#pv-txt-text'),
 				current = currentEntries[currentIdx],
-				spinnerTimeout = setTimeout(function () {
-
-					$container.spin({
-						length: 12,
-						width: 4,
-						radius: 24,
-						color: '#ccc',
-						shadow: true
-					});
-				}, 200);
+				spinnerTimeout = setTimeout(function () { $('#pv-txt-spinner').show(); }, 200);
 
 			preloadText(current.absHref, function (content) {
 
 				clearTimeout(spinnerTimeout);
-				$container.spin(false);
+				$('#pv-txt-spinner').hide();
 
 				$text.fadeOut(100, function () {
 
 					var $nText;
 
 					if (current.type === 'markdown') {
-						$nText = $(templateMarkdown).hide();
+						$nText = $(templateMarkdown).hide().text(content);
 						$text.replaceWith($nText);
 
 						loadMarkdown(function (md) {
@@ -144,13 +188,22 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 							}
 						});
 					} else {
-						$nText = $(templateText).hide().addClass('toolbar: false; brush:').addClass(settings.types[current.type] || 'plain').text(content);
+						$nText = $(templateText).hide().text(content);
 						$text.replaceWith($nText);
 
 						loadSyntaxhighlighter(function (sh) {
 
 							if (sh) {
-								sh.highlight({}, $nText[0]);
+								var $table = $('<table/>');
+
+								getHighlightedLines(sh, settings.types[current.type], content).each(function (i) {
+									$('<tr/>')
+										.append($('<td/>').addClass('nr').append(i + 1))
+										.append($('<td/>').addClass('line').append(this))
+										.appendTo($table);
+								});
+
+								$nText.empty().append($table);
 							}
 						});
 					}
@@ -165,12 +218,12 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			});
 		},
 
-		onEnter = function (entries, idx) {
+		onEnter = function (items, idx) {
 
 			$(window).on('keydown', onKeydown);
 			$('#pv-txt-overlay').stop(true, true).fadeIn(200);
 
-			currentEntries = entries;
+			currentEntries = items;
 			onIndexChange(idx);
 		},
 
@@ -195,42 +248,53 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			var key = event.which;
 
 			if (key === 27) { // esc
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onExit();
 			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onPrevious();
 			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				onNext();
 			}
-
-			event.preventDefault();
-			event.stopImmediatePropagation();
 		},
 
-		initEntry = function (entry) {
+		initItem = function (item) {
 
-			if (entry.$extended && _.indexOf(_.keys(settings.types), entry.type) >= 0) {
-				entry.$extended.find('a').on('click', function (event) {
+			if (item.$view && _.indexOf(_.keys(settings.types), item.type) >= 0) {
+				item.$view.find('a').on('click', function (event) {
 
 					event.preventDefault();
 
-					var matchedEntries = _.compact(_.map($('#extended .entry'), function (entry) {
+					var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
 
-						entry = $(entry).data('entry');
-						return _.indexOf(_.keys(settings.types), entry.type) >= 0 ? entry : null;
+						item = $(item).data('item');
+						return _.indexOf(_.keys(settings.types), item.type) >= 0 ? item : null;
 					}));
 
-					onEnter(matchedEntries, _.indexOf(matchedEntries, entry));
+					onEnter(matchedEntries, _.indexOf(matchedEntries, item));
 				});
 			}
 		},
 
-		init = function (entry) {
+		onLocationChanged = function (item) {
+
+			_.each(item.content, initItem);
+		},
+
+		onLocationRefreshed = function (item, added, removed) {
+
+			_.each(added, initItem);
+		},
+
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
 			}
-
-			_.each(entry.content, initEntry);
 
 			$(template).appendTo('body');
 			$('#pv-txt-bar-prev').on('click', onPrevious);
@@ -253,10 +317,11 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 					event.stopImmediatePropagation();
 				});
 
-			event.sub('entry.created', initEntry);
+			event.sub('location.changed', onLocationChanged);
+			event.sub('location.refreshed', onLocationRefreshed);
 
 			$(window).on('resize load', adjustSize);
 		};
 
-	init(entry);
+	init();
 });

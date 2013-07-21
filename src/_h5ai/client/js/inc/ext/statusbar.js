@@ -1,5 +1,5 @@
 
-modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'core/event', 'core/entry'], function (_, $, allsettings, format, event, entry) {
+modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'core/event'], function (_, $, allsettings, format, event) {
 
 	var settings = _.extend({
 			enabled: false
@@ -29,7 +29,7 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 			}
 		},
 
-		init = function (entry) {
+		init = function () {
 
 			if (!settings.enabled) {
 				return;
@@ -37,57 +37,46 @@ modulejs.define('ext/statusbar', ['_', '$', 'core/settings', 'core/format', 'cor
 
 			var $statusbar = $(template),
 				$folderTotal = $statusbar.find('.folderTotal'),
-				$fileTotal = $statusbar.find('.fileTotal');
+				$fileTotal = $statusbar.find('.fileTotal'),
+				onLocationChanged = function (item) {
+
+					var stats = item.getStats();
+					$folderTotal.text(stats.folders);
+					$fileTotal.text(stats.files);
+				};
 
 			$statusDefault = $statusbar.find('.status.default');
 			$statusDynamic = $statusbar.find('.status.dynamic');
 
-			var stats = entry.getStats();
-			$folderTotal.text(stats.folders);
-			$fileTotal.text(stats.files);
-
-			update();
-
-			event.sub('statusbar', update);
 			$('#bottombar > .center').append($statusbar);
 
-			event.sub('entry.created', function () {
+			event.sub('statusbar', update);
+			event.sub('location.changed', onLocationChanged);
+			event.sub('location.refreshed', onLocationChanged);
 
-				var stats = entry.getStats();
-				$folderTotal.text(stats.folders);
-				$fileTotal.text(stats.files);
-			});
+			event.sub('item.mouseenter', function (item) {
 
-			event.sub('entry.removed', function () {
-
-				var stats = entry.getStats();
-				$folderTotal.text(stats.folders);
-				$fileTotal.text(stats.files);
-			});
-
-			event.sub('entry.mouseenter', function (entry) {
-
-				if (entry.isCurrentParentFolder()) {
+				if (item.isCurrentParentFolder()) {
 					return;
 				}
 
-				var $span = $('<span/>').append(entry.label);
+				var $span = $('<span/>').append(item.label);
 
-				if (_.isNumber(entry.time)) {
-					$span.append(sepTemplate).append(format.formatDate(entry.time));
+				if (_.isNumber(item.time)) {
+					$span.append(sepTemplate).append(format.formatDate(item.time));
 				}
-				if (_.isNumber(entry.size)) {
-					$span.append(sepTemplate).append(format.formatSize(entry.size));
+				if (_.isNumber(item.size)) {
+					$span.append(sepTemplate).append(format.formatSize(item.size));
 				}
 
 				update($span);
 			});
 
-			event.sub('entry.mouseleave', function (entry) {
+			event.sub('item.mouseleave', function (item) {
 
 				update();
 			});
 		};
 
-	init(entry);
+	init();
 });

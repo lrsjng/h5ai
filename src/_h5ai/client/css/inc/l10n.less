@@ -11,20 +11,20 @@
 		right: 0;
 		top: 0;
 		max-height: 200px;
-		background-color: rgb(241,241,241);
-		border: 1px solid rgb(210,210,210);
+		background-color: @col-widget-back;
+		border: @border-widget;
 
 		.sp-scrollbar {
 			margin: 0;
 			width: 6px;
-			background-color: rgb(210,210,210);
+			background-color: @col-sb-back;
 			cursor: pointer;
 
 			.sp-thumb {
-				background-color: rgb(180,180,180);
+				background-color: @col-sb-thumb;
 			}
 			&.active .sp-thumb {
-				background-color: rgb(150,150,150);
+				background-color: @col-sb-thumb-active;
 			}
 		}
 
@@ -38,16 +38,16 @@
 		li {
 			padding: 8px 24px 10px 24px;
 			white-space: nowrap;
-			border-top: 1px solid rgb(231,231,231);
+			border-top: @border-widget-sep;
 			.transition(all 0.2s ease-in-out);
 
 			&.current {
 				color: #333;
-				background-color: rgba(255,255,255,0.8);
+				background-color: @col-widget-back-sel;
 			}
 			&:hover {
-				color: #e80;
-				background-color: rgba(255,255,255,0.8);
+				color: @col-hover;
+				background-color: @col-widget-back-hover;
 			}
 		}
 	}

@@ -1,0 +1,46 @@
+
+#view.view-icons {
+
+	li {
+		text-align: center;
+
+		&.item {
+			float: left;
+
+			a, a:active, a:visited {
+				float: left;
+				margin: 8px;
+				padding: 8px;
+				width: 100px;
+				height: 120px;
+				border: 1px solid rgba(0,0,0,0);
+
+				&:hover, &.hover {
+					border-color: @item-border-col-hover;
+				}
+			}
+		}
+
+		.icon.big {
+			display: block;
+			height: 48px;
+			margin-bottom: 6px;
+		}
+
+		.label {
+			text-align: center;
+			word-wrap: break-word;
+			white-space: normal;
+		}
+
+		.date, .size {
+			display: none;
+		}
+	}
+
+	.empty, .no-match {
+		margin: 0 120px;
+		padding: 16px;
+		height: 120px;
+	}
+}

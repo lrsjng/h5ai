@@ -1,8 +1,5 @@
 
-@media only screen and (max-width: 500px) {
-body {
-	margin: 8px;
-}
+@media only screen and (max-width: 700px) {
 #topbar {
 	.crumb {
 		display: none;
@@ -14,23 +11,28 @@ body {
 		display: none;
 	}
 }
-#extended.view-details {
-	.header .label, .entry .label {
+#view.view-details, #view.view-list {
+	.header .label, .item .label {
 		margin-right: 110px;
 	}
-	.header .date, .entry .date {
+	.header .date, .item .date {
 		display: none;
 	}
 }
-#extended.view-icons {
+#view.view-icons {
 	padding: 0;
 	border: none;
-	margin: 0 -14px;
 }
 #bottombar {
 	.center {
 		display: none;
 	}
+}
+}
+
+@media only screen and (max-width: 500px) {
+body {
+	margin: 8px;
 }
 #tree {
 	display: none !important;

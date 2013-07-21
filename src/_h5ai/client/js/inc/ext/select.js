@@ -13,12 +13,12 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 		publish = function () {
 
-			var entries = _.map($('#extended .entry.selected'), function (entryElement) {
+			var items = _.map($('#items .item.selected'), function (itemElement) {
 
-				return $(entryElement).data('entry');
+				return $(itemElement).data('item');
 			});
 
-			event.pub('selection', entries);
+			event.pub('selection', items);
 		},
 
 		selectionUpdate = function (event) {
@@ -35,13 +35,13 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 				.show();
 
 			var selRect = $selectionRect.fracs('rect');
-			$('#extended .entry').removeClass('selecting').each(function () {
+			$('#items .item').removeClass('selecting').each(function () {
 
-				var $entry = $(this),
-					rect = $entry.find('a').fracs('rect'),
+				var $item = $(this),
+					rect = $item.find('a').fracs('rect'),
 					inter = selRect.intersection(rect);
-				if (inter && !$entry.hasClass('folder-parent')) {
-					$entry.addClass('selecting');
+				if (inter && !$item.hasClass('folder-parent')) {
+					$item.addClass('selecting');
 				}
 			});
 		},
@@ -50,8 +50,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			event.preventDefault();
 			$document.off('mousemove', selectionUpdate);
-			$('#extended .entry.selecting.selected').removeClass('selecting').removeClass('selected');
-			$('#extended .entry.selecting').removeClass('selecting').addClass('selected');
+			$('#items .item.selecting.selected').removeClass('selecting').removeClass('selected');
+			$('#items .item.selecting').removeClass('selecting').addClass('selected');
 			publish();
 
 			$selectionRect
@@ -59,7 +59,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 				.animate(
 					{
 						left: l + w * 0.5 * shrink,
-						top: t + h  * 0.5 * shrink,
+						top: t + h * 0.5 * shrink,
 						width: w * (1 - shrink),
 						height: h * (1 - shrink),
 						opacity: 0
@@ -87,7 +87,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			$(':focus').blur();
 			if (!event.ctrlKey && !event.metaKey) {
-				$('#extended .entry').removeClass('selected');
+				$('#items .item').removeClass('selected');
 				publish();
 			}
 
@@ -111,6 +111,28 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 			}
 		},
 
+		onLocationChanged = function () {
+
+			publish();
+		},
+
+		onLocationRefreshed = function (item, added, removed) {
+
+			var selectionChanged = false;
+
+			_.each(removed, function (item) {
+
+				if (item.$view && item.$view.hasClass('selected')) {
+					item.$view.removeClass('selected');
+					selectionChanged = true;
+				}
+			});
+
+			if (selectionChanged) {
+				publish();
+			}
+		},
+
 		init = function () {
 
 			if (!settings.enabled) {
@@ -119,13 +141,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			$selectionRect.hide().appendTo('body');
 
-			event.sub('entry.removed', function (entry) {
-
-				if (entry.$extended && entry.$extended.hasClass('selected')) {
-					entry.$extended.removeClass('selected');
-					publish();
-				}
-			});
+			event.sub('location.changed', onLocationChanged);
+			event.sub('location.refreshed', onLocationRefreshed);
 
 			$document
 				.on('mousedown', '.noSelection', noSelection)

@@ -3,17 +3,16 @@
 	.topbar-right;
 
 	input {
-		display: none;
 		border: none;
-		font-family: Ubuntu, sans-serif;
-		color: #555;
+		font-family: @font-family;
+		color: @col;
 		background-color: rgba(0,0,0,0);
-		width: 100px;
+		width: 30px;
 	}
 
 	&.current {
 		input {
-			display: inline;
+			width: 150px;
 		}
 	}
 }

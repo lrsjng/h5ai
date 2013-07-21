@@ -62,11 +62,11 @@ class Api {
 				$response["custom"] = $this->app->get_customizations($abs_href);
 			}
 
-			if (array_key_exists("entries", $_REQUEST)) {
+			if (array_key_exists("items", $_REQUEST)) {
 
-				list($abs_href, $what) = use_optional_request_params("entriesHref", "entriesWhat", "entries");
+				list($abs_href, $what) = use_optional_request_params("itemsHref", "itemsWhat", "items");
 				$what = is_numeric($what) ? intval($what, 10) : 1;
-				$response["entries"] = $this->app->get_entries($abs_href, $what);
+				$response["items"] = $this->app->get_items($abs_href, $what);
 			}
 
 			if (count($_REQUEST)) {
@@ -100,42 +100,27 @@ class Api {
 		}
 
 
-		else if ($action === "createArchive") {
+		else if ($action === "download") {
 
 			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
 
-			list($execution, $format, $hrefs) = use_request_params(array("execution", "format", "hrefs"));
+			list($as, $type, $hrefs) = use_request_params(array("as", "type", "hrefs"));
 
 			normalized_require_once("/server/php/inc/Archive.php");
 			$archive = new Archive($this->app);
 
-			$hrefs = explode(":", trim($hrefs));
-			$target = $archive->create($execution, $format, $hrefs);
+			$hrefs = explode("|:|", trim($hrefs));
 
-			if (!is_string($target)) {
-				json_fail($target, "package creation failed");
-			}
-
-			json_exit(array("id" => basename($target), "size" => filesize($target)));
-		}
-
-
-		else if ($action === "getArchive") {
-
-			json_fail(1, "downloads disabled", !$options["download"]["enabled"]);
-
-			list($id, $as) = use_request_params(array("id", "as"));
-			json_fail(2, "file not found", !preg_match("/^package-/", $id));
-
-			$target = $this->app->get_cache_abs_path() . "/" . $id;
-			json_fail(3, "file not found", !file_exists($target));
-
+			set_time_limit(0);
 			header("Content-Type: application/octet-stream");
-			header("Content-Length: " . filesize($target));
 			header("Content-Disposition: attachment; filename=\"$as\"");
 			header("Connection: close");
-			register_shutdown_function("delete_tempfile", $target);
-			readfile($target);
+			$rc = $archive->output($type, $hrefs);
+
+			if ($rc !== 0) {
+				json_fail("packaging failed");
+			}
+			exit;
 		}
 
 
@@ -171,7 +156,7 @@ class Api {
 
 			list($hrefs) = use_request_params(array("hrefs"));
 
-			$hrefs = explode(":", trim($hrefs));
+			$hrefs = explode("|:|", trim($hrefs));
 			$errors = array();
 
 			foreach ($hrefs as $href) {

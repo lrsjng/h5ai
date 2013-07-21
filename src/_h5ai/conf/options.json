@@ -6,7 +6,7 @@ Options
 */
 
 {
-	/* [all]
+	/*
 	Spacing of the main content.
 
 	Left and right will be added to a minimum of 30px. Top and bottom
@@ -20,7 +20,7 @@ Options
 		"left": "auto"
 	},
 
-	/* [all]
+	/*
 	General view options.
 
 	- modes: array of "details", "icons", "grid" and/or "list"
@@ -29,23 +29,29 @@ Options
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
 	- setParentFolderLabels: set parent folder labels to real folder names
+	- hideParentFolderLinks: hide parent folder links
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- indexFiles [php only]: consider folder with those files as non {{pkg.name}} folders
-	- ignore [php only]: don't list items matching these regular expressions
+	- indexFiles: consider folder with those files as non {{pkg.name}} folders
+	- ignore: don't list items matching these regular expressions
+	- smartBrowsing: use History API if available (no need to reload the whole page)
+	- extInNewWindow: open non-h5ai links in new window/tab
 	*/
 	"view": {
-		"modes": ["details", "icons"],
+		"modes": ["details", "icons", "grid", "list"],
 		"setParentFolderLabels": true,
+		"hideParentFolderLinks": false,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
-		"ignore": ["^\\.", "^_{{pkg.name}}"]
+		"ignore": ["^\\.", "^_{{pkg.name}}"],
+		"smartBrowsing": true,
+		"extInNewWindow": true
 	},
 
 
 
 	/*** Extensions (in alphabetical order) ***/
 
-	/* [php]
+	/*
 	Watch and update current folder content.
 
 	- interval: number, update interval in milliseconds, at least 1000
@@ -55,31 +61,33 @@ Options
 		"interval": 5000
 	},
 
-	/* [all]
+	/*
 	Show a clickable breadcrumb.
 	*/
 	"crumb": {
 		"enabled": true
 	},
 
-	/* [all]
-	Filenames of customized header and footer files to look for
-	in each folder.
+	/*
+	Allow customized header and footer files.
+	First looks for	files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
+	If not found it looks in all parent	directories (starting in the current directory) for
+	files "_h5ai.headers.html" and "_h5ai.footers.html"	until it finds one.	Note the different
+	filenames: "header" (only current) - "headers" (current and sub directories)!
+	The file's content will be placed inside a <div/> tag above/below the main content.
 	*/
 	"custom": {
-		"enabled": false,
-		"header": "_{{pkg.name}}.header.html",
-		"footer": "_{{pkg.name}}.footer.html"
+		"enabled": true
 	},
 
-	/* [php, EXPERIMENTAL]
+	/* [EXPERIMENTAL]
 	Allow file deletion.
 	*/
 	"delete": {
 		"enabled": false
 	},
 
-	/* [php, EXPERIMENTAL]
+	/* [EXPERIMENTAL]
 	File upload via drag'n'drop. Folders are not supported.
 	The working file size seems to be very browser dependent.
 
@@ -92,21 +100,19 @@ Options
 		"maxfilesize": 1000
 	},
 
-	/* [php]
+	/*
 	Enable packaged download of selected entries.
 
-	- execution: "php" or "shell"
-	- format: "tar" or "zip"
+	- type: "php-tar", "shell-tar" or "shell-zip"
 	- packageName: basename of the download package, null for current foldername
 	*/
 	"download": {
-		"enabled": false,
-		"execution": "shell",
-		"format": "zip",
+		"enabled": true,
+		"type": "php-tar",
 		"packageName": null
 	},
 
-	/* [all]
+	/*
 	Allow filtering the displayed files and folders.
 	Will check entries for right order of characters, i.e.
 	"ab" matches "ab", "axb", "xaxbx" but not "ba".
@@ -119,26 +125,14 @@ Options
 		"enabled": true
 	},
 
-	/* [php]
+	/*
 	Calc the size of folders.
 	*/
 	"foldersize": {
 		"enabled": true
 	},
 
-	/* [aai]
-	Fetch status for subfolders of the current folder.
-
-	- maxChecks: number, max number of status requests in the current folder
-	- delay: number, delay in milliseconds after "dom-ready" before starting the requests
-	*/
-	"folderstatus": {
-		"enabled": false,
-		"maxChecks": 16,
-		"delay": 2000
-	},
-
-	/* [all]
+	/*
 	Adds Google Analytics asynchronous tracking code.
 
 	for example:
@@ -156,7 +150,7 @@ Options
 		"gaq": []
 	},
 
-	/* [all]
+	/*
 	Localization, for example "en", "de" etc. - see "langs" below for
 	possible values. Adjust it to your needs. If lang is not found in
 	"langs" it defaults to "en".
@@ -170,14 +164,14 @@ Options
 		"useBrowserLang": true
 	},
 
-	/* [all]
+	/*
 	Link the hover effects between crumb, main view and tree.
 	*/
 	"link-hover-states": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Shows the server mode in the bottom left corner.
 
 	- display:
@@ -186,11 +180,11 @@ Options
 		2: mode, servername and -version
 	*/
 	"mode": {
-		"enabled": false,
+		"enabled": true,
 		"display": 2
 	},
 
-	/* [all]
+	/*
 	Adds Piwik tracker javascript code.
 
 	- baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
@@ -202,17 +196,17 @@ Options
 		"idSite": 1
 	},
 
-	/* [all]
+	/*
 	Show an image preview on click.
 
 	- types: array of types
 	*/
 	"preview-img": {
 		"enabled": true,
-		"types": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"]
+		"types": ["bmp", "gif", "ico", "image", "jpg", "png"]
 	},
 
-	/* [all]
+	/*
 	Show text file preview on click.
 	"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
 	be rendered as HTML.
@@ -250,17 +244,17 @@ Options
 		}
 	},
 
-	/* [all]
+	/*
 	Show QRCodes on hovering files.
 
 	- size: width and height in pixel
 	*/
 	"qrcode": {
-		"enabled": false,
+		"enabled": true,
 		"size": 150
 	},
 
-	/* [php, EXPERIMENTAL]
+	/* [EXPERIMENTAL]
 	Allow to rename files.
 	No GUI yet.
 	*/
@@ -268,14 +262,14 @@ Options
 		"enabled": false
 	},
 
-	/* [all]
+	/*
 	Make entries selectable. At the moment only needed for packaged download and delete.
 	*/
 	"select": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Default sort order is a two letter code. The first letter specifies
 	the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
 	second letter specifies the sort order: "a" for "ascending" or "d"
@@ -288,14 +282,14 @@ Options
 		"order": "na"
 	},
 
-	/* [all]
+	/*
 	Show additional info in a statusbar.
 	*/
 	"statusbar": {
 		"enabled": true
 	},
 
-	/* [php]
+	/*
 	Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
 	writable for the web Server.
 
@@ -306,20 +300,20 @@ Options
 	*/
 	"thumbnails": {
 		"enabled": true,
-		"img": ["bmp", "gif", "ico", "image", "jpg", "png", "tiff"],
+		"img": ["bmp", "gif", "ico", "image", "jpg", "png"],
 		"mov": ["video"],
 		"doc": ["pdf", "ps"],
 		"delay": 1
 	},
 
-	/* [all]
+	/*
 	Replace window title with current breadcrumb.
 	*/
 	"title": {
 		"enabled": true
 	},
 
-	/* [all]
+	/*
 	Show a folder tree.
 	Note that this might affect performance significantly.
 

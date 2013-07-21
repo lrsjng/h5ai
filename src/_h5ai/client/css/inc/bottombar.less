@@ -7,8 +7,10 @@
 	left: 0;
 	bottom: 0;
 	padding: 6px 0 8px 0;
-	.vert-gradient(rgb(241,241,241), rgb(228,228,228));
-	border-top: 1px solid rgb(210,210,210);
+	// .vert-gradient(rgb(241,241,241), rgb(228,228,228));
+	background-color: @col-widget-back;
+	border-top: @border-widget;
+	// .box-shadow(0 -2px 4px 0 rgba(0, 0, 0, 0.15);
 
 	color: #999;
 	text-align: center;
@@ -20,7 +22,7 @@
 		opacity: 0.7;
 
 		&:hover {
-			color: #e80;
+			color: @col-hover;
 			opacity: 1;
 		}
 	}
@@ -40,18 +42,19 @@
 		padding: 0 8px;
 	}
 	.noJsMsg {
-		color: #c33;
+		color: @col-error;
 		margin-left: 16px;
 	}
-	.oldBrowser {
+	.noBrowserMsg {
 		display: none;
-		color: #c33;
+		color: @col-error;
 		margin-left: 16px;
 		a, a:active, a:visited {
-			color: #c33;
+			color: @col-error;
 			text-decoration: underline;
+			opacity: 1;
 			&:hover {
-				color: #e80;
+				color: @col-hover;
 			}
 		}
 	}

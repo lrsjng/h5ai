@@ -1,5 +1,5 @@
 
-modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], function (_, $, allsettings, resource) {
+modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core/event'], function (_, $, allsettings, resource, event) {
 
 	var settings = _.extend({
 			enabled: false
@@ -22,7 +22,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 				duration = 200;
 
 			if (re) {
-				$('#extended .entry').each(function () {
+				$('#items .item').not('.folder-parent').each(function () {
 
 					var label = $(this).find('.label').text();
 
@@ -33,12 +33,12 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 					}
 				});
 			} else {
-				match = $('#extended .entry');
+				match = $('#items .item').not('.folder-parent');
 			}
 
-			if ($(match).length) {
+			if (match.length) {
 				$noMatch.hide();
-			} else {
+			} else if (noMatch.length) {
 				setTimeout(function () { $noMatch.show(); }, duration);
 			}
 			$(match).fadeIn(duration);
@@ -58,20 +58,24 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 
 			sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
 
-				return _.map(part.split(''), function (char) {
+				return _.map(part.split(''), function (character) {
 
-					return escapeRegExp(char);
+					return escapeRegExp(character);
 				}).join('.*?');
 			}).join('|');
 
 			return new RegExp(sequence, 'i');
 		},
 
-		update = function () {
+		update = function (focus) {
 
 			var val = $input.val();
 
-			if (val) {
+			if (focus) {
+				$input.focus();
+			}
+
+			if (val || focus) {
 				filter(parseFilterSequence(val));
 				$filter.addClass('current');
 			} else {
@@ -79,6 +83,8 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 				$filter.removeClass('current');
 			}
 		},
+		updt = function () { update(true); },
+		updf = function () { update(false); },
 
 		init = function () {
 
@@ -88,32 +94,21 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource'], func
 
 			$filter = $(template).appendTo('#navbar');
 			$input = $filter.find('input');
-			$noMatch = $(noMatchTemplate).appendTo('#extended');
+			$noMatch = $(noMatchTemplate).appendTo('#view');
 
-			$filter
-				.on('click', function () {
-
-					$input.focus();
-				});
-
-			$input
-				.on('focus', function () {
-
-					$filter.addClass('current');
-				})
-				.on('blur keyup', update);
+			$filter.on('click', updt);
+			$input.on('focus blur keyup', updf);
 
 			$(document)
 				.on('keydown', function (event) {
 
 					if (event.which === 27) {
-						$input.attr('value','').blur();
+						$input.val('').blur();
 					}
 				})
-				.on('keypress', function (event) {
+				.on('keypress', updt);
 
-					$input.focus();
-				});
+			event.sub('location.changed', updf);
 		};
 
 	init();

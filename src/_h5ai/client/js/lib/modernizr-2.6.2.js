@@ -1,5 +1,5 @@
 /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-opacity-rgba-canvas-history-audio-video-shiv-cssclasses-prefixes
+ * Build: http://modernizr.com/download/#-opacity-rgba-canvas-history-audio-video-localstorage-shiv-cssclasses-prefixes
  */
 ;
 
@@ -182,7 +182,21 @@ window.Modernizr = (function( window, document, undefined ) {
         } catch(e) { }
 
         return bool;
-    };    for ( var feature in tests ) {
+    };
+
+
+    tests['localstorage'] = function() {
+        try {
+            localStorage.setItem(mod, mod);
+            localStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+
+    for ( var feature in tests ) {
         if ( hasOwnProp(tests, feature) ) {
                                     featureName  = feature.toLowerCase();
             Modernizr[featureName] = tests[feature]();

@@ -1,6 +1,6 @@
 doctype 5
 //if lt IE 9
-	<html class="no-js oldie" lang="en">
+	<html class="no-js no-browser" lang="en">
 //[if gt IE 8]><!
 html.no-js( lang="en" )
 	//<![endif]
@@ -12,16 +12,23 @@ html.no-js( lang="en" )
 		meta( name="description", content="{{pkg.name}} server details" )
 		meta( name="viewport", content="width=device-width" )
 		link( rel="shortcut icon", href="client/images/app-16x16.ico" )
-		link( rel="apple-touch-icon", type="image/png", href="client/images/app-48x48.png" )
+		link( rel="apple-touch-icon-precomposed", type="image/png", href="client/images/app-48x48.png" )
+		link( rel="apple-touch-icon-precomposed", sizes="57x57", type="image/png", href="client/images/app-57x57.png" )
+		link( rel="apple-touch-icon-precomposed", sizes="72x72", type="image/png", href="client/images/app-72x72.png" )
+		link( rel="apple-touch-icon-precomposed", sizes="114x114", type="image/png", href="client/images/app-114x114.png" )
+		link( rel="apple-touch-icon-precomposed", sizes="144x144", type="image/png", href="client/images/app-144x144.png" )
 		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:400,700,400italic,700italic" )
 		link( rel="stylesheet", href="client/css/styles.css" )
 		script( src="client/js/scripts.js", data-mode="info" )
 
 	body#h5ai-info
 
-		h1 {{pkg.name}}
+		h1
+			a( href="http://larsjung.de/h5ai/" ) {{pkg.name}}
 		span.build-version version {{pkg.version}}
 		span.build-stamp {{stamp}}
+		span.idx-file Index File: 
+			span.value
 
 		h2 server supports
 		ul#tests
@@ -45,10 +52,6 @@ html.no-js( lang="en" )
 				span.test-label pdf thumbs
 				span.test-result ?
 				div.test-info command 'convert' available
-			li.test( data-id="archive" )
-				span.test-label php tar and zip
-				span.test-result ?
-				div.test-info PHP Phar extension available
 			li.test( data-id="tar" )
 				span.test-label shell tar
 				span.test-result ?
@@ -67,9 +70,9 @@ html.no-js( lang="en" )
 				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
 					| {{pkg.name}} {{pkg.version}}
 				span.hideOnJs.noJsMsg
-					| ⚡ JavaScript is disabled! ⚡
-				span.oldBrowser
-					| ⚡ Some features disabled! Works best in 
+					| ⚡ JavaScript disabled! ⚡
+				span.noBrowserMsg
+					| ⚡ Unsupported browser! Works best in 
 					a( href="http://browsehappy.com" ) modern browsers
 					| . ⚡
 			span.right

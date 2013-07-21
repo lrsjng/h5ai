@@ -1,5 +1,5 @@
 
-modulejs.define('ext/link-hover-states', ['_', '$', 'core/settings'], function (_, $, allsettings) {
+modulejs.define('ext/link-hover-states', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
 	var settings = _.extend({
 			enabled: false
@@ -29,13 +29,22 @@ modulejs.define('ext/link-hover-states', ['_', '$', 'core/settings'], function (
 			selectLinks(href).removeClass('hover');
 		},
 
+		onLocationChanged = function () {
+
+			$('.hover').removeClass('hover');
+		},
+
 		init = function () {
 
-			if (settings.enabled) {
-				$('body')
-					.on('mouseenter', selector, onMouseEnter)
-					.on('mouseleave', selector, onMouseLeave);
+			if (!settings.enabled) {
+				return;
 			}
+
+			$('body')
+				.on('mouseenter', selector, onMouseEnter)
+				.on('mouseleave', selector, onMouseLeave);
+
+			event.sub('location.changed', onLocationChanged);
 		};
 
 	init();

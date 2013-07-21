@@ -26,8 +26,6 @@ File types mapped to file extensions
 	"eps":				[".eps"],
 	"exe":				[".bat", ".cmd", ".exe"],
 	"folder":			[],
-	"folder-home":		[],
-	"folder-open":		[],
 	"folder-page":		[],
 	"folder-parent":	[],
 	"gif":				[".gif"],
@@ -69,7 +67,7 @@ File types mapped to file extensions
 	"tiff":				[".tiff"],
 	"unknown":			[],
 	"vcal":				[".vcal"],
-	"video":			[".avi", ".flv", ".mkv", ".mov", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
+	"video":			[".avi", ".flv", ".mkv", ".mov", ".m4v", ".mp4", ".mpg", ".rm", ".swf", ".vob", ".wmv"],
 	"xml":				[".xml"],
 	"zip":				[".7z", ".bz2", ".jar", ".lzma", ".war", ".z", ".Z", ".zip"]
 }

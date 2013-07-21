@@ -34,7 +34,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 					'</span>',
 		langOptionTemplate = '<li class="langOption"/>',
 
-		storekey = 'h5ai.language',
+		storekey = 'l10n.lang',
 
 		loaded = {
 			en: _.extend({}, defaultTranslations)
@@ -55,7 +55,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 
 			format.setDefaultDateFormat(currentLang.dateFormat);
 
-			$('#extended .entry .date').each(function () {
+			$('#items .item .date').each(function () {
 
 				var $this = $(this);
 

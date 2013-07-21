@@ -1,11 +1,21 @@
 
 body#h5ai-info {
-	font-family: Ubuntu, Arial, sans;
+	font-family: @font-family;
 	margin: 2em auto 4em auto;
 	font-size: 20px;
-	color: #555;
+	color: @col;
 	max-width: 600px;
 	text-align: center;
+
+	a, a:active, a:visited {
+		color: @col;
+		text-decoration: none;
+		.transition(all 0.2s ease-in-out);
+
+		&:hover {
+			color: @col-hover;
+		}
+	}
 
 	.build-version {
 		display: block;
@@ -15,6 +25,22 @@ body#h5ai-info {
 		margin-top: 0.3em;
 		font-size: 0.6em;
 		color: #aaa;
+	}
+	.idx-file {
+		margin-top: 1em;
+		font-size: 0.6em;
+		display: block;
+		color: #aaa;
+
+		.value {
+			margin-left: 0.5em;
+			padding: 2px 4px;
+			.border-radius(4px);
+			font-family: @font-family-mono;
+			letter-spacing: 0.1em;
+			background-color: @col-widget-back;
+			border: @border-widget;
+		}
 	}
 	h1 {
 		font-size: 3.6em;

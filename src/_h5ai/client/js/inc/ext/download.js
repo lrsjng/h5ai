@@ -1,10 +1,9 @@
 
-modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server', 'core/entry'], function (_, $, allsettings, resource, event, server, entry) {
+modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server', 'core/location'], function (_, $, allsettings, resource, event, server, location) {
 
 	var settings = _.extend({
 			enabled: false,
-			execution: 'php',
-			format: 'zip',
+			type: 'php-tar',
 			packageName: 'package'
 		}, allsettings.download),
 
@@ -28,46 +27,36 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			}, 1000);
 		},
 
-		handleResponse = function (json) {
-
-			$download.removeClass('current');
-			$img.attr('src', resource.image('download'));
-
-			if (json && json.code === 0) {
-				setTimeout(function () { // wait here so the img above can be updated in time
-
-					window.location = '?action=getArchive&id=' + json.id + '&as=' + (settings.packageName || entry.label) + '.' + settings.format;
-				}, 200);
-			} else {
-				failed();
-			}
-		},
-
-		requestArchive = function (hrefsStr) {
-
-			$download.addClass('current');
-			$img.attr('src', resource.image('loading.gif', true));
-
-			server.request({
-				action: 'createArchive',
-				execution: settings.execution,
-				format: settings.format,
-				hrefs: hrefsStr
-			}, handleResponse);
-		},
-
-		onSelection = function (entries) {
+		onSelection = function (items) {
 
 			selectedHrefsStr = '';
-			if (entries.length) {
-				selectedHrefsStr = _.map(entries, function (entry) {
+			if (items.length) {
+				selectedHrefsStr = _.map(items, function (item) {
 
-					return entry.absHref;
-				}).join(':');
+					return item.absHref;
+				}).join('|:|');
 				$download.appendTo('#navbar').show();
 			} else {
 				$download.hide();
 			}
+		},
+
+		onClick = function (event) {
+
+			var type = settings.type,
+				extension = (type === 'shell-zip') ? 'zip' : 'tar',
+				query = {
+					action: 'download',
+					as: (settings.packageName || location.getItem().label) + '.' + extension,
+					type: type,
+					hrefs: selectedHrefsStr
+				},
+				$form = $('<form action="#" method="post" style="display:none;" />');
+
+			for (var key in query) {
+				$form.append('<input type="hidden" name="' + key + '" value="' + query[key] + '" />')
+			}
+			$form.appendTo('body').submit().remove();
 		},
 
 		init = function () {
@@ -77,11 +66,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			}
 
 			$download = $(downloadBtnTemplate)
-				.find('a').on('click', function (event) {
-
-					event.preventDefault();
-					requestArchive(selectedHrefsStr);
-				}).end()
+				.find('a').on('click', onClick).end()
 				.appendTo('#navbar');
 			$img = $download.find('img');
 

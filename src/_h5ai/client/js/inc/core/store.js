@@ -1,25 +1,37 @@
 
-modulejs.define('core/store', ['_'], function (_) {
+modulejs.define('core/store', ['modernizr'], function (modernizr) {
 
-	var store = window.localStorage,
+	var store = modernizr.localstorage ? window.localStorage : null,
+
+		key = '_h5ai',
+
+		load = function () {
+
+			if (store) {
+				try {
+					return JSON.parse(store[key]);
+				} catch (e) {}
+			}
+			return {};
+		},
+
+		save = function (obj) {
+
+			if (store) {
+				store[key] = JSON.stringify(obj);
+			}
+		},
 
 		put = function (key, value) {
 
-			if (store && _.isString(key)) {
-				store[key] = JSON.stringify({data: value});
-			}
+			var obj = load();
+			obj[key] = value;
+			return save(obj);
 		},
 
 		get = function (key) {
 
-			if (store && _.isString(key)) {
-				var json = store[key],
-					obj = {};
-
-				try { obj = JSON.parse(json); } catch (e) {}
-
-				return obj.data;
-			}
+			return load()[key];
 		};
 
 	return {

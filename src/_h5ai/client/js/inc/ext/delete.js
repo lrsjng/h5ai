@@ -1,5 +1,5 @@
 
-modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'core/refresh', 'core/server'], function (_, $, allsettings, event, resource, refresh, server) {
+modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'core/location', 'core/server'], function (_, $, allsettings, event, resource, location, server) {
 
 	var settings = _.extend({
 			enabled: false
@@ -31,7 +31,7 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 			if (!json || json.code) {
 				failed();
 			}
-			refresh();
+			location.refresh();
 		},
 
 		requestDeletion = function (hrefsStr) {
@@ -41,13 +41,13 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 			server.request({action: 'delete', hrefs: hrefsStr}, handleResponse);
 		},
 
-		onSelection = function (entries) {
+		onSelection = function (items) {
 
 			selectedHrefsStr = '';
-			if (entries.length) {
-				selectedHrefsStr = _.map(entries, function (entry) {
+			if (items.length) {
+				selectedHrefsStr = _.map(items, function (item) {
 
-					return entry.absHref;
+					return item.absHref;
 				}).join(':');
 				$delete.appendTo('#navbar').show();
 			} else {

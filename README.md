@@ -7,8 +7,8 @@ create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
 ## Install
 
-(**note:** please don't use files from the `src` folder for installation,
-they need to be preprocessed to work correctly)
+( **note:** please don't use files from the `src` folder for installation,
+they need to be preprocessed to work correctly )
 
 You'll find a preprocessed package, as well as detailed installation
 instructions on the [project page](http://larsjung.de/h5ai/).
@@ -16,7 +16,7 @@ instructions on the [project page](http://larsjung.de/h5ai/).
 
 ## Build
 
-(there are repositories of the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/))
+( there are repositories for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/) )
 
 If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
@@ -39,6 +39,7 @@ You'll find a new directory `build` including a fresh zipball.
 
 It profits from these great projects:
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
+[Gnome Symbolic Icon Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.filedrop](http://www.github.com/weixiyen/jquery-filedrop)&nbsp;(MIT),
@@ -50,13 +51,38 @@ It profits from these great projects:
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
-[spin.js](http://fgnass.github.com/spin.js/)&nbsp;(MIT),
 [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
 [Underscore.js](http://underscorejs.org)&nbsp;(MIT)
 
 
 ## Changelog
-(**h5ai** uses [semantic versioning](http://semver.org/))
+( **h5ai** uses [semantic versioning](http://semver.org/) )
+
+
+### v0.23.0 - *2013-07-21*
+
+* removes `aai` mode!
+* drops support for IE7+8 (simple fallback, same as no javascript)
+* uses History API if available (way faster browsing)
+* faster thumbnail generation if EXIF thumbnails available
+* adds optional custom headers/footers that are propageted to all subfolders
+* optional hide parent folder links
+* some fixes on previews
+* speeds up packaged downloads
+* add line wrap and line highlighting (on hover) to text preview
+* new design (colors, images)
+* now uses scalable images for the interface
+* fixes filter (ignore parent folder, display of `no match`)
+* lots of small fixes
+* updates H5BP to 4.2.0
+* updates jQuery to 2.0.3
+* updates jQuery.mousewheel to 3.1.3
+* updates Moment.js to 2.1.0
+* updates markdown-js to 0.4.0-9c21acdf08
+* updates json2.js to 2013-05-26
+* adds `uk` translation by Viktor Matveenko
+* updates to `pl` translation by Mark
+
 
 ### v0.22.1 - *2012-10-16*
 
