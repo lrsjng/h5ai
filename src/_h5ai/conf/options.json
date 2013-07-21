@@ -70,12 +70,11 @@ Options
 
 	/*
 	Allow customized header and footer files.
-	First looks for	files "_h5ai.header.html" and "_h5ai.footer.html"
-	in the current directory.
-	If not found it looks in all parent	directories (starting in the
-	current directory) for files "_h5ai.headers.html" and "_h5ai.footers.html"
-	until it finds one.
-	Note the different filenames: header (only current) - headers (recursive)!
+	First looks for	files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
+	If not found it looks in all parent	directories (starting in the current directory) for
+	files "_h5ai.headers.html" and "_h5ai.footers.html"	until it finds one.	Note the different
+	filenames: "header" (only current) - "headers" (current and sub directories)!
+	The file's content will be placed inside a <div/> tag above/below the main content.
 	*/
 	"custom": {
 		"enabled": true
