@@ -57,20 +57,11 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			$date.data('time', item.time).text(format.formatDate(item.time));
 			$size.data('bytes', item.size).text(format.formatSize(item.size));
 
-
-			// if (item.isFolder()) {
-			// 	$imgSmall.attr('src', resource.image('folder'));
-			// 	$imgBig.attr('src', resource.image('folder')).width(48);
-			// }
-
-
 			if (item.isFolder() && _.isNumber(item.status)) {
 				if (item.status === 200) {
 					$html.addClass('page');
 					$imgSmall.attr('src', resource.icon('folder-page'));
 					$imgBig.attr('src', resource.icon('folder-page', true));
-					// $imgSmall.attr('src', resource.image('folder-page'));
-					// $imgBig.attr('src', resource.image('folder-page')).width(48);
 				} else {
 					$html.addClass('error');
 					$label.append($(hintTemplate).text(' ' + item.status + ' '));
