@@ -59,7 +59,7 @@ It profits from these great projects:
 ( **h5ai** uses [semantic versioning](http://semver.org/) )
 
 
-### develop branch
+### v0.23.0 - *2013-07-21*
 
 * removes `aai` mode!
 * drops support for IE7+8 (simple fallback, same as no javascript)
@@ -71,8 +71,9 @@ It profits from these great projects:
 * speeds up packaged downloads
 * add line wrap and line highlighting (on hover) to text preview
 * new design (colors, images)
-* now uses `SVG` images for the interface
+* now uses scalable images for the interface
 * fixes filter (ignore parent folder, display of `no match`)
+* lots of small fixes
 * updates H5BP to 4.2.0
 * updates jQuery to 2.0.3
 * updates jQuery.mousewheel to 3.1.3

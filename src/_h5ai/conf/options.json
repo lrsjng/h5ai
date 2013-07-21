@@ -57,7 +57,7 @@ Options
 	- interval: number, update interval in milliseconds, at least 1000
 	*/
 	"autorefresh": {
-		"enabled": true,
+		"enabled": false,
 		"interval": 5000
 	},
 
@@ -84,7 +84,7 @@ Options
 	Allow file deletion.
 	*/
 	"delete": {
-		"enabled": true
+		"enabled": false
 	},
 
 	/* [EXPERIMENTAL]
@@ -95,7 +95,7 @@ Options
 	- maxfilesize: number, file size is in MB
 	*/
 	"dropbox": {
-		"enabled": true,
+		"enabled": false,
 		"maxfiles": 10,
 		"maxfilesize": 1000
 	},
