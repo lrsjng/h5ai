@@ -32,7 +32,7 @@ html.no-js( lang="en" )
 
 		h2 server supports
 		ul#tests
-			li.test( data-id="php" )
+			li.test.php( data-id="php" )
 				span.test-label php version
 				span.test-result ?
 				div.test-info PHP version >= 5.2.1
@@ -44,6 +44,10 @@ html.no-js( lang="en" )
 				span.test-label image thumbs
 				span.test-result ?
 				div.test-info PHP GD extension with JPEG support available
+			li.test( data-id="exif" )
+				span.test-label use exif thumbs
+				span.test-result ?
+				div.test-info PHP EXIF extension available
 			li.test( data-id="ffmpeg" )
 				span.test-label movie thumbs
 				span.test-result ?

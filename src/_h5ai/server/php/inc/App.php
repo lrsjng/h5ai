@@ -278,6 +278,7 @@ class App {
 			$gdinfo = gd_info();
 			$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 		}
+		$exif = function_exists("exif_thumbnail");
 		$cache = @is_writable($this->get_cache_abs_path());
 		$tar = @preg_match("/tar(.exe)?$/i", `which tar`) > 0;
 		$zip = @preg_match("/zip(.exe)?$/i", `which zip`) > 0;
@@ -287,9 +288,11 @@ class App {
 
 		return array(
 			"idx" => $this->app_abs_href . "server/php/index.php",
+			"phpversion" => PHP_VERSION,
 			"php" => $php,
 			"cache" => $cache,
 			"thumbs" => $gd,
+			"exif" => $exif,
 			"tar" => $tar,
 			"zip" => $zip,
 			"convert" => $convert,
