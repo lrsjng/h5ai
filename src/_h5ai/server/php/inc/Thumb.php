@@ -57,7 +57,7 @@ class Thumb {
 
 			$et = false;
 			if (function_exists("exif_thumbnail")) {
-				$et = exif_thumbnail($source_abs_path);
+				$et = @exif_thumbnail($source_abs_path);
 			}
 			if($et !== false) {
 				file_put_contents($thumb_abs_path, $et);
