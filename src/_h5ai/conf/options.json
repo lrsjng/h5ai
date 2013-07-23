@@ -44,7 +44,7 @@ Options
 		"indexFiles": ["index.html", "index.htm", "index.php"],
 		"ignore": ["^\\.", "^_{{pkg.name}}"],
 		"smartBrowsing": true,
-		"extInNewWindow": true
+		"extInNewWindow": false
 	},
 
 
@@ -180,7 +180,7 @@ Options
 		2: mode, servername and -version
 	*/
 	"mode": {
-		"enabled": true,
+		"enabled": false,
 		"display": 2
 	},
 

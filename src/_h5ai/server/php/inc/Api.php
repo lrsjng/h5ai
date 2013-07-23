@@ -207,6 +207,8 @@ class Api {
 
 			json_exit();
 		}
+
+		json_fail(100, "unsupported request");
 	}
 }
 
