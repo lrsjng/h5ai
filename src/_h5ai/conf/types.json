@@ -7,7 +7,7 @@ File types mapped to file extensions
 
 {
 	"archive":			[".tar.bz2", ".tar.gz", ".tgz"],
-	"audio":			[".aif", ".flac", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
+	"audio":			[".aif", ".aiff", ".flac", ".m4a", ".mid", ".mp3", ".mpa", ".ra", ".ogg", ".wav", ".wma"],
 	"authors":			["authors"],
 	"bin":				[".class", ".o", ".so"],
 	"blank":			[],
