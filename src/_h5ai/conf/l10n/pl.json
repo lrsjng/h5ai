@@ -9,10 +9,10 @@
 	"size": "Rozmiar",
 	"parentDirectory": "Katalog nadrzędny",
 	"empty": "pusty",
-	"folders": "foldery",
-	"files": "pliki",
+	"folders": "folderów",
+	"files": "plików",
 	"download": "pobierz",
-	"noMatch": "nie pasuje",
+	"noMatch": "nie znaleziono",
 	"dateFormat": "YYYY-MM-DD HH:mm",
 	"filter": "filtr",
 	"delete": "usuń"
