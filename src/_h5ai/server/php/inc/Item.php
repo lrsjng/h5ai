@@ -13,7 +13,7 @@ class Item {
 			return 1;
 		}
 
-		return strcasecmp($item1->abs_path, $item2->abs_path);
+		return strnatcasecmp(basename($item1->abs_path),basename($item2->abs_path));
 	}
 
 	public static function get($app, $abs_path, &$cache) {
