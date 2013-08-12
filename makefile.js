@@ -2,82 +2,49 @@
 'use strict';
 
 
-var path = require('path'),
-
-	pkg = require('./package.json'),
-
-	root = path.resolve(__dirname),
-	src = path.join(root, 'src'),
-	build = path.join(root, 'build'),
-
-	jshint = {
-		// Enforcing Options
-		bitwise: true,
-		curly: true,
-		eqeqeq: true,
-		forin: true,
-		latedef: true,
-		newcap: true,
-		noempty: true,
-		plusplus: true,
-		trailing: true,
-		undef: true,
-
-		// Environments
-		browser: true,
-
-		// Globals
-		predef: [
-			'modulejs'
-		]
-	},
-
-	handlebarsEnv = {
-		pkg: pkg
-	},
-
-	mapSrc = function (blob) {
-
-		return blob.source.replace(src, build).replace(/\.less$/, '.css').replace(/\.jade$/, '');
-	},
-
-	mapRoot = function (blob) {
-
-		return blob.source.replace(root, path.join(build, '_h5ai'));
-	};
-
-
 module.exports = function (make) {
 
-	var Event = make.Event,
+	var path = require('path'),
+
+		pkg = require('./package.json'),
+
+		root = path.resolve(__dirname),
+		src = path.join(root, 'src'),
+		build = path.join(root, 'build'),
+
 		$ = make.fQuery,
-		moment = make.moment;
+		mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', ''),
+		mapRoot = $.map.p(root, build);
 
 
-	make.version('>=0.8.1');
+	make.version('>=0.10.0');
 	make.defaults('build');
 
 
 	make.before(function () {
 
-		handlebarsEnv.stamp = moment().format('YYYY-MM-DD HH:mm:ss');
+		var moment = make.moment();
+
+		make.env = {
+			pkg: pkg,
+			stamp: moment.format('YYYY-MM-DD HH:mm:ss')
+		};
+
+		$.info({ method: 'before', message: pkg.version + ' ' + make.env.stamp });
 	});
 
 
 	make.target('check-version', [], 'add git info to dev builds').async(function (done, fail) {
 
-		if (!/-dev$/.test(pkg.version)) {
+		if (!/\+$/.test(pkg.version)) {
 			done();
 			return;
 		}
 
 		$.git(root, function (err, result) {
 
-			pkg.version += '-' + result.revListOriginMasterHead.length + '-' + result.revParseHead.slice(0, 7);
-			Event.info({
-				method: 'check-version',
-				message: 'version set to ' + pkg.version
-			});
+			pkg.version += result.buildSuffix;
+			$.info({ method: 'check-version', message: 'version set to ' + pkg.version });
 			done();
 		});
 	});
@@ -85,14 +52,34 @@ module.exports = function (make) {
 
 	make.target('clean', [], 'delete build folder').sync(function () {
 
-		$.rmfr($.I_AM_SURE, build);
+		$.DELETE(build);
 	});
 
 
 	make.target('lint', [], 'lint all JavaScript files with JSHint').sync(function () {
 
+		var jshint = {
+				// Enforcing Options
+				bitwise: true,
+				curly: true,
+				eqeqeq: true,
+				forin: true,
+				latedef: true,
+				newcap: true,
+				noempty: true,
+				plusplus: true,
+				trailing: true,
+				undef: true,
+
+				// Environments
+				browser: true
+			},
+			globals = {
+				'modulejs': true
+			};
+
 		$(src + '/_h5ai/client/js: **/*.js, ! lib/**')
-			.jshint(jshint);
+			.jshint(jshint, globals);
 	});
 
 
@@ -102,28 +89,28 @@ module.exports = function (make) {
 			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
 			.uglifyjs()
-			.write($.OVERWRITE, mapSrc);
+			.WRITE(mapSrc);
 
 		$(src + ': _h5ai/client/css/*.less')
 			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
 			.cssmin()
-			.write($.OVERWRITE, mapSrc);
+			.WRITE(mapSrc);
 
 		$(src + ': **/*.jade')
 			.modified(mapSrc)
-			.handlebars(handlebarsEnv)
+			.handlebars(make.env)
 			.jade()
-			.write($.OVERWRITE, mapSrc);
+			.WRITE(mapSrc);
 
 		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
 			.modified(mapSrc)
-			.handlebars(handlebarsEnv)
-			.write($.OVERWRITE, mapSrc);
+			.handlebars(make.env)
+			.WRITE(mapSrc);
 
 		$(root + ': README*, LICENSE*')
 			.modified(mapRoot)
-			.write($.OVERWRITE, mapRoot);
+			.WRITE(mapRoot);
 	});
 
 
@@ -133,28 +120,28 @@ module.exports = function (make) {
 			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
 			// .uglifyjs()
-			.write($.OVERWRITE, mapSrc);
+			.WRITE(mapSrc);
 
 		$(src + ': _h5ai/client/css/*.less')
 			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
 			// .cssmin()
-			.write($.OVERWRITE, mapSrc);
+			.WRITE(mapSrc);
 
 		$(src + ': **/*.jade')
 			.modified(mapSrc)
-			.handlebars(handlebarsEnv)
+			.handlebars(make.env)
 			.jade()
-			.write($.OVERWRITE, mapSrc);
+			.WRITE(mapSrc);
 
 		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
 			.modified(mapSrc)
-			.handlebars(handlebarsEnv)
-			.write($.OVERWRITE, mapSrc);
+			.handlebars(make.env)
+			.WRITE(mapSrc);
 
 		$(root + ': README*, LICENSE*')
 			.modified(mapRoot)
-			.write($.OVERWRITE, mapRoot);
+			.WRITE(mapRoot);
 	});
 
 
