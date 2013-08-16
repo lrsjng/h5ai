@@ -7,25 +7,21 @@ create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
 ## Install
 
-( **note:** please don't use files from the `src` folder for installation,
-they need to be preprocessed to work correctly )
-
+**Note:** please don't use files from the `src` folder for installation,
+they need to be preprocessed to work correctly!
 You'll find a preprocessed package, as well as detailed installation
 instructions on the [project page](http://larsjung.de/h5ai/).
 
 
 ## Build
 
-( there are repositories for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/) )
-
-If you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
+There are repositories for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/).
+But if you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
     > npm install -g fquery
 
 This will install fQuery and its command line tool `makejs`. Run `makejs --help` to see if everything
-worked fine.
-
-To clone and build the project run the following commands.
+worked fine. To clone and build the project run the following commands.
 You'll find a new directory `build` including a fresh zipball.
 
     > git clone git://github.com/lrsjng/h5ai.git
@@ -56,7 +52,7 @@ It profits from these great projects:
 
 
 ## Changelog
-( **h5ai** uses [semantic versioning](http://semver.org/) )
+**h5ai** uses [semantic versioning](http://semver.org/).
 
 
 ### develop branch
