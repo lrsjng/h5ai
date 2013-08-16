@@ -85,16 +85,18 @@ module.exports = function (make) {
 
 	make.target('build', ['check-version'], 'build all updated files').sync(function () {
 
+		var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.url + ' */'
+
 		$(src + ': _h5ai/client/js/*.js')
 			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
-			.uglifyjs()
+			.uglifyjs({header: header})
 			.WRITE(mapSrc);
 
 		$(src + ': _h5ai/client/css/*.less')
 			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
-			.cssmin()
+			.cssmin({header: header})
 			.WRITE(mapSrc);
 
 		$(src + ': **/*.jade')
