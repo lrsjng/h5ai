@@ -28,9 +28,6 @@
 @border-widget-sep: 1px solid @col-widget-sep;
 
 
-
-
-
 @font-family: Ubuntu, sans-serif;
 @font-family-mono: "Ubuntu Mono", monospace;
 
@@ -48,9 +45,9 @@ body {
 	margin: 30px;
 }
 
-html.js .hideOnJs, html.no-js .hideOnNoJs {
+html.js .noJsMsg {
 	display: none;
 }
-html.no-browser .noBrowserMsg {
-	display: inline !important;
+html.browser .noBrowserMsg {
+	display: none;
 }

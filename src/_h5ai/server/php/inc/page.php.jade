@@ -6,7 +6,7 @@ doctype 5
 //if lt IE 9
 	<html class="no-js no-browser" lang="en">
 //[if gt IE 8]><!
-html.no-js( lang="en" )
+html.no-js.browser( lang="en" )
 	//<![endif]
 
 	head
@@ -34,7 +34,7 @@ html.no-js( lang="en" )
 			span.left
 				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
 					| {{pkg.name}} {{pkg.version}}
-				span.hideOnJs.noJsMsg
+				span.noJsMsg
 					| ⚡ JavaScript disabled! ⚡
 				span.noBrowserMsg
 					| ⚡ Unsupported browser! Works best in 
