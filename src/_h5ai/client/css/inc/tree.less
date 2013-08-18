@@ -12,15 +12,12 @@
 	border-right: @border-widget;
 
 	.sp-scrollbar {
-		// margin: 8px 8px 8px 0;
 		width: 6px;
 		background-color: @col-sb-back;
-		// .border-radius(3px);
 		cursor: pointer;
 
 		.sp-thumb {
 			background-color: @col-sb-thumb;
-			// .border-radius(3px);
 		}
 		&.active .sp-thumb {
 			background-color: @col-sb-thumb-active;
@@ -63,14 +60,13 @@
 		padding: 4px 6px;
 		color: #555;
 		border: 1px solid rgba(0,0,0,0);
-		.border-radius(3px);
+		border-radius: 3px;
 		text-decoration: none;
 		opacity: 0.7;
 
 		&:hover, &.hover {
 			color: @col-hover;
 			background-color: @col-widget-back-hover;
-			// border-color: rgba(0,0,0,0.05);
 			opacity: 1;
 		}
 	}

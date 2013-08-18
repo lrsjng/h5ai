@@ -76,7 +76,6 @@
 				overflow: hidden;
 
 				&:hover, &.hover {
-					// color: #e80;
 					color: @col-hover;
 					background-color: @item-background-col-hover;
 					border-color: @item-border-col-hover;
@@ -86,8 +85,6 @@
 			&.selected:not(.selecting), &.selecting:not(.selected) {
 
 				a, a:active, a:visited {
-					// color: #000;
-					// color: @col-hover;
 					background-color: @item-background-col-sel;
 					border-color: @item-border-col-sel;
 
@@ -105,7 +102,6 @@
 				color: #aaa;
 
 				&:hover, &.hover {
-					// color: #e80;
 					color: @col-hover;
 				}
 			}
@@ -131,7 +127,7 @@
 			img {
 
 				&.thumb {
-					.box-shadow(0 0 0 1px #ddd);
+					box-shadow: 0 0 0 1px #ddd;
 				}
 			}
 
