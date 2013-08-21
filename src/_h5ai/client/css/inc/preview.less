@@ -18,12 +18,23 @@
 	background-color: #111;
 }
 
-#pv-spinner {
-	position: fixed;
+#pv-content {
+	position: absolute;
+	overflow: hidden;
 }
 
-#pv-close {
-	position: fixed;
+#pv-spinner {
+	position: absolute;
+
+	img {
+		width: 100px;
+		height: 100px;
+		margin: -50px -50px;
+	}
+}
+
+#pv-close-area {
+	position: absolute;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -31,14 +42,32 @@
 	cursor: pointer;
 }
 
-#pv-prev {
-	position: fixed;
+#pv-prev-area, #pv-next-area {
+	position: absolute;
+	top: 50%;
 	cursor: pointer;
+	opacity: 0.5;
+	.transition(all 0.2s ease-in-out);
+
+	img {
+		background-color: rgba(0,0,0,0.5);
+		border-radius: 8px;
+		width: 48px;
+		height: 48px;
+		margin: -24px 0;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
 }
 
-#pv-next {
-	position: fixed;
-	cursor: pointer;
+#pv-prev-area {
+	left: 8px;
+}
+
+#pv-next-area {
+	right: 8px;
 }
 
 #pv-buttons {

@@ -6,19 +6,15 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 		}, allsettings['preview']),
 
 		template = '<div id="pv-overlay" class="noSelection">' +
-						'<div id="pv-content">' +
-							'<img id="pv-image"/>' +
-						'</div>' +
-						'<div id="pv-spinner">' +
-							'<img src="' + resource.image('spinner') + '"/>' +
-						'</div>' +
-						'<div id="pv-close"/>' +
-						'<div id="pv-prev"/>' +
-						'<div id="pv-next"/>' +
+						'<div id="pv-close-area"/>' +
+						'<div id="pv-content"/>' +
+						'<div id="pv-spinner"><img src="' + resource.image('spinner') + '"/></div>' +
+						'<div id="pv-prev-area"><img src="' + resource.image('preview/prev') + '"/></div>' +
+						'<div id="pv-next-area"><img src="' + resource.image('preview/next') + '"/></div>' +
 						'<div id="pv-bottombar" class="clearfix">' +
 							'<ul id="pv-buttons">' +
 								'<li id="pv-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '"/></li>' +
-								'<li id="pv-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '"/></a></li>' +
+								'<li id="pv-bar-raw" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '"/></a></li>' +
 								'<li id="pv-bar-fullscreen" class="bar-right bar-button"><img src="' + resource.image('preview/fullscreen') + '"/></li>' +
 								'<li id="pv-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '"/></li>' +
 								'<li id="pv-bar-idx" class="bar-right bar-label"/>' +
@@ -38,67 +34,47 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			var rect = $(window).fracs('viewport'),
 				$container = $('#pv-content'),
 				$spinner = $('#pv-spinner'),
-				$spinnerimg = $spinner.find('img').width(100).height(100),
-				$img = $('#pv-image'),
 				margin = isFullscreen ? 0 : 20,
 				barheight = isFullscreen ? 0 : 31;
 
-			$container.add($spinner).css({
+			$container.css({
 				width: rect.width - 2 * margin,
 				height: rect.height - 2 * margin - barheight,
 				left: margin,
 				top: margin
 			});
 
-			var lr = ($container.width() - $img.width()) / 2,
-				tb = ($container.height() - $img.height()) / 2;
-
-			$img.css({
-				margin: '' + tb + 'px ' + lr + 'px'
-			});
-			$spinnerimg.css({
-				margin: '' + (($spinner.height() - $spinnerimg.height()) / 2) + 'px ' + (($spinner.width() - $spinnerimg.height()) / 2) + 'px'
+			$spinner.css({
+				left: rect.width * 0.5,
+				top: rect.height * 0.5
 			});
 
-			rect = $img.fracs('rect');
-			if (!rect) {
-				return;
-			}
-			rect = rect.relativeTo($('#pv-overlay').fracs('rect'));
-
-			$('#pv-prev').css({
-				left: rect.left,
-				top: rect.top,
-				width: rect.width / 2,
-				height: rect.height
-			});
-			$('#pv-next').css({
-				left: rect.left + rect.width / 2,
-				top: rect.top,
-				width: rect.width / 2,
-				height: rect.height
-			});
-
-			$('#pv-bar-percent').text('' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%');
 			if (isFullscreen) {
 				$('#pv-overlay').addClass('fullscreen');
 				$('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
-				$('#pv-bottombar').fadeOut(400);
 			} else {
 				$('#pv-overlay').removeClass('fullscreen');
 				$('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
-				$('#pv-bottombar').fadeIn(200);
+			}
+
+			if (_.isFunction(onAdjustSize)) {
+				onAdjustSize(1);
 			}
 		},
 
-		onEnter = function (items, idx) {
+		onEnter = function () {
 
 			$(window).on('keydown', onKeydown);
-			$('#pv-image').hide();
+			$('#pv-content').empty();
 			$('#pv-overlay').stop(true, true).fadeIn(200);
 
-			currentEntries = items;
 			adjustSize();
+		},
+
+		onExit = function () {
+
+			$(window).off('keydown', onKeydown);
+			$('#pv-overlay').stop(true, true).fadeOut(200);
 		},
 
 		onNext = function () {
@@ -115,10 +91,19 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			}
 		},
 
-		onExit = function () {
+		fsTimer = null,
+		onMouseMove = function () {
 
-			$(window).off('keydown', onKeydown);
-			$('#pv-overlay').stop(true, true).fadeOut(200);
+			clearTimeout(fsTimer);
+			$('#pv-bottombar, #pv-prev-area, #pv-next-area').fadeIn(200);
+
+			if (isFullscreen) {
+
+				fsTimer = setTimeout(function () {
+
+					$('#pv-bottombar, #pv-prev-area, #pv-next-area').fadeOut(400);
+				}, 2000);
+			}
 		},
 
 		onFullscreen = function () {
@@ -126,6 +111,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			isFullscreen = !isFullscreen;
 			store.put(storekey, isFullscreen);
 
+			onMouseMove();
 			adjustSize();
 		},
 
@@ -152,12 +138,31 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			}
 		},
 
+		enter = function () {
+
+			onEnter();
+		},
+
+		exit = function () {
+
+			onExit();
+		},
+
 		setIndex = function (idx, total) {
 
 			if (_.isNumber(idx)) {
-				$('#pv-bar-idx').show().text('' + idx + (_.isNumber(total) ? '/' + total : ''));
+				$('#pv-bar-idx').text('' + idx + (_.isNumber(total) ? '/' + total : '')).show();
 			} else {
-				$('#pv-bar-idx').hide();
+				$('#pv-bar-idx').text('').hide();
+			}
+		},
+
+		setRawLink = function (href) {
+
+			if (href) {
+				$('#pv-bar-raw').find('a').attr('href', href).end().show();
+			} else {
+				$('#pv-bar-raw').find('a').attr('href', '#').end().hide();
 			}
 		},
 
@@ -179,6 +184,25 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			onIndexChange = fn;
 		},
 
+		onAdjustSize = null,
+		setOnAdjustSize = function (fn) {
+
+			onAdjustSize = fn;
+		},
+
+		showSpinner = function (show, millis) {
+
+			if (!_.isNumber(millis)) {
+				millis = 400;
+			}
+
+			if (show) {
+				$('#pv-spinner').stop(true, true).fadeIn(millis);
+			} else {
+				$('#pv-spinner').stop(true, true).fadeOut(millis);
+			}
+		},
+
 		init = function () {
 
 			if (!settings.enabled) {
@@ -186,12 +210,14 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			}
 
 			$(template).appendTo('body');
-			$('#pv-bar-prev, #pv-prev').on('click', onPrevious);
-			$('#pv-bar-next, #pv-next').on('click', onNext);
-			$('#pv-bar-close, #pv-close').on('click', onExit);
+
+			$('#pv-spinner').hide();
+			$('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
+			$('#pv-bar-next, #pv-next-area').on('click', onNext);
+			$('#pv-bar-close, #pv-close-area').on('click', onExit);
 			$('#pv-bar-fullscreen').on('click', onFullscreen);
 
-			$('#pv-prev')
+			$('#pv-prev-area')
 				.on('mouseenter', function () {
 					$('#pv-bar-prev').addClass('hover');
 				})
@@ -199,7 +225,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 					$('#pv-bar-prev').removeClass('hover');
 				});
 
-			$('#pv-next')
+			$('#pv-next-area')
 				.on('mouseenter', function () {
 					$('#pv-bar-next').addClass('hover');
 				})
@@ -207,7 +233,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 					$('#pv-bar-next').removeClass('hover');
 				});
 
-			$('#pv-close')
+			$('#pv-close-area')
 				.on('mouseenter', function () {
 					$('#pv-bar-close').addClass('hover');
 				})
@@ -215,20 +241,10 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 					$('#pv-bar-close').removeClass('hover');
 				});
 
+			var fsTimer = null;
 			$('#pv-overlay')
 				.on('keydown', onKeydown)
-				.on('mousemove', function (event) {
-
-					if (isFullscreen) {
-						var rect = $('#pv-overlay').fracs('rect');
-
-						if (rect.bottom - event.pageY < 64) {
-							$('#pv-bottombar').fadeIn(200);
-						} else {
-							$('#pv-bottombar').fadeOut(400);
-						}
-					}
-				})
+				.on('mousemove', onMouseMove)
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
 					event.stopImmediatePropagation();
@@ -240,8 +256,13 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 	init();
 
 	return {
+		enter: enter,
+		exit: exit,
 		setIndex: setIndex,
+		setRawLink: setRawLink,
 		setLabels: setLabels,
-		setOnIndexChange: setOnIndexChange
+		setOnIndexChange: setOnIndexChange,
+		setOnAdjustSize: setOnAdjustSize,
+		showSpinner: showSpinner
 	};
 });
