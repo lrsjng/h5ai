@@ -244,7 +244,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			var fsTimer = null;
 			$('#pv-overlay')
 				.on('keydown', onKeydown)
-				.on('mousemove', onMouseMove)
+				.on('mousemove click mousedown', onMouseMove)
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
 					event.stopImmediatePropagation();

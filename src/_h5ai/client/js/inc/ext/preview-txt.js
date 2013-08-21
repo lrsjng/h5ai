@@ -92,32 +92,6 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 			loadScript(allsettings.h5aiAbsHref + 'client/js/markdown.js', 'markdown', callback);
 		},
 
-		adjustSize = function () {
-
-			var $window = $(window),
-				$container = $('#pv-txt-content'),
-				$spinner = $('#pv-txt-spinner'),
-				$spinnerimg = $spinner.find('img').width(100).height(100),
-				margin = 20,
-				barheight = 31;
-
-			$container.css({
-				height: $window.height() - 2 * margin - barheight - 32,
-				top: margin
-			});
-
-			$spinner.css({
-				width: $window.width() - 2 * margin,
-				height: $window.height() - 2 * margin - barheight,
-				left: margin,
-				top: margin
-			});
-
-			$spinnerimg.css({
-				margin: '' + (($spinner.height() - $spinnerimg.height()) / 2) + 'px ' + (($spinner.width() - $spinnerimg.height()) / 2) + 'px'
-			});
-		},
-
 		preloadText = function (absHref, callback) {
 
 			$.ajax({
@@ -141,6 +115,17 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 				currentIdx = idx,
 				currentItem = items[idx],
 
+				onAdjustSize = function () {
+
+					var $content = $('#pv-content'),
+						$text = $('#pv-txt-text');
+
+					if ($text.length) {
+
+						$text.height($content.height() - 16);
+					}
+				},
+
 				onIdxChange = function (rel) {
 
 					currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
@@ -158,8 +143,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 							var $text;
 
 							if (currentItem.type === 'markdown') {
+
 								$text = $(templateMarkdown).text(textContent);
-								$text.replaceWith($text);
 
 								loadMarkdown(function (md) {
 
@@ -168,8 +153,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 									}
 								});
 							} else {
+
 								$text = $(templateText).text(textContent);
-								$text.replaceWith($text);
 
 								loadSyntaxhighlighter(function (sh) {
 
@@ -187,8 +172,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 									}
 								});
 							}
-
 							$('#pv-content').empty().append($text).fadeIn(200);
+							onAdjustSize();
 
 							preview.setIndex(currentIdx + 1, currentItems.length);
 							preview.setLabels([
@@ -202,6 +187,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 
 			onIdxChange(0);
 			preview.setOnIndexChange(onIdxChange);
+			preview.setOnAdjustSize(onAdjustSize);
 			preview.enter();
 		},
 
