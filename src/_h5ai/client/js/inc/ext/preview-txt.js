@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/location'], function (_, $, allsettings, resource, store, event, location) {
+modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/store', 'core/event', 'ext/preview'], function (_, $, allsettings, store, event, preview) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -28,32 +28,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			}
 		}, allsettings['preview-txt']),
 
-		template = '<div id="pv-txt-overlay" class="noSelection">' +
-						'<div id="pv-txt-close"/>' +
-						'<div id="pv-txt-content">' +
-							'<div id="pv-txt-text"/>' +
-						'</div>' +
-						'<div id="pv-txt-spinner">' +
-							'<img src="' + resource.image('spinner') + '"/>' +
-						'</div>' +
-						'<div id="pv-txt-bottombar" class="clearfix">' +
-							'<ul id="pv-txt-buttons">' +
-								'<li id="pv-txt-bar-size" class="bar-left bar-label"/>' +
-								'<li id="pv-txt-bar-label" class="bar-left bar-label"/>' +
-								'<li id="pv-txt-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '"/></li>' +
-								'<li id="pv-txt-bar-original" class="bar-right"><a class="bar-button" target="_blank"><img src="' + resource.image('preview/raw') + '"/></a></li>' +
-								'<li id="pv-txt-bar-next" class="bar-right bar-button"><img src="' + resource.image('preview/next') + '"/></li>' +
-								'<li id="pv-txt-bar-idx" class="bar-right bar-label"/>' +
-								'<li id="pv-txt-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '"/></li>' +
-							'</ul>' +
-						'</div>' +
-					'</div>',
-
 		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
 		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
-
-		currentEntries = [],
-		currentIdx = 0,
 
 		// adapted from SyntaxHighlighter
 		getHighlightedLines = function (sh, alias, content) {
@@ -159,107 +135,74 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 			});
 		},
 
-		onIndexChange = function (idx) {
-
-			currentIdx = (idx + currentEntries.length) % currentEntries.length;
-
-			var $container = $('#pv-txt-content'),
-				$text = $('#pv-txt-text'),
-				current = currentEntries[currentIdx],
-				spinnerTimeout = setTimeout(function () { $('#pv-txt-spinner').show(); }, 200);
-
-			preloadText(current.absHref, function (content) {
-
-				clearTimeout(spinnerTimeout);
-				$('#pv-txt-spinner').hide();
-
-				$text.fadeOut(100, function () {
-
-					var $nText;
-
-					if (current.type === 'markdown') {
-						$nText = $(templateMarkdown).hide().text(content);
-						$text.replaceWith($nText);
-
-						loadMarkdown(function (md) {
-
-							if (md) {
-								$nText.html(md.toHTML(content));
-							}
-						});
-					} else {
-						$nText = $(templateText).hide().text(content);
-						$text.replaceWith($nText);
-
-						loadSyntaxhighlighter(function (sh) {
-
-							if (sh) {
-								var $table = $('<table/>');
-
-								getHighlightedLines(sh, settings.types[current.type], content).each(function (i) {
-									$('<tr/>')
-										.append($('<td/>').addClass('nr').append(i + 1))
-										.append($('<td/>').addClass('line').append(this))
-										.appendTo($table);
-								});
-
-								$nText.empty().append($table);
-							}
-						});
-					}
-					$nText.fadeIn(200);
-
-					adjustSize();
-					$('#pv-txt-bar-label').text(current.label);
-					$('#pv-txt-bar-size').text('' + current.size + ' bytes');
-					$('#pv-txt-bar-idx').text('' + (currentIdx + 1) + ' / ' + currentEntries.length);
-					$('#pv-txt-bar-original').find('a').attr('href', current.absHref);
-				});
-			});
-		},
-
 		onEnter = function (items, idx) {
 
-			$(window).on('keydown', onKeydown);
-			$('#pv-txt-overlay').stop(true, true).fadeIn(200);
+			var currentItems = items,
+				currentIdx = idx,
+				currentItem = items[idx],
 
-			currentEntries = items;
-			onIndexChange(idx);
-		},
+				onIdxChange = function (rel) {
 
-		onNext = function () {
+					currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
+					currentItem = currentItems[currentIdx];
 
-			onIndexChange(currentIdx + 1);
-		},
+					var spinnerTimeout = setTimeout(function () { preview.showSpinner(true); }, 200);
 
-		onPrevious = function () {
+					preloadText(currentItem.absHref, function (textContent) {
 
-			onIndexChange(currentIdx - 1);
-		},
+						clearTimeout(spinnerTimeout);
+						preview.showSpinner(false);
 
-		onExit = function () {
+						$('#pv-content').fadeOut(100, function () {
 
-			$(window).off('keydown', onKeydown);
-			$('#pv-txt-overlay').stop(true, true).fadeOut(200);
-		},
+							var $text;
 
-		onKeydown = function (event) {
+							if (currentItem.type === 'markdown') {
+								$text = $(templateMarkdown).text(textContent);
+								$text.replaceWith($text);
 
-			var key = event.which;
+								loadMarkdown(function (md) {
 
-			if (key === 27) { // esc
-				event.preventDefault();
-				event.stopImmediatePropagation();
-				onExit();
-			} else if (key === 8 || key === 37 || key === 40) { // backspace, left, down
-				event.preventDefault();
-				event.stopImmediatePropagation();
-				onPrevious();
-			} else if (key === 13 || key === 32 || key === 38 || key === 39) { // enter, space, up, right
-				event.preventDefault();
-				event.stopImmediatePropagation();
-				onNext();
-			}
+									if (md) {
+										$text.html(md.toHTML(textContent));
+									}
+								});
+							} else {
+								$text = $(templateText).text(textContent);
+								$text.replaceWith($text);
+
+								loadSyntaxhighlighter(function (sh) {
+
+									if (sh) {
+										var $table = $('<table/>');
+
+										getHighlightedLines(sh, settings.types[currentItem.type], textContent).each(function (i) {
+											$('<tr/>')
+												.append($('<td/>').addClass('nr').append(i + 1))
+												.append($('<td/>').addClass('line').append(this))
+												.appendTo($table);
+										});
+
+										$text.empty().append($table);
+									}
+								});
+							}
+
+							$('#pv-content').empty().append($text).fadeIn(200);
+
+							preview.setIndex(currentIdx + 1, currentItems.length);
+							preview.setLabels([
+								currentItem.label,
+								'' + currentItem.size + ' bytes'
+							]);
+							preview.setRawLink(currentItem.absHref);
+						});
+					});
+				};
+
+			onIdxChange(0);
+			preview.setOnIndexChange(onIdxChange);
+			preview.enter();
 		},
 
 		initItem = function (item) {
@@ -296,31 +239,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/resource', 
 				return;
 			}
 
-			$(template).appendTo('body');
-			$('#pv-txt-bar-prev').on('click', onPrevious);
-			$('#pv-txt-bar-next').on('click', onNext);
-			$('#pv-txt-bar-close, #pv-txt-close').on('click', onExit);
-
-			$('#pv-txt-close')
-				.on('mouseenter', function () {
-					$('#pv-txt-bar-close').addClass('hover');
-				})
-				.on('mouseleave', function () {
-					$('#pv-txt-bar-close').removeClass('hover');
-				});
-
-
-			$('#pv-txt-overlay')
-				.on('keydown', onKeydown)
-				.on('click mousedown mousemove keydown keypress', function (event) {
-
-					event.stopImmediatePropagation();
-				});
-
 			event.sub('location.changed', onLocationChanged);
 			event.sub('location.refreshed', onLocationRefreshed);
-
-			$(window).on('resize load', adjustSize);
 		};
 
 	init();
