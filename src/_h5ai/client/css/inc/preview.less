@@ -37,17 +37,19 @@
 	right: 8px;
 	top: 8px;
 	cursor: pointer;
-	opacity: 0.5;
 
 	img {
 		background-color: rgba(0,0,0,0.5);
 		border-radius: 8px;
 		width: 48px;
 		height: 48px;
+		opacity: 0.5;
 	}
 
-	&:hover {
-		opacity: 1;
+	&:hover, &.hover {
+		img {
+			opacity: 1;
+		}
 	}
 }
 
@@ -55,7 +57,6 @@
 	position: absolute;
 	top: 50%;
 	cursor: pointer;
-	opacity: 0.5;
 
 	img {
 		background-color: rgba(0,0,0,0.5);
@@ -64,10 +65,13 @@
 		height: 48px;
 		margin: -72px 0;
 		padding: 48px 0;
+		opacity: 0.5;
 	}
 
-	&:hover {
-		opacity: 1;
+	&:hover, &.hover {
+		img {
+			opacity: 1;
+		}
 	}
 }
 

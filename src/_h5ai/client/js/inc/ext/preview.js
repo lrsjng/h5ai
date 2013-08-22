@@ -117,23 +117,32 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
 		onKeydown = function (event) {
 
-			var key = event.which;
+			var key = event.which,
+				delay = 300;
 
 			if (key === 27) { // esc
 				event.preventDefault();
 				event.stopImmediatePropagation();
+				$('#pv-bar-close, #pv-close-area').addClass('hover');
+				setTimeout(function () { $('#pv-bar-close, #pv-close-area').removeClass('hover'); }, delay);
 				onExit();
 			} else if (key === 8 || key === 37) { // backspace, left
 				event.preventDefault();
 				event.stopImmediatePropagation();
+				$('#pv-bar-prev, #pv-prev-area').addClass('hover');
+				setTimeout(function () { $('#pv-bar-prev, #pv-prev-area').removeClass('hover'); }, delay);
 				onPrevious();
 			} else if (key === 13 || key === 32 || key === 39) { // enter, space, right
 				event.preventDefault();
 				event.stopImmediatePropagation();
+				$('#pv-bar-next, #pv-next-area').addClass('hover');
+				setTimeout(function () { $('#pv-bar-next, #pv-next-area').removeClass('hover'); }, delay);
 				onNext();
 			} else if (key === 70) { // f
 				event.preventDefault();
 				event.stopImmediatePropagation();
+				$('#pv-bar-fullscreen').addClass('hover');
+				setTimeout(function () { $('#pv-bar-fullscreen').removeClass('hover'); }, delay);
 				onFullscreen();
 			}
 		},
