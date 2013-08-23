@@ -56,7 +56,14 @@ It profits from these great projects:
 
 ### develop branch
 
-* ...
+* updates image and text preview
+* adds optional natural sort of items
+* fixes file deletion of multiple files
+* fixes `setParentFolderLabels = false`
+* cleans code
+* updates info page `/_h5ai`
+* adds type `aiff` to type `audio`
+* updates `pl` translation
 
 
 ### v0.23.0 - *2013-07-21*
