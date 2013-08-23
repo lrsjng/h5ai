@@ -96,7 +96,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			return 0;
 		},
 
-		cmpFn = function (getVal, reverse, ignorecase, natural) {
+		cmpFn = function (getValue, reverse, ignorecase, natural) {
 
 			return function (item1, item2) {
 
@@ -107,8 +107,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					return res;
 				}
 
-				val1 = '' + getVal(item1);
-				val2 = '' + getVal(item2);
+				val1 = '' + getValue(item1);
+				val2 = '' + getValue(item2);
 
 				if (ignorecase) {
 					val1 = val1.toLowerCase();
@@ -163,30 +163,31 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				return;
 			}
 
-			var $ascending = $('<img src="' + resource.image('ascending') + '" class="sort ascending" alt="ascending" />'),
-				$descending = $('<img src="' + resource.image('descending') + '" class="sort descending" alt="descending" />'),
-				$header = $('#items li.header');
+			$('#items li.header')
 
-			$header.find('a.label')
-				.append(template)
-				.click(function (event) {
-					sortItems(0, $(this).hasClass('ascending'));
-					event.preventDefault();
-				});
+				.find('a.label')
+					.append(template)
+					.click(function (event) {
+						sortItems(0, $(this).hasClass('ascending'));
+						event.preventDefault();
+					})
+				.end()
 
-			$header.find('a.date')
-				.prepend(template)
-				.click(function (event) {
-					sortItems(1, $(this).hasClass('ascending'));
-					event.preventDefault();
-				});
+				.find('a.date')
+					.prepend(template)
+					.click(function (event) {
+						sortItems(1, $(this).hasClass('ascending'));
+						event.preventDefault();
+					})
+				.end()
 
-			$header.find('a.size')
-				.prepend(template)
-				.click(function (event) {
-					sortItems(2, $(this).hasClass('ascending'));
-					event.preventDefault();
-				});
+				.find('a.size')
+					.prepend(template)
+					.click(function (event) {
+						sortItems(2, $(this).hasClass('ascending'));
+						event.preventDefault();
+					})
+				.end();
 
 			event.sub('location.changed', onContentChanged);
 			event.sub('location.refreshed', onContentChanged);
