@@ -128,7 +128,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 		sortItems = function (column, reverse) {
 
 			var headers = $('#items li.header a'),
-				header = $("#items li.header a." + columnClasses[column]),
+				header = $('#items li.header a.' + columnClasses[column]),
 
 				fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, settings.natural),
 
