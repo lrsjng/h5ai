@@ -63,7 +63,8 @@ It profits from these great projects:
 * cleans code
 * updates info page `/_h5ai`
 * adds type `aiff` to type `audio`
-* updates `pl` translation
+* adds `dk` translation by Ronnie Milbo
+* updates to `pl` translation by Mark
 
 
 ### v0.23.0 - *2013-07-21*
