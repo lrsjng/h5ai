@@ -77,17 +77,4 @@ function load_commented_json($file) {
 	return json_decode($str, true);
 }
 
-/* unused
-function merge_config($a, $b) {
-
-	$result = array_merge(array(), $a);
-
-	foreach ($b as $key => $value) {
-		$result[$key] = array_merge($result[$key], $b[$key]);
-	}
-
-	return $result;
-}
-*/
-
 ?>
