@@ -10,6 +10,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 		}, allsettings.sort),
 
 		storekey = 'sort.order',
+		template = '<img src="' + resource.image('ascending') + '" class="sort ascending" alt="ascending" />' +
+					'<img src="' + resource.image('descending') + '" class="sort descending" alt="descending" />',
 
 		getType = function (item) {
 
@@ -163,27 +165,24 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 			var $ascending = $('<img src="' + resource.image('ascending') + '" class="sort ascending" alt="ascending" />'),
 				$descending = $('<img src="' + resource.image('descending') + '" class="sort descending" alt="descending" />'),
-				$header = $('#items li.header'),
-				$label = $header.find('a.label'),
-				$date = $header.find('a.date'),
-				$size = $header.find('a.size');
+				$header = $('#items li.header');
 
-			$label
-				.append($ascending.clone()).append($descending.clone())
+			$header.find('a.label')
+				.append(template)
 				.click(function (event) {
 					sortItems(0, $(this).hasClass('ascending'));
 					event.preventDefault();
 				});
 
-			$date
-				.prepend($ascending.clone()).prepend($descending.clone())
+			$header.find('a.date')
+				.prepend(template)
 				.click(function (event) {
 					sortItems(1, $(this).hasClass('ascending'));
 					event.preventDefault();
 				});
 
-			$size
-				.prepend($ascending.clone()).prepend($descending.clone())
+			$header.find('a.size')
+				.prepend(template)
 				.click(function (event) {
 					sortItems(2, $(this).hasClass('ascending'));
 					event.preventDefault();
