@@ -3,7 +3,6 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 	var settings = _.extend({
 			enabled: false,
-			order: 'na',
 			column: 0,
 			reverse: false,
 			ignorecase: true,
@@ -12,16 +11,44 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 		storekey = 'sort.order',
 
-		type = function (item) {
+		getType = function (item) {
 
 			var $item = $(item);
 
 			if ($item.hasClass('folder-parent')) {
 				return 0;
-			} else if ($item.hasClass('folder')) {
+			}
+			if ($item.hasClass('folder')) {
 				return 1;
 			}
 			return 2;
+		},
+
+		getName = function (item) {
+
+			return $(item).find('.label').text();
+		},
+
+		getTime = function (item) {
+
+			return $(item).find('.date').data('time');
+		},
+
+		getSize = function (item) {
+
+			return $(item).find('.size').data('bytes');
+		},
+
+		columnGetters = {
+			0: getName,
+			1: getTime,
+			2: getSize
+		},
+
+		columnClasses = {
+			0: 'label',
+			1: 'date',
+			2: 'size'
 		},
 
 		// Natural Sort algorithm for Javascript - Version 0.7 - Released under MIT license
@@ -36,8 +63,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				hre = /^0x[0-9a-f]+$/i,
 				ore = /^0/,
 				// convert all to strings strip whitespace
-				x = ('' + val1).replace(sre, '') || '',
-				y = ('' + val2).replace(sre, '') || '',
+				x = ('' + val1).replace(sre, ''),
+				y = ('' + val2).replace(sre, ''),
 				// chunk/tokenize
 				xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
 				yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
@@ -73,13 +100,13 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 				var res, val1, val2;
 
-				res = type(item1) - type(item2);
+				res = getType(item1) - getType(item2);
 				if (res !== 0) {
 					return res;
 				}
 
-				val1 = getVal(item1);
-				val2 = getVal(item2);
+				val1 = '' + getVal(item1);
+				val2 = '' + getVal(item2);
 
 				if (ignorecase) {
 					val1 = val1.toLowerCase();
@@ -96,34 +123,24 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			};
 		},
 
-		getName = function (item) {
+		sortItems = function (column, reverse) {
 
-			return $(item).find('.label').text();
-		},
-		getTime = function (item) {
+			var headers = $('#items li.header a'),
+				header = $("#items li.header a." + columnClasses[column]),
 
-			return $(item).find('.date').data('time');
-		},
-		getSize = function (item) {
+				fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, settings.natural),
 
-			return $(item).find('.size').data('bytes');
-		},
+				current = $('#items .item'),
+				sorted = $('#items .item').sort(fn);
 
-		$all, orders,
+			store.put(storekey, {column: column, reverse: reverse});
 
-		sortBy = function (id) {
+			headers.removeClass('ascending descending');
+			header.addClass(reverse ? 'descending' : 'ascending');
 
-			var order = orders[id];
-
-			store.put(storekey, id);
-
-			$all.removeClass('ascending').removeClass('descending');
-			order.head.addClass(order.clas);
-			var current = $('#items .item');
-			var sorted = $('#items .item').sort(order.fn);
 			for (var i = 0, l = current.length; i < l; i += 1) {
 				if (current[i] !== sorted[i]) {
-					sorted.detach().sort(order.fn).appendTo('#items');
+					sorted.detach().sort(fn).appendTo('#items');
 					break;
 				}
 			}
@@ -131,7 +148,11 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 		onContentChanged = function (item) {
 
-			sortBy(store.get(storekey) || settings.order);
+			var order = store.get(storekey),
+				column = order.column || settings.column,
+				reverse = order.reverse || settings.reverse;
+
+			sortItems(column, reverse);
 		},
 
 		init = function () {
@@ -145,66 +166,26 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				$header = $('#items li.header'),
 				$label = $header.find('a.label'),
 				$date = $header.find('a.date'),
-				$size = $header.find('a.size'),
-				column = settings.column,
-				reverse = settings.reverse,
-				ignorecase = settings.ignorecase,
-				natural = settings.natural;
-
-			$all = $header.find('a.label,a.date,a.size');
-			orders = {
-				na: {
-					head: $label,
-					clas: 'ascending',
-					fn: cmpFn(getName, false, ignorecase, natural)
-				},
-				nd: {
-					head: $label,
-					clas: 'descending',
-					fn: cmpFn(getName, true, ignorecase, natural)
-				},
-				da: {
-					head: $date,
-					clas: 'ascending',
-					fn: cmpFn(getTime, false, ignorecase, natural)
-				},
-				dd: {
-					head: $date,
-					clas: 'descending',
-					fn: cmpFn(getTime, true, ignorecase, natural)
-				},
-				sa: {
-					head: $size,
-					clas: 'ascending',
-					fn: cmpFn(getSize, false, ignorecase, natural)
-				},
-				sd: {
-					head: $size,
-					clas: 'descending',
-					fn: cmpFn(getSize, true, ignorecase, natural)
-				}
-			};
-
-			sortBy(store.get(storekey) || settings.order);
+				$size = $header.find('a.size');
 
 			$label
 				.append($ascending.clone()).append($descending.clone())
 				.click(function (event) {
-					sortBy('n' + ($label.hasClass('ascending') ? 'd' : 'a'));
+					sortItems(0, $(this).hasClass('ascending'));
 					event.preventDefault();
 				});
 
 			$date
 				.prepend($ascending.clone()).prepend($descending.clone())
 				.click(function (event) {
-					sortBy('d' + ($date.hasClass('ascending') ? 'd' : 'a'));
+					sortItems(1, $(this).hasClass('ascending'));
 					event.preventDefault();
 				});
 
 			$size
 				.prepend($ascending.clone()).prepend($descending.clone())
 				.click(function (event) {
-					sortBy('s' + ($size.hasClass('ascending') ? 'd' : 'a'));
+					sortItems(2, $(this).hasClass('ascending'));
 					event.preventDefault();
 				});
 
