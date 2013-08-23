@@ -276,10 +276,18 @@ Options
 	for "descending".
 
 	- order: "na", "nd", "da", "dd", "sa" or "sd"
+	- column: [NOT USED] 0 for "Name", 1 for "Date", 2 for "Size"
+	- reverse: [NOT USED] false for ascending, true for descending
+	- ignorecase: compare ignorecase
+	- natural: use natural sort order
 	*/
 	"sort": {
 		"enabled": true,
-		"order": "na"
+		"order": "na",
+		"column": 0,
+		"reverse": false,
+		"ignorecase": true,
+		"natural": true
 	},
 
 	/*

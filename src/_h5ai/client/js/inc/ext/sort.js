@@ -3,7 +3,11 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 	var settings = _.extend({
 			enabled: false,
-			order: 'na'
+			order: 'na',
+			column: 0,
+			reverse: false,
+			ignorecase: true,
+			natural: true
 		}, allsettings.sort),
 
 		storekey = 'sort.order',
@@ -20,7 +24,50 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			return 2;
 		},
 
-		cmpFn = function (rev, getVal) {
+		// Natural Sort algorithm for Javascript - Version 0.7 - Released under MIT license
+		// Author: Jim Palmer (based on chunking idea from Dave Koelle)
+		//
+		// Modified to make it work with h5ai
+		naturalCmpFn = function (val1, val2) {
+
+			var re = /(^-?[0-9]+(\.?[0-9]*)[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/gi,
+				sre = /(^[ ]*|[ ]*$)/g,
+				dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/,
+				hre = /^0x[0-9a-f]+$/i,
+				ore = /^0/,
+				// convert all to strings strip whitespace
+				x = ('' + val1).replace(sre, '') || '',
+				y = ('' + val2).replace(sre, '') || '',
+				// chunk/tokenize
+				xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
+				yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
+				// numeric, hex or date detection
+				xD = parseInt(x.match(hre), 10) || (xN.length != 1 && x.match(dre) && Date.parse(x)),
+				yD = parseInt(y.match(hre), 10) || xD && y.match(dre) && Date.parse(y) || null,
+				oFxNcL, oFyNcL;
+			// first try and sort Hex codes or Dates
+			if (yD)
+				if ( xD < yD ) return -1;
+				else if ( xD > yD ) return 1;
+			// natural sorting through split numeric strings and default strings
+			for(var cLoc=0, numS=Math.max(xN.length, yN.length); cLoc < numS; cLoc++) {
+				// find floats not starting with '0', string or 0 if not defined (Clint Priest)
+				oFxNcL = !(xN[cLoc] || '').match(ore) && parseFloat(xN[cLoc]) || xN[cLoc] || 0;
+				oFyNcL = !(yN[cLoc] || '').match(ore) && parseFloat(yN[cLoc]) || yN[cLoc] || 0;
+				// handle numeric vs string comparison - number < string - (Kyle Adams)
+				if (isNaN(oFxNcL) !== isNaN(oFyNcL)) { return (isNaN(oFxNcL)) ? 1 : -1; }
+				// rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
+				else if (typeof oFxNcL !== typeof oFyNcL) {
+					oFxNcL += '';
+					oFyNcL += '';
+				}
+				if (oFxNcL < oFyNcL) return -1;
+				if (oFxNcL > oFyNcL) return 1;
+			}
+			return 0;
+		},
+
+		cmpFn = function (getVal, reverse, ignorecase, natural) {
 
 			return function (item1, item2) {
 
@@ -33,18 +80,25 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 				val1 = getVal(item1);
 				val2 = getVal(item2);
-				if (val1 < val2) {
-					return rev ? 1 : -1;
-				} else if (val1 > val2) {
-					return rev ? -1 : 1;
+
+				if (ignorecase) {
+					val1 = val1.toLowerCase();
+					val2 = val2.toLowerCase();
 				}
-				return 0;
+
+				if (natural) {
+					res = naturalCmpFn(val1, val2);
+				} else {
+					res = val1 < val2 ? -1 : (val1 > val2 ? 1 : 0);
+				}
+
+				return reverse ? -res : res;
 			};
 		},
 
 		getName = function (item) {
 
-			return $(item).find('.label').text().toLowerCase();
+			return $(item).find('.label').text();
 		},
 		getTime = function (item) {
 
@@ -91,39 +145,43 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				$header = $('#items li.header'),
 				$label = $header.find('a.label'),
 				$date = $header.find('a.date'),
-				$size = $header.find('a.size');
+				$size = $header.find('a.size'),
+				column = settings.column,
+				reverse = settings.reverse,
+				ignorecase = settings.ignorecase,
+				natural = settings.natural;
 
 			$all = $header.find('a.label,a.date,a.size');
 			orders = {
 				na: {
 					head: $label,
 					clas: 'ascending',
-					fn: cmpFn(false, getName)
+					fn: cmpFn(getName, false, ignorecase, natural)
 				},
 				nd: {
 					head: $label,
 					clas: 'descending',
-					fn: cmpFn(true, getName)
+					fn: cmpFn(getName, true, ignorecase, natural)
 				},
 				da: {
 					head: $date,
 					clas: 'ascending',
-					fn: cmpFn(false, getTime)
+					fn: cmpFn(getTime, false, ignorecase, natural)
 				},
 				dd: {
 					head: $date,
 					clas: 'descending',
-					fn: cmpFn(true, getTime)
+					fn: cmpFn(getTime, true, ignorecase, natural)
 				},
 				sa: {
 					head: $size,
 					clas: 'ascending',
-					fn: cmpFn(false, getSize)
+					fn: cmpFn(getSize, false, ignorecase, natural)
 				},
 				sd: {
 					head: $size,
 					clas: 'descending',
-					fn: cmpFn(true, getSize)
+					fn: cmpFn(getSize, true, ignorecase, natural)
 				}
 			};
 
