@@ -283,7 +283,7 @@ Options
 		"column": 0,
 		"reverse": false,
 		"ignorecase": true,
-		"natural": true
+		"natural": false
 	},
 
 	/*

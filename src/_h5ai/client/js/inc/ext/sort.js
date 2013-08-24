@@ -6,7 +6,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			column: 0,
 			reverse: false,
 			ignorecase: true,
-			natural: true
+			natural: false
 		}, allsettings.sort),
 
 		storekey = 'sort.order',
