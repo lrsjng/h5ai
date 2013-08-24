@@ -62,7 +62,7 @@ It profits from these great projects:
 * fixes `setParentFolderLabels = false`
 * cleans code
 * updates info page `/_h5ai`
-* adds type `aiff` to type `audio`
+* adds `aiff` to `audio` types
 * adds `da` translation by Ronnie Milbo
 * updates to `pl` translation by Mark
 
