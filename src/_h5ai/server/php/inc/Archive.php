@@ -44,9 +44,9 @@ class Archive {
 
 	private function shell_cmd($cmd) {
 
-		$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_abs_path() . "\"", $cmd);
-		$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
-		$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
+		$cmd = str_replace("[ROOTDIR]", escapeshellarg($this->app->get_abs_path()), $cmd);
+		$cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
+		$cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
 		try {
 			passthru($cmd);
 		} catch (Exeption $err) {
