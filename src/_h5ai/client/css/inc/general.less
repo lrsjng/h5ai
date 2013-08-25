@@ -20,18 +20,27 @@
 @col-sb-thumb: rgba(0,0,0,0.15);
 @col-sb-thumb-active: rgba(0,0,0,0.25);
 
-
 @border-widget: 1px solid @col-border;
 @border-widget-sep: 1px solid @col-widget-sep;
-
 
 @font-family: Ubuntu, sans-serif;
 @font-family-mono: "Ubuntu Mono", monospace;
 
 
-html { overflow-y: auto; }
 ::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
 ::selection { background: #68A9FF; color: #fff; text-shadow: none; }
+
+html {
+	min-height: 100%;
+	overflow: auto;
+
+	&.js .noJsMsg {
+		display: none;
+	}
+	&.browser .noBrowserMsg {
+		display: none;
+	}
+}
 
 body {
 	font-family: @font-family;
@@ -39,11 +48,4 @@ body {
 	color: @col;
 	background-color: @col-back;
 	margin: 30px;
-}
-
-html.js .noJsMsg {
-	display: none;
-}
-html.browser .noBrowserMsg {
-	display: none;
 }
