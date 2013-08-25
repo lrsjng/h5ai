@@ -2,8 +2,8 @@
 
 class Thumb {
 
-	private static $FFMPEG_CMD = "ffmpeg -i \"[SOURCE]\" -an -ss 3 -vframes 1 \"[TARGET]\"";
-	private static $CONVERT_CMD = "convert -strip \"[SOURCE][0]\" \"[TARGET]\"";
+	private static $FFMPEG_CMD = "ffmpeg -i [SOURCE] -an -ss 3 -vframes 1 [TARGET]";
+	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
 
 	public static final function is_supported() {
 
@@ -84,8 +84,8 @@ class Thumb {
 		$capture_abs_path = $this->app->get_cache_abs_path() . "/capture-" . sha1($source_abs_path) . ".jpg";
 
 		if (!file_exists($capture_abs_path) || filemtime($source_abs_path) >= filemtime($capture_abs_path)) {
-			$cmd = str_replace("[SOURCE]", $source_abs_path, $cmd);
-			$cmd = str_replace("[TARGET]", $capture_abs_path, $cmd);
+			$cmd = str_replace("[SOURCE]", escapeshellarg($source_abs_path), $cmd);
+			$cmd = str_replace("[TARGET]", escapeshellarg($capture_abs_path), $cmd);
 			`$cmd`;
 		}
 
@@ -97,14 +97,14 @@ class Thumb {
 
 class Magic {
 
-	private static $GET_SIZE_CMD = "identify -format \"%w %h\" \"[SOURCE]\"";
-	private static $RESIZE_CMD = "convert -strip -transparent-color \"#ffffff\" -resize [WIDTH]x[HEIGHT] -quality 80 \"[SOURCE]\" \"[TARGET]\"";
-	private static $SQUARE_CMD = "convert -strip -transparent-color \"#ffffff\" -crop [CWIDTH]x[CWIDTH]+[CLEFT]+[CTOP] -resize [WIDTH]x[WIDTH] -quality 80 \"[SOURCE]\" \"[TARGET]\"";
+	private static $GET_SIZE_CMD = "identify -format \"%w %h\" [SOURCE]";
+	private static $RESIZE_CMD = "convert -strip -transparent-color \"#ffffff\" -resize [WIDTH]x[HEIGHT] -quality 80 [SOURCE] [TARGET]";
+	private static $SQUARE_CMD = "convert -strip -transparent-color \"#ffffff\" -crop [CWIDTH]x[CWIDTH]+[CLEFT]+[CTOP] -resize [WIDTH]x[WIDTH] -quality 80 [SOURCE] [TARGET]";
 
 
 	private static final function img_size($source) {
 
-		$cmd = str_replace("[SOURCE]", str_replace("\"", "\\\"", $source), Magic::$GET_SIZE_CMD);
+		$cmd = str_replace("[SOURCE]", escapeshellarg($source), Magic::$GET_SIZE_CMD);
 		$size = explode(" ", `$cmd`);
 		$size[0] = intval($size[0]);
 		$size[1] = intval($size[1]);
@@ -113,10 +113,10 @@ class Magic {
 
 	private static final function rational($source, $target, $width, $height) {
 
-		$cmd = str_replace("[SOURCE]", str_replace("\"", "\\\"", $source), Magic::$RESIZE_CMD);
-		$cmd = str_replace("[TARGET]", str_replace("\"", "\\\"", $target), $cmd);
-		$cmd = str_replace("[WIDTH]", $width, $cmd);
-		$cmd = str_replace("[HEIGHT]", $height, $cmd);
+		$cmd = str_replace("[SOURCE]", escapeshellarg($source), Magic::$RESIZE_CMD);
+		$cmd = str_replace("[TARGET]", escapeshellarg($target), $cmd);
+		$cmd = str_replace("[WIDTH]", escapeshellarg($width), $cmd);
+		$cmd = str_replace("[HEIGHT]", escapeshellarg($height), $cmd);
 		`$cmd`;
 	}
 
@@ -130,12 +130,12 @@ class Magic {
 		$cleft = ($w - $cwidth) / 2;
 		$ctop = ($h - $cwidth) / 2;
 
-		$cmd = str_replace("[SOURCE]", str_replace("\"", "\\\"", $source), Magic::$SQUARE_CMD);
-		$cmd = str_replace("[TARGET]", str_replace("\"", "\\\"", $target), $cmd);
-		$cmd = str_replace("[CWIDTH]", $cwidth, $cmd);
-		$cmd = str_replace("[CLEFT]", $cleft, $cmd);
-		$cmd = str_replace("[CTOP]", $ctop, $cmd);
-		$cmd = str_replace("[WIDTH]", $width, $cmd);
+		$cmd = str_replace("[SOURCE]", escapeshellarg($source), Magic::$SQUARE_CMD);
+		$cmd = str_replace("[TARGET]", escapeshellarg($target), $cmd);
+		$cmd = str_replace("[CWIDTH]", escapeshellarg($cwidth), $cmd);
+		$cmd = str_replace("[CLEFT]", escapeshellarg($cleft), $cmd);
+		$cmd = str_replace("[CTOP]", escapeshellarg($ctop), $cmd);
+		$cmd = str_replace("[WIDTH]", escapeshellarg($width), $cmd);
 		`$cmd`;
 	}
 
