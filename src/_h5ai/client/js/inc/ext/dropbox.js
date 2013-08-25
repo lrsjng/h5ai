@@ -48,7 +48,8 @@ modulejs.define('ext/dropbox', ['_', '$', 'core/settings', 'core/location', 'cor
 
 			event.sub('ready', function () {
 
-				$content.filedrop({
+				// $content.filedrop({
+				$('html').filedrop({
 
 					paramname: 'userfile',
 
