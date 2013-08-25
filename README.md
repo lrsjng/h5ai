@@ -60,6 +60,7 @@ It profits from these great projects:
 * adds optional natural sort of items
 * fixes file deletion of multiple files
 * fixes `setParentFolderLabels = false`
+* fixes shell-arg and RegExp escape issues
 * cleans code
 * updates info page `/_h5ai`
 * adds `aiff` to `audio` types
