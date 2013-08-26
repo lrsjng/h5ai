@@ -460,4 +460,3 @@ It profits from these great projects:
 ### v0.2 - *2011-06-15*
 
 * adds icon view
-
