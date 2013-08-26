@@ -9,6 +9,45 @@
 	background-color: rgba(0,0,0,0.01);
 }
 
+#selector {
+	position: absolute;
+	left: 8px;
+	top: 8px;
+	width: 16px;
+	height: 16px;
+	background-color: #fff;
+	border: 1px solid #555;
+	border-radius: 100px;
+	opacity: 0.7;
+	cursor: pointer;
+
+	.on-selected, .on-not-selected {
+		display: block;
+		width: 16px;
+		height: 16px;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.item.selected {
+	#selector {
+		.on-not-selected {
+			display: none;
+		}
+	}
+}
+.item:not(.selected) {
+	#selector {
+		.on-selected {
+			display: none;
+		}
+	}
+}
+
+
 @item-border-col-sep: @col-border;
 
 @item-background-col-hover: rgba(0,0,0,0.02);

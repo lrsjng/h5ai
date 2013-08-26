@@ -1,5 +1,5 @@
 
-modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
+modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core/event'], function (_, $, allsettings, resource, event) {
 
 	var settings = _.extend({
 			enabled: false
@@ -111,8 +111,38 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 			}
 		},
 
-		onLocationChanged = function () {
+		initItem = function (item) {
 
+			if (item.$view) {
+				item.$view
+					.on('mouseenter', function () {
+
+						$('#selector').remove();
+						$('<div id="selector">' +
+							'<img src="' + resource.image('select') + '" class="on-selected" alt="selected" />' +
+							'<img src="' + resource.image('blank') + '" class="on-not-selected" alt="not-selected" />' +
+							'</div>')
+							.on('click', function (event) {
+
+								event.stopImmediatePropagation();
+								event.preventDefault();
+								console.log('icon', event);
+
+								item.$view.toggleClass('selected');
+								publish();
+							})
+							.appendTo(item.$view.find('a'));
+					})
+					.on('mouseleave', function () {
+
+						$('#selector').remove();
+					});
+			}
+		},
+
+		onLocationChanged = function (item) {
+
+			_.each(item.content, initItem);
 			publish();
 		},
 
@@ -120,6 +150,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			var selectionChanged = false;
 
+			_.each(added, initItem);
 			_.each(removed, function (item) {
 
 				if (item.$view && item.$view.hasClass('selected')) {
