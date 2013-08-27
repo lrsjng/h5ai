@@ -3,7 +3,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 	var settings = _.extend({
 			enabled: false,
-			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff'],
+			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png'],
 			mov: ['video'],
 			doc: ['pdf', 'ps'],
 			delay: 1000,
