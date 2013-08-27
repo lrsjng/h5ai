@@ -9,8 +9,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 		itemTemplate = '<li class="item">' +
 						'<a>' +
-							'<span class="icon small"><img/></span>' +
-							'<span class="icon big"><img/></span>' +
+							'<span class="icon square"><img/></span>' +
+							'<span class="icon rational"><img/></span>' +
 							'<span class="label"/>' +
 							'<span class="date"/>' +
 							'<span class="size"/>' +
@@ -39,8 +39,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			var $html = $(itemTemplate),
 				$a = $html.find('a'),
-				$imgSmall = $html.find('.icon.small img'),
-				$imgBig = $html.find('.icon.big img'),
+				$imgSquare = $html.find('.icon.square img'),
+				$imgRational = $html.find('.icon.rational img'),
 				$label = $html.find('.label'),
 				$date = $html.find('.date'),
 				$size = $html.find('.size');
@@ -51,8 +51,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			location.setLink($a, item);
 
-			$imgSmall.attr('src', resource.icon(item.type)).attr('alt', item.type);
-			$imgBig.attr('src', resource.icon(item.type, true)).attr('alt', item.type);
+			$imgSquare.attr('src', resource.icon(item.type)).attr('alt', item.type);
+			$imgRational.attr('src', resource.icon(item.type)).attr('alt', item.type);
 			$label.text(item.label);
 			$date.data('time', item.time).text(format.formatDate(item.time));
 			$size.data('bytes', item.size).text(format.formatSize(item.size));
@@ -60,8 +60,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			if (item.isFolder() && _.isNumber(item.status)) {
 				if (item.status === 200) {
 					$html.addClass('page');
-					$imgSmall.attr('src', resource.icon('folder-page'));
-					$imgBig.attr('src', resource.icon('folder-page', true));
+					$imgSquare.attr('src', resource.icon('folder-page'));
+					$imgRational.attr('src', resource.icon('folder-page'));
 				} else {
 					$html.addClass('error');
 					$label.append($(hintTemplate).text(' ' + item.status + ' '));
@@ -69,8 +69,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			}
 
 			if (item.isCurrentParentFolder()) {
-				$imgSmall.attr('src', resource.icon('folder-parent'));
-				$imgBig.attr('src', resource.icon('folder-parent', true));
+				$imgSquare.attr('src', resource.icon('folder-parent'));
+				$imgRational.attr('src', resource.icon('folder-parent'));
 				if (!settings.setParentFolderLabels) {
 					$label.addClass('l10n-parentDirectory');
 				}

@@ -56,6 +56,12 @@
 @item-background-col-sel: rgba(0,0,0,0.02);
 @item-border-col-sel: @col-border-strong;
 
+@small-icon-size: 32px;
+// @small-icon-size: 16px;
+@big-icon-size: 48px;
+// @big-icon-size: 64px;
+// @big-icon-size: 80px;
+// @big-icon-size: 96px;
 
 
 #view {
@@ -109,6 +115,7 @@
 		}
 
 		&.item {
+			font-size: 15px;
 
 			a, a:active, a:visited {
 				display: block;
@@ -164,6 +171,7 @@
 			text-align: center;
 
 			img {
+				vertical-align: top;
 
 				&.thumb {
 					box-shadow: 0 0 0 1px #ddd;
@@ -173,17 +181,32 @@
 			&.small {
 
 				img {
-					max-width: 16px;
-					max-height: 16px;
+					max-width: @small-icon-size * 2;
+					max-height: @small-icon-size;
 				}
 			}
 
 			&.big {
 
 				img {
-					max-width: 100px;
-					max-height: 48px;
-					vertical-align: top;
+					max-width: @big-icon-size * 2;
+					max-height: @big-icon-size;
+				}
+			}
+
+			&.square {
+
+				img {
+					max-width: @big-icon-size;
+					max-height: @big-icon-size;
+				}
+			}
+
+			&.rational {
+
+				img {
+					max-width: @big-icon-size * 2;
+					max-height: @big-icon-size;
 				}
 			}
 		}
@@ -192,11 +215,12 @@
 			display: block;
 			overflow: hidden;
 			text-align: left;
+			text-overflow: ellipsis;
 		}
 
 		.date {
 			text-align: right;
-			width: 160px;
+			width: 130px;
 		}
 
 		.size {

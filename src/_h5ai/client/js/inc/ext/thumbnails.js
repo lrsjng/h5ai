@@ -9,17 +9,17 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 			delay: 1000
 		}, allsettings.thumbnails),
 
-		requestThumbSmall = function (type, href, callback) {
+		requestThumbSquare = function (type, href, callback) {
 
-			server.request({action: 'getThumbHref', type: type, href: href, mode: 'square', width: 16, height: 16}, function (json) {
+			server.request({action: 'getThumbHref', type: type, href: href, mode: 'square', width: 96, height: 96}, function (json) {
 
 				callback(json && json.code === 0 ? json.absHref : null);
 			});
 		},
 
-		requestThumbBig = function (type, href, callback) {
+		requestThumbRational = function (type, href, callback) {
 
-			server.request({action: 'getThumbHref', type: type, href: href, mode: 'rational', width: 100, height: 48}, function (json) {
+			server.request({action: 'getThumbHref', type: type, href: href, mode: 'rational', width: 96 * 2, height: 96}, function (json) {
 
 				callback(json && json.code === 0 ? json.absHref : null);
 			});
@@ -38,25 +38,25 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 			}
 
 			if (type) {
-				if (item.thumbSmall) {
-					item.$view.find('.icon.small img').addClass('thumb').attr('src', item.thumbSmall);
+				if (item.thumbSquare) {
+					item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
 				} else {
-					requestThumbSmall(type, item.absHref, function (src) {
+					requestThumbSquare(type, item.absHref, function (src) {
 
 						if (src && item.$view) {
-							item.thumbSmall = src;
-							item.$view.find('.icon.small img').addClass('thumb').attr('src', src);
+							item.thumbSquare = src;
+							item.$view.find('.icon.square img').addClass('thumb').attr('src', src);
 						}
 					});
 				}
-				if (item.thumbBig) {
-					item.$view.find('.icon.big img').addClass('thumb').attr('src', item.thumbBig);
+				if (item.thumbRational) {
+					item.$view.find('.icon.rational img').addClass('thumb').attr('src', item.thumbRational);
 				} else {
-					requestThumbBig(type, item.absHref, function (src) {
+					requestThumbRational(type, item.absHref, function (src) {
 
 						if (src && item.$view) {
-							item.thumbBig = src;
-							item.$view.find('.icon.big img').addClass('thumb').attr('src', src);
+							item.thumbRational = src;
+							item.$view.find('.icon.rational img').addClass('thumb').attr('src', src);
 						}
 					});
 				}

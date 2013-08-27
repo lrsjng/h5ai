@@ -9,29 +9,40 @@
 			a, a:active, a:visited {
 				float: left;
 				margin: 2px;
-				padding: 8px;
-				width: 164px;
-				height: 24px;
+				width: 218px;
+				height: @small-icon-size + 6px;
 				border: 1px solid rgba(0,0,0,0);
 
 				&:hover, &.hover {
 					border-color: @item-border-col-hover;
 				}
 			}
+
+			// needs to be here, to not conflict with header fields
+			.icon {
+				padding: 8px;
+			}
+			.label, .date, .size {
+				padding: ((@small-icon-size - 16px)/2) 8px;
+			}
 		}
 
-		.icon.small {
+		.icon.square {
 			display: inline-block;
 			position: absolute;
-			left: 11px;
-			top: 9px;
-			width: 16px;
+			left: 0;
+			top: -2px;
+			width: @small-icon-size;
+
+			img {
+				width: @small-icon-size;
+				height: @small-icon-size;
+			}
 		}
 
 		.label {
 			display: block;
-			max-width: 140px;
-			margin: 0 0 0 24px;
+			margin: 0 0 0 (@small-icon-size + 8px);
 		}
 
 		.date, .size {

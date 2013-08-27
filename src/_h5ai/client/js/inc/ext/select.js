@@ -114,7 +114,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 		initItem = function (item) {
 
 			if (item.$view) {
-				item.$view
+				item.$view.find('a')
 					.on('mouseenter', function () {
 
 						$('#selector').remove();
@@ -142,7 +142,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
 		onLocationChanged = function (item) {
 
-			_.each(item.content, initItem);
+			// _.each(item.content, initItem);
 			publish();
 		},
 
@@ -150,7 +150,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			var selectionChanged = false;
 
-			_.each(added, initItem);
+			// _.each(added, initItem);
 			_.each(removed, function (item) {
 
 				if (item.$view && item.$view.hasClass('selected')) {

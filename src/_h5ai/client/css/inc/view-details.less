@@ -12,6 +12,7 @@
 			a, a:active, a:visited {
 				border-top: 1px solid @item-border-col-sep;
 				border-bottom: 1px solid @item-border-col-sep;
+				height: @small-icon-size + 6px;
 
 				&:hover, &.hover {
 					border-color: @item-border-col-hover;
@@ -19,8 +20,11 @@
 			}
 
 			// needs to be here, to not conflict with header fields
-			.icon, .label, .date, .size {
-				padding: 8px 6px;
+			.icon {
+				padding: 8px;
+			}
+			.label, .date, .size {
+				padding: ((@small-icon-size - 16px)/2) 8px;
 			}
 		}
 
@@ -31,16 +35,21 @@
 			}
 		}
 
-		.icon.small {
+		.icon.square {
 			display: inline-block;
 			position: absolute;
 			left: 0;
-			top: -2px;
-			width: 16px;
+			top: -5px;
+			width: @small-icon-size;
+
+			img {
+				width: @small-icon-size;
+				height: @small-icon-size;
+			}
 		}
 
 		.label {
-			margin: 0 270px 0 24px;
+			margin: 0 230px 0 (@small-icon-size + 8px);
 		}
 
 		.date {

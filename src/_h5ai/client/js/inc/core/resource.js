@@ -8,7 +8,7 @@ modulejs.define('core/resource', ['core/settings'], function (settings) {
 
 		icon = function (id, big) {
 
-			return settings.h5aiAbsHref + 'client/icons/' + (big ? '48x48' : '16x16') + '/' + id + '.png';
+			return settings.h5aiAbsHref + 'client/icons/96/' + id + '.png';
 		};
 
 	return {
