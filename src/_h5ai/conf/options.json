@@ -301,13 +301,15 @@ Options
 	- mov: array of types
 	- doc: array of types
 	- delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
+	- size: number, size in pixel of the generated thumbnails
 	*/
 	"thumbnails": {
 		"enabled": true,
 		"img": ["bmp", "gif", "ico", "image", "jpg", "png"],
 		"mov": ["video"],
 		"doc": ["pdf", "ps"],
-		"delay": 1
+		"delay": 1,
+		"size": 96
 	},
 
 	/*

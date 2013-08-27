@@ -6,20 +6,20 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff'],
 			mov: ['video'],
 			doc: ['pdf', 'ps'],
-			delay: 1000
+			delay: 1000,
+			size: 96
 		}, allsettings.thumbnails),
 
-		requestThumbSquare = function (type, href, callback) {
+		requestThumb = function (type, href, mode, ratio, callback) {
 
-			server.request({action: 'getThumbHref', type: type, href: href, mode: 'square', width: 96, height: 96}, function (json) {
-
-				callback(json && json.code === 0 ? json.absHref : null);
-			});
-		},
-
-		requestThumbRational = function (type, href, callback) {
-
-			server.request({action: 'getThumbHref', type: type, href: href, mode: 'rational', width: 96 * 2, height: 96}, function (json) {
+			server.request({
+				action: 'getThumbHref',
+				type: type,
+				href: href,
+				mode: mode,
+				width: settings.size * ratio,
+				height: settings.size
+			}, function (json) {
 
 				callback(json && json.code === 0 ? json.absHref : null);
 			});
@@ -41,7 +41,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 				if (item.thumbSquare) {
 					item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
 				} else {
-					requestThumbSquare(type, item.absHref, function (src) {
+					requestThumb(type, item.absHref, 'square', 1, function (src) {
 
 						if (src && item.$view) {
 							item.thumbSquare = src;
@@ -52,7 +52,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 				if (item.thumbRational) {
 					item.$view.find('.icon.rational img').addClass('thumb').attr('src', item.thumbRational);
 				} else {
-					requestThumbRational(type, item.absHref, function (src) {
+					requestThumb(type, item.absHref, 'rational', 2, function (src) {
 
 						if (src && item.$view) {
 							item.thumbRational = src;
