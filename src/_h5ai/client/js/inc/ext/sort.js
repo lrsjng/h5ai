@@ -151,8 +151,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 		onContentChanged = function (item) {
 
 			var order = store.get(storekey),
-				column = order.column || settings.column,
-				reverse = order.reverse || settings.reverse;
+				column = order && order.column || settings.column,
+				reverse = order && order.reverse || settings.reverse;
 
 			sortItems(column, reverse);
 		},
