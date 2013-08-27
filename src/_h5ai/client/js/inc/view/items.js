@@ -39,8 +39,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			var $html = $(itemTemplate),
 				$a = $html.find('a'),
-				$imgSquare = $html.find('.icon.square img'),
-				$imgRational = $html.find('.icon.rational img'),
+				$iconImg = $html.find('.icon img'),
 				$label = $html.find('.label'),
 				$date = $html.find('.date'),
 				$size = $html.find('.size');
@@ -51,8 +50,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			location.setLink($a, item);
 
-			$imgSquare.attr('src', resource.icon(item.type)).attr('alt', item.type);
-			$imgRational.attr('src', resource.icon(item.type)).attr('alt', item.type);
+			$iconImg.attr('src', resource.icon(item.type)).attr('alt', item.type);
 			$label.text(item.label);
 			$date.data('time', item.time).text(format.formatDate(item.time));
 			$size.data('bytes', item.size).text(format.formatSize(item.size));
@@ -60,8 +58,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			if (item.isFolder() && _.isNumber(item.status)) {
 				if (item.status === 200) {
 					$html.addClass('page');
-					$imgSquare.attr('src', resource.icon('folder-page'));
-					$imgRational.attr('src', resource.icon('folder-page'));
+					$iconImg.attr('src', resource.icon('folder-page'));
 				} else {
 					$html.addClass('error');
 					$label.append($(hintTemplate).text(' ' + item.status + ' '));
@@ -69,8 +66,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			}
 
 			if (item.isCurrentParentFolder()) {
-				$imgSquare.attr('src', resource.icon('folder-parent'));
-				$imgRational.attr('src', resource.icon('folder-parent'));
+				$iconImg.attr('src', resource.icon('folder-parent'));
 				if (!settings.setParentFolderLabels) {
 					$label.addClass('l10n-parentDirectory');
 				}

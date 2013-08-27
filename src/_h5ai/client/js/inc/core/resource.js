@@ -1,12 +1,12 @@
 
 modulejs.define('core/resource', ['core/settings'], function (settings) {
 
-	var image = function (id, customExt) {
+	var image = function (id) {
 
-			return settings.h5aiAbsHref + 'client/images/' + id + (customExt ? '' : '.svg');
+			return settings.h5aiAbsHref + 'client/images/' + id + '.svg';
 		},
 
-		icon = function (id, big) {
+		icon = function (id) {
 
 			return settings.h5aiAbsHref + 'client/icons/96/' + id + '.png';
 		};

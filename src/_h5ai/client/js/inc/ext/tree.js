@@ -34,7 +34,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				.data('status', item.status);
 
 			location.setLink($a, item);
-			// $img.attr('src', resource.icon(item.type));
 			$img.attr('src', resource.image('folder'));
 			$label.text(item.label);
 
@@ -95,7 +94,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				// reflect folder status
 				if (_.isNumber(item.status)) {
 					if (item.status === 200) {
-						// $img.attr('src', resource.icon('folder-page'));
 						$img.attr('src', resource.image('folder-page'));
 					} else {
 						$html.addClass('error');

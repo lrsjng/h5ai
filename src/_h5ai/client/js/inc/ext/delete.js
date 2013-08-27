@@ -37,7 +37,7 @@ modulejs.define('ext/delete', ['_', '$', 'core/settings', 'core/event', 'core/re
 		requestDeletion = function (hrefsStr) {
 
 			$delete.addClass('current');
-			$img.attr('src', resource.image('loading.gif', true));
+			$img.attr('src', resource.image('loading'));
 			server.request({action: 'delete', hrefs: hrefsStr}, handleResponse);
 		},
 

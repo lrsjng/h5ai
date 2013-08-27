@@ -29,11 +29,11 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 			var type = null;
 
-			if (_.indexOf(settings.img, item.type) >= 0) {
+			if (_.contains(settings.img, item.type)) {
 				type = 'img';
-			} else if (_.indexOf(settings.mov, item.type) >= 0) {
+			} else if (_.contains(settings.mov, item.type)) {
 				type = 'mov';
-			} else if (_.indexOf(settings.doc, item.type) >= 0) {
+			} else if (_.contains(settings.doc, item.type)) {
 				type = 'doc';
 			}
 
