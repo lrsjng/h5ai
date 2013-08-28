@@ -23,13 +23,16 @@ Options
 	/*
 	General view options.
 
-	- modes: array of "details", "grid" and/or "icons"
+	- modes: array, subset of ["details", "grid", "icons"]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
-	- sizes: array of numbers
-		the numbers seen below are the only accepted values, you may only remove some
+	- sizes: array, subset of [16, 24, 32, 48, 64, 96]
+		the first value indicates the default view mode. If only one value
+		is given the view mode is fixed and the selector buttons are hidden.
+		The user selected view mode is also stored local in modern browsers
+		so that it will be persistent.
 	- setParentFolderLabels: set parent folder labels to real folder names
 	- hideParentFolderLinks: hide parent folder links
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
@@ -40,7 +43,7 @@ Options
 	*/
 	"view": {
 		"modes": ["details", "grid", "icons"],
-		"sizes": [16, 24, 32, 48, 64, 96],
+		"sizes": [48, 24, 96],
 		"setParentFolderLabels": true,
 		"hideParentFolderLinks": false,
 		"binaryPrefix": false,

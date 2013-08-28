@@ -23,7 +23,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 						'</div>' +
 					'</div>',
 
-		storekey = 'preview.isFullscreen',
+		storekey = 'ext/preview',
 
 		currentEntries = [],
 		currentIdx = 0,

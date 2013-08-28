@@ -25,25 +25,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 							'</a>' +
 						'</li>',
 
-		// sizeSelectorTemplate = '<li id="sizeSelector" class="view">' +
-		// 							'<span class="element">' +
-		// 								'<img src="' + resource.image('size') + '" alt="size"/>' +
-		// 								'<span class="size-current">small</span>' +
-		// 							'</span>' +
-		// 							'<span class="sizeOptions hidden"><ul/></span>' +
-		// 						'</li>',
-		// sizeOptionTemplate = '<li class="sizeOption"/>',
-
-		// viewSelectorTemplate = '<li id="viewSelector" class="view">' +
-		// 							'<span class="element">' +
-		// 								'<img src="' + resource.image('view-details') + '" alt="view-details"/>' +
-		// 								'<span class="view-current">details</span>' +
-		// 							'</span>' +
-		// 							'<span class="viewOptions hidden"><ul/></span>' +
-		// 						'</li>',
-		// viewOptionTemplate = '<li class="viewOption"/>',
-
-
 		adjustSpacing = function () {
 
 			var contentWidth = $('#content').width(),
@@ -53,12 +34,16 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 			$view.width(Math.floor(contentWidth / itemWidth) * itemWidth);
 		},
 
-		updateMode = function (mode) {
+		update = function (mode, size) {
 
-			var $view = $('#view');
+			var $view = $('#view'),
+				stored = store.get(storekey);
 
+			mode = mode || stored && stored.mode;
+			size = size || stored && stored.size;
 			mode = _.contains(settings.modes, mode) ? mode : settings.modes[0];
-			store.put(storekey, mode);
+			size = _.contains(settings.sizes, size) ? size : settings.sizes[0];
+			store.put(storekey, {mode: mode, size: size});
 
 			_.each(modes, function (m) {
 				if (m === mode) {
@@ -69,16 +54,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 					$view.removeClass('view-' + m);
 				}
 			});
-
-			adjustSpacing();
-		},
-
-		updateSize = function (size) {
-
-			var $view = $('#view');
-
-			size = _.contains(settings.sizes, size) ? size : settings.sizes[0];
-			// store.put(storekey, viewmode);
 
 			_.each(sizes, function (s) {
 				if (s === size) {
@@ -99,41 +74,33 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
 			settings.modes = _.intersection(settings.modes, modes);
 
-			if (settings.modes.length) {
+			if (settings.modes.length > 1) {
 				_.each(modes.slice(0).reverse(), function (mode) {
 					if (_.contains(settings.modes, mode)) {
 						$(template.replace(/\[MODE\]/g, mode))
 							.appendTo($navbar)
 							.on('click', 'a', function (event) {
-								updateMode(mode);
+								update(mode);
 								event.preventDefault();
 							});
 					}
 				});
 			}
 
-
-			if (settings.sizes.length) {
+			if (settings.sizes.length > 1) {
 				_.each(sizes.slice(0).reverse(), function (size) {
 					if (_.contains(settings.sizes, size)) {
 						$(sizeTemplate.replace(/\[SIZE\]/g, size))
 							.appendTo($navbar)
 							.on('click', 'a', function (event) {
-								updateSize(size);
+								update(null, size);
 								event.preventDefault();
 							});
 					}
 				});
 			}
 
-			// $(sizeSelectorTemplate)
-			// 	.appendTo($navbar);
-
-			// $(viewSelectorTemplate)
-			// 	.appendTo($navbar);
-
-			updateMode(store.get(storekey));
-			updateSize(sizes[0]);
+			update();
 
 			event.sub('location.changed', adjustSpacing);
 			$(window).on('resize', adjustSpacing);

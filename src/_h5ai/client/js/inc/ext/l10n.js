@@ -34,7 +34,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 					'</span>',
 		langOptionTemplate = '<li class="langOption"/>',
 
-		storekey = 'l10n.lang',
+		storekey = 'ext/l10n',
 
 		loaded = {
 			en: _.extend({}, defaultTranslations)

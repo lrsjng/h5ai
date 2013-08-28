@@ -9,7 +9,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			natural: false
 		}, allsettings.sort),
 
-		storekey = 'sort.order',
+		storekey = 'ext/sort',
 		template = '<img src="' + resource.image('ascending') + '" class="sort ascending" alt="ascending" />' +
 					'<img src="' + resource.image('descending') + '" class="sort descending" alt="descending" />',
 
