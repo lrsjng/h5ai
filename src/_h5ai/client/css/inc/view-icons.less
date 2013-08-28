@@ -25,6 +25,11 @@
 			display: block;
 			height: @big-icon-size;
 			margin-bottom: 6px;
+
+			img {
+				max-width: @big-icon-size * 2;
+				max-height: @big-icon-size;
+			}
 		}
 
 		.label {
@@ -42,5 +47,56 @@
 		margin: 0 120px;
 		padding: 16px;
 		height: 120px;
+	}
+}
+
+
+.view-icons-sized(@size) {
+
+	li {
+
+		&.item {
+
+			a, a:active, a:visited {
+				width: @size * 2;
+				height: @size + 72px;
+			}
+		}
+
+		.icon.rational {
+			height: @size;
+
+			img {
+				max-width: @size * 2;
+				max-height: @size;
+			}
+		}
+	}
+}
+
+
+#view.view-icons {
+	&.size-16 {
+		.view-icons-sized(16px)
+	}
+
+	&.size-24 {
+		.view-icons-sized(24px)
+	}
+
+	&.size-32 {
+		.view-icons-sized(32px)
+	}
+
+	&.size-48 {
+		.view-icons-sized(48px)
+	}
+
+	&.size-64 {
+		.view-icons-sized(64px)
+	}
+
+	&.size-96 {
+		.view-icons-sized(96px)
 	}
 }

@@ -9,7 +9,7 @@
 			a, a:active, a:visited {
 				float: left;
 				margin: 2px;
-				width: 218px;
+				width: @small-icon-size + 186px;
 				height: @small-icon-size + 6px;
 				border: 1px solid rgba(0,0,0,0);
 
@@ -48,5 +48,64 @@
 		.date, .size {
 			display: none;
 		}
+	}
+}
+
+
+.view-grid-sized(@size) {
+
+	li {
+
+		&.item {
+
+			a, a:active, a:visited {
+				width: @size + 186px;
+				height: @size + 6px;
+			}
+
+			.label, .date, .size {
+				padding: ((@size - 16px)/2) 8px;
+			}
+		}
+
+		.icon.square {
+			width: @size;
+
+			img {
+				width: @size;
+				height: @size;
+			}
+		}
+
+		.label {
+			margin: 0 0 0 (@size + 8px);
+		}
+	}
+}
+
+
+#view.view-grid {
+	&.size-16 {
+		.view-grid-sized(16px)
+	}
+
+	&.size-24 {
+		.view-grid-sized(24px)
+	}
+
+	&.size-32 {
+		.view-grid-sized(32px)
+	}
+
+	&.size-48 {
+		.view-grid-sized(48px)
+	}
+
+	&.size-64 {
+		.view-grid-sized(64px)
+	}
+
+	&.size-96 {
+		.view-grid-sized(96px)
 	}
 }
