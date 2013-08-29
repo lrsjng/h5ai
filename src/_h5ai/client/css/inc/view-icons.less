@@ -11,8 +11,9 @@
 				float: left;
 				margin: 8px;
 				padding: 8px;
-				width: @big-icon-size * 2;
-				height: @big-icon-size + 72px;
+				min-width: 96px;
+				width: @icon-size * 2;
+				height: @icon-size + 72px;
 				border: 1px solid rgba(0,0,0,0);
 
 				&:hover, &.hover {
@@ -23,12 +24,12 @@
 
 		.icon.rational {
 			display: block;
-			height: @big-icon-size;
+			height: @icon-size;
 			margin-bottom: 6px;
 
 			img {
-				max-width: @big-icon-size * 2;
-				max-height: @big-icon-size;
+				max-width: @icon-size * 2;
+				max-height: @icon-size;
 			}
 		}
 

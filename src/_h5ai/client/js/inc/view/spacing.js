@@ -4,9 +4,9 @@ modulejs.define('view/spacing', ['_', '$', 'core/settings', 'core/event'], funct
 	var settings = _.extend({
 			maxWidth: 960,
 			top: 50,
-			right: "auto",
+			right: 'auto',
 			bottom: 50,
-			left: "auto"
+			left: 'auto'
 		}, allsettings.spacing),
 
 		adjustSpacing = function () {
