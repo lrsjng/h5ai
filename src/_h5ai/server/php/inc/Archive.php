@@ -113,7 +113,7 @@ class Archive {
 			. str_repeat("\0", 100)  // linkname [100]
 			. "ustar\0"  // magic [6]
 			. "00"  // version [2]
-			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]  ?92?
+			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]
 			. str_pad($prefix, 155, "\0")  // filename [155]
 			. str_repeat("\0", 12);  // fill [12]
 		assert(strlen($header) === 512);

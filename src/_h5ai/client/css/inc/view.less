@@ -11,20 +11,21 @@
 
 #selector {
 	position: absolute;
-	left: 8px;
-	top: 8px;
-	width: 16px;
-	height: 16px;
+	left: 0;
+	top: 0;
+	margin-top: -3px;
+	margin-left: -3px;
 	background-color: #fff;
 	border: 1px solid #555;
-	border-radius: 100px;
-	opacity: 0.7;
+	border-radius: 3px;
+	opacity: 0.6;
 	cursor: pointer;
+	.transition(all 0.2s ease-in-out);
 
 	.on-selected, .on-not-selected {
 		display: block;
-		width: 16px;
-		height: 16px;
+		width: 24px;
+		height: 24px;
 	}
 
 	&:hover {
