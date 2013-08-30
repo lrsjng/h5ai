@@ -269,10 +269,14 @@ Options
 	},
 
 	/*
-	Make entries selectable. At the moment only needed for packaged download and delete.
+	Make entries selectable (first mouse button + drag).
+	At the moment only needed for packaged download and delete.
+
+	- checkboxes: boolean, show a checkbox on mouse over item
 	*/
 	"select": {
-		"enabled": true
+		"enabled": true,
+		"checkboxes": true
 	},
 
 	/*

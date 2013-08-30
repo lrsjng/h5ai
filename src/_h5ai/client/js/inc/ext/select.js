@@ -2,7 +2,8 @@
 modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core/event'], function (_, $, allsettings, resource, event) {
 
 	var settings = _.extend({
-			enabled: false
+			enabled: false,
+			checkboxes: false
 		}, allsettings.select),
 
 		x = 0, y = 0,
@@ -144,7 +145,9 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
 		onLocationChanged = function (item) {
 
-			_.each(item.content, initItem);
+			if (settings.checkboxes) {
+				_.each(item.content, initItem);
+			}
 			publish();
 		},
 
@@ -152,7 +155,9 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			var selectionChanged = false;
 
-			_.each(added, initItem);
+			if (settings.checkboxes) {
+				_.each(added, initItem);
+			}
 			_.each(removed, function (item) {
 
 				if (item.$view && item.$view.hasClass('selected')) {
