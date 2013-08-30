@@ -58,6 +58,7 @@ It profits from these great projects:
 
 * updates image and text preview
 * adds optional natural sort of items
+* adds optional checkboxes to select items
 * fixes file deletion of multiple files
 * fixes `setParentFolderLabels = false`
 * fixes shell-arg and RegExp escape issues
