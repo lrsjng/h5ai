@@ -48,11 +48,6 @@ function use_optional_request_params($keys) {
 	return $values;
 }
 
-function delete_tempfile($file) {
-
-	@unlink($file);
-}
-
 function starts_with($sequence, $head) {
 
 	return substr($sequence, 0, strlen($head)) === $head;
