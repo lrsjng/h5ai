@@ -94,66 +94,6 @@ class Thumb {
 }
 
 
-
-class Magic {
-
-	private static $GET_SIZE_CMD = "identify -format \"%w %h\" [SOURCE]";
-	private static $RESIZE_CMD = "convert -strip -transparent-color \"#ffffff\" -resize [WIDTH]x[HEIGHT] -quality 80 [SOURCE] [TARGET]";
-	private static $SQUARE_CMD = "convert -strip -transparent-color \"#ffffff\" -crop [CWIDTH]x[CWIDTH]+[CLEFT]+[CTOP] -resize [WIDTH]x[WIDTH] -quality 80 [SOURCE] [TARGET]";
-
-
-	private static final function img_size($source) {
-
-		$cmd = str_replace("[SOURCE]", escapeshellarg($source), Magic::$GET_SIZE_CMD);
-		$size = explode(" ", `$cmd`);
-		$size[0] = intval($size[0]);
-		$size[1] = intval($size[1]);
-		return $size;
-	}
-
-	private static final function rational($source, $target, $width, $height) {
-
-		$cmd = str_replace("[SOURCE]", escapeshellarg($source), Magic::$RESIZE_CMD);
-		$cmd = str_replace("[TARGET]", escapeshellarg($target), $cmd);
-		$cmd = str_replace("[WIDTH]", escapeshellarg($width), $cmd);
-		$cmd = str_replace("[HEIGHT]", escapeshellarg($height), $cmd);
-		`$cmd`;
-	}
-
-	private static final function square($source, $target, $width) {
-
-		$size = Magic::img_size($source);
-		$w = $size[0];
-		$h = $size[1];
-
-		$cwidth = min($w, $h);
-		$cleft = ($w - $cwidth) / 2;
-		$ctop = ($h - $cwidth) / 2;
-
-		$cmd = str_replace("[SOURCE]", escapeshellarg($source), Magic::$SQUARE_CMD);
-		$cmd = str_replace("[TARGET]", escapeshellarg($target), $cmd);
-		$cmd = str_replace("[CWIDTH]", escapeshellarg($cwidth), $cmd);
-		$cmd = str_replace("[CLEFT]", escapeshellarg($cleft), $cmd);
-		$cmd = str_replace("[CTOP]", escapeshellarg($ctop), $cmd);
-		$cmd = str_replace("[WIDTH]", escapeshellarg($width), $cmd);
-		`$cmd`;
-	}
-
-	public static final function thumb($mode, $source, $target, $width, $height = null, $color = null) {
-
-		if ($height === null) {
-			$height = $width;
-		}
-		if ($mode === "square") {
-			Magic::square($source, $target, $width);
-		} elseif ($mode === "rational") {
-			Magic::rational($source, $target, $width, $height);
-		}
-	}
-}
-
-
-
 class Image {
 
 	private $source_file, $source, $width, $height, $type, $dest;
