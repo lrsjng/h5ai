@@ -312,6 +312,7 @@ Options
 	- doc: array of types
 	- delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
 	- size: number, size in pixel of the generated thumbnails
+	- exif: boolean, use included EXIF thumbs if possible
 	*/
 	"thumbnails": {
 		"enabled": true,
@@ -319,7 +320,8 @@ Options
 		"mov": ["video"],
 		"doc": ["pdf", "ps"],
 		"delay": 1,
-		"size": 96
+		"size": 96,
+		"exif": true
 	},
 
 	/*

@@ -56,7 +56,8 @@ class Thumb {
 			$image = new Image();
 
 			$et = false;
-			if (function_exists("exif_thumbnail")) {
+			$opts = $this->app->get_options();
+			if ($opts["thumbnails"]["exif"] === true && function_exists("exif_thumbnail")) {
 				$et = @exif_thumbnail($source_abs_path);
 			}
 			if($et !== false) {
