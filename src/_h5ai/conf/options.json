@@ -214,38 +214,41 @@ Options
 
 	/*
 	Show text file preview on click.
-	"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
-	be rendered as HTML.
-
+	"types" maps file types to SyntaxHighligher brushes.
 	For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+
+	Additional type are:
+	 - "markdown" to render Markdown text
+	 - "none" for floating text
+	 - "fixed" for fixed width text
 
 	- types: maps types to brushes
 	*/
 	"preview-txt": {
 		"enabled": true,
 		"types": {
-			"authors": "plain",
-			"copying": "plain",
+			"authors": "fixed",
+			"copying": "fixed",
 			"c": "c",
 			"cpp": "cpp",
 			"css": "css",
 			"diff": "diff",
 			"h": "c",
 			"hpp": "cpp",
-			"install": "plain",
-			"log": "plain",
+			"install": "fixed",
+			"log": "fixed",
 			"java": "java",
 			"js": "js",
 			"json": "js",
 			"makefile": "xml",
-			"markdown": "plain",
+			"markdown": "markdown",
 			// "php": "php",
 			"python": "python",
-			"readme": "plain",
+			"readme": "fixed",
 			"rb": "ruby",
-			"rtf": "plain",
+			"rtf": "fixed",
 			"script": "shell",
-			"text": "plain",
+			"text": "fixed",
 			"xml": "xml"
 		}
 	},

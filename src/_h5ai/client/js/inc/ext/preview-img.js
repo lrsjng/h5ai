@@ -3,7 +3,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
 
 	var settings = _.extend({
 			enabled: false,
-			types: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff']
+			types: []
 		}, allsettings['preview-img']),
 
 		preloadImg = function (src, callback) {

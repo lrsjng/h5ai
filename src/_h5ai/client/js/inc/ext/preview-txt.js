@@ -3,29 +3,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 
 	var settings = _.extend({
 			enabled: false,
-			types: {
-				authors: 'plain',
-				copying: 'plain',
-				c: 'c',
-				cpp: 'cpp',
-				css: 'css',
-				h: 'c',
-				hpp: 'cpp',
-				install: 'plain',
-				log: 'plain',
-				java: 'java',
-				makefile: 'xml',
-				markdown: 'plain',
-				// php: 'php',
-				python: 'python',
-				readme: 'plain',
-				rb: 'ruby',
-				rtf: 'plain',
-				script: 'shell',
-				text: 'plain',
-				js: 'js',
-				xml: 'xml'
-			}
+			types: {}
 		}, allsettings['preview-txt']),
 
 		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
@@ -142,7 +120,15 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 
 							var $text;
 
-							if (currentItem.type === 'markdown') {
+							if (settings.types[currentItem.type] === 'none') {
+
+								$text = $(templateMarkdown).text(textContent);
+
+							} else if (settings.types[currentItem.type] === 'fixed') {
+
+								$text = $(templateText).text(textContent);
+
+							} else if (settings.types[currentItem.type] === 'markdown') {
 
 								$text = $(templateMarkdown).text(textContent);
 
