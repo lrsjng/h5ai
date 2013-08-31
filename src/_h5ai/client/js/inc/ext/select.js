@@ -137,7 +137,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 					})
 					.on('mouseleave', function () {
 
-						item.$view.find('a').removeClass('hover');
+						$('.hover').removeClass('hover');
 						$('#selector').remove();
 					});
 			}
