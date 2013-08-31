@@ -4,6 +4,7 @@ class Thumb {
 
 	private static $FFMPEG_CMD = "ffmpeg -i [SOURCE] -an -ss 3 -vframes 1 [TARGET]";
 	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
+	private static $THUMB_CACHE = "thumbs";
 
 	public static final function is_supported() {
 
@@ -22,6 +23,8 @@ class Thumb {
 	public function __construct($app) {
 
 		$this->app = $app;
+		$this->thumbs_path = $this->app->get_cache_abs_path() . "/" . Thumb::$THUMB_CACHE;
+		$this->thumbs_href = $this->app->get_cache_abs_href() . Thumb::$THUMB_CACHE;
 	}
 
 
@@ -47,9 +50,13 @@ class Thumb {
 			return null;
 		}
 
+		if (!is_dir($this->thumbs_path)) {
+			@mkdir($this->thumbs_path, 0755, true);
+		}
+
 		$name = "thumb-" . sha1("$source_abs_path-$width-$height-$mode") . ".jpg";
-		$thumb_abs_path = $this->app->get_cache_abs_path() . "/" . $name;
-		$thumb_abs_href = $this->app->get_cache_abs_href() . $name;
+		$thumb_abs_path = $this->thumbs_path . "/" . $name;
+		$thumb_abs_href = $this->thumbs_href . "/" . $name;
 
 		if (!file_exists($thumb_abs_path) || filemtime($source_abs_path) >= filemtime($thumb_abs_path)) {
 
