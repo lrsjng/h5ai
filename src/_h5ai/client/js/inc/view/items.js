@@ -4,6 +4,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 	var settings = _.extend({
 			setParentFolderLabels: false,
 			hideParentFolderLinks: false,
+			hideFolders: false,
 			binaryPrefix: false
 		}, allsettings.view),
 
@@ -106,7 +107,9 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			_.each(item.content, function (e) {
 
-				$items.append(update(e, true));
+				if (!(e.isFolder() && settings.hideFolders)) {
+					$items.append(update(e, true));
+				}
 			});
 
 			if (item.isEmpty()) {
@@ -123,7 +126,9 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			_.each(added, function (item) {
 
-				update(item, true).hide().appendTo($items).fadeIn(400);
+				if (!(item.isFolder() && settings.hideFolders)) {
+					update(item, true).hide().appendTo($items).fadeIn(400);
+				}
 			});
 
 			_.each(removed, function (item) {

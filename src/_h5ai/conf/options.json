@@ -34,7 +34,8 @@ Options
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
 	- setParentFolderLabels: set parent folder labels to real folder names
-	- hideParentFolderLinks: hide parent folder links
+	- hideParentFolderLinks: hide parent folder links in the main view
+	- hideFolders: hide all folders in the main view
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
 	- indexFiles: consider folder with those files as non {{pkg.name}} folders
 	- ignore: don't list items matching these regular expressions
@@ -46,6 +47,7 @@ Options
 		"sizes": [48, 24, 96],
 		"setParentFolderLabels": true,
 		"hideParentFolderLinks": false,
+		"hideFolders": false,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
 		"ignore": ["^\\.", "^_{{pkg.name}}"],
