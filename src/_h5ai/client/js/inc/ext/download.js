@@ -54,7 +54,7 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 				$form = $('<form action="#" method="post" style="display:none;" />');
 
 			for (var key in query) {
-				$form.append('<input type="hidden" name="' + key + '" value="' + query[key] + '" />')
+				$form.append('<input type="hidden" name="' + key + '" value="' + query[key] + '" />');
 			}
 			$form.appendTo('body').submit().remove();
 		},
