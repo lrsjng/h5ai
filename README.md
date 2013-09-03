@@ -60,6 +60,7 @@ It profits from these great projects:
 * adds optional natural sort of items
 * adds optional checkboxes to select items
 * adds text preview modes: none, fixed, markdown
+* optionally hide folders in main view
 * makes use of EXIF thumbnails optional
 * fixes file deletion of multiple files
 * fixes `setParentFolderLabels = false`

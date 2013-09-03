@@ -6,6 +6,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 			checkboxes: false
 		}, allsettings.select),
 
+		template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>',
+
 		x = 0, y = 0,
 		l = 0, t = 0, w = 0, h = 0,
 		shrink = 1/3,
@@ -115,14 +117,17 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 		initItem = function (item) {
 
 			if (item.$view) {
-				item.$view.find('.selector').on('click', function (event) {
 
-					event.stopImmediatePropagation();
-					event.preventDefault();
+				$(template)
+					.appendTo(item.$view.find('a'))
+					.on('click', function (event) {
 
-					item.$view.toggleClass('selected');
-					publish();
-				});
+						event.stopImmediatePropagation();
+						event.preventDefault();
+
+						item.$view.toggleClass('selected');
+						publish();
+					});
 			}
 		},
 
