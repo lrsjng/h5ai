@@ -115,31 +115,14 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 		initItem = function (item) {
 
 			if (item.$view) {
-				item.$view.find('a')
-					.on('mouseenter', function () {
+				item.$view.find('.selector').on('click', function (event) {
 
-						var $icon = item.$view.find('.icon');
+					event.stopImmediatePropagation();
+					event.preventDefault();
 
-						$('#selector').remove();
-						$('<div id="selector">' +
-							'<img src="' + resource.image('select') + '" class="on-selected" alt="selected" />' +
-							'<img src="' + resource.image('blank') + '" class="on-not-selected" alt="not-selected" />' +
-							'</div>')
-							.on('click', function (event) {
-
-								event.stopImmediatePropagation();
-								event.preventDefault();
-
-								item.$view.toggleClass('selected');
-								publish();
-							})
-							.appendTo(item.$view.find('a'));
-					})
-					.on('mouseleave', function () {
-
-						$('.hover').removeClass('hover');
-						$('#selector').remove();
-					});
+					item.$view.toggleClass('selected');
+					publish();
+				});
 			}
 		},
 

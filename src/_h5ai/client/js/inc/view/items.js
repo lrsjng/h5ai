@@ -15,6 +15,9 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 							'<span class="label"/>' +
 							'<span class="date"/>' +
 							'<span class="size"/>' +
+							'<span class="selector">' +
+								'<img src="' + resource.image('select') + '" alt="selected"/>' +
+							'</span>' +
 						'</a>' +
 					'</li>',
 		hintTemplate = '<span class="hint"/>',
@@ -72,6 +75,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 					$label.addClass('l10n-parentDirectory');
 				}
 				$html.addClass('folder-parent');
+				$html.find('.selector').remove();
 			}
 
 			if (item.$view) {
