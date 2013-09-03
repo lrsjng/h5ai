@@ -107,12 +107,17 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					return res;
 				}
 
-				val1 = '' + getValue(item1);
-				val2 = '' + getValue(item2);
+				val1 = getValue(item1);
+				val2 = getValue(item2);
 
-				if (ignorecase) {
-					val1 = val1.toLowerCase();
-					val2 = val2.toLowerCase();
+				if (isNaN(val1) || isNaN(val2)) {
+					val1 = '' + val1;
+					val2 = '' + val2;
+
+					if (ignorecase) {
+						val1 = val1.toLowerCase();
+						val2 = val2.toLowerCase();
+					}
 				}
 
 				if (natural) {
@@ -130,7 +135,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			var headers = $('#items li.header a'),
 				header = $('#items li.header a.' + columnClasses[column]),
 
-				fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, settings.natural),
+				fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, column === 0 && settings.natural),
 
 				current = $('#items .item'),
 				sorted = $('#items .item').sort(fn);
