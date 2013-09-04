@@ -54,6 +54,11 @@ It profits from these great projects:
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
+### develop branch
+
+* ...
+
+
 ### v0.24.0 - *2013-09-04*
 
 * updates image and text preview
