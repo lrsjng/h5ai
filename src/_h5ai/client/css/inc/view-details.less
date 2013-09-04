@@ -10,7 +10,6 @@
 		&.item {
 
 			a, a:active, a:visited {
-				border-top: 1px solid @item-border-col-sep;
 				border-bottom: 1px solid @item-border-col-sep;
 				height: @icon-size + 6px;
 
@@ -26,10 +25,6 @@
 			.label, .date, .size {
 				padding: ((@icon-size - 16px)/2) 8px;
 			}
-		}
-
-		&.item + .item {
-			margin-top: -1px;
 		}
 
 		.icon.square {
@@ -59,6 +54,10 @@
 			position: absolute;
 			right: 0;
 			top: 0;
+		}
+
+		.selector {
+			margin-top: -1px;
 		}
 	}
 }
