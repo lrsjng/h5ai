@@ -1,7 +1,7 @@
 # h5ai
 **h5ai** is a modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
 The preferred way to report a bug or make a feature request is to
-create [a new issue](http://github.com/lrsjng/h5ai/issues/new) on GitHub!
+create [a new issue](https://github.com/lrsjng/h5ai/issues/new) on GitHub!
 
 
 ## Install
@@ -30,7 +30,7 @@ You'll find a new directory `build` including a fresh zipball.
 
 ## License
 
-**h5ai** is provided under the terms of the [MIT License](http://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
+**h5ai** is provided under the terms of the [MIT License](https://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
 
 It profits from these great projects:
 [Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
@@ -39,10 +39,10 @@ It profits from these great projects:
 [jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.filedrop](http://www.github.com/weixiyen/jquery-filedrop)&nbsp;(MIT),
 [jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
-[jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
+[jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
 [jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
-[markdown-js](http://github.com/evilstreak/markdown-js)&nbsp;(MIT),
+[markdown-js](https://github.com/evilstreak/markdown-js)&nbsp;(MIT),
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
@@ -57,6 +57,7 @@ It profits from these great projects:
 ### develop branch
 
 * updates image and text preview
+* adds variable icon sizes
 * adds optional natural sort of items
 * adds optional checkboxes to select items
 * adds text preview modes: none, fixed, markdown
@@ -140,11 +141,11 @@ It profits from these great projects:
 * improves filter (now ignorecase, now only checks if chars in right order)
 * adds keyboard support to image preview (space, enter, backspace, left, right, up, down, f, esc)
 * adds text file preview and highlighting with [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) (same keys as img preview)
-* adds Markdown preview with [markdown-js](http://github.com/evilstreak/markdown-js)
+* adds Markdown preview with [markdown-js](https://github.com/evilstreak/markdown-js)
 * adds new type `markdown`
 * changes language code `gr` to `el`
 * adds localization for filter placeholder
-* adds `hu` translation by [Rodolffo](http://github.com/Rodolffo)
+* adds `hu` translation by [Rodolffo](https://github.com/Rodolffo)
 * updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
 * updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1
 * updates to [modulejs](http://larsjung.de/modulejs/) 0.2
@@ -181,13 +182,13 @@ It profits from these great projects:
 * adds `index.php` to use h5ai in non-Apache environments
 * switches from [Datejs](http://www.datejs.com) to [Moment.js](http://momentjs.com)
 * adds [underscore.js](http://underscorejs.org)
-* fixes mousewheel problems, updates [jQuery.mousewheel](http://github.com/brandonaaron/jquery-mousewheel) to 3.0.6
+* fixes mousewheel problems, updates [jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel) to 3.0.6
 * updates `lv` translation
-* adds `ro` translation by [Jakob Cosoroabă](http://github.com/midday)
-* adds `ja` translation by [metasta](http://github.com/metasta)
-* adds `nb` translation by [Sindre Sorhus](http://github.com/sindresorhus)
-* adds `sr` translation by [vBm](http://github.com/vBm)
-* adds `gr` translation by [xhmikosr](http://github.com/xhmikosr)
+* adds `ro` translation by [Jakob Cosoroabă](https://github.com/midday)
+* adds `ja` translation by [metasta](https://github.com/metasta)
+* adds `nb` translation by [Sindre Sorhus](https://github.com/sindresorhus)
+* adds `sr` translation by [vBm](https://github.com/vBm)
+* adds `gr` translation by [xhmikosr](https://github.com/xhmikosr)
 
 
 ### v0.18 - *2012-02-24*
@@ -207,7 +208,7 @@ It profits from these great projects:
 * improves url hashes
 * updates year in `LICENSE.TXT`
 * updates es translation
-* adds `zh-tw` translation by [Yao Wei](http://github.com/medicalwei)
+* adds `zh-tw` translation by [Yao Wei](https://github.com/medicalwei)
 * updates `zh-cn` translation
 
 
@@ -243,7 +244,7 @@ It profits from these great projects:
 
 ### v0.15.2 - *2011-09-18*
 
-* adds `it` translation by [Salvo Gentile](http://github.com/SalvoGentile) and [Marco Patriarca](http://github.com/Fexys)
+* adds `it` translation by [Salvo Gentile](https://github.com/SalvoGentile) and [Marco Patriarca](https://github.com/Fexys)
 * switches build process from scripp to wepp
 
 
@@ -262,7 +263,7 @@ It profits from these great projects:
 ### v0.14.1 - *2011-09-01*
 
 * display meta information in bottom bar (icon view)
-* adds `zh-cn` translation by [Dongsheng Cai](http://github.com/dongsheng)
+* adds `zh-cn` translation by [Dongsheng Cai](https://github.com/dongsheng)
 * adds `pl` translation by Radosław Zając
 * adds `ru` translation by Богдан Илюхин
 
@@ -296,13 +297,13 @@ It profits from these great projects:
 * changes value of option `lang` from `undefined` to `null`
 * adds some new keys to `h5aiLangs`
 * adds browser caching rules for css and js
-* adds `pt` translation by [Jonnathan](http://github.com/jonnsl)
+* adds `pt` translation by [Jonnathan](https://github.com/jonnsl)
 * adds `bg` translation by George Andonov
 
 
 ### v0.12.3 - *2011-07-30*
 
-* adds `tr` translation by [Batuhan Icoz](http://github.com/batuhanicoz)
+* adds `tr` translation by [Batuhan Icoz](https://github.com/batuhanicoz)
 
 
 ### v0.12.2 - *2011-07-30*
@@ -338,9 +339,9 @@ It profits from these great projects:
 ### v0.10 - *2011-07-24*
 
 * fixes problems with XAMPP on Windows (see `dot.htaccess` comments for instructions)
-* fixes tree fade-in-fade-out effect for small displays ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
-* adds custom scrollbar to tree ([issue #6](http://github.com/lrsjng/h5ai/issues/6))
-* fixes broken links caused by URI encoding/decoding ([issue #9](http://github.com/lrsjng/h5ai/issues/9))
+* fixes tree fade-in-fade-out effect for small displays ([issue #6](https://github.com/lrsjng/h5ai/issues/6))
+* adds custom scrollbar to tree ([issue #6](https://github.com/lrsjng/h5ai/issues/6))
+* fixes broken links caused by URI encoding/decoding ([issue #9](https://github.com/lrsjng/h5ai/issues/9))
 * adds "empty" to localization (hope Google Translate did a good job here)
 
 
@@ -350,8 +351,8 @@ It profits from these great projects:
 * fixes size of tree view (now there's a ugly scrollbar, hopefully will be fixed)
 * refactores js to improve performance and cleaned code
 * adds caching for folder status codes and content
-* adds `fr` translation by [Nicolas](http://github.com/Nicosmos)
-* adds `nl` translation by [Stefan de Konink](http://github.com/skinkie)
+* adds `fr` translation by [Nicolas](https://github.com/Nicosmos)
+* adds `nl` translation by [Stefan de Konink](https://github.com/skinkie)
 * adds `sv` translation by Oscar Carlsson
 
 
@@ -439,7 +440,7 @@ It profits from these great projects:
 ### v0.2.2 - *2011-06-16*
 
 * refactores a lot, adds some comments
-* includes fixes from [NumEricR](http://github.com/NumEricR)
+* includes fixes from [NumEricR](https://github.com/NumEricR)
 * adds top/bottom message support, only basicly styled
 
 
