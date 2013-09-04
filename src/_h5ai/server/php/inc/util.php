@@ -48,11 +48,6 @@ function use_optional_request_params($keys) {
 	return $values;
 }
 
-function delete_tempfile($file) {
-
-	@unlink($file);
-}
-
 function starts_with($sequence, $head) {
 
 	return substr($sequence, 0, strlen($head)) === $head;
@@ -76,18 +71,5 @@ function load_commented_json($file) {
 
 	return json_decode($str, true);
 }
-
-/* unused
-function merge_config($a, $b) {
-
-	$result = array_merge(array(), $a);
-
-	foreach ($b as $key => $value) {
-		$result[$key] = array_merge($result[$key], $b[$key]);
-	}
-
-	return $result;
-}
-*/
 
 ?>

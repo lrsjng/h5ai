@@ -44,9 +44,9 @@ class Archive {
 
 	private function shell_cmd($cmd) {
 
-		$cmd = str_replace("[ROOTDIR]", "\"" . $this->app->get_abs_path() . "\"", $cmd);
-		$cmd = str_replace("[DIRS]", count($this->dirs) ? "\"" . implode("\"  \"", array_values($this->dirs)) . "\"" : "", $cmd);
-		$cmd = str_replace("[FILES]", count($this->files) ? "\"" . implode("\"  \"", array_values($this->files)) . "\"" : "", $cmd);
+		$cmd = str_replace("[ROOTDIR]", escapeshellarg($this->app->get_abs_path()), $cmd);
+		$cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
+		$cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
 		try {
 			passthru($cmd);
 		} catch (Exeption $err) {
@@ -113,7 +113,7 @@ class Archive {
 			. str_repeat("\0", 100)  // linkname [100]
 			. "ustar\0"  // magic [6]
 			. "00"  // version [2]
-			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]  ?92?
+			. str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]
 			. str_pad($prefix, 155, "\0")  // filename [155]
 			. str_repeat("\0", 12);  // fill [12]
 		assert(strlen($header) === 512);
@@ -153,7 +153,7 @@ class Archive {
 			if ($code == App::$MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
 
 				$real_file = $this->app->get_abs_path($href);
-				$archived_file = preg_replace("!^" . normalize_path($this->app->get_abs_path(), true) . "!", "", $real_file);
+				$archived_file = preg_replace("!^" . preg_quote(normalize_path($this->app->get_abs_path(), true)) . "!", "", $real_file);
 
 				if (is_dir($real_file)) {
 					$this->add_dir($real_file, $archived_file);

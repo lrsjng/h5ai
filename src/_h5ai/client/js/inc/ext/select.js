@@ -1,9 +1,12 @@
 
-modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
+modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core/event'], function (_, $, allsettings, resource, event) {
 
 	var settings = _.extend({
-			enabled: false
+			enabled: false,
+			checkboxes: false
 		}, allsettings.select),
+
+		template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>',
 
 		x = 0, y = 0,
 		l = 0, t = 0, w = 0, h = 0,
@@ -111,8 +114,28 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 			}
 		},
 
-		onLocationChanged = function () {
+		initItem = function (item) {
 
+			if (item.$view) {
+
+				$(template)
+					.appendTo(item.$view.find('a'))
+					.on('click', function (event) {
+
+						event.stopImmediatePropagation();
+						event.preventDefault();
+
+						item.$view.toggleClass('selected');
+						publish();
+					});
+			}
+		},
+
+		onLocationChanged = function (item) {
+
+			if (settings.checkboxes) {
+				_.each(item.content, initItem);
+			}
 			publish();
 		},
 
@@ -120,6 +143,9 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/event'], functio
 
 			var selectionChanged = false;
 
+			if (settings.checkboxes) {
+				_.each(added, initItem);
+			}
 			_.each(removed, function (item) {
 
 				if (item.$view && item.$view.hasClass('selected')) {

@@ -6,13 +6,13 @@
 
 		&.item {
 			float: left;
+			margin: 8px;
 
 			a, a:active, a:visited {
-				float: left;
-				margin: 8px;
 				padding: 8px;
-				width: 100px;
-				height: 120px;
+				min-width: 96px;
+				width: @icon-size * 2;
+				height: @icon-size + 72px;
 				border: 1px solid rgba(0,0,0,0);
 
 				&:hover, &.hover {
@@ -21,10 +21,15 @@
 			}
 		}
 
-		.icon.big {
+		.icon.rational {
 			display: block;
-			height: 48px;
+			height: @icon-size;
 			margin-bottom: 6px;
+
+			img {
+				max-width: @icon-size * 2;
+				max-height: @icon-size;
+			}
 		}
 
 		.label {
@@ -42,5 +47,56 @@
 		margin: 0 120px;
 		padding: 16px;
 		height: 120px;
+	}
+}
+
+
+.view-icons-sized(@size) {
+
+	li {
+
+		&.item {
+
+			a, a:active, a:visited {
+				width: @size * 2;
+				height: @size + 72px;
+			}
+		}
+
+		.icon.rational {
+			height: @size;
+
+			img {
+				max-width: @size * 2;
+				max-height: @size;
+			}
+		}
+	}
+}
+
+
+#view.view-icons {
+	&.size-16 {
+		.view-icons-sized(16px)
+	}
+
+	&.size-24 {
+		.view-icons-sized(24px)
+	}
+
+	&.size-32 {
+		.view-icons-sized(32px)
+	}
+
+	&.size-48 {
+		.view-icons-sized(48px)
+	}
+
+	&.size-64 {
+		.view-icons-sized(64px)
+	}
+
+	&.size-96 {
+		.view-icons-sized(96px)
 	}
 }

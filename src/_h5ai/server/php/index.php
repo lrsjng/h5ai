@@ -53,8 +53,6 @@ if (array_key_exists("action", $_REQUEST)) {
 	$api = new Api($app);
 	$api->apply();
 
-	json_fail(100, "unsupported request");
-
 } else {
 
 	header("Content-type: text/html;charset=utf-8");

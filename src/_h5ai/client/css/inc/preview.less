@@ -1,0 +1,166 @@
+
+#pv-overlay {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
+
+	background-color: rgba(0,0,0,0.5);
+	.transition(background-color 0.3s ease-in-out);
+
+	text-align: center;
+}
+
+#pv-overlay.fullscreen {
+	background-color: #111;
+}
+
+#pv-content {
+	position: absolute;
+}
+
+#pv-spinner {
+	position: absolute;
+
+	img {
+		width: 100px;
+		height: 100px;
+		margin: -50px -50px;
+	}
+}
+
+#pv-close-area {
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	cursor: pointer;
+
+	img {
+		background-color: rgba(0,0,0,0.5);
+		border-radius: 8px;
+		width: 48px;
+		height: 48px;
+		opacity: 0.5;
+	}
+
+	&:hover, &.hover {
+		img {
+			opacity: 1;
+		}
+	}
+}
+
+#pv-prev-area, #pv-next-area {
+	position: absolute;
+	top: 50%;
+	cursor: pointer;
+
+	img {
+		background-color: rgba(0,0,0,0.5);
+		border-radius: 8px;
+		width: 48px;
+		height: 48px;
+		margin: -72px 0;
+		padding: 48px 0;
+		opacity: 0.5;
+	}
+
+	&:hover, &.hover {
+		img {
+			opacity: 1;
+		}
+	}
+}
+
+#pv-prev-area {
+	left: 8px;
+}
+
+#pv-next-area {
+	right: 8px;
+}
+
+#pv-buttons {
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;
+
+	img {
+		position: relative;
+		top: -2px;
+		width: 16px;
+		height: 16px;
+	}
+	img + span, img + input {
+		margin-left: 6px;
+	}
+	input {
+		background-color: rgba(255,255,255,0.1);
+		border: none;
+		color: #ccc;
+	}
+
+	.bar-label {
+		display: block;
+		color: #ccc;
+		height: 30px;
+		line-height: 30px;
+		padding: 0 10px;
+		opacity: 0.7;
+		.transition(all 0.2s ease-in-out);
+	}
+
+	.bar-highlight {
+		background-color: rgba(255,255,255,0.1);
+		opacity: 1.0;
+	}
+
+	@bar-sep-border: 1px solid rgba(255,255,255,0.08);
+
+	.bar-button {
+		.bar-label;
+		cursor: pointer;
+		&:hover, &.hover {
+			.bar-highlight;
+		}
+	}
+
+	.bar-left {
+		float: left;
+		border-right: @bar-sep-border;
+	}
+
+	.bar-right {
+		float: right;
+		border-left: @bar-sep-border;
+	}
+}
+
+#pv-bottombar {
+	position: fixed;
+	z-index: 5;
+	width: 100%;
+	height: 32px;
+	left: 0;
+	bottom: 0;
+	background-color: rgb(27,27,27);
+	border-top: 1px solid rgb(45,45,45);
+
+}
+
+#pv-overlay.fullscreen {
+
+	#pv-bottombar {
+		opacity: 0.5;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+#pv-prev-area, #pv-next-area, #pv-close-area {
+	display: none !important;
+}
+}

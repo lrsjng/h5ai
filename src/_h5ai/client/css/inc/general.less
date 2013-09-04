@@ -4,6 +4,7 @@
 @col-hover: rgb(29,119,194);
 @col-border: rgba(0,0,0,0.05);
 @col-border-strong: rgba(0,0,0,0.15);
+@col-border-stronger: rgba(0,0,0,0.3);
 
 @col-error: rgb(204,51,51);
 
@@ -16,41 +17,50 @@
 @col-widget-back-sel: rgba(255,255,255,0.8);
 @col-widget-sep: @col-border;
 
-// @col-sb-back: rgb(210,210,210);
-// @col-sb-thumb: rgb(180,180,180);
-// @col-sb-thumb-active: rgb(150,150,150);
 @col-sb-back: rgba(0,0,0,0.08);
 @col-sb-thumb: rgba(0,0,0,0.15);
 @col-sb-thumb-active: rgba(0,0,0,0.25);
 
-
 @border-widget: 1px solid @col-border;
 @border-widget-sep: 1px solid @col-widget-sep;
 
-
-
-
-
 @font-family: Ubuntu, sans-serif;
+@font-weight: 300;
 @font-family-mono: "Ubuntu Mono", monospace;
 
 
-html { overflow-y: auto; }
 ::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
 ::selection { background: #68A9FF; color: #fff; text-shadow: none; }
 
+.transition (@transition) {
+	-webkit-transition: @transition;
+	transition: @transition;
+}
+
+.transform (@transform) {
+	-webkit-transform: @transform;
+	-ms-transform: @transform;
+	transform: @transform;
+	zoom: 1;
+}
+
+html {
+	min-height: 100%;
+	overflow: auto;
+
+	&.js .noJsMsg {
+		display: none;
+	}
+	&.browser .noBrowserMsg {
+		display: none;
+	}
+}
+
 body {
 	font-family: @font-family;
-	// font-weight: 400;
 	font-size: 13px;
+	font-weight: @font-weight;
 	color: @col;
 	background-color: @col-back;
 	margin: 30px;
-}
-
-html.js .hideOnJs, html.no-js .hideOnNoJs {
-	display: none;
-}
-html.no-browser .noBrowserMsg {
-	display: inline !important;
 }

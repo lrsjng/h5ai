@@ -5,37 +5,106 @@
 
 		&.item {
 			float: left;
+			margin: 2px;
 
 			a, a:active, a:visited {
-				float: left;
-				margin: 2px;
-				padding: 8px;
-				width: 164px;
-				height: 24px;
+				width: @icon-size + 182px;
+				height: @icon-size + 6px;
 				border: 1px solid rgba(0,0,0,0);
 
 				&:hover, &.hover {
 					border-color: @item-border-col-hover;
 				}
 			}
+
+			// needs to be here, to not conflict with header fields
+			.icon {
+				padding: 8px;
+			}
+			.label, .date, .size {
+				padding: ((@icon-size - 16px)/2) 8px;
+			}
 		}
 
-		.icon.small {
+		.icon.square {
 			display: inline-block;
 			position: absolute;
-			left: 11px;
-			top: 9px;
-			width: 16px;
+			left: 0;
+			top: -4px;
+			width: @icon-size;
+
+			img {
+				width: @icon-size;
+				height: @icon-size;
+			}
 		}
 
 		.label {
 			display: block;
-			max-width: 140px;
-			margin: 0 0 0 24px;
+			margin: 0 0 0 (@icon-size + 8px);
 		}
 
 		.date, .size {
 			display: none;
 		}
+	}
+}
+
+
+.view-grid-sized(@size) {
+
+	li {
+
+		&.item {
+
+			a, a:active, a:visited {
+				width: @size + 182px;
+				height: @size + 6px;
+			}
+
+			.label, .date, .size {
+				padding: ((@size - 16px)/2) 8px;
+			}
+		}
+
+		.icon.square {
+			width: @size;
+
+			img {
+				width: @size;
+				height: @size;
+			}
+		}
+
+		.label {
+			margin: 0 0 0 (@size + 8px);
+		}
+	}
+}
+
+
+#view.view-grid {
+	&.size-16 {
+		.view-grid-sized(16px)
+	}
+
+	&.size-24 {
+		.view-grid-sized(24px)
+	}
+
+	&.size-32 {
+		.view-grid-sized(32px)
+	}
+
+	&.size-48 {
+		.view-grid-sized(48px)
+	}
+
+	&.size-64 {
+		.view-grid-sized(64px)
+	}
+
+	&.size-96 {
+		.view-grid-sized(96px)
 	}
 }

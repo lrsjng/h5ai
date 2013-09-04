@@ -209,11 +209,13 @@ class App {
 		$html = "<table>";
 		$html .= "<tr><th></th><th><span>Name</span></th><th><span>Last modified</span></th><th><span>Size</span></th></tr>";
 		if ($folder->get_parent($cache)) {
-			$html .= "<tr><td><img src=\"" . $this->app_abs_href . "client/icons/16x16/folder-parent.png\"/></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
+			$html .= "<tr><td><img src=\"" . $this->app_abs_href . "client/icons/96/folder-parent.png\" alt=\"folder-parent\"/></td><td><a href=\"..\">Parent Directory</a></td><td></td><td></td></tr>";
 		}
 		foreach ($items as $item) {
+			$type = $item->is_folder ? "folder" : "default";
+
 			$html .= "<tr>";
-			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/16x16/" . ($item->is_folder ? "folder" : "default") . ".png\"/></td>";
+			$html .= "<td><img src=\"" . $this->app_abs_href . "client/icons/96/" . $type . ".png\" alt=\"" . $type . "\"/></td>";
 			$html .= "<td><a href=\"" . $item->abs_href . "\">" . basename($item->abs_path) . "</a></td>";
 			$html .= "<td>" . date("Y-m-d H:i", $item->date) . "</td>";
 			$html .= "<td>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
@@ -278,18 +280,21 @@ class App {
 			$gdinfo = gd_info();
 			$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 		}
+		$exif = function_exists("exif_thumbnail");
 		$cache = @is_writable($this->get_cache_abs_path());
-		$tar = @preg_match("/tar(.exe)?$/i", `which tar`) > 0;
-		$zip = @preg_match("/zip(.exe)?$/i", `which zip`) > 0;
-		$convert = @preg_match("/convert(.exe)?$/i", `which convert`) > 0;
-		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", `which ffmpeg`) > 0;
-		$du = @preg_match("/du(.exe)?$/i", `which du`) > 0;
+		$tar = @preg_match("/tar(.exe)?$/i", `command -v tar`) > 0;
+		$zip = @preg_match("/zip(.exe)?$/i", `command -v zip`) > 0;
+		$convert = @preg_match("/convert(.exe)?$/i", `command -v convert`) > 0;
+		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", `command -v ffmpeg`) > 0;
+		$du = @preg_match("/du(.exe)?$/i", `command -v du`) > 0;
 
 		return array(
 			"idx" => $this->app_abs_href . "server/php/index.php",
+			"phpversion" => PHP_VERSION,
 			"php" => $php,
 			"cache" => $cache,
 			"thumbs" => $gd,
+			"exif" => $exif,
 			"tar" => $tar,
 			"zip" => $zip,
 			"convert" => $convert,

@@ -22,6 +22,7 @@ modulejs.define('info', ['$'], function ($) {
 
 						setCheckResult(this, json.checks[$(this).data('id')]);
 					});
+					$('.test.php .test-result').text(json.checks['phpversion']);
 				}
 			});
 		};

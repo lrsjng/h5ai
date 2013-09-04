@@ -3,23 +3,23 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 	var settings = _.extend({
 			enabled: false,
-			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png', 'tiff'],
+			img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png'],
 			mov: ['video'],
 			doc: ['pdf', 'ps'],
-			delay: 1000
+			delay: 1000,
+			size: 96
 		}, allsettings.thumbnails),
 
-		requestThumbSmall = function (type, href, callback) {
+		requestThumb = function (type, href, mode, ratio, callback) {
 
-			server.request({action: 'getThumbHref', type: type, href: href, mode: 'square', width: 16, height: 16}, function (json) {
-
-				callback(json && json.code === 0 ? json.absHref : null);
-			});
-		},
-
-		requestThumbBig = function (type, href, callback) {
-
-			server.request({action: 'getThumbHref', type: type, href: href, mode: 'rational', width: 100, height: 48}, function (json) {
+			server.request({
+				action: 'getThumbHref',
+				type: type,
+				href: href,
+				mode: mode,
+				width: settings.size * ratio,
+				height: settings.size
+			}, function (json) {
 
 				callback(json && json.code === 0 ? json.absHref : null);
 			});
@@ -29,34 +29,34 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 			var type = null;
 
-			if (_.indexOf(settings.img, item.type) >= 0) {
+			if (_.contains(settings.img, item.type)) {
 				type = 'img';
-			} else if (_.indexOf(settings.mov, item.type) >= 0) {
+			} else if (_.contains(settings.mov, item.type)) {
 				type = 'mov';
-			} else if (_.indexOf(settings.doc, item.type) >= 0) {
+			} else if (_.contains(settings.doc, item.type)) {
 				type = 'doc';
 			}
 
 			if (type) {
-				if (item.thumbSmall) {
-					item.$view.find('.icon.small img').addClass('thumb').attr('src', item.thumbSmall);
+				if (item.thumbSquare) {
+					item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
 				} else {
-					requestThumbSmall(type, item.absHref, function (src) {
+					requestThumb(type, item.absHref, 'square', 1, function (src) {
 
 						if (src && item.$view) {
-							item.thumbSmall = src;
-							item.$view.find('.icon.small img').addClass('thumb').attr('src', src);
+							item.thumbSquare = src;
+							item.$view.find('.icon.square img').addClass('thumb').attr('src', src);
 						}
 					});
 				}
-				if (item.thumbBig) {
-					item.$view.find('.icon.big img').addClass('thumb').attr('src', item.thumbBig);
+				if (item.thumbRational) {
+					item.$view.find('.icon.rational img').addClass('thumb').attr('src', item.thumbRational);
 				} else {
-					requestThumbBig(type, item.absHref, function (src) {
+					requestThumb(type, item.absHref, 'rational', 2, function (src) {
 
 						if (src && item.$view) {
-							item.thumbBig = src;
-							item.$view.find('.icon.big img').addClass('thumb').attr('src', src);
+							item.thumbRational = src;
+							item.$view.find('.icon.rational img').addClass('thumb').attr('src', src);
 						}
 					});
 				}

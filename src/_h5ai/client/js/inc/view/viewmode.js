@@ -1,10 +1,12 @@
 
 modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event'], function (_, $, allsettings, resource, store, event) {
 
-	var modes = ['details', 'list', 'grid', 'icons'],
+	var modes = ['details', 'grid', 'icons'],
+		sizes = [16, 24, 32, 48, 64, 96],
 
 		settings = _.extend({}, {
-			modes: modes
+			modes: modes,
+			sizes: sizes
 		}, allsettings.view),
 
 		storekey = 'viewmode',
@@ -16,29 +18,50 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 						'</a>' +
 					'</li>',
 
+		sizeTemplate = '<li id="view-[SIZE]" class="view">' +
+							'<a href="#">' +
+								'<img src="' + resource.image('size') + '" alt="size"/>' +
+								'<span>[SIZE]</span>' +
+							'</a>' +
+						'</li>',
+
 		adjustSpacing = function () {
 
 			var contentWidth = $('#content').width(),
 				$view = $('#view'),
-				itemWidth = ($view.hasClass('view-icons') || $view.hasClass('view-grid')) ? ($view.find('.item').eq(0).width() || 1) : 1;
+				itemWidth = ($view.hasClass('view-icons') || $view.hasClass('view-grid')) ? ($view.find('.item').eq(0).outerWidth(true) || 1) : 1;
 
 			$view.width(Math.floor(contentWidth / itemWidth) * itemWidth);
 		},
 
-		update = function (viewmode) {
+		update = function (mode, size) {
 
-			var $view = $('#view');
+			var $view = $('#view'),
+				stored = store.get(storekey);
 
-			viewmode = _.indexOf(settings.modes, viewmode) >= 0 ? viewmode : settings.modes[0];
-			store.put(storekey, viewmode);
+			mode = mode || stored && stored.mode;
+			size = size || stored && stored.size;
+			mode = _.contains(settings.modes, mode) ? mode : settings.modes[0];
+			size = _.contains(settings.sizes, size) ? size : settings.sizes[0];
+			store.put(storekey, {mode: mode, size: size});
 
-			_.each(modes, function (mode) {
-				if (mode === viewmode) {
-					$('#view-' + mode).addClass('current');
-					$view.addClass('view-' + mode).show();
+			_.each(modes, function (m) {
+				if (m === mode) {
+					$('#view-' + m).addClass('current');
+					$view.addClass('view-' + m).show();
 				} else {
-					$('#view-' + mode).removeClass('current');
-					$view.removeClass('view-' + mode);
+					$('#view-' + m).removeClass('current');
+					$view.removeClass('view-' + m);
+				}
+			});
+
+			_.each(sizes, function (s) {
+				if (s === size) {
+					$('#view-' + s).addClass('current');
+					$view.addClass('size-' + s).show();
+				} else {
+					$('#view-' + s).removeClass('current');
+					$view.removeClass('size-' + s);
 				}
 			});
 
@@ -52,8 +75,8 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 			settings.modes = _.intersection(settings.modes, modes);
 
 			if (settings.modes.length > 1) {
-				_.each(modes.reverse(), function (mode) {
-					if (_.indexOf(settings.modes, mode) >= 0) {
+				_.each(modes.slice(0).reverse(), function (mode) {
+					if (_.contains(settings.modes, mode)) {
 						$(template.replace(/\[MODE\]/g, mode))
 							.appendTo($navbar)
 							.on('click', 'a', function (event) {
@@ -64,7 +87,20 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 				});
 			}
 
-			update(store.get(storekey));
+			if (settings.sizes.length > 1) {
+				_.each(sizes.slice(0).reverse(), function (size) {
+					if (_.contains(settings.sizes, size)) {
+						$(sizeTemplate.replace(/\[SIZE\]/g, size))
+							.appendTo($navbar)
+							.on('click', 'a', function (event) {
+								update(null, size);
+								event.preventDefault();
+							});
+					}
+				});
+			}
+
+			update();
 
 			event.sub('location.changed', adjustSpacing);
 			$(window).on('resize', adjustSpacing);

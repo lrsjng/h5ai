@@ -10,8 +10,8 @@
 		&.item {
 
 			a, a:active, a:visited {
-				border-top: 1px solid @item-border-col-sep;
 				border-bottom: 1px solid @item-border-col-sep;
+				height: @icon-size + 6px;
 
 				&:hover, &.hover {
 					border-color: @item-border-col-hover;
@@ -19,28 +19,29 @@
 			}
 
 			// needs to be here, to not conflict with header fields
-			.icon, .label, .date, .size {
-				padding: 8px 6px;
+			.icon {
+				padding: 8px;
+			}
+			.label, .date, .size {
+				padding: ((@icon-size - 16px)/2) 8px;
 			}
 		}
 
-		&.item + .item {
-
-			a, a:active, a:visited {
-				border-top: none;
-			}
-		}
-
-		.icon.small {
+		.icon.square {
 			display: inline-block;
 			position: absolute;
 			left: 0;
-			top: -2px;
-			width: 16px;
+			top: -4px;
+			width: @icon-size;
+
+			img {
+				width: @icon-size;
+				height: @icon-size;
+			}
 		}
 
 		.label {
-			margin: 0 270px 0 24px;
+			margin: 0 230px 0 (@icon-size + 16px);
 		}
 
 		.date {
@@ -54,5 +55,67 @@
 			right: 0;
 			top: 0;
 		}
+
+		.selector {
+			margin-top: -1px;
+		}
+	}
+}
+
+
+.view-details-sized(@size) {
+
+	li {
+
+		&.item {
+
+			a, a:active, a:visited {
+				height: @size + 6px;
+			}
+
+			.label, .date, .size {
+				padding: ((@size - 16px)/2) 8px;
+			}
+		}
+
+		.icon.square {
+			width: @size;
+
+			img {
+				width: @size;
+				height: @size;
+			}
+		}
+
+		.label {
+			margin: 0 230px 0 (@size + 16px);
+		}
+	}
+}
+
+
+#view.view-details {
+	&.size-16 {
+		.view-details-sized(16px)
+	}
+
+	&.size-24 {
+		.view-details-sized(24px)
+	}
+
+	&.size-32 {
+		.view-details-sized(32px)
+	}
+
+	&.size-48 {
+		.view-details-sized(48px)
+	}
+
+	&.size-64 {
+		.view-details-sized(64px)
+	}
+
+	&.size-96 {
+		.view-details-sized(96px)
 	}
 }

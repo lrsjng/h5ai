@@ -23,13 +23,19 @@ Options
 	/*
 	General view options.
 
-	- modes: array of "details", "icons", "grid" and/or "list"
+	- modes: array, subset of ["details", "grid", "icons"]
+		the first value indicates the default view mode. If only one value
+		is given the view mode is fixed and the selector buttons are hidden.
+		The user selected view mode is also stored local in modern browsers
+		so that it will be persistent.
+	- sizes: array, subset of [16, 24, 32, 48, 64, 96]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
 	- setParentFolderLabels: set parent folder labels to real folder names
-	- hideParentFolderLinks: hide parent folder links
+	- hideParentFolderLinks: hide parent folder links in the main view
+	- hideFolders: hide all folders in the main view
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
 	- indexFiles: consider folder with those files as non {{pkg.name}} folders
 	- ignore: don't list items matching these regular expressions
@@ -37,14 +43,16 @@ Options
 	- extInNewWindow: open non-h5ai links in new window/tab
 	*/
 	"view": {
-		"modes": ["details", "icons", "grid", "list"],
+		"modes": ["details", "grid", "icons"],
+		"sizes": [48, 24, 96],
 		"setParentFolderLabels": true,
 		"hideParentFolderLinks": false,
+		"hideFolders": false,
 		"binaryPrefix": false,
 		"indexFiles": ["index.html", "index.htm", "index.php"],
 		"ignore": ["^\\.", "^_{{pkg.name}}"],
 		"smartBrowsing": true,
-		"extInNewWindow": true
+		"extInNewWindow": false
 	},
 
 
@@ -107,7 +115,7 @@ Options
 	- packageName: basename of the download package, null for current foldername
 	*/
 	"download": {
-		"enabled": true,
+		"enabled": false,
 		"type": "php-tar",
 		"packageName": null
 	},
@@ -129,7 +137,7 @@ Options
 	Calc the size of folders.
 	*/
 	"foldersize": {
-		"enabled": true
+		"enabled": false
 	},
 
 	/*
@@ -180,7 +188,7 @@ Options
 		2: mode, servername and -version
 	*/
 	"mode": {
-		"enabled": true,
+		"enabled": false,
 		"display": 2
 	},
 
@@ -208,38 +216,41 @@ Options
 
 	/*
 	Show text file preview on click.
-	"types" maps file types to SyntaxHighligher brushes. Special case: "markdown" will
-	be rendered as HTML.
-
+	"types" maps file types to SyntaxHighligher brushes.
 	For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+
+	Additional type are:
+	 - "markdown" to render Markdown text
+	 - "none" for floating text
+	 - "fixed" for fixed width text
 
 	- types: maps types to brushes
 	*/
 	"preview-txt": {
 		"enabled": true,
 		"types": {
-			"authors": "plain",
-			"copying": "plain",
+			"authors": "fixed",
+			"copying": "fixed",
 			"c": "c",
 			"cpp": "cpp",
 			"css": "css",
 			"diff": "diff",
 			"h": "c",
 			"hpp": "cpp",
-			"install": "plain",
-			"log": "plain",
+			"install": "fixed",
+			"log": "fixed",
 			"java": "java",
 			"js": "js",
 			"json": "js",
 			"makefile": "xml",
-			"markdown": "plain",
+			"markdown": "markdown",
 			// "php": "php",
 			"python": "python",
-			"readme": "plain",
+			"readme": "fixed",
 			"rb": "ruby",
-			"rtf": "plain",
+			"rtf": "fixed",
 			"script": "shell",
-			"text": "plain",
+			"text": "fixed",
 			"xml": "xml"
 		}
 	},
@@ -263,23 +274,31 @@ Options
 	},
 
 	/*
-	Make entries selectable. At the moment only needed for packaged download and delete.
+	Make entries selectable (first mouse button + drag).
+	At the moment only needed for packaged download and delete.
+
+	- checkboxes: boolean, show a checkbox on mouse over item
 	*/
 	"select": {
-		"enabled": true
+		"enabled": true,
+		"checkboxes": true
 	},
 
 	/*
-	Default sort order is a two letter code. The first letter specifies
-	the column: "n" for "Name", "d" for "Date" or "s" for "Size". The
-	second letter specifies the sort order: "a" for "ascending" or "d"
-	for "descending".
+	Default sort order.
+	"column" and "reverse" are locally stored.
 
-	- order: "na", "nd", "da", "dd", "sa" or "sd"
+	- column: int, 0 for "Name", 1 for "Date", 2 for "Size"
+	- reverse: boolean, false for ascending, true for descending
+	- ignorecase: boolean, compare ignorecase
+	- natural: boolean, use natural sort order
 	*/
 	"sort": {
 		"enabled": true,
-		"order": "na"
+		"column": 0,
+		"reverse": false,
+		"ignorecase": true,
+		"natural": false
 	},
 
 	/*
@@ -297,13 +316,17 @@ Options
 	- mov: array of types
 	- doc: array of types
 	- delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
+	- size: number, size in pixel of the generated thumbnails
+	- exif: boolean, use included EXIF thumbs if possible
 	*/
 	"thumbnails": {
 		"enabled": true,
 		"img": ["bmp", "gif", "ico", "image", "jpg", "png"],
 		"mov": ["video"],
 		"doc": ["pdf", "ps"],
-		"delay": 1
+		"delay": 1,
+		"size": 96,
+		"exif": true
 	},
 
 	/*

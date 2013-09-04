@@ -2,8 +2,9 @@
 
 class Thumb {
 
-	private static $FFMPEG_CMD = "ffmpeg -i \"[SOURCE]\" -an -ss 3 -vframes 1 \"[TARGET]\"";
-	private static $CONVERT_CMD = "convert -strip \"[SOURCE][0]\" \"[TARGET]\"";
+	private static $FFMPEG_CMD = "ffmpeg -i [SOURCE] -an -ss 3 -vframes 1 [TARGET]";
+	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
+	private static $THUMB_CACHE = "thumbs";
 
 	public static final function is_supported() {
 
@@ -22,6 +23,8 @@ class Thumb {
 	public function __construct($app) {
 
 		$this->app = $app;
+		$this->thumbs_path = $this->app->get_cache_abs_path() . "/" . Thumb::$THUMB_CACHE;
+		$this->thumbs_href = $this->app->get_cache_abs_href() . Thumb::$THUMB_CACHE;
 	}
 
 
@@ -47,17 +50,22 @@ class Thumb {
 			return null;
 		}
 
+		if (!is_dir($this->thumbs_path)) {
+			@mkdir($this->thumbs_path, 0755, true);
+		}
+
 		$name = "thumb-" . sha1("$source_abs_path-$width-$height-$mode") . ".jpg";
-		$thumb_abs_path = $this->app->get_cache_abs_path() . "/" . $name;
-		$thumb_abs_href = $this->app->get_cache_abs_href() . $name;
+		$thumb_abs_path = $this->thumbs_path . "/" . $name;
+		$thumb_abs_href = $this->thumbs_href . "/" . $name;
 
 		if (!file_exists($thumb_abs_path) || filemtime($source_abs_path) >= filemtime($thumb_abs_path)) {
 
 			$image = new Image();
 
 			$et = false;
-			if (function_exists("exif_thumbnail")) {
-				$et = exif_thumbnail($source_abs_path);
+			$opts = $this->app->get_options();
+			if ($opts["thumbnails"]["exif"] === true && function_exists("exif_thumbnail")) {
+				$et = @exif_thumbnail($source_abs_path);
 			}
 			if($et !== false) {
 				file_put_contents($thumb_abs_path, $et);
@@ -84,74 +92,14 @@ class Thumb {
 		$capture_abs_path = $this->app->get_cache_abs_path() . "/capture-" . sha1($source_abs_path) . ".jpg";
 
 		if (!file_exists($capture_abs_path) || filemtime($source_abs_path) >= filemtime($capture_abs_path)) {
-			$cmd = str_replace("[SOURCE]", $source_abs_path, $cmd);
-			$cmd = str_replace("[TARGET]", $capture_abs_path, $cmd);
+			$cmd = str_replace("[SOURCE]", escapeshellarg($source_abs_path), $cmd);
+			$cmd = str_replace("[TARGET]", escapeshellarg($capture_abs_path), $cmd);
 			`$cmd`;
 		}
 
 		return file_exists($capture_abs_path) ? $capture_abs_path : null;
 	}
 }
-
-
-
-class Magic {
-
-	private static $GET_SIZE_CMD = "identify -format \"%w %h\" \"[SOURCE]\"";
-	private static $RESIZE_CMD = "convert -strip -transparent-color \"#ffffff\" -resize [WIDTH]x[HEIGHT] -quality 80 \"[SOURCE]\" \"[TARGET]\"";
-	private static $SQUARE_CMD = "convert -strip -transparent-color \"#ffffff\" -crop [CWIDTH]x[CWIDTH]+[CLEFT]+[CTOP] -resize [WIDTH]x[WIDTH] -quality 80 \"[SOURCE]\" \"[TARGET]\"";
-
-
-	private static final function img_size($source) {
-
-		$cmd = str_replace("[SOURCE]", str_replace("\"", "\\\"", $source), Magic::$GET_SIZE_CMD);
-		$size = explode(" ", `$cmd`);
-		$size[0] = intval($size[0]);
-		$size[1] = intval($size[1]);
-		return $size;
-	}
-
-	private static final function rational($source, $target, $width, $height) {
-
-		$cmd = str_replace("[SOURCE]", str_replace("\"", "\\\"", $source), Magic::$RESIZE_CMD);
-		$cmd = str_replace("[TARGET]", str_replace("\"", "\\\"", $target), $cmd);
-		$cmd = str_replace("[WIDTH]", $width, $cmd);
-		$cmd = str_replace("[HEIGHT]", $height, $cmd);
-		`$cmd`;
-	}
-
-	private static final function square($source, $target, $width) {
-
-		$size = Magic::img_size($source);
-		$w = $size[0];
-		$h = $size[1];
-
-		$cwidth = min($w, $h);
-		$cleft = ($w - $cwidth) / 2;
-		$ctop = ($h - $cwidth) / 2;
-
-		$cmd = str_replace("[SOURCE]", str_replace("\"", "\\\"", $source), Magic::$SQUARE_CMD);
-		$cmd = str_replace("[TARGET]", str_replace("\"", "\\\"", $target), $cmd);
-		$cmd = str_replace("[CWIDTH]", $cwidth, $cmd);
-		$cmd = str_replace("[CLEFT]", $cleft, $cmd);
-		$cmd = str_replace("[CTOP]", $ctop, $cmd);
-		$cmd = str_replace("[WIDTH]", $width, $cmd);
-		`$cmd`;
-	}
-
-	public static final function thumb($mode, $source, $target, $width, $height = null, $color = null) {
-
-		if ($height === null) {
-			$height = $width;
-		}
-		if ($mode === "square") {
-			Magic::square($source, $target, $width);
-		} elseif ($mode === "rational") {
-			Magic::rational($source, $target, $width, $height);
-		}
-	}
-}
-
 
 
 class Image {
