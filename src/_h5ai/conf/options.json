@@ -92,7 +92,7 @@ Options
 	Allow file deletion.
 	*/
 	"delete": {
-		"enabled": true
+		"enabled": false
 	},
 
 	/* [EXPERIMENTAL]

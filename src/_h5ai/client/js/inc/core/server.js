@@ -23,6 +23,22 @@ modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function (
 			} else {
 				callback();
 			}
+		},
+
+		formRequest: function (data) {
+
+			var $form = $('<form method="post" style="display:none;"/>')
+							.attr('action', location.getAbsHref());
+
+			_.each(data, function (val, key) {
+
+				$('<input type="hidden"/>')
+					.attr('name', key)
+					.attr('value', val)
+					.appendTo($form);
+			});
+
+			$form.appendTo('body').submit().remove();
 		}
 	});
 
