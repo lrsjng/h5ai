@@ -14,7 +14,7 @@ module.exports = function (make) {
 
 		$ = make.fQuery,
 		mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', ''),
-		mapRoot = $.map.p(root, build);
+		mapRoot = $.map.p(root, path.join(build, '_h5ai'));
 
 
 	make.version('>=0.10.0');
@@ -88,30 +88,30 @@ module.exports = function (make) {
 		var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.url + ' */';
 
 		$(src + ': _h5ai/client/js/*.js')
-			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
+			.newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
 			.uglifyjs({header: header})
 			.WRITE(mapSrc);
 
 		$(src + ': _h5ai/client/css/*.less')
-			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
+			.newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
 			.cssmin({header: header})
 			.WRITE(mapSrc);
 
 		$(src + ': **/*.jade')
-			.modified(mapSrc)
+			.newerThan(mapSrc)
 			.handlebars(make.env)
 			.jade()
 			.WRITE(mapSrc);
 
 		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
-			.modified(mapSrc)
+			.newerThan(mapSrc)
 			.handlebars(make.env)
 			.WRITE(mapSrc);
 
-		$(root + ': README*, LICENSE*')
-			.modified(mapRoot)
+		$(root + ': *.md')
+			.newerThan(mapRoot)
 			.WRITE(mapRoot);
 	});
 
@@ -119,30 +119,30 @@ module.exports = function (make) {
 	make.target('build-uncompressed', ['check-version'], 'build all updated files without compression').sync(function () {
 
 		$(src + ': _h5ai/client/js/*.js')
-			.modified(mapSrc, $(src + ': _h5ai/client/js/**'))
+			.newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
 			.includify()
 			// .uglifyjs()
 			.WRITE(mapSrc);
 
 		$(src + ': _h5ai/client/css/*.less')
-			.modified(mapSrc, $(src + ': _h5ai/client/css/**'))
+			.newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
 			.less()
 			// .cssmin()
 			.WRITE(mapSrc);
 
 		$(src + ': **/*.jade')
-			.modified(mapSrc)
+			.newerThan(mapSrc)
 			.handlebars(make.env)
 			.jade()
 			.WRITE(mapSrc);
 
 		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
-			.modified(mapSrc)
+			.newerThan(mapSrc)
 			.handlebars(make.env)
 			.WRITE(mapSrc);
 
-		$(root + ': README*, LICENSE*')
-			.modified(mapRoot)
+		$(root + ': *.md')
+			.newerThan(mapRoot)
 			.WRITE(mapRoot);
 	});
 
