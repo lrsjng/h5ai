@@ -51,11 +51,16 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 					type: type,
 					hrefs: selectedHrefsStr
 				},
-				$form = $('<form action="#" method="post" style="display:none;" />');
+				$form = $('<form action="#" method="post" style="display:none;"/>');
 
-			for (var key in query) {
-				$form.append('<input type="hidden" name="' + key + '" value="' + query[key] + '" />');
-			}
+			_.each(query, function (val, key) {
+
+				$('<input type="hidden"/>')
+					.attr('name', key)
+					.attr('value', val)
+					.appendTo($form);
+			});
+
 			$form.appendTo('body').submit().remove();
 		},
 
