@@ -1,14 +1,14 @@
 
 modulejs.define('info', ['$'], function ($) {
 
-	var setCheckResult = function (id, result) {
+	var setCheckResult = function (el, result) {
 
-			var $result = $(id).find('.test-result');
+			var $result = $(el).find('.result');
 
 			if (result) {
-				$result.addClass('test-passed').text('yes');
+				$result.addClass('passed').text('yes');
 			} else {
-				$result.addClass('test-failed').text('no');
+				$result.addClass('failed').text('no');
 			}
 		},
 
@@ -22,7 +22,7 @@ modulejs.define('info', ['$'], function ($) {
 
 						setCheckResult(this, json.checks[$(this).data('id')]);
 					});
-					$('.test.php .test-result').text(json.checks['phpversion']);
+					$('.test.php .result').text(json.checks['phpversion']);
 				}
 			});
 		};
