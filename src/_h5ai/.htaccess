@@ -1,3 +1,6 @@
+# Apache Server Configs v2.0.0 | MIT License
+# https://github.com/h5bp/server-configs-apache
+
 DirectoryIndex index.html
 
 
@@ -25,13 +28,12 @@ DirectoryIndex index.html
 
 # Force IE to render pages in the highest available mode in the various
 # cases when it may not: http://hsivonen.iki.fi/doctype/ie-mode.pdf.
-# Use, if installed, Google Chrome Frame.
 
 <IfModule mod_headers.c>
-    Header set X-UA-Compatible "IE=edge,chrome=1"
+    Header set X-UA-Compatible "IE=edge"
     # `mod_headers` can't match based on the content-type, however, we only
     # want to send this header for HTML pages and not for the other resources
-    <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
+    <FilesMatch "\.(appcache|crx|css|cur|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svgz?|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
         Header unset X-UA-Compatible
     </FilesMatch>
 </IfModule>
@@ -75,7 +77,7 @@ AddDefaultCharset utf-8
     ExpiresByType application/xml                       "access plus 0 seconds"
     ExpiresByType text/xml                              "access plus 0 seconds"
 
-  # Favicon (cannot be renamed!)
+  # Favicon (cannot be renamed!) and cursor images
     ExpiresByType image/x-icon                          "access plus 1 week"
 
   # HTML components (HTCs)
