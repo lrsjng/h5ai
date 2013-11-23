@@ -74,6 +74,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 		onExit = function () {
 
 			$(window).off('keydown', onKeydown);
+			$('#pv-content').empty();
 			$('#pv-overlay').stop(true, true).fadeOut(200);
 		},
 
