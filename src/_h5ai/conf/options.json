@@ -256,6 +256,16 @@ Options
 	},
 
 	/*
+	Show a video preview on click.
+	
+	- types: array of types
+	*/
+	"preview-vid": {
+		"enabled": true,
+		"types": ["video"]
+	},
+	
+	/*
 	Show QRCodes on hovering files.
 
 	- size: width and height in pixel
