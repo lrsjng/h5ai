@@ -1,6 +1,8 @@
 {
 	"lang": "italiano",
 	"details": "dettagli",
+	"list": "lista",
+	"grid": "griglia",
 	"icons": "icone",
 	"name": "Nome",
 	"lastModified": "Ultima modifica",
@@ -8,5 +10,10 @@
 	"parentDirectory": "Cartella Superiore",
 	"empty": "vuota",
 	"folders": "cartelle",
-	"files": "file"
+	"files": "file",
+	"download": "download",
+	"noMatch": "nessun risultato",
+	"dateFormat": "DD-MM-YYYY HH:mm",
+	"filter": "filtra",
+	"delete": "elimina"
 }
