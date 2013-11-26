@@ -266,6 +266,16 @@ Options
 	},
 	
 	/*
+	Show an audio preview on click.
+	
+	- types: array of types
+	*/
+	"preview-audio": {
+		"enabled": true,
+		"types": ["audio"]
+	},
+	
+	/*
 	Show QRCodes on hovering files.
 
 	- size: width and height in pixel
