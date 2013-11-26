@@ -5,7 +5,17 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', '
 			enabled: false,
 			types: []
 		}, allsettings['preview-audio']),
-
+		
+		//Credits go to Thorben (http://stackoverflow.com/a/5539081)
+		formatSecondsToHMS = function (d) {
+			d = Number(d);
+			
+			var h = Math.floor(d / 3600);
+			var m = Math.floor(d % 3600 / 60);
+			var s = Math.floor(d % 3600 % 60);
+			return ((h > 0 ? h + ":" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + ":" : "0:") + (s < 10 ? "0" : "") + s);
+		},
+		
 		preloadAudio = function (src, callback) {
 
 			var $audio = $('<audio/>')
@@ -38,7 +48,7 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', '
 
 						preview.setLabels([
 							currentItem.label,
-							'' + $audio[0].duration
+							formatSecondsToHMS($audio[0].duration)
 						]);
 					}
 				},
