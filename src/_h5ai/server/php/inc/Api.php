@@ -171,7 +171,19 @@ class Api {
 					$abs_path = $this->app->get_abs_path($href);
 
 					if (!unlink($abs_path)) {
-						$errors[] = $href;
+					   //check if it's a directory
+					   if(is_dir($abs_path)) {
+					    //check for files & folders within dir, deletes them, recursively (from SOF, barbushin | tested in PHP 5.4)
+						foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($abs_path, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST) as $path) {
+						$path->isFile() ? unlink($path->getPathname()) : rmdir($path->getPathname());
+						}
+					   rmdir($abs_path);
+					   
+					   } else {
+					   //return error if neither dir or file could be deleted
+					   $errors[] = $href;
+					   }
+						
 					}
 				}
 			}
