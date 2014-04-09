@@ -2,7 +2,7 @@
 
 class Thumb {
 
-	private static $FFMPEG_CMD = "ffmpeg -i [SOURCE] -an -ss 3 -vframes 1 [TARGET]";
+	private static $FFMPEG_CMD = "ffmpeg -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
 	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
 	private static $THUMB_CACHE = "thumbs";
 
