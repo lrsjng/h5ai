@@ -103,7 +103,7 @@ Options
 	- maxfilesize: number, file size is in MB
 	*/
 	"dropbox": {
-		"enabled": true,
+		"enabled": false,
 		"maxfiles": 10,
 		"maxfilesize": 1000
 	},
@@ -115,7 +115,7 @@ Options
 	- packageName: basename of the download package, null for current foldername
 	*/
 	"download": {
-		"enabled": true,
+		"enabled": false,
 		"type": "php-tar",
 		"packageName": null
 	},
@@ -137,7 +137,7 @@ Options
 	Calc the size of folders.
 	*/
 	"foldersize": {
-		"enabled": true
+		"enabled": false
 	},
 
 	/*
@@ -159,9 +159,9 @@ Options
 	},
 
 	/*
-	Localization, for example "en", "de" etc. - see "langs" below for
-	possible values. Adjust it to your needs. If lang is not found in
-	"langs" it defaults to "en".
+	Localization, for example "en", "de" etc. - see "_h5ai/conf/l10n" folder for
+	possible values. Adjust it to your needs. If lang is not found
+	it defaults to "en".
 
 	- lang: default language
 	- useBroserLang: boolean, try to use browser language

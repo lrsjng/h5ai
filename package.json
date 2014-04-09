@@ -1,6 +1,6 @@
 {
   "name": "h5ai",
-  "version": "0.24.0+",
+  "version": "0.24.1",
   "description": "a modern HTTP web server index",
   "url": "http://larsjung.de/h5ai/",
   "author": "Lars Jung",

@@ -54,9 +54,11 @@ It profits from these great projects:
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
-### develop branch
+### v0.24.1 - *2014-04-09*
 
-* ...
+* security fixes! (issues #268, #269)
+* language updates (`fi`, `fr`, `hi`, `it`, `zh-tw`)
+* fixes WinOS command detection
 
 
 ### v0.24.0 - *2013-09-04*
