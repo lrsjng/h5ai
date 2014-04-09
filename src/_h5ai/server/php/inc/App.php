@@ -137,7 +137,7 @@ class App {
 
 		$abs_path = $this->get_abs_path($abs_href);
 
-		if (!is_dir($abs_path)) {
+		if (!is_dir($abs_path) || strpos($abs_path, '../') || strpos($abs_path, '/..') || $abs_path == '..') {
 			return 500;
 		}
 
@@ -169,6 +169,11 @@ class App {
 
 
 	public function get_items($abs_href, $what) {
+
+		$code = $this->get_http_code($abs_href);
+		if ($code != App::$MAGIC_SEQUENCE) {
+			return array();
+		}
 
 		$cache = array();
 		$folder = Item::get($this, $this->get_abs_path($abs_href), $cache);
