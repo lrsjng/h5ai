@@ -1,6 +1,8 @@
 {
 	"lang": "正體中文",
 	"details": "詳細資料",
+	"list": "清單",
+	"grid": "網格",
 	"icons": "圖示",
 	"name": "檔名",
 	"lastModified": "上次修改",
@@ -9,5 +11,9 @@
 	"empty": "空資料夾",
 	"folders": "資料夾",
 	"files": "檔案",
-	"download": "下載"
+	"download": "下載",
+	"noMatch": "沒有符合的檔案",
+	"dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
+	"filter": "過濾",
+	"delete": "刪除"
 }
