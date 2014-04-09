@@ -1,0 +1,19 @@
+{
+	"lang": "हिंदी",
+	"details": "विस्तार",
+	"icons": "आइकॉन",
+	"name": "नाम",
+	"lastModified": "पिछला परिवर्तन",
+	"size": "माप",
+	"parentDirectory": "मूल डायरेक्टरी",
+	"empty": "खाली",
+	"folders": "फोल्डर",
+	"files": "फ़ाइलें",
+	"download": "डाउनलोड",
+	"list": "सूची",
+	"grid": "ग्रिड",
+	"noMatch": "कोई समानता नहीं",
+	"dateFormat": "DD.MM.YYYY HH:mm",
+	"filter": "फ़िल्टर",
+	"delete": "हटाओ"
+}
