@@ -1,13 +1,11 @@
 
-modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/server', 'core/location'], function (_, $, allsettings, resource, event, server, location) {
+modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location', 'core/server'], function (_, $, allsettings, resource, event, location, server) {
 
 	var settings = _.extend({
 			enabled: false,
 			type: 'php-tar',
 			packageName: 'package'
 		}, allsettings.download),
-
-		// formats = ['tar', 'zip'],
 
 		downloadBtnTemplate = '<li id="download">' +
 									'<a href="#">' +
@@ -16,25 +14,14 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 									'</a>' +
 								'</li>',
 
-		selectedHrefsStr = '',
-		$download, $img,
-
-		failed = function () {
-
-			$download.addClass('failed');
-			setTimeout(function () {
-				$download.removeClass('failed');
-			}, 1000);
-		},
+		selectedItems = [],
 
 		onSelection = function (items) {
 
-			selectedHrefsStr = '';
-			if (items.length) {
-				selectedHrefsStr = _.map(items, function (item) {
+			var $download = $('#download');
 
-					return item.absHref;
-				}).join('|:|');
+			selectedItems = items.slice(0);
+			if (selectedItems.length) {
 				$download.appendTo('#navbar').show();
 			} else {
 				$download.hide();
@@ -49,26 +36,21 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 					action: 'download',
 					as: (settings.packageName || location.getItem().label) + '.' + extension,
 					type: type,
-					hrefs: selectedHrefsStr
-				},
-				$form = $('<form action="#" method="post" style="display:none;" />');
+					hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
+				};
 
-			for (var key in query) {
-				$form.append('<input type="hidden" name="' + key + '" value="' + query[key] + '" />');
-			}
-			$form.appendTo('body').submit().remove();
+			server.formRequest(query);
 		},
 
 		init = function () {
 
-			if (!settings.enabled || !server.api) {
+			if (!settings.enabled) {
 				return;
 			}
 
-			$download = $(downloadBtnTemplate)
+			$(downloadBtnTemplate)
 				.find('a').on('click', onClick).end()
 				.appendTo('#navbar');
-			$img = $download.find('img');
 
 			event.sub('selection', onSelection);
 		};

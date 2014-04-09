@@ -159,9 +159,9 @@ Options
 	},
 
 	/*
-	Localization, for example "en", "de" etc. - see "langs" below for
-	possible values. Adjust it to your needs. If lang is not found in
-	"langs" it defaults to "en".
+	Localization, for example "en", "de" etc. - see "_h5ai/conf/l10n" folder for
+	possible values. Adjust it to your needs. If lang is not found
+	it defaults to "en".
 
 	- lang: default language
 	- useBroserLang: boolean, try to use browser language
@@ -188,7 +188,7 @@ Options
 		2: mode, servername and -version
 	*/
 	"mode": {
-		"enabled": false,
+		"enabled": true,
 		"display": 2
 	},
 
