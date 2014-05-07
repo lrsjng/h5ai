@@ -72,4 +72,13 @@ function load_commented_json($file) {
 	return json_decode($str, true);
 }
 
+function exec_cmd($cmd) {
+
+	$lines = array();
+	$rc = null;
+	exec($cmd, $lines, $rc);
+
+	return $lines;
+}
+
 ?>
