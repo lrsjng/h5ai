@@ -301,19 +301,16 @@ class App {
 		}
 		$exif = function_exists("exif_thumbnail");
 		$cache = @is_writable($this->get_cache_abs_path());
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$tar = @preg_match("/tar(.exe)?$/i", `which tar`) > 0;
-			$zip = @preg_match("/zip(.exe)?$/i", `which zip`) > 0;
-			$convert = @preg_match("/convert(.exe)?$/i", `which convert`) > 0;
-			$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", `which ffmpeg`) > 0;
-			$du = @preg_match("/du(.exe)?$/i", `which du`) > 0;
+		if (strtoupper(substr(PHP_OS, 0, 3)) === "WIN") {
+			$cmd = "which";
 		} else {
-			$tar = @preg_match("/tar(.exe)?$/i", `command -v tar`) > 0;
-			$zip = @preg_match("/zip(.exe)?$/i", `command -v zip`) > 0;
-			$convert = @preg_match("/convert(.exe)?$/i", `command -v convert`) > 0;
-			$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", `command -v ffmpeg`) > 0;
-			$du = @preg_match("/du(.exe)?$/i", `command -v du`) > 0;
+			$cmd = "command -v";
 		}
+		$tar = @preg_match("/tar(.exe)?$/i", exec_cmd($cmd . " tar")) > 0;
+		$zip = @preg_match("/zip(.exe)?$/i", exec_cmd($cmd . " zip")) > 0;
+		$convert = @preg_match("/convert(.exe)?$/i", exec_cmd($cmd . " convert")) > 0;
+		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", exec_cmd($cmd . " ffmpeg")) > 0;
+		$du = @preg_match("/du(.exe)?$/i", exec_cmd($cmd . " du")) > 0;
 
 		return array(
 			"idx" => $this->app_abs_href . "server/php/index.php",

@@ -137,7 +137,7 @@ Options
 	Calc the size of folders.
 	*/
 	"foldersize": {
-		"enabled": false
+		"enabled": true
 	},
 
 	/*

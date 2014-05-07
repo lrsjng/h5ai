@@ -94,7 +94,7 @@ class Thumb {
 		if (!file_exists($capture_abs_path) || filemtime($source_abs_path) >= filemtime($capture_abs_path)) {
 			$cmd = str_replace("[SOURCE]", escapeshellarg($source_abs_path), $cmd);
 			$cmd = str_replace("[TARGET]", escapeshellarg($capture_abs_path), $cmd);
-			`$cmd`;
+			exec_cmd($cmd);
 		}
 
 		return file_exists($capture_abs_path) ? $capture_abs_path : null;

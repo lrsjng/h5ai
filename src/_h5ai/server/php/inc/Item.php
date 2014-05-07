@@ -58,7 +58,7 @@ class Item {
 			$options = $app->get_options();
 			if ($options["foldersize"]["enabled"]) {
 				$cmd = str_replace("[DIR]", escapeshellarg($this->abs_path), Item::$FOLDER_SIZE_CMD);
-				$this->size = intval(preg_replace("/\s.*$/", "", `$cmd`), 10) * 1024;
+				$this->size = intval(preg_replace("/\s.*$/", "", exec_cmd($cmd)), 10) * 1024;
 			}
 		} else {
 			$this->size = @filesize($this->abs_path);

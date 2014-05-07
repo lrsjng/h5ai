@@ -78,7 +78,7 @@ function exec_cmd($cmd) {
 	$rc = null;
 	exec($cmd, $lines, $rc);
 
-	return $lines;
+	return implode('\n', $lines);
 }
 
 ?>
