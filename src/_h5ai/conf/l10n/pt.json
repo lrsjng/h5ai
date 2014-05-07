@@ -1,12 +1,19 @@
 {
 	"lang": "português",
 	"details": "detalhes",
+	"list": "lista",
+	"grid": "grelha",
 	"icons": "ícones",
 	"name": "Nome",
-	"lastModified": "Última modificação",
+	"lastModified": "última modificação",
 	"size": "Tamanho",
-	"parentDirectory": "Diretório superior",
+	"parentDirectory": "diretório acima",
 	"empty": "vazio",
 	"folders": "pastas",
-	"files": "arquivos"
+	"files": "arquivos",
+	"download": "descarregar",
+	"noMatch": "sem resultados",
+	"dateFormat": "DD-MM-YYYY HH:mm",
+	"filter": "filtro",
+	"delete": "eliminar"
 }
