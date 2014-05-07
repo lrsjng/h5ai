@@ -56,7 +56,8 @@ It profits from these great projects:
 
 ### develop branch
 
-* ...
+* replaces PHP backtick operator with `exec`
+* language updates (`bg`, `ko`, `pt`, `sv`)
 
 
 ### v0.24.1 - *2014-04-09*
