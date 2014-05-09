@@ -3,6 +3,7 @@
 class Thumb {
 
 	private static $FFMPEG_CMD = "ffmpeg -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
+	private static $AVCONV_CMD = "avconv -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
 	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
 	private static $THUMB_CACHE = "thumbs";
 
@@ -36,6 +37,9 @@ class Thumb {
 			$capture_abs_path = $source_abs_path;
 		} else if ($type === "mov") {
 			$capture_abs_path = $this->capture(Thumb::$FFMPEG_CMD, $source_abs_path);
+			if ($capture_abs_path === null) {
+				$capture_abs_path = $this->capture(Thumb::$AVCONV_CMD, $source_abs_path);
+			}
 		} else if ($type === "doc") {
 			$capture_abs_path = $this->capture(Thumb::$CONVERT_CMD, $source_abs_path);
 		}

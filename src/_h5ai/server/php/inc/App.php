@@ -310,6 +310,7 @@ class App {
 		$zip = @preg_match("/zip(.exe)?$/i", exec_cmd($cmd . " zip")) > 0;
 		$convert = @preg_match("/convert(.exe)?$/i", exec_cmd($cmd . " convert")) > 0;
 		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", exec_cmd($cmd . " ffmpeg")) > 0;
+		$avconv = @preg_match("/avconv(.exe)?$/i", exec_cmd($cmd . " avconv")) > 0;
 		$du = @preg_match("/du(.exe)?$/i", exec_cmd($cmd . " du")) > 0;
 
 		return array(
@@ -323,6 +324,8 @@ class App {
 			"zip" => $zip,
 			"convert" => $convert,
 			"ffmpeg" => $ffmpeg,
+			"avconv" => $avconv,
+			"moviethumbs" => $ffmpeg || $avconv,
 			"du" => $du
 		);
 	}

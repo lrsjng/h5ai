@@ -48,7 +48,7 @@ class Archive {
 		$cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
 		$cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
 		try {
-			passthru($cmd);
+			passthru_cmd($cmd);
 		} catch (Exeption $err) {
 			return 500;
 		}

@@ -77,8 +77,14 @@ function exec_cmd($cmd) {
 	$lines = array();
 	$rc = null;
 	exec($cmd, $lines, $rc);
+	return implode("\n", $lines);
+}
 
-	return implode('\n', $lines);
+function passthru_cmd($cmd) {
+
+	$rc = null;
+	passthru($cmd, $rc);
+	return $rc;
 }
 
 ?>
