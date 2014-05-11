@@ -32,23 +32,23 @@ html.no-js.browser( lang="en" )
 
 		h2 Server Details
 		ul#tests
-			li.test.php( data-id="php" )
+			li.test.php( data-id="php_version_supported" )
 				span.label PHP version
 				span.result ?
-				div.info PHP version &gt;= 5.2.1
-			li.test( data-id="cache" )
+				div.info PHP version &gt;= 5.3.0
+			li.test( data-id="path_cache_writable" )
 				span.label Cache directory
 				span.result ?
 				div.info Web server has write access
-			li.test( data-id="thumbs" )
+			li.test( data-id="php_jpg" )
 				span.label Image thumbs
 				span.result ?
 				div.info PHP GD extension with JPEG support available
-			li.test( data-id="exif" )
+			li.test( data-id="php_exif" )
 				span.label Use EXIF thumbs
 				span.result ?
 				div.info PHP EXIF extension available
-			li.test( data-id="moviethumbs" )
+			li.test( data-id="cmd_ffmpeg_or_avconv" )
 				span.label Movie thumbs
 				span.result ?
 				div.info
@@ -57,28 +57,28 @@ html.no-js.browser( lang="en" )
 					|  or 
 					code avconv
 					|  available
-			li.test( data-id="convert" )
+			li.test( data-id="cmd_convert" )
 				span.label PDF thumbs
 				span.result ?
 				div.info
 					| Command line program 
 					code convert
 					|  available
-			li.test( data-id="tar" )
+			li.test( data-id="cmd_tar" )
 				span.label Shell tar
 				span.result ?
 				div.info
 					| Command line program 
 					code tar
 					|  available
-			li.test( data-id="zip" )
+			li.test( data-id="cmd_zip" )
 				span.label Shell zip
 				span.result ?
 				div.info
 					| Command line program 
 					code zip
 					|  available
-			li.test( data-id="du" )
+			li.test( data-id="cmd_du" )
 				span.label Folder sizes
 				span.result ?
 				div.info

@@ -5,17 +5,48 @@ class App {
 	public static $MAGIC_SEQUENCE = "={{pkg.name}}=";
 	public static $FILE_PREFIX = "_{{pkg.name}}";
 
+	private static $MIN_PHP_VERSION = "5.3.0";
 	private static $RE_DELIMITER = "|";
 	private static $CACHE_DIR = "cache";
 
 
-	private $app_abs_path, $root_abs_path,
+	private $is_win_os, $is_supported_php,
+			$server_name, $server_version,
+			$app_abs_path, $root_abs_path,
 			$app_abs_href, $root_abs_href,
 			$abs_href, $abs_path,
 			$options;
 
 
-	public function __construct($app_abs_path, $app_abs_href, $abs_href) {
+	public static function from_env() {
+
+		$server_name = null;
+		$server_version = null;
+		if (preg_match("#^(.*?)/(.*?)(?: |$)#", strtolower(getenv("SERVER_SOFTWARE")), $matches)) {
+			$server_name = $matches[1];
+			$server_version = $matches[2];
+		}
+
+		$script_name = getenv("SCRIPT_NAME");
+		if ($server_name === "lighttpd") {
+			$script_name = preg_replace("#^.*//#", "/", $script_name);
+		}
+		$app_abs_href = dirname(dirname(dirname($script_name)));
+
+		$url_parts = parse_url(getenv("REQUEST_URI"));
+		$abs_href = $url_parts["path"];
+
+		return new App($server_name, $server_version, APP_ABS_PATH, $app_abs_href, $abs_href);
+	}
+
+
+	public function __construct($server_name, $server_version, $app_abs_path, $app_abs_href, $abs_href) {
+
+		$this->is_win_os = strtolower(substr(PHP_OS, 0, 3)) === "win";
+		$this->is_supported_php = version_compare(PHP_VERSION, App::$MIN_PHP_VERSION) >= 0;
+
+		$this->server_name = strtolower($server_name);
+		$this->server_version = strtolower($server_version);
 
 		$this->app_abs_path = normalize_path($app_abs_path);
 		$this->root_abs_path = normalize_path(dirname($this->app_abs_path));
@@ -293,41 +324,40 @@ class App {
 
 	public function get_server_checks() {
 
-		$php = version_compare(PHP_VERSION, "5.2.1") >= 0;
+		$results = array();
+
+		$results["path_index"] = $this->app_abs_href . "server/php/index.php";
+		$results["php_version"] = PHP_VERSION;
+		$results["php_version_supported"] = $this->is_supported_php;
+		$results["php_exif"] = function_exists("exif_thumbnail");
+		$results["path_cache_writable"] = @is_writable($this->get_cache_abs_path());
+
 		$gd = false;
 		if (function_exists("gd_info")) {
 			$gdinfo = gd_info();
 			$gd = array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
 		}
-		$exif = function_exists("exif_thumbnail");
-		$cache = @is_writable($this->get_cache_abs_path());
-		if (strtoupper(substr(PHP_OS, 0, 3)) === "WIN") {
-			$cmd = "which";
-		} else {
-			$cmd = "command -v";
-		}
-		$tar = @preg_match("/tar(.exe)?$/i", exec_cmd($cmd . " tar")) > 0;
-		$zip = @preg_match("/zip(.exe)?$/i", exec_cmd($cmd . " zip")) > 0;
-		$convert = @preg_match("/convert(.exe)?$/i", exec_cmd($cmd . " convert")) > 0;
-		$ffmpeg = @preg_match("/ffmpeg(.exe)?$/i", exec_cmd($cmd . " ffmpeg")) > 0;
-		$avconv = @preg_match("/avconv(.exe)?$/i", exec_cmd($cmd . " avconv")) > 0;
-		$du = @preg_match("/du(.exe)?$/i", exec_cmd($cmd . " du")) > 0;
+		$results["php_jpg"] = $gd;
 
-		return array(
-			"idx" => $this->app_abs_href . "server/php/index.php",
-			"phpversion" => PHP_VERSION,
-			"php" => $php,
-			"cache" => $cache,
-			"thumbs" => $gd,
-			"exif" => $exif,
-			"tar" => $tar,
-			"zip" => $zip,
-			"convert" => $convert,
-			"ffmpeg" => $ffmpeg,
-			"avconv" => $avconv,
-			"moviethumbs" => $ffmpeg || $avconv,
-			"du" => $du
-		);
+		$check_cmd = $this->is_win_os ? "which" : "command -v";
+		foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $c) {
+			$results["cmd_" . $c] = @preg_match("#" . $c . "(.exe)?$#i", exec_cmd($check_cmd . " " . $c)) > 0;
+		}
+		$results["cmd_ffmpeg_or_avconv"] = $results["cmd_ffmpeg"] || $results["cmd_avconv"];
+
+		$results["is_win_os"] = $this->is_win_os;
+		$results["is_supported_php"] = $this->is_supported_php;
+		$results["server_name"] = $this->server_name;
+		$results["server_version"] = $this->server_version;
+		$results["app_abs_path"] = $this->app_abs_path;
+		$results["root_abs_path"] = $this->root_abs_path;
+		$results["app_abs_href"] = $this->app_abs_href;
+		$results["root_abs_href"] = $this->root_abs_href;
+		$results["abs_href"] = $this->abs_href;
+		$results["abs_path"] = $this->abs_path;
+		$results["options"] = $this->options;
+
+		return $results;
 	}
 
 
@@ -335,9 +365,8 @@ class App {
 
 		return array(
 			"backend" => "php",
-			"api" => true,
-			"name" => strtolower(preg_replace("/\\/.*$/", "", getenv("SERVER_SOFTWARE"))),
-			"version" => strtolower(preg_replace("/^.*\\//", "", preg_replace("/\\s.*$/", "", getenv("SERVER_SOFTWARE"))))
+			"name" => $this->server_name,
+			"version" => $this->server_version
 		);
 	}
 

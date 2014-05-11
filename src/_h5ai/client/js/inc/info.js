@@ -17,12 +17,12 @@ modulejs.define('info', ['$'], function ($) {
 			$.getJSON('server/php/index.php', {action: 'get', checks: true}, function (json) {
 
 				if (json) {
-					$('.idx-file .value').text(json.checks['idx']);
+					$('.idx-file .value').text(json.checks['path_index']);
 					$('.test').each(function () {
 
 						setCheckResult(this, json.checks[$(this).data('id')]);
 					});
-					$('.test.php .result').text(json.checks['phpversion']);
+					$('.test.php .result').text(json.checks['php_version']);
 				}
 			});
 		};
