@@ -6,19 +6,16 @@ class Thumb {
 	private static $AVCONV_CMD = "avconv -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
 	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
 	private static $THUMB_CACHE = "thumbs";
+	private static $CAPTURE_CACHE = "captures";
+
 
 	public static final function is_supported() {
 
-		if (!function_exists("gd_info")) {
-			return false;
-		}
-
-		$gdinfo = gd_info();
-		return array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
+		return Image::is_supported();
 	}
 
 
-	private $app;
+	private $app, $thumbs_path, $thumbs_href;
 
 
 	public function __construct($app) {
@@ -93,7 +90,7 @@ class Thumb {
 			return null;
 		}
 
-		$capture_abs_path = $this->app->get_cache_abs_path() . "/capture-" . sha1($source_abs_path) . ".jpg";
+		$capture_abs_path = $this->thumbs_path . "/capture-" . sha1($source_abs_path) . ".jpg";
 
 		if (!file_exists($capture_abs_path) || filemtime($source_abs_path) >= filemtime($capture_abs_path)) {
 			$cmd = str_replace("[SOURCE]", escapeshellarg($source_abs_path), $cmd);

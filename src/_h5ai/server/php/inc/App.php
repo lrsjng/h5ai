@@ -27,6 +27,8 @@ class App {
 			$server_version = $matches[2];
 		}
 
+		$app_abs_path = normalize_path(dirname(dirname(dirname(dirname(__FILE__)))));
+
 		$script_name = getenv("SCRIPT_NAME");
 		if ($server_name === "lighttpd") {
 			$script_name = preg_replace("#^.*//#", "/", $script_name);
@@ -36,7 +38,7 @@ class App {
 		$url_parts = parse_url(getenv("REQUEST_URI"));
 		$abs_href = $url_parts["path"];
 
-		return new App($server_name, $server_version, APP_ABS_PATH, $app_abs_href, $abs_href);
+		return new App($server_name, $server_version, $app_abs_path, $app_abs_href, $abs_href);
 	}
 
 
@@ -56,6 +58,10 @@ class App {
 
 		$this->abs_href = normalize_path($abs_href, true);
 		$this->abs_path = $this->get_abs_path($this->abs_href);
+
+		// echo("<pre>");
+		// var_dump($this);
+		// exit();
 
 		$this->options = load_commented_json($this->app_abs_path . "/conf/options.json");
 	}
@@ -235,8 +241,6 @@ class App {
 
 	public function get_fallback() {
 
-		date_default_timezone_set("UTC");
-
 		$cache = array();
 		$folder = Item::get($this, $this->abs_path, $cache);
 		$items = $folder->get_content($cache);
@@ -327,10 +331,10 @@ class App {
 		$results = array();
 
 		$results["path_index"] = $this->app_abs_href . "server/php/index.php";
+		$results["path_cache_writable"] = @is_writable($this->get_cache_abs_path());
 		$results["php_version"] = PHP_VERSION;
 		$results["php_version_supported"] = $this->is_supported_php;
 		$results["php_exif"] = function_exists("exif_thumbnail");
-		$results["path_cache_writable"] = @is_writable($this->get_cache_abs_path());
 
 		$gd = false;
 		if (function_exists("gd_info")) {
@@ -365,6 +369,7 @@ class App {
 
 		return array(
 			"backend" => "php",
+			"api" => true,
 			"name" => $this->server_name,
 			"version" => $this->server_version
 		);

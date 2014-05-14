@@ -3,6 +3,9 @@
 class Api {
 
 
+	private $app;
+
+
 	public function __construct($app) {
 
 		$this->app = $app;
@@ -19,50 +22,50 @@ class Api {
 
 			$response = array();
 
-			if (array_key_exists("options", $_REQUEST)) {
+			if (has_request_param("options")) {
 
 				use_request_params("options");
 				$response["options"] = $this->app->get_options();
 			}
 
-			if (array_key_exists("types", $_REQUEST)) {
+			if (has_request_param("types")) {
 
 				use_request_params("types");
 				$response["types"] = $this->app->get_types();
 			}
 
-			if (array_key_exists("langs", $_REQUEST)) {
+			if (has_request_param("langs")) {
 
 				use_request_params("langs");
 				$response["langs"] = $this->app->get_l10n_list();
 			}
 
-			if (array_key_exists("l10n", $_REQUEST)) {
+			if (has_request_param("l10n")) {
 
 				list($iso_codes) = use_request_params("l10nCodes", "l10n");
 				$iso_codes = explode(":", $iso_codes);
 				$response["l10n"] = $this->app->get_l10n($iso_codes);
 			}
 
-			if (array_key_exists("checks", $_REQUEST)) {
+			if (has_request_param("checks")) {
 
 				use_request_params("checks");
 				$response["checks"] = $this->app->get_server_checks();
 			}
 
-			if (array_key_exists("server", $_REQUEST)) {
+			if (has_request_param("server")) {
 
 				use_request_params("server");
 				$response["server"] = $this->app->get_server_details();
 			}
 
-			if (array_key_exists("custom", $_REQUEST)) {
+			if (has_request_param("custom")) {
 
 				list($abs_href) = use_optional_request_params("customHref", "custom");
 				$response["custom"] = $this->app->get_customizations($abs_href);
 			}
 
-			if (array_key_exists("items", $_REQUEST)) {
+			if (has_request_param("items")) {
 
 				list($abs_href, $what) = use_optional_request_params("itemsHref", "itemsWhat", "items");
 				$what = is_numeric($what) ? intval($what, 10) : 1;
@@ -83,7 +86,7 @@ class Api {
 				json_fail(1, "thumbnails disabled");
 			}
 
-			normalized_require_once("/server/php/inc/Thumb.php");
+			normalized_require_once("Thumb.php");
 			if (!Thumb::is_supported()) {
 				json_fail(2, "thumbnails not supported");
 			}
@@ -106,7 +109,7 @@ class Api {
 
 			list($as, $type, $hrefs) = use_request_params(array("as", "type", "hrefs"));
 
-			normalized_require_once("/server/php/inc/Archive.php");
+			normalized_require_once("Archive.php");
 			$archive = new Archive($this->app);
 
 			$hrefs = explode("|:|", trim($hrefs));

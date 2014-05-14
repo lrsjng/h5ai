@@ -1,5 +1,11 @@
 <?php
 
+function normalize_path($path, $trailing_slash = false) {
+
+	$path = str_replace("\\", "/", $path);
+	return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
+}
+
 function json_exit($obj = array()) {
 
 	$obj["code"] = 0;
@@ -13,6 +19,11 @@ function json_fail($code, $msg = "", $cond = true) {
 		echo json_encode(array("code" => $code, "msg" => $msg));
 		exit;
 	}
+}
+
+function has_request_param($key) {
+
+	return array_key_exists($key, $_REQUEST);
 }
 
 function use_request_params($keys) {
