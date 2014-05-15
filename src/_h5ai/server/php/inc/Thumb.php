@@ -21,33 +21,33 @@ class Thumb {
 	public function __construct($app) {
 
 		$this->app = $app;
-		$this->thumbs_path = $this->app->get_cache_abs_path() . "/" . Thumb::$THUMB_CACHE;
-		$this->thumbs_href = $this->app->get_cache_abs_href() . Thumb::$THUMB_CACHE;
+		$this->thumbs_path = CACHE_PATH . "/" . Thumb::$THUMB_CACHE;
+		$this->thumbs_href = CACHE_URL . Thumb::$THUMB_CACHE;
 	}
 
 
-	public function thumb($type, $source_abs_href, $mode, $width, $height) {
+	public function thumb($type, $source_url, $mode, $width, $height) {
 
-		$source_abs_path = $this->app->get_abs_path($source_abs_href);
+		$source_path = $this->app->to_path($source_url);
 
 		if ($type === "img") {
-			$capture_abs_path = $source_abs_path;
+			$capture_path = $source_path;
 		} else if ($type === "mov") {
-			$capture_abs_path = $this->capture(Thumb::$FFMPEG_CMD, $source_abs_path);
-			if ($capture_abs_path === null) {
-				$capture_abs_path = $this->capture(Thumb::$AVCONV_CMD, $source_abs_path);
+			$capture_path = $this->capture(Thumb::$FFMPEG_CMD, $source_path);
+			if ($capture_path === null) {
+				$capture_path = $this->capture(Thumb::$AVCONV_CMD, $source_path);
 			}
 		} else if ($type === "doc") {
-			$capture_abs_path = $this->capture(Thumb::$CONVERT_CMD, $source_abs_path);
+			$capture_path = $this->capture(Thumb::$CONVERT_CMD, $source_path);
 		}
 
-		return $this->thumb_href($capture_abs_path, $mode, $width, $height);
+		return $this->thumb_href($capture_path, $mode, $width, $height);
 	}
 
 
-	private function thumb_href($source_abs_path, $mode, $width, $height) {
+	private function thumb_href($source_path, $mode, $width, $height) {
 
-		if (!file_exists($source_abs_path)) {
+		if (!file_exists($source_path)) {
 			return null;
 		}
 
@@ -55,50 +55,50 @@ class Thumb {
 			@mkdir($this->thumbs_path, 0755, true);
 		}
 
-		$name = "thumb-" . sha1("$source_abs_path-$width-$height-$mode") . ".jpg";
-		$thumb_abs_path = $this->thumbs_path . "/" . $name;
-		$thumb_abs_href = $this->thumbs_href . "/" . $name;
+		$name = "thumb-" . sha1("$source_path-$width-$height-$mode") . ".jpg";
+		$thumb_path = $this->thumbs_path . "/" . $name;
+		$thumb_url = $this->thumbs_href . "/" . $name;
 
-		if (!file_exists($thumb_abs_path) || filemtime($source_abs_path) >= filemtime($thumb_abs_path)) {
+		if (!file_exists($thumb_path) || filemtime($source_path) >= filemtime($thumb_path)) {
 
 			$image = new Image();
 
 			$et = false;
 			$opts = $this->app->get_options();
 			if ($opts["thumbnails"]["exif"] === true && function_exists("exif_thumbnail")) {
-				$et = @exif_thumbnail($source_abs_path);
+				$et = @exif_thumbnail($source_path);
 			}
 			if($et !== false) {
-				file_put_contents($thumb_abs_path, $et);
-				$image->set_source($thumb_abs_path);
-				$image->normalize_exif_orientation($source_abs_path);
+				file_put_contents($thumb_path, $et);
+				$image->set_source($thumb_path);
+				$image->normalize_exif_orientation($source_path);
 			} else {
-				$image->set_source($source_abs_path);
+				$image->set_source($source_path);
 			}
 
 			$image->thumb($mode, $width, $height);
-			$image->save_dest_jpeg($thumb_abs_path, 80);
+			$image->save_dest_jpeg($thumb_path, 80);
 		}
 
-		return file_exists($thumb_abs_path) ? $thumb_abs_href : null;
+		return file_exists($thumb_path) ? $thumb_url : null;
 	}
 
 
-	private function capture($cmd, $source_abs_path) {
+	private function capture($cmd, $source_path) {
 
-		if (!file_exists($source_abs_path)) {
+		if (!file_exists($source_path)) {
 			return null;
 		}
 
-		$capture_abs_path = $this->thumbs_path . "/capture-" . sha1($source_abs_path) . ".jpg";
+		$capture_path = $this->thumbs_path . "/capture-" . sha1($source_path) . ".jpg";
 
-		if (!file_exists($capture_abs_path) || filemtime($source_abs_path) >= filemtime($capture_abs_path)) {
-			$cmd = str_replace("[SOURCE]", escapeshellarg($source_abs_path), $cmd);
-			$cmd = str_replace("[TARGET]", escapeshellarg($capture_abs_path), $cmd);
+		if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
+			$cmd = str_replace("[SOURCE]", escapeshellarg($source_path), $cmd);
+			$cmd = str_replace("[TARGET]", escapeshellarg($capture_path), $cmd);
 			exec_cmd($cmd);
 		}
 
-		return file_exists($capture_abs_path) ? $capture_abs_path : null;
+		return file_exists($capture_path) ? $capture_path : null;
 	}
 }
 

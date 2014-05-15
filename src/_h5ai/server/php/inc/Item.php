@@ -13,55 +13,55 @@ class Item {
 			return 1;
 		}
 
-		return strcasecmp($item1->abs_path, $item2->abs_path);
+		return strcasecmp($item1->path, $item2->path);
 	}
 
-	public static function get($app, $abs_path, &$cache) {
+	public static function get($app, $path, &$cache) {
 
-		if (!starts_with($abs_path, $app->get_root_abs_path())) {
-			error_log("ILLEGAL REQUEST: " . $abs_path . ", " . $app->get_root_abs_path());
+		if (!starts_with($path, ROOT_PATH)) {
+			error_log("ILLEGAL REQUEST: " . $path . ", " . ROOT_PATH);
 			return null;
 		}
 
-		if (is_array($cache) && array_key_exists($abs_path, $cache)) {
-			return $cache[$abs_path];
+		if (is_array($cache) && array_key_exists($path, $cache)) {
+			return $cache[$path];
 		}
 
-		$item = new Item($app, $abs_path);
+		$item = new Item($app, $path);
 
 		if (is_array($cache)) {
-			$cache[$abs_path] = $item;
+			$cache[$path] = $item;
 		}
 		return $item;
 	}
 
 
 	public $app,
-			$abs_path, $abs_href,
+			$path, $url,
 			$date, $size,
 			$is_folder,
 			$is_content_fetched;
 
 
-	private function __construct($app, $abs_path) {
+	private function __construct($app, $path) {
 
 		$this->app = $app;
 
-		$this->abs_path = normalize_path($abs_path);
-		$this->is_folder = is_dir($this->abs_path);
-		$this->abs_href = $this->app->get_abs_href($abs_path, $this->is_folder);
+		$this->path = normalize_path($path, false);
+		$this->is_folder = is_dir($this->path);
+		$this->url = $this->app->to_url($path, $this->is_folder);
 
-		$this->date = @filemtime($this->abs_path);
+		$this->date = @filemtime($this->path);
 
 		if ($this->is_folder) {
 			$this->size = null;
 			$options = $app->get_options();
 			if ($options["foldersize"]["enabled"]) {
-				$cmd = str_replace("[DIR]", escapeshellarg($this->abs_path), Item::$FOLDER_SIZE_CMD);
-				$this->size = intval(preg_replace("/\s.*$/", "", exec_cmd($cmd)), 10) * 1024;
+				$cmd = str_replace("[DIR]", escapeshellarg($this->path), Item::$FOLDER_SIZE_CMD);
+				$this->size = intval(preg_replace("#\s.*$#", "", exec_cmd($cmd)), 10) * 1024;
 			}
 		} else {
-			$this->size = @filesize($this->abs_path);
+			$this->size = @filesize($this->path);
 		}
 
 		$this->is_content_fetched = false;
@@ -71,13 +71,13 @@ class Item {
 	public function to_json_object() {
 
 		$obj = array(
-			"absHref" => $this->abs_href,
+			"absHref" => $this->url,
 			"time" => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
 			"size" => $this->size
 		);
 
 		if ($this->is_folder) {
-			$obj["status"] = $this->app->get_http_code($this->abs_href);
+			$obj["status"] = $this->app->get_http_code($this->url);
 			$obj["content"] = $this->is_content_fetched;
 		}
 
@@ -87,9 +87,9 @@ class Item {
 
 	public function get_parent(&$cache) {
 
-		$parent_abs_path = normalize_path(dirname($this->abs_path));
-		if ($parent_abs_path !== $this->abs_path && starts_with($parent_abs_path, $this->app->get_root_abs_path())) {
-			return Item::get($this->app, $parent_abs_path, $cache);
+		$parent_path = normalize_path(dirname($this->path), false);
+		if ($parent_path !== $this->path && starts_with($parent_path, ROOT_PATH)) {
+			return Item::get($this->app, $parent_path, $cache);
 		}
 		return null;
 	}
@@ -97,21 +97,21 @@ class Item {
 
 	public function get_content(&$cache) {
 
-		$content = array();
+		$items = array();
 
-		if ($this->app->get_http_code($this->abs_href) !== App::$MAGIC_SEQUENCE) {
-			return $content;
+		if ($this->app->get_http_code($this->url) !== MAGIC_SEQUENCE) {
+			return $items;
 		}
 
-		$files = $this->app->read_dir($this->abs_path);
+		$files = $this->app->read_dir($this->path);
 		foreach ($files as $file) {
-			$item = Item::get($this->app, $this->abs_path . "/" . $file, $cache);
-			$content[$item->abs_path] = $item;
+			$item = Item::get($this->app, $this->path . "/" . $file, $cache);
+			$items[$item->path] = $item;
 		}
 
 		$this->is_content_fetched = true;
 
-		return $content;
+		return $items;
 	}
 }
 

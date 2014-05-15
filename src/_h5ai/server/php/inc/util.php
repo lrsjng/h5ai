@@ -1,11 +1,5 @@
 <?php
 
-function normalize_path($path, $trailing_slash = false) {
-
-	$path = str_replace("\\", "/", $path);
-	return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
-}
-
 function json_exit($obj = array()) {
 
 	$obj["code"] = 0;
@@ -26,37 +20,17 @@ function has_request_param($key) {
 	return array_key_exists($key, $_REQUEST);
 }
 
-function use_request_params($keys) {
+define("NO_DEFAULT", "__NO_DEFAULT_VALUE__");
+function use_request_param($key, $default = NO_DEFAULT) {
 
-	if (!is_array($keys)) {
-		$keys = func_get_args();
+	if (!array_key_exists($key, $_REQUEST)) {
+		json_fail(101, "parameter '$key' is missing", $default === NO_DEFAULT);
+		return $default;
 	}
 
-	$values = array();
-	foreach ($keys as $key) {
-		json_fail(101, "parameter '$key' is missing", !array_key_exists($key, $_REQUEST));
-		$values[] = $_REQUEST[$key];
-		unset($_REQUEST[$key]);
-	}
-	return $values;
-}
-
-function use_optional_request_params($keys) {
-
-	if (!is_array($keys)) {
-		$keys = func_get_args();
-	}
-
-	$values = array();
-	foreach ($keys as $key) {
-		if (array_key_exists($key, $_REQUEST)) {
-			$values[] = $_REQUEST[$key];
-			unset($_REQUEST[$key]);
-		} else {
-			$values[] = null;
-		}
-	}
-	return $values;
+	$value = $_REQUEST[$key];
+	unset($_REQUEST[$key]);
+	return $value;
 }
 
 function starts_with($sequence, $head) {

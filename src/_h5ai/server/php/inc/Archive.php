@@ -15,12 +15,12 @@ class Archive {
 	}
 
 
-	public function output($type, $hrefs) {
+	public function output($type, $urls) {
 
 		$this->dirs = array();
 		$this->files = array();
 
-		$this->add_hrefs($hrefs);
+		$this->add_hrefs($urls);
 
 		if (count($this->dirs) === 0 && count($this->files) === 0) {
 			return 500;
@@ -44,7 +44,7 @@ class Archive {
 
 	private function shell_cmd($cmd) {
 
-		$cmd = str_replace("[ROOTDIR]", escapeshellarg($this->app->get_abs_path()), $cmd);
+		$cmd = str_replace("[ROOTDIR]", escapeshellarg(CURRENT_PATH), $cmd);
 		$cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
 		$cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
 		try {
@@ -133,27 +133,27 @@ class Archive {
 		if ($fd = fopen($file, 'rb')) {
 			while (!feof($fd)) {
 				print fread($fd, Archive::$SEGMENT_SIZE);
-				ob_flush();
-				flush();
+				@ob_flush();
+				@flush();
 			}
 			fclose($fd);
 		}
 	}
 
 
-	private function add_hrefs($hrefs) {
+	private function add_hrefs($urls) {
 
-		foreach ($hrefs as $href) {
+		foreach ($urls as $href) {
 
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
 			$code = $this->app->get_http_code($d);
 
-			if ($code == App::$MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
+			if ($code === MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
 
-				$real_file = $this->app->get_abs_path($href);
-				$archived_file = preg_replace("!^" . preg_quote(normalize_path($this->app->get_abs_path(), true)) . "!", "", $real_file);
+				$real_file = $this->app->to_path($href);
+				$archived_file = preg_replace("!^" . preg_quote(normalize_path(CURRENT_PATH, true)) . "!", "", $real_file);
 
 				if (is_dir($real_file)) {
 					$this->add_dir($real_file, $archived_file);
@@ -175,9 +175,9 @@ class Archive {
 
 	private function add_dir($real_dir, $archived_dir) {
 
-		$code = $this->app->get_http_code($this->app->get_abs_href($real_dir));
+		$code = $this->app->get_http_code($this->app->to_url($real_dir));
 
-		if ($code == App::$MAGIC_SEQUENCE) {
+		if ($code === MAGIC_SEQUENCE) {
 			$this->dirs[] = $archived_dir;
 
 			$files = $this->app->read_dir($real_dir);
