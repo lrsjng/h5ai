@@ -93,6 +93,14 @@ class Thumb {
 		$capture_path = $this->thumbs_path . "/capture-" . sha1($source_path) . ".jpg";
 
 		if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
+
+			// if ($type === "mov") {
+			// 	$cmdv = array("ffmpeg", "-ss", "0:01:00", "-i", $source_path, "-an", "-vframes", "1", $capture_path);
+			// 	$cmdv = array("avconv", "-ss", "0:01:00", "-i", $source_path, "-an", "-vframes", "1", $capture_path);
+			// } else if ($type === "doc") {
+			// 	$cmdv = array("convert", "-strip", $source_path, $capture_path);
+			// }
+
 			$cmd = str_replace("[SOURCE]", escapeshellarg($source_path), $cmd);
 			$cmd = str_replace("[TARGET]", escapeshellarg($capture_path), $cmd);
 			exec_cmd($cmd);

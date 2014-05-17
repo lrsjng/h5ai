@@ -20,6 +20,14 @@ class App {
 	}
 
 
+	public function get_setup() {
+
+		$consts = get_defined_constants(true)['user'];
+		$consts['PHP_VERSION'] = PHP_VERSION;
+		return $consts;
+	}
+
+
 	public function to_url($path, $trailing_slash = true) {
 
 		$rel_path = substr($path, strlen(ROOT_PATH));
@@ -229,56 +237,6 @@ class App {
 		}
 
 		return $results;
-	}
-
-
-	public function get_server_checks() {
-
-		$results = array();
-
-		$results["path_index"] = INDEX_URL;
-		$results["path_cache_writable"] = @is_writable(CACHE_PATH);
-		$results["php_version"] = PHP_VERSION;
-		$results["php_version_supported"] = IS_PHP_VERSION_SUPPORTED;
-		$results["php_exif"] = function_exists("exif_thumbnail");
-
-		$php_jpg = false;
-		if (function_exists("gd_info")) {
-			$infos = gd_info();
-			$php_jpg = array_key_exists("JPG Support", $infos) && $infos["JPG Support"] || array_key_exists("JPEG Support", $infos) && $infos["JPEG Support"];
-		}
-		$results["php_jpg"] = $php_jpg;
-
-		$check_cmd = IS_WIN_OS ? "which" : "command -v";
-		foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $cmd) {
-			$results["cmd_" . $cmd] = @preg_match("#" . $cmd . "(.exe)?$#i", exec_cmd($check_cmd . " " . $cmd)) > 0;
-		}
-		$results["cmd_ffmpeg_or_avconv"] = $results["cmd_ffmpeg"] || $results["cmd_avconv"];
-
-		$results["is_win_os"] = IS_WIN_OS;
-		$results["is_supported_php"] = IS_PHP_VERSION_SUPPORTED;
-		$results["server_name"] = SERVER_NAME;
-		$results["server_version"] = SERVER_VERSION;
-		$results["app_url"] = APP_URL;
-		$results["app_path"] = APP_PATH;
-		$results["root_url"] = ROOT_URL;
-		$results["root_path"] = ROOT_PATH;
-		$results["current_url"] = CURRENT_URL;
-		$results["current_path"] = CURRENT_PATH;
-		$results["options"] = $this->options;
-
-		return $results;
-	}
-
-
-	public function get_server_details() {
-
-		return array(
-			"backend" => "php",
-			"api" => true,
-			"name" => SERVER_NAME,
-			"version" => SERVER_VERSION
-		);
 	}
 
 

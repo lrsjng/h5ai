@@ -1,46 +1,53 @@
 
 modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function ($, _, config, location) {
 
-	var server = _.extend({}, config.server, {
+	var server = {
 
-		request: function (data, callback) {
+			backend: config.setup.BACKEND,
+			api: config.setup.API === true,
+			name: config.setup.SERVER_NAME,
+			version: config.setup.SERVER_VERSION,
 
-			if (server.api) {
-				$.ajax({
-					url: location.getAbsHref(),
-					data: data,
-					type: 'POST',
-					dataType: 'json',
-					success: function (json) {
+			request: function (data, callback) {
 
-						callback(json);
-					},
-					error: function () {
+				if (server.api) {
+					$.ajax({
+						url: location.getAbsHref(),
+						data: data,
+						type: 'POST',
+						dataType: 'json',
+						success: function (json) {
 
-						callback();
-					}
-				});
-			} else {
-				callback();
+							callback(json);
+						},
+						error: function () {
+
+							callback();
+						}
+					});
+				} else {
+					callback();
+				}
+			},
+
+			formRequest: function (data) {
+
+				if (server.api) {
+					var $form = $('<form method="post" style="display:none;"/>')
+									.attr('action', location.getAbsHref());
+
+					_.each(data, function (val, key) {
+
+						$('<input type="hidden"/>')
+							.attr('name', key)
+							.attr('value', val)
+							.appendTo($form);
+					});
+
+					$form.appendTo('body').submit().remove();
+				}
 			}
-		},
-
-		formRequest: function (data) {
-
-			var $form = $('<form method="post" style="display:none;"/>')
-							.attr('action', location.getAbsHref());
-
-			_.each(data, function (val, key) {
-
-				$('<input type="hidden"/>')
-					.attr('name', key)
-					.attr('value', val)
-					.appendTo($form);
-			});
-
-			$form.appendTo('body').submit().remove();
-		}
-	});
+		};
 
 	return server;
 });

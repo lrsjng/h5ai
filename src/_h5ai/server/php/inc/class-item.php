@@ -2,8 +2,6 @@
 
 class Item {
 
-	private static $FOLDER_SIZE_CMD = "du -sk [DIR]";
-
 	public static function cmp($item1, $item2) {
 
 		if ($item1->is_folder && !$item2->is_folder) {
@@ -57,8 +55,8 @@ class Item {
 			$this->size = null;
 			$options = $app->get_options();
 			if ($options["foldersize"]["enabled"]) {
-				$cmd = str_replace("[DIR]", escapeshellarg($this->path), Item::$FOLDER_SIZE_CMD);
-				$this->size = intval(preg_replace("#\s.*$#", "", exec_cmd($cmd)), 10) * 1024;
+				$cmdv = array("du", "-sk", $this->path);
+				$this->size = intval(preg_replace("#\s.*$#", "", exec_cmdv($cmdv)), 10) * 1024;
 			}
 		} else {
 			$this->size = @filesize($this->path);

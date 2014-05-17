@@ -22,6 +22,12 @@ class Api {
 
 			$response = array();
 
+			if (has_request_param("setup")) {
+
+				use_request_param("setup");
+				$response["setup"] = $this->app->get_setup();
+			}
+
 			if (has_request_param("options")) {
 
 				use_request_param("options");
@@ -48,32 +54,20 @@ class Api {
 				$response["l10n"] = $this->app->get_l10n($iso_codes);
 			}
 
-			if (has_request_param("checks")) {
-
-				use_request_param("checks");
-				$response["checks"] = $this->app->get_server_checks();
-			}
-
-			if (has_request_param("server")) {
-
-				use_request_param("server");
-				$response["server"] = $this->app->get_server_details();
-			}
-
 			if (has_request_param("custom")) {
 
 				use_request_param("custom");
-				$abs_href = use_request_param("customHref", null);
-				$response["custom"] = $this->app->get_customizations($abs_href);
+				$url = use_request_param("customHref");
+				$response["custom"] = $this->app->get_customizations($url);
 			}
 
 			if (has_request_param("items")) {
 
 				use_request_param("items");
-				$abs_href = use_request_param("itemsHref", null);
-				$what = use_request_param("itemsWhat", null);
+				$url = use_request_param("itemsHref");
+				$what = use_request_param("itemsWhat");
 				$what = is_numeric($what) ? intval($what, 10) : 1;
-				$response["items"] = $this->app->get_items($abs_href, $what);
+				$response["items"] = $this->app->get_items($url, $what);
 			}
 
 			if (count($_REQUEST)) {
@@ -90,7 +84,7 @@ class Api {
 				json_fail(1, "thumbnails disabled");
 			}
 
-			normalized_require_once("Thumb.php");
+			normalized_require_once("class-thumb");
 			if (!Thumb::is_supported()) {
 				json_fail(2, "thumbnails not supported");
 			}
@@ -119,7 +113,7 @@ class Api {
 			$type = use_request_param("type");
 			$hrefs = use_request_param("hrefs");
 
-			normalized_require_once("Archive.php");
+			normalized_require_once("class-archive");
 			$archive = new Archive($this->app);
 
 			$hrefs = explode("|:|", trim($hrefs));

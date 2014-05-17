@@ -1,7 +1,22 @@
 
-modulejs.define('info', ['$'], function ($) {
+modulejs.define('info', ['$', 'config'], function ($, config) {
 
-	var setCheckResult = function (el, result) {
+	var map = function (setup) {
+
+			return {
+				'php_version': setup['HAS_PHP_VERSION'],
+				'cache_dir': setup['HAS_WRITABLE_CACHE'],
+				'image_thumbs': setup['HAS_PHP_JPG'],
+				'exif_thumbs': setup['HAS_PHP_EXIF'],
+				'movie_thumbs': setup['HAS_CMD_FFMPEG'] || setup['HAS_CMD_AVCONV'],
+				'pdf_thumbs': setup['HAS_CMD_CONVERT'],
+				'shell_tar': setup['HAS_CMD_TAR'],
+				'shell_zip': setup['HAS_CMD_ZIP'],
+				'folder_sizes': setup['HAS_CMD_DU']
+			};
+		},
+
+		setValue = function (el, result) {
 
 			var $result = $(el).find('.result');
 
@@ -14,17 +29,16 @@ modulejs.define('info', ['$'], function ($) {
 
 		init = function () {
 
-			$.getJSON('server/php/index.php', {action: 'get', checks: true}, function (json) {
+			var setup = config.setup,
+				values = map(setup);
 
-				if (json) {
-					$('.idx-file .value').text(json.checks['path_index']);
-					$('.test').each(function () {
+			$('.test').each(function () {
 
-						setCheckResult(this, json.checks[$(this).data('id')]);
-					});
-					$('.test.php .result').text(json.checks['php_version']);
-				}
+				setValue(this, values[$(this).data('id')]);
 			});
+
+			$('.idx-file .value').text(setup['INDEX_URL']);
+			$('.test.php .result').text(setup['PHP_VERSION']);
 		};
 
 	init();

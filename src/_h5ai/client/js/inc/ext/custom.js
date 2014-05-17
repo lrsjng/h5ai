@@ -5,9 +5,9 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/e
 			enabled: false
 		}, allsettings.custom),
 
-		onLocationChanged = function () {
+		onLocationChanged = function (item) {
 
-			server.request({action: 'get', custom: true}, function (response) {
+			server.request({action: 'get', custom: true, customHref: item.absHref}, function (response) {
 
 				var h, f;
 				if (response) {

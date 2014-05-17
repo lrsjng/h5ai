@@ -31,27 +31,29 @@
 	// @include "inc/**/*.js"
 
 	var	$ = jQuery,
-		mode = $('script[src$="scripts.js"]').data('mode');
+		mode = $('script[src$="scripts.js"]').data('mode'),
+		url = '.',
+		module = 'main';
 
 	if ($('html').hasClass('no-browser')) {
-
-	} else if (mode === 'info') {
-
-		$(function () { modulejs.require('info'); });
-
-	} else {
-
-		$.ajax({
-			url: '.',
-			data: {action: 'get', options: true, types: true, langs: true, server: true},
-			type: 'POST',
-			dataType: 'json',
-			success: function (config) {
-
-				modulejs.define('config', config);
-				$(function () { modulejs.require('main'); });
-			}
-		});
+		return;
 	}
+
+	if (mode === 'info') {
+		url = 'server/php/index.php';
+		module = 'info';
+	}
+
+	$.ajax({
+		url: url,
+		data: {action: 'get', setup: true, options: true, types: true, langs: true},
+		type: 'POST',
+		dataType: 'json',
+		success: function (config) {
+
+			modulejs.define('config', config);
+			$(function () { modulejs.require(module); });
+		}
+	});
 
 }());
