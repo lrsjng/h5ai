@@ -14,10 +14,46 @@ class Item {
 		return strcasecmp($item1->path, $item2->path);
 	}
 
+
+	private static $size_cache = array();
+
+
+	private static function filesize($app, $path) {
+
+		if (array_key_exists($path, Item::$size_cache)) {
+			return Item::$size_cache[$path];
+		}
+
+		$size = 0;
+
+		if (is_file($path)) {
+
+			$size = @filesize($path);
+
+		} else if (is_dir($path)) {
+
+			$options = $app->get_options();
+			if ($options["foldersize"]["enabled"]) {
+				if (HAS_CMD_DU && $options["foldersize"]["type"] === "shell-du") {
+					$cmdv = array("du", "-sk", $path);
+					$size = intval(preg_replace("#\s.*$#", "", exec_cmdv($cmdv)), 10) * 1024;
+				} else {
+					foreach ($app->read_dir($path) as $name) {
+						$size += Item::filesize($app, $path . "/" . $name);
+					}
+				}
+			}
+		}
+
+		Item::$size_cache[$path] = $size;
+		return $size;
+	}
+
+
 	public static function get($app, $path, &$cache) {
 
 		if (!starts_with($path, ROOT_PATH)) {
-			error_log("ILLEGAL REQUEST: " . $path . ", " . ROOT_PATH);
+			err_log("ILLEGAL REQUEST: " . $path . ", " . ROOT_PATH);
 			return null;
 		}
 
@@ -47,21 +83,9 @@ class Item {
 
 		$this->path = normalize_path($path, false);
 		$this->is_folder = is_dir($this->path);
-		$this->url = $this->app->to_url($path, $this->is_folder);
-
+		$this->url = $app->to_url($this->path, $this->is_folder);
 		$this->date = @filemtime($this->path);
-
-		if ($this->is_folder) {
-			$this->size = null;
-			$options = $app->get_options();
-			if ($options["foldersize"]["enabled"]) {
-				$cmdv = array("du", "-sk", $this->path);
-				$this->size = intval(preg_replace("#\s.*$#", "", exec_cmdv($cmdv)), 10) * 1024;
-			}
-		} else {
-			$this->size = @filesize($this->path);
-		}
-
+		$this->size = Item::filesize($app, $this->path);
 		$this->is_content_fetched = false;
 	}
 

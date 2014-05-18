@@ -15,7 +15,6 @@ class Api {
 	public function apply() {
 
 		$options = $this->app->get_options();
-
 		$action = use_request_param("action");
 
 		if ($action === "get") {
@@ -80,14 +79,8 @@ class Api {
 
 		else if ($action === "getThumbHref") {
 
-			if (!$options["thumbnails"]["enabled"]) {
-				json_fail(1, "thumbnails disabled");
-			}
-
-			normalized_require_once("class-thumb");
-			if (!Thumb::is_supported()) {
-				json_fail(2, "thumbnails not supported");
-			}
+			json_fail(1, "thumbnails disabled", !$options["thumbnails"]["enabled"]);
+			json_fail(2, "thumbnails not supported", !HAS_PHP_JPG);
 
 			$type = use_request_param("type");
 			$src_url = use_request_param("href");
@@ -97,9 +90,7 @@ class Api {
 
 			$thumb = new Thumb($this->app);
 			$thumb_url = $thumb->thumb($type, $src_url, $mode, $width, $height);
-			if ($thumb_url === null) {
-				json_fail(3, "thumbnail creation failed");
-			}
+			json_fail(3, "thumbnail creation failed", $thumb_url === null);
 
 			json_exit(array("absHref" => $thumb_url));
 		}
@@ -113,7 +104,6 @@ class Api {
 			$type = use_request_param("type");
 			$hrefs = use_request_param("hrefs");
 
-			normalized_require_once("class-archive");
 			$archive = new Archive($this->app);
 
 			$hrefs = explode("|:|", trim($hrefs));
@@ -124,9 +114,7 @@ class Api {
 			header("Connection: close");
 			$rc = $archive->output($type, $hrefs);
 
-			if ($rc !== 0) {
-				json_fail("packaging failed");
-			}
+			json_fail("packaging failed", $rc !== 0);
 			exit;
 		}
 
@@ -152,7 +140,6 @@ class Api {
 
 			json_fail(6, "already exists", file_exists($dest));
 			json_fail(7, "can't move uploaded file", !move_uploaded_file($userfile["tmp_name"], $dest));
-
 			json_exit();
 		}
 
@@ -183,11 +170,8 @@ class Api {
 				}
 			}
 
-			if (count($errors)) {
-				json_fail(2, "deletion failed for some");
-			} else {
-				json_exit();
-			}
+			json_fail(2, "deletion failed for some", count($errors) > 0);
+			json_exit();
 		}
 
 

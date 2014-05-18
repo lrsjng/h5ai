@@ -113,12 +113,6 @@ class App {
 	}
 
 
-	public function get_generic_json() {
-
-		return json_encode(array("items" => $this->get_items(CURRENT_URL, 1))) . "\n";
-	}
-
-
 	public function get_items($url, $what) {
 
 		$code = $this->get_http_code($url);
@@ -157,7 +151,9 @@ class App {
 
 		$cache = array();
 		$folder = Item::get($this, CURRENT_PATH, $cache);
+		time_log("f2");
 		$items = $folder->get_content($cache);
+		time_log("f3");
 		uasort($items, array("Item", "cmp"));
 
 		$html = "<table>";

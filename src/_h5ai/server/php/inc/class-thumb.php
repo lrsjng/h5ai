@@ -6,13 +6,6 @@ class Thumb {
 	private static $AVCONV_CMD = "avconv -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
 	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
 	private static $THUMB_CACHE = "thumbs";
-	private static $CAPTURE_CACHE = "captures";
-
-
-	public static final function is_supported() {
-
-		return Image::is_supported();
-	}
 
 
 	private $app, $thumbs_path, $thumbs_href;
@@ -65,7 +58,7 @@ class Thumb {
 
 			$et = false;
 			$opts = $this->app->get_options();
-			if ($opts["thumbnails"]["exif"] === true && function_exists("exif_thumbnail")) {
+			if (HAS_PHP_EXIF && $opts["thumbnails"]["exif"] === true) {
 				$et = @exif_thumbnail($source_path);
 			}
 			if($et !== false) {
@@ -114,17 +107,6 @@ class Thumb {
 class Image {
 
 	private $source_file, $source, $width, $height, $type, $dest;
-
-
-	public static final function is_supported() {
-
-		if (!function_exists("gd_info")) {
-			return false;
-		}
-
-		$gdinfo = gd_info();
-		return array_key_exists("JPG Support", $gdinfo) && $gdinfo["JPG Support"] || array_key_exists("JPEG Support", $gdinfo) && $gdinfo["JPEG Support"];
-	}
 
 
 	public function __construct($filename = null) {
