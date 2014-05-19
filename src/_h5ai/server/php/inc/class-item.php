@@ -136,5 +136,3 @@ class Item {
 		return $items;
 	}
 }
-
-?>

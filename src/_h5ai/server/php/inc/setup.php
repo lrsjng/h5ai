@@ -75,5 +75,3 @@ function setup() {
 		define("HAS_CMD_" . strtoupper($cmd), @preg_match("#" . $cmd . "(.exe)?$#i", exec_cmdv($cmdv)) > 0);
 	}
 }
-
-?>

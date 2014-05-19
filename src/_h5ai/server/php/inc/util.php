@@ -122,5 +122,3 @@ function time_log($message) {
 	error_log($message . "    DT " . number_format($now - $__TIMER_LAST, 5) . "    TT " . number_format($now - $__TIMER_START, 5));
 	$__TIMER_LAST = $now;
 }
-
-?>

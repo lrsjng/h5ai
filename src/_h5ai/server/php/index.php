@@ -46,5 +46,3 @@ if (has_request_param("action")) {
 	time_log("i2");
 	normalized_require_once("page");
 }
-
-?>

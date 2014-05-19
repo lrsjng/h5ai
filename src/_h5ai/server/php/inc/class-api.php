@@ -203,5 +203,3 @@ class Api {
 		json_fail(100, "unsupported request");
 	}
 }
-
-?>
