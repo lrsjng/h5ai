@@ -28,6 +28,12 @@ class App {
 	}
 
 
+	public function get_types() {
+
+		return load_commented_json(APP_PATH . "/conf/types.json");
+	}
+
+
 	public function to_url($path, $trailing_slash = true) {
 
 		$rel_path = substr($path, strlen(ROOT_PATH));
@@ -188,12 +194,6 @@ class App {
 		$html .= "</table>";
 
 		return $html;
-	}
-
-
-	public function get_types() {
-
-		return load_commented_json(APP_PATH . "/conf/types.json");
 	}
 
 
