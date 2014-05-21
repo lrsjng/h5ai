@@ -2,9 +2,9 @@
 
 class Thumb {
 
-	private static $FFMPEG_CMD = "ffmpeg -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
-	private static $AVCONV_CMD = "avconv -ss 0:01:00 -i [SOURCE] -an -vframes 1 [TARGET]";
-	private static $CONVERT_CMD = "convert -strip [SOURCE][0] [TARGET]";
+	private static $FFMPEG_CMDV = array("ffmpeg", "-ss", "0:01:00", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]");
+	private static $AVCONV_CMDV = array("avconv", "-ss", "0:01:00", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]");
+	private static $CONVERT_CMDV = array("convert", "-strip", "[SRC][0]", "[DEST]");
 	private static $THUMB_CACHE = "thumbs";
 
 
@@ -26,12 +26,13 @@ class Thumb {
 		if ($type === "img") {
 			$capture_path = $source_path;
 		} else if ($type === "mov") {
-			$capture_path = $this->capture(Thumb::$FFMPEG_CMD, $source_path);
-			if ($capture_path === null) {
-				$capture_path = $this->capture(Thumb::$AVCONV_CMD, $source_path);
+			if (HAS_CMD_FFMPEG) {
+				$capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path);
+			} else if (HAS_CMD_AVCONV) {
+				$capture_path = $this->capture(Thumb::$AVCONV_CMDV, $source_path);
 			}
-		} else if ($type === "doc") {
-			$capture_path = $this->capture(Thumb::$CONVERT_CMD, $source_path);
+		} else if ($type === "doc" && HAS_CMD_CONVERT) {
+			$capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
 		}
 
 		return $this->thumb_href($capture_path, $mode, $width, $height);
@@ -77,7 +78,7 @@ class Thumb {
 	}
 
 
-	private function capture($cmd, $source_path) {
+	private function capture($cmdv, $source_path) {
 
 		if (!file_exists($source_path)) {
 			return null;
@@ -87,16 +88,12 @@ class Thumb {
 
 		if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
 
-			// if ($type === "mov") {
-			// 	$cmdv = array("ffmpeg", "-ss", "0:01:00", "-i", $source_path, "-an", "-vframes", "1", $capture_path);
-			// 	$cmdv = array("avconv", "-ss", "0:01:00", "-i", $source_path, "-an", "-vframes", "1", $capture_path);
-			// } else if ($type === "doc") {
-			// 	$cmdv = array("convert", "-strip", $source_path, $capture_path);
-			// }
+			foreach ($cmdv as &$arg) {
+				$arg = str_replace("[SRC]", $source_path, $arg);
+				$arg = str_replace("[DEST]", $capture_path, $arg);
+			}
 
-			$cmd = str_replace("[SOURCE]", escapeshellarg($source_path), $cmd);
-			$cmd = str_replace("[TARGET]", escapeshellarg($capture_path), $cmd);
-			exec_cmd($cmd);
+			exec_cmdv($cmdv);
 		}
 
 		return file_exists($capture_path) ? $capture_path : null;

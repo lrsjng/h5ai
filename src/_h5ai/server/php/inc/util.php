@@ -66,15 +66,6 @@ function load_commented_json($file) {
 }
 
 
-function exec_cmd($cmd) {
-
-	$lines = array();
-	$rc = null;
-	exec($cmd, $lines, $rc);
-	return implode("\n", $lines);
-}
-
-
 function passthru_cmd($cmd) {
 
 	$rc = null;
@@ -89,7 +80,11 @@ function exec_cmdv($cmdv) {
 		$cmdv = func_get_args();
 	}
 	$cmd = implode(" ", array_map("escapeshellarg", $cmdv));
-	return exec_cmd($cmd);
+
+	$lines = array();
+	$rc = null;
+	exec($cmd, $lines, $rc);
+	return implode("\n", $lines);
 }
 
 

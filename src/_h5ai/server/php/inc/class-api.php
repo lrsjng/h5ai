@@ -17,13 +17,10 @@ class Api {
 	public function apply() {
 
 		$action = use_request_param("action");
+		json_fail(100, "unsupported request", !in_array($action, $this->actions));
 
-		if (in_array($action, $this->actions)) {
-			$methodname = "on_$action";
-			$this->$methodname();
-		}
-
-		json_fail(100, "unsupported request");
+		$methodname = "on_$action";
+		$this->$methodname();
 	}
 
 
@@ -124,7 +121,7 @@ class Api {
 		header("Connection: close");
 		$rc = $archive->output($type, $hrefs);
 
-		json_fail("packaging failed", $rc !== 0);
+		json_fail(2, "packaging failed", $rc !== 0);
 		exit;
 	}
 
