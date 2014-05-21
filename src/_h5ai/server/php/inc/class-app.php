@@ -157,9 +157,7 @@ class App {
 
 		$cache = array();
 		$folder = Item::get($this, CURRENT_PATH, $cache);
-		time_log("f2");
 		$items = $folder->get_content($cache);
-		time_log("f3");
 		uasort($items, array("Item", "cmp"));
 
 		$html = "<table>";
