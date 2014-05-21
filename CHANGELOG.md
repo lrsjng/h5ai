@@ -6,6 +6,7 @@
 
 * replaces PHP backtick operator with `exec`
 * adds PHP variant to calc folder sizes
+* updates H5BP to 4.3.0
 * updates jQuery to 2.1.1
 * updates json2.js to 2014-02-04
 * updates markdown-js to 0.5.0
