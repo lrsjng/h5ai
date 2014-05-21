@@ -6,12 +6,18 @@
 
 * replaces PHP backtick operator with `exec`
 * adds PHP variant to calc folder sizes
+* updates jQuery to 2.1.1
+* updates json2.js to 2014-02-04
+* updates markdown-js to 0.5.0
+* updates Modernizr to 2.8.2
+* updates Moment.js to 2.6.0
+* updates Underscore.js to 1.6.0
 * language updates (`bg`, `ko`, `pt`, `sv`)
 
 
 ## v0.24.1 - *2014-04-09*
 
-* security fixes! (issues #268, #269)
+* security fixes! (issues [#268], [#269])
 * language updates (`fi`, `fr`, `hi`, `it`, `zh-tw`)
 * fixes WinOS command detection
 
