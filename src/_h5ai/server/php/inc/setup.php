@@ -43,7 +43,7 @@ function setup() {
 	// PATHS
 	$script_name = getenv("SCRIPT_NAME");
 	if (SERVER_NAME === "lighttpd") {
-		$script_name = preg_replace("#^.*//#", "/", $script_name);
+		$script_name = preg_replace("#^.*?//#", "/", $script_name);
 	}
 	define("APP_URL", normalize_path(dirname(dirname(dirname($script_name))), true));
 	define("APP_PATH", normalize_path(dirname(dirname(dirname(dirname(__FILE__)))), false));

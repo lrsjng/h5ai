@@ -22,8 +22,8 @@ class App {
 
 	public function get_setup() {
 
-		$consts = get_defined_constants(true)['user'];
-		$consts['PHP_VERSION'] = PHP_VERSION;
+		$consts = get_defined_constants(true)["user"];
+		$consts["PHP_VERSION"] = PHP_VERSION;
 		return $consts;
 	}
 
@@ -99,8 +99,8 @@ class App {
 			return 500;
 		}
 
-		foreach ($this->options["view"]["indexFiles"] as $if) {
-			if (file_exists($path . "/" . $if)) {
+		foreach ($this->options["view"]["indexFiles"] as $name) {
+			if (file_exists($path . "/" . $name)) {
 				return 200;
 			}
 		}
