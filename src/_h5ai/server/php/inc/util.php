@@ -24,12 +24,10 @@ function has_request_param($key) {
 }
 
 
-define("NO_DEFAULT", "__NO_DEFAULT_VALUE__");
-
-function use_request_param($key, $default = NO_DEFAULT) {
+function use_request_param($key, $default = null) {
 
 	if (!array_key_exists($key, $_REQUEST)) {
-		json_fail(101, "parameter '$key' is missing", $default === NO_DEFAULT);
+		json_fail(101, "parameter '$key' is missing", $default === null);
 		return $default;
 	}
 
@@ -51,18 +49,18 @@ function ends_with($sequence, $tail) {
 }
 
 
-function load_commented_json($file) {
+function load_commented_json($path) {
 
-	if (!file_exists($file)) {
+	if (!file_exists($path)) {
 		return array();
 	}
 
-	$str = file_get_contents($file);
+	$content = file_get_contents($path);
 
 	// remove comments to get pure json
-	$str = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", "", $str);
+	$content = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", "", $content);
 
-	return json_decode($str, true);
+	return json_decode($content, true);
 }
 
 
@@ -102,18 +100,22 @@ function scr_log($message, $obj = null) {
 }
 
 
-global $__TIMER_START, $__TIMER_LAST;
+global $__TIMER_START, $__TIMER_PREV;
 $__TIMER_START = microtime(true);
-$__TIMER_LAST = $__TIMER_START;
+$__TIMER_PREV = $__TIMER_START;
+
 function time_log($message) {
 
-	global $__TIMER_START, $__TIMER_LAST;
+	global $__TIMER_START, $__TIMER_PREV;
+
 	$now = microtime(true);
-	if ($__TIMER_START === $__TIMER_LAST) {
-		error_log("-----------------------------");
-		function timer_shutdown() { time_log('ex'); }
-		register_shutdown_function('timer_shutdown');
+
+	if ($__TIMER_START === $__TIMER_PREV) {
+		error_log("------------------------------");
+		register_shutdown_function(function () { time_log('ex'); });
 	}
-	error_log($message . "    DT " . number_format($now - $__TIMER_LAST, 5) . "    TT " . number_format($now - $__TIMER_START, 5));
-	$__TIMER_LAST = $now;
+
+	error_log($message . "    DT " . number_format($now - $__TIMER_PREV, 5) . "    TT " . number_format($now - $__TIMER_START, 5));
+
+	$__TIMER_PREV = $now;
 }

@@ -25,9 +25,9 @@ time_log(" 1");
 
 $app = new App();
 
-// time_log(" 2");
+time_log(" 2");
 // err_log('setup', $app->get_setup());
-time_log(" 3");
+// time_log(" 3");
 
 
 if (has_request_param("action")) {
