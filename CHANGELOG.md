@@ -13,7 +13,7 @@
 * updates Modernizr to 2.8.2
 * updates Moment.js to 2.6.0
 * updates Underscore.js to 1.6.0
-* language updates (`bg`, `ko`, `pt`, `sv`)
+* language updates (`bg`, `ko`, `pt`, `sv`, `zh-cn`)
 
 
 ## v0.24.1 - *2014-04-09*
