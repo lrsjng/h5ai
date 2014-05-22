@@ -89,7 +89,7 @@ Options
 	},
 
 	/* [EXPERIMENTAL]
-	Allow file deletion.
+	Allow file and folder deletion. Be careful with this option!
 	*/
 	"delete": {
 		"enabled": false

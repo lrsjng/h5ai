@@ -169,9 +169,9 @@ class Api {
 
 			if ($code == MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
 
-				$abs_path = $this->app->to_path($href);
+				$path = $this->app->to_path($href);
 
-				if (!unlink($abs_path)) {
+				if (!delete_path($path, true)) {
 					$errors[] = $href;
 				}
 			}
@@ -196,10 +196,10 @@ class Api {
 
 		if ($code == MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
 
-			$abs_path = $this->app->to_path($href);
-			$folder = normalize_path(dirname($abs_path));
+			$path = $this->app->to_path($href);
+			$folder = normalize_path(dirname($path));
 
-			if (!rename($abs_path, $folder . "/" . $name)) {
+			if (!rename($path, $folder . "/" . $name)) {
 				json_fail(2, "renaming failed");
 			}
 		}
