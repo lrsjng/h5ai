@@ -186,19 +186,6 @@ Options
 	},
 
 	/*
-	Shows the server mode in the bottom left corner.
-
-	- display:
-		0: only show mode
-		1: mode and servername
-		2: mode, servername and -version
-	*/
-	"mode": {
-		"enabled": true,
-		"display": 2
-	},
-
-	/*
 	Adds Piwik tracker javascript code.
 
 	- baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
