@@ -163,18 +163,18 @@ class App {
 		$html = "<table>";
 
 		$html .= "<tr>";
-		$html .= "<th></th>";
-		$html .= "<th><span>Name</span></th>";
-		$html .= "<th><span>Last modified</span></th>";
-		$html .= "<th><span>Size</span></th>";
+		$html .= "<th class='fb-i'></th>";
+		$html .= "<th class='fb-n'><span>Name</span></th>";
+		$html .= "<th class='fb-d'><span>Last modified</span></th>";
+		$html .= "<th class='fb-s'><span>Size</span></th>";
 		$html .= "</tr>";
 
 		if ($folder->get_parent($cache)) {
 			$html .= "<tr>";
-			$html .= "<td><img src='" . APP_URL . "client/icons/96/folder-parent.png' alt='folder-parent'/></td>";
-			$html .= "<td><a href='..'>Parent Directory</a></td>";
-			$html .= "<td></td>";
-			$html .= "<td></td>";
+			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/icons/96/folder-parent.png' alt='folder-parent'/></td>";
+			$html .= "<td class='fb-n'><a href='..'>Parent Directory</a></td>";
+			$html .= "<td class='fb-d'></td>";
+			$html .= "<td class='fb-s'></td>";
 			$html .= "</tr>";
 		}
 
@@ -182,10 +182,10 @@ class App {
 			$type = $item->is_folder ? "folder" : "default";
 
 			$html .= "<tr>";
-			$html .= "<td><img src='" . APP_URL . "client/icons/96/" . $type . ".png' alt='" . $type . "'/></td>";
-			$html .= "<td><a href='" . $item->url . "'>" . basename($item->path) . "</a></td>";
-			$html .= "<td>" . date("Y-m-d H:i", $item->date) . "</td>";
-			$html .= "<td>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
+			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/icons/96/" . $type . ".png' alt='" . $type . "'/></td>";
+			$html .= "<td class='fb-n'><a href='" . $item->url . "'>" . basename($item->path) . "</a></td>";
+			$html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
+			$html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
 			$html .= "</tr>";
 		}
 
