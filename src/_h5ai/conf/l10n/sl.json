@@ -1,0 +1,19 @@
+{
+	"lang": "slovenščina",
+	"details": "podrobnosti",
+	"list": "seznam",
+	"grid": "mreža",
+	"icons": "ikone",
+	"name": "Ime",
+	"lastModified": "Zadnja sprememba",
+	"size": "Velikost",
+	"parentDirectory": "Nadrejena mapa",
+	"empty": "prazno",
+	"folders": "mape",
+	"files": "datoteke",
+	"download": "prenesi",
+	"noMatch": "ni zadetkov",
+	"dateFormat": "DD. MM. YYYY HH:mm",
+	"filter": "filter",
+	"delete": "izbriši"
+}
