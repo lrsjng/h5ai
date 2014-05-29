@@ -33,15 +33,16 @@ You'll find a new directory `build` including a fresh zipball.
 **h5ai** is provided under the terms of the [MIT License](https://github.com/lrsjng/h5ai/blob/develop/LICENSE.md).
 
 It profits from these great projects:
-[Faenza icon set](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
+[Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)&nbsp;(CC BY-NC-ND 3.0),
+[Faenza Icons](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
 [Gnome Symbolic Icon Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
-[jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.filedrop](http://www.github.com/weixiyen/jquery-filedrop)&nbsp;(MIT),
 [jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
 [jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
 [jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
+[jQuery](http://jquery.com)&nbsp;(MIT),
 [markdown-js](https://github.com/evilstreak/markdown-js)&nbsp;(MIT),
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),

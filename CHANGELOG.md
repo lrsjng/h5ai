@@ -5,6 +5,8 @@
 ## develop branch
 
 * replaces PHP backtick operator with `exec`
+* adds initial theme support
+* adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
 * adds PHP variant to calc folder sizes
 * updates H5BP to 4.3.0
 * updates jQuery to 2.1.1
@@ -18,7 +20,7 @@
 
 ## v0.24.1 - *2014-04-09*
 
-* security fixes! (issues [#268], [#269])
+* security fixes! (issues #268, #269)
 * language updates (`fi`, `fr`, `hi`, `it`, `zh-tw`)
 * fixes WinOS command detection
 
