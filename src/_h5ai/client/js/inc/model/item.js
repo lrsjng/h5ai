@@ -30,7 +30,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 			if (match) {
 				var split = { parent: match[1], name: match[2] };
 
-				if (split.parent && !startsWith(split.parent, settings.rootUrl)) {
+				if (split.parent && !startsWith(split.parent, settings.rootHref)) {
 					split.parent = null;
 				}
 				return split;
@@ -45,7 +45,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 			absHref = location.forceEncoding(absHref);
 
-			if (!startsWith(absHref, settings.rootUrl)) {
+			if (!startsWith(absHref, settings.rootHref)) {
 				return null;
 			}
 
@@ -164,12 +164,12 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 		isRoot: function () {
 
-			return this.absHref === settings.rootUrl;
+			return this.absHref === settings.rootHref;
 		},
 
 		isH5ai: function () {
 
-			return this.absHref === settings.appUrl;
+			return this.absHref === settings.appHref;
 		},
 
 		isEmpty: function () {

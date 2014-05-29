@@ -16,7 +16,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 				callback();
 			} else {
 				$.ajax({
-					url: allsettings.appUrl + 'client/js/qrcode.js',
+					url: allsettings.appHref + 'client/js/qrcode.js',
 					dataType: 'script',
 					complete: function () {
 
