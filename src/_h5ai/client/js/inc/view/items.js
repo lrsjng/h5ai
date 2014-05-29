@@ -112,6 +112,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			} else {
 				$empty.hide();
 			}
+
+			$('html,body').scrollLeft(0).scrollTop(0);
 		},
 
 		onLocationRefreshed = function (item, added, removed) {
