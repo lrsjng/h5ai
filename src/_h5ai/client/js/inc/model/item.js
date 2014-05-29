@@ -41,7 +41,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 		cache = {},
 
-		getItem = function (absHref, time, size, status, isContentFetched) {
+		getItem = function (absHref, time, size, isManaged, isContentFetched) {
 
 			absHref = location.forceEncoding(absHref);
 
@@ -57,8 +57,8 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 			if (_.isNumber(size)) {
 				self.size = size;
 			}
-			if (status) {
-				self.status = status;
+			if (isManaged) {
+				self.isManaged = true;
 			}
 			if (isContentFetched) {
 				self.isContentFetched = true;
@@ -100,7 +100,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 					if (response.items) {
 						_.each(response.items, function (item) {
-							getItem(item.absHref, item.time, item.size, item.status, item.content);
+							getItem(item.absHref, item.time, item.size, item.is_managed, item.content);
 						});
 					}
 
@@ -123,7 +123,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 		this.time = null;
 		this.size = null;
 		this.parent = null;
-		this.status = null;
+		this.isManaged = null;
 		this.content = {};
 
 		if (split.parent) {

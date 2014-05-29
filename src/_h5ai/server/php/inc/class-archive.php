@@ -148,9 +148,7 @@ class Archive {
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
-			$code = $this->app->get_http_code($d);
-
-			if ($code === MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
+			if ($this->app->is_managed_url($d) && !$this->app->is_ignored($n)) {
 
 				$real_file = $this->app->to_path($href);
 				$archived_file = preg_replace("!^" . preg_quote(normalize_path(CURRENT_PATH, true)) . "!", "", $real_file);
@@ -175,9 +173,7 @@ class Archive {
 
 	private function add_dir($real_dir, $archived_dir) {
 
-		$code = $this->app->get_http_code($this->app->to_url($real_dir));
-
-		if ($code === MAGIC_SEQUENCE) {
+		if ($this->app->is_managed_path($real_dir)) {
 			$this->dirs[] = $archived_dir;
 
 			$files = $this->app->read_dir($real_dir);

@@ -10,7 +10,6 @@ function setup() {
 
 	define("BACKEND", "PHP");
 	define("API", true);
-	define("MAGIC_SEQUENCE", "={{pkg.name}}=");
 	define("FILE_PREFIX", "_{{pkg.name}}");
 
 

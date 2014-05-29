@@ -99,7 +99,7 @@ class Item {
 		);
 
 		if ($this->is_folder) {
-			$obj["status"] = $this->app->get_http_code($this->url);
+			$obj["is_managed"] = $this->app->is_managed_url($this->url);
 			$obj["content"] = $this->is_content_fetched;
 		}
 
@@ -121,7 +121,7 @@ class Item {
 
 		$items = array();
 
-		if ($this->app->get_http_code($this->url) !== MAGIC_SEQUENCE) {
+		if (!$this->app->is_managed_url($this->url)) {
 			return $items;
 		}
 

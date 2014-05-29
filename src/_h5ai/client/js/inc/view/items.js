@@ -56,14 +56,9 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			$date.data('time', item.time).text(format.formatDate(item.time));
 			$size.data('bytes', item.size).text(format.formatSize(item.size));
 
-			if (item.isFolder() && _.isNumber(item.status)) {
-				if (item.status === 200) {
-					$html.addClass('page');
-					$iconImg.attr('src', resource.icon('folder-page'));
-				} else {
-					$html.addClass('error');
-					$label.append($(hintTemplate).text(' ' + item.status + ' '));
-				}
+			if (item.isFolder() && !item.isManaged) {
+				$html.addClass('page');
+				$iconImg.attr('src', resource.icon('folder-page'));
 			}
 
 			if (item.isCurrentParentFolder()) {

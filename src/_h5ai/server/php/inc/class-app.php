@@ -91,38 +91,41 @@ class App {
 	}
 
 
-	public function get_http_code($url) {
+	public function is_managed_url($url) {
 
-		$path = $this->to_path($url);
+		return $this->is_managed_path($this->to_path($url));
+	}
+
+
+	public function is_managed_path($path) {
 
 		if (!is_dir($path) || strpos($path, '../') || strpos($path, '/..') || $path == '..') {
-			return 500;
+			return false;
 		}
 
 		foreach ($this->options["view"]["indexFiles"] as $name) {
 			if (file_exists($path . "/" . $name)) {
-				return 200;
+				return false;
 			}
 		}
 
 		while ($path !== ROOT_PATH) {
 			if (@is_dir($path . "/_h5ai/server")) {
-				return 200;
+				return false;
 			}
 			$parent_path = normalize_path(dirname($path));
 			if ($parent_path === $path) {
-				return 200;
+				return false;
 			}
 			$path = $parent_path;
 		}
-		return MAGIC_SEQUENCE;
+		return true;
 	}
 
 
 	public function get_items($url, $what) {
 
-		$code = $this->get_http_code($url);
-		if ($code !== MAGIC_SEQUENCE) {
+		if (!$this->is_managed_url($url)) {
 			return array();
 		}
 
@@ -171,7 +174,7 @@ class App {
 
 		if ($folder->get_parent($cache)) {
 			$html .= "<tr>";
-			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/icons/96/folder-parent.png' alt='folder-parent'/></td>";
+			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/images/fallback/parent.png' alt='folder-parent'/></td>";
 			$html .= "<td class='fb-n'><a href='..'>Parent Directory</a></td>";
 			$html .= "<td class='fb-d'></td>";
 			$html .= "<td class='fb-s'></td>";
@@ -179,10 +182,13 @@ class App {
 		}
 
 		foreach ($items as $item) {
-			$type = $item->is_folder ? "folder" : "default";
+			$type = "file";
+			if ($item->is_folder) {
+				$type = $this->is_managed_url($item->url) ? "folder" : "folder-page";
+			}
 
 			$html .= "<tr>";
-			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/icons/96/" . $type . ".png' alt='" . $type . "'/></td>";
+			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/images/fallback/" . $type . ".png' alt='" . $type . "'/></td>";
 			$html .= "<td class='fb-n'><a href='" . $item->url . "'>" . basename($item->path) . "</a></td>";
 			$html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
 			$html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";

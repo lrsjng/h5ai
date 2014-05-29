@@ -18,8 +18,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					'</span>',
 		statusHintTemplate = '<span class="hint"/>',
 
-		magicSequence = '=h5ai=',
-
 		update = function (item) {
 
 			var $html = $(template),
@@ -30,8 +28,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
 			$html
 				.addClass(item.isFolder() ? 'folder' : 'file')
-				.data('item', item)
-				.data('status', item.status);
+				.data('item', item);
 
 			location.setLink($a, item);
 			$img.attr('src', resource.image('folder'));
@@ -42,11 +39,11 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				var subfolders = item.getSubfolders();
 
 				// indicator
-				if (!item.status || (item.status === magicSequence && !item.isContentFetched) || subfolders.length) {
+				if ((item.isManaged && !item.isContentFetched) || subfolders.length) {
 
 					$indicator.removeClass('none');
 
-					if (!item.status || (item.status === magicSequence && !item.isContentFetched)) {
+					if ((item.isManaged && !item.isContentFetched)) {
 						$indicator.addClass('unknown');
 					} else if (item.isContentVisible) {
 						$indicator.addClass('open');
@@ -92,13 +89,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				}
 
 				// reflect folder status
-				if (_.isNumber(item.status)) {
-					if (item.status === 200) {
-						$img.attr('src', resource.image('folder-page'));
-					} else {
-						$html.addClass('error');
-						$a.append($(statusHintTemplate).text(item.status));
-					}
+				if (!item.isManaged) {
+					$img.attr('src', resource.image('folder-page'));
 				}
 			}
 

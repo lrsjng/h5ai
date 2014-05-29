@@ -139,9 +139,8 @@ class Api {
 		json_fail(4, "folders not supported", file_get_contents($userfile["tmp_name"]) === "null");
 
 		$upload_dir = $this->app->to_path($href);
-		$code = $this->app->get_http_code($href);
 
-		json_fail(5, "upload dir no h5ai folder or ignored", $code !== MAGIC_SEQUENCE || $this->app->is_ignored($upload_dir));
+		json_fail(5, "upload dir no h5ai folder or ignored", !$this->app->is_managed_url($href) || $this->app->is_ignored($upload_dir));
 
 		$dest = $upload_dir . "/" . utf8_encode($userfile["name"]);
 
@@ -165,9 +164,7 @@ class Api {
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
-			$code = $this->app->get_http_code($d);
-
-			if ($code == MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
+			if ($this->app->is_managed_url($href) && !$this->app->is_ignored($n)) {
 
 				$path = $this->app->to_path($href);
 
@@ -192,9 +189,7 @@ class Api {
 		$d = normalize_path(dirname($href), true);
 		$n = basename($href);
 
-		$code = $this->app->get_http_code($d);
-
-		if ($code == MAGIC_SEQUENCE && !$this->app->is_ignored($n)) {
+		if ($this->app->is_managed_url($d) && !$this->app->is_ignored($n)) {
 
 			$path = $this->app->to_path($href);
 			$folder = normalize_path(dirname($path));

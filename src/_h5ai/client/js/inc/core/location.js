@@ -85,7 +85,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 					_.each(json.items, function (jsonItem) {
 
-						var e = Item.get(jsonItem.absHref, jsonItem.time, jsonItem.size, jsonItem.status, jsonItem.content);
+						var e = Item.get(jsonItem.absHref, jsonItem.time, jsonItem.size, jsonItem.is_managed, jsonItem.content);
 						found[e.absHref] = true;
 					});
 
@@ -155,7 +155,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 			$el.attr('href', item.absHref);
 
-			if (history && item.isFolder() && item.status === '=h5ai=') {
+			if (history && item.isFolder() && item.isManaged) {
 				$el.on('click', function () {
 
 					setLocation(item.absHref);
@@ -163,7 +163,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 				});
 			}
 
-			if (settings.extInNewWindow && item.status !== '=h5ai=') {
+			if (settings.extInNewWindow && !item.isManaged) {
 				$el.attr('target', '_blank');
 			}
 		};
