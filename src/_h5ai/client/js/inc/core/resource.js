@@ -8,8 +8,8 @@ modulejs.define('core/resource', ['core/settings'], function (settings) {
 
 		icon = function (id) {
 
-			return settings.h5aiAbsHref + 'client/themes/faenza/icons/' + id + '.png';
-			// return settings.h5aiAbsHref + 'client/themes/evolvere/icons/' + id + '.svg';
+			// return settings.h5aiAbsHref + 'client/themes/faenza/icons/' + id + '.png';
+			return settings.h5aiAbsHref + 'client/themes/evolvere/icons/' + id + '.svg';
 		};
 
 	return {

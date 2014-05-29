@@ -182,10 +182,7 @@ class App {
 		}
 
 		foreach ($items as $item) {
-			$type = "file";
-			if ($item->is_folder) {
-				$type = $this->is_managed_url($item->url) ? "folder" : "folder-page";
-			}
+			$type = $item->is_folder ? "folder" : "file";
 
 			$html .= "<tr>";
 			$html .= "<td class='fb-i'><img src='" . APP_URL . "client/images/fallback/" . $type . ".png' alt='" . $type . "'/></td>";
