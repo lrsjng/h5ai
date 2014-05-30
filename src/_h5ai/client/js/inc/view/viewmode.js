@@ -2,7 +2,7 @@
 modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event'], function (_, $, allsettings, resource, store, event) {
 
 	var modes = ['details', 'grid', 'icons'],
-		sizes = [16, 24, 32, 48, 64, 96],
+		sizes = [16, 24, 32, 48, 64, 96, 128, 192, 256, 384],
 
 		settings = _.extend({}, {
 			modes: modes,

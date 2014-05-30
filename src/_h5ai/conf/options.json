@@ -28,7 +28,7 @@ Options
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
-	- sizes: array, subset of [16, 24, 32, 48, 64, 96]
+	- sizes: array, subset of [16, 24, 32, 48, 64, 96, 128, 192, 256, 384]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
