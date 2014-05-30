@@ -37,7 +37,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 				setValue(this, values[$(this).data('id')]);
 			});
 
-			$('.idx-file .value').text(setup['INDEX_URL']);
+			$('.idx-file .value').text(setup['INDEX_HREF']);
 			$('.test.php .result').text(setup['PHP_VERSION']);
 		};
 

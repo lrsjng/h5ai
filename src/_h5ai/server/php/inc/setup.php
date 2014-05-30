@@ -43,26 +43,26 @@ function setup() {
 	if (SERVER_NAME === "lighttpd") {
 		$script_name = preg_replace("#^.*?//#", "/", $script_name);
 	}
-	define("APP_URL", normalize_path(dirname(dirname(dirname($script_name))), true));
+	define("APP_HREF", normalize_path(dirname(dirname(dirname($script_name))), true));
 	define("APP_PATH", normalize_path(dirname(dirname(dirname(dirname(__FILE__)))), false));
 
-	define("ROOT_URL", normalize_path(dirname(APP_URL), true));
+	define("ROOT_HREF", normalize_path(dirname(APP_HREF), true));
 	define("ROOT_PATH", normalize_path(dirname(APP_PATH), false));
 
-	$url_parts = parse_url(getenv("REQUEST_URI"));
-	$cur_url = normalize_path($url_parts["path"], true);
-	$rel_url = substr($cur_url, strlen(ROOT_URL));
-	$cur_path = normalize_path(ROOT_PATH . "/" . rawurldecode($rel_url));
-	if (!is_dir($cur_path)) {
-		$cur_url = normalize_path(dirname($cur_url), true);
-		$cur_path = normalize_path(dirname($cur_path), false);
+	$uri_parts = parse_url(getenv("REQUEST_URI"));
+	$current_href = normalize_path($uri_parts["path"], true);
+	$rel_href = substr($current_href, strlen(ROOT_HREF));
+	$current_path = normalize_path(ROOT_PATH . "/" . rawurldecode($rel_href));
+	if (!is_dir($current_path)) {
+		$current_href = normalize_path(dirname($current_href), true);
+		$current_path = normalize_path(dirname($current_path), false);
 	}
-	define("CURRENT_URL", $cur_url);
-	define("CURRENT_PATH", $cur_path);
+	define("CURRENT_HREF", $current_href);
+	define("CURRENT_PATH", $current_path);
 
-	define("INDEX_URL", normalize_path(APP_URL . "server/php/index.php", false));
+	define("INDEX_HREF", normalize_path(APP_HREF . "server/php/index.php", false));
 
-	define("CACHE_URL", normalize_path(APP_URL . "cache", true));
+	define("CACHE_HREF", normalize_path(APP_HREF . "cache", true));
 	define("CACHE_PATH", normalize_path(APP_PATH . "/cache", false));
 	define("HAS_WRITABLE_CACHE", @is_writable(CACHE_PATH));
 

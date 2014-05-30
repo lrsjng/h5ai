@@ -15,7 +15,7 @@ class Thumb {
 
 		$this->app = $app;
 		$this->thumbs_path = CACHE_PATH . "/" . Thumb::$THUMB_CACHE;
-		$this->thumbs_href = CACHE_URL . Thumb::$THUMB_CACHE;
+		$this->thumbs_href = CACHE_HREF . Thumb::$THUMB_CACHE;
 	}
 
 
