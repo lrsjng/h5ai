@@ -9,6 +9,7 @@
 * adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
 * adds PHP variant to calc folder sizes
 * adds scroll position reset on location change (issue #279)
+* adds "hide if 403" option
 * updates H5BP to 4.3.0
 * updates jQuery to 2.1.1
 * updates json2.js to 2014-02-04

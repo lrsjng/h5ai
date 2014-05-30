@@ -80,9 +80,14 @@ class App {
 		if (is_dir($path)) {
 			if ($dir = opendir($path)) {
 				while (($name = readdir($dir)) !== false) {
-					if (!$this->is_ignored($name) && !$this->is_ignored($this->to_url($path) . $name)) {
-						$names[] = $name;
+					if (
+						$this->is_ignored($name)
+						|| $this->is_ignored($this->to_url($path) . $name)
+						|| (!is_readable($path .'/'. $name) && $this->options["view"]["hideIf403"])
+					) {
+						continue;
 					}
+					$names[] = $name;
 				}
 				closedir($dir);
 			}

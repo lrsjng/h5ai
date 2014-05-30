@@ -41,6 +41,7 @@ Options
 	- ignore: don't list items matching these regular expressions
 	- smartBrowsing: use History API if available (no need to reload the whole page)
 	- extInNewWindow: open non-h5ai links in new window/tab
+	- hideIf403: hide files and folders that are not readable by the server
 	*/
 	"view": {
 		"modes": ["details", "grid", "icons"],
@@ -52,7 +53,8 @@ Options
 		"indexFiles": ["index.html", "index.htm", "index.php"],
 		"ignore": ["^\\.", "^_{{pkg.name}}"],
 		"smartBrowsing": true,
-		"extInNewWindow": false
+		"extInNewWindow": false,
+		"hideIf403": true
 	},
 
 
