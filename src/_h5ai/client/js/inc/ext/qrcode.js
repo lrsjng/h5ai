@@ -35,7 +35,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 					height: settings.size,
 					color: '#333',
 					bgColor: '#fff',
-					text: 'http://' + document.domain + item.absHref
+					text: window.location.protocol + '//' + window.location.host + item.absHref
 				});
 			});
 		},
