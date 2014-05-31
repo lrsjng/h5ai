@@ -10,6 +10,7 @@
 * adds PHP variant to calc folder sizes
 * adds scroll position reset on location change (issue #279)
 * adds "hide if 403" option
+* fixes QR code URI origin (issue #287)
 * extends selectable icon sizes (adds 128px, 192px, 256px, 384px)
 * updates H5BP to 4.3.0
 * updates jQuery to 2.1.1
