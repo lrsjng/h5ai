@@ -159,11 +159,27 @@ Options
 		["_trackPageLoadTime"]
 	]
 
-	see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
+	see: https://developers.google.com/analytics/devguides/collection/gajs/
 	*/
-	"google-analytics": {
+	"google-analytics-ga": {
 		"enabled": false,
 		"gaq": []
+	},
+
+	/*
+	Adds Google Universial Analytics asynchronous tracking code.
+
+	for example:
+	"calls": [
+		['create', 'UA-XXXX-Y', 'auto'],
+		['send', 'pageview']
+	]
+
+	see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
+	*/
+	"google-analytics-ua": {
+		"enabled": false,
+		"calls": []
 	},
 
 	/*
