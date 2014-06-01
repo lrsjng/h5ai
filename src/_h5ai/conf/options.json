@@ -24,7 +24,7 @@ Options
 	General view options.
 
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- extInNewWindow: open non-h5ai links in new window/tab
+	- extInNewWindow: open non-{{pkg.name}} links in new window/tab
 	- hidden: don't list items matching these regular expressions
 	- hideFolders: hide all folders in the main view
 	- hideIf403: hide files and folders that are not readable by the server
@@ -42,7 +42,7 @@ Options
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
 	- smartBrowsing: use History API if available (no need to reload the whole page)
-	- theme: name of one of the folders in "_h5ai/client/themes", defaults to "fallback"
+	- theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to "fallback"
 	*/
 	"view": {
 		"binaryPrefix": false,
