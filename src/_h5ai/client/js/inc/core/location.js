@@ -15,6 +15,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 			return href
 					.replace(/\/+/g, '/')
 
+					.replace(/ /g, '%20')
 					.replace(/!/g, '%21')
 					.replace(/#/g, '%23')
 					.replace(/\$/g, '%24')
