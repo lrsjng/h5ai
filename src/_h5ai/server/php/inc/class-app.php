@@ -142,7 +142,7 @@ class App {
 			return false;
 		}
 
-		foreach ($this->options["view"]["indexFiles"] as $name) {
+		foreach ($this->options["view"]["unmanaged"] as $name) {
 			if (file_exists($path . "/" . $name)) {
 				return false;
 			}

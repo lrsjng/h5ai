@@ -24,12 +24,10 @@ Options
 	General view options.
 
 	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- extInNewWindow: open non-{{pkg.name}} links in new window/tab
 	- hidden: don't list items matching these regular expressions
 	- hideFolders: hide all folders in the main view
 	- hideIf403: hide files and folders that are not readable by the server
 	- hideParentFolder: hide parent folder links in the main view
-	- indexFiles: consider folder with those files as non {{pkg.name}} folders
 	- modes: array, subset of ["details", "grid", "icons"]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
@@ -43,22 +41,24 @@ Options
 		so that it will be persistent.
 	- smartBrowsing: use History API if available (no need to reload the whole page)
 	- theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to "fallback"
+	- unmanaged: don't manage folders containing one of those files
+	- unmanagedInNewWindow: open unmanaged links in new window/tab
 	*/
 	"view": {
 		"binaryPrefix": false,
-		"extInNewWindow": false,
 		"hidden": ["^\\.", "^_{{pkg.name}}"],
 		"hideFolders": false,
 		"hideIf403": true,
 		"hideParentFolder": false,
-		"indexFiles": ["index.html", "index.htm", "index.php"],
 		"modes": ["details", "grid", "icons"],
 		"setParentFolderLabels": true,
 		"sizes": [48, 24, 96],
 		"smartBrowsing": true,
-		"theme": "evolvere"
-		// "theme": "faenza"
-		// "theme": "fallback"
+		// "theme": "fallback",
+		// "theme": "faenza",
+		"theme": "evolvere",
+		"unmanaged": ["index.html", "index.htm", "index.php"],
+		"unmanagedInNewWindow": false
 	},
 
 

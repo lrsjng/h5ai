@@ -3,7 +3,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 	var settings = _.extend({
 			smartBrowsing: true,
-			extInNewWindow: true
+			unmanagedInNewWindow: true
 		}, allsettings.view),
 
 		doc = document,
@@ -175,7 +175,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 				});
 			}
 
-			if (settings.extInNewWindow && !item.isManaged) {
+			if (settings.unmanagedInNewWindow && !item.isManaged) {
 				$el.attr('target', '_blank');
 			}
 		};
