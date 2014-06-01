@@ -23,9 +23,10 @@ class App {
 
 	public function get_setup() {
 
-		$consts = get_defined_constants(true)["user"];
-		$consts["PHP_VERSION"] = PHP_VERSION;
-		return $consts;
+		$consts = get_defined_constants(true);
+		$consts_user = $consts["user"];
+		$consts_user["PHP_VERSION"] = PHP_VERSION;
+		return $consts_user;
 	}
 
 
@@ -89,14 +90,14 @@ class App {
 	}
 
 
-	public function is_ignored($name) {
+	public function is_hidden($name) {
 
-		// always ignore
+		// always hide
 		if ($name === "." || $name === "..") {
 			return true;
 		}
 
-		foreach ($this->options["view"]["ignore"] as $re) {
+		foreach ($this->options["view"]["hidden"] as $re) {
 			$re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
 			if (preg_match($re, $name)) {
 				return true;
@@ -114,8 +115,8 @@ class App {
 			if ($dir = opendir($path)) {
 				while (($name = readdir($dir)) !== false) {
 					if (
-						$this->is_ignored($name)
-						|| $this->is_ignored($this->to_url($path) . $name)
+						$this->is_hidden($name)
+						|| $this->is_hidden($this->to_url($path) . $name)
 						|| (!is_readable($path .'/'. $name) && $this->options["view"]["hideIf403"])
 					) {
 						continue;

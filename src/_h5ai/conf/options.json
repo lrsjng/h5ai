@@ -10,55 +10,55 @@ Options
 	Spacing of the main content.
 
 	Left and right will be added to a minimum of 30px. Top and bottom
-	are calculated relative to the top and bottom bar heights.
+	are added to the top and bottom bar heights.
 	*/
 	"spacing": {
-		"maxWidth": 960,
-		"top": 50,
-		"right": "auto",
 		"bottom": 50,
-		"left": "auto"
+		"left": "auto",
+		"maxWidth": 960,
+		"right": "auto",
+		"top": 50
 	},
 
 	/*
 	General view options.
 
+	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+	- extInNewWindow: open non-h5ai links in new window/tab
+	- hidden: don't list items matching these regular expressions
+	- hideFolders: hide all folders in the main view
+	- hideIf403: hide files and folders that are not readable by the server
+	- hideParentFolder: hide parent folder links in the main view
+	- indexFiles: consider folder with those files as non {{pkg.name}} folders
 	- modes: array, subset of ["details", "grid", "icons"]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
+	- setParentFolderLabels: set parent folder labels to real folder names
 	- sizes: array, subset of [16, 24, 32, 48, 64, 96, 128, 192, 256, 384]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
-	- setParentFolderLabels: set parent folder labels to real folder names
-	- hideParentFolderLinks: hide parent folder links in the main view
-	- hideFolders: hide all folders in the main view
-	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- indexFiles: consider folder with those files as non {{pkg.name}} folders
-	- ignore: don't list items matching these regular expressions
 	- smartBrowsing: use History API if available (no need to reload the whole page)
-	- extInNewWindow: open non-h5ai links in new window/tab
-	- hideIf403: hide files and folders that are not readable by the server
 	- theme: name of one of the folders in "_h5ai/client/themes", defaults to "fallback"
 	*/
 	"view": {
-		"modes": ["details", "grid", "icons"],
-		"sizes": [48, 24, 96],
-		"setParentFolderLabels": true,
-		"hideParentFolderLinks": false,
-		"hideFolders": false,
 		"binaryPrefix": false,
-		"indexFiles": ["index.html", "index.htm", "index.php"],
-		"ignore": ["^\\.", "^_{{pkg.name}}"],
-		"smartBrowsing": true,
 		"extInNewWindow": false,
+		"hidden": ["^\\.", "^_{{pkg.name}}"],
+		"hideFolders": false,
 		"hideIf403": true,
-		// "theme": "fallback"
+		"hideParentFolder": false,
+		"indexFiles": ["index.html", "index.htm", "index.php"],
+		"modes": ["details", "grid", "icons"],
+		"setParentFolderLabels": true,
+		"sizes": [48, 24, 96],
+		"smartBrowsing": true,
 		"theme": "evolvere"
 		// "theme": "faenza"
+		// "theme": "fallback"
 	},
 
 

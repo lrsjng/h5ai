@@ -2,10 +2,10 @@
 modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/location'], function (_, $, allsettings, resource, format, event, location) {
 
 	var settings = _.extend({
-			setParentFolderLabels: false,
-			hideParentFolderLinks: false,
+			binaryPrefix: false,
 			hideFolders: false,
-			binaryPrefix: false
+			hideParentFolder: false,
+			setParentFolderLabels: false
 		}, allsettings.view),
 
 		itemTemplate = '<li class="item">' +
@@ -96,7 +96,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			$items.find('.item').remove();
 
-			if (item.parent && !settings.hideParentFolderLinks) {
+			if (item.parent && !settings.hideParentFolder) {
 				$items.append(update(item.parent, true));
 			}
 
