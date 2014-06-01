@@ -55,7 +55,7 @@ class App {
 
 		$icons = array();
 		foreach (array("file", "folder", "folder-page", "folder-parent") as $type) {
-			$icons[$type] = $this->get_icon($theme, $type, "default/icons/${type}.svg");
+			$icons[$type] = $this->get_icon($theme, $type, "fallback/icons/${type}.svg");
 		}
 		foreach ($types as $type => $exts) {
 			if (!array_key_exists($type, $icons)) {

@@ -56,7 +56,9 @@ Options
 		"smartBrowsing": true,
 		"extInNewWindow": false,
 		"hideIf403": true,
-		"theme": "fallback"
+		// "theme": "fallback"
+		"theme": "evolvere"
+		// "theme": "faenza"
 	},
 
 
