@@ -8,9 +8,9 @@
 * adds initial theme support
 * adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
 * adds PHP variant to calc folder sizes
-* adds scroll position reset on location change (issue #279)
+* adds scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))
 * adds "hide if 403" option
-* fixes QR code URI origin (issue #287)
+* fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
 * adds Google UA support
 * extends selectable icon sizes (adds 128px, 192px, 256px, 384px)
 * updates H5BP to 4.3.0
@@ -25,7 +25,7 @@
 
 ## v0.24.1 - *2014-04-09*
 
-* security fixes! (issues #268, #269)
+* security fixes! (issues [#268](https://github.com/lrsjng/h5ai/issues/268), [#269](https://github.com/lrsjng/h5ai/issues/269))
 * language updates (`fi`, `fr`, `hi`, `it`, `zh-tw`)
 * fixes WinOS command detection
 

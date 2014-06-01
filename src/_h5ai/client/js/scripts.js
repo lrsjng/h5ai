@@ -46,7 +46,7 @@
 
 	$.ajax({
 		url: url,
-		data: {action: 'get', setup: true, options: true, types: true, langs: true},
+		data: {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
 		type: 'POST',
 		dataType: 'json',
 		success: function (config) {

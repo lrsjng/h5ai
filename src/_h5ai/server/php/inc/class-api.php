@@ -46,6 +46,12 @@ class Api {
 			$response["types"] = $this->app->get_types();
 		}
 
+		if (has_request_param("theme")) {
+
+			use_request_param("theme");
+			$response["theme"] = $this->app->get_theme();
+		}
+
 		if (has_request_param("langs")) {
 
 			use_request_param("langs");

@@ -1,5 +1,5 @@
 
-modulejs.define('core/resource', ['core/settings'], function (settings) {
+modulejs.define('core/resource', ['config', 'core/settings'], function (config, settings) {
 
 	var image = function (id) {
 
@@ -8,8 +8,7 @@ modulejs.define('core/resource', ['core/settings'], function (settings) {
 
 		icon = function (id) {
 
-			return settings.appHref + 'client/themes/faenza/icons/' + id + '.png';
-			// return settings.appHref + 'client/themes/evolvere/icons/' + id + '.svg';
+			return settings.appHref + 'client/themes/' + config.theme[id];
 		};
 
 	return {
