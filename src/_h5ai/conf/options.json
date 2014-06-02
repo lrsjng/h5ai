@@ -226,7 +226,7 @@ Options
 	*/
 	"preview-img": {
 		"enabled": true,
-		"types": ["bmp", "gif", "ico", "image", "jpg", "png"]
+		"types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"]
 	},
 
 	/*
@@ -244,29 +244,29 @@ Options
 	"preview-txt": {
 		"enabled": true,
 		"types": {
-			"authors": "fixed",
-			"copying": "fixed",
-			"c": "c",
-			"cpp": "cpp",
-			"css": "css",
-			"diff": "diff",
-			"h": "c",
-			"hpp": "cpp",
-			"install": "fixed",
-			"log": "fixed",
-			"java": "java",
-			"js": "js",
-			"json": "js",
-			"makefile": "xml",
-			"markdown": "markdown",
-			// "php": "php",
-			"python": "python",
-			"readme": "fixed",
-			"rb": "ruby",
-			"rtf": "fixed",
-			"script": "shell",
-			"text": "fixed",
-			"xml": "xml"
+			"txt": "fixed",
+			"txt-authors": "fixed",
+			"txt-license": "fixed",
+			"txt-c": "c",
+			"txt-cpp": "cpp",
+			"txt-css": "css",
+			"txt-diff": "diff",
+			"txt-h": "c",
+			"txt-hpp": "cpp",
+			"txt-install": "fixed",
+			"txt-log": "fixed",
+			"txt-java": "java",
+			"txt-js": "js",
+			"txt-json": "js",
+			"txt-makefile": "xml",
+			"txt-md": "markdown",
+			// "txt-php": "php",
+			"txt-py": "python",
+			"txt-readme": "fixed",
+			"txt-rb": "ruby",
+			"txt-rtf": "fixed",
+			"txt-script": "shell",
+			"txt-xml": "xml"
 		}
 	},
 
@@ -336,9 +336,9 @@ Options
 	*/
 	"thumbnails": {
 		"enabled": true,
-		"img": ["bmp", "gif", "ico", "image", "jpg", "png"],
-		"mov": ["video"],
-		"doc": ["pdf", "ps"],
+		"img": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"],
+		"mov": ["vid"],
+		"doc": ["x-pdf", "x-ps"],
 		"delay": 1,
 		"size": 96,
 		"exif": true
