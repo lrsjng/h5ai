@@ -2,25 +2,20 @@
 modulejs.define('core/types', ['config', '_'], function (config, _) {
 
 	var reEndsWithSlash = /\/$/,
-		reStartsWithDot = /^\./,
+		regexps = {},
 
-		fileExts = {},
-		fileNames = {},
+		escapeRegExp = function (sequence) {
+
+			return sequence.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$]/g, "\\$&");
+			// return sequence.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+		},
 
 		parse = function (types) {
 
-			_.each(types, function (matches, type) {
+			_.each(types, function (patterns, type) {
 
-				_.each(matches, function (match) {
-
-					match = match.toLowerCase();
-
-					if (reStartsWithDot.test(match)) {
-						fileExts[match] = type;
-					} else {
-						fileNames[match] = type;
-					}
-				});
+				var pattern = '^' + _.map(patterns, function (p) { return escapeRegExp(p).replace(/\*/g, '.*'); }).join('|') + '$';
+				regexps[type] = new RegExp(pattern, 'i');
 			});
 		},
 
@@ -30,14 +25,18 @@ modulejs.define('core/types', ['config', '_'], function (config, _) {
 				return 'folder';
 			}
 
-			sequence = sequence.toLowerCase();
-
 			var slashidx = sequence.lastIndexOf('/'),
-				name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence,
-				dotidx = sequence.lastIndexOf('.'),
-				ext = dotidx >= 0 ? sequence.substr(dotidx) : sequence;
+				name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence;
 
-			return fileNames[name] || fileExts[ext] || 'unknown';
+			for (var type in regexps) {
+				if (regexps.hasOwnProperty(type)) {
+					if (regexps[type].test(name)) {
+						return type;
+					}
+				}
+			}
+
+			return 'file';
 		};
 
 	parse(_.extend({}, config.types));

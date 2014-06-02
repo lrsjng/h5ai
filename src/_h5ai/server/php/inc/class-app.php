@@ -60,7 +60,12 @@ class App {
 		}
 		foreach ($types as $type => $exts) {
 			if (!array_key_exists($type, $icons)) {
-				$icons[$type] = $this->get_icon($theme, $type, $icons["file"]);
+				$icon = $this->get_icon($theme, $type);
+				if ($icon === null) {
+					$type_parts = explode('-', $type);
+					$icon = $this->get_icon($theme, $type_parts[0], $icons["file"]);
+				}
+				$icons[$type] = $icon;
 			}
 		}
 

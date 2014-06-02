@@ -9,49 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg7384"
    height="96"
-   width="96"
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="folder-parent.svg"
+   id="svg7384"
+   width="96"
    inkscape:export-filename="/home/lars/env/workspace/h5ai/src/_h5ai/client/themes/fallback/icons/folder-parent.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
-  <defs
-     id="defs10" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1877"
-     inkscape:window-height="1056"
-     id="namedview8"
-     showgrid="true"
-     inkscape:zoom="7.375"
-     inkscape:cx="43.738937"
-     inkscape:cy="47.182237"
-     inkscape:window-x="43"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg7384"
-     showguides="true"
-     inkscape:guide-bbox="true">
-    <inkscape:grid
-       type="xygrid"
-       id="grid3002"
-       empspacing="5"
-       visible="true"
-       enabled="true"
-       snapvisiblegridlinesonly="true"
-       spacingx="6px"
-       spacingy="6px" />
-  </sodipodi:namedview>
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -64,14 +30,119 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <sodipodi:namedview
+     objecttolerance="10"
+     inkscape:zoom="8"
+     inkscape:snap-bbox="true"
+     inkscape:object-nodes="false"
+     inkscape:object-paths="false"
+     inkscape:snap-global="true"
+     inkscape:snap-grids="true"
+     showgrid="false"
+     showborder="true"
+     inkscape:window-x="43"
+     inkscape:window-y="24"
+     inkscape:snap-others="false"
+     inkscape:guide-bbox="true"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:current-layer="layer12"
+     guidetolerance="10"
+     id="namedview88"
+     inkscape:pageshadow="2"
+     inkscape:cx="35.857415"
+     inkscape:cy="44.695707"
+     inkscape:pageopacity="0"
+     inkscape:snap-nodes="true"
+     pagecolor="#000000"
+     inkscape:window-height="1056"
+     gridtolerance="10"
+     showguides="true"
+     inkscape:bbox-paths="false"
+     inkscape:snap-bbox-midpoints="false"
+     inkscape:snap-to-guides="true"
+     inkscape:window-width="1877"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="false">
+    <inkscape:grid
+       snapvisiblegridlinesonly="true"
+       visible="true"
+       type="xygrid"
+       id="grid4866"
+       empspacing="2"
+       enabled="true"
+       spacingx="1px"
+       spacingy="1px" />
+  </sodipodi:namedview>
   <title
      id="title9167">Gnome Symbolic Icon Theme</title>
-  <path
-     style="fill:#555555"
-     d="M 24,24 72,24 72,36 54,42 78,66 66,78 42,54 36,72 24,72 z"
-     id="rect3845"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccccccccc"
-     inkscape:export-xdpi="270"
-     inkscape:export-ydpi="270" />
+  <defs
+     id="defs7386" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer9"
+     inkscape:label="status"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer10"
+     inkscape:label="devices" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer11"
+     inkscape:label="apps" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer13"
+     inkscape:label="places" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer14"
+     inkscape:label="mimetypes" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer15"
+     inkscape:label="emblems"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="g71291"
+     inkscape:label="emotes"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="g4953"
+     inkscape:label="categories"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     transform="translate(-321.00015,-587)"
+     id="layer12"
+     inkscape:label="actions"
+     style="display:inline">
+    <g
+       id="g2994"
+       style="fill:#555555;fill-opacity:1"
+       transform="matrix(4.836272,0,0,4.836272,-1221.151,-2629.537)">
+      <path
+         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#555555;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+         inkscape:connector-curvature="0"
+         id="path4762"
+         d="m 325,673 0,2 6.5,0 c 0.84027,0 1.5,0.65973 1.5,1.5 0,0.84027 -0.65973,1.5 -1.5,1.5 l -0.5,0 0,2 0.5,0 c 1.92115,0 3.5,-1.57885 3.5,-3.5 0,-1.92115 -1.57885,-3.5 -3.5,-3.5 l -6.5,0 z" />
+      <path
+         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#bebebe;fill:#555555;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         inkscape:connector-curvature="0"
+         id="path4764"
+         d="m 328,670.0221 0,1 c 0,0.25689 -0.12983,0.52846 -0.3125,0.71875 l -2.28125,2.28125 2.28125,2.28125 c 0.18267,0.19029 0.3125,0.46186 0.3125,0.71875 l 0,1 -1,0 c -0.30945,0 -0.55232,-0.0903 -0.75,-0.28125 l -3.65625,-3.71875 3.65625,-3.71875 c 0.19768,-0.19095 0.44055,-0.28125 0.75,-0.28125 z"
+         sodipodi:nodetypes="ccccccccccccc" />
+    </g>
+  </g>
 </svg>
