@@ -36,36 +36,22 @@ class App {
 	}
 
 
-	public function get_icon($theme, $type, $fallback = null) {
-
-		foreach (App::$ICON_EXTS as $ext) {
-			$icon = "${theme}/icons/${type}.${ext}";
-			if (is_file(APP_PATH . "/client/themes/${icon}")) {
-				return $icon;
-			}
-		}
-
-		return $fallback;
-	}
-
-
 	public function get_theme() {
 
 		$theme = $this->options["view"]["theme"];
-		$types = $this->get_types();
+		$theme_path = APP_PATH . "/client/themes/${theme}/icons";
 
 		$icons = array();
-		foreach (array("file", "folder", "folder-page", "folder-parent") as $type) {
-			$icons[$type] = $this->get_icon($theme, $type, "fallback/icons/${type}.svg");
-		}
-		foreach ($types as $type => $exts) {
-			if (!array_key_exists($type, $icons)) {
-				$icon = $this->get_icon($theme, $type);
-				if ($icon === null) {
-					$type_parts = explode('-', $type);
-					$icon = $this->get_icon($theme, $type_parts[0], $icons["file"]);
+
+		if (is_dir($theme_path)) {
+			if ($dir = opendir($theme_path)) {
+				while (($name = readdir($dir)) !== false) {
+					$path_parts = pathinfo($name);
+					if (in_array($path_parts["extension"], App::$ICON_EXTS)) {
+						$icons[$path_parts["filename"]] = "${theme}/icons/${name}";
+					}
 				}
-				$icons[$type] = $icon;
+				closedir($dir);
 			}
 		}
 
@@ -218,7 +204,7 @@ class App {
 
 		if ($folder->get_parent($cache)) {
 			$html .= "<tr>";
-			$html .= "<td class='fb-i'><img src='" . APP_HREF . "client/themes/fallback/icons/folder-parent.png' alt='folder-parent'/></td>";
+			$html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/folder-parent.png' alt='folder-parent'/></td>";
 			$html .= "<td class='fb-n'><a href='..'>Parent Directory</a></td>";
 			$html .= "<td class='fb-d'></td>";
 			$html .= "<td class='fb-s'></td>";
@@ -229,7 +215,7 @@ class App {
 			$type = $item->is_folder ? "folder" : "file";
 
 			$html .= "<tr>";
-			$html .= "<td class='fb-i'><img src='" . APP_HREF . "client/themes/fallback/icons/" . $type . ".png' alt='" . $type . "'/></td>";
+			$html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/" . $type . ".png' alt='" . $type . "'/></td>";
 			$html .= "<td class='fb-n'><a href='" . $item->url . "'>" . basename($item->path) . "</a></td>";
 			$html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
 			$html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
