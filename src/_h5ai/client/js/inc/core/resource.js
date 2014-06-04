@@ -4,7 +4,7 @@ modulejs.define('core/resource', ['config', 'core/settings'], function (config, 
 	var imagesHref = settings.appHref + 'client/images/',
 		fallbackHref = settings.appHref + 'client/images/fallback/',
 		themesHref = settings.appHref + 'client/themes/',
-		fallbacks = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'img', 'txt', 'vid'],
+		fallbacks = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid'],
 
 		image = function (id) {
 

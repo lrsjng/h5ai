@@ -55,8 +55,6 @@ Options
 		"sizes": [48, 24, 96],
 		"smartBrowsing": true,
 		"theme": "fallback",
-		// "theme": "faenza",
-		// "theme": "evolvere",
 		"unmanaged": ["index.html", "index.htm", "index.php"],
 		"unmanagedInNewWindow": false
 	},
