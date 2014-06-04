@@ -4,7 +4,7 @@ modulejs.define('core/resource', ['config', 'core/settings'], function (config, 
 	var imagesHref = settings.appHref + 'client/images/',
 		fallbackHref = settings.appHref + 'client/images/fallback/',
 		themesHref = settings.appHref + 'client/themes/',
-		fallbacks = ['file', 'folder', 'folder-page', 'folder-parent'],
+		fallbacks = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'img', 'txt', 'vid'],
 
 		image = function (id) {
 
@@ -23,6 +23,11 @@ modulejs.define('core/resource', ['config', 'core/settings'], function (config, 
 			if (fallbacks.indexOf(id) >= 0) {
 				return fallbackHref + id + '.svg';
 			}
+
+			if (fallbacks.indexOf(baseId) >= 0) {
+				return fallbackHref + baseId + '.svg';
+			}
+
 			return fallbackHref + 'file.svg';
 		};
 

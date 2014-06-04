@@ -54,9 +54,9 @@ Options
 		"setParentFolderLabels": true,
 		"sizes": [48, 24, 96],
 		"smartBrowsing": true,
-		// "theme": "fallback",
+		"theme": "fallback",
 		// "theme": "faenza",
-		"theme": "evolvere",
+		// "theme": "evolvere",
 		"unmanaged": ["index.html", "index.htm", "index.php"],
 		"unmanagedInNewWindow": false
 	},

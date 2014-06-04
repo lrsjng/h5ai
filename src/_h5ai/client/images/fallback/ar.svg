@@ -11,8 +11,15 @@
    version="1.1">
   <path
      style="fill:#555555;fill-opacity:1;stroke:none"
-     d="M 12,6 12,90 84,90 84,24 66,6 z m 6,6 45.559322,0 L 78,26.576271 78,84 18,84 z"
+     d="M 6,6 6,90 90,90 90,24 72,6 z m 6,6 57.559322,0 L 84,26.576271 84,84 12,84 z"
      id="rect2984"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cccccccccccc" />
+  <rect
+     style="fill:#555555;fill-opacity:1;stroke:none"
+     id="rect3031"
+     width="12"
+     height="24"
+     x="42"
+     y="12" />
 </svg>
