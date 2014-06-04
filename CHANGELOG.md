@@ -9,7 +9,8 @@
 * adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
 * adds PHP variant to calc folder sizes
 * adds scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))
-* adds "hide if 403" option
+* adds option to hide unreadable files
+* adds option where to place folders (top, inplace, bottom)
 * fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
 * adds Google UA support
 * extends selectable icon sizes (adds 128px, 192px, 256px, 384px)

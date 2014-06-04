@@ -6,7 +6,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 			column: 0,
 			reverse: false,
 			ignorecase: true,
-			natural: false
+			natural: false,
+			folders: 0
 		}, allsettings.sort),
 
 		storekey = 'ext/sort',
@@ -21,6 +22,11 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				return 0;
 			}
 			if ($item.hasClass('folder')) {
+				if (settings.folders === 1) {
+					return 2;
+				} else if (settings.folders === 2) {
+					return 3;
+				}
 				return 1;
 			}
 			return 2;

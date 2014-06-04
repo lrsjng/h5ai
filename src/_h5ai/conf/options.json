@@ -305,13 +305,15 @@ Options
 	- reverse: boolean, false for ascending, true for descending
 	- ignorecase: boolean, compare ignorecase
 	- natural: boolean, use natural sort order
+	- folders: where to place folders, 0 for "top", 1 for "in place", 2 for "bottom"
 	*/
 	"sort": {
 		"enabled": true,
 		"column": 0,
 		"reverse": false,
 		"ignorecase": true,
-		"natural": false
+		"natural": false,
+		"folders": 0
 	},
 
 	/*
