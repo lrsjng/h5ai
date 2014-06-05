@@ -1,5 +1,5 @@
 
-modulejs.define('core/resource', ['config', 'core/settings'], function (config, settings) {
+modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, config, settings) {
 
 	var imagesHref = settings.appHref + 'client/images/',
 		fallbackHref = settings.appHref + 'client/images/fallback/',
@@ -20,11 +20,11 @@ modulejs.define('core/resource', ['config', 'core/settings'], function (config, 
 				return themesHref + href;
 			}
 
-			if (fallbacks.indexOf(id) >= 0) {
+			if (_.indexOf(fallbacks, id) >= 0) {
 				return fallbackHref + id + '.svg';
 			}
 
-			if (fallbacks.indexOf(baseId) >= 0) {
+			if (_.indexOf(fallbacks, baseId) >= 0) {
 				return fallbackHref + baseId + '.svg';
 			}
 
