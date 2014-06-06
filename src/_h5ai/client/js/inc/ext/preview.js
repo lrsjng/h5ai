@@ -73,7 +73,9 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 		onExit = function () {
 
 			$(window).off('keydown', onKeydown);
-			$('#pv-overlay').stop(true, true).fadeOut(200);
+			$('#pv-overlay').stop(true, true).fadeOut(200, function () {
+				$('#pv-content').empty();
+			});
 		},
 
 		onNext = function () {
@@ -97,7 +99,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			$('#pv-overlay .hof').stop(true, true).fadeIn(200);
 
 			if (isFullscreen) {
-
 				userAliveTimeoutId = setTimeout(function () {
 
 					$('#pv-overlay .hof').stop(true, true).fadeOut(2000);
@@ -122,20 +123,18 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			if (key === 27) { // esc
 				event.preventDefault();
 				event.stopImmediatePropagation();
-				$('#pv-bar-close, #pv-close-area').addClass('hover');
-				setTimeout(function () { $('#pv-bar-close, #pv-close-area').removeClass('hover'); }, delay);
 				onExit();
 			} else if (key === 8 || key === 37) { // backspace, left
 				event.preventDefault();
 				event.stopImmediatePropagation();
-				$('#pv-bar-prev, #pv-prev-area').addClass('hover');
-				setTimeout(function () { $('#pv-bar-prev, #pv-prev-area').removeClass('hover'); }, delay);
+				$('#pv-bar-prev').addClass('hover');
+				setTimeout(function () { $('#pv-bar-prev').removeClass('hover'); }, delay);
 				onPrevious();
 			} else if (key === 13 || key === 32 || key === 39) { // enter, space, right
 				event.preventDefault();
 				event.stopImmediatePropagation();
-				$('#pv-bar-next, #pv-next-area').addClass('hover');
-				setTimeout(function () { $('#pv-bar-next, #pv-next-area').removeClass('hover'); }, delay);
+				$('#pv-bar-next').addClass('hover');
+				setTimeout(function () { $('#pv-bar-next').removeClass('hover'); }, delay);
 				onNext();
 			} else if (key === 70) { // f
 				event.preventDefault();
@@ -144,16 +143,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 				setTimeout(function () { $('#pv-bar-fullscreen').removeClass('hover'); }, delay);
 				onFullscreen();
 			}
-		},
-
-		enter = function () {
-
-			onEnter();
-		},
-
-		exit = function () {
-
-			onExit();
 		},
 
 		setIndex = function (idx, total) {
@@ -179,7 +168,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			$('#pv-buttons .bar-left').remove();
 			_.each(labels, function (label) {
 
-				$('<li />')
+				$('<li/>')
 					.addClass('bar-left bar-label')
 					.text(label)
 					.appendTo('#pv-buttons');
@@ -232,7 +221,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
 					if (event.type === 'click') {
 						if (event.target.id === 'pv-overlay' || event.target.id === 'pv-content') {
-							exit();
+							onExit();
 						}
 					}
 					event.stopImmediatePropagation();
@@ -244,8 +233,8 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 	init();
 
 	return {
-		enter: enter,
-		exit: exit,
+		enter: onEnter,
+		exit: onExit,
 		setIndex: setIndex,
 		setRawLink: setRawLink,
 		setLabels: setLabels,

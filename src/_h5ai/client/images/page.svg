@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg7384"
    height="12"
    width="12"
-   version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="page.svg">
+   version="1.1">
   <g
      id="layer14"
      transform="matrix(0.68005728,0,0,0.70728284,-313.86652,-213.11037)">
     <path
        id="path1234"
        style="text-indent:0;text-transform:none;block-progression:tb;color:#555555;fill:#555555"
-       d="m 479.1751,323.93034 0,-15.55248 -4.41139,-4.24158 -13.23419,-10e-6 1e-5,19.79407 m 2.94093,-1.41387 -10e-6,-15.55248 7.35234,10e-6 0,4.24159 4.41139,0 -10e-6,11.31088"
+       d="m 479.17511,316.86104 0,-9.89704 -4.41139,-4.24158 -13.23419,-10e-6 10e-6,14.13863 m 2.94093,-10e-6 -10e-6,-11.3109 7.35234,10e-6 0,4.24159 4.41139,0 -1e-5,7.0693"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccc" />
   </g>
