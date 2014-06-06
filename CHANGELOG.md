@@ -12,6 +12,7 @@
 * adds option to hide unreadable files
 * adds option where to place folders (top, inplace, bottom)
 * fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
+* improves preview GUI
 * adds Google UA support
 * extends selectable icon sizes (adds 128px, 192px, 256px, 384px)
 * updates H5BP to 4.3.0

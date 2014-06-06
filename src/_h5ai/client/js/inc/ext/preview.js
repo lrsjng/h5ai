@@ -10,7 +10,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 						'<div id="pv-spinner"><img src="' + resource.image('spinner') + '"/></div>' +
 						'<div id="pv-prev-area" class="hof"><img src="' + resource.image('preview/prev') + '"/></div>' +
 						'<div id="pv-next-area" class="hof"><img src="' + resource.image('preview/next') + '"/></div>' +
-						'<div id="pv-close-area" class="hof"><img src="' + resource.image('preview/close') + '"/></div>' +
 						'<div id="pv-bottombar" class="clearfix hof">' +
 							'<ul id="pv-buttons">' +
 								'<li id="pv-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '"/></li>' +
@@ -231,6 +230,11 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 				.on('mousemove mousedown', userAlive)
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
+					if (event.type === 'click') {
+						if (event.target.id === 'pv-overlay' || event.target.id === 'pv-content') {
+							exit();
+						}
+					}
 					event.stopImmediatePropagation();
 				});
 
