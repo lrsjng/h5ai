@@ -52,7 +52,7 @@ Options
 		"hideParentFolder": false,
 		"modes": ["details", "grid", "icons"],
 		"setParentFolderLabels": true,
-		"sizes": [48, 24, 96],
+		"sizes": [24, 48, 96],
 		"smartBrowsing": true,
 		"theme": "fallback",
 		"unmanaged": ["index.html", "index.htm", "index.php"],
