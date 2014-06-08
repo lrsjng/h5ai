@@ -12,7 +12,7 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/e
 				var has_header, has_footer, data, content;
 
 				if (response) {
-					resource.loadMarkdown(function (md) {
+					resource.ensureMarkdown(function (md) {
 
 						data = response.custom;
 

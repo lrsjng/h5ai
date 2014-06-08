@@ -108,7 +108,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'co
 
 								$text = $(templateMarkdown).text(textContent);
 
-								resource.loadMarkdown(function (md) {
+								resource.ensureMarkdown(function (md) {
 
 									if (md) {
 										$text.html(md.toHTML(textContent));
@@ -118,7 +118,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'co
 
 								$text = $(templateText).text(textContent);
 
-								resource.loadSyntaxhighlighter(function (sh) {
+								resource.ensureSH(function (sh) {
 
 									if (sh) {
 										var $table = $('<table/>');
