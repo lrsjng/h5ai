@@ -267,7 +267,7 @@ class App {
 	}
 
 
-	public function get_customizations($url) {
+	public function get_customizations2($url) {
 
 		if (!$this->options["custom"]["enabled"]) {
 			return array(
@@ -307,6 +307,68 @@ class App {
 		return array(
 			"header" => $header,
 			"footer" => $footer
+		);
+	}
+
+
+	private function read_custom_file($path, $name, &$content, &$type) {
+
+		foreach (array("html", "md") as $ext) {
+			$file = "$path/" . FILE_PREFIX . ".$name.$ext";
+			if (is_readable($file)) {
+				$content = file_get_contents($file);
+				$type = $ext;
+				return;
+			}
+		}
+	}
+
+
+	public function get_customizations($url) {
+
+		if (!$this->options["custom"]["enabled"]) {
+			return array(
+				"header" => null,
+				"header_type" => null,
+				"footer" => null,
+				"footer_type" => null
+			);
+		}
+
+		$path = $this->to_path($url);
+
+		$header = null;
+		$header_type = null;
+		$footer = null;
+		$footer_type = null;
+
+		$this->read_custom_file($path, "header", $header, $header_type);
+		$this->read_custom_file($path, "footer", $footer, $footer_type);
+
+		while ($header === null || $footer === null) {
+
+			if ($header === null) {
+				$this->read_custom_file($path, "headers", $header, $header_type);
+			}
+			if ($footer === null) {
+				$this->read_custom_file($path, "footers", $footer, $footer_type);
+			}
+
+			if ($path === ROOT_PATH) {
+				break;
+			}
+			$parent_path = normalize_path(dirname($path));
+			if ($parent_path === $path) {
+				break;
+			}
+			$path = $parent_path;
+		}
+
+		return array(
+			"header" => $header,
+			"header_type" => $header_type,
+			"footer" => $footer,
+			"footer_type" => $footer_type
 		);
 	}
 }

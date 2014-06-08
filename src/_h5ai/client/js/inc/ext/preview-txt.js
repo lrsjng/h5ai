@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ext/preview'], function (_, $, allsettings, event, preview) {
+modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'core/resource', 'ext/preview'], function (_, $, allsettings, event, resource, preview) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -44,30 +44,6 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 			brush.init({toolbar: false, gutter: false});
 
 			return $(brush.getHtml(content)).find('.line');
-		},
-
-		loadScript = function (url, globalId, callback) {
-
-			if (window[globalId]) {
-				callback(window[globalId]);
-			} else {
-				$.ajax({
-					url: url,
-					dataType: 'script',
-					complete: function () {
-
-						callback(window[globalId]);
-					}
-				});
-			}
-		},
-		loadSyntaxhighlighter = function (callback) {
-
-			loadScript(allsettings.appHref + 'client/js/syntaxhighlighter.js', 'SyntaxHighlighter', callback);
-		},
-		loadMarkdown = function (callback) {
-
-			loadScript(allsettings.appHref + 'client/js/markdown.js', 'markdown', callback);
 		},
 
 		preloadText = function (absHref, callback) {
@@ -132,7 +108,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 
 								$text = $(templateMarkdown).text(textContent);
 
-								loadMarkdown(function (md) {
+								resource.loadMarkdown(function (md) {
 
 									if (md) {
 										$text.html(md.toHTML(textContent));
@@ -142,7 +118,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 
 								$text = $(templateText).text(textContent);
 
-								loadSyntaxhighlighter(function (sh) {
+								resource.loadSyntaxhighlighter(function (sh) {
 
 									if (sh) {
 										var $table = $('<table/>');

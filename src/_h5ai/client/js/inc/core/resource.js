@@ -4,6 +4,7 @@ modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, 
 	var imagesHref = settings.appHref + 'client/images/',
 		fallbackHref = settings.appHref + 'client/images/fallback/',
 		themesHref = settings.appHref + 'client/themes/',
+		scriptsHref = settings.appHref + 'client/js/',
 		fallbacks = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid'],
 
 		image = function (id) {
@@ -29,10 +30,39 @@ modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, 
 			}
 
 			return fallbackHref + 'file.svg';
+		},
+
+		loadScript = function (url, globalId, callback) {
+
+			if (window[globalId]) {
+				callback(window[globalId]);
+			} else {
+				$.ajax({
+					url: url,
+					dataType: 'script',
+					complete: function () {
+
+						callback(window[globalId]);
+					}
+				});
+			}
+		},
+
+		loadSyntaxhighlighter = function (callback) {
+
+			loadScript(scriptsHref + 'syntaxhighlighter.js', 'SyntaxHighlighter', callback);
+		},
+
+		loadMarkdown = function (callback) {
+
+			loadScript(scriptsHref + 'markdown.js', 'markdown', callback);
 		};
+
 
 	return {
 		image: image,
-		icon: icon
+		icon: icon,
+		loadSyntaxhighlighter: loadSyntaxhighlighter,
+		loadMarkdown: loadMarkdown
 	};
 });

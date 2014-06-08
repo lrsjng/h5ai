@@ -82,11 +82,12 @@ Options
 
 	/*
 	Allow customized header and footer files.
-	First looks for	files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
-	If not found it looks in all parent	directories (starting in the current directory) for
-	files "_h5ai.headers.html" and "_h5ai.footers.html"	until it finds one.	Note the different
-	filenames: "header" (only current) - "headers" (current and sub directories)!
+	First checks for files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
+	If not successful it checks all parent directories (starting in the current directory) for
+	files "_h5ai.headers.html" and "_h5ai.footers.html".
+	Note the different filenames: "header" (only current) - "headers" (current and sub directories)!
 	The file's content will be placed inside a <div/> tag above/below the main content.
+	If a file's extension is ".md" instead of ".html" its content will be interpreted as markdown.
 	*/
 	"custom": {
 		"enabled": true

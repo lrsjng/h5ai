@@ -11,6 +11,7 @@
 * adds scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))
 * adds option to hide unreadable files
 * adds option where to place folders (top, inplace, bottom)
+* adds markdown support for custom header and footer files
 * fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
 * improves preview GUI
 * adds Google UA support
