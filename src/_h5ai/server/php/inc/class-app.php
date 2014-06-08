@@ -267,50 +267,6 @@ class App {
 	}
 
 
-	public function get_customizations2($url) {
-
-		if (!$this->options["custom"]["enabled"]) {
-			return array(
-				"header" => null,
-				"footer" => null
-			);
-		}
-
-		$path = $this->to_path($url);
-
-		$file = $path . "/" . FILE_PREFIX . ".header.html";
-		$header = is_readable($file) ? file_get_contents($file) : null;
-		$file = $path . "/" . FILE_PREFIX . ".footer.html";
-		$footer = is_readable($file) ? file_get_contents($file) : null;
-
-		while ($header === null || $footer === null) {
-
-			if ($header === null) {
-				$file = $path . "/" . FILE_PREFIX . ".headers.html";
-				$header = is_readable($file) ? file_get_contents($file) : null;
-			}
-			if ($footer === null) {
-				$file = $path . "/" . FILE_PREFIX . ".footers.html";
-				$footer = is_readable($file) ? file_get_contents($file) : null;
-			}
-
-			if ($path === ROOT_PATH) {
-				break;
-			}
-			$parent_path = normalize_path(dirname($path));
-			if ($parent_path === $path) {
-				break;
-			}
-			$path = $parent_path;
-		}
-
-		return array(
-			"header" => $header,
-			"footer" => $footer
-		);
-	}
-
-
 	private function read_custom_file($path, $name, &$content, &$type) {
 
 		foreach (array("html", "md") as $ext) {
