@@ -9,43 +9,37 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/e
 
 			server.request({action: 'get', custom: true, customHref: item.absHref}, function (response) {
 
-				var h, f;
+				var has_header, has_footer, data, content;
 
 				if (response) {
+					resource.loadMarkdown(function (md) {
 
-					if (response.custom.header) {
-						if (response.custom.header_type === 'md') {
-							resource.loadMarkdown(function (md) {
+						data = response.custom;
 
-								if (md) {
-									$('#content-header').html(md.toHTML(response.custom.header)).stop().slideDown(200);
-								}
-							});
-						} else {
-							$('#content-header').html(response.custom.header).stop().slideDown(200);
+						if (data.header) {
+							content = data.header;
+							if (md && data.header_type === 'md') {
+								content  = md.toHTML(content);
+							}
+							$('#content-header').html(content).stop().slideDown(200);
+							has_header = true;
 						}
-						h = true;
-					}
 
-					if (response.custom.footer) {
-						if (response.custom.footer_type === 'md') {
-							resource.loadMarkdown(function (md) {
-
-								if (md) {
-									$('#content-footer').html(md.toHTML(response.custom.footer)).stop().slideDown(200);
-								}
-							});
-						} else {
-							$('#content-footer').html(response.custom.footer).stop().slideDown(200);
+						if (data.footer) {
+							content = data.footer;
+							if (md && data.footer_type === 'md') {
+								content  = md.toHTML(content);
+							}
+							$('#content-footer').html(content).stop().slideDown(200);
+							has_footer = true;
 						}
-						f = true;
-					}
+					});
 				}
 
-				if (!h) {
+				if (!has_header) {
 					$('#content-header').stop().slideUp(200);
 				}
-				if (!f) {
+				if (!has_footer) {
 					$('#content-footer').stop().slideUp(200);
 				}
 			});

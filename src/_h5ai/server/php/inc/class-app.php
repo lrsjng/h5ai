@@ -4,6 +4,7 @@ class App {
 
 	private static $RE_DELIMITER = "|";
 	private static $ICON_EXTS = array("svg", "png", "jpg");
+	private static $CUSTOM_EXTS = array("html", "md");
 
 
 	private $options;
@@ -269,7 +270,7 @@ class App {
 
 	private function read_custom_file($path, $name, &$content, &$type) {
 
-		foreach (array("html", "md") as $ext) {
+		foreach (APP::$CUSTOM_EXTS as $ext) {
 			$file = "$path/" . FILE_PREFIX . ".$name.$ext";
 			if (is_readable($file)) {
 				$content = file_get_contents($file);
