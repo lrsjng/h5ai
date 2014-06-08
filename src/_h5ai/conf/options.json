@@ -199,6 +199,16 @@ Options
 	},
 
 	/*
+	Play a audio preview on click.
+
+	- types: array of types
+	*/
+	"preview-aud": {
+		"enabled": true,
+		"types": ["aud"]
+	},
+
+	/*
 	Show an image preview on click.
 
 	- types: array of types
@@ -250,7 +260,7 @@ Options
 	},
 
 	/*
-	Show a video preview on click.
+	Play a video preview on click.
 
 	- types: array of types
 	*/

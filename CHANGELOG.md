@@ -12,6 +12,7 @@
 * adds option to hide unreadable files
 * adds option where to place folders (top, inplace, bottom)
 * adds markdown support for custom header and footer files
+* adds video and audio preview via HTML5 elements (no fallback, works best in Chrome)
 * removes server side file manipulation extensions `dropbox`, `delete` and `rename`
 * fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
 * improves preview GUI

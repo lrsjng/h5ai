@@ -63,9 +63,10 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
 		onEnter = function () {
 
-			$(window).on('keydown', onKeydown);
 			$('#pv-content').empty();
+			setLabels([]);
 			$('#pv-overlay').stop(true, true).fadeIn(200);
+			$(window).on('keydown', onKeydown);
 
 			adjustSize();
 		},
@@ -75,6 +76,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			$(window).off('keydown', onKeydown);
 			$('#pv-overlay').stop(true, true).fadeOut(200, function () {
 				$('#pv-content').empty();
+				setLabels([]);
 			});
 		},
 

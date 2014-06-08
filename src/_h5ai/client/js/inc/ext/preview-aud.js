@@ -1,18 +1,18 @@
 
-modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ext/preview'], function (_, $, allsettings, event, preview) {
+modulejs.define('ext/preview-audio', ['_', '$', 'moment', 'core/settings', 'core/event', 'ext/preview'], function (_, $, moment, allsettings, event, preview) {
 
 	var settings = _.extend({
 			enabled: false,
 			types: []
-		}, allsettings['preview-vid']),
+		}, allsettings['preview-aud']),
 
-		preloadVid = function (src, callback) {
+		preloadAudio = function (src, callback) {
 
-			var $video = $('<video/>')
+			var $audio = $('<audio/>')
 				.one('loadedmetadata', function () {
 
-					callback($video);
-					// setTimeout(function () { callback($video); }, 1000); // for testing
+					callback($audio);
+					// setTimeout(function () { callback($img); }, 1000); // for testing
 				})
 				.attr('autoplay', 'autoplay')
 				.attr('controls', 'controls')
@@ -28,19 +28,18 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ex
 				onAdjustSize = function () {
 
 					var $content = $('#pv-content'),
-						$vid = $('#pv-vid-video');
+						$audio = $('#pv-aud-audio');
 
-					if ($vid.length) {
+					if ($audio.length) {
 
-						$vid.css({
-							'left': '' + (($content.width()-$vid.width())*0.5) + 'px',
-							'top': '' + (($content.height()-$vid.height())*0.5) + 'px'
+						$audio.css({
+							'left': '' + (($content.width()-$audio.width())*0.5) + 'px',
+							'top': '' + (($content.height()-$audio.height())*0.5) + 'px'
 						});
 
 						preview.setLabels([
 							currentItem.label,
-							'' + $vid[0].videoWidth + 'x' + $vid[0].videoHeight,
-							'' + (100 * $vid.width() / $vid[0].videoWidth).toFixed(0) + '%'
+							moment(0).add('seconds', $audio[0].duration).format('m:ss')
 						]);
 					}
 				},
@@ -52,19 +51,19 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ex
 
 					var spinnerTimeout = setTimeout(function () { preview.showSpinner(true); }, 200);
 
-					if ($('#pv-vid-video').length) {
-						$('#pv-vid-video')[0].pause();
+					if ($('#pv-aud-audio').length) {
+						$('#pv-aud-audio')[0].pause();
 					}
-					preloadVid(currentItem.absHref, function ($preloaded_vid) {
+					preloadAudio(currentItem.absHref, function ($preloaded_audio) {
 
 						clearTimeout(spinnerTimeout);
 						preview.showSpinner(false);
 
 						$('#pv-content').fadeOut(100, function () {
 
-							$('#pv-content').empty().append($preloaded_vid.attr('id', 'pv-vid-video')).fadeIn(200);
+							$('#pv-content').empty().append($preloaded_audio.attr('id', 'pv-aud-audio')).fadeIn(200);
 
-							// small timeout, so $preloaded_vid is visible and therefore $preloaded_vid.width is available
+							// small timeout, so $preloaded_audio is visible and therefore $preloaded_audio.width is available
 							setTimeout(function () {
 								onAdjustSize();
 
