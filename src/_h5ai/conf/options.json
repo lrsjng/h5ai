@@ -93,26 +93,6 @@ Options
 		"enabled": true
 	},
 
-	/* [EXPERIMENTAL]
-	Allow file and folder deletion. Be careful with this option!
-	*/
-	"delete": {
-		"enabled": false
-	},
-
-	/* [EXPERIMENTAL]
-	File upload via drag'n'drop. Folders are not supported.
-	The working file size seems to be very browser dependent.
-
-	- maxfiles: number, max number of files per upload
-	- maxfilesize: number, file size is in MB
-	*/
-	"dropbox": {
-		"enabled": false,
-		"maxfiles": 10,
-		"maxfilesize": 1000
-	},
-
 	/*
 	Enable packaged download of selected entries.
 
@@ -277,14 +257,6 @@ Options
 	"qrcode": {
 		"enabled": true,
 		"size": 150
-	},
-
-	/* [EXPERIMENTAL]
-	Allow to rename files.
-	No GUI yet.
-	*/
-	"rename": {
-		"enabled": false
 	},
 
 	/*
