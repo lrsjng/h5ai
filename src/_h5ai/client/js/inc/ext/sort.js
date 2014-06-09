@@ -77,15 +77,19 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
 				yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
 				// numeric, hex or date detection
-				xD = parseInt(x.match(hre), 10) || (xN.length != 1 && x.match(dre) && Date.parse(x)),
+				xD = parseInt(x.match(hre), 10) || (xN.length !== 1 && x.match(dre) && Date.parse(x)),
 				yD = parseInt(y.match(hre), 10) || xD && y.match(dre) && Date.parse(y) || null,
 				oFxNcL, oFyNcL;
 			// first try and sort Hex codes or Dates
-			if (yD)
-				if ( xD < yD ) return -1;
-				else if ( xD > yD ) return 1;
+			if (yD) {
+				if (xD < yD) {
+					return -1;
+				} else if (xD > yD) {
+					return 1;
+				}
+			}
 			// natural sorting through split numeric strings and default strings
-			for(var cLoc=0, numS=Math.max(xN.length, yN.length); cLoc < numS; cLoc++) {
+			for(var cLoc=0, numS=Math.max(xN.length, yN.length); cLoc < numS; cLoc += 1) {
 				// find floats not starting with '0', string or 0 if not defined (Clint Priest)
 				oFxNcL = !(xN[cLoc] || '').match(ore) && parseFloat(xN[cLoc]) || xN[cLoc] || 0;
 				oFyNcL = !(yN[cLoc] || '').match(ore) && parseFloat(yN[cLoc]) || yN[cLoc] || 0;
@@ -96,8 +100,12 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 					oFxNcL += '';
 					oFyNcL += '';
 				}
-				if (oFxNcL < oFyNcL) return -1;
-				if (oFxNcL > oFyNcL) return 1;
+				if (oFxNcL < oFyNcL) {
+					return -1;
+				}
+				if (oFxNcL > oFyNcL) {
+					return 1;
+				}
 			}
 			return 0;
 		},

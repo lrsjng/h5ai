@@ -3,7 +3,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
 	var settings = _.extend({
 			enabled: true
-		}, allsettings['preview']),
+		}, allsettings.preview),
 
 		template = '<div id="pv-overlay" class="noSelection">' +
 						'<div id="pv-content"/>' +
