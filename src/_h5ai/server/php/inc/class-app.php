@@ -187,6 +187,34 @@ class App {
 	}
 
 
+	private function get_all_item_content($item, &$cache) {
+
+		foreach ($item->get_content($cache) as $child) {
+			if ($child->is_folder) {
+				$this->get_all_item_content($child, $cache);
+			}
+		}
+	}
+
+
+	public function get_all_items() {
+
+		$cache = array();
+		$root = Item::get($this, ROOT_PATH, $cache);
+
+		$this->get_all_item_content($root, $cache);
+
+		uasort($cache, array("Item", "cmp"));
+		$result = array();
+		foreach ($cache as $p => $item) {
+			$result[] = $item->to_json_object();
+		}
+
+		@file_put_contents(CACHE_PATH . "/item.json", json_encode($result));
+		return $result;
+	}
+
+
 	public function get_fallback() {
 
 		$cache = array();

@@ -82,6 +82,12 @@ class Api {
 			$response["items"] = $this->app->get_items($url, $what);
 		}
 
+		if (has_request_param("all_items")) {
+
+			use_request_param("all_items");
+			$response["all_items"] = $this->app->get_all_items();
+		}
+
 		if (count($_REQUEST)) {
 			$response["unused"] = $_REQUEST;
 		}
