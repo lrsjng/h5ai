@@ -148,7 +148,7 @@ class Archive {
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);
 
-			if ($this->app->is_managed_url($d) && !$this->app->is_ignored($n)) {
+			if ($this->app->is_managed_url($d) && !$this->app->is_hidden($n)) {
 
 				$real_file = $this->app->to_path($href);
 				$archived_file = preg_replace("!^" . preg_quote(normalize_path(CURRENT_PATH, true)) . "!", "", $real_file);
