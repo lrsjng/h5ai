@@ -9,10 +9,10 @@ html.no-js.browser( lang="en" )
 		meta( charset="utf-8" )
 		meta( http-equiv="X-UA-Compatible", content="IE=edge" )
 		title {{pkg.name}} {{pkg.version}} Server Setup
-		meta( name="description", content="{{pkg.name}} server details" )
+		meta( name="description", content="{{pkg.name}} Server Setup" )
 		meta( name="viewport", content="width=device-width, initial-scale=1" )
-		link( rel="shortcut icon", href="client/images/favicon/app-16-32.ico" )
-		link( rel="apple-touch-icon-precomposed", type="image/png", href="client/images/favicon/app-152.png" )
+		link( rel="shortcut icon", href="client/images/favicon/favicon-16-32.ico" )
+		link( rel="apple-touch-icon-precomposed", type="image/png", href="client/images/favicon/favicon-152.png" )
 		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:300italic,700italic,300,700" )
 		link( rel="stylesheet", href="client/css/styles.css" )
 		script( src="client/js/scripts.js", data-mode="info" )
@@ -28,59 +28,6 @@ html.no-js.browser( lang="en" )
 
 		h2 Server Setup
 		ul#tests
-			li.test.php( data-id="php_version" )
-				span.label PHP version
-				span.result ?
-				div.info PHP version &gt;= 5.3.0
-			li.test( data-id="cache_dir" )
-				span.label Cache directory
-				span.result ?
-				div.info Web server has write access
-			li.test( data-id="image_thumbs" )
-				span.label Image thumbs
-				span.result ?
-				div.info PHP GD extension with JPEG support available
-			li.test( data-id="exif_thumbs" )
-				span.label Use EXIF thumbs
-				span.result ?
-				div.info PHP EXIF extension available
-			li.test( data-id="movie_thumbs" )
-				span.label Movie thumbs
-				span.result ?
-				div.info
-					| Command line program 
-					code ffmpeg
-					|  or 
-					code avconv
-					|  available
-			li.test( data-id="pdf_thumbs" )
-				span.label PDF thumbs
-				span.result ?
-				div.info
-					| Command line program 
-					code convert
-					|  available
-			li.test( data-id="shell_tar" )
-				span.label Shell tar
-				span.result ?
-				div.info
-					| Command line program 
-					code tar
-					|  available
-			li.test( data-id="shell_zip" )
-				span.label Shell zip
-				span.result ?
-				div.info
-					| Command line program 
-					code zip
-					|  available
-			li.test( data-id="folder_sizes" )
-				span.label Folder sizes
-				span.result ?
-				div.info
-					| Command line program 
-					code du
-					|  available
 
 		div#bottombar.clearfix
 			span.left
