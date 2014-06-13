@@ -15,7 +15,7 @@ Options
 	"spacing": {
 		"bottom": 50,
 		"left": "auto",
-		"maxWidth": 960,
+		"maxWidth": 1024,
 		"right": "auto",
 		"top": 50
 	},

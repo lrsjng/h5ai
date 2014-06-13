@@ -41,7 +41,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 		cache = {},
 
-		getItem = function (absHref, time, size, isManaged, isContentFetched) {
+		getItem = function (absHref, time, size, isManaged, isContentFetched, md5, sha1) {
 
 			absHref = location.forceEncoding(absHref);
 
@@ -62,6 +62,12 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 			}
 			if (isContentFetched) {
 				self.isContentFetched = true;
+			}
+			if (md5) {
+				self.md5 = md5;
+			}
+			if (sha1) {
+				self.sha1 = sha1;
 			}
 
 			return self;
@@ -100,7 +106,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 					if (response.items) {
 						_.each(response.items, function (item) {
-							getItem(item.absHref, item.time, item.size, item.is_managed, item.content);
+							getItem(item.absHref, item.time, item.size, item.is_managed, item.content, item.md5, item.sha1);
 						});
 					}
 

@@ -87,6 +87,18 @@ class Item {
 		$this->date = @filemtime($this->path);
 		$this->size = Item::filesize($app, $this->path);
 		$this->is_content_fetched = false;
+
+		// $options = $app->get_options();
+		// if (!$this->is_folder && $options["hashes"]["enabled"]) {
+		if (!$this->is_folder) {
+			// $this->md5 = md5_file($this->path);
+			// $this->sha1 = sha1_file($this->path);
+			$this->md5 = null;
+			$this->sha1 = null;
+		} else {
+			$this->md5 = null;
+			$this->sha1 = null;
+		}
 	}
 
 
@@ -101,6 +113,9 @@ class Item {
 		if ($this->is_folder) {
 			$obj["is_managed"] = $this->app->is_managed_url($this->url);
 			$obj["content"] = $this->is_content_fetched;
+		} else {
+			$obj["md5"] = $this->md5;
+			$obj["sha1"] = $this->sha1;
 		}
 
 		return $obj;
