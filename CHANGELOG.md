@@ -6,6 +6,7 @@
 
 * replaces PHP backtick operator with `exec`
 * adds initial theme support
+* adds sidebar
 * adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
 * adds PHP variant to calc folder sizes
 * adds scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))

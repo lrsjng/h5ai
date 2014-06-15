@@ -10,20 +10,24 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 		}, allsettings.view),
 
 		storekey = 'viewmode',
+		menuIsVisible = false,
 
-		template = '<li id="view-[MODE]" class="view">' +
-						'<a href="#">' +
-							'<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]"/>' +
-							'<span class="l10n-[MODE]"/>' +
-						'</a>' +
-					'</li>',
+		sidebarToggleTemplate =
+			'<li id="menu-toggle" class="view">' +
+				'<a href="#">' +
+					'<img src="' + resource.image('settings') + '" alt="settings"/>' +
+				'</a>' +
+			'</li>',
 
-		sizeTemplate = '<li id="view-[SIZE]" class="view">' +
-							'<a href="#">' +
-								'<img src="' + resource.image('size') + '" alt="size"/>' +
-								'<span>[SIZE]</span>' +
-							'</a>' +
-						'</li>',
+		modeTemplate =
+			'<div id="view-[MODE]" class="view">' +
+				'<a href="#">' +
+					'<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]"/>' +
+				'</a>' +
+			'</div>',
+
+		sizeTemplate =
+			'<input id="view-size" type="range" min="0" max="0" value="0">',
 
 		adjustSpacing = function () {
 
@@ -57,29 +61,44 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
 			_.each(sizes, function (s) {
 				if (s === size) {
-					$('#view-' + s).addClass('current');
 					$view.addClass('size-' + s).show();
 				} else {
-					$('#view-' + s).removeClass('current');
 					$view.removeClass('size-' + s);
 				}
 			});
+
+			$('#view-size').val(_.indexOf(_.intersection(sizes, settings.sizes), size));
 
 			adjustSpacing();
 		},
 
 		init = function () {
 
-			var $navbar = $('#navbar');
+			var $sidebar = $('#sidebar'),
+				$settings = $('#settings'),
+				$viewBlock = $('<div class="block"/>'),
+				max;
+
+			$(sidebarToggleTemplate)
+				.on('click', 'a', function (event) {
+
+					menuIsVisible = !menuIsVisible;
+					$sidebar.stop().animate({
+						right: menuIsVisible ? 0 : -$sidebar.outerWidth()-1
+					});
+					event.preventDefault();
+				})
+				.appendTo('#navbar');
 
 			settings.modes = _.intersection(settings.modes, modes);
 
 			if (settings.modes.length > 1) {
-				_.each(modes.slice(0).reverse(), function (mode) {
+				_.each(modes, function (mode) {
 					if (_.contains(settings.modes, mode)) {
-						$(template.replace(/\[MODE\]/g, mode))
-							.appendTo($navbar)
+						$(modeTemplate.replace(/\[MODE\]/g, mode))
+							.appendTo($viewBlock)
 							.on('click', 'a', function (event) {
+
 								update(mode);
 								event.preventDefault();
 							});
@@ -88,17 +107,17 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 			}
 
 			if (settings.sizes.length > 1) {
-				_.each(sizes.slice(0).reverse(), function (size) {
-					if (_.contains(settings.sizes, size)) {
-						$(sizeTemplate.replace(/\[SIZE\]/g, size))
-							.appendTo($navbar)
-							.on('click', 'a', function (event) {
-								update(null, size);
-								event.preventDefault();
-							});
-					}
-				});
+				max = settings.sizes.length-1;
+				$(sizeTemplate)
+					.prop('max', max).attr('max', max)
+					.on('input', function (event) {
+
+						update(null, settings.sizes[parseInt(event.target.value, 10)]);
+					})
+					.appendTo($viewBlock);
 			}
+
+			$viewBlock.appendTo($settings);
 
 			update();
 

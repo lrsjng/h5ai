@@ -11,8 +11,8 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			isoCode: 'en',
 			lang: 'english',
 			details: 'details',
-			list: "list",
-			grid: "grid",
+			list: 'list',
+			grid: 'grid',
 			icons: 'icons',
 			name: 'Name',
 			lastModified: 'Last modified',
@@ -28,11 +28,8 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 			'delete': 'delete'
 		},
 
-		template = '<span id="langSelector">' +
-						'<span class="l10n-isoCode"/> - <span class="l10n-lang"/>' +
-						'<span class="langOptions"><ul/></span>' +
-					'</span>',
-		langOptionTemplate = '<li class="langOption"/>',
+		blockTemplate = '<div class="block"><div class="select"><select id="langs"/></div></div>',
+		optionTemplate = '<option/>',
 
 		storekey = 'ext/l10n',
 
@@ -47,12 +44,14 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 				currentLang = lang;
 			}
 
+			$('#langs option')
+				.removeAttr('selected').removeProp('selected')
+				.filter('.' + currentLang.isoCode)
+				.attr('selected', 'selected').prop('selected', 'selected');
+
 			$.each(currentLang, function (key, value) {
 				$('.l10n-' + key).text(value);
 			});
-			$('.langOption').removeClass('current');
-			$('.langOption.' + currentLang.isoCode).addClass('current');
-
 			format.setDefaultDateFormat(currentLang.dateFormat);
 
 			$('#items .item .date').each(function () {
@@ -107,46 +106,24 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
 
 		initLangSelector = function (langs) {
 
-			var $langSelector = $(template).appendTo('#bottombar .right'),
-				$langOptions = $langSelector.find('.langOptions'),
-				$ul = $langOptions.find('ul'),
-				isoCodes = [];
-
-			$.each(langs, function (isoCode) {
-				isoCodes.push(isoCode);
-			});
-			isoCodes.sort();
-
-			$.each(isoCodes, function (idx, isoCode) {
-				$(langOptionTemplate)
-					.addClass(isoCode)
-					.text(isoCode + ' - ' + (_.isString(langs[isoCode]) ? langs[isoCode] : langs[isoCode].lang))
-					.appendTo($ul)
-					.click(function () {
+			var isoCodes = _.keys(langs).sort(),
+				$block = $(blockTemplate),
+				$select = $block.find('select')
+					.on('change', function (event) {
+						var isoCode = event.target.value;
 						store.put(storekey, isoCode);
 						localize(langs, isoCode, false);
 					});
+
+			$.each(isoCodes, function (idx, isoCode) {
+				$(optionTemplate)
+					.attr('value', isoCode)
+					.addClass(isoCode)
+					.text(isoCode + ' - ' + (_.isString(langs[isoCode]) ? langs[isoCode] : langs[isoCode].lang))
+					.appendTo($select);
 			});
-			$langOptions
-				.append($ul)
-				.scrollpanel();
 
-			$langSelector.hover(
-				function () {
-					$langOptions
-						.css('top', '-' + $langOptions.outerHeight() + 'px')
-						.stop(true, true)
-						.fadeIn();
-
-					// needs to be updated twice for initial fade in rendering :/
-					$langOptions.scrollpanel('update').scrollpanel('update');
-				},
-				function () {
-					$langOptions
-						.stop(true, true)
-						.fadeOut();
-				}
-			);
+			$block.appendTo('#settings');
 		},
 
 		init = function () {
