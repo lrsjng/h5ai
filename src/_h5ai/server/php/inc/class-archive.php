@@ -23,7 +23,7 @@ class Archive {
 		$this->add_hrefs($urls);
 
 		if (count($this->dirs) === 0 && count($this->files) === 0) {
-			return 500;
+			$this->add_dir(CURRENT_PATH, "/");
 		}
 
 		if ($type === "php-tar") {
@@ -144,6 +144,10 @@ class Archive {
 	private function add_hrefs($urls) {
 
 		foreach ($urls as $href) {
+
+			if (trim($href) === "") {
+				continue;
+			}
 
 			$d = normalize_path(dirname($href), true);
 			$n = basename($href);

@@ -15,6 +15,7 @@
 * adds markdown support for custom header and footer files
 * adds video and audio preview via HTML5 elements (no fallback, works best in Chrome)
 * adds filter reset on location change
+* adds option to make download button always visible
 * adds Google UA support
 * extends selectable icon sizes (adds 128px, 192px, 256px, 384px)
 * improves preview GUI
