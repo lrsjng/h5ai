@@ -19,6 +19,7 @@
 * adds Google UA support
 * extends selectable icon sizes (adds 128px, 192px, 256px, 384px)
 * improves preview GUI
+* disable thumbs in `cache` folder
 * fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
 * removes server side file manipulation extensions `dropbox`, `delete` and `rename`
 * updates H5BP to 4.3.0

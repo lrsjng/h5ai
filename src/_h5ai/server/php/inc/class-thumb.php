@@ -22,6 +22,9 @@ class Thumb {
 	public function thumb($type, $source_url, $mode, $width, $height) {
 
 		$source_path = $this->app->to_path($source_url);
+		if (!file_exists($source_path) || starts_with($source_path, CACHE_PATH)) {
+			return null;
+		}
 
 		if ($type === "img") {
 			$capture_path = $source_path;
