@@ -57,7 +57,7 @@ File types mapped to file extensions
 	"txt-tex":			["*.tex"],
 	"txt-vcal":			["*.vcal"],
 	"txt-xml":			["*.xml"],
-	"vid":				["*.avi", "*.flv", "*.mkv", "*.mov", "*.m4v", "*.mp4", "*.mpg", "*.rm", "*.swf", "*.ts", "*.vob", "*.wmv"],
+	"vid":				["*.avi", "*.flv", "*.mkv", "*.mov", "*.m4v", "*.mp4", "*.mpg", "*.rm", "*.swf", "*.ts", "*.vob", "*.webm", "*.wmv"],
 	"x":				[],
 	"x-calc":			["*.ods", "*.ots", "*.xlr", "*.xls", "*.xlsx"],
 	"x-doc":			["*.doc", "*.docx", "*.odm", "*.odt", "*.ott"],
