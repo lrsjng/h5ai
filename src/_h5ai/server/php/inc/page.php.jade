@@ -3,9 +3,9 @@
 - var fallback = "<?= FALLBACK ?>"
 
 doctype 5
-//if lt IE 9
+//if lt IE 10
 	<html class="no-js no-browser" lang="en">
-//[if gt IE 8]><!
+//[if gt IE 9]><!
 html.no-js.browser( lang="en" )
 	//<![endif]
 
@@ -27,15 +27,19 @@ html.no-js.browser( lang="en" )
 
 		div#bottombar.clearfix
 			span.left
-				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
-					| {{pkg.name}} {{pkg.version}}
 				span.noJsMsg
 					| ⚡ JavaScript disabled! ⚡
 				span.noBrowserMsg
-					| ⚡ Unsupported browser! Works best in 
+					| ⚡ Works best in 
 					a( href="http://browsehappy.com" ) modern browsers
-					| . ⚡
+					| ! ⚡
 			span.right
+				a( href="{{pkg.url}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
+					| {{pkg.name}}
+				span
+					|  by 
+				a( href="https://twitter.com/{{pkg.twitter}}", title="{{pkg.author}}" )
+					| @{{pkg.twitter}}
 			span.center
 
 		div#sidebar

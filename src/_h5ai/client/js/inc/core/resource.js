@@ -75,6 +75,6 @@ modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function
 		icon: icon,
 		ensureMarkdown: ensureMarkdown,
 		ensureQRCode: ensureQRCode,
-		ensureSH: ensureSH,
+		ensureSH: ensureSH
 	};
 });

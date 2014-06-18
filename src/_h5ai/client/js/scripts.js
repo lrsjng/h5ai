@@ -2,6 +2,7 @@
 // other libs
 // ----------
 // @include "lib/modernizr-*.js"
+if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 // @include "lib/underscore-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
