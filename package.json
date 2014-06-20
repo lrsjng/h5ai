@@ -4,7 +4,6 @@
   "description": "a modern HTTP web server index",
   "url": "http://larsjung.de/h5ai/",
   "author": "Lars Jung",
-  "twitter": "lrsjng",
   "license": "MIT",
   "repository": {
     "type": "git",

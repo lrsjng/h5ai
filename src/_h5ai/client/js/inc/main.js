@@ -1,6 +1,7 @@
 
 modulejs.define('main', ['_', 'core/event'], function (_, event) {
 
+	modulejs.require('view/ensure');
 	modulejs.require('view/items');
 	modulejs.require('view/spacing');
 	modulejs.require('view/viewmode');
