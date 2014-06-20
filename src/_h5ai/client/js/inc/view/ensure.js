@@ -13,9 +13,9 @@ modulejs.define('view/ensure', ['$', 'core/event'], function ($, event) {
 		ensure = function () {
 
 			if (
-				$(selr).filter(isVisible).length != 1 ||
-				$(sela).filter(isVisible).length != 1 ||
-				$(selr).text() != sequence
+				$(selr).filter(isVisible).length !== 1 ||
+				$(sela).filter(isVisible).length !== 1 ||
+				$(selr).text() !== sequence
 			) {
 				$(selr).remove();
 				$('<span><a/></span>')

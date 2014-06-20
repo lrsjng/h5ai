@@ -1,10 +1,12 @@
 
 modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function (_, $, config, settings) {
 
-	var imagesHref = settings.appHref + 'client/images/',
-		fallbackHref = settings.appHref + 'client/images/fallback/',
-		themesHref = settings.appHref + 'client/themes/',
-		scriptsHref = settings.appHref + 'client/js/',
+	var win = window,
+		appHref = settings.appHref,
+		imagesHref = appHref + 'client/images/',
+		fallbackHref = appHref + 'client/images/fallback/',
+		themesHref = appHref + 'client/themes/',
+		scriptsHref = appHref + 'client/js/',
 		fallbacks = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid'],
 
 		image = function (id) {
@@ -43,38 +45,22 @@ modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function
 
 		loadScriptGlob = function (filename, globalId, callback) {
 
-			if (window[globalId]) {
-				callback(window[globalId]);
+			if (win[globalId]) {
+				callback(win[globalId]);
 			} else {
-				loadScript(filename, function () { callback(window[globalId]); });
-			}
-		},
-
-		ensureQRCode = function (callback) {
-
-			if ($.fn.qrcode) {
-				callback();
-			} else {
-				loadScript('qrcode.js', callback);
+				loadScript(filename, function () { callback(win[globalId]); });
 			}
 		},
 
 		ensureSH = function (callback) {
 
 			loadScriptGlob('syntaxhighlighter.js', 'SyntaxHighlighter', callback);
-		},
-
-		ensureMarkdown = function (callback) {
-
-			loadScriptGlob('markdown.js', 'markdown', callback);
 		};
 
 
 	return {
 		image: image,
 		icon: icon,
-		ensureMarkdown: ensureMarkdown,
-		ensureQRCode: ensureQRCode,
 		ensureSH: ensureSH
 	};
 });

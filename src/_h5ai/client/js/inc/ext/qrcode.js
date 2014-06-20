@@ -1,5 +1,5 @@
 
-modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/event', 'core/resource'], function (_, $, modernizr, allsettings, event, resource) {
+modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/event'], function (_, $, modernizr, allsettings, event) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -12,15 +12,13 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
 		update = function (item) {
 
-			resource.ensureQRCode(function () {
-				$qrcode.empty().qrcode({
-					render: modernizr.canvas ? 'canvas' : 'div',
-					width: settings.size,
-					height: settings.size,
-					color: '#333',
-					bgColor: '#fff',
-					text: window.location.protocol + '//' + window.location.host + item.absHref
-				});
+			$qrcode.empty().qrcode({
+				render: modernizr.canvas ? 'canvas' : 'div',
+				width: settings.size,
+				height: settings.size,
+				color: '#333',
+				bgColor: '#fff',
+				text: window.location.protocol + '//' + window.location.host + item.absHref
 			});
 		},
 

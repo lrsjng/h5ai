@@ -4,6 +4,7 @@
 // @include "lib/modernizr-*.js"
 if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 // @include "lib/underscore-*.js"
+// @include "lib/markdown-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 // @include "lib/json2-*.js"
@@ -13,6 +14,7 @@ if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 // @include "lib/jquery-*.js"
 // @include "lib/jquery.fracs-*.js"
 // @include "lib/jquery.mousewheel-*.js"
+// @include "lib/jquery.qrcode-*.js"
 // @include "lib/jquery.scrollpanel-*.js"
 
 // app
@@ -22,6 +24,7 @@ if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 
 	/*global jQuery, Modernizr, moment, _ */
 	modulejs.define('$', function () { return jQuery; });
+	modulejs.define('markdown', function () { return markdown; });
 	modulejs.define('modernizr', function () { return Modernizr; });
 	modulejs.define('moment', function () { return moment; });
 	modulejs.define('_', function () { return _; });
