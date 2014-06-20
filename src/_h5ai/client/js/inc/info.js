@@ -30,7 +30,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
 			addTest(
 				'PHP version', 'PHP version &gt;= 5.3.0',
-				setup.HAS_PHP_VERSION, setup.PHP_VERSION
+				setup.HAS_PHP_VERSION
 			);
 
 			addTest(
