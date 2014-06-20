@@ -22,7 +22,7 @@ if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 (function () {
 	'use strict';
 
-	/*global jQuery, Modernizr, moment, _ */
+	/*global jQuery, markdown, Modernizr, moment, _ */
 	modulejs.define('$', function () { return jQuery; });
 	modulejs.define('markdown', function () { return markdown; });
 	modulejs.define('modernizr', function () { return Modernizr; });
