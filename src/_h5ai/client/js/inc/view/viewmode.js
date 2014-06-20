@@ -110,7 +110,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 				max = settings.sizes.length-1;
 				$(sizeTemplate)
 					.prop('max', max).attr('max', max)
-					.on('input', function (event) {
+					.on('input change', function (event) {
 
 						update(null, settings.sizes[parseInt(event.target.value, 10)]);
 					})
