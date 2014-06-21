@@ -30,7 +30,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 			if (match) {
 				var split = { parent: match[1], name: match[2] };
 
-				if (split.parent && !startsWith(split.parent, settings.rootAbsHref)) {
+				if (split.parent && !startsWith(split.parent, settings.rootHref)) {
 					split.parent = null;
 				}
 				return split;
@@ -41,11 +41,11 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 		cache = {},
 
-		getItem = function (absHref, time, size, status, isContentFetched) {
+		getItem = function (absHref, time, size, isManaged, isContentFetched, md5, sha1) {
 
 			absHref = location.forceEncoding(absHref);
 
-			if (!startsWith(absHref, settings.rootAbsHref)) {
+			if (!startsWith(absHref, settings.rootHref)) {
 				return null;
 			}
 
@@ -57,11 +57,17 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 			if (_.isNumber(size)) {
 				self.size = size;
 			}
-			if (status) {
-				self.status = status;
+			if (isManaged) {
+				self.isManaged = true;
 			}
 			if (isContentFetched) {
 				self.isContentFetched = true;
+			}
+			if (md5) {
+				self.md5 = md5;
+			}
+			if (sha1) {
+				self.sha1 = sha1;
 			}
 
 			return self;
@@ -100,7 +106,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 					if (response.items) {
 						_.each(response.items, function (item) {
-							getItem(item.absHref, item.time, item.size, item.status, item.content);
+							getItem(item.absHref, item.time, item.size, item.is_managed, item.content, item.md5, item.sha1);
 						});
 					}
 
@@ -123,7 +129,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 		this.time = null;
 		this.size = null;
 		this.parent = null;
-		this.status = null;
+		this.isManaged = null;
 		this.content = {};
 
 		if (split.parent) {
@@ -164,12 +170,12 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
 		isRoot: function () {
 
-			return this.absHref === settings.rootAbsHref;
+			return this.absHref === settings.rootHref;
 		},
 
 		isH5ai: function () {
 
-			return this.absHref === settings.h5aiAbsHref;
+			return this.absHref === settings.appHref;
 		},
 
 		isEmpty: function () {

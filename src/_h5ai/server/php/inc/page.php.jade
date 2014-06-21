@@ -1,29 +1,24 @@
 
-- var href = "<?php global $HREF; echo $HREF; ?>"
-- var fallback = "<?php global $FALLBACK; echo $FALLBACK; ?>"
+- var app_href = "<?= APP_HREF ?>"
+- var fallback = "<?= FALLBACK ?>"
 
 doctype 5
-//if lt IE 9
+//if lt IE 10
 	<html class="no-js no-browser" lang="en">
-//[if gt IE 8]><!
+//[if gt IE 9]><!
 html.no-js.browser( lang="en" )
 	//<![endif]
 
 	head
 		meta( charset="utf-8" )
-		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
-		title index · styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})
-		meta( name="description", content="index styled with {{pkg.name}} {{pkg.version}} ({{pkg.url}})" )
-		meta( name="viewport", content="width=device-width" )
-		link( rel="shortcut icon", href!="#{href}client/images/app-16x16.ico" )
-		link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{href}client/images/app-48x48.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="57x57", type="image/png", href!="#{href}client/images/app-57x57.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="72x72", type="image/png", href!="#{href}client/images/app-72x72.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="114x114", type="image/png", href!="#{href}client/images/app-114x114.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="144x144", type="image/png", href!="#{href}client/images/app-144x144.png" )
-		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:300italic,700italic,300,700" )
-		link( rel="stylesheet", href!="#{href}client/css/styles.css" )
-		script( src!="#{href}client/js/scripts.js" )
+		meta( http-equiv="X-UA-Compatible", content="IE=edge" )
+		title index · powered by {{pkg.name}} {{pkg.version}} ({{pkg.url}})
+		meta( name="description", content="index - powered by {{pkg.name}} {{pkg.version}} ({{pkg.url}})" )
+		meta( name="viewport", content="width=device-width, initial-scale=1" )
+		link( rel="shortcut icon", href!="#{app_href}client/images/favicon/favicon-16-32.ico" )
+		link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{app_href}client/images/favicon/favicon-152.png" )
+		link( rel="stylesheet", href!="#{app_href}client/css/styles.css" )
+		script( src!="#{app_href}client/js/scripts.js", data-module="main" )
 
 	body
 
@@ -32,15 +27,18 @@ html.no-js.browser( lang="en" )
 
 		div#bottombar.clearfix
 			span.left
-				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
-					| {{pkg.name}} {{pkg.version}}
 				span.noJsMsg
 					| ⚡ JavaScript disabled! ⚡
 				span.noBrowserMsg
-					| ⚡ Unsupported browser! Works best in 
+					| ⚡ Works best in 
 					a( href="http://browsehappy.com" ) modern browsers
-					| . ⚡
+					| ! ⚡
 			span.right
+				a( href="{{pkg.url}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
+					| powered by h5ai {{pkg.version}}
 			span.center
+
+		div#sidebar
+			div#settings
 
 		div#fallback !{fallback}

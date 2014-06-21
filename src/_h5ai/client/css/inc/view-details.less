@@ -1,68 +1,4 @@
 
-#view.view-details {
-
-	li {
-
-		&.header {
-			display: list-item;
-		}
-
-		&.item {
-
-			a, a:active, a:visited {
-				border-bottom: 1px solid @item-border-col-sep;
-				height: @icon-size + 6px;
-
-				&:hover, &.hover {
-					border-color: @item-border-col-hover;
-				}
-			}
-
-			// needs to be here, to not conflict with header fields
-			.icon {
-				padding: 8px;
-			}
-			.label, .date, .size {
-				padding: ((@icon-size - 16px)/2) 8px;
-			}
-		}
-
-		.icon.square {
-			display: inline-block;
-			position: absolute;
-			left: 0;
-			top: -4px;
-			width: @icon-size;
-
-			img {
-				width: @icon-size;
-				height: @icon-size;
-			}
-		}
-
-		.label {
-			margin: 0 230px 0 (@icon-size + 16px);
-		}
-
-		.date {
-			position: absolute;
-			right: 100px;
-			top: 0;
-		}
-
-		.size {
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
-
-		.selector {
-			margin-top: -1px;
-		}
-	}
-}
-
-
 .view-details-sized(@size) {
 
 	li {
@@ -95,6 +31,55 @@
 
 
 #view.view-details {
+
+	li {
+
+		&.header {
+			display: list-item;
+		}
+
+		&.item {
+
+			a, a:active, a:visited {
+				border-bottom: 1px solid @item-border-col-sep;
+
+				&:hover, &.hover {
+					border-color: @item-border-col-hover;
+				}
+			}
+
+			// needs to be here, to not conflict with header fields
+			.icon {
+				padding: 8px;
+			}
+		}
+
+		.icon.square {
+			display: inline-block;
+			position: absolute;
+			left: 0;
+			top: -4px;
+		}
+
+		.date {
+			position: absolute;
+			right: 100px;
+			top: 0;
+		}
+
+		.size {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		.selector {
+			margin-top: -1px;
+		}
+	}
+
+	.view-details-sized(@icon-size);
+
 	&.size-16 {
 		.view-details-sized(16px)
 	}
@@ -117,5 +102,21 @@
 
 	&.size-96 {
 		.view-details-sized(96px)
+	}
+
+	&.size-128 {
+		.view-details-sized(128px)
+	}
+
+	&.size-192 {
+		.view-details-sized(192px)
+	}
+
+	&.size-256 {
+		.view-details-sized(256px)
+	}
+
+	&.size-384 {
+		.view-details-sized(384px)
 	}
 }

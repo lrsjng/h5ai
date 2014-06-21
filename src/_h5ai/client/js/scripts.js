@@ -3,27 +3,24 @@
 // ----------
 // @include "lib/modernizr-*.js"
 // @include "lib/underscore-*.js"
+// @include "lib/markdown-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 // @include "lib/json2-*.js"
-// @include "lib/spin-*.js"
 
 // jQuery libs
 // -----------
 // @include "lib/jquery-*.js"
-// @include "lib/jquery.filedrop-*.js"
-// @include "lib/jquery.fracs-*.js"
-// @include "lib/jquery.mousewheel-*.js"
-// @include "lib/jquery.scrollpanel-*.js"
-// @include "lib/jquery.spin-*.js"
+// @include "lib/jquery.*.js"
 
 // app
 // ---
 (function () {
 	'use strict';
 
-	/*global jQuery, Modernizr, moment, _ */
+	/*global jQuery, markdown, Modernizr, moment, _ */
 	modulejs.define('$', function () { return jQuery; });
+	modulejs.define('markdown', function () { return markdown; });
 	modulejs.define('modernizr', function () { return Modernizr; });
 	modulejs.define('moment', function () { return moment; });
 	modulejs.define('_', function () { return _; });
@@ -31,27 +28,30 @@
 	// @include "inc/**/*.js"
 
 	var	$ = jQuery,
-		mode = $('script[src$="scripts.js"]').data('mode');
+		module = $('script[data-module]').data('module'),
+		url;
 
 	if ($('html').hasClass('no-browser')) {
-
-	} else if (mode === 'info') {
-
-		$(function () { modulejs.require('info'); });
-
-	} else {
-
-		$.ajax({
-			url: '.',
-			data: {action: 'get', options: true, types: true, langs: true, server: true},
-			type: 'POST',
-			dataType: 'json',
-			success: function (config) {
-
-				modulejs.define('config', config);
-				$(function () { modulejs.require('main'); });
-			}
-		});
+		return;
 	}
+
+	if (module === 'main') {
+		url = '.';
+	} else if (module === 'info') {
+		url = 'server/php/index.php';
+	} else {
+		return;
+	}
+
+	$.ajax({
+		url: url,
+		data: {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
+		type: 'POST',
+		dataType: 'json'
+	}).done(function (config) {
+
+		modulejs.define('config', config);
+		$(function () { modulejs.require(module); });
+	});
 
 }());

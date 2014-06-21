@@ -1,30 +1,46 @@
 
-modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/event'], function (_, $, allsettings, server, event) {
+modulejs.define('ext/custom', ['_', '$', 'markdown', 'core/settings', 'core/server', 'core/event', 'core/resource'], function (_, $, markdown, allsettings, server, event, resource) {
 
 	var settings = _.extend({
 			enabled: false
 		}, allsettings.custom),
 
-		onLocationChanged = function () {
+		$header, $footer,
+		duration = 200,
 
-			server.request({action: 'get', custom: true}, function (response) {
+		onLocationChanged = function (item) {
 
-				var h, f;
+			server.request({action: 'get', custom: true, customHref: item.absHref}, function (response) {
+
+				var has_header, has_footer, data, content;
+
 				if (response) {
-					if (response.custom.header) {
-						$('#content-header').html(response.custom.header).stop().slideDown(200);
-						h = true;
+					data = response.custom;
+
+					if (data.header) {
+						content = data.header;
+						if (data.header_type === 'md') {
+							content  = markdown.toHTML(content);
+						}
+						$header.html(content).stop().slideDown(duration);
+						has_header = true;
 					}
-					if (response.custom.footer) {
-						$('#content-footer').html(response.custom.footer).stop().slideDown(200);
-						f = true;
+
+					if (data.footer) {
+						content = data.footer;
+						if (data.footer_type === 'md') {
+							content  = markdown.toHTML(content);
+						}
+						$footer.html(content).stop().slideDown(duration);
+						has_footer = true;
 					}
 				}
-				if (!h) {
-					$('#content-header').stop().slideUp(200);
+
+				if (!has_header) {
+					$header.stop().slideUp(duration);
 				}
-				if (!f) {
-					$('#content-footer').stop().slideUp(200);
+				if (!has_footer) {
+					$footer.stop().slideUp(duration);
 				}
 			});
 		},
@@ -35,8 +51,8 @@ modulejs.define('ext/custom', ['_', '$', 'core/settings', 'core/server', 'core/e
 				return;
 			}
 
-			$('<div id="content-header"/>').hide().prependTo('#content');
-			$('<div id="content-footer"/>').hide().appendTo('#content');
+			$header = $('<div id="content-header"/>').hide().prependTo('#content');
+			$footer = $('<div id="content-footer"/>').hide().appendTo('#content');
 
 			event.sub('location.changed', onLocationChanged);
 		};

@@ -1,98 +1,42 @@
 doctype 5
-//if lt IE 9
+//if lt IE 10
 	<html class="no-js no-browser" lang="en">
-//[if gt IE 8]><!
+//[if gt IE 9]><!
 html.no-js.browser( lang="en" )
 	//<![endif]
 
 	head
 		meta( charset="utf-8" )
-		meta( http-equiv="X-UA-Compatible", content="IE=edge,chrome=1" )
-		title {{pkg.name}} {{pkg.version}} server details
-		meta( name="description", content="{{pkg.name}} server details" )
-		meta( name="viewport", content="width=device-width" )
-		link( rel="shortcut icon", href="client/images/app-16x16.ico" )
-		link( rel="apple-touch-icon-precomposed", type="image/png", href="client/images/app-48x48.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="57x57", type="image/png", href="client/images/app-57x57.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="72x72", type="image/png", href="client/images/app-72x72.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="114x114", type="image/png", href="client/images/app-114x114.png" )
-		link( rel="apple-touch-icon-precomposed", sizes="144x144", type="image/png", href="client/images/app-144x144.png" )
-		link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:300italic,700italic,300,700" )
+		meta( http-equiv="X-UA-Compatible", content="IE=edge" )
+		title {{pkg.name}} {{pkg.version}} Server Setup
+		meta( name="description", content="{{pkg.name}} {{pkg.version}} Server Setup" )
+		meta( name="viewport", content="width=device-width, initial-scale=1" )
+		link( rel="shortcut icon", href="client/images/favicon/favicon-16-32.ico" )
+		link( rel="apple-touch-icon-precomposed", type="image/png", href="client/images/favicon/favicon-152.png" )
 		link( rel="stylesheet", href="client/css/styles.css" )
-		script( src="client/js/scripts.js", data-mode="info" )
+		script( src="client/js/scripts.js", data-module="info" )
 
 	body#h5ai-info
 
 		h1
-			a( href="http://larsjung.de/h5ai/" ) {{pkg.name}}
+			a( href="{{pkg.url}}" ) {{pkg.name}}
 		span.build-version version {{pkg.version}}
 		span.build-stamp {{stamp}}
-		span.idx-file Index File: 
+		span.idx-file Index: 
 			code.value
 
-		h2 Server Details
+		h2 Server Setup
 		ul#tests
-			li.test.php( data-id="php" )
-				span.label PHP version
-				span.result ?
-				div.info PHP version &gt;= 5.2.1
-			li.test( data-id="cache" )
-				span.label Cache directory
-				span.result ?
-				div.info Web server has write access
-			li.test( data-id="thumbs" )
-				span.label Image thumbs
-				span.result ?
-				div.info PHP GD extension with JPEG support available
-			li.test( data-id="exif" )
-				span.label Use EXIF thumbs
-				span.result ?
-				div.info PHP EXIF extension available
-			li.test( data-id="ffmpeg" )
-				span.label Movie thumbs
-				span.result ?
-				div.info
-					| Command line program 
-					code ffmpeg
-					|  available
-			li.test( data-id="convert" )
-				span.label PDF thumbs
-				span.result ?
-				div.info
-					| Command line program 
-					code convert
-					|  available
-			li.test( data-id="tar" )
-				span.label Shell tar
-				span.result ?
-				div.info
-					| Command line program 
-					code tar
-					|  available
-			li.test( data-id="zip" )
-				span.label Shell zip
-				span.result ?
-				div.info
-					| Command line program 
-					code zip
-					|  available
-			li.test( data-id="du" )
-				span.label Folder sizes
-				span.result ?
-				div.info
-					| Command line program 
-					code du
-					|  available
 
 		div#bottombar.clearfix
 			span.left
-				a#h5ai-reference( href="{{pkg.url}}", title="{{pkg.name}} · {{pkg.description}}" )
-					| {{pkg.name}} {{pkg.version}}
 				span.noJsMsg
 					| ⚡ JavaScript disabled! ⚡
 				span.noBrowserMsg
-					| ⚡ Unsupported browser! Works best in 
+					| ⚡ Works best in 
 					a( href="http://browsehappy.com" ) modern browsers
-					| . ⚡
+					| ! ⚡
 			span.right
+				a( href="{{pkg.url}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
+					| powered by h5ai {{pkg.version}}
 			span.center

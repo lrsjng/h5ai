@@ -10,33 +10,15 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
 		$qrcode, hideTimeoutId,
 
-		loadQrCodeExtension = function (callback) {
-
-			if ($.fn.qrcode) {
-				callback();
-			} else {
-				$.ajax({
-					url: allsettings.h5aiAbsHref + 'client/js/qrcode.js',
-					dataType: 'script',
-					complete: function () {
-
-						callback();
-					}
-				});
-			}
-		},
-
 		update = function (item) {
 
-			loadQrCodeExtension(function () {
-				$qrcode.empty().qrcode({
-					render: modernizr.canvas ? 'canvas' : 'div',
-					width: settings.size,
-					height: settings.size,
-					color: '#333',
-					bgColor: '#fff',
-					text: 'http://' + document.domain + item.absHref
-				});
+			$qrcode.empty().qrcode({
+				render: modernizr.canvas ? 'canvas' : 'div',
+				width: settings.size,
+				height: settings.size,
+				color: '#333',
+				bgColor: '#fff',
+				text: window.location.protocol + '//' + window.location.host + item.absHref
 			});
 		},
 

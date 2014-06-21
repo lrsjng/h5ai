@@ -1,0 +1,19 @@
+{
+	"lang": "한국어",
+	"details": "자세히",
+	"list": "목록",
+	"grid": "그리드",
+	"icons": "아이콘",
+	"name": "파일명",
+	"lastModified": "최근수정일",
+	"size": "크기",
+	"parentDirectory": "상위폴더",
+	"empty": "빈폴더",
+	"folders": "폴더",
+	"files": "파일",
+	"download": "다운로드",
+	"noMatch": "해당파일이 없습니다.",
+	"dateFormat": "YYYY-MM-DD HH:mm",
+	"filter": "필터",
+	"delete": "삭제"
+}

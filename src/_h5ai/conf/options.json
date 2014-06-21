@@ -10,49 +10,53 @@ Options
 	Spacing of the main content.
 
 	Left and right will be added to a minimum of 30px. Top and bottom
-	are calculated relative to the top and bottom bar heights.
+	are added to the top and bottom bar heights.
 	*/
 	"spacing": {
-		"maxWidth": 960,
 		"top": 50,
-		"right": "auto",
 		"bottom": 50,
-		"left": "auto"
+		"left": "auto",
+		"right": "auto",
+		"maxWidth": 1024
 	},
 
 	/*
 	General view options.
 
+	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+	- hidden: don't list items matching these regular expressions
+	- hideFolders: hide all folders in the main view
+	- hideIf403: hide files and folders that are not readable by the server
+	- hideParentFolder: hide parent folder links in the main view
 	- modes: array, subset of ["details", "grid", "icons"]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
-	- sizes: array, subset of [16, 24, 32, 48, 64, 96]
+	- setParentFolderLabels: set parent folder labels to real folder names
+	- sizes: array, subset of [16, 24, 32, 48, 64, 96, 128, 192, 256, 384]
 		the first value indicates the default view mode. If only one value
 		is given the view mode is fixed and the selector buttons are hidden.
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
-	- setParentFolderLabels: set parent folder labels to real folder names
-	- hideParentFolderLinks: hide parent folder links in the main view
-	- hideFolders: hide all folders in the main view
-	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- indexFiles: consider folder with those files as non {{pkg.name}} folders
-	- ignore: don't list items matching these regular expressions
 	- smartBrowsing: use History API if available (no need to reload the whole page)
-	- extInNewWindow: open non-h5ai links in new window/tab
+	- theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to builtin fallback
+	- unmanaged: don't manage folders containing one of those files
+	- unmanagedInNewWindow: open unmanaged links in new window/tab
 	*/
 	"view": {
-		"modes": ["details", "grid", "icons"],
-		"sizes": [48, 24, 96],
-		"setParentFolderLabels": true,
-		"hideParentFolderLinks": false,
-		"hideFolders": false,
 		"binaryPrefix": false,
-		"indexFiles": ["index.html", "index.htm", "index.php"],
-		"ignore": ["^\\.", "^_{{pkg.name}}"],
+		"hidden": ["^\\.", "^_{{pkg.name}}"],
+		"hideFolders": false,
+		"hideIf403": true,
+		"hideParentFolder": false,
+		"modes": ["details", "grid", "icons"],
+		"setParentFolderLabels": true,
+		"sizes": [24, 32, 48, 64, 96],
 		"smartBrowsing": true,
-		"extInNewWindow": false
+		"theme": "",
+		"unmanaged": ["index.html", "index.htm", "index.php"],
+		"unmanagedInNewWindow": false
 	},
 
 
@@ -78,46 +82,30 @@ Options
 
 	/*
 	Allow customized header and footer files.
-	First looks for	files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
-	If not found it looks in all parent	directories (starting in the current directory) for
-	files "_h5ai.headers.html" and "_h5ai.footers.html"	until it finds one.	Note the different
-	filenames: "header" (only current) - "headers" (current and sub directories)!
+	First checks for files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
+	If not successful it checks all parent directories (starting in the current directory) for
+	files "_h5ai.headers.html" and "_h5ai.footers.html".
+	Note the different filenames: "header" (only current) - "headers" (current and sub directories)!
 	The file's content will be placed inside a <div/> tag above/below the main content.
+	If a file's extension is ".md" instead of ".html" its content will be interpreted as markdown.
 	*/
 	"custom": {
 		"enabled": true
 	},
 
-	/* [EXPERIMENTAL]
-	Allow file deletion.
-	*/
-	"delete": {
-		"enabled": false
-	},
-
-	/* [EXPERIMENTAL]
-	File upload via drag'n'drop. Folders are not supported.
-	The working file size seems to be very browser dependent.
-
-	- maxfiles: number, max number of files per upload
-	- maxfilesize: number, file size is in MB
-	*/
-	"dropbox": {
-		"enabled": false,
-		"maxfiles": 10,
-		"maxfilesize": 1000
-	},
-
 	/*
 	Enable packaged download of selected entries.
+	To select files the "select"-extension needs to be enabled.
 
 	- type: "php-tar", "shell-tar" or "shell-zip"
 	- packageName: basename of the download package, null for current foldername
+	- alwaysVisible: always show download button (defaults to download the current folder)
 	*/
 	"download": {
-		"enabled": false,
+		"enabled": true,
 		"type": "php-tar",
-		"packageName": null
+		"packageName": null,
+		"alwaysVisible": false
 	},
 
 	/*
@@ -135,9 +123,15 @@ Options
 
 	/*
 	Calc the size of folders.
+	This operation is real slow. The calculated sizes differ slightly for both
+	calculation types since "php" only adds the file size, while "shell-du"
+	also adds the sizes for the actual folder files.
+
+	- type: "php" (sloooow) or "shell-du" (sloow)
 	*/
 	"foldersize": {
-		"enabled": false
+		"enabled": false,
+		"type": "php"
 	},
 
 	/*
@@ -151,11 +145,27 @@ Options
 		["_trackPageLoadTime"]
 	]
 
-	see: http://support.google.com/googleanalytics/bin/topic.py?hl=en&topic=27612
+	see: https://developers.google.com/analytics/devguides/collection/gajs/
 	*/
-	"google-analytics": {
+	"google-analytics-ga": {
 		"enabled": false,
 		"gaq": []
+	},
+
+	/*
+	Adds Google Universial Analytics asynchronous tracking code.
+
+	for example:
+	"calls": [
+		['create', 'UA-XXXX-Y', 'auto'],
+		['send', 'pageview']
+	]
+
+	see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
+	*/
+	"google-analytics-ua": {
+		"enabled": false,
+		"calls": []
 	},
 
 	/*
@@ -180,19 +190,6 @@ Options
 	},
 
 	/*
-	Shows the server mode in the bottom left corner.
-
-	- display:
-		0: only show mode
-		1: mode and servername
-		2: mode, servername and -version
-	*/
-	"mode": {
-		"enabled": true,
-		"display": 2
-	},
-
-	/*
 	Adds Piwik tracker javascript code.
 
 	- baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
@@ -205,13 +202,23 @@ Options
 	},
 
 	/*
+	Play a audio preview on click.
+
+	- types: array of types
+	*/
+	"preview-aud": {
+		"enabled": true,
+		"types": ["aud"]
+	},
+
+	/*
 	Show an image preview on click.
 
 	- types: array of types
 	*/
 	"preview-img": {
 		"enabled": true,
-		"types": ["bmp", "gif", "ico", "image", "jpg", "png"]
+		"types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"]
 	},
 
 	/*
@@ -229,30 +236,40 @@ Options
 	"preview-txt": {
 		"enabled": true,
 		"types": {
-			"authors": "fixed",
-			"copying": "fixed",
-			"c": "c",
-			"cpp": "cpp",
-			"css": "css",
-			"diff": "diff",
-			"h": "c",
-			"hpp": "cpp",
-			"install": "fixed",
-			"log": "fixed",
-			"java": "java",
-			"js": "js",
-			"json": "js",
-			"makefile": "xml",
-			"markdown": "markdown",
-			// "php": "php",
-			"python": "python",
-			"readme": "fixed",
-			"rb": "ruby",
-			"rtf": "fixed",
-			"script": "shell",
-			"text": "fixed",
-			"xml": "xml"
+			"txt": "fixed",
+			"txt-authors": "fixed",
+			"txt-license": "fixed",
+			"txt-c": "c",
+			"txt-cpp": "cpp",
+			"txt-css": "css",
+			"txt-diff": "diff",
+			"txt-h": "c",
+			"txt-hpp": "cpp",
+			"txt-install": "fixed",
+			"txt-log": "fixed",
+			"txt-java": "java",
+			"txt-js": "js",
+			"txt-json": "js",
+			"txt-makefile": "xml",
+			"txt-md": "markdown",
+			// "txt-php": "php",
+			"txt-py": "python",
+			"txt-readme": "fixed",
+			"txt-rb": "ruby",
+			"txt-rtf": "fixed",
+			"txt-script": "shell",
+			"txt-xml": "xml"
 		}
+	},
+
+	/*
+	Play a video preview on click.
+
+	- types: array of types
+	*/
+	"preview-vid": {
+		"enabled": true,
+		"types": ["vid"]
 	},
 
 	/*
@@ -265,17 +282,9 @@ Options
 		"size": 150
 	},
 
-	/* [EXPERIMENTAL]
-	Allow to rename files.
-	No GUI yet.
-	*/
-	"rename": {
-		"enabled": false
-	},
-
 	/*
 	Make entries selectable (first mouse button + drag).
-	At the moment only needed for packaged download and delete.
+	At the moment only needed for packaged download.
 
 	- checkboxes: boolean, show a checkbox on mouse over item
 	*/
@@ -292,13 +301,15 @@ Options
 	- reverse: boolean, false for ascending, true for descending
 	- ignorecase: boolean, compare ignorecase
 	- natural: boolean, use natural sort order
+	- folders: where to place folders, 0 for "top", 1 for "in place", 2 for "bottom"
 	*/
 	"sort": {
 		"enabled": true,
 		"column": 0,
 		"reverse": false,
 		"ignorecase": true,
-		"natural": false
+		"natural": false,
+		"folders": 0
 	},
 
 	/*
@@ -321,9 +332,9 @@ Options
 	*/
 	"thumbnails": {
 		"enabled": true,
-		"img": ["bmp", "gif", "ico", "image", "jpg", "png"],
-		"mov": ["video"],
-		"doc": ["pdf", "ps"],
+		"img": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"],
+		"mov": ["vid"],
+		"doc": ["x-pdf", "x-ps"],
 		"delay": 1,
 		"size": 96,
 		"exif": true

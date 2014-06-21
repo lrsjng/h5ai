@@ -67,6 +67,11 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
 			return new RegExp(sequence, 'i');
 		},
 
+		reset = function () {
+
+			$input.val('').blur();
+		},
+
 		update = function (focus) {
 
 			var val = $input.val();
@@ -103,12 +108,12 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
 				.on('keydown', function (event) {
 
 					if (event.which === 27) {
-						$input.val('').blur();
+						reset();
 					}
 				})
 				.on('keypress', updt);
 
-			event.sub('location.changed', updf);
+			event.sub('location.changed', reset);
 		};
 
 	init();

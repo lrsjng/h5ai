@@ -110,6 +110,10 @@ module.exports = function (make) {
 			.handlebars(make.env)
 			.WRITE(mapSrc);
 
+		$(src + ': _h5ai/client/css/fonts/**')
+			.newerThan(mapSrc)
+			.WRITE(mapSrc);
+
 		$(root + ': *.md')
 			.newerThan(mapRoot)
 			.WRITE(mapRoot);
@@ -139,6 +143,10 @@ module.exports = function (make) {
 		$(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
 			.newerThan(mapSrc)
 			.handlebars(make.env)
+			.WRITE(mapSrc);
+
+		$(src + ': _h5ai/client/css/fonts/**')
+			.newerThan(mapSrc)
 			.WRITE(mapSrc);
 
 		$(root + ': *.md')

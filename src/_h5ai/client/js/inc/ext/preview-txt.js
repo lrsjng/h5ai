@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ext/preview'], function (_, $, allsettings, event, preview) {
+modulejs.define('ext/preview-txt', ['_', '$', 'markdown', 'core/settings', 'core/event', 'core/resource', 'ext/preview'], function (_, $, markdown, allsettings, event, resource, preview) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -46,45 +46,21 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 			return $(brush.getHtml(content)).find('.line');
 		},
 
-		loadScript = function (url, globalId, callback) {
-
-			if (window[globalId]) {
-				callback(window[globalId]);
-			} else {
-				$.ajax({
-					url: url,
-					dataType: 'script',
-					complete: function () {
-
-						callback(window[globalId]);
-					}
-				});
-			}
-		},
-		loadSyntaxhighlighter = function (callback) {
-
-			loadScript(allsettings.h5aiAbsHref + 'client/js/syntaxhighlighter.js', 'SyntaxHighlighter', callback);
-		},
-		loadMarkdown = function (callback) {
-
-			loadScript(allsettings.h5aiAbsHref + 'client/js/markdown.js', 'markdown', callback);
-		},
-
 		preloadText = function (absHref, callback) {
 
 			$.ajax({
-				url: absHref,
-				dataType: 'text',
-				success: function (content) {
+					url: absHref,
+					dataType: 'text'
+				})
+				.done(function (content) {
 
 					callback(content);
 					// setTimeout(function () { callback(content); }, 1000); // for testing
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
+				})
+				.fail(function (jqXHR, textStatus, errorThrown) {
 
 					callback('[ajax error] ' + textStatus);
-				}
-			});
+				});
 		},
 
 		onEnter = function (items, idx) {
@@ -130,19 +106,12 @@ modulejs.define('ext/preview-txt', ['_', '$', 'core/settings', 'core/event', 'ex
 
 							} else if (settings.types[currentItem.type] === 'markdown') {
 
-								$text = $(templateMarkdown).text(textContent);
-
-								loadMarkdown(function (md) {
-
-									if (md) {
-										$text.html(md.toHTML(textContent));
-									}
-								});
+								$text = $(templateMarkdown).html(markdown.toHTML(textContent));
 							} else {
 
 								$text = $(templateText).text(textContent);
 
-								loadSyntaxhighlighter(function (sh) {
+								resource.ensureSH(function (sh) {
 
 									if (sh) {
 										var $table = $('<table/>');

@@ -2,10 +2,10 @@
 modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/location'], function (_, $, allsettings, resource, format, event, location) {
 
 	var settings = _.extend({
-			setParentFolderLabels: false,
-			hideParentFolderLinks: false,
+			binaryPrefix: false,
 			hideFolders: false,
-			binaryPrefix: false
+			hideParentFolder: false,
+			setParentFolderLabels: false
 		}, allsettings.view),
 
 		itemTemplate = '<li class="item">' +
@@ -56,14 +56,9 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			$date.data('time', item.time).text(format.formatDate(item.time));
 			$size.data('bytes', item.size).text(format.formatSize(item.size));
 
-			if (item.isFolder() && _.isNumber(item.status)) {
-				if (item.status === 200) {
-					$html.addClass('page');
-					$iconImg.attr('src', resource.icon('folder-page'));
-				} else {
-					$html.addClass('error');
-					$label.append($(hintTemplate).text(' ' + item.status + ' '));
-				}
+			if (item.isFolder() && !item.isManaged) {
+				$html.addClass('page');
+				$iconImg.attr('src', resource.icon('folder-page'));
 			}
 
 			if (item.isCurrentParentFolder()) {
@@ -101,7 +96,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			$items.find('.item').remove();
 
-			if (item.parent && !settings.hideParentFolderLinks) {
+			if (item.parent && !settings.hideParentFolder) {
 				$items.append(update(item.parent, true));
 			}
 
@@ -117,6 +112,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 			} else {
 				$empty.hide();
 			}
+
+			$('html,body').scrollLeft(0).scrollTop(0);
 		},
 
 		onLocationRefreshed = function (item, added, removed) {

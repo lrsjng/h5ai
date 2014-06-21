@@ -44,12 +44,8 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 				$html.addClass('current');
 			}
 
-			if (_.isNumber(item.status)) {
-				if (item.status === 200) {
-					$a.append($(pageHintTemplate));
-				} else {
-					$a.append($(statusHintTemplate).text('(' + item.status + ')'));
-				}
+			if (!item.isManaged) {
+				$a.append($(pageHintTemplate));
 			}
 
 			if (item.$crumb) {

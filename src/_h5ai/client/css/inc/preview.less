@@ -32,55 +32,43 @@
 	}
 }
 
-#pv-close-area {
-	position: absolute;
-	right: 8px;
-	top: 8px;
-	cursor: pointer;
-
-	img {
-		background-color: rgba(0,0,0,0.5);
-		border-radius: 8px;
-		width: 48px;
-		height: 48px;
-		opacity: 0.5;
-	}
-
-	&:hover, &.hover {
-		img {
-			opacity: 1;
-		}
-	}
-}
-
 #pv-prev-area, #pv-next-area {
 	position: absolute;
 	top: 50%;
 	cursor: pointer;
 
 	img {
-		background-color: rgba(0,0,0,0.5);
-		border-radius: 8px;
 		width: 48px;
 		height: 48px;
-		margin: -72px 0;
-		padding: 48px 0;
+		margin: -36px 0;
+		padding: 12px;
 		opacity: 0.5;
 	}
 
 	&:hover, &.hover {
 		img {
+			background-color: rgba(27,27,27,0.8);
 			opacity: 1;
 		}
 	}
 }
 
 #pv-prev-area {
-	left: 8px;
+	left: 0;
+	img {
+		border-top-right-radius: 8px;
+		border-bottom-right-radius: 8px;
+		padding-left: 48px;
+	}
 }
 
 #pv-next-area {
-	right: 8px;
+	right: 0;
+	img {
+		border-top-left-radius: 8px;
+		border-bottom-left-radius: 8px;
+		padding-right: 48px;
+	}
 }
 
 #pv-buttons {

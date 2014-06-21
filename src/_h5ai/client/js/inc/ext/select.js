@@ -172,7 +172,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
 			$document
 				.on('mousedown', '.noSelection', noSelection)
-				.on('mousedown', '.noSelectionUnlessCtrl,input,a', noSelectionUnlessCtrl)
+				.on('mousedown', '.noSelectionUnlessCtrl,input,select,a', noSelectionUnlessCtrl)
 				.on('mousedown', selectionStart);
 		};
 

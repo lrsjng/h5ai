@@ -4,15 +4,17 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 	var settings = _.extend({
 			enabled: false,
 			type: 'php-tar',
-			packageName: 'package'
+			packageName: 'package',
+			alwaysVisible: false
 		}, allsettings.download),
 
-		downloadBtnTemplate = '<li id="download">' +
-									'<a href="#">' +
-										'<img src="' + resource.image('download') + '" alt="download"/>' +
-										'<span class="l10n-download"/>' +
-									'</a>' +
-								'</li>',
+		downloadBtnTemplate =
+			'<li id="download">' +
+				'<a href="#">' +
+					'<img src="' + resource.image('download') + '" alt="download"/>' +
+					'<span class="l10n-download"/>' +
+				'</a>' +
+			'</li>',
 
 		selectedItems = [],
 
@@ -22,8 +24,8 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
 			selectedItems = items.slice(0);
 			if (selectedItems.length) {
-				$download.appendTo('#navbar').show();
-			} else {
+				$download.show();
+			} else if (!settings.alwaysVisible) {
 				$download.hide();
 			}
 		},
@@ -51,6 +53,10 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 			$(downloadBtnTemplate)
 				.find('a').on('click', onClick).end()
 				.appendTo('#navbar');
+
+			if (settings.alwaysVisible) {
+				$('#download').show();
+			}
 
 			event.sub('selection', onSelection);
 		};

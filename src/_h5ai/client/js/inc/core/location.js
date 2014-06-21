@@ -3,7 +3,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 	var settings = _.extend({
 			smartBrowsing: true,
-			extInNewWindow: true
+			unmanagedInNewWindow: true
 		}, allsettings.view),
 
 		doc = document,
@@ -14,14 +14,26 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 			return href
 					.replace(/\/+/g, '/')
+
 					.replace(/ /g, '%20')
+					.replace(/!/g, '%21')
+					.replace(/#/g, '%23')
+					.replace(/\$/g, '%24')
+					.replace(/&/g, '%26')
 					.replace(/'/g, '%27')
-					.replace(/\[/g, '%5B')
-					.replace(/\]/g, '%5D')
 					.replace(/\(/g, '%28')
 					.replace(/\)/g, '%29')
+					.replace(/\*/g, '%2A')
 					.replace(/\+/g, '%2B')
-					.replace(/\=/g, '%3D');
+					.replace(/\,/g, '%2C')
+					// .replace(/\//g, '%2F')
+					.replace(/:/g, '%3A')
+					.replace(/;/g, '%3B')
+					.replace(/=/g, '%3D')
+					.replace(/\?/g, '%3F')
+					.replace(/@/g, '%40')
+					.replace(/\[/g, '%5B')
+					.replace(/\]/g, '%5D');
 		},
 
 		reUriToPathname = /^.*:\/\/[^\/]*|[^\/]*$/g,
@@ -85,7 +97,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 					_.each(json.items, function (jsonItem) {
 
-						var e = Item.get(jsonItem.absHref, jsonItem.time, jsonItem.size, jsonItem.status, jsonItem.content);
+						var e = Item.get(jsonItem.absHref, jsonItem.time, jsonItem.size, jsonItem.is_managed, jsonItem.content, jsonItem.md5, jsonItem.sha1);
 						found[e.absHref] = true;
 					});
 
@@ -155,7 +167,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
 			$el.attr('href', item.absHref);
 
-			if (history && item.isFolder() && item.status === '=h5ai=') {
+			if (history && item.isFolder() && item.isManaged) {
 				$el.on('click', function () {
 
 					setLocation(item.absHref);
@@ -163,7 +175,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 				});
 			}
 
-			if (settings.extInNewWindow && item.status !== '=h5ai=') {
+			if (settings.unmanagedInNewWindow && !item.isManaged) {
 				$el.attr('target', '_blank');
 			}
 		};

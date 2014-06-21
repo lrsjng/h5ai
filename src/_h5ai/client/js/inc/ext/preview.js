@@ -3,14 +3,13 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
 	var settings = _.extend({
 			enabled: true
-		}, allsettings['preview']),
+		}, allsettings.preview),
 
 		template = '<div id="pv-overlay" class="noSelection">' +
 						'<div id="pv-content"/>' +
 						'<div id="pv-spinner"><img src="' + resource.image('spinner') + '"/></div>' +
 						'<div id="pv-prev-area" class="hof"><img src="' + resource.image('preview/prev') + '"/></div>' +
 						'<div id="pv-next-area" class="hof"><img src="' + resource.image('preview/next') + '"/></div>' +
-						'<div id="pv-close-area" class="hof"><img src="' + resource.image('preview/close') + '"/></div>' +
 						'<div id="pv-bottombar" class="clearfix hof">' +
 							'<ul id="pv-buttons">' +
 								'<li id="pv-bar-close" class="bar-right bar-button"><img src="' + resource.image('preview/close') + '"/></li>' +
@@ -64,9 +63,10 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
 		onEnter = function () {
 
-			$(window).on('keydown', onKeydown);
 			$('#pv-content').empty();
+			setLabels([]);
 			$('#pv-overlay').stop(true, true).fadeIn(200);
+			$(window).on('keydown', onKeydown);
 
 			adjustSize();
 		},
@@ -74,7 +74,10 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 		onExit = function () {
 
 			$(window).off('keydown', onKeydown);
-			$('#pv-overlay').stop(true, true).fadeOut(200);
+			$('#pv-overlay').stop(true, true).fadeOut(200, function () {
+				$('#pv-content').empty();
+				setLabels([]);
+			});
 		},
 
 		onNext = function () {
@@ -98,7 +101,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			$('#pv-overlay .hof').stop(true, true).fadeIn(200);
 
 			if (isFullscreen) {
-
 				userAliveTimeoutId = setTimeout(function () {
 
 					$('#pv-overlay .hof').stop(true, true).fadeOut(2000);
@@ -123,20 +125,18 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			if (key === 27) { // esc
 				event.preventDefault();
 				event.stopImmediatePropagation();
-				$('#pv-bar-close, #pv-close-area').addClass('hover');
-				setTimeout(function () { $('#pv-bar-close, #pv-close-area').removeClass('hover'); }, delay);
 				onExit();
 			} else if (key === 8 || key === 37) { // backspace, left
 				event.preventDefault();
 				event.stopImmediatePropagation();
-				$('#pv-bar-prev, #pv-prev-area').addClass('hover');
-				setTimeout(function () { $('#pv-bar-prev, #pv-prev-area').removeClass('hover'); }, delay);
+				$('#pv-bar-prev').addClass('hover');
+				setTimeout(function () { $('#pv-bar-prev').removeClass('hover'); }, delay);
 				onPrevious();
 			} else if (key === 13 || key === 32 || key === 39) { // enter, space, right
 				event.preventDefault();
 				event.stopImmediatePropagation();
-				$('#pv-bar-next, #pv-next-area').addClass('hover');
-				setTimeout(function () { $('#pv-bar-next, #pv-next-area').removeClass('hover'); }, delay);
+				$('#pv-bar-next').addClass('hover');
+				setTimeout(function () { $('#pv-bar-next').removeClass('hover'); }, delay);
 				onNext();
 			} else if (key === 70) { // f
 				event.preventDefault();
@@ -145,16 +145,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 				setTimeout(function () { $('#pv-bar-fullscreen').removeClass('hover'); }, delay);
 				onFullscreen();
 			}
-		},
-
-		enter = function () {
-
-			onEnter();
-		},
-
-		exit = function () {
-
-			onExit();
 		},
 
 		setIndex = function (idx, total) {
@@ -180,7 +170,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 			$('#pv-buttons .bar-left').remove();
 			_.each(labels, function (label) {
 
-				$('<li />')
+				$('<li/>')
 					.addClass('bar-left bar-label')
 					.text(label)
 					.appendTo('#pv-buttons');
@@ -231,6 +221,11 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 				.on('mousemove mousedown', userAlive)
 				.on('click mousedown mousemove keydown keypress', function (event) {
 
+					if (event.type === 'click') {
+						if (event.target.id === 'pv-overlay' || event.target.id === 'pv-content') {
+							onExit();
+						}
+					}
 					event.stopImmediatePropagation();
 				});
 
@@ -240,8 +235,8 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 	init();
 
 	return {
-		enter: enter,
-		exit: exit,
+		enter: onEnter,
+		exit: onExit,
 		setIndex: setIndex,
 		setRawLink: setRawLink,
 		setLabels: setLabels,
