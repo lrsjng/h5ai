@@ -51,12 +51,11 @@ if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 		url: url,
 		data: {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
 		type: 'POST',
-		dataType: 'json',
-		success: function (config) {
+		dataType: 'json'
+	}).done(function (config) {
 
-			modulejs.define('config', config);
-			$(function () { modulejs.require(module); });
-		}
+		modulejs.define('config', config);
+		$(function () { modulejs.require(module); });
 	});
 
 }());

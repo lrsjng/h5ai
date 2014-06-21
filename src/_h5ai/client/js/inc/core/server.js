@@ -12,19 +12,19 @@ modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function (
 
 				if (server.api) {
 					$.ajax({
-						url: location.getAbsHref(),
-						data: data,
-						type: 'POST',
-						dataType: 'json',
-						success: function (json) {
+							url: location.getAbsHref(),
+							data: data,
+							type: 'POST',
+							dataType: 'json'
+						})
+						.done(function (json) {
 
 							callback(json);
-						},
-						error: function () {
+						})
+						.fail(function () {
 
 							callback();
-						}
-					});
+						});
 				} else {
 					callback();
 				}

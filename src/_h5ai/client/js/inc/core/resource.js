@@ -37,10 +37,12 @@ modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function
 		loadScript = function (filename, callback) {
 
 			$.ajax({
-				url: scriptsHref + filename,
-				dataType: 'script',
-				complete: function () { callback(); }
-			});
+					url: scriptsHref + filename,
+					dataType: 'script'
+				}).done(function () {
+
+					callback();
+				});
 		},
 
 		loadScriptGlob = function (filename, globalId, callback) {

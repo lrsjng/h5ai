@@ -49,18 +49,18 @@ modulejs.define('ext/preview-txt', ['_', '$', 'markdown', 'core/settings', 'core
 		preloadText = function (absHref, callback) {
 
 			$.ajax({
-				url: absHref,
-				dataType: 'text',
-				success: function (content) {
+					url: absHref,
+					dataType: 'text'
+				})
+				.done(function (content) {
 
 					callback(content);
 					// setTimeout(function () { callback(content); }, 1000); // for testing
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
+				})
+				.fail(function (jqXHR, textStatus, errorThrown) {
 
 					callback('[ajax error] ' + textStatus);
-				}
-			});
+				});
 		},
 
 		onEnter = function (items, idx) {
