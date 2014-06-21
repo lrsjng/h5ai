@@ -8,6 +8,9 @@ function setup() {
 	setlocale(LC_CTYPE, "en_US.UTF-8");
 	date_default_timezone_set("UTC");
 
+	define("NAME", "{{pkg.name}}");
+	define("VERSION", "{{pkg.version}}");
+
 	define("BACKEND", "PHP");
 	define("API", true);
 	define("FILE_PREFIX", "_{{pkg.name}}");

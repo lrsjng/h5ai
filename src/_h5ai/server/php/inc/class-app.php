@@ -25,9 +25,13 @@ class App {
 	public function get_setup() {
 
 		$consts = get_defined_constants(true);
-		$consts_user = $consts["user"];
-		$consts_user["PHP_VERSION"] = PHP_VERSION;
-		return $consts_user;
+		$setup = $consts["user"];
+		$setup["PHP_VERSION"] = PHP_VERSION;
+		unset($setup["APP_PATH"]);
+		unset($setup["ROOT_PATH"]);
+		unset($setup["CURRENT_PATH"]);
+		unset($setup["CACHE_PATH"]);
+		return $setup;
 	}
 
 

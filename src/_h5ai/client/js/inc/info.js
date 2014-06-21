@@ -29,7 +29,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 		addTests = function () {
 
 			addTest(
-				'PHP version', 'PHP version &gt;= 5.3.0',
+				'PHP version', 'PHP version &gt;= ' + setup.MIN_PHP_VERSION,
 				setup.HAS_PHP_VERSION
 			);
 

@@ -1,10 +1,10 @@
 
-modulejs.define('view/ensure', ['$', 'core/event'], function ($, event) {
+modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, config, event) {
 
 	var selb = '#bottombar',
 		selr = selb + ' .right',
 		sela = selr + ' a',
-		sequence = 'powered by h5ai',
+		sequence = 'powered by h5ai ' + config.setup.VERSION,
 		url = 'http://larsjung.de/h5ai/',
 		isVisible = ':visible',
 		styleKey = 'style',
