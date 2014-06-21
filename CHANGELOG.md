@@ -2,7 +2,7 @@
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
-## develop branch
+## v0.25.0 - *2014-06-21*
 
 * adds sidebar
 * adds initial theme support

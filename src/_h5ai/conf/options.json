@@ -95,6 +95,7 @@ Options
 
 	/*
 	Enable packaged download of selected entries.
+	To select files the "select"-extension needs to be enabled.
 
 	- type: "php-tar", "shell-tar" or "shell-zip"
 	- packageName: basename of the download package, null for current foldername
@@ -129,7 +130,7 @@ Options
 	- type: "php" (sloooow) or "shell-du" (sloow)
 	*/
 	"foldersize": {
-		"enabled": true,
+		"enabled": false,
 		"type": "php"
 	},
 
@@ -283,7 +284,7 @@ Options
 
 	/*
 	Make entries selectable (first mouse button + drag).
-	At the moment only needed for packaged download and delete.
+	At the moment only needed for packaged download.
 
 	- checkboxes: boolean, show a checkbox on mouse over item
 	*/
