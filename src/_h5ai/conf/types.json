@@ -6,10 +6,10 @@ File types mapped to file extensions
 */
 
 {
-	"txt-authors":		["author*"],
-	"txt-install":		["install*"],
-	"txt-license":		["copying*", "license*"],
-	"txt-readme":		["readme*"],
+	// "txt-authors":		["author*"],
+	// "txt-install":		["install*"],
+	// "txt-license":		["copying*", "license*"],
+	// "txt-readme":		["readme*"],
 
 	"ar":				["*.tar.bz2", "*.tar.gz", "*.tgz"],
 	"ar-apk":			["*.apk"],
