@@ -24,7 +24,7 @@ class Item {
 			return Item::$size_cache[$path];
 		}
 
-		$size = 0;
+		$size = null;
 
 		if (is_file($path)) {
 
@@ -38,6 +38,7 @@ class Item {
 					$cmdv = array("du", "-sk", $path);
 					$size = intval(preg_replace("#\s.*$#", "", exec_cmdv($cmdv)), 10) * 1024;
 				} else {
+					$size = 0;
 					foreach ($app->read_dir($path) as $name) {
 						$size += Item::filesize($app, $path . "/" . $name);
 					}

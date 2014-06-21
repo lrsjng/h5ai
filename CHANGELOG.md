@@ -4,9 +4,8 @@
 
 ## develop branch
 
-* replaces PHP backtick operator with `exec`
-* adds initial theme support
 * adds sidebar
+* adds initial theme support
 * adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
 * adds PHP variant to calc folder sizes
 * adds scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))
@@ -21,6 +20,7 @@
 * improves preview GUI
 * disable thumbs in `cache` folder
 * fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
+* replaces PHP backtick operator with `exec`
 * removes server side file manipulation extensions `dropbox`, `delete` and `rename`
 * updates H5BP to 4.3.0
 * updates jQuery to 2.1.1

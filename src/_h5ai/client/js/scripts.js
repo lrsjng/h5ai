@@ -32,17 +32,19 @@ if (window.attachEvent && !window.addEventListener) { throw 'no-browser'; }
 	// @include "inc/**/*.js"
 
 	var	$ = jQuery,
-		mode = $('script[src$="scripts.js"]').data('mode'),
-		url = '.',
-		module = 'main';
+		module = $('script[data-module]').data('module'),
+		url;
 
 	if ($('html').hasClass('no-browser')) {
 		return;
 	}
 
-	if (mode === 'info') {
+	if (module === 'main') {
+		url = '.';
+	} else if (module === 'info') {
 		url = 'server/php/index.php';
-		module = 'info';
+	} else {
+		return;
 	}
 
 	$.ajax({

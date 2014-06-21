@@ -13,11 +13,11 @@ Options
 	are added to the top and bottom bar heights.
 	*/
 	"spacing": {
+		"top": 50,
 		"bottom": 50,
 		"left": "auto",
-		"maxWidth": 1024,
 		"right": "auto",
-		"top": 50
+		"maxWidth": 1024
 	},
 
 	/*
@@ -40,7 +40,7 @@ Options
 		The user selected view mode is also stored local in modern browsers
 		so that it will be persistent.
 	- smartBrowsing: use History API if available (no need to reload the whole page)
-	- theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to "fallback"
+	- theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to builtin fallback
 	- unmanaged: don't manage folders containing one of those files
 	- unmanagedInNewWindow: open unmanaged links in new window/tab
 	*/
@@ -54,7 +54,7 @@ Options
 		"setParentFolderLabels": true,
 		"sizes": [24, 32, 48, 64, 96],
 		"smartBrowsing": true,
-		"theme": "fallback",
+		"theme": "",
 		"unmanaged": ["index.html", "index.htm", "index.php"],
 		"unmanagedInNewWindow": false
 	},
