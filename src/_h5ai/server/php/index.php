@@ -21,8 +21,17 @@ normalized_require_once("class-thumb");
 
 setup();
 $app = new App();
+$options = $app->get_options();
+if ($options["security"]["enabled"] && (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])
+	|| ($_SERVER['PHP_AUTH_USER'] !== $options["security"]["login"] )
+	|| ($_SERVER['PHP_AUTH_PW'] !== $options["security"]["pass"])) ) {
 
-if (has_request_param("action")) {
+	header('WWW-Authenticate: Basic realm='.$options["security"]["message"]);
+	header('HTTP/1.0 401 Unauthorized');
+	echo 'Acces non autorisé';
+	exit;
+}
+else if (has_request_param("action")) {
 
 	header("Content-type: application/json;charset=utf-8");
 	$api = new Api($app);

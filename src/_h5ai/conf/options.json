@@ -6,6 +6,16 @@ Options
 */
 
 {
+        /* Enable Authentication
+        */
+        "security": {
+                "enabled": false,
+                "login": "user",
+                "password": "demo",
+                "message": "Authentication Required !"
+        },
+
+
 	/*
 	Spacing of the main content.
 
