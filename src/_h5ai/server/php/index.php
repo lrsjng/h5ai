@@ -18,6 +18,7 @@ normalized_require_once("class-app");
 normalized_require_once("class-archive");
 normalized_require_once("class-item");
 normalized_require_once("class-thumb");
+normalized_require_once("class-image");
 
 setup();
 $app = new App();
