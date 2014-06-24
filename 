@@ -1,0 +1,80 @@
+[1mdiff --git a/src/_h5ai/client/js/inc/ext/google-analytics.js b/src/_h5ai/client/js/inc/ext/google-analytics.js[m
+[1mindex e9d4cfe..c82c3ed 100644[m
+[1m--- a/src/_h5ai/client/js/inc/ext/google-analytics.js[m
+[1m+++ b/src/_h5ai/client/js/inc/ext/google-analytics.js[m
+[36m@@ -28,24 +28,25 @@[m [mmodulejs.define('ext/google-analytics-ga', ['_', 'core/settings'], function (_,[m
+ });[m
+ [m
+ [m
+[31m-modulejs.define('ext/google-analytics-ua', ['_', 'core/settings'], function (_, allsettings) {[m
+[32m+[m[32mmodulejs.define('ext/google-analytics-ua', ['_', 'core/settings', 'core/event'], function (_, allsettings, event) {[m
+ [m
+ 	var settings = _.extend({[m
+ 			enabled: false,[m
+[31m-			calls: [][m
+[32m+[m			[32mid: 'UA-000000-0'[m
+ 		}, allsettings['google-analytics-ua']),[m
+ [m
+[32m+[m		[32mwin = window,[m
+[32m+[m		[32mdoc = document,[m
+[32m+[m		[32mscriptLiteral = 'script',[m
+[32m+[m		[32mid = 'h5ai-ga',[m
+[32m+[m
+ 		init = function () {[m
+ [m
+ 			if (!settings.enabled) {[m
+ 				return;[m
+ 			}[m
+ [m
+[31m-			var win = window,[m
+[31m-				doc = document,[m
+[31m-				scriptLiteral = 'script',[m
+[31m-				id = 'ga',[m
+[31m-				el, firstScriptElement;[m
+[32m+[m			[32mvar el, firstScriptElement;[m
+ [m
+ 			win.GoogleAnalyticsObject = id;[m
+ 			win[id] = win[id] || function () {[m
+[36m@@ -60,8 +61,16 @@[m [mmodulejs.define('ext/google-analytics-ua', ['_', 'core/settings'], function (_,[m
+ 			firstScriptElement = doc.getElementsByTagName(scriptLiteral)[0];[m
+ 			firstScriptElement.parentNode.insertBefore(el, firstScriptElement);[m
+ [m
+[31m-			_.each(settings.calls, function (call) {[m
+[31m-				win[id].apply(win, call);[m
+[32m+[m			[32mwin[id]('create', settings.id, 'auto');[m
+[32m+[m
+[32m+[m			[32mevent.sub('location.changed', function (item) {[m
+[32m+[m
+[32m+[m				[32mvar loc = win.location;[m
+[32m+[m				[32mwin[id]('send', 'pageview', {[m
+[32m+[m					[32mlocation: loc.protocol + '//' + loc.hostname + item.absHref,[m
+[32m+[m					[32mpage: loc.protocol + '//' + loc.host + item.absHref,[m
+[32m+[m					[32mtitle: _.pluck(item.getCrumb(), 'label').join(' > ')[m
+[32m+[m				[32m});[m
+ 			});[m
+ 		};[m
+ [m
+[1mdiff --git a/src/_h5ai/conf/options.json b/src/_h5ai/conf/options.json[m
+[1mindex be3dea5..5169e34 100644[m
+[1m--- a/src/_h5ai/conf/options.json[m
+[1m+++ b/src/_h5ai/conf/options.json[m
+[36m@@ -155,17 +155,11 @@[m [mOptions[m
+ 	/*[m
+ 	Adds Google Universial Analytics asynchronous tracking code.[m
+ [m
+[31m-	for example:[m
+[31m-	"calls": [[m
+[31m-		['create', 'UA-XXXX-Y', 'auto'],[m
+[31m-		['send', 'pageview'][m
+[31m-	][m
+[31m-[m
+ 	see: https://developers.google.com/analytics/devguides/collection/analyticsjs/[m
+ 	*/[m
+ 	"google-analytics-ua": {[m
+[31m-		"enabled": false,[m
+[31m-		"calls": [][m
+[32m+[m		[32m"enabled": true,[m
+[32m+[m		[32m"id": "UA-000000-0"[m
+ 	},[m
+ [m
+ 	/*[m

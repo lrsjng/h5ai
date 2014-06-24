@@ -155,17 +155,11 @@ Options
 	/*
 	Adds Google Universial Analytics asynchronous tracking code.
 
-	for example:
-	"calls": [
-		['create', 'UA-XXXX-Y', 'auto'],
-		['send', 'pageview']
-	]
-
 	see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
 	*/
 	"google-analytics-ua": {
 		"enabled": false,
-		"calls": []
+		"id": "UA-000000-0"
 	},
 
 	/*
