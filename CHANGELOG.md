@@ -4,7 +4,8 @@
 
 ## develop branch
 
-* ...
+* fixes Google Universal Analytics
+* fixes file type check
 
 
 ## v0.25.0 - *2014-06-22*
