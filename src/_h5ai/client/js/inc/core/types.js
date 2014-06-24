@@ -14,7 +14,7 @@ modulejs.define('core/types', ['config', '_'], function (config, _) {
 
 			_.each(types, function (patterns, type) {
 
-				var pattern = '^' + _.map(patterns, function (p) { return escapeRegExp(p).replace(/\*/g, '.*'); }).join('|') + '$';
+				var pattern = '^(' + _.map(patterns, function (p) { return '(' + escapeRegExp(p).replace(/\*/g, '.*') + ')'; }).join('|') + ')$';
 				regexps[type] = new RegExp(pattern, 'i');
 			});
 		},
