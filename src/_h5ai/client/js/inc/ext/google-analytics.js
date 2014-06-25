@@ -67,8 +67,7 @@ modulejs.define('ext/google-analytics-ua', ['_', 'core/settings', 'core/event'],
 
 				var loc = win.location;
 				win[id]('send', 'pageview', {
-					location: loc.protocol + '//' + loc.hostname + item.absHref,
-					page: loc.protocol + '//' + loc.host + item.absHref,
+					location: loc.protocol + '//' + loc.host + item.absHref,
 					title: _.pluck(item.getCrumb(), 'label').join(' > ')
 				});
 			});
