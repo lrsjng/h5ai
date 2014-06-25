@@ -4,6 +4,7 @@
 
 ## develop branch
 
+* fixes broken paths for filenames containing '+' characters
 * fixes Google Universal Analytics
 * fixes file type check
 
