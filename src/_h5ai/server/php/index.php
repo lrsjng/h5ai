@@ -2,7 +2,7 @@
 
 function normalize_path($path, $trailing_slash = false) {
 
-	$path = preg_replace("#\\+|/+#", "/", $path);
+	$path = preg_replace("#\\\\+|/+#", "/", $path);
 	return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
 }
 
