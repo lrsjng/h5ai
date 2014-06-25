@@ -28,12 +28,17 @@ modulejs.define('ext/google-analytics-ga', ['_', 'core/settings'], function (_, 
 });
 
 
-modulejs.define('ext/google-analytics-ua', ['_', 'core/settings'], function (_, allsettings) {
+modulejs.define('ext/google-analytics-ua', ['_', 'core/settings', 'core/event'], function (_, allsettings, event) {
 
 	var settings = _.extend({
 			enabled: false,
-			calls: []
+			id: 'UA-000000-0'
 		}, allsettings['google-analytics-ua']),
+
+		win = window,
+		doc = document,
+		scriptLiteral = 'script',
+		id = 'h5ai-ga',
 
 		init = function () {
 
@@ -41,11 +46,7 @@ modulejs.define('ext/google-analytics-ua', ['_', 'core/settings'], function (_, 
 				return;
 			}
 
-			var win = window,
-				doc = document,
-				scriptLiteral = 'script',
-				id = 'ga',
-				el, firstScriptElement;
+			var el, firstScriptElement;
 
 			win.GoogleAnalyticsObject = id;
 			win[id] = win[id] || function () {
@@ -60,8 +61,16 @@ modulejs.define('ext/google-analytics-ua', ['_', 'core/settings'], function (_, 
 			firstScriptElement = doc.getElementsByTagName(scriptLiteral)[0];
 			firstScriptElement.parentNode.insertBefore(el, firstScriptElement);
 
-			_.each(settings.calls, function (call) {
-				win[id].apply(win, call);
+			win[id]('create', settings.id, 'auto');
+
+			event.sub('location.changed', function (item) {
+
+				var loc = win.location;
+				win[id]('send', 'pageview', {
+					location: loc.protocol + '//' + loc.hostname + item.absHref,
+					page: loc.protocol + '//' + loc.host + item.absHref,
+					title: _.pluck(item.getCrumb(), 'label').join(' > ')
+				});
 			});
 		};
 
