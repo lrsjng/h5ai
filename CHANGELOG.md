@@ -2,6 +2,11 @@
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
+## develop branch
+
+* ...
+
+
 ## v0.25.1 - *2014-06-25*
 
 * fixes broken paths for filenames containing '+' characters
