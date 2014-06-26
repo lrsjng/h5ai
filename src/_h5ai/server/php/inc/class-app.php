@@ -26,7 +26,7 @@ class App {
 
 		$consts = get_defined_constants(true);
 		$setup = $consts["user"];
-		$setup["PHP_VERSION"] = PHP_VERSION;
+		// $setup["PHP_VERSION"] = PHP_VERSION;
 		unset($setup["APP_PATH"]);
 		unset($setup["ROOT_PATH"]);
 		unset($setup["CURRENT_PATH"]);

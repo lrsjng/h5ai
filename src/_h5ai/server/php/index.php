@@ -22,6 +22,7 @@ normalized_require_once("class-thumb");
 setup();
 $app = new App();
 
+header("X-Powered-By: " . NAME . "/" . VERSION);
 if (has_request_param("action")) {
 
 	header("Content-type: application/json;charset=utf-8");
