@@ -23,7 +23,11 @@ class Archive {
 		$this->add_hrefs($urls);
 
 		if (count($this->dirs) === 0 && count($this->files) === 0) {
-			$this->add_dir(CURRENT_PATH, "/");
+			if ($type === "php-tar") {
+				$this->add_dir(CURRENT_PATH, "/");
+			} else {
+				$this->add_dir(CURRENT_PATH, ".");
+			}
 		}
 
 		if ($type === "php-tar") {
