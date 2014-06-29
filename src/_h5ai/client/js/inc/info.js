@@ -20,7 +20,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 				'<span id="logout">logout</span>' +
 				'<div id="hint">' +
 					'The preset password is the empty string, so just hit login. ' +
-					'You might change it in the index file if you want to keep these informations private!' +
+					'You might change it in the index file to keep this information private.' +
 				'</div>' +
 			'</div>',
 
