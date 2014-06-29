@@ -8,7 +8,7 @@ class Api {
 
 	public function __construct($app) {
 
-		$this->actions = array("get", "getThumbHref", "download", "upload", "delete", "rename");
+		$this->actions = array("login", "logout", "get", "getThumbHref", "download");
 		$this->app = $app;
 		$this->options = $app->get_options();
 	}
@@ -21,6 +21,21 @@ class Api {
 
 		$methodname = "on_$action";
 		$this->$methodname();
+	}
+
+
+	private function on_login() {
+
+		$pass = use_request_param("pass");
+		$_SESSION[AS_ADMIN_SESSION_KEY] = sha1($pass) === PASSHASH;
+		json_exit(array("as_admin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
+	}
+
+
+	private function on_logout() {
+
+		$_SESSION[AS_ADMIN_SESSION_KEY] = false;
+		json_exit(array("as_admin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
 	}
 
 
