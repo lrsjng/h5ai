@@ -1,6 +1,13 @@
 <?php
 
 
+function normalize_path($path, $trailing_slash = false) {
+
+	$path = preg_replace("#\\\\+|/+#", "/", $path);
+	return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
+}
+
+
 function json_exit($obj = array()) {
 
 	$obj["code"] = 0;
@@ -86,28 +93,10 @@ function exec_cmdv($cmdv) {
 }
 
 
-function delete_path($path, $recursive = false) {
 
-	if (is_file($path)) {
-		return @unlink($path);
-	}
-
-	if (is_dir($path)) {
-		if ($recursive === true && $dir = opendir($path)) {
-			while (($name = readdir($dir)) !== false) {
-				delete_path($path . "/" . $name);
-			}
-			closedir($dir);
-		}
-
-		return @rmdir($path);
-	}
-
-	return false;
-}
-
-
-// debug tools
+/*********************************************************************
+  Debug Tools
+*********************************************************************/
 
 function err_log($message, $obj = null) {
 

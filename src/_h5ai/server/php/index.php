@@ -11,15 +11,9 @@ define("PASSHASH", "da39a3ee5e6b4b0d3255bfef95601890afd80709");
 
 
 
-function normalize_path($path, $trailing_slash = false) {
-
-	$path = preg_replace("#\\\\+|/+#", "/", $path);
-	return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
-}
-
 function normalized_require_once($lib) {
 
-	require_once(normalize_path(dirname(__FILE__) . "/inc/${lib}.php", false));
+	require_once(preg_replace("#\\\\+|/+#", "/", dirname(__FILE__) . "/inc/${lib}.php"));
 }
 
 normalized_require_once("util");
