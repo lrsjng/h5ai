@@ -103,7 +103,7 @@ class Api {
 			$response["all_items"] = $this->app->get_all_items();
 		}
 
-		if (count($_REQUEST)) {
+		if (AS_ADMIN && count($_REQUEST)) {
 			$response["unused"] = $_REQUEST;
 		}
 
