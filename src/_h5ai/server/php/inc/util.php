@@ -1,9 +1,20 @@
 <?php
 
 
+function normalize_path($path, $trailing_slash = false) {
+
+	$path = preg_replace("#[\\\\/]+#", "/", $path);
+	return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
+}
+
+
 function json_exit($obj = array()) {
 
-	$obj["code"] = 0;
+	if (!isset($obj["code"])) {
+		$obj["code"] = 0;
+	}
+
+	header("Content-type: application/json;charset=utf-8");
 	echo json_encode($obj);
 	exit;
 }
@@ -12,8 +23,7 @@ function json_exit($obj = array()) {
 function json_fail($code, $msg = "", $cond = true) {
 
 	if ($cond) {
-		echo json_encode(array("code" => $code, "msg" => $msg));
-		exit;
+		json_exit(array("code" => $code, "msg" => $msg));
 	}
 }
 
@@ -86,28 +96,10 @@ function exec_cmdv($cmdv) {
 }
 
 
-function delete_path($path, $recursive = false) {
 
-	if (is_file($path)) {
-		return @unlink($path);
-	}
-
-	if (is_dir($path)) {
-		if ($recursive === true && $dir = opendir($path)) {
-			while (($name = readdir($dir)) !== false) {
-				delete_path($path . "/" . $name);
-			}
-			closedir($dir);
-		}
-
-		return @rmdir($path);
-	}
-
-	return false;
-}
-
-
-// debug tools
+/*********************************************************************
+  Debug Tools
+*********************************************************************/
 
 function err_log($message, $obj = null) {
 

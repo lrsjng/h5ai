@@ -1,7 +1,8 @@
 
-- var app_href = "<?= APP_HREF ?>"
-- var fallback = "<?= FALLBACK ?>"
+- var app_href = "<?php echo APP_HREF; ?>"
+- var fallback = "<?php echo FALLBACK; ?>"
 
+<?php header("Content-type: text/html;charset=utf-8"); ?>
 doctype 5
 //if lt IE 10
 	<html class="no-js no-browser" lang="en">
@@ -35,7 +36,7 @@ html.no-js.browser( lang="en" )
 					| ! ⚡
 			span.right
 				a( href="{{pkg.url}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
-					| powered by h5ai {{pkg.version}}
+					| powered by {{pkg.name}} {{pkg.version}}
 			span.center
 
 		div#sidebar

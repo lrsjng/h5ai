@@ -17,15 +17,6 @@ body#h5ai-info {
 		}
 	}
 
-	.build-version {
-		display: block;
-	}
-	.build-stamp {
-		display: block;
-		margin-top: 0.3em;
-		font-size: 0.6em;
-		color: #aaa;
-	}
 	.idx-file {
 		margin-top: 1em;
 		font-size: 0.6em;
@@ -61,6 +52,56 @@ body#h5ai-info {
 		line-height: 1.4em;
 	}
 
+	#login-wrapper {
+		margin: 96px 0;
+		font-size: 14px;
+
+		#pass {
+			-moz-appearance: none;
+			-ms-appearance: none;
+			-webkit-appearance: none;
+			font-family: @font-family;
+			font-weight: @font-weight;
+			color: @col;
+			background: @col-widget-back-highlight;
+			border: @border-widget;
+			outline: none;
+			display: inline-block;
+			width: 200px;
+			height: 30px;
+			padding: 0 6px;
+			margin: 8px;
+		}
+		#login, #logout {
+			display: inline-block;
+			padding: 4px 16px;
+			margin: 8px;
+			background-color: @col-widget-back;
+			border: @border-widget;
+			cursor: pointer;
+
+			color: @col;
+			cursor: pointer;
+			text-decoration: none;
+			.transition(all 0.2s ease-in-out);
+
+			&:hover, &.hover {
+				background-color: @col-widget-back-highlight;
+				color: @col-hover;
+			}
+		}
+		#hint {
+			margin: 12px auto;
+			width: 360px;
+			color: @col;
+			font-size: 12px;
+		}
+	}
+
+	#tests-wrapper {
+		margin: 96px 0;
+	}
+
 	#tests {
 		display: inline-block;
 		list-style-type: none;
@@ -69,16 +110,17 @@ body#h5ai-info {
 		padding: 0;
 
 		.test {
+			padding: 6px;
+
 			.label {
 				display: inline-block;
-				width: 370px;
+				width: 250px;
 			}
 			.result {
 				display: inline-block;
-				width: 70px;
+				width: 250px;
 				text-align: right;
 				font-weight: bold;
-				color: #aaa;
 
 				&.passed {
 					color: #5a5;
@@ -91,7 +133,7 @@ body#h5ai-info {
 				margin: 4px 0 12px 12px;
 				font-size: 0.7em;
 				color: #aaa;
-				width: 370px;
+				width: 380px;
 				line-height: 1.2em;
 			}
 		}

@@ -1,36 +1,59 @@
 
 modulejs.define('info', ['$', 'config'], function ($, config) {
 
-	var template = '<li class="test">' +
-						'<span class="label"></span>' +
-						'<span class="result"></span>' +
-						'<div class="info"></div>' +
-					'</li>',
+	var testsTemp =
+			'<div id="tests-wrapper">' +
+				'<ul id="tests">' +
+			'</div>',
+
+		testTemp =
+			'<li class="test">' +
+				'<span class="label"></span>' +
+				'<span class="result"></span>' +
+				'<div class="info"></div>' +
+			'</li>',
+
+		loginTemp =
+			'<div id="login-wrapper">' +
+				'<input id="pass" type="text" placeholder="password"/>' +
+				'<span id="login">login</span>' +
+				'<span id="logout">logout</span>' +
+				'<div id="hint">' +
+					'The preset password is the empty string, so just hit login. ' +
+					'You might change it in the index file to keep this information private.' +
+				'</div>' +
+			'</div>',
 
 		setup = config.setup,
-		$tests = $("#tests"),
-
-		addTest = function (label, info, passed, result) {
-
-			$(template)
-				.find('.label')
-					.text(label)
-				.end()
-				.find('.result')
-					.addClass(passed ? 'passed' : 'failed')
-					.text(result ? result : (passed ? 'yes' : 'no'))
-				.end()
-				.find('.info')
-					.html(info)
-				.end()
-				.appendTo($tests);
-		},
 
 		addTests = function () {
 
+			var addTest = function (label, info, passed, result) {
+
+					$(testTemp)
+						.find('.label')
+							.text(label)
+						.end()
+						.find('.result')
+							.addClass(passed ? 'passed' : 'failed')
+							.text(result ? result : (passed ? 'yes' : 'no'))
+						.end()
+						.find('.info')
+							.html(info)
+						.end()
+						.appendTo('#tests');
+				};
+
+			$(testsTemp).appendTo('body');
+
+			addTest(
+				'Server software', 'Server is one of apache, lighttpd, nginx or cherokee',
+				setup.HAS_SERVER, setup.SERVER_NAME + ' ' + setup.SERVER_VERSION
+			);
+
 			addTest(
 				'PHP version', 'PHP version &gt;= ' + setup.MIN_PHP_VERSION,
-				setup.HAS_PHP_VERSION
+				setup.HAS_PHP_VERSION, setup.PHP_VERSION
 			);
 
 			addTest(
@@ -49,8 +72,8 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 			);
 
 			addTest(
-				'Movie thumbs', 'Command line program <code>ffmpeg</code> or <code>avconv</code> available',
-				setup.HAS_CMD_FFMPEG || setup.HAS_CMD_AVCONV
+				'Movie thumbs', 'Command line program <code>avconv</code> or <code>ffmpeg</code> available',
+				setup.HAS_CMD_AVCONV || setup.HAS_CMD_FFMPEG
 			);
 
 			addTest(
@@ -69,15 +92,75 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 			);
 
 			addTest(
-				'Folder sizes', 'Command line program <code>du</code> available',
+				'Shell du', 'Command line program <code>du</code> available',
 				setup.HAS_CMD_DU
 			);
 		},
 
+		addLogin = function () {
+
+			var request = function (data) {
+
+					$.ajax({
+							url: 'server/php/index.php',
+							type: 'POST',
+							dataType: 'JSON',
+							data: data
+						})
+						.always(function () {
+
+							window.location.reload();
+						});
+				},
+
+				onLogin = function () {
+
+					request({
+						'action': 'login',
+						'pass': $('#pass').val()
+					});
+				},
+
+				onLogout = function () {
+
+					request({
+						'action': 'logout'
+					});
+				},
+
+				onKeydown = function (event) {
+
+					if (event.which === 13) {
+						onLogin();
+					}
+				};
+
+			$(loginTemp).appendTo('body');
+
+			if (setup.AS_ADMIN) {
+				$('#pass').remove();
+				$('#login').remove();
+				$('#logout').on('click', onLogout);
+			} else {
+				$('#pass').on('keydown', onKeydown).focus();
+				$('#login').on('click', onLogin);
+				$('#logout').remove();
+			}
+			if (setup.HAS_CUSTOM_PASSHASH) {
+				$('#hint').remove();
+			}
+		},
+
 		init = function () {
 
-			$('.idx-file .value').text(setup.INDEX_HREF);
-			addTests();
+			$('<span class="idx-file">Index: <code class="value"></code></span>')
+				.appendTo('body')
+				.find('.value').text(setup.INDEX_HREF);
+
+			if (setup.AS_ADMIN) {
+				addTests();
+			}
+			addLogin();
 		};
 
 	init();

@@ -26,11 +26,21 @@ class App {
 
 		$consts = get_defined_constants(true);
 		$setup = $consts["user"];
+
 		$setup["PHP_VERSION"] = PHP_VERSION;
-		unset($setup["APP_PATH"]);
-		unset($setup["ROOT_PATH"]);
-		unset($setup["CURRENT_PATH"]);
-		unset($setup["CACHE_PATH"]);
+		unset($setup["AS_ADMIN_SESSION_KEY"]);
+		unset($setup["PASSHASH"]);
+
+		if (!AS_ADMIN) {
+			unset($setup["APP_PATH"]);
+			unset($setup["CACHE_PATH"]);
+			unset($setup["CURRENT_PATH"]);
+			unset($setup["PHP_VERSION"]);
+			unset($setup["ROOT_PATH"]);
+			unset($setup["SERVER_NAME"]);
+			unset($setup["SERVER_VERSION"]);
+		}
+
 		return $setup;
 	}
 
@@ -134,7 +144,7 @@ class App {
 
 	public function is_managed_path($path) {
 
-		if (!is_dir($path) || strpos($path, '../') || strpos($path, '/..') || $path == '..') {
+		if (!is_dir($path) || strpos($path, '../') !== false || strpos($path, '/..') !== false || $path === '..') {
 			return false;
 		}
 
