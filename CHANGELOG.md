@@ -4,7 +4,10 @@
 
 ## develop branch
 
-* ...
+* adds optional info page protection
+* fixes `short_open_tag` issues for PHP < 5.4.0
+* fixes default folder download (`alwaysVisible` option)
+* minor fixes
 
 
 ## v0.25.1 - *2014-06-25*
