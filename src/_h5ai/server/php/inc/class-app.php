@@ -144,7 +144,7 @@ class App {
 
 	public function is_managed_path($path) {
 
-		if (!is_dir($path) || strpos($path, '../') || strpos($path, '/..') || $path == '..') {
+		if (!is_dir($path) || strpos($path, '../') !== false || strpos($path, '/..') !== false || $path === '..') {
 			return false;
 		}
 
