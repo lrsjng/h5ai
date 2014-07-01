@@ -2,6 +2,11 @@
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
+## develop branch
+
+* ...
+
+
 ## v0.25.2 - *2014-07-01*
 
 * adds optional info page protection
