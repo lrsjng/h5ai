@@ -153,10 +153,10 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
 		init = function () {
 
+			addLogin();
 			if (setup.AS_ADMIN) {
 				addTests();
 			}
-			addLogin();
 		};
 
 	init();
