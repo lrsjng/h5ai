@@ -46,7 +46,7 @@ function setup() {
 	}
 	define("SERVER_NAME", $server_name);
 	define("SERVER_VERSION", $server_version);
-	define("HAS_SERVER", in_array($server_name, array("apache", "lighttd", "nginx", "cherokee")));
+	define("HAS_SERVER", in_array($server_name, array("apache", "lighttpd", "nginx", "cherokee")));
 	define("HAS_WIN_OS", strtolower(substr(PHP_OS, 0, 3)) === "win");
 
 
