@@ -6,7 +6,6 @@
 // @include "lib/markdown-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
-// @include "lib/json2-*.js"
 
 // jQuery libs
 // -----------
