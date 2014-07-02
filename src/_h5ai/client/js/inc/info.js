@@ -47,6 +47,21 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 			$(testsTemp).appendTo('body');
 
 			addTest(
+				'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',
+				setup.INDEX_HREF
+			);
+
+			addTest(
+				'Options parsable', 'File <code>options.json</code> is readable and syntax seams to be correct',
+				config.options !== null
+			);
+
+			addTest(
+				'Types parsable', 'File <code>types.json</code> is readable and syntax seams to be correct',
+				config.types !== null
+			);
+
+			addTest(
 				'Server software', 'Server is one of apache, lighttpd, nginx or cherokee',
 				setup.HAS_SERVER, setup.SERVER_NAME + ' ' + setup.SERVER_VERSION
 			);
