@@ -16,14 +16,6 @@ body#h5ai-info {
 			color: @col-hover;
 		}
 	}
-
-	.idx-file {
-		margin-top: 1em;
-		font-size: 0.6em;
-		display: block;
-		color: #aaa;
-
-	}
 	code {
 		margin: 0 0.2em;
 		padding: 2px 4px;
@@ -41,62 +33,71 @@ body#h5ai-info {
 		font-size: 1.15em;
 		margin: 2.6em 0 0 0;
 	}
-	p {
-		line-height: 1.6em;
+
+
+	#support {
+		margin: 12px auto 24px auto;
+		padding: 6px 18px;
+		width: 164px;
+		font-size: 12px;
+		background: @col-widget-back;
+		border: @border-widget;
+		border-radius: 4px;
+
+		.paypal {
+			margin: 6px 0 0 0;
+		}
 	}
-	p + p {
-		margin-top: 1.2em;
-	}
-	li {
-		margin-top: 0.6em;
-		line-height: 1.4em;
-	}
+
 
 	#login-wrapper {
 		margin: 96px 0;
 		font-size: 14px;
+	}
 
-		#pass {
-			-moz-appearance: none;
-			-ms-appearance: none;
-			-webkit-appearance: none;
-			font-family: @font-family;
-			font-weight: @font-weight;
-			color: @col;
-			background: @col-widget-back-highlight;
-			border: @border-widget;
-			outline: none;
-			display: inline-block;
-			width: 200px;
-			height: 30px;
-			padding: 0 6px;
-			margin: 8px;
-		}
-		#login, #logout {
-			display: inline-block;
-			padding: 4px 16px;
-			margin: 8px;
-			background-color: @col-widget-back;
-			border: @border-widget;
-			cursor: pointer;
+	#pass {
+		-moz-appearance: none;
+		-ms-appearance: none;
+		-webkit-appearance: none;
+		font-family: @font-family;
+		font-weight: @font-weight;
+		color: @col;
+		background: @col-widget-back-highlight;
+		border: @border-widget;
+		outline: none;
+		display: inline-block;
+		width: 200px;
+		height: 30px;
+		padding: 0 6px;
+		margin: 8px;
+	}
 
-			color: @col;
-			cursor: pointer;
-			text-decoration: none;
-			.transition(all 0.2s ease-in-out);
+	#login, #logout {
+		display: inline-block;
+		padding: 4px 16px;
+		margin: 8px;
+		background-color: @col-widget-back;
+		border: @border-widget;
+		cursor: pointer;
 
-			&:hover, &.hover {
-				background-color: @col-widget-back-highlight;
-				color: @col-hover;
-			}
-		}
-		#hint {
-			margin: 12px auto;
-			width: 360px;
-			color: @col;
-			font-size: 12px;
+		color: @col;
+		cursor: pointer;
+		text-decoration: none;
+		.transition(all 0.2s ease-in-out);
+
+		&:hover, &.hover {
+			background-color: @col-widget-back-highlight;
+			color: @col-hover;
 		}
 	}
+
+	#hint {
+		margin: 12px auto;
+		width: 360px;
+		color: @col;
+		font-size: 12px;
+	}
+
 
 	#tests-wrapper {
 		margin: 96px 0;
@@ -110,6 +111,7 @@ body#h5ai-info {
 		padding: 0;
 
 		.test {
+			margin: 12px 0 0 0;
 			padding: 6px;
 
 			.label {
@@ -139,18 +141,8 @@ body#h5ai-info {
 		}
 	}
 
+
 	#bottombar {
 		font-size: 13px;
-	}
-
-	#donation {
-		margin: 12px auto;
-		width: 360px;
-		color: @col;
-		font-size: 12px;
-
-		.paypal {
-			margin: 6px;
-		}
 	}
 }

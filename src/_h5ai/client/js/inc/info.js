@@ -153,10 +153,6 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
 		init = function () {
 
-			$('<span class="idx-file">Index: <code class="value"></code></span>')
-				.appendTo('body')
-				.find('.value').text(setup.INDEX_HREF);
-
 			if (setup.AS_ADMIN) {
 				addTests();
 			}
