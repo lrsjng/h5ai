@@ -52,12 +52,12 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 			);
 
 			addTest(
-				'Options parsable', 'File <code>options.json</code> is readable and syntax seams to be correct',
+				'Options parsable', 'File <code>options.json</code> is readable and syntax is correct',
 				config.options !== null
 			);
 
 			addTest(
-				'Types parsable', 'File <code>types.json</code> is readable and syntax seams to be correct',
+				'Types parsable', 'File <code>types.json</code> is readable and syntax is correct',
 				config.types !== null
 			);
 
