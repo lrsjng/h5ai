@@ -40,9 +40,9 @@ function setup() {
 	$server_name = null;
 	$server_version = null;
 	$server_software = getenv("SERVER_SOFTWARE");
-	if ($server_software && preg_match("#^(.*?)/(.*?)(?: |$)#", strtolower($server_software), $matches)) {
+	if ($server_software && preg_match("#^(.*?)(?:/(.*?))?(?: |$)#", strtolower($server_software), $matches)) {
 		$server_name = $matches[1];
-		$server_version = $matches[2];
+		$server_version = count($matches) > 2 ? $matches[2] : '';
 	}
 	define("SERVER_NAME", $server_name);
 	define("SERVER_VERSION", $server_version);
