@@ -28,7 +28,33 @@ class Item {
 
 		if (is_file($path)) {
 
-			$size = @filesize($path);
+			if (PHP_INT_SIZE < 8) {
+				$_handle = fopen($path, "r");
+
+				$_pos = 0;
+				$_size = 1073741824;
+				fseek($_handle, 0, SEEK_SET);
+				while ($_size > 1) {
+					fseek($_handle, $_size, SEEK_CUR);
+
+					if (fgetc($_handle) === false) {
+						fseek($_handle, -$_size, SEEK_CUR);
+						$_size = (int)($_size / 2);
+					} else {
+						fseek($_handle, -1, SEEK_CUR);
+						$_pos += $_size;
+					}
+				}
+
+				while (fgetc($_handle) !== false) {
+					$_pos++;
+				}
+				fclose($_handle);
+
+				$size = $_pos * 1e20;
+			} else {
+				$size = @filesize($path);
+			}
 
 		} else if (is_dir($path)) {
 

@@ -4,12 +4,12 @@ modulejs.define('core/format', ['_', 'moment'], function (_, moment) {
 	var decimalMetric = {
 			t: 1000.0,
 			k: 1000.0,
-			u: ['B', 'KB', 'MB', 'GB', 'TB']
+			u: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 		},
 		binaryMetric = {
 			t: 1024.0,
 			k: 1024.0,
-			u: ['B', 'KiB', 'MiB', 'GiB', 'TiB']
+			u: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
 		},
 		defaultMetric = decimalMetric,
 		defaultDateFormat = 'YYYY-MM-DD HH:mm',
