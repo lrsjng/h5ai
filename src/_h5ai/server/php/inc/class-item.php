@@ -51,7 +51,7 @@ class Item {
 				}
 				fclose($_handle);
 
-				$size = $_pos * 1e20;
+				$size = $_pos;
 			} else {
 				$size = @filesize($path);
 			}
