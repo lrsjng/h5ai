@@ -2,8 +2,8 @@
   "name": "h5ai",
   "version": "0.25.2+",
   "description": "a modern HTTP web server index",
-  "url": "http://larsjung.de/h5ai/",
-  "author": "Lars Jung",
+  "homepage": "http://larsjung.de/h5ai/",
+  "author": "Lars Jung <lrsjng@gmail.com> (http://larsjung.de)",
   "license": "MIT",
   "repository": {
     "type": "git",

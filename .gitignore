@@ -1,6 +1,5 @@
 
+*.sublime-*
 build
 local
-*.sublime-*
-
 test
