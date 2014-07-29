@@ -1,18 +1,19 @@
 # h5ai
-**h5ai** is a modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
-The preferred way to report a bug or make a feature request is to
-create [a new issue](https://github.com/lrsjng/h5ai/issues/new) on GitHub!
+
+[![web](http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat)](http://larsjung.de/h5ai/)
+[![GitHub](http://img.shields.io/badge/GitHub-lrsjng/h5ai-a0a060.svg?style=flat)](https://github.com/lrsjng/h5ai)
+
+A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
+To report a bug or make a feature request please create [a new issue](https://github.com/lrsjng/h5ai/issues/new).
 
 
 ## Install
-**Note:** please don't use files from the `src` folder for installation,
-they need to be preprocessed to work correctly!
-You'll find a preprocessed package, as well as detailed installation
-instructions on the [project page](http://larsjung.de/h5ai/).
+**Note:** don't install any files the `src` folder, they need to be preprocessed to work correctly!
+You'll find a preprocessed package, as well as detailed install instructions on the [project page](http://larsjung.de/h5ai/).
 
 
 ## Build
-There are repositories for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/).
+There are installation ready packages for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/).
 But if you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
 
     > npm install -g fquery@0.11.0
