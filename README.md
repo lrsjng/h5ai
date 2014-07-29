@@ -8,7 +8,7 @@ To report a bug or make a feature request please create [a new issue](https://gi
 
 
 ## Install
-**Note:** don't install any files the `src` folder, they need to be preprocessed to work correctly!
+Do **not** install any files from the `src` folder, they need to be preprocessed to work correctly!
 You'll find a preprocessed package, as well as detailed install instructions on the [project page](http://larsjung.de/h5ai/).
 
 
