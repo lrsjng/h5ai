@@ -15,7 +15,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
 		loginTemp =
 			'<div id="login-wrapper">' +
-				'<input id="pass" type="text" placeholder="password"/>' +
+				'<input id="pass" type="password" placeholder="password"/>' +
 				'<span id="login">login</span>' +
 				'<span id="logout">logout</span>' +
 				'<div id="hint">' +
