@@ -4,7 +4,8 @@
 
 ## develop branch
 
-* ...
+* removes True Type fonts
+* outsources themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
 
 
 ## v0.25.2 - *2014-07-01*
