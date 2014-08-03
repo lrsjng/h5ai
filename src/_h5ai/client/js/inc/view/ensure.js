@@ -14,6 +14,7 @@ modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, confi
 
 			if (
 				$(selr).text() !== sequence ||
+				$(sela).attr('href') !== url ||
 				$(sela).filter(isVisible).length !== 1 ||
 				$(selr).filter(isVisible).length !== 1 ||
 				$(selb).filter(isVisible).length !== 1
