@@ -8,7 +8,7 @@
 * outsources themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
 * updates `jQuery.mousewheel` to 3.1.12
 * updates `jQuery.qrcode` to 0.8.0
-* replaces `markdown` with [`marked`](https://github.com/chjj/marked)
+* replaces `markdown` with [`marked`](https://github.com/chjj/marked) 0.3.2
 * updates `modulejs` to 0.4.5
 
 
