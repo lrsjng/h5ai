@@ -1,5 +1,5 @@
 
-modulejs.define('ext/custom', ['_', '$', 'markdown', 'core/settings', 'core/server', 'core/event', 'core/resource'], function (_, $, markdown, allsettings, server, event, resource) {
+modulejs.define('ext/custom', ['_', '$', 'marked', 'core/settings', 'core/server', 'core/event', 'core/resource'], function (_, $, marked, allsettings, server, event, resource) {
 
 	var settings = _.extend({
 			enabled: false
@@ -20,7 +20,7 @@ modulejs.define('ext/custom', ['_', '$', 'markdown', 'core/settings', 'core/serv
 					if (data.header) {
 						content = data.header;
 						if (data.header_type === 'md') {
-							content  = markdown.toHTML(content);
+							content  = marked(content);
 						}
 						$header.html(content).stop().slideDown(duration);
 						has_header = true;
@@ -29,7 +29,7 @@ modulejs.define('ext/custom', ['_', '$', 'markdown', 'core/settings', 'core/serv
 					if (data.footer) {
 						content = data.footer;
 						if (data.footer_type === 'md') {
-							content  = markdown.toHTML(content);
+							content  = marked(content);
 						}
 						$footer.html(content).stop().slideDown(duration);
 						has_footer = true;

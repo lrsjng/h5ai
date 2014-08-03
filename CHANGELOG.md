@@ -6,6 +6,7 @@
 
 * removes True Type fonts
 * outsources themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
+* replaces `markdown` with [`marked`](https://github.com/chjj/marked)
 
 
 ## v0.25.2 - *2014-07-01*

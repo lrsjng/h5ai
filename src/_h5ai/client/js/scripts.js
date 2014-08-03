@@ -3,7 +3,7 @@
 // ----------
 // @include "lib/modernizr-*.js"
 // @include "lib/underscore-*.js"
-// @include "lib/markdown-*.js"
+// @include "lib/marked-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 
@@ -19,7 +19,7 @@
 
 	/*global jQuery, markdown, Modernizr, moment, _ */
 	modulejs.define('$', function () { return jQuery; });
-	modulejs.define('markdown', function () { return markdown; });
+	modulejs.define('marked', function () { return marked; });
 	modulejs.define('modernizr', function () { return Modernizr; });
 	modulejs.define('moment', function () { return moment; });
 	modulejs.define('_', function () { return _; });

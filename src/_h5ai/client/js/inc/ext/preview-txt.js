@@ -1,5 +1,5 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'markdown', 'core/settings', 'core/event', 'core/resource', 'ext/preview'], function (_, $, markdown, allsettings, event, resource, preview) {
+modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'core/settings', 'core/event', 'core/resource', 'ext/preview'], function (_, $, marked, allsettings, event, resource, preview) {
 
 	var settings = _.extend({
 			enabled: false,
@@ -106,7 +106,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'markdown', 'core/settings', 'core
 
 							} else if (settings.types[currentItem.type] === 'markdown') {
 
-								$text = $(templateMarkdown).html(markdown.toHTML(textContent));
+								$text = $(templateMarkdown).html(marked(textContent));
 							} else {
 
 								$text = $(templateText).text(textContent);
