@@ -6,9 +6,10 @@
 
 * removes True Type fonts
 * outsources themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
+* updates `jQuery.mousewheel` to 3.1.12
+* updates `jQuery.qrcode` to 0.8.0
 * replaces `markdown` with [`marked`](https://github.com/chjj/marked)
 * updates `modulejs` to 0.4.5
-* updates `jQuery.qrcode` to 0.8.0
 
 
 ## v0.25.2 - *2014-07-01*
