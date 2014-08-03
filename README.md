@@ -53,8 +53,8 @@ THE SOFTWARE.
 
 ## References
 **h5ai** profits from these great projects:
-[Gnome Symbolic Icon Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
-[HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
+[Gnome&nbsp;Symbolic&nbsp;Icon&nbsp;Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
+[HTML5&nbsp;★&nbsp;Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.fracs](http://larsjung.de/fracs/)&nbsp;(MIT),
 [jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
