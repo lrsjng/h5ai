@@ -53,8 +53,6 @@ THE SOFTWARE.
 
 ## References
 **h5ai** profits from these great projects:
-[Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)&nbsp;(CC BY-NC-ND 3.0),
-[Faenza Icons](http://tiheum.deviantart.com/art/Faenza-Icons-173323228)&nbsp;(GPL),
 [Gnome Symbolic Icon Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
 [HTML5 ★ Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
