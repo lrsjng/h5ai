@@ -17,7 +17,7 @@
 (function () {
 	'use strict';
 
-	/*global jQuery, markdown, Modernizr, moment, _ */
+	/*global jQuery, marked, Modernizr, moment, _ */
 	modulejs.define('$', function () { return jQuery; });
 	modulejs.define('marked', function () { return marked; });
 	modulejs.define('modernizr', function () { return Modernizr; });
