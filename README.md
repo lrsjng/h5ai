@@ -4,7 +4,7 @@
 [![GitHub](http://img.shields.io/badge/GitHub-lrsjng/h5ai-a0a060.svg?style=flat)](https://github.com/lrsjng/h5ai)
 
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
-For bugs and feature requests please use [GitHub issues](https://github.com/lrsjng/h5ai/issues).
+For bugs and feature requests please use [issues](https://github.com/lrsjng/h5ai/issues).
 
 
 ## Install
