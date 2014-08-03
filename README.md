@@ -1,20 +1,19 @@
 # h5ai
 
-[![web](http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat)](http://larsjung.de/h5ai/)
-[![GitHub](http://img.shields.io/badge/GitHub-lrsjng/h5ai-a0a060.svg?style=flat)](https://github.com/lrsjng/h5ai)
+[![web][web-img]][web] [![GitHub][gh-img]][gh]
 
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
-For bug reports and feature requests please use [issues](https://github.com/lrsjng/h5ai/issues).
+For bug reports and feature requests please use [issues][gh-issues].
 
 
 ## Install
 Do **not** install any files from the `src` folder, they need to be preprocessed to work correctly!
-You'll find a preprocessed package, as well as detailed install instructions on the [project page](http://larsjung.de/h5ai/).
+You'll find a preprocessed package, as well as detailed install instructions on the [project page][web].
 
 
 ## Build
-There are installation ready packages for the latest [releases](http://release.larsjung.de/h5ai/) and [dev builds](http://release.larsjung.de/h5ai/dev/).
-But if you want to build **h5ai** yourself you need to install the build tool [fQuery](http://larsjung.de/fquery/) first:
+There are installation ready packages for the latest [releases][release] and [dev builds][release-dev].
+But if you want to build **h5ai** yourself you need to install the build tool [fQuery][fquery] first:
 
     > npm install -g fquery@0.11.0
 
@@ -66,3 +65,14 @@ THE SOFTWARE.
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
 [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
 [Underscore.js](http://underscorejs.org)&nbsp;(MIT)
+
+
+[web]: http://larsjung.de/h5ai/
+[gh]: https://github.com/lrsjng/h5ai
+[gh-issues]: https://github.com/lrsjng/h5ai/issues
+[release]: http://release.larsjung.de/h5ai/
+[release-dev]: http://release.larsjung.de/h5ai/dev/
+[fquery]: http://larsjung.de/fquery/
+
+[web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat
+[gh-img]: http://img.shields.io/badge/GitHub-lrsjng/h5ai-a0a060.svg?style=flat
