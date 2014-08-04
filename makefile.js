@@ -36,14 +36,14 @@ module.exports = function (make) {
 
 	make.target('check-version', [], 'add git info to dev builds').async(function (done, fail) {
 
-		if (!/\+$/.test(pkg.version)) {
+		if (!pkg.develop) {
 			done();
 			return;
 		}
 
 		$.git(root, function (err, result) {
 
-			pkg.version += result.buildSuffix;
+			pkg.version += '+' + result.buildSuffix;
 			$.info({ method: 'check-version', message: 'version set to ' + pkg.version });
 			done();
 		});
