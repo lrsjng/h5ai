@@ -2,7 +2,7 @@
 // other libs
 // ----------
 // @include "lib/modernizr-*.js"
-// @include "lib/underscore-*.js"
+// @include "lib/lodash-*.js"
 // @include "lib/marked-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
