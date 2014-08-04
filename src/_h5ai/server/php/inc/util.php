@@ -96,6 +96,18 @@ function exec_cmdv($cmdv) {
 }
 
 
+function exec_0($cmd) {
+
+	$lines = array();
+	$rc = null;
+	try {
+		@exec($cmd, $lines, $rc);
+		return $rc === 0;
+	} catch (Exception $e) {}
+	return false;
+}
+
+
 
 /*********************************************************************
   Debug Tools

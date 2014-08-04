@@ -84,8 +84,15 @@ function setup() {
 
 
 	// EXTERNAL COMMANDS
-	foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $cmd) {
-		$cmdv = HAS_WIN_OS ? array("which", $cmd) : array("command", "-v", $cmd);
-		define("HAS_CMD_" . strtoupper($cmd), @preg_match("#" . $cmd . "(.exe)?$#i", exec_cmdv($cmdv)) > 0);
+	// todo: cache all cmd tests
+	$cmd = false;
+	if (!$cmd && exec_0("command -v command")) {
+		$cmd = "command -v";
+	}
+	if (!$cmd && exec_0("which which")) {
+		$cmd = "which";
+	}
+	foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $c) {
+		define("HAS_CMD_" . strtoupper($c), ($cmd !== false) && exec_0($cmd . " " . $c));
 	}
 }
