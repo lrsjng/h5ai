@@ -6,7 +6,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings'
 			types: {}
 		}, allsettings['preview-txt']),
 
-		templateText = '<pre id="pv-txt-text" class="highlighted"><code/></pre>',
+		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
 		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
 		preloadText = function (absHref, callback) {
@@ -61,20 +61,14 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings'
 								$text, $code;
 
 							if (type === 'none') {
-
 								$text = $(templateMarkdown).text(textContent);
-
 							} else if (type === 'fixed') {
-
 								$text = $(templateText).text(textContent);
-
 							} else if (type === 'markdown') {
-
 								$text = $(templateMarkdown).html(marked(textContent));
 							} else {
-
 								$text = $(templateText);
-								$code = $text.find('code');
+								$code = $('<code/>').appendTo($text);
 
 								if (textContent.length < 20000) {
 									$code.empty().html(prism.highlight(textContent, prism.languages[type]));
