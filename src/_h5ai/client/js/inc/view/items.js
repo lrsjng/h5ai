@@ -50,6 +50,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 				.data('item', item);
 
 			location.setLink($a, item);
+			if(!item.isManaged) $a.attr('target', '_parent');
 
 			$iconImg.attr('src', resource.icon(item.type)).attr('alt', item.type);
 			$label.text(item.label);

@@ -31,6 +31,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 				.data('item', item);
 
 			location.setLink($a, item);
+			if(!item.isManaged) $a.attr('target', '_parent');
+
 			$img.attr('src', resource.image('folder'));
 			$label.text(item.label);
 
