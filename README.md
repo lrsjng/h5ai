@@ -59,12 +59,12 @@ THE SOFTWARE.
 [jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
 [jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
+[Lo-Dash](http://lodash.com)&nbsp;(MIT),
 [marked](https://github.com/chjj/marked)&nbsp;(MIT),
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
-[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL),
-[Underscore.js](http://underscorejs.org)&nbsp;(MIT)
+[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL)
 
 
 [web]: http://larsjung.de/h5ai/
