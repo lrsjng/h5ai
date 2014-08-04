@@ -34,26 +34,6 @@ modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function
 			return fallbackHref + 'file.svg';
 		};
 
-		// loadScript = function (filename, callback) {
-
-		// 	$.ajax({
-		// 			url: scriptsHref + filename,
-		// 			dataType: 'script'
-		// 		}).done(function () {
-
-		// 			callback();
-		// 		});
-		// },
-
-		// loadScriptGlob = function (filename, globalId, callback) {
-
-		// 	if (win[globalId]) {
-		// 		callback(win[globalId]);
-		// 	} else {
-		// 		loadScript(filename, function () { callback(win[globalId]); });
-		// 	}
-		// };
-
 
 	return {
 		image: image,

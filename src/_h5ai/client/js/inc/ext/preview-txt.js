@@ -9,43 +9,6 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings'
 		templateText = '<pre id="pv-txt-text" class="highlighted"><code/></pre>',
 		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
-		// adapted from SyntaxHighlighter
-		getHighlightedLines = function (sh, alias, content) {
-
-			var brushes = sh.vars.discoveredBrushes,
-				Brush, brush;
-
-			if (!brushes) {
-				brushes = {};
-
-				_.each(sh.brushes, function (info, brush) {
-
-					var aliases = info.aliases;
-
-					if (aliases) {
-						info.brushName = brush.toLowerCase();
-
-						for (var i = 0; i < aliases.length; i += 1) {
-							brushes[aliases[i]] = brush;
-						}
-					}
-				});
-
-				sh.vars.discoveredBrushes = brushes;
-			}
-
-			Brush = sh.brushes[brushes[alias || 'plain']];
-
-			if (!Brush) {
-				return $();
-			}
-
-			brush = new Brush();
-			brush.init({toolbar: false, gutter: false});
-
-			return $(brush.getHtml(content)).find('.line');
-		},
-
 		preloadText = function (absHref, callback) {
 
 			$.ajax({
