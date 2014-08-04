@@ -217,15 +217,14 @@ Options
 
 	/*
 	Show text file preview on click.
-	"types" maps file types to SyntaxHighligher brushes.
-	For available brushes see http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/
+	"types" maps file types to http://prismjs.com languages.
 
 	Additional type are:
 	 - "markdown" to render Markdown text
 	 - "none" for floating text
 	 - "fixed" for fixed width text
 
-	- types: maps types to brushes
+	- types: maps types to languages
 	*/
 	"preview-txt": {
 		"enabled": true,
@@ -236,23 +235,23 @@ Options
 			"txt-c": "c",
 			"txt-cpp": "cpp",
 			"txt-css": "css",
-			"txt-diff": "diff",
+			"txt-diff": "fixed",
 			"txt-h": "c",
 			"txt-hpp": "cpp",
 			"txt-install": "fixed",
 			"txt-log": "fixed",
 			"txt-java": "java",
-			"txt-js": "js",
-			"txt-json": "js",
-			"txt-makefile": "xml",
+			"txt-js": "javascript",
+			"txt-json": "javascript",
+			"txt-makefile": "fixed",
 			"txt-md": "markdown",
 			// "txt-php": "php",
 			"txt-py": "python",
 			"txt-readme": "fixed",
 			"txt-rb": "ruby",
 			"txt-rtf": "fixed",
-			"txt-script": "shell",
-			"txt-xml": "xml"
+			"txt-script": "bash",
+			"txt-xml": "fixed"
 		}
 	},
 

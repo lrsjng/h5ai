@@ -12,6 +12,7 @@
 * updates `modulejs` to 0.4.5
 * updates `Moment.js` to 2.8.1
 * replaces `underscore` with [`Lo-Dash`](https://github.com/lodash/lodash) 2.4.1
+* replaces `SyntaxHighlighter` with [`Prism`](http://prismjs.com) 2014-08-04
 
 
 ## v0.25.2 - *2014-07-01*

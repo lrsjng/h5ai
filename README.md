@@ -64,7 +64,7 @@ THE SOFTWARE.
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
-[SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)&nbsp;(MIT/GPL)
+[Prism](http://prismjs.com)&nbsp;(MIT)
 
 
 [web]: http://larsjung.de/h5ai/

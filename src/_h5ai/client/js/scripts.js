@@ -6,6 +6,7 @@
 // @include "lib/marked-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
+// @include "lib/prism-*.js"
 
 // jQuery libs
 // -----------
@@ -22,6 +23,7 @@
 	modulejs.define('marked', function () { return marked; });
 	modulejs.define('modernizr', function () { return Modernizr; });
 	modulejs.define('moment', function () { return moment; });
+	modulejs.define('prism', function () { return Prism; });
 	modulejs.define('_', function () { return _; });
 
 	// @include "inc/**/*.js"

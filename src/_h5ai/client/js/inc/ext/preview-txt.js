@@ -1,12 +1,12 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'core/settings', 'core/event', 'core/resource', 'ext/preview'], function (_, $, marked, allsettings, event, resource, preview) {
+modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings', 'core/event', 'ext/preview'], function (_, $, marked, prism, allsettings, event, preview) {
 
 	var settings = _.extend({
 			enabled: false,
 			types: {}
 		}, allsettings['preview-txt']),
 
-		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
+		templateText = '<pre id="pv-txt-text" class="highlighted"><code/></pre>',
 		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
 		// adapted from SyntaxHighlighter
@@ -94,38 +94,31 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'core/settings', 'core/e
 
 						$('#pv-content').fadeOut(100, function () {
 
-							var $text;
+							var type = settings.types[currentItem.type],
+								$text, $code;
 
-							if (settings.types[currentItem.type] === 'none') {
+							if (type === 'none') {
 
 								$text = $(templateMarkdown).text(textContent);
 
-							} else if (settings.types[currentItem.type] === 'fixed') {
+							} else if (type === 'fixed') {
 
 								$text = $(templateText).text(textContent);
 
-							} else if (settings.types[currentItem.type] === 'markdown') {
+							} else if (type === 'markdown') {
 
 								$text = $(templateMarkdown).html(marked(textContent));
 							} else {
 
-								$text = $(templateText).text(textContent);
+								$text = $(templateText);
+								$code = $text.find('code');
 
-								resource.ensureSH(function (sh) {
-
-									if (sh) {
-										var $table = $('<table/>');
-
-										getHighlightedLines(sh, settings.types[currentItem.type], textContent).each(function (i) {
-											$('<tr/>')
-												.append($('<td/>').addClass('nr').append(i + 1))
-												.append($('<td/>').addClass('line').append(this))
-												.appendTo($table);
-										});
-
-										$text.empty().append($table);
-									}
-								});
+								if (textContent.length < 20000) {
+									$code.empty().html(prism.highlight(textContent, prism.languages[type]));
+								} else {
+									$code.empty().text(textContent);
+									setTimeout(function () { $code.empty().html(prism.highlight(textContent, prism.languages[type])); }, 300);
+								}
 							}
 							$('#pv-content').empty().append($text).fadeIn(200);
 							onAdjustSize();
