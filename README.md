@@ -21,10 +21,10 @@ to install the build tool [fQuery][fquery] first:
 
     > npm install -g fquery@0.11.0
 
-This will install *fQuery* and its command line tool `makejs`. Run `makejs --help`
-to see if everything worked fine. To clone and build the project run
-the following commands, this will create a new folder `build` including a
-fresh zipball.
+This will globally install fQuery and its command line tool `makejs`. Run
+`makejs --help` to see if everything worked fine. To clone and build the
+project run the following commands, this will create a new folder `build`
+including a fresh zipball.
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
