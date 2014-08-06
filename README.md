@@ -7,19 +7,24 @@ For bug reports and feature requests please use [issues][gh-issues].
 
 
 ## Install
-Do **not** install any files from the `src` folder, they need to be preprocessed to work correctly!
-You'll find a preprocessed package, as well as detailed install instructions on the [project page][web].
+
+Do **not** install any files from the `src` folder, they need to be
+preprocessed to work correctly! Find a preprocessed package and detailed
+install instructions on the [project page][web].
 
 
 ## Build
-There are installation ready packages for the latest [releases][release] and [dev builds][release-dev].
-But if you want to build **h5ai** yourself you need to install the build tool [fQuery][fquery] first:
+
+There are installation ready packages for the latest [releases][release] and
+[dev builds][release-dev]. But if you want to build **h5ai** yourself you need
+to install the build tool [fQuery][fquery] first:
 
     > npm install -g fquery@0.11.0
 
-This will install fQuery and its command line tool `makejs`. Run `makejs --help` to see if everything
-worked fine. To clone and build the project run the following commands.
-You'll find a new directory `build` including a fresh zipball.
+This will install *fQuery* and its command line tool `makejs`. Run `makejs --help`
+to see if everything worked fine. To clone and build the project run
+the following commands, this will create a new folder `build` including a
+fresh zipball.
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
@@ -27,6 +32,7 @@ You'll find a new directory `build` including a fresh zipball.
 
 
 ## License
+
 The MIT License (MIT)
 
 Copyright (c) 2014 Lars Jung (http://larsjung.de)
@@ -51,6 +57,7 @@ THE SOFTWARE.
 
 
 ## References
+
 **h5ai** profits from these great projects:  
 [Gnome&nbsp;Symbolic&nbsp;Icon&nbsp;Theme](https://git.gnome.org/browse/gnome-icon-theme-symbolic/)&nbsp;(CC BY-SA 3.0),
 [HTML5&nbsp;★&nbsp;Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
