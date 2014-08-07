@@ -74,6 +74,13 @@ function load_commented_json($path) {
 }
 
 
+function safe_json($path, $obj) {
+
+	$json = json_encode($obj);
+	return file_put_contents($path, $json) !== false;
+}
+
+
 function passthru_cmd($cmd) {
 
 	$rc = null;

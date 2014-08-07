@@ -81,18 +81,29 @@ function setup() {
 	define("CACHE_HREF", normalize_path(APP_HREF . "/cache", true));
 	define("CACHE_PATH", normalize_path(APP_PATH . "/cache", false));
 	define("HAS_WRITABLE_CACHE", @is_writable(CACHE_PATH));
+	define("CMDS_PATH", normalize_path(CACHE_PATH . "/cmds.json", false));
 
 
 	// EXTERNAL COMMANDS
-	// todo: cache all cmd tests
-	$cmd = false;
-	if (!$cmd && exec_0("command -v command")) {
-		$cmd = "command -v";
+	$cmds = load_commented_json(CMDS_PATH);
+	if (sizeof($cmds) === 0 || has_request_param("updatecmds")) {
+		$cmds["command"] = exec_0("command -v command");
+		$cmds["which"] = exec_0("which which");
+
+		$cmd = false;
+		if ($cmds["command"]) {
+			$cmd = "command -v";
+		} else if ($cmds["which"]) {
+			$cmd = "which";
+		}
+
+		foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $c) {
+			$cmds[$c] = ($cmd !== false) && exec_0($cmd . " " . $c);
+		}
+
+		safe_json(CMDS_PATH, $cmds);
 	}
-	if (!$cmd && exec_0("which which")) {
-		$cmd = "which";
-	}
-	foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $c) {
-		define("HAS_CMD_" . strtoupper($c), ($cmd !== false) && exec_0($cmd . " " . $c));
+	foreach ($cmds as $c => $has) {
+		define("HAS_CMD_" . strtoupper($c), $has);
 	}
 }

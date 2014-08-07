@@ -30,6 +30,7 @@
 
 	var	$ = jQuery,
 		module = $('script[data-module]').data('module'),
+		data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
 		url;
 
 	if ($('html').hasClass('no-browser')) {
@@ -39,6 +40,7 @@
 	if (module === 'main') {
 		url = '.';
 	} else if (module === 'info') {
+		data.updatecmds = true;
 		url = 'server/php/index.php';
 	} else {
 		return;
@@ -46,7 +48,7 @@
 
 	$.ajax({
 		url: url,
-		data: {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
+		data: data,
 		type: 'POST',
 		dataType: 'json'
 	}).done(function (config) {
