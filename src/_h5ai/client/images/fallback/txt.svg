@@ -1,40 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="96"
-   width="96"
-   viewBox="0 0 96 96"
-   version="1.1">
-  <path
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     d="M 12,6 12,90 84,90 84,24 66,6 z m 6,6 45.559322,0 L 78,26.576271 78,84 18,84 z"
-     id="rect2984"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccccccccccc" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2985"
-     width="42"
-     height="6"
-     x="24"
-     y="24" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2985-6"
-     width="36"
-     height="6"
-     x="24"
-     y="42" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2985-5"
-     width="48"
-     height="6"
-     x="24"
-     y="60" />
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" height="96" width="96" viewBox="0 0 96 96" version="1.1">
+  <path d="M12 6 12 90 84 90 84 24 66 6zm6 6 45.6 0L78 26.6 78 84 18 84z" fill="#555"/>
+  <rect width="42" height="6" x="24" y="24" fill="#555"/>
+  <rect width="36" height="6" x="24" y="42" fill="#555"/>
+  <rect width="48" height="6" x="24" y="60" fill="#555"/>
 </svg>

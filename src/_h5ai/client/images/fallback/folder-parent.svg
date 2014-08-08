@@ -1,80 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="96"
-   height="96"
-   viewBox="0 0 96 96"
-   version="1.1">
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer9"
-     inkscape:label="status"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer10"
-     inkscape:label="devices" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer11"
-     inkscape:label="apps" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer13"
-     inkscape:label="places" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer14"
-     inkscape:label="mimetypes" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer15"
-     inkscape:label="emblems"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="g71291"
-     inkscape:label="emotes"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="g4953"
-     inkscape:label="categories"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     transform="translate(-321.00015,-587)"
-     id="layer12"
-     inkscape:label="actions"
-     style="display:inline">
-    <g
-       id="g2994"
-       style="fill:#555555;fill-opacity:1"
-       transform="matrix(4.836272,0,0,4.836272,-1221.151,-2629.537)">
-      <path
-         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#555555;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-         inkscape:connector-curvature="0"
-         id="path4762"
-         d="m 325,673 0,2 6.5,0 c 0.84027,0 1.5,0.65973 1.5,1.5 0,0.84027 -0.65973,1.5 -1.5,1.5 l -0.5,0 0,2 0.5,0 c 1.92115,0 3.5,-1.57885 3.5,-3.5 0,-1.92115 -1.57885,-3.5 -3.5,-3.5 l -6.5,0 z" />
-      <path
-         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#bebebe;fill:#555555;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-         inkscape:connector-curvature="0"
-         id="path4764"
-         d="m 328,670.0221 0,1 c 0,0.25689 -0.12983,0.52846 -0.3125,0.71875 l -2.28125,2.28125 2.28125,2.28125 c 0.18267,0.19029 0.3125,0.46186 0.3125,0.71875 l 0,1 -1,0 c -0.30945,0 -0.55232,-0.0903 -0.75,-0.28125 l -3.65625,-3.71875 3.65625,-3.71875 c 0.19768,-0.19095 0.44055,-0.28125 0.75,-0.28125 z"
-         sodipodi:nodetypes="ccccccccccccc" />
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" version="1.1">
+  <g transform="translate(-321.00015,-587)">
+    <g transform="matrix(4.836272,0,0,4.836272,-1221.151,-2629.537)" fill="#555">
+      <path d="m325 673 0 2 6.5 0c0.8 0 1.5 0.7 1.5 1.5 0 0.8-0.7 1.5-1.5 1.5l-0.5 0 0 2 0.5 0c1.9 0 3.5-1.6 3.5-3.5 0-1.9-1.6-3.5-3.5-3.5l-6.5 0z"/>
+      <path d="m328 670 0 1c0 0.3-0.1 0.5-0.3 0.7l-2.3 2.3 2.3 2.3c0.2 0.2 0.3 0.5 0.3 0.7l0 1-1 0c-0.3 0-0.6-0.1-0.7-0.3l-3.7-3.7 3.7-3.7c0.2-0.2 0.4-0.3 0.8-0.3z"/>
     </g>
   </g>
 </svg>

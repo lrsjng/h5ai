@@ -1,126 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="96"
-   width="96"
-   viewBox="0 0 96 96"
-   version="1.1">
-  <path
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     d="M 6,12 6,84 90,84 90,30 72,12 z m 6,6 57.559322,0 L 84,32.576271 84,78 12,78 z"
-     id="rect2984"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccccccccccc" />
-  <path
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     d="M 35.4,42 46.577823,57.968309 56.399999,52.00002 69,72 27,72 z"
-     id="rect2985"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccccc" />
-  <path
-     sodipodi:type="arc"
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="path2988"
-     sodipodi:cx="-39"
-     sodipodi:cy="53.237289"
-     sodipodi:rx="15"
-     sodipodi:ry="15"
-     d="m -24,53.237289 a 15,15 0 1 1 -30,0 15,15 0 1 1 30,0 z"
-     transform="matrix(0.4,0,0,0.4,75.6,14.705084)" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2986"
-     width="6"
-     height="60"
-     x="18"
-     y="17.999989" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988"
-     width="6"
-     height="6"
-     x="12"
-     y="26.728817" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3"
-     width="6"
-     height="6"
-     x="12"
-     y="38.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-2"
-     width="6"
-     height="6"
-     x="12"
-     y="50.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-2-2"
-     width="6"
-     height="6"
-     x="12"
-     y="62.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-2-7"
-     width="6"
-     height="6"
-     x="12"
-     y="74.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2986-0"
-     width="6"
-     height="60"
-     x="72"
-     y="17.999989" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-4"
-     width="6"
-     height="6"
-     x="78"
-     y="26.728817" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-26"
-     width="6"
-     height="6"
-     x="78"
-     y="38.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-2-5"
-     width="6"
-     height="6"
-     x="78"
-     y="50.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-2-2-4"
-     width="6"
-     height="6"
-     x="78"
-     y="62.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-3-2-7-8"
-     width="6"
-     height="6"
-     x="78"
-     y="74.999985" />
-  <rect
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     id="rect2988-6"
-     width="6"
-     height="6"
-     x="12"
-     y="15.000004" />
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" height="96" width="96" viewBox="0 0 96 96" version="1.1">
+  <path d="m -24,53.237289 a 15,15 0 1 1 -30,0 15,15 0 1 1 30,0 z" transform="matrix(0.4,0,0,0.4,75.6,14.705084)" fill="#555"/>
+  <path d="M6 12 6 84 90 84 90 30 72 12zm6 6 57.6 0L84 32.6 84 78 12 78zM35.4 42 46.6 58 56.4 52 69 72 27 72zM-24 53.2a15 15 0 1 1-30 0 15 15 0 1 1 30 0z" fill="#555"/>
+  <rect width="6" height="60" x="18" y="18" fill="#555"/>
+  <rect width="6" height="6" x="12" y="26.7" fill="#555"/>
+  <rect width="6" height="6" x="12" y="39" fill="#555"/>
+  <rect width="6" height="6" x="12" y="51" fill="#555"/>
+  <rect width="6" height="6" x="12" y="63" fill="#555"/>
+  <rect width="6" height="6" x="12" y="75" fill="#555"/>
+  <rect width="6" height="60" x="72" y="18" fill="#555"/>
+  <rect width="6" height="6" x="78" y="26.7" fill="#555"/>
+  <rect width="6" height="6" x="78" y="39" fill="#555"/>
+  <rect width="6" height="6" x="78" y="51" fill="#555"/>
+  <rect width="6" height="6" x="78" y="63" fill="#555"/>
+  <rect width="6" height="6" x="78" y="75" fill="#555"/>
+  <rect width="6" height="6" x="12" y="15" fill="#555"/>
 </svg>
