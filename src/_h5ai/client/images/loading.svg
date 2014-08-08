@@ -1,17 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg id="svg7384" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
- <metadata id="metadata90">
-  <rdf:RDF>
-   <cc:Work rdf:about="">
-    <dc:format>image/svg+xml</dc:format>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title>Gnome Symbolic Icon Theme</dc:title>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <title id="title9167">Gnome Symbolic Icon Theme</title>
- <g id="layer12" transform="translate(-241 -627)">
-  <path id="path4597" style="block-progression:tb;text-indent:0;color:#555555;text-transform:none;fill:#555555" d="m253.91 628.97a1.0001 1.0001 0 0 0 -0.125 0.0312 1.0001 1.0001 0 0 0 -0.78125 1v1.6875c-0.38225-0.57796-0.84927-1.0822-1.4062-1.5-1.1556-0.86677-2.532-1.2523-3.875-1.1875-0.19186 0.009-0.37223 0.0353-0.5625 0.0625-1.5222 0.21741-2.9782 1.023-3.9688 2.3438-1.9812 2.6414-1.4227 6.425 1.2188 8.4062s6.425 1.4227 8.4062-1.2188a1.0063 1.0063 0 0 0 0.19 -0.6 1.0063 1.0063 0 0 0 0 -0.15625v-0.84375h-0.8125-0.0937a1.0063 1.0063 0 0 0 -0.0937 0 1.0063 1.0063 0 0 0 -0.8125 0.40625c-1.3326 1.7767-3.817 2.1139-5.5938 0.78125-1.7767-1.3326-2.1139-3.817-0.78125-5.5938 1.3326-1.7767 3.817-2.1139 5.5938-0.78125 0.42946 0.32212 0.76954 0.73295 1.0312 1.1875h-1.4375a1.0001 1.0001 0 0 0 -1 1 1.0001 1.0001 0 0 0 0 0.21875v0.78125h0.84375 0.15625 4 1v-1-4a1.0001 1.0001 0 0 0 0 -0.1875v-0.8125h-0.8125a1.0001 1.0001 0 0 0 -0.28125 -0.0312z"/>
- </g>
+<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16" version="1.1">
+  <g transform="translate(-241 -627)">
+    <path d="m253.9 629a1 1 0 0 0-0.1 0 1 1 0 0 0-0.8 1v1.7c-0.4-0.6-0.8-1.1-1.4-1.5-1.2-0.9-2.5-1.3-3.9-1.2-0.2 0-0.4 0-0.6 0.1-1.5 0.2-3 1-4 2.3-2 2.6-1.4 6.4 1.2 8.4s6.4 1.4 8.4-1.2a1 1 0 0 0 0.2-0.6 1 1 0 0 0 0-0.2v-0.8h-0.8-0.1a1 1 0 0 0-0.1 0 1 1 0 0 0-0.8 0.4c-1.3 1.8-3.8 2.1-5.6 0.8-1.8-1.3-2.1-3.8-0.8-5.6 1.3-1.8 3.8-2.1 5.6-0.8 0.4 0.3 0.8 0.7 1 1.2h-1.4a1 1 0 0 0-1 1 1 1 0 0 0 0 0.2v0.8h0.8 0.2 4 1v-1-4a1 1 0 0 0 0-0.2v-0.8h-0.8a1 1 0 0 0-0.30z" fill="#555"/>
+  </g>
 </svg>
