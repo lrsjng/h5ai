@@ -16,8 +16,8 @@ install instructions on the [project page][web].
 ## Build
 
 There are installation ready packages for the latest [releases][release] and
-[dev builds][release-dev]. But if you want to build **h5ai** yourself you need
-to install the build tool [fQuery][fquery] first:
+[dev builds][develop]. But if you want to build **h5ai** yourself you need to
+install the build tool [fQuery][fquery] first:
 
     > npm install -g fquery@0.11.0
 
@@ -78,7 +78,7 @@ THE SOFTWARE.
 [gh]: https://github.com/lrsjng/h5ai
 [gh-issues]: https://github.com/lrsjng/h5ai/issues
 [release]: http://release.larsjung.de/h5ai/
-[release-dev]: http://release.larsjung.de/h5ai/dev/
+[develop]: http://release.larsjung.de/h5ai/develop/
 [fquery]: http://larsjung.de/fquery/
 
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat
