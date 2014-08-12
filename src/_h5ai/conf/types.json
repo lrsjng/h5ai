@@ -11,10 +11,10 @@ File types mapped to file extensions
 	// "txt-license":		["copying*", "license*"],
 	// "txt-readme":		["readme*"],
 
-	"ar":				["*.tar.bz2", "*.tar.gz", "*.tgz"],
+	"ar":				["*.tar.bz2", "*.crx"],
 	"ar-apk":			["*.apk"],
 	"ar-deb":			["*.deb"],
-	"ar-gz":			["*.gz"],
+	"ar-gz":			["*.gz", "*.tar.gz", "*.tgz"],
 	"ar-rar":			["*.rar"],
 	"ar-rpm":			["*.rpm"],
 	"ar-tar":			["*.tar"],
