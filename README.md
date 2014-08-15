@@ -1,6 +1,6 @@
 # h5ai
 
-[![license][license-img]][gh] [![web][web-img]][web] [![GitHub][gh-img]][gh]
+[![license][license-img]][gh] [![web][web-img]][web] [![github][gh-img]][gh]
 
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
 For bug reports and feature requests please use [issues][gh-issues].
@@ -83,4 +83,4 @@ THE SOFTWARE.
 
 [license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
-[gh-img]: http://img.shields.io/badge/GitHub-lrsjng/h5ai-a0a060.svg?style=flat-square
+[gh-img]: http://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
