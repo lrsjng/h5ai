@@ -16,45 +16,45 @@
 // app
 // ---
 (function () {
-	'use strict';
+    'use strict';
 
-	/*global jQuery, marked, Modernizr, moment, _ */
-	modulejs.define('$', function () { return jQuery; });
-	modulejs.define('marked', function () { return marked; });
-	modulejs.define('modernizr', function () { return Modernizr; });
-	modulejs.define('moment', function () { return moment; });
-	modulejs.define('prism', function () { return Prism; });
-	modulejs.define('_', function () { return _; });
+    /*global jQuery, marked, Modernizr, moment, _ */
+    modulejs.define('$', function () { return jQuery; });
+    modulejs.define('marked', function () { return marked; });
+    modulejs.define('modernizr', function () { return Modernizr; });
+    modulejs.define('moment', function () { return moment; });
+    modulejs.define('prism', function () { return Prism; });
+    modulejs.define('_', function () { return _; });
 
-	// @include "inc/**/*.js"
+    // @include "inc/**/*.js"
 
-	var	$ = jQuery,
-		module = $('script[data-module]').data('module'),
-		data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
-		url;
+    var $ = jQuery,
+        module = $('script[data-module]').data('module'),
+        data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
+        url;
 
-	if ($('html').hasClass('no-browser')) {
-		return;
-	}
+    if ($('html').hasClass('no-browser')) {
+        return;
+    }
 
-	if (module === 'main') {
-		url = '.';
-	} else if (module === 'info') {
-		data.updatecmds = true;
-		url = 'server/php/index.php';
-	} else {
-		return;
-	}
+    if (module === 'main') {
+        url = '.';
+    } else if (module === 'info') {
+        data.updatecmds = true;
+        url = 'server/php/index.php';
+    } else {
+        return;
+    }
 
-	$.ajax({
-		url: url,
-		data: data,
-		type: 'POST',
-		dataType: 'json'
-	}).done(function (config) {
+    $.ajax({
+        url: url,
+        data: data,
+        type: 'POST',
+        dataType: 'json'
+    }).done(function (config) {
 
-		modulejs.define('config', config);
-		$(function () { modulejs.require(module); });
-	});
+        modulejs.define('config', config);
+        $(function () { modulejs.require(module); });
+    });
 
 }());

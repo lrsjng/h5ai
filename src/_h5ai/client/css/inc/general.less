@@ -36,35 +36,35 @@
 ::selection { background: #68A9FF; color: #fff; text-shadow: none; }
 
 .transition (@transition) {
-	-webkit-transition: @transition;
-	transition: @transition;
+    -webkit-transition: @transition;
+    transition: @transition;
 }
 
 .transform (@transform) {
-	-webkit-transform: @transform;
-	-ms-transform: @transform;
-	transform: @transform;
-	zoom: 1;
+    -webkit-transform: @transform;
+    -ms-transform: @transform;
+    transform: @transform;
+    zoom: 1;
 }
 
 html {
-	min-height: 100%;
-	overflow: auto;
-	overflow-y: scroll;
+    min-height: 100%;
+    overflow: auto;
+    overflow-y: scroll;
 
-	&.js .noJsMsg {
-		display: none;
-	}
-	&.browser .noBrowserMsg {
-		display: none;
-	}
+    &.js .noJsMsg {
+        display: none;
+    }
+    &.browser .noBrowserMsg {
+        display: none;
+    }
 }
 
 body {
-	font-family: @font-family;
-	font-size: 13px;
-	font-weight: @font-weight;
-	color: @col;
-	background-color: @col-back;
-	margin: 30px;
+    font-family: @font-family;
+    font-size: 13px;
+    font-weight: @font-weight;
+    color: @col;
+    background-color: @col-back;
+    margin: 30px;
 }

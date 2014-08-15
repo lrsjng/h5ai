@@ -1,116 +1,116 @@
 
 #tree {
-	display: none;
-	position: fixed;
-	left: 0;
-	top: 31px;
-	height: 100%;
-	z-index: 3;
-	overflow: auto;
-	padding: 8px;
-	background-color: @col-widget-back;
-	border-right: @border-widget;
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 31px;
+    height: 100%;
+    z-index: 3;
+    overflow: auto;
+    padding: 8px;
+    background-color: @col-widget-back;
+    border-right: @border-widget;
 
-	.sp-scrollbar {
-		width: 6px;
-		background-color: @col-sb-back;
-		cursor: pointer;
+    .sp-scrollbar {
+        width: 6px;
+        background-color: @col-sb-back;
+        cursor: pointer;
 
-		.sp-thumb {
-			background-color: @col-sb-thumb;
-		}
-		&.active .sp-thumb {
-			background-color: @col-sb-thumb-active;
-		}
-	}
+        .sp-thumb {
+            background-color: @col-sb-thumb;
+        }
+        &.active .sp-thumb {
+            background-color: @col-sb-thumb-active;
+        }
+    }
 
-	.indicator {
-		position: relative;
-		top: 2px;
-		display: inline-block;
-		width: 16px;
-		height: 22px;
-		float: left;
-		opacity: 0.7;
-		cursor: pointer;
+    .indicator {
+        position: relative;
+        top: 2px;
+        display: inline-block;
+        width: 16px;
+        height: 22px;
+        float: left;
+        opacity: 0.7;
+        cursor: pointer;
 
-		img {
-			width: 12px;
-			height: 12px;
-			.transition(all 0.2s ease-in-out);
-		}
-		&.open {
-			img {
-				.transform(rotate(90deg));
-			}
-		}
-		&.unknown {
-			opacity: 0.3;
-		}
-		&.none {
-			opacity: 0;
-			cursor: inherit;
-		}
-	}
-	a, a:active, a.visited {
-		display: block;
-		height: 1.231em;
-		line-height: 1.231em;
-		margin-left: 14px;
-		padding: 4px 6px;
-		color: #555;
-		border: 1px solid rgba(0,0,0,0);
-		border-radius: 3px;
-		text-decoration: none;
-		opacity: 0.7;
+        img {
+            width: 12px;
+            height: 12px;
+            .transition(all 0.2s ease-in-out);
+        }
+        &.open {
+            img {
+                .transform(rotate(90deg));
+            }
+        }
+        &.unknown {
+            opacity: 0.3;
+        }
+        &.none {
+            opacity: 0;
+            cursor: inherit;
+        }
+    }
+    a, a:active, a.visited {
+        display: block;
+        height: 1.231em;
+        line-height: 1.231em;
+        margin-left: 14px;
+        padding: 4px 6px;
+        color: #555;
+        border: 1px solid rgba(0,0,0,0);
+        border-radius: 3px;
+        text-decoration: none;
+        opacity: 0.7;
 
-		&:hover, &.hover {
-			color: @col-hover;
-			background-color: @col-widget-back-hover;
-			opacity: 1;
-		}
-	}
-	.icon {
-		position: relative;
-		top: -2px;
-		margin-right: 6px;
+        &:hover, &.hover {
+            color: @col-hover;
+            background-color: @col-widget-back-hover;
+            opacity: 1;
+        }
+    }
+    .icon {
+        position: relative;
+        top: -2px;
+        margin-right: 6px;
 
-		img {
-			width: 16px;
-			height: 16px;
-		}
-	}
-	.hint {
-		margin-left: 6px;
-		font-size: 0.9em;
-		color: #ccc;
-	}
-	.content {
-		list-style: none;
-		margin: 0;
-		padding: 0 0 0 24px;
-	}
-	.summary {
-		margin: 0 0 0 24px;
-		color: #999;
-		font-style: italic;
-	}
-	.current {
-		> a, > a:active, > a:visited {
-			background-color: @col-widget-back-sel;
-			border-color: @col-widget-sep;
-			opacity: 1;
-		}
-	}
-	.error {
-		> a, > a:active, > a:visited {
-			color: #999;
-			&:hover, &.hover {
-				color: @col-hover;
-			}
-		}
-		.hint {
-			color: #c55;
-		}
-	}
+        img {
+            width: 16px;
+            height: 16px;
+        }
+    }
+    .hint {
+        margin-left: 6px;
+        font-size: 0.9em;
+        color: #ccc;
+    }
+    .content {
+        list-style: none;
+        margin: 0;
+        padding: 0 0 0 24px;
+    }
+    .summary {
+        margin: 0 0 0 24px;
+        color: #999;
+        font-style: italic;
+    }
+    .current {
+        > a, > a:active, > a:visited {
+            background-color: @col-widget-back-sel;
+            border-color: @col-widget-sep;
+            opacity: 1;
+        }
+    }
+    .error {
+        > a, > a:active, > a:visited {
+            color: #999;
+            &:hover, &.hover {
+                color: @col-hover;
+            }
+        }
+        .hint {
+            color: #c55;
+        }
+    }
 }

@@ -1,174 +1,174 @@
 
 #pv-txt-text {
-	max-width: 960px;
-	text-align: left;
-	background-color: #fff;
-	margin: 0 auto;
-	padding: 8px;
-	overflow: auto;
+    max-width: 960px;
+    text-align: left;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 8px;
+    overflow: auto;
 
-	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.3);
 
-	&.highlighted {
-		// word-break: break-all;
+    &.highlighted {
+        // word-break: break-all;
 
-		code {
-			font-family: @font-family-mono;
-			font-size: 16px;
-			line-height: 1.2em;
-		}
+        code {
+            font-family: @font-family-mono;
+            font-size: 16px;
+            line-height: 1.2em;
+        }
 
-		a, a:active, a:visited {
-			color: #2080FF;
-			text-decoration: none;
-			cursor: pointer;
+        a, a:active, a:visited {
+            color: #2080FF;
+            text-decoration: none;
+            cursor: pointer;
 
-			&:hover {
-				color: #68A9FF;
-			}
-		}
+            &:hover {
+                color: #68A9FF;
+            }
+        }
 
-		.token.comment,
-		.token.prolog,
-		.token.doctype,
-		.token.cdata {
-			color: #aaa;
-		}
+        .token.comment,
+        .token.prolog,
+        .token.doctype,
+        .token.cdata {
+            color: #aaa;
+        }
 
-		.token.punctuation {
-			color: #999;
-		}
+        .token.punctuation {
+            color: #999;
+        }
 
-		.namespace {
-			opacity: .7;
-		}
+        .namespace {
+            opacity: .7;
+        }
 
-		.token.property,
-		.token.tag,
-		.token.boolean,
-		.token.number,
-		.token.constant,
-		.token.symbol {
-			color: #905;
-		}
+        .token.property,
+        .token.tag,
+        .token.boolean,
+        .token.number,
+        .token.constant,
+        .token.symbol {
+            color: #905;
+        }
 
-		.token.selector,
-		.token.attr-name,
-		.token.string,
-		.token.builtin {
-			color: #690;
-		}
+        .token.selector,
+        .token.attr-name,
+        .token.string,
+        .token.builtin {
+            color: #690;
+        }
 
-		.token.operator,
-		.token.entity,
-		.token.url,
-		.language-css .token.string,
-		.style .token.string,
-		.token.variable {
-			color: #a67f59;
-			background: hsla(0,0%,100%,.5);
-		}
+        .token.operator,
+        .token.entity,
+        .token.url,
+        .language-css .token.string,
+        .style .token.string,
+        .token.variable {
+            color: #a67f59;
+            background: hsla(0,0%,100%,.5);
+        }
 
-		.token.atrule,
-		.token.attr-value,
-		.token.keyword {
-			color: #07a;
-		}
+        .token.atrule,
+        .token.attr-value,
+        .token.keyword {
+            color: #07a;
+        }
 
-		.token.function {
-			color: #DD4A68;
-		}
+        .token.function {
+            color: #DD4A68;
+        }
 
-		.token.regex,
-		.token.important {
-			color: #e90;
-		}
+        .token.regex,
+        .token.important {
+            color: #e90;
+        }
 
-		.token.important {
-			font-weight: bold;
-		}
+        .token.important {
+            font-weight: bold;
+        }
 
-		.token.entity {
-			cursor: help;
-		}
+        .token.entity {
+            cursor: help;
+        }
 
-		// pre.line-numbers {
-		// 	position: relative;
-		// 	padding-left: 3.8em;
-		// 	counter-reset: linenumber;
-		// }
-		// pre.line-numbers > code {
-		// 	position: relative;
-		// }
-		// .line-numbers .line-numbers-rows {
-		// 	position: absolute;
-		// 	pointer-events: none;
-		// 	top: 0;
-		// 	font-size: 100%;
-		// 	left: -3.8em;
-		// 	width: 3em; /* works for line-numbers below 1000 lines */
-		// 	letter-spacing: -1px;
-		// 	border-right: 1px solid #999;
+        // pre.line-numbers {
+        //  position: relative;
+        //  padding-left: 3.8em;
+        //  counter-reset: linenumber;
+        // }
+        // pre.line-numbers > code {
+        //  position: relative;
+        // }
+        // .line-numbers .line-numbers-rows {
+        //  position: absolute;
+        //  pointer-events: none;
+        //  top: 0;
+        //  font-size: 100%;
+        //  left: -3.8em;
+        //  width: 3em; /* works for line-numbers below 1000 lines */
+        //  letter-spacing: -1px;
+        //  border-right: 1px solid #999;
 
-		// 	-webkit-user-select: none;
-		// 	-moz-user-select: none;
-		// 	-ms-user-select: none;
-		// 	user-select: none;
+        //  -webkit-user-select: none;
+        //  -moz-user-select: none;
+        //  -ms-user-select: none;
+        //  user-select: none;
 
-		// }
-		// .line-numbers-rows > span {
-		// 	pointer-events: none;
-		// 	display: block;
-		// 	counter-increment: linenumber;
-		// }
-		// .line-numbers-rows > span:before {
-		// 	content: counter(linenumber);
-		// 	color: #999;
-		// 	display: block;
-		// 	padding-right: 0.8em;
-		// 	text-align: right;
-		// }
+        // }
+        // .line-numbers-rows > span {
+        //  pointer-events: none;
+        //  display: block;
+        //  counter-increment: linenumber;
+        // }
+        // .line-numbers-rows > span:before {
+        //  content: counter(linenumber);
+        //  color: #999;
+        //  display: block;
+        //  padding-right: 0.8em;
+        //  text-align: right;
+        // }
 
-		// .token.tab:not(:empty):before,
-		// .token.cr:before,
-		// .token.lf:before {
-		// 	color: hsl(24, 20%, 85%);
-		// }
-		// .token.tab:not(:empty):before {
-		// 	content: '▸';
-		// }
-		// .token.cr:before {
-		// 	content: '␍';
-		// }
-		// .token.lf:before {
-		// 	// content: '␊';
-		// 	content: '¶';
-		// }
-		// .token a {
-		// 	color: inherit;
-		// }
-	}
+        // .token.tab:not(:empty):before,
+        // .token.cr:before,
+        // .token.lf:before {
+        //  color: hsl(24, 20%, 85%);
+        // }
+        // .token.tab:not(:empty):before {
+        //  content: '▸';
+        // }
+        // .token.cr:before {
+        //  content: '␍';
+        // }
+        // .token.lf:before {
+        //  // content: '␊';
+        //  content: '¶';
+        // }
+        // .token a {
+        //  color: inherit;
+        // }
+    }
 
 
-	&.markdown {
-		font-size: 16px;
-		padding: 8px 24px;
+    &.markdown {
+        font-size: 16px;
+        padding: 8px 24px;
 
-		a, a:active, a:visited {
-			color: #2080FF;
-			text-decoration: none;
-			cursor: pointer;
+        a, a:active, a:visited {
+            color: #2080FF;
+            text-decoration: none;
+            cursor: pointer;
 
-			&:hover {
-				color: #68A9FF;
-			}
-		}
+            &:hover {
+                color: #68A9FF;
+            }
+        }
 
-		pre, code {
-			font-family: @font-family-mono;
-		}
-		code {
-			color: #008200;
-		}
-	}
+        pre, code {
+            font-family: @font-family-mono;
+        }
+        code {
+            color: #008200;
+        }
+    }
 }

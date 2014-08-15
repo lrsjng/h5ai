@@ -1,178 +1,178 @@
 
 modulejs.define('info', ['$', 'config'], function ($, config) {
 
-	var testsTemp =
-			'<div id="tests-wrapper">' +
-				'<ul id="tests">' +
-			'</div>',
+    var testsTemp =
+            '<div id="tests-wrapper">' +
+                '<ul id="tests">' +
+            '</div>',
 
-		testTemp =
-			'<li class="test">' +
-				'<span class="label"></span>' +
-				'<span class="result"></span>' +
-				'<div class="info"></div>' +
-			'</li>',
+        testTemp =
+            '<li class="test">' +
+                '<span class="label"></span>' +
+                '<span class="result"></span>' +
+                '<div class="info"></div>' +
+            '</li>',
 
-		loginTemp =
-			'<div id="login-wrapper">' +
-				'<input id="pass" type="password" placeholder="password"/>' +
-				'<span id="login">login</span>' +
-				'<span id="logout">logout</span>' +
-				'<div id="hint">' +
-					'The preset password is the empty string, so just hit login. ' +
-					'You might change it in the index file to keep this information private.' +
-				'</div>' +
-			'</div>',
+        loginTemp =
+            '<div id="login-wrapper">' +
+                '<input id="pass" type="password" placeholder="password"/>' +
+                '<span id="login">login</span>' +
+                '<span id="logout">logout</span>' +
+                '<div id="hint">' +
+                    'The preset password is the empty string, so just hit login. ' +
+                    'You might change it in the index file to keep this information private.' +
+                '</div>' +
+            '</div>',
 
-		setup = config.setup,
+        setup = config.setup,
 
-		addTests = function () {
+        addTests = function () {
 
-			var addTest = function (label, info, passed, result) {
+            var addTest = function (label, info, passed, result) {
 
-					$(testTemp)
-						.find('.label')
-							.text(label)
-						.end()
-						.find('.result')
-							.addClass(passed ? 'passed' : 'failed')
-							.text(result ? result : (passed ? 'yes' : 'no'))
-						.end()
-						.find('.info')
-							.html(info)
-						.end()
-						.appendTo('#tests');
-				};
+                    $(testTemp)
+                        .find('.label')
+                            .text(label)
+                        .end()
+                        .find('.result')
+                            .addClass(passed ? 'passed' : 'failed')
+                            .text(result ? result : (passed ? 'yes' : 'no'))
+                        .end()
+                        .find('.info')
+                            .html(info)
+                        .end()
+                        .appendTo('#tests');
+                };
 
-			$(testsTemp).appendTo('body');
+            $(testsTemp).appendTo('body');
 
-			addTest(
-				'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',
-				setup.INDEX_HREF
-			);
+            addTest(
+                'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',
+                setup.INDEX_HREF
+            );
 
-			addTest(
-				'Options parsable', 'File <code>options.json</code> is readable and syntax is correct',
-				config.options !== null
-			);
+            addTest(
+                'Options parsable', 'File <code>options.json</code> is readable and syntax is correct',
+                config.options !== null
+            );
 
-			addTest(
-				'Types parsable', 'File <code>types.json</code> is readable and syntax is correct',
-				config.types !== null
-			);
+            addTest(
+                'Types parsable', 'File <code>types.json</code> is readable and syntax is correct',
+                config.types !== null
+            );
 
-			addTest(
-				'Server software', 'Server is one of apache, lighttpd, nginx or cherokee',
-				setup.HAS_SERVER, setup.SERVER_NAME + ' ' + setup.SERVER_VERSION
-			);
+            addTest(
+                'Server software', 'Server is one of apache, lighttpd, nginx or cherokee',
+                setup.HAS_SERVER, setup.SERVER_NAME + ' ' + setup.SERVER_VERSION
+            );
 
-			addTest(
-				'PHP version', 'PHP version &gt;= ' + setup.MIN_PHP_VERSION,
-				setup.HAS_PHP_VERSION, setup.PHP_VERSION
-			);
+            addTest(
+                'PHP version', 'PHP version &gt;= ' + setup.MIN_PHP_VERSION,
+                setup.HAS_PHP_VERSION, setup.PHP_VERSION
+            );
 
-			addTest(
-				'Cache directory', 'Web server has write access',
-				setup.HAS_WRITABLE_CACHE
-			);
+            addTest(
+                'Cache directory', 'Web server has write access',
+                setup.HAS_WRITABLE_CACHE
+            );
 
-			addTest(
-				'Image thumbs', 'PHP GD extension with JPEG support available',
-				setup.HAS_PHP_JPG
-			);
+            addTest(
+                'Image thumbs', 'PHP GD extension with JPEG support available',
+                setup.HAS_PHP_JPG
+            );
 
-			addTest(
-				'Use EXIF thumbs', 'PHP EXIF extension available',
-				setup.HAS_PHP_EXIF
-			);
+            addTest(
+                'Use EXIF thumbs', 'PHP EXIF extension available',
+                setup.HAS_PHP_EXIF
+            );
 
-			addTest(
-				'Movie thumbs', 'Command line program <code>avconv</code> or <code>ffmpeg</code> available',
-				setup.HAS_CMD_AVCONV || setup.HAS_CMD_FFMPEG
-			);
+            addTest(
+                'Movie thumbs', 'Command line program <code>avconv</code> or <code>ffmpeg</code> available',
+                setup.HAS_CMD_AVCONV || setup.HAS_CMD_FFMPEG
+            );
 
-			addTest(
-				'PDF thumbs', 'Command line program <code>convert</code> available',
-				setup.HAS_CMD_CONVERT
-			);
+            addTest(
+                'PDF thumbs', 'Command line program <code>convert</code> available',
+                setup.HAS_CMD_CONVERT
+            );
 
-			addTest(
-				'Shell tar', 'Command line program <code>tar</code> available',
-				setup.HAS_CMD_TAR
-			);
+            addTest(
+                'Shell tar', 'Command line program <code>tar</code> available',
+                setup.HAS_CMD_TAR
+            );
 
-			addTest(
-				'Shell zip', 'Command line program <code>zip</code> available',
-				setup.HAS_CMD_ZIP
-			);
+            addTest(
+                'Shell zip', 'Command line program <code>zip</code> available',
+                setup.HAS_CMD_ZIP
+            );
 
-			addTest(
-				'Shell du', 'Command line program <code>du</code> available',
-				setup.HAS_CMD_DU
-			);
-		},
+            addTest(
+                'Shell du', 'Command line program <code>du</code> available',
+                setup.HAS_CMD_DU
+            );
+        },
 
-		addLogin = function () {
+        addLogin = function () {
 
-			var request = function (data) {
+            var request = function (data) {
 
-					$.ajax({
-							url: 'server/php/index.php',
-							type: 'POST',
-							dataType: 'JSON',
-							data: data
-						})
-						.always(function () {
+                    $.ajax({
+                            url: 'server/php/index.php',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: data
+                        })
+                        .always(function () {
 
-							window.location.reload();
-						});
-				},
+                            window.location.reload();
+                        });
+                },
 
-				onLogin = function () {
+                onLogin = function () {
 
-					request({
-						'action': 'login',
-						'pass': $('#pass').val()
-					});
-				},
+                    request({
+                        'action': 'login',
+                        'pass': $('#pass').val()
+                    });
+                },
 
-				onLogout = function () {
+                onLogout = function () {
 
-					request({
-						'action': 'logout'
-					});
-				},
+                    request({
+                        'action': 'logout'
+                    });
+                },
 
-				onKeydown = function (event) {
+                onKeydown = function (event) {
 
-					if (event.which === 13) {
-						onLogin();
-					}
-				};
+                    if (event.which === 13) {
+                        onLogin();
+                    }
+                };
 
-			$(loginTemp).appendTo('body');
+            $(loginTemp).appendTo('body');
 
-			if (setup.AS_ADMIN) {
-				$('#pass').remove();
-				$('#login').remove();
-				$('#logout').on('click', onLogout);
-			} else {
-				$('#pass').on('keydown', onKeydown).focus();
-				$('#login').on('click', onLogin);
-				$('#logout').remove();
-			}
-			if (setup.HAS_CUSTOM_PASSHASH) {
-				$('#hint').remove();
-			}
-		},
+            if (setup.AS_ADMIN) {
+                $('#pass').remove();
+                $('#login').remove();
+                $('#logout').on('click', onLogout);
+            } else {
+                $('#pass').on('keydown', onKeydown).focus();
+                $('#login').on('click', onLogin);
+                $('#logout').remove();
+            }
+            if (setup.HAS_CUSTOM_PASSHASH) {
+                $('#hint').remove();
+            }
+        },
 
-		init = function () {
+        init = function () {
 
-			addLogin();
-			if (setup.AS_ADMIN) {
-				addTests();
-			}
-		};
+            addLogin();
+            if (setup.AS_ADMIN) {
+                addTests();
+            }
+        };
 
-	init();
+    init();
 });

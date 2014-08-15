@@ -1,25 +1,25 @@
 
 modulejs.define('core/notify', ['$'], function ($) {
 
-	var template = '<div id="notify"/>',
+    var template = '<div id="notify"/>',
 
-		set = function (content) {
+        set = function (content) {
 
-			if (content) {
-				$('#notify').stop(true, true).html(content).fadeIn(400);
-			} else {
-				$('#notify').stop(true, true).fadeOut(400);
-			}
-		},
+            if (content) {
+                $('#notify').stop(true, true).html(content).fadeIn(400);
+            } else {
+                $('#notify').stop(true, true).fadeOut(400);
+            }
+        },
 
-		init = function () {
+        init = function () {
 
-			$(template).hide().appendTo('body');
-		};
+            $(template).hide().appendTo('body');
+        };
 
-	init();
+    init();
 
-	return {
-		set: set
-	};
+    return {
+        set: set
+    };
 });

@@ -1,55 +1,55 @@
 
 modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/event'], function (_, $, modernizr, allsettings, event) {
 
-	var settings = _.extend({
-			enabled: false,
-			size: 150
-		}, allsettings.qrcode),
+    var settings = _.extend({
+            enabled: false,
+            size: 150
+        }, allsettings.qrcode),
 
-		template = '<div id="qrcode"/>',
+        template = '<div id="qrcode"/>',
 
-		$qrcode, hideTimeoutId,
+        $qrcode, hideTimeoutId,
 
-		update = function (item) {
+        update = function (item) {
 
-			$qrcode.empty().qrcode({
-				render: modernizr.canvas ? 'canvas' : 'div',
-				width: settings.size,
-				height: settings.size,
-				color: '#333',
-				bgColor: '#fff',
-				text: window.location.protocol + '//' + window.location.host + item.absHref
-			});
-		},
+            $qrcode.empty().qrcode({
+                render: modernizr.canvas ? 'canvas' : 'div',
+                width: settings.size,
+                height: settings.size,
+                color: '#333',
+                bgColor: '#fff',
+                text: window.location.protocol + '//' + window.location.host + item.absHref
+            });
+        },
 
-		onMouseenter = function (item) {
+        onMouseenter = function (item) {
 
-			if (!item.isFolder()) {
-				update(item);
-				clearTimeout(hideTimeoutId);
-				$qrcode.stop(true, true).fadeIn(400);
-			}
-		},
+            if (!item.isFolder()) {
+                update(item);
+                clearTimeout(hideTimeoutId);
+                $qrcode.stop(true, true).fadeIn(400);
+            }
+        },
 
-		onMouseleave = function (item) {
+        onMouseleave = function (item) {
 
-			hideTimeoutId = setTimeout(function () {
+            hideTimeoutId = setTimeout(function () {
 
-				$qrcode.stop(true, true).fadeOut(400);
-			}, 200);
-		},
+                $qrcode.stop(true, true).fadeOut(400);
+            }, 200);
+        },
 
-		init = function () {
+        init = function () {
 
-			if (!settings.enabled) {
-				return;
-			}
+            if (!settings.enabled) {
+                return;
+            }
 
-			$qrcode = $(template).appendTo('body');
+            $qrcode = $(template).appendTo('body');
 
-			event.sub('item.mouseenter', onMouseenter);
-			event.sub('item.mouseleave', onMouseleave);
-		};
+            event.sub('item.mouseenter', onMouseenter);
+            event.sub('item.mouseleave', onMouseleave);
+        };
 
-	init();
+    init();
 });

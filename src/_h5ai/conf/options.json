@@ -6,350 +6,350 @@ Options
 */
 
 {
-	/*
-	Spacing of the main content.
+    /*
+    Spacing of the main content.
 
-	Left and right will be added to a minimum of 30px. Top and bottom
-	are added to the top and bottom bar heights.
-	*/
-	"spacing": {
-		"top": 50,
-		"bottom": 50,
-		"left": "auto",
-		"right": "auto",
-		"maxWidth": 1024
-	},
+    Left and right will be added to a minimum of 30px. Top and bottom
+    are added to the top and bottom bar heights.
+    */
+    "spacing": {
+        "top": 50,
+        "bottom": 50,
+        "left": "auto",
+        "right": "auto",
+        "maxWidth": 1024
+    },
 
-	/*
-	General view options.
+    /*
+    General view options.
 
-	- binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-	- hidden: don't list items matching these regular expressions
-	- hideFolders: hide all folders in the main view
-	- hideIf403: hide files and folders that are not readable by the server
-	- hideParentFolder: hide parent folder links in the main view
-	- modes: array, subset of ["details", "grid", "icons"]
-		the first value indicates the default view mode. If only one value
-		is given the view mode is fixed and the selector buttons are hidden.
-		The user selected view mode is also stored local in modern browsers
-		so that it will be persistent.
-	- setParentFolderLabels: set parent folder labels to real folder names
-	- sizes: array, subset of [16, 24, 32, 48, 64, 96, 128, 192, 256, 384]
-		the first value indicates the default view mode. If only one value
-		is given the view mode is fixed and the selector buttons are hidden.
-		The user selected view mode is also stored local in modern browsers
-		so that it will be persistent.
-	- smartBrowsing: use History API if available (no need to reload the whole page)
-	- theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to builtin fallback
-	- unmanaged: don't manage folders containing one of those files
-	- unmanagedInNewWindow: open unmanaged links in new window/tab
-	*/
-	"view": {
-		"binaryPrefix": false,
-		"hidden": ["^\\.", "^_{{pkg.name}}"],
-		"hideFolders": false,
-		"hideIf403": true,
-		"hideParentFolder": false,
-		"modes": ["details", "grid", "icons"],
-		"setParentFolderLabels": true,
-		"sizes": [24, 32, 48, 64, 96],
-		"smartBrowsing": true,
-		"theme": "",
-		"unmanaged": ["index.html", "index.htm", "index.php"],
-		"unmanagedInNewWindow": false
-	},
+    - binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+    - hidden: don't list items matching these regular expressions
+    - hideFolders: hide all folders in the main view
+    - hideIf403: hide files and folders that are not readable by the server
+    - hideParentFolder: hide parent folder links in the main view
+    - modes: array, subset of ["details", "grid", "icons"]
+        the first value indicates the default view mode. If only one value
+        is given the view mode is fixed and the selector buttons are hidden.
+        The user selected view mode is also stored local in modern browsers
+        so that it will be persistent.
+    - setParentFolderLabels: set parent folder labels to real folder names
+    - sizes: array, subset of [16, 24, 32, 48, 64, 96, 128, 192, 256, 384]
+        the first value indicates the default view mode. If only one value
+        is given the view mode is fixed and the selector buttons are hidden.
+        The user selected view mode is also stored local in modern browsers
+        so that it will be persistent.
+    - smartBrowsing: use History API if available (no need to reload the whole page)
+    - theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to builtin fallback
+    - unmanaged: don't manage folders containing one of those files
+    - unmanagedInNewWindow: open unmanaged links in new window/tab
+    */
+    "view": {
+        "binaryPrefix": false,
+        "hidden": ["^\\.", "^_{{pkg.name}}"],
+        "hideFolders": false,
+        "hideIf403": true,
+        "hideParentFolder": false,
+        "modes": ["details", "grid", "icons"],
+        "setParentFolderLabels": true,
+        "sizes": [24, 32, 48, 64, 96],
+        "smartBrowsing": true,
+        "theme": "",
+        "unmanaged": ["index.html", "index.htm", "index.php"],
+        "unmanagedInNewWindow": false
+    },
 
 
 
-	/*** Extensions (in alphabetical order) ***/
+    /*** Extensions (in alphabetical order) ***/
 
-	/*
-	Watch and update current folder content.
+    /*
+    Watch and update current folder content.
 
-	- interval: number, update interval in milliseconds, at least 1000
-	*/
-	"autorefresh": {
-		"enabled": false,
-		"interval": 5000
-	},
+    - interval: number, update interval in milliseconds, at least 1000
+    */
+    "autorefresh": {
+        "enabled": false,
+        "interval": 5000
+    },
 
-	/*
-	Show a clickable breadcrumb.
-	*/
-	"crumb": {
-		"enabled": true
-	},
+    /*
+    Show a clickable breadcrumb.
+    */
+    "crumb": {
+        "enabled": true
+    },
 
-	/*
-	Allow customized header and footer files.
-	First checks for files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
-	If not successful it checks all parent directories (starting in the current directory) for
-	files "_h5ai.headers.html" and "_h5ai.footers.html".
-	Note the different filenames: "header" (only current) - "headers" (current and sub directories)!
-	The file's content will be placed inside a <div/> tag above/below the main content.
-	If a file's extension is ".md" instead of ".html" its content will be interpreted as markdown.
-	*/
-	"custom": {
-		"enabled": true
-	},
+    /*
+    Allow customized header and footer files.
+    First checks for files "_h5ai.header.html" and "_h5ai.footer.html" in the current directory.
+    If not successful it checks all parent directories (starting in the current directory) for
+    files "_h5ai.headers.html" and "_h5ai.footers.html".
+    Note the different filenames: "header" (only current) - "headers" (current and sub directories)!
+    The file's content will be placed inside a <div/> tag above/below the main content.
+    If a file's extension is ".md" instead of ".html" its content will be interpreted as markdown.
+    */
+    "custom": {
+        "enabled": true
+    },
 
-	/*
-	Enable packaged download of selected entries.
-	To select files the "select"-extension needs to be enabled.
+    /*
+    Enable packaged download of selected entries.
+    To select files the "select"-extension needs to be enabled.
 
-	- type: "php-tar", "shell-tar" or "shell-zip"
-	- packageName: basename of the download package, null for current foldername
-	- alwaysVisible: always show download button (defaults to download the current folder)
-	*/
-	"download": {
-		"enabled": true,
-		"type": "php-tar",
-		"packageName": null,
-		"alwaysVisible": false
-	},
+    - type: "php-tar", "shell-tar" or "shell-zip"
+    - packageName: basename of the download package, null for current foldername
+    - alwaysVisible: always show download button (defaults to download the current folder)
+    */
+    "download": {
+        "enabled": true,
+        "type": "php-tar",
+        "packageName": null,
+        "alwaysVisible": false
+    },
 
-	/*
-	Allow filtering the displayed files and folders.
-	Will check entries for right order of characters, i.e.
-	"ab" matches "ab", "axb", "xaxbx" but not "ba".
-	Space separated sequences get OR-ed.
+    /*
+    Allow filtering the displayed files and folders.
+    Will check entries for right order of characters, i.e.
+    "ab" matches "ab", "axb", "xaxbx" but not "ba".
+    Space separated sequences get OR-ed.
 
-	Filters will be treated as JavaScript regular expressions
-	if you prefix them with "re:".
-	*/
-	"filter": {
-		"enabled": true
-	},
+    Filters will be treated as JavaScript regular expressions
+    if you prefix them with "re:".
+    */
+    "filter": {
+        "enabled": true
+    },
 
-	/*
-	Calc the size of folders.
-	This operation is real slow. The calculated sizes differ slightly for both
-	calculation types since "php" only adds the file size, while "shell-du"
-	also adds the sizes for the actual folder files.
+    /*
+    Calc the size of folders.
+    This operation is real slow. The calculated sizes differ slightly for both
+    calculation types since "php" only adds the file size, while "shell-du"
+    also adds the sizes for the actual folder files.
 
-	- type: "php" (sloooow) or "shell-du" (sloow)
-	*/
-	"foldersize": {
-		"enabled": false,
-		"type": "php"
-	},
+    - type: "php" (sloooow) or "shell-du" (sloow)
+    */
+    "foldersize": {
+        "enabled": false,
+        "type": "php"
+    },
 
-	/*
-	Adds Google Analytics asynchronous tracking code.
+    /*
+    Adds Google Analytics asynchronous tracking code.
 
-	for example:
-	"gaq": [
-		["_setAccount", "UA-xxxxxx-x"],
-		["_setDomainName", ".your-domain.tld"],
-		["_trackPageview"],
-		["_trackPageLoadTime"]
-	]
+    for example:
+    "gaq": [
+        ["_setAccount", "UA-xxxxxx-x"],
+        ["_setDomainName", ".your-domain.tld"],
+        ["_trackPageview"],
+        ["_trackPageLoadTime"]
+    ]
 
-	see: https://developers.google.com/analytics/devguides/collection/gajs/
-	*/
-	"google-analytics-ga": {
-		"enabled": false,
-		"gaq": []
-	},
+    see: https://developers.google.com/analytics/devguides/collection/gajs/
+    */
+    "google-analytics-ga": {
+        "enabled": false,
+        "gaq": []
+    },
 
-	/*
-	Adds Google Universial Analytics asynchronous tracking code.
+    /*
+    Adds Google Universial Analytics asynchronous tracking code.
 
-	see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
-	*/
-	"google-analytics-ua": {
-		"enabled": false,
-		"id": "UA-000000-0"
-	},
+    see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
+    */
+    "google-analytics-ua": {
+        "enabled": false,
+        "id": "UA-000000-0"
+    },
 
-	/*
-	Localization, for example "en", "de" etc. - see "_h5ai/conf/l10n" folder for
-	possible values. Adjust it to your needs. If lang is not found
-	it defaults to "en".
+    /*
+    Localization, for example "en", "de" etc. - see "_h5ai/conf/l10n" folder for
+    possible values. Adjust it to your needs. If lang is not found
+    it defaults to "en".
 
-	- lang: default language
-	- useBroserLang: boolean, try to use browser language
-	*/
-	"l10n": {
-		"enabled": true,
-		"lang": "en",
-		"useBrowserLang": true
-	},
+    - lang: default language
+    - useBroserLang: boolean, try to use browser language
+    */
+    "l10n": {
+        "enabled": true,
+        "lang": "en",
+        "useBrowserLang": true
+    },
 
-	/*
-	Link the hover effects between crumb, main view and tree.
-	*/
-	"link-hover-states": {
-		"enabled": true
-	},
+    /*
+    Link the hover effects between crumb, main view and tree.
+    */
+    "link-hover-states": {
+        "enabled": true
+    },
 
-	/*
-	Adds Piwik tracker javascript code.
+    /*
+    Adds Piwik tracker javascript code.
 
-	- baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
-	- idSite: number
-	*/
-	"piwik-analytics": {
-		"enabled": false,
-		"baseURL": "some/url",
-		"idSite": 1
-	},
+    - baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
+    - idSite: number
+    */
+    "piwik-analytics": {
+        "enabled": false,
+        "baseURL": "some/url",
+        "idSite": 1
+    },
 
-	/*
-	Play a audio preview on click.
+    /*
+    Play a audio preview on click.
 
-	- types: array of types
-	*/
-	"preview-aud": {
-		"enabled": true,
-		"types": ["aud"]
-	},
+    - types: array of types
+    */
+    "preview-aud": {
+        "enabled": true,
+        "types": ["aud"]
+    },
 
-	/*
-	Show an image preview on click.
+    /*
+    Show an image preview on click.
 
-	- types: array of types
-	*/
-	"preview-img": {
-		"enabled": true,
-		"types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"]
-	},
+    - types: array of types
+    */
+    "preview-img": {
+        "enabled": true,
+        "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"]
+    },
 
-	/*
-	Show text file preview on click.
-	"types" maps file types to http://prismjs.com languages.
+    /*
+    Show text file preview on click.
+    "types" maps file types to http://prismjs.com languages.
 
-	Additional type are:
-	 - "markdown" to render Markdown text
-	 - "none" for floating text
-	 - "fixed" for fixed width text
+    Additional type are:
+     - "markdown" to render Markdown text
+     - "none" for floating text
+     - "fixed" for fixed width text
 
-	- types: maps types to languages
-	*/
-	"preview-txt": {
-		"enabled": true,
-		"types": {
-			"txt": "fixed",
-			"txt-authors": "fixed",
-			"txt-license": "fixed",
-			"txt-c": "c",
-			"txt-cpp": "cpp",
-			"txt-css": "css",
-			"txt-diff": "fixed",
-			"txt-h": "c",
-			"txt-hpp": "cpp",
-			"txt-install": "fixed",
-			"txt-log": "fixed",
-			"txt-java": "java",
-			"txt-js": "javascript",
-			"txt-json": "javascript",
-			"txt-makefile": "fixed",
-			"txt-md": "markdown",
-			// "txt-php": "php",
-			"txt-py": "python",
-			"txt-readme": "fixed",
-			"txt-rb": "ruby",
-			"txt-rtf": "fixed",
-			"txt-script": "bash",
-			"txt-xml": "fixed"
-		}
-	},
+    - types: maps types to languages
+    */
+    "preview-txt": {
+        "enabled": true,
+        "types": {
+            "txt": "fixed",
+            "txt-authors": "fixed",
+            "txt-license": "fixed",
+            "txt-c": "c",
+            "txt-cpp": "cpp",
+            "txt-css": "css",
+            "txt-diff": "fixed",
+            "txt-h": "c",
+            "txt-hpp": "cpp",
+            "txt-install": "fixed",
+            "txt-log": "fixed",
+            "txt-java": "java",
+            "txt-js": "javascript",
+            "txt-json": "javascript",
+            "txt-makefile": "fixed",
+            "txt-md": "markdown",
+            // "txt-php": "php",
+            "txt-py": "python",
+            "txt-readme": "fixed",
+            "txt-rb": "ruby",
+            "txt-rtf": "fixed",
+            "txt-script": "bash",
+            "txt-xml": "fixed"
+        }
+    },
 
-	/*
-	Play a video preview on click.
+    /*
+    Play a video preview on click.
 
-	- types: array of types
-	*/
-	"preview-vid": {
-		"enabled": true,
-		"types": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"]
-	},
+    - types: array of types
+    */
+    "preview-vid": {
+        "enabled": true,
+        "types": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"]
+    },
 
-	/*
-	Show QRCodes on hovering files.
+    /*
+    Show QRCodes on hovering files.
 
-	- size: width and height in pixel
-	*/
-	"qrcode": {
-		"enabled": true,
-		"size": 150
-	},
+    - size: width and height in pixel
+    */
+    "qrcode": {
+        "enabled": true,
+        "size": 150
+    },
 
-	/*
-	Make entries selectable (first mouse button + drag).
-	At the moment only needed for packaged download.
+    /*
+    Make entries selectable (first mouse button + drag).
+    At the moment only needed for packaged download.
 
-	- checkboxes: boolean, show a checkbox on mouse over item
-	*/
-	"select": {
-		"enabled": true,
-		"checkboxes": true
-	},
+    - checkboxes: boolean, show a checkbox on mouse over item
+    */
+    "select": {
+        "enabled": true,
+        "checkboxes": true
+    },
 
-	/*
-	Default sort order.
-	"column" and "reverse" are locally stored.
+    /*
+    Default sort order.
+    "column" and "reverse" are locally stored.
 
-	- column: int, 0 for "Name", 1 for "Date", 2 for "Size"
-	- reverse: boolean, false for ascending, true for descending
-	- ignorecase: boolean, compare ignorecase
-	- natural: boolean, use natural sort order
-	- folders: where to place folders, 0 for "top", 1 for "in place", 2 for "bottom"
-	*/
-	"sort": {
-		"enabled": true,
-		"column": 0,
-		"reverse": false,
-		"ignorecase": true,
-		"natural": false,
-		"folders": 0
-	},
+    - column: int, 0 for "Name", 1 for "Date", 2 for "Size"
+    - reverse: boolean, false for ascending, true for descending
+    - ignorecase: boolean, compare ignorecase
+    - natural: boolean, use natural sort order
+    - folders: where to place folders, 0 for "top", 1 for "in place", 2 for "bottom"
+    */
+    "sort": {
+        "enabled": true,
+        "column": 0,
+        "reverse": false,
+        "ignorecase": true,
+        "natural": false,
+        "folders": 0
+    },
 
-	/*
-	Show additional info in a statusbar.
-	*/
-	"statusbar": {
-		"enabled": true
-	},
+    /*
+    Show additional info in a statusbar.
+    */
+    "statusbar": {
+        "enabled": true
+    },
 
-	/*
-	Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
-	writable for the web Server.
+    /*
+    Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
+    writable for the web Server.
 
-	- img: array of types
-	- mov: array of types
-	- doc: array of types
-	- delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
-	- size: number, size in pixel of the generated thumbnails
-	- exif: boolean, use included EXIF thumbs if possible
-	*/
-	"thumbnails": {
-		"enabled": true,
-		"img": ["img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"],
-		"mov": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"],
-		"doc": ["x-pdf", "x-ps"],
-		"delay": 1,
-		"size": 96,
-		"exif": true
-	},
+    - img: array of types
+    - mov: array of types
+    - doc: array of types
+    - delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
+    - size: number, size in pixel of the generated thumbnails
+    - exif: boolean, use included EXIF thumbs if possible
+    */
+    "thumbnails": {
+        "enabled": true,
+        "img": ["img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"],
+        "mov": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"],
+        "doc": ["x-pdf", "x-ps"],
+        "delay": 1,
+        "size": 96,
+        "exif": true
+    },
 
-	/*
-	Replace window title with current breadcrumb.
-	*/
-	"title": {
-		"enabled": true
-	},
+    /*
+    Replace window title with current breadcrumb.
+    */
+    "title": {
+        "enabled": true
+    },
 
-	/*
-	Show a folder tree.
-	Note that this might affect performance significantly.
+    /*
+    Show a folder tree.
+    Note that this might affect performance significantly.
 
-	- slide: boolean, slide tree bar into viewport if there is enough space
-	- maxSubfolders: max number of subfolders to show in tree
-	*/
-	"tree": {
-		"enabled": true,
-		"slide": true,
-		"maxSubfolders": 50
-	}
+    - slide: boolean, slide tree bar into viewport if there is enough space
+    - maxSubfolders: max number of subfolders to show in tree
+    */
+    "tree": {
+        "enabled": true,
+        "slide": true,
+        "maxSubfolders": 50
+    }
 }
