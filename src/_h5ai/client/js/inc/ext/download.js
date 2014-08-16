@@ -1,65 +1,65 @@
 
 modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location', 'core/server'], function (_, $, allsettings, resource, event, location, server) {
 
-	var settings = _.extend({
-			enabled: false,
-			type: 'php-tar',
-			packageName: 'package',
-			alwaysVisible: false
-		}, allsettings.download),
+    var settings = _.extend({
+            enabled: false,
+            type: 'php-tar',
+            packageName: 'package',
+            alwaysVisible: false
+        }, allsettings.download),
 
-		downloadBtnTemplate =
-			'<li id="download">' +
-				'<a href="#">' +
-					'<img src="' + resource.image('download') + '" alt="download"/>' +
-					'<span class="l10n-download"/>' +
-				'</a>' +
-			'</li>',
+        downloadBtnTemplate =
+            '<li id="download">' +
+                '<a href="#">' +
+                    '<img src="' + resource.image('download') + '" alt="download"/>' +
+                    '<span class="l10n-download"/>' +
+                '</a>' +
+            '</li>',
 
-		selectedItems = [],
+        selectedItems = [],
 
-		onSelection = function (items) {
+        onSelection = function (items) {
 
-			var $download = $('#download');
+            var $download = $('#download');
 
-			selectedItems = items.slice(0);
-			if (selectedItems.length) {
-				$download.show();
-			} else if (!settings.alwaysVisible) {
-				$download.hide();
-			}
-		},
+            selectedItems = items.slice(0);
+            if (selectedItems.length) {
+                $download.show();
+            } else if (!settings.alwaysVisible) {
+                $download.hide();
+            }
+        },
 
-		onClick = function (event) {
+        onClick = function (event) {
 
-			var type = settings.type,
-				extension = (type === 'shell-zip') ? 'zip' : 'tar',
-				query = {
-					action: 'download',
-					as: (settings.packageName || location.getItem().label) + '.' + extension,
-					type: type,
-					hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
-				};
+            var type = settings.type,
+                extension = (type === 'shell-zip') ? 'zip' : 'tar',
+                query = {
+                    action: 'download',
+                    as: (settings.packageName || location.getItem().label) + '.' + extension,
+                    type: type,
+                    hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
+                };
 
-			server.formRequest(query);
-		},
+            server.formRequest(query);
+        },
 
-		init = function () {
+        init = function () {
 
-			if (!settings.enabled) {
-				return;
-			}
+            if (!settings.enabled) {
+                return;
+            }
 
-			$(downloadBtnTemplate)
-				.find('a').on('click', onClick).end()
-				.appendTo('#navbar');
+            $(downloadBtnTemplate)
+                .find('a').on('click', onClick).end()
+                .appendTo('#navbar');
 
-			if (settings.alwaysVisible) {
-				$('#download').show();
-			}
+            if (settings.alwaysVisible) {
+                $('#download').show();
+            }
 
-			event.sub('selection', onSelection);
-		};
+            event.sub('selection', onSelection);
+        };
 
-	init();
+    init();
 });

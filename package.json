@@ -1,12 +1,22 @@
 {
   "name": "h5ai",
-  "version": "0.25.2",
+  "version": "0.26.0",
+  "develop": false,
   "description": "a modern HTTP web server index",
-  "url": "http://larsjung.de/h5ai/",
-  "author": "Lars Jung",
+  "homepage": "http://larsjung.de/h5ai/",
+  "bugs": "https://github.com/lrsjng/h5ai/issues",
+  "author": "Lars Jung <lrsjng@gmail.com> (http://larsjung.de)",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/lrsjng/h5ai.git"
+  },
+  "scripts": {
+    "test": "mocha --recursive test"
+  },
+  "devDependencies": {
+    "lodash": "~2.4.1",
+    "mocha": "~1.21.3",
+    "zombie": "~2.0.0-alpha31"
   }
 }

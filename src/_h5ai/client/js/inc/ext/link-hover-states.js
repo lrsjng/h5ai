@@ -1,51 +1,51 @@
 
 modulejs.define('ext/link-hover-states', ['_', '$', 'core/settings', 'core/event'], function (_, $, allsettings, event) {
 
-	var settings = _.extend({
-			enabled: false
-		}, allsettings['link-hover-states']),
+    var settings = _.extend({
+            enabled: false
+        }, allsettings['link-hover-states']),
 
-		selector = "a[href^='/']",
+        selector = "a[href^='/']",
 
-		selectLinks = function (href) {
+        selectLinks = function (href) {
 
-			return $(_.filter($(selector), function (el) {
+            return $(_.filter($(selector), function (el) {
 
-				return $(el).attr('href') === href;
-			}));
-		},
+                return $(el).attr('href') === href;
+            }));
+        },
 
-		onMouseEnter = function () {
+        onMouseEnter = function () {
 
-			var href = $(this).attr('href');
+            var href = $(this).attr('href');
 
-			selectLinks(href).addClass('hover');
-		},
+            selectLinks(href).addClass('hover');
+        },
 
-		onMouseLeave = function () {
+        onMouseLeave = function () {
 
-			var href = $(this).attr('href');
+            var href = $(this).attr('href');
 
-			selectLinks(href).removeClass('hover');
-		},
+            selectLinks(href).removeClass('hover');
+        },
 
-		onLocationChanged = function () {
+        onLocationChanged = function () {
 
-			$('.hover').removeClass('hover');
-		},
+            $('.hover').removeClass('hover');
+        },
 
-		init = function () {
+        init = function () {
 
-			if (!settings.enabled) {
-				return;
-			}
+            if (!settings.enabled) {
+                return;
+            }
 
-			$('body')
-				.on('mouseenter', selector, onMouseEnter)
-				.on('mouseleave', selector, onMouseLeave);
+            $('body')
+                .on('mouseenter', selector, onMouseEnter)
+                .on('mouseleave', selector, onMouseLeave);
 
-			event.sub('location.changed', onLocationChanged);
-		};
+            event.sub('location.changed', onLocationChanged);
+        };
 
-	init();
+    init();
 });

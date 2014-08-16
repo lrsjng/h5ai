@@ -1,48 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="96"
-   width="96"
-   viewBox="0 0 96 96"
-   version="1.1">
-  <path
-     style="fill:#555555;fill-opacity:1;stroke:none"
-     d="M 12,6 12,90 84,90 84,24 66,6 z m 6,6 45.559322,0 L 78,26.576271 78,84 18,84 z"
-     id="rect2984"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccccccccccc" />
-  <g
-     id="g3006"
-     transform="translate(2.5793231,-3.2660688)">
-    <path
-       transform="matrix(1.353211,0,0,0.99662165,-14.954127,-1.1081069)"
-       d="m 47.999999,65.830505 c 0,4.156177 -3.30854,7.525424 -7.389831,7.525424 -4.08129,0 -7.38983,-3.369247 -7.38983,-7.525424 0,-4.156176 3.30854,-7.525423 7.38983,-7.525423 4.081291,0 7.389831,3.369247 7.389831,7.525423 z"
-       sodipodi:ry="7.5254235"
-       sodipodi:rx="7.3898306"
-       sodipodi:cy="65.830505"
-       sodipodi:cx="40.610168"
-       id="path2984"
-       style="fill:#555555;fill-opacity:1;stroke:none"
-       sodipodi:type="arc" />
-    <rect
-       y="35.000015"
-       x="44"
-       height="30"
-       width="6"
-       id="rect2986"
-       style="fill:#555555;fill-opacity:1;stroke:none" />
-    <rect
-       transform="matrix(0.69076685,-0.72307756,0.72307756,0.69076685,0,0)"
-       y="55.90287"
-       x="5.1795917"
-       height="17.559322"
-       width="6"
-       id="rect2986-2"
-       style="fill:#555555;fill-opacity:1;stroke:none" />
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" height="96" width="96" viewBox="0 0 96 96" version="1.1">
+  <path d="M12 6 12 90 84 90 84 24 66 6zm6 6 45.6 0L78 26.6 78 84 18 84z" fill="#555"/>
+  <g transform="translate(2.5793231,-3.2660688)">
+    <path transform="matrix(1.353211,0,0,0.99662165,-14.954127,-1.1081069)" d="m48 65.8c0 4.2-3.3 7.5-7.4 7.5-4.1 0-7.4-3.4-7.4-7.5 0-4.2 3.3-7.5 7.4-7.5 4.1 0 7.4 3.4 7.4 7.5z" fill="#555"/>
+    <rect y="35" x="44" height="30" width="6" fill="#555"/>
+    <rect transform="matrix(0.69076685,-0.72307756,0.72307756,0.69076685,0,0)" y="55.9" x="5.2" height="17.6" width="6" fill="#555"/>
   </g>
 </svg>

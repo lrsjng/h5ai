@@ -1,26 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg id="svg7384" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
- <metadata id="metadata90">
-  <rdf:RDF>
-   <cc:Work rdf:about="">
-    <dc:format>image/svg+xml</dc:format>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title>Gnome Symbolic Icon Theme</dc:title>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <title id="title9167">Gnome Symbolic Icon Theme</title>
- <g id="layer12" transform="translate(-40.984 -646.99)">
-  <path id="path12113" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m41.781 657a1.0001 1.0001 0 0 0 -0.781 1v4a1.0001 1.0001 0 0 0 1 1h4a1.0001 1.0001 0 1 0 0 -2h-3v-3a1.0001 1.0001 0 0 0 -1.2188 -1z"/>
-  <path id="path12147" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m46.875 656a1.0001 1.0001 0 0 0 -0.59375 0.28125l-5 5a1.0165 1.0165 0 1 0 1.4375 1.4375l5-5a1.0001 1.0001 0 0 0 -0.843 -1.72z"/>
-  <rect id="rect12919" style="color:#000000;enable-background:new;fill:#bdbdbd" height="1" width="1" y="662" x="41"/>
-  <path id="path12111" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m51.906 647a1.0011 1.0011 0 1 0 0.094 2h3v3a1.0001 1.0001 0 1 0 2 0v-4a1.0001 1.0001 0 0 0 -1 -1h-4a1.0001 1.0001 0 0 0 -0.09375 0z"/>
-  <rect id="rect12923" style="color:#000000;enable-background:new;fill:#bdbdbd" height="1" width="1" y="647" x="56"/>
-  <path id="path12925" style="block-progression:tb;text-indent:0;color:#000000;enable-background:new;text-transform:none;fill:#bebebe" d="m55.875 647a1.0001 1.0001 0 0 0 -0.59375 0.28125l-5 5a1.0165 1.0165 0 1 0 1.4375 1.4375l5-5a1.0001 1.0001 0 0 0 -0.843 -1.72z"/>
-  <rect id="rect4479-2" style="color:#000000;fill:#bebebe" height="1" width="1" y="657" x="41"/>
-  <rect id="rect4479-2-9" style="color:#000000;fill:#bebebe" height="1" width="1" y="662" x="46"/>
-  <rect id="rect4479-2-9-9-0-8" style="color:#000000;fill:#bebebe" height="1" width="1" y="652" x="56"/>
-  <rect id="rect4479-2-9-9-0-8-1" style="color:#000000;fill:#bebebe" height="1" width="1" y="647" x="51"/>
- </g>
+<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16" version="1.1">
+  <g transform="translate(-40.984 -646.99)" fill="#ccc">
+    <path d="m41.8 657a1 1 0 0 0-0.8 1v4a1 1 0 0 0 1 1h4a1 1 0 1 0 0-2h-3v-3a1 1 0 0 0-1.2-1zM46.9 656a1 1 0 0 0-0.6 0.3l-5 5a1 1 0 1 0 1.4 1.4l5-5a1 1 0 0 0-0.8-1.7z"/>
+    <rect height="1" width="1" y="662" x="41"/>
+    <path d="m51.9 647a1 1 0 1 0 0.1 2h3v3a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1h-4a1 1 0 0 0-0.1 0z"/>
+    <rect height="1" width="1" y="647" x="56"/>
+    <path d="m55.9 647a1 1 0 0 0-0.6 0.3l-5 5a1 1 0 1 0 1.4 1.4l5-5a1 1 0 0 0-0.8-1.7z"/>
+    <rect height="1" width="1" y="657" x="41"/>
+    <rect height="1" width="1" y="662" x="46"/>
+    <rect height="1" width="1" y="652" x="56"/>
+    <rect height="1" width="1" y="647" x="51"/>
+  </g>
 </svg>

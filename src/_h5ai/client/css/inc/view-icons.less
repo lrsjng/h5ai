@@ -1,115 +1,115 @@
 
 .view-icons-sized(@size) {
 
-	li {
+    li {
 
-		&.item {
+        &.item {
 
-			a, a:active, a:visited {
-				width: @size * 2;
-				height: @size + 72px;
-			}
-		}
+            a, a:active, a:visited {
+                width: @size * 2;
+                height: @size + 72px;
+            }
+        }
 
-		.icon.rational {
-			height: @size;
+        .icon.rational {
+            height: @size;
 
-			img {
-				width: @size;
-				height: @size;
-			}
-			img.thumb {
-				width: auto;
-				height: auto;
-				max-width: @size * 2;
-				max-height: @size;
-			}
-		}
-	}
+            img {
+                width: @size;
+                height: @size;
+            }
+            img.thumb {
+                width: auto;
+                height: auto;
+                max-width: @size * 2;
+                max-height: @size;
+            }
+        }
+    }
 }
 
 
 #view.view-icons {
 
-	li {
-		text-align: center;
+    li {
+        text-align: center;
 
-		&.item {
-			float: left;
-			margin: 8px;
+        &.item {
+            float: left;
+            margin: 8px;
 
-			a, a:active, a:visited {
-				padding: 8px;
-				min-width: 96px;
-				border: 1px solid rgba(0,0,0,0);
+            a, a:active, a:visited {
+                padding: 8px;
+                min-width: 96px;
+                border: 1px solid rgba(0,0,0,0);
 
-				&:hover, &.hover {
-					border-color: @item-border-col-hover;
-				}
-			}
-		}
+                &:hover, &.hover {
+                    border-color: @item-border-col-hover;
+                }
+            }
+        }
 
-		.icon.rational {
-			display: block;
-			margin-bottom: 6px;
-		}
+        .icon.rational {
+            display: block;
+            margin-bottom: 6px;
+        }
 
-		.label {
-			text-align: center;
-			word-wrap: break-word;
-			white-space: normal;
-		}
+        .label {
+            text-align: center;
+            word-wrap: break-word;
+            white-space: normal;
+        }
 
-		.date, .size {
-			display: none;
-		}
-	}
+        .date, .size {
+            display: none;
+        }
+    }
 
-	.empty, .no-match {
-		margin: 0 120px;
-		padding: 16px;
-		height: 120px;
-	}
+    .empty, .no-match {
+        margin: 0 120px;
+        padding: 16px;
+        height: 120px;
+    }
 
-	.view-icons-sized(@icon-size);
+    .view-icons-sized(@icon-size);
 
-	&.size-16 {
-		.view-icons-sized(16px);
-	}
+    &.size-16 {
+        .view-icons-sized(16px);
+    }
 
-	&.size-24 {
-		.view-icons-sized(24px);
-	}
+    &.size-24 {
+        .view-icons-sized(24px);
+    }
 
-	&.size-32 {
-		.view-icons-sized(32px);
-	}
+    &.size-32 {
+        .view-icons-sized(32px);
+    }
 
-	&.size-48 {
-		.view-icons-sized(48px);
-	}
+    &.size-48 {
+        .view-icons-sized(48px);
+    }
 
-	&.size-64 {
-		.view-icons-sized(64px);
-	}
+    &.size-64 {
+        .view-icons-sized(64px);
+    }
 
-	&.size-96 {
-		.view-icons-sized(96px);
-	}
+    &.size-96 {
+        .view-icons-sized(96px);
+    }
 
-	&.size-128 {
-		.view-icons-sized(128px);
-	}
+    &.size-128 {
+        .view-icons-sized(128px);
+    }
 
-	&.size-192 {
-		.view-icons-sized(192px);
-	}
+    &.size-192 {
+        .view-icons-sized(192px);
+    }
 
-	&.size-256 {
-		.view-icons-sized(256px);
-	}
+    &.size-256 {
+        .view-icons-sized(256px);
+    }
 
-	&.size-384 {
-		.view-icons-sized(384px);
-	}
+    &.size-384 {
+        .view-icons-sized(384px);
+    }
 }

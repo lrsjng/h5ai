@@ -68,31 +68,31 @@ AddDefaultCharset utf-8
     ExpiresActive on
     ExpiresDefault                                      "access plus 1 month"
 
-  # CSS
+    # CSS
     ExpiresByType text/css                              "access plus 1 week"
 
-  # Data interchange
+    # Data interchange
     ExpiresByType application/json                      "access plus 0 seconds"
     ExpiresByType application/xml                       "access plus 0 seconds"
     ExpiresByType text/xml                              "access plus 0 seconds"
 
-  # Favicon (cannot be renamed!)
+    # Favicon (cannot be renamed!)
     ExpiresByType image/x-icon                          "access plus 1 week"
 
-  # HTML components (HTCs)
+    # HTML components (HTCs)
     ExpiresByType text/x-component                      "access plus 1 month"
 
-  # HTML
+    # HTML
     ExpiresByType text/html                             "access plus 0 seconds"
 
-  # JavaScript
+    # JavaScript
     ExpiresByType application/javascript                "access plus 1 week"
 
-  # Manifest files
+    # Manifest files
     ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
     ExpiresByType text/cache-manifest                   "access plus 0 seconds"
 
-  # Media
+    # Media
     ExpiresByType audio/ogg                             "access plus 1 month"
     ExpiresByType image/gif                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
@@ -101,11 +101,11 @@ AddDefaultCharset utf-8
     ExpiresByType video/ogg                             "access plus 1 month"
     ExpiresByType video/webm                            "access plus 1 month"
 
-  # Web feeds
+    # Web feeds
     ExpiresByType application/atom+xml                  "access plus 1 hour"
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
-  # Web fonts
+    # Web fonts
     ExpiresByType application/font-woff                 "access plus 1 month"
     ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
     ExpiresByType application/x-font-ttf                "access plus 1 month"

@@ -1,188 +1,138 @@
 
-modulejs.define('ext/preview-txt', ['_', '$', 'markdown', 'core/settings', 'core/event', 'core/resource', 'ext/preview'], function (_, $, markdown, allsettings, event, resource, preview) {
+modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings', 'core/event', 'ext/preview'], function (_, $, marked, prism, allsettings, event, preview) {
 
-	var settings = _.extend({
-			enabled: false,
-			types: {}
-		}, allsettings['preview-txt']),
+    var settings = _.extend({
+            enabled: false,
+            types: {}
+        }, allsettings['preview-txt']),
 
-		templateText = '<pre id="pv-txt-text" class="highlighted"/>',
-		templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
+        templateText = '<pre id="pv-txt-text" class="highlighted"/>',
+        templateMarkdown = '<div id="pv-txt-text" class="markdown"/>',
 
-		// adapted from SyntaxHighlighter
-		getHighlightedLines = function (sh, alias, content) {
+        preloadText = function (absHref, callback) {
 
-			var brushes = sh.vars.discoveredBrushes,
-				Brush, brush;
+            $.ajax({
+                    url: absHref,
+                    dataType: 'text'
+                })
+                .done(function (content) {
 
-			if (!brushes) {
-				brushes = {};
+                    callback(content);
+                    // setTimeout(function () { callback(content); }, 1000); // for testing
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
 
-				_.each(sh.brushes, function (info, brush) {
+                    callback('[ajax error] ' + textStatus);
+                });
+        },
 
-					var aliases = info.aliases;
+        onEnter = function (items, idx) {
 
-					if (aliases) {
-						info.brushName = brush.toLowerCase();
+            var currentItems = items,
+                currentIdx = idx,
+                currentItem = items[idx],
 
-						for (var i = 0; i < aliases.length; i += 1) {
-							brushes[aliases[i]] = brush;
-						}
-					}
-				});
+                onAdjustSize = function () {
 
-				sh.vars.discoveredBrushes = brushes;
-			}
+                    var $content = $('#pv-content'),
+                        $text = $('#pv-txt-text');
 
-			Brush = sh.brushes[brushes[alias || 'plain']];
+                    if ($text.length) {
 
-			if (!Brush) {
-				return $();
-			}
+                        $text.height($content.height() - 16);
+                    }
+                },
 
-			brush = new Brush();
-			brush.init({toolbar: false, gutter: false});
+                onIdxChange = function (rel) {
 
-			return $(brush.getHtml(content)).find('.line');
-		},
+                    currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
+                    currentItem = currentItems[currentIdx];
 
-		preloadText = function (absHref, callback) {
+                    var spinnerTimeout = setTimeout(function () { preview.showSpinner(true); }, 200);
 
-			$.ajax({
-					url: absHref,
-					dataType: 'text'
-				})
-				.done(function (content) {
+                    preloadText(currentItem.absHref, function (textContent) {
 
-					callback(content);
-					// setTimeout(function () { callback(content); }, 1000); // for testing
-				})
-				.fail(function (jqXHR, textStatus, errorThrown) {
+                        clearTimeout(spinnerTimeout);
+                        preview.showSpinner(false);
 
-					callback('[ajax error] ' + textStatus);
-				});
-		},
+                        $('#pv-content').fadeOut(100, function () {
 
-		onEnter = function (items, idx) {
+                            var type = settings.types[currentItem.type],
+                                $text, $code;
 
-			var currentItems = items,
-				currentIdx = idx,
-				currentItem = items[idx],
+                            if (type === 'none') {
+                                $text = $(templateMarkdown).text(textContent);
+                            } else if (type === 'fixed') {
+                                $text = $(templateText).text(textContent);
+                            } else if (type === 'markdown') {
+                                $text = $(templateMarkdown).html(marked(textContent));
+                            } else {
+                                $text = $(templateText);
+                                $code = $('<code/>').appendTo($text);
 
-				onAdjustSize = function () {
+                                if (textContent.length < 20000) {
+                                    $code.empty().html(prism.highlight(textContent, prism.languages[type]));
+                                } else {
+                                    $code.empty().text(textContent);
+                                    setTimeout(function () { $code.empty().html(prism.highlight(textContent, prism.languages[type])); }, 300);
+                                }
+                            }
+                            $('#pv-content').empty().append($text).fadeIn(200);
+                            onAdjustSize();
 
-					var $content = $('#pv-content'),
-						$text = $('#pv-txt-text');
+                            preview.setIndex(currentIdx + 1, currentItems.length);
+                            preview.setLabels([
+                                currentItem.label,
+                                '' + currentItem.size + ' bytes'
+                            ]);
+                            preview.setRawLink(currentItem.absHref);
+                        });
+                    });
+                };
 
-					if ($text.length) {
+            onIdxChange(0);
+            preview.setOnIndexChange(onIdxChange);
+            preview.setOnAdjustSize(onAdjustSize);
+            preview.enter();
+        },
 
-						$text.height($content.height() - 16);
-					}
-				},
+        initItem = function (item) {
 
-				onIdxChange = function (rel) {
+            if (item.$view && _.indexOf(_.keys(settings.types), item.type) >= 0) {
+                item.$view.find('a').on('click', function (event) {
 
-					currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
-					currentItem = currentItems[currentIdx];
+                    event.preventDefault();
 
-					var spinnerTimeout = setTimeout(function () { preview.showSpinner(true); }, 200);
+                    var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
 
-					preloadText(currentItem.absHref, function (textContent) {
+                        item = $(item).data('item');
+                        return _.indexOf(_.keys(settings.types), item.type) >= 0 ? item : null;
+                    }));
 
-						clearTimeout(spinnerTimeout);
-						preview.showSpinner(false);
+                    onEnter(matchedEntries, _.indexOf(matchedEntries, item));
+                });
+            }
+        },
 
-						$('#pv-content').fadeOut(100, function () {
+        onLocationChanged = function (item) {
 
-							var $text;
+            _.each(item.content, initItem);
+        },
 
-							if (settings.types[currentItem.type] === 'none') {
+        onLocationRefreshed = function (item, added, removed) {
 
-								$text = $(templateMarkdown).text(textContent);
+            _.each(added, initItem);
+        },
 
-							} else if (settings.types[currentItem.type] === 'fixed') {
+        init = function () {
 
-								$text = $(templateText).text(textContent);
+            if (!settings.enabled) {
+                return;
+            }
 
-							} else if (settings.types[currentItem.type] === 'markdown') {
+            event.sub('location.changed', onLocationChanged);
+            event.sub('location.refreshed', onLocationRefreshed);
+        };
 
-								$text = $(templateMarkdown).html(markdown.toHTML(textContent));
-							} else {
-
-								$text = $(templateText).text(textContent);
-
-								resource.ensureSH(function (sh) {
-
-									if (sh) {
-										var $table = $('<table/>');
-
-										getHighlightedLines(sh, settings.types[currentItem.type], textContent).each(function (i) {
-											$('<tr/>')
-												.append($('<td/>').addClass('nr').append(i + 1))
-												.append($('<td/>').addClass('line').append(this))
-												.appendTo($table);
-										});
-
-										$text.empty().append($table);
-									}
-								});
-							}
-							$('#pv-content').empty().append($text).fadeIn(200);
-							onAdjustSize();
-
-							preview.setIndex(currentIdx + 1, currentItems.length);
-							preview.setLabels([
-								currentItem.label,
-								'' + currentItem.size + ' bytes'
-							]);
-							preview.setRawLink(currentItem.absHref);
-						});
-					});
-				};
-
-			onIdxChange(0);
-			preview.setOnIndexChange(onIdxChange);
-			preview.setOnAdjustSize(onAdjustSize);
-			preview.enter();
-		},
-
-		initItem = function (item) {
-
-			if (item.$view && _.indexOf(_.keys(settings.types), item.type) >= 0) {
-				item.$view.find('a').on('click', function (event) {
-
-					event.preventDefault();
-
-					var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
-
-						item = $(item).data('item');
-						return _.indexOf(_.keys(settings.types), item.type) >= 0 ? item : null;
-					}));
-
-					onEnter(matchedEntries, _.indexOf(matchedEntries, item));
-				});
-			}
-		},
-
-		onLocationChanged = function (item) {
-
-			_.each(item.content, initItem);
-		},
-
-		onLocationRefreshed = function (item, added, removed) {
-
-			_.each(added, initItem);
-		},
-
-		init = function () {
-
-			if (!settings.enabled) {
-				return;
-			}
-
-			event.sub('location.changed', onLocationChanged);
-			event.sub('location.refreshed', onLocationRefreshed);
-		};
-
-	init();
+    init();
 });

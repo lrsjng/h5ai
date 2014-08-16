@@ -1,122 +1,122 @@
 
 .view-details-sized(@size) {
 
-	li {
+    li {
 
-		&.item {
+        &.item {
 
-			a, a:active, a:visited {
-				height: @size + 6px;
-			}
+            a, a:active, a:visited {
+                height: @size + 6px;
+            }
 
-			.label, .date, .size {
-				padding: ((@size - 16px)/2) 8px;
-			}
-		}
+            .label, .date, .size {
+                padding: ((@size - 16px)/2) 8px;
+            }
+        }
 
-		.icon.square {
-			width: @size;
+        .icon.square {
+            width: @size;
 
-			img {
-				width: @size;
-				height: @size;
-			}
-		}
+            img {
+                width: @size;
+                height: @size;
+            }
+        }
 
-		.label {
-			margin: 0 230px 0 (@size + 16px);
-		}
-	}
+        .label {
+            margin: 0 230px 0 (@size + 16px);
+        }
+    }
 }
 
 
 #view.view-details {
 
-	li {
+    li {
 
-		&.header {
-			display: list-item;
-		}
+        &.header {
+            display: list-item;
+        }
 
-		&.item {
+        &.item {
 
-			a, a:active, a:visited {
-				border-bottom: 1px solid @item-border-col-sep;
+            a, a:active, a:visited {
+                border-bottom: 1px solid @item-border-col-sep;
 
-				&:hover, &.hover {
-					border-color: @item-border-col-hover;
-				}
-			}
+                &:hover, &.hover {
+                    border-color: @item-border-col-hover;
+                }
+            }
 
-			// needs to be here, to not conflict with header fields
-			.icon {
-				padding: 8px;
-			}
-		}
+            // needs to be here, to not conflict with header fields
+            .icon {
+                padding: 8px;
+            }
+        }
 
-		.icon.square {
-			display: inline-block;
-			position: absolute;
-			left: 0;
-			top: -4px;
-		}
+        .icon.square {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: -4px;
+        }
 
-		.date {
-			position: absolute;
-			right: 100px;
-			top: 0;
-		}
+        .date {
+            position: absolute;
+            right: 100px;
+            top: 0;
+        }
 
-		.size {
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
+        .size {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
 
-		.selector {
-			margin-top: -1px;
-		}
-	}
+        .selector {
+            margin-top: -1px;
+        }
+    }
 
-	.view-details-sized(@icon-size);
+    .view-details-sized(@icon-size);
 
-	&.size-16 {
-		.view-details-sized(16px)
-	}
+    &.size-16 {
+        .view-details-sized(16px)
+    }
 
-	&.size-24 {
-		.view-details-sized(24px)
-	}
+    &.size-24 {
+        .view-details-sized(24px)
+    }
 
-	&.size-32 {
-		.view-details-sized(32px)
-	}
+    &.size-32 {
+        .view-details-sized(32px)
+    }
 
-	&.size-48 {
-		.view-details-sized(48px)
-	}
+    &.size-48 {
+        .view-details-sized(48px)
+    }
 
-	&.size-64 {
-		.view-details-sized(64px)
-	}
+    &.size-64 {
+        .view-details-sized(64px)
+    }
 
-	&.size-96 {
-		.view-details-sized(96px)
-	}
+    &.size-96 {
+        .view-details-sized(96px)
+    }
 
-	&.size-128 {
-		.view-details-sized(128px)
-	}
+    &.size-128 {
+        .view-details-sized(128px)
+    }
 
-	&.size-192 {
-		.view-details-sized(192px)
-	}
+    &.size-192 {
+        .view-details-sized(192px)
+    }
 
-	&.size-256 {
-		.view-details-sized(256px)
-	}
+    &.size-256 {
+        .view-details-sized(256px)
+    }
 
-	&.size-384 {
-		.view-details-sized(384px)
-	}
+    &.size-384 {
+        .view-details-sized(384px)
+    }
 }

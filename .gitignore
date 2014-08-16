@@ -1,6 +1,5 @@
 
 build
 local
-*.sublime-*
-
+node_modules
 test

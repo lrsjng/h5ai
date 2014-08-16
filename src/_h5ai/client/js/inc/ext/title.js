@@ -1,30 +1,30 @@
 
 modulejs.define('ext/title', ['_', 'core/settings', 'core/event'], function (_, allsettings, event) {
 
-	var settings = _.extend({
-			enabled: false
-		}, allsettings.title),
+    var settings = _.extend({
+            enabled: false
+        }, allsettings.title),
 
-		onLocationChanged = function (item) {
+        onLocationChanged = function (item) {
 
-			var labels = _.pluck(item.getCrumb(), 'label'),
-				title = labels.join(' > ');
+            var labels = _.pluck(item.getCrumb(), 'label'),
+                title = labels.join(' > ');
 
-			if (labels.length > 1) {
-				title = labels[labels.length - 1] + ' - ' + title;
-			}
+            if (labels.length > 1) {
+                title = labels[labels.length - 1] + ' - ' + title;
+            }
 
-			document.title = title;
-		},
+            document.title = title;
+        },
 
-		init = function () {
+        init = function () {
 
-			if (!settings.enabled) {
-				return;
-			}
+            if (!settings.enabled) {
+                return;
+            }
 
-			event.sub('location.changed', onLocationChanged);
-		};
+            event.sub('location.changed', onLocationChanged);
+        };
 
-	init();
+    init();
 });
