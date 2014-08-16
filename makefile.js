@@ -21,19 +21,6 @@ module.exports = function (make) {
     make.defaults('build');
 
 
-    make.before(function () {
-
-        var moment = make.moment();
-
-        make.env = {
-            pkg: pkg,
-            stamp: moment.format('YYYY-MM-DD HH:mm:ss')
-        };
-
-        $.info({ method: 'before', message: pkg.version + ' ' + make.env.stamp });
-    });
-
-
     make.target('check-version', [], 'add git info to dev builds').async(function (done, fail) {
 
         if (!pkg.develop) {
@@ -85,29 +72,32 @@ module.exports = function (make) {
 
     make.target('build', ['check-version'], 'build all updated files').sync(function () {
 
-        var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.url + ' */';
+        var env = {pkg: pkg};
+        var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
 
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
             .includify()
-            .uglifyjs({header: header})
+            .uglifyjs()
+            .wrap(header)
             .WRITE(mapSrc);
 
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
-            .cssmin({header: header})
+            .cssmin()
+            .wrap(header)
             .WRITE(mapSrc);
 
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
-            .handlebars(make.env)
+            .handlebars(env)
             .jade()
             .WRITE(mapSrc);
 
         $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
             .newerThan(mapSrc)
-            .handlebars(make.env)
+            .handlebars(env)
             .WRITE(mapSrc);
 
         $(src + ': _h5ai/client/css/fonts/**')
@@ -122,27 +112,32 @@ module.exports = function (make) {
 
     make.target('build-uncompressed', ['check-version'], 'build all updated files without compression').sync(function () {
 
+        var env = {pkg: pkg};
+        var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
+
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
             .includify()
             // .uglifyjs()
+            .wrap(header)
             .WRITE(mapSrc);
 
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
             // .cssmin()
+            .wrap(header)
             .WRITE(mapSrc);
 
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
-            .handlebars(make.env)
+            .handlebars(env)
             .jade()
             .WRITE(mapSrc);
 
         $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
             .newerThan(mapSrc)
-            .handlebars(make.env)
+            .handlebars(env)
             .WRITE(mapSrc);
 
         $(src + ': _h5ai/client/css/fonts/**')
