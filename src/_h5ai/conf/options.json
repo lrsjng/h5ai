@@ -135,6 +135,7 @@ Options
     },
 
     /*
+    [DEPRECATED, will be removed]
     Adds Google Analytics asynchronous tracking code.
 
     for example:

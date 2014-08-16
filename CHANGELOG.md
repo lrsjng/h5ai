@@ -2,10 +2,15 @@
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
-## develop branch
+## v0.26.0 - *2014-08-16*
 
 * removes True Type fonts
 * outsources themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
+* adds filesize fallback for large files and 32bit PHP
+* fixes server detection
+* adds config file tests to info page
+* removes JSON shim
+* adds caching of command checks
 * updates `jQuery.mousewheel` to 3.1.12
 * updates `jQuery.qrcode` to 0.8.0
 * replaces `markdown` with [`marked`](https://github.com/chjj/marked) 0.3.2
