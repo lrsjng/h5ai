@@ -2,6 +2,8 @@
 'use strict';
 
 
+
+
 module.exports = function (make) {
 
     var path = require('path'),
@@ -14,7 +16,31 @@ module.exports = function (make) {
 
         $ = make.fQuery,
         mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', ''),
-        mapRoot = $.map.p(root, path.join(build, '_h5ai'));
+        mapRoot = $.map.p(root, path.join(build, '_h5ai')),
+
+        // bad hack
+        getBuildSuffix = function (callback) {
+
+            var child_process = require('child_process');
+
+            child_process.exec('git rev-list --tags --max-count=1', {cwd: root}, function (err, out) {
+
+                if (err) {
+                    callback();
+                } else {
+                    child_process.exec('git rev-list ' + out.trim() + '..HEAD', {cwd: root}, function (err, out) {
+
+                        if (err) {
+                            callback();
+                        } else {
+                            var lines = out.split(/\r?\n/);
+                            var count = lines.length - 1;
+                            callback('' + count + '~' + lines[0].substring(0, 10));
+                        }
+                    });
+                }
+            });
+        };
 
 
     make.version('>=0.10.0');
@@ -28,9 +54,9 @@ module.exports = function (make) {
             return;
         }
 
-        $.git(root, function (err, result) {
+        getBuildSuffix(function (result) {
 
-            pkg.version += '+' + result.buildSuffix;
+            pkg.version += '+' + result;
             $.info({ method: 'check-version', message: 'version set to ' + pkg.version });
             done();
         });
