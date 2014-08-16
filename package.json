@@ -1,7 +1,7 @@
 {
   "name": "h5ai",
   "version": "0.26.1",
-  "develop": false,
+  "develop": true,
   "description": "a modern HTTP web server index",
   "homepage": "http://larsjung.de/h5ai/",
   "bugs": "https://github.com/lrsjng/h5ai/issues",
