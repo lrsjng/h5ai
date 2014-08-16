@@ -2,6 +2,11 @@
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
+## develop branch
+
+* ...
+
+
 ## v0.26.0 - *2014-08-16*
 
 * removes True Type fonts
