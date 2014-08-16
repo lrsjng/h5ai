@@ -2,7 +2,7 @@
 **h5ai** uses [semantic versioning](http://semver.org/).
 
 
-## develop branch
+## v0.26.1 - *2014-08-17*
 
 * fixes links
 
