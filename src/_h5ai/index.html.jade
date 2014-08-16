@@ -19,7 +19,7 @@ html.no-js.browser( lang="en" )
     body#h5ai-info
 
         h1
-            a( href="{{pkg.url}}" ) {{pkg.name}}
+            a( href="{{pkg.homepage}}" ) {{pkg.name}}
 
         div#support
             | show your love and support for h5ai with a small donation
@@ -38,6 +38,6 @@ html.no-js.browser( lang="en" )
                     a( href="http://browsehappy.com" ) modern browsers
                     | ! ⚡
             span.right
-                a( href="{{pkg.url}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
+                a( href="{{pkg.homepage}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
                     | powered by {{pkg.name}} {{pkg.version}}
             span.center

@@ -4,7 +4,7 @@
 
 ## develop branch
 
-* ...
+* fixes links
 
 
 ## v0.26.0 - *2014-08-16*

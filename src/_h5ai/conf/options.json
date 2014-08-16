@@ -1,6 +1,6 @@
 /*
 {{pkg.name}} {{pkg.version}}
-{{pkg.url}}
+{{pkg.homepage}}
 
 Options
 */
