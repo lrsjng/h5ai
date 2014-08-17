@@ -21,27 +21,20 @@ module.exports = function (make) {
 
             var child_process = require('child_process');
 
-            child_process.exec('git rev-list --tags --max-count=1', {cwd: root}, function (err, out) {
+            child_process.exec('git rev-list v' + pkg.version + '..HEAD', {cwd: root}, function (err, out) {
 
-                if (err) {
-                    callback();
-                } else {
-                    child_process.exec('git rev-list ' + out.trim() + '..HEAD', {cwd: root}, function (err, out) {
-
-                        if (err) {
-                            callback();
-                        } else {
-                            var lines = out.trim().split(/\r?\n/);
-                            callback('+' + lines.length + '~' + lines[0].substring(0, 7));
-                        }
-                    });
+                try {
+                    var lines = out.trim().split(/\r?\n/);
+                    callback('+' + lines.length + '~' + lines[0].substring(0, 7));
+                } catch (e) {
+                    callback('+X');
                 }
             });
         };
 
 
     make.version('>=0.10.0');
-    make.defaults('build');
+    make.defaults('release');
 
 
     make.target('check-version', [], 'add git info to dev builds').async(function (done, fail) {

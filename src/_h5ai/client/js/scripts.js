@@ -18,7 +18,7 @@
 (function () {
     'use strict';
 
-    /*global jQuery, marked, Modernizr, moment, _ */
+    /*global jQuery, marked, Modernizr, moment, Prism, _ */
     modulejs.define('$', function () { return jQuery; });
     modulejs.define('marked', function () { return marked; });
     modulejs.define('modernizr', function () { return Modernizr; });
