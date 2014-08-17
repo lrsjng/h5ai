@@ -2,8 +2,6 @@
 'use strict';
 
 
-
-
 module.exports = function (make) {
 
     var path = require('path'),
@@ -35,7 +33,7 @@ module.exports = function (make) {
                         } else {
                             var lines = out.split(/\r?\n/);
                             var count = lines.length - 1;
-                            callback('' + count + '~' + lines[0].substring(0, 10));
+                            callback('+' + count + '~' + lines[0].substring(0, 7));
                         }
                     });
                 }
@@ -56,7 +54,7 @@ module.exports = function (make) {
 
         getBuildSuffix(function (result) {
 
-            pkg.version += '+' + result;
+            pkg.version += result;
             $.info({ method: 'check-version', message: 'version set to ' + pkg.version });
             done();
         });
