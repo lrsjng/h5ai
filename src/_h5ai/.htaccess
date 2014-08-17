@@ -2,69 +2,20 @@
 DirectoryIndex index.html
 
 
-
-
-# ------------------------------------------------------------------------------
-# | File access                                                                |
-# ------------------------------------------------------------------------------
-
-# Block access to directories without a default document.
-# Usually you should leave this uncommented because you shouldn't allow anyone
-# to surf through every directory on your server (which may includes rather
-# private places like the CMS's directories).
-
 <IfModule mod_autoindex.c>
     Options -Indexes
 </IfModule>
 
 
-
-
-# ------------------------------------------------------------------------------
-# | Better website experience                                                  |
-# ------------------------------------------------------------------------------
-
-# Force IE to render pages in the highest available mode in the various
-# cases when it may not: http://hsivonen.iki.fi/doctype/ie-mode.pdf.
-# Use, if installed, Google Chrome Frame.
-
-<IfModule mod_headers.c>
-    Header set X-UA-Compatible "IE=edge,chrome=1"
-    # `mod_headers` can't match based on the content-type, however, we only
-    # want to send this header for HTML pages and not for the other resources
-    <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
-        Header unset X-UA-Compatible
-    </FilesMatch>
-</IfModule>
-
-
-
-
-# ------------------------------------------------------------------------------
-# | UTF-8 encoding                                                             |
-# ------------------------------------------------------------------------------
-
-# Use UTF-8 encoding for anything served as `text/html` or `text/plain`.
 AddDefaultCharset utf-8
 
-# Force UTF-8 for certain file formats.
+
 <IfModule mod_mime.c>
-    AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
+    AddCharset utf-8 .css .js .json .svg
 </IfModule>
 
 
-
-
-# ------------------------------------------------------------------------------
-# | Expires headers (for better cache control)                                 |
-# ------------------------------------------------------------------------------
-
-# The following expires headers are set pretty far in the future. If you don't
-# control versioning with filename-based cache busting, consider lowering the
-# cache time for resources like CSS and JS to something like 1 week.
-
 <IfModule mod_expires.c>
-
     ExpiresActive on
     ExpiresDefault                                      "access plus 1 month"
 
@@ -79,37 +30,17 @@ AddDefaultCharset utf-8
     # Favicon (cannot be renamed!)
     ExpiresByType image/x-icon                          "access plus 1 week"
 
-    # HTML components (HTCs)
-    ExpiresByType text/x-component                      "access plus 1 month"
-
     # HTML
     ExpiresByType text/html                             "access plus 0 seconds"
 
     # JavaScript
     ExpiresByType application/javascript                "access plus 1 week"
 
-    # Manifest files
-    ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
-    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
-
     # Media
-    ExpiresByType audio/ogg                             "access plus 1 month"
-    ExpiresByType image/gif                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
     ExpiresByType image/png                             "access plus 1 month"
-    ExpiresByType video/mp4                             "access plus 1 month"
-    ExpiresByType video/ogg                             "access plus 1 month"
-    ExpiresByType video/webm                            "access plus 1 month"
-
-    # Web feeds
-    ExpiresByType application/atom+xml                  "access plus 1 hour"
-    ExpiresByType application/rss+xml                   "access plus 1 hour"
 
     # Web fonts
     ExpiresByType application/font-woff                 "access plus 1 month"
-    ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
-    ExpiresByType application/x-font-ttf                "access plus 1 month"
-    ExpiresByType font/opentype                         "access plus 1 month"
     ExpiresByType image/svg+xml                         "access plus 1 month"
-
 </IfModule>
