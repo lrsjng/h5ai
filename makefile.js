@@ -31,9 +31,8 @@ module.exports = function (make) {
                         if (err) {
                             callback();
                         } else {
-                            var lines = out.split(/\r?\n/);
-                            var count = lines.length - 1;
-                            callback('+' + count + '~' + lines[0].substring(0, 7));
+                            var lines = out.trim().split(/\r?\n/);
+                            callback('+' + lines.length + '~' + lines[0].substring(0, 7));
                         }
                     });
                 }
