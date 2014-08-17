@@ -10,7 +10,6 @@ function setup() {
 
     define("NAME", "{{pkg.name}}");
     define("VERSION", "{{pkg.version}}");
-    define("STAMP", "{{stamp}}");
 
     define("BACKEND", "PHP");
     define("API", true);
