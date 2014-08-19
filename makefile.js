@@ -33,7 +33,7 @@ module.exports = function (make) {
         };
 
 
-    make.version('>=0.10.0');
+    make.version('=0.11.0');
     make.defaults('release');
 
 
