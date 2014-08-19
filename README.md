@@ -58,7 +58,7 @@ THE SOFTWARE.
 
 ## References
 
-**h5ai** profits from these great projects:
+**h5ai** profits from these great projects:  
 [GNOME&nbsp;Symbolic&nbsp;Icons](https://github.com/GNOME/gnome-icon-theme-symbolic)&nbsp;(CC BY-SA 3.0),
 [HTML5&nbsp;★&nbsp;Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),

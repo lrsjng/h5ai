@@ -16,5 +16,9 @@ trim_trailing_whitespace = true
 indent_size = 2
 
 
-[{*.md,*.jade}]
+[*.md]
+trim_trailing_whitespace = false
+
+
+[*.jade]
 trim_trailing_whitespace = false
