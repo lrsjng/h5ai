@@ -5,6 +5,7 @@
 ## develop
 
 * adds editorconfig
+* updates `modulejs` to 1.0.0
 
 
 ## v0.26.1 - *2014-08-17*
