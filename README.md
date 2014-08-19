@@ -1,9 +1,9 @@
 # h5ai
 
-[![license][license-img]][gh] [![web][web-img]][web] [![github][gh-img]][gh]
+[![license][license-img]][github] [![web][web-img]][web] [![github][github-img]][github]
 
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
-For bug reports and feature requests please use [issues][gh-issues].
+For bug reports and feature requests please use [issues][github-issues].
 
 
 ## Install
@@ -58,7 +58,7 @@ THE SOFTWARE.
 
 ## References
 
-**h5ai** profits from these great projects:  
+**h5ai** profits from these great projects:
 [GNOME&nbsp;Symbolic&nbsp;Icons](https://github.com/GNOME/gnome-icon-theme-symbolic)&nbsp;(CC BY-SA 3.0),
 [HTML5&nbsp;★&nbsp;Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
@@ -75,12 +75,12 @@ THE SOFTWARE.
 
 
 [web]: http://larsjung.de/h5ai/
-[gh]: https://github.com/lrsjng/h5ai
-[gh-issues]: https://github.com/lrsjng/h5ai/issues
+[github]: https://github.com/lrsjng/h5ai
+[github-issues]: https://github.com/lrsjng/h5ai/issues
 [release]: http://release.larsjung.de/h5ai/
 [develop]: http://release.larsjung.de/h5ai/develop/
 [fquery]: http://larsjung.de/fquery/
 
 [license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
-[gh-img]: http://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
+[github-img]: http://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
