@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "fquery": "~0.12.17",
-    "fquery-cssmin": "~0.1.4",
+    "fquery-cssmin": "~0.2.0",
     "fquery-handlebars": "~0.1.0",
     "fquery-includeit": "~0.1.1",
     "fquery-jade": "~0.2.1",
@@ -24,9 +24,6 @@
     "fquery-jszip": "~0.1.0",
     "fquery-less": "~0.1.5",
     "fquery-uglifyjs": "~0.1.3",
-    "lodash": "~2.4.1",
-    "mkr": "~0.3.0",
-    "mocha": "~1.21.3",
-    "zombie": "~2.0.0-alpha31"
+    "mkr": "~0.3.0"
   }
 }
