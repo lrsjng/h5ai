@@ -2,42 +2,52 @@
 'use strict';
 
 
-module.exports = function (make) {
+var path = require('path');
+var $ = require('fquery');
 
-    var path = require('path'),
+var pkg = require('./package.json');
 
-        pkg = require('./package.json'),
+var root = path.resolve(__dirname);
+var src = path.join(root, 'src');
+var build = path.join(root, 'build');
 
-        root = path.resolve(__dirname),
-        src = path.join(root, 'src'),
-        build = path.join(root, 'build'),
+var mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', '');
+var mapRoot = $.map.p(root, path.join(build, '_h5ai'));
 
-        $ = make.fQuery,
-        mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', ''),
-        mapRoot = $.map.p(root, path.join(build, '_h5ai')),
+    // bad hack
+var getBuildSuffix = function (callback) {
 
-        // bad hack
-        getBuildSuffix = function (callback) {
+        var child_process = require('child_process');
 
-            var child_process = require('child_process');
+        child_process.exec('git rev-list v' + pkg.version + '..HEAD', {cwd: root}, function (err, out) {
 
-            child_process.exec('git rev-list v' + pkg.version + '..HEAD', {cwd: root}, function (err, out) {
-
-                try {
-                    var lines = out.trim().split(/\r?\n/);
-                    callback('+' + lines.length + '~' + lines[0].substring(0, 7));
-                } catch (e) {
-                    callback('+X');
-                }
-            });
-        };
+            try {
+                var lines = out.trim().split(/\r?\n/);
+                callback('+' + lines.length + '~' + lines[0].substring(0, 7));
+            } catch (e) {
+                callback('+X');
+            }
+        });
+    };
 
 
-    make.version('=0.11.0');
-    make.defaults('release');
+$.plugin('fquery-cssmin');
+$.plugin('fquery-handlebars');
+$.plugin('fquery-includeit');
+$.plugin('fquery-jade');
+$.plugin('fquery-jshint');
+$.plugin('fquery-jszip');
+$.plugin('fquery-less');
+$.plugin('fquery-uglifyjs');
 
 
-    make.target('check-version', [], 'add git info to dev builds').async(function (done, fail) {
+module.exports = function (suite) {
+
+
+    suite.defaults('release');
+
+
+    suite.target('check-version', [], 'add git info to dev builds').task(function (done) {
 
         if (!pkg.develop) {
             done();
@@ -47,19 +57,19 @@ module.exports = function (make) {
         getBuildSuffix(function (result) {
 
             pkg.version += result;
-            $.info({ method: 'check-version', message: 'version set to ' + pkg.version });
+            $.Event.info({method: 'check-version', message: 'version set to ' + pkg.version});
             done();
         });
     });
 
 
-    make.target('clean', [], 'delete build folder').sync(function () {
+    suite.target('clean', [], 'delete build folder').task(function () {
 
-        $.DELETE(build);
+        $(build, {dirs: true}).delete();
     });
 
 
-    make.target('lint', [], 'lint all JavaScript files with JSHint').sync(function () {
+    suite.target('lint', [], 'lint all JavaScript files with JSHint').task(function () {
 
         var jshint = {
                 // Enforcing Options
@@ -76,8 +86,8 @@ module.exports = function (make) {
 
                 // Environments
                 browser: true
-            },
-            globals = {
+            };
+        var globals = {
                 'modulejs': true
             };
 
@@ -86,92 +96,92 @@ module.exports = function (make) {
     });
 
 
-    make.target('build', ['check-version'], 'build all updated files').sync(function () {
+    suite.target('build', ['check-version'], 'build all updated files').task(function () {
 
         var env = {pkg: pkg};
         var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
 
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
-            .includify()
+            .includeit()
             .uglifyjs()
             .wrap(header)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
             .cssmin()
             .wrap(header)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
             .jade()
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': _h5ai/client/css/fonts/**')
             .newerThan(mapSrc)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(root + ': *.md')
             .newerThan(mapRoot)
-            .WRITE(mapRoot);
+            .write(mapRoot, true);
     });
 
 
-    make.target('build-uncompressed', ['check-version'], 'build all updated files without compression').sync(function () {
+    suite.target('build-uncompressed', ['check-version'], 'build all updated files').task(function () {
 
         var env = {pkg: pkg};
         var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
 
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
-            .includify()
+            .includeit()
             // .uglifyjs()
             .wrap(header)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
             // .cssmin()
             .wrap(header)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
             .jade()
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(src + ': _h5ai/client/css/fonts/**')
             .newerThan(mapSrc)
-            .WRITE(mapSrc);
+            .write(mapSrc, true);
 
         $(root + ': *.md')
             .newerThan(mapRoot)
-            .WRITE(mapRoot);
+            .write(mapRoot, true);
     });
 
 
-    make.target('release', ['clean', 'build'], 'create a zipball').async(function (done, fail) {
+    suite.target('release', ['clean', 'build'], 'create a zipball').task(function () {
 
-        $(build + ': **').shzip({
-            target: path.join(build, pkg.name + '-' + pkg.version + '.zip'),
-            dir: build,
-            callback: done
-        });
+        var target = path.join(build, pkg.name + '-' + pkg.version + '.zip');
+
+        $(build + ': **')
+            .jszip({dir: build})
+            .write(target, true);
     });
 };

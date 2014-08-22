@@ -17,18 +17,17 @@ install instructions on the [project page][web].
 
 There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. But if you want to build **h5ai** yourself you need to
-install the build tool [fQuery][fquery] first:
+install the global command line trigger for the build tool [`mkr`][mkr] first:
 
-    > npm install -g fquery@0.11.0
+    > npm install -g mkr-global
 
-This will globally install fQuery and its command line tool `makejs`. Run
-`makejs --help` to see if everything worked fine. To clone and build the
-project run the following commands, this will create a new folder `build`
-including a fresh zipball.
+To clone and build the project run the following commands, this will create a
+new folder `build` including a fresh zipball.
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
-    > makejs release
+    > npm install
+    > mkr release
 
 
 ## License
@@ -79,7 +78,7 @@ THE SOFTWARE.
 [github-issues]: https://github.com/lrsjng/h5ai/issues
 [release]: http://release.larsjung.de/h5ai/
 [develop]: http://release.larsjung.de/h5ai/develop/
-[fquery]: http://larsjung.de/fquery/
+[mkr]: http://larsjung.de/mkr/ (target and task based build tool for Node.js)
 
 [license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
