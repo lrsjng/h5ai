@@ -5,6 +5,7 @@
 ## develop
 
 * adds editorconfig
+* updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
 * updates `modulejs` to 1.0.0
 
 
