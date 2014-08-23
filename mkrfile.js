@@ -23,7 +23,7 @@ var getBuildSuffix = function (callback) {
 
             try {
                 var lines = out.trim().split(/\r?\n/);
-                callback('+' + lines.length + '~' + lines[0].substring(0, 7));
+                callback('+' + ('000' + lines.length).substr(-3) + '~' + lines[0].substring(0, 7));
             } catch (e) {
                 callback('+X');
             }
