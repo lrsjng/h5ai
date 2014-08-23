@@ -17,7 +17,7 @@ install instructions on the [project page][web].
 
 There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. To build **h5ai** yourself install the global command
-line trigger for the build tool [`mkr`][mkr]:
+line trigger for the build tool [mkr][mkr]:
 
     > npm install -g mkr-global
 
