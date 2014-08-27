@@ -1,14 +1,19 @@
 {
-    "lang": "日本語",
-    "details": "詳細",
-    "icons": "アイコン",
-    "name": "名前",
-    "lastModified": "変更日",
-    "size": "サイズ",
-    "parentDirectory": "親フォルダ",
-    "empty": "項目なし",
-    "folders": "フォルダ",
-    "files": "ファイル",
-    "download": "ダウンロード",
-    "noMatch": "一致なし"
+	"lang": "日本語",
+	"details": "詳細",
+	"list": "一覧",
+	"grid": "グリッド",
+	"icons": "アイコン",
+	"name": "名前",
+	"lastModified": "最終変更日時",
+	"size": "サイズ",
+	"parentDirectory": "親ディレクトリへ",
+	"empty": "(空)",
+	"folders": "フォルダー",
+	"files": "ファイル",
+	"download": "ダウンロード",
+	"noMatch": "一致する項目が見つかりません",
+	"dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
+	"filter": "フィルター",
+	"delete": "削除"
 }
