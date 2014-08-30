@@ -57,7 +57,7 @@ module.exports = function (suite) {
         getBuildSuffix(function (result) {
 
             pkg.version += result;
-            $.Event.info({method: 'check-version', message: 'version set to ' + pkg.version});
+            $.report({type: 'info', method: 'check-version', message: 'version set to ' + pkg.version});
             done();
         });
     });
@@ -88,7 +88,7 @@ module.exports = function (suite) {
                 browser: true
             };
         var globals = {
-                'modulejs': true
+                modulejs: true
             };
 
         $(src + '/_h5ai/client/js: **/*.js, ! lib/**')
