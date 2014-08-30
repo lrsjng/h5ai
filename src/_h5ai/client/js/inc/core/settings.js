@@ -1,4 +1,3 @@
-
 modulejs.define('core/settings', ['config', '_'], function (config, _) {
 
     return _.extend({}, config.options, {

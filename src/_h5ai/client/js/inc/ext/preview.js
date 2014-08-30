@@ -1,11 +1,9 @@
-
 modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'core/store'], function (_, $, allsettings, resource, store) {
 
     var settings = _.extend({
             enabled: true
-        }, allsettings.preview),
-
-        template =
+        }, allsettings.preview);
+    var template =
             '<div id="pv-overlay" class="noSelection">' +
                 '<div id="pv-content"/>' +
                 '<div id="pv-spinner"><img src="' + resource.image('spinner') + '"/></div>' +
@@ -21,217 +19,217 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
                         '<li id="pv-bar-prev" class="bar-right bar-button"><img src="' + resource.image('preview/prev') + '"/></li>' +
                     '</ul>' +
                 '</div>' +
-            '</div>',
+            '</div>';
+    var storekey = 'ext/preview';
+    var currentEntries = [];
+    var currentIdx = 0;
+    var isFullscreen = store.get(storekey) || false;
+    var userAliveTimeoutId = null;
+    var onIndexChange = null;
+    var onAdjustSize = null;
 
-        storekey = 'ext/preview',
 
-        currentEntries = [],
-        currentIdx = 0,
-        isFullscreen = store.get(storekey) || false,
+    function adjustSize() {
 
-        adjustSize = function () {
+        var rect = $(window).fracs('viewport');
+        var $container = $('#pv-content');
+        var $spinner = $('#pv-spinner');
+        var margin = isFullscreen ? 0 : 20;
+        var barheight = isFullscreen ? 0 : 31;
 
-            var rect = $(window).fracs('viewport'),
-                $container = $('#pv-content'),
-                $spinner = $('#pv-spinner'),
-                margin = isFullscreen ? 0 : 20,
-                barheight = isFullscreen ? 0 : 31;
+        $container.css({
+            width: rect.width - 2 * margin,
+            height: rect.height - 2 * margin - barheight,
+            left: margin,
+            top: margin
+        });
 
-            $container.css({
-                width: rect.width - 2 * margin,
-                height: rect.height - 2 * margin - barheight,
-                left: margin,
-                top: margin
-            });
+        $spinner.css({
+            left: rect.width * 0.5,
+            top: rect.height * 0.5
+        });
 
-            $spinner.css({
-                left: rect.width * 0.5,
-                top: rect.height * 0.5
-            });
+        if (isFullscreen) {
+            $('#pv-overlay').addClass('fullscreen');
+            $('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
+        } else {
+            $('#pv-overlay').removeClass('fullscreen');
+            $('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
+        }
 
-            if (isFullscreen) {
-                $('#pv-overlay').addClass('fullscreen');
-                $('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview/no-fullscreen'));
-            } else {
-                $('#pv-overlay').removeClass('fullscreen');
-                $('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview/fullscreen'));
-            }
+        if (_.isFunction(onAdjustSize)) {
+            onAdjustSize(1);
+        }
+    }
 
-            if (_.isFunction(onAdjustSize)) {
-                onAdjustSize(1);
-            }
-        },
+    function onEnter() {
 
-        onEnter = function () {
+        $('#pv-content').empty();
+        setLabels([]);
+        $('#pv-overlay').stop(true, true).fadeIn(200);
+        $(window).on('keydown', onKeydown);
 
+        adjustSize();
+    }
+
+    function onExit() {
+
+        $(window).off('keydown', onKeydown);
+        $('#pv-overlay').stop(true, true).fadeOut(200, function () {
             $('#pv-content').empty();
             setLabels([]);
-            $('#pv-overlay').stop(true, true).fadeIn(200);
-            $(window).on('keydown', onKeydown);
+        });
+    }
 
-            adjustSize();
-        },
+    function onNext() {
 
-        onExit = function () {
+        if (_.isFunction(onIndexChange)) {
+            onIndexChange(1);
+        }
+    }
 
-            $(window).off('keydown', onKeydown);
-            $('#pv-overlay').stop(true, true).fadeOut(200, function () {
-                $('#pv-content').empty();
-                setLabels([]);
-            });
-        },
+    function onPrevious() {
 
-        onNext = function () {
+        if (_.isFunction(onIndexChange)) {
+            onIndexChange(-1);
+        }
+    }
 
-            if (_.isFunction(onIndexChange)) {
-                onIndexChange(1);
-            }
-        },
+    function userAlive() {
 
-        onPrevious = function () {
+        clearTimeout(userAliveTimeoutId);
+        $('#pv-overlay .hof').stop(true, true).fadeIn(200);
 
-            if (_.isFunction(onIndexChange)) {
-                onIndexChange(-1);
-            }
-        },
+        if (isFullscreen) {
+            userAliveTimeoutId = setTimeout(function () {
 
-        userAliveTimeoutId = null,
-        userAlive = function () {
+                $('#pv-overlay .hof').stop(true, true).fadeOut(2000);
+            }, 2000);
+        }
+    }
 
-            clearTimeout(userAliveTimeoutId);
-            $('#pv-overlay .hof').stop(true, true).fadeIn(200);
+    function onFullscreen() {
 
-            if (isFullscreen) {
-                userAliveTimeoutId = setTimeout(function () {
+        isFullscreen = !isFullscreen;
+        store.put(storekey, isFullscreen);
 
-                    $('#pv-overlay .hof').stop(true, true).fadeOut(2000);
-                }, 2000);
-            }
-        },
+        userAlive();
+        adjustSize();
+    }
 
-        onFullscreen = function () {
+    function onKeydown(ev) {
 
-            isFullscreen = !isFullscreen;
-            store.put(storekey, isFullscreen);
+        var key = ev.which;
+        var delay = 300;
 
-            userAlive();
-            adjustSize();
-        },
+        if (key === 27) { // esc
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            onExit();
+        } else if (key === 8 || key === 37) { // backspace, left
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            $('#pv-bar-prev').addClass('hover');
+            setTimeout(function () { $('#pv-bar-prev').removeClass('hover'); }, delay);
+            onPrevious();
+        } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            $('#pv-bar-next').addClass('hover');
+            setTimeout(function () { $('#pv-bar-next').removeClass('hover'); }, delay);
+            onNext();
+        } else if (key === 70) { // f
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            $('#pv-bar-fullscreen').addClass('hover');
+            setTimeout(function () { $('#pv-bar-fullscreen').removeClass('hover'); }, delay);
+            onFullscreen();
+        }
+    }
 
-        onKeydown = function (event) {
+    function setIndex(idx, total) {
 
-            var key = event.which,
-                delay = 300;
+        if (_.isNumber(idx)) {
+            $('#pv-bar-idx').text('' + idx + (_.isNumber(total) ? '/' + total : '')).show();
+        } else {
+            $('#pv-bar-idx').text('').hide();
+        }
+    }
 
-            if (key === 27) { // esc
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                onExit();
-            } else if (key === 8 || key === 37) { // backspace, left
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                $('#pv-bar-prev').addClass('hover');
-                setTimeout(function () { $('#pv-bar-prev').removeClass('hover'); }, delay);
-                onPrevious();
-            } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                $('#pv-bar-next').addClass('hover');
-                setTimeout(function () { $('#pv-bar-next').removeClass('hover'); }, delay);
-                onNext();
-            } else if (key === 70) { // f
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                $('#pv-bar-fullscreen').addClass('hover');
-                setTimeout(function () { $('#pv-bar-fullscreen').removeClass('hover'); }, delay);
-                onFullscreen();
-            }
-        },
+    function setRawLink(href) {
 
-        setIndex = function (idx, total) {
+        if (href) {
+            $('#pv-bar-raw').find('a').attr('href', href).end().show();
+        } else {
+            $('#pv-bar-raw').find('a').attr('href', '#').end().hide();
+        }
+    }
 
-            if (_.isNumber(idx)) {
-                $('#pv-bar-idx').text('' + idx + (_.isNumber(total) ? '/' + total : '')).show();
-            } else {
-                $('#pv-bar-idx').text('').hide();
-            }
-        },
+    function setLabels(labels) {
 
-        setRawLink = function (href) {
+        $('#pv-buttons .bar-left').remove();
+        _.each(labels, function (label) {
 
-            if (href) {
-                $('#pv-bar-raw').find('a').attr('href', href).end().show();
-            } else {
-                $('#pv-bar-raw').find('a').attr('href', '#').end().hide();
-            }
-        },
+            $('<li/>')
+                .addClass('bar-left bar-label')
+                .text(label)
+                .appendTo('#pv-buttons');
+        });
+    }
 
-        setLabels = function (labels) {
+    function setOnIndexChange(fn) {
 
-            $('#pv-buttons .bar-left').remove();
-            _.each(labels, function (label) {
+        onIndexChange = fn;
+    }
 
-                $('<li/>')
-                    .addClass('bar-left bar-label')
-                    .text(label)
-                    .appendTo('#pv-buttons');
-            });
-        },
+    function setOnAdjustSize(fn) {
 
-        onIndexChange = null,
-        setOnIndexChange = function (fn) {
+        onAdjustSize = fn;
+    }
 
-            onIndexChange = fn;
-        },
+    function showSpinner(show, millis) {
 
-        onAdjustSize = null,
-        setOnAdjustSize = function (fn) {
+        if (!_.isNumber(millis)) {
+            millis = 400;
+        }
 
-            onAdjustSize = fn;
-        },
+        if (show) {
+            $('#pv-spinner').stop(true, true).fadeIn(millis);
+        } else {
+            $('#pv-spinner').stop(true, true).fadeOut(millis);
+        }
+    }
 
-        showSpinner = function (show, millis) {
+    function init() {
 
-            if (!_.isNumber(millis)) {
-                millis = 400;
-            }
+        if (!settings.enabled) {
+            return;
+        }
 
-            if (show) {
-                $('#pv-spinner').stop(true, true).fadeIn(millis);
-            } else {
-                $('#pv-spinner').stop(true, true).fadeOut(millis);
-            }
-        },
+        $(template).appendTo('body');
 
-        init = function () {
+        $('#pv-spinner').hide();
+        $('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
+        $('#pv-bar-next, #pv-next-area').on('click', onNext);
+        $('#pv-bar-close, #pv-close-area').on('click', onExit);
+        $('#pv-bar-fullscreen').on('click', onFullscreen);
 
-            if (!settings.enabled) {
-                return;
-            }
+        $('#pv-overlay')
+            .on('keydown', onKeydown)
+            .on('mousemove mousedown', userAlive)
+            .on('click mousedown mousemove keydown keypress', function (ev) {
 
-            $(template).appendTo('body');
-
-            $('#pv-spinner').hide();
-            $('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
-            $('#pv-bar-next, #pv-next-area').on('click', onNext);
-            $('#pv-bar-close, #pv-close-area').on('click', onExit);
-            $('#pv-bar-fullscreen').on('click', onFullscreen);
-
-            $('#pv-overlay')
-                .on('keydown', onKeydown)
-                .on('mousemove mousedown', userAlive)
-                .on('click mousedown mousemove keydown keypress', function (event) {
-
-                    if (event.type === 'click') {
-                        if (event.target.id === 'pv-overlay' || event.target.id === 'pv-content') {
-                            onExit();
-                        }
+                if (ev.type === 'click') {
+                    if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content') {
+                        onExit();
                     }
-                    event.stopImmediatePropagation();
-                });
+                }
+                ev.stopImmediatePropagation();
+            });
 
-            $(window).on('resize load', adjustSize);
-        };
+        $(window).on('resize load', adjustSize);
+    }
+
 
     init();
 

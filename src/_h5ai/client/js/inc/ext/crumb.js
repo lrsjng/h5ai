@@ -1,96 +1,96 @@
-
 modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location'], function (_, $, allsettings, resource, event, location) {
 
     var settings = _.extend({
             enabled: false
-        }, allsettings.crumb),
-
-        template =
+        }, allsettings.crumb);
+    var template =
             '<li class="crumb">' +
                 '<a>' +
                     '<img src="' + resource.image('crumb') + '" alt=">"/>' +
                     '<span/>' +
                 '</a>' +
-            '</li>',
-        pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page"/>',
-        statusHintTemplate = '<span class="hint"/>',
+            '</li>';
+    var pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page"/>';
+    var statusHintTemplate = '<span class="hint"/>';
 
-        update = function (item, force) {
 
-            if (!force && item.$crumb) {
-                return item.$crumb;
-            }
+    function update(item, force) {
 
-            var $html = $(template),
-                $a = $html.find('a');
+        if (!force && item.$crumb) {
+            return item.$crumb;
+        }
 
-            $html
-                .addClass(item.isFolder() ? 'folder' : 'file')
-                .data('item', item);
+        var $html = $(template);
+        var $a = $html.find('a');
 
-            location.setLink($a, item);
-            $a.find('span').text(item.label).end();
+        $html
+            .addClass(item.isFolder() ? 'folder' : 'file')
+            .data('item', item);
 
-            if (item.isDomain()) {
-                $html.addClass('domain');
-                $a.find('img').attr('src', resource.image('home'));
-            }
+        location.setLink($a, item);
+        $a.find('span').text(item.label).end();
 
-            if (item.isRoot()) {
-                $html.addClass('root');
-                $a.find('img').attr('src', resource.image('home'));
-            }
+        if (item.isDomain()) {
+            $html.addClass('domain');
+            $a.find('img').attr('src', resource.image('home'));
+        }
 
-            if (item.isCurrentFolder()) {
+        if (item.isRoot()) {
+            $html.addClass('root');
+            $a.find('img').attr('src', resource.image('home'));
+        }
+
+        if (item.isCurrentFolder()) {
+            $html.addClass('current');
+        }
+
+        if (!item.isManaged) {
+            $a.append($(pageHintTemplate));
+        }
+
+        if (item.$crumb) {
+            item.$crumb.replaceWith($html);
+        }
+        item.$crumb = $html;
+
+        return $html;
+    }
+
+    function onLocationChanged(item) {
+
+        var crumb = item.getCrumb();
+        var $ul = $('#navbar');
+        var found = false;
+
+        $ul.find('.crumb').each(function () {
+
+            var $html = $(this);
+            if ($html.data('item') === item) {
+                found = true;
                 $html.addClass('current');
+            } else {
+                $html.removeClass('current');
             }
+        });
 
-            if (!item.isManaged) {
-                $a.append($(pageHintTemplate));
-            }
+        if (!found) {
+            $ul.find('.crumb').remove();
+            _.each(crumb, function (e) {
 
-            if (item.$crumb) {
-                item.$crumb.replaceWith($html);
-            }
-            item.$crumb = $html;
-
-            return $html;
-        },
-
-        onLocationChanged = function (item) {
-
-            var crumb = item.getCrumb(),
-                $ul = $('#navbar'),
-                found = false;
-
-            $ul.find('.crumb').each(function () {
-
-                var $html = $(this);
-                if ($html.data('item') === item) {
-                    found = true;
-                    $html.addClass('current');
-                } else {
-                    $html.removeClass('current');
-                }
+                $ul.append(update(e, true));
             });
+        }
+    }
 
-            if (!found) {
-                $ul.find('.crumb').remove();
-                _.each(crumb, function (e) {
+    function init() {
 
-                    $ul.append(update(e, true));
-                });
-            }
-        },
+        if (!settings.enabled) {
+            return;
+        }
 
-        init = function () {
+        event.sub('location.changed', onLocationChanged);
+    }
 
-            if (!settings.enabled) {
-                return;
-            }
-
-            event.sub('location.changed', onLocationChanged);
-        };
 
     init();
 });

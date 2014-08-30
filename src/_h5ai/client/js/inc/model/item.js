@@ -1,123 +1,115 @@
-
 modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings', 'core/server', 'core/location'], function (_, types, event, settings, server, location) {
 
-
-    var reEndsWithSlash = /\/$/,
-
-        startsWith = function (sequence, part) {
-
-            return sequence.slice && part.length && sequence.slice(0, part.length) === part;
-        },
+    var reEndsWithSlash = /\/$/;
+    var reSplitPath = /^(.*\/)([^\/]+\/?)$/;
+    var cache = {};
 
 
-        createLabel = function (sequence) {
+    function startsWith(sequence, part) {
 
-            sequence = sequence.replace(reEndsWithSlash, '');
-            try { sequence = decodeURIComponent(sequence); } catch (e) {}
-            return sequence;
-        },
+        return sequence.slice && part.length && sequence.slice(0, part.length) === part;
+    }
 
+    function createLabel(sequence) {
 
-        reSplitPath = /^(.*\/)([^\/]+\/?)$/,
+        sequence = sequence.replace(reEndsWithSlash, '');
+        try { sequence = decodeURIComponent(sequence); } catch (e) {}
+        return sequence;
+    }
 
-        splitPath = function (sequence) {
+    function splitPath(sequence) {
 
-            if (sequence === '/') {
-                return { parent: null, name: '/' };
+        if (sequence === '/') {
+            return { parent: null, name: '/' };
+        }
+
+        var match = reSplitPath.exec(sequence);
+        if (match) {
+            var split = { parent: match[1], name: match[2] };
+
+            if (split.parent && !startsWith(split.parent, settings.rootHref)) {
+                split.parent = null;
             }
+            return split;
+        }
+    }
 
-            var match = reSplitPath.exec(sequence);
-            if (match) {
-                var split = { parent: match[1], name: match[2] };
+    function getItem(absHref, time, size, isManaged, isContentFetched, md5, sha1) {
 
-                if (split.parent && !startsWith(split.parent, settings.rootHref)) {
-                    split.parent = null;
+        absHref = location.forceEncoding(absHref);
+
+        if (!startsWith(absHref, settings.rootHref)) {
+            return null;
+        }
+
+        var self = cache[absHref] || new Item(absHref);
+
+        if (_.isNumber(time)) {
+            self.time = time;
+        }
+        if (_.isNumber(size)) {
+            self.size = size;
+        }
+        if (isManaged) {
+            self.isManaged = true;
+        }
+        if (isContentFetched) {
+            self.isContentFetched = true;
+        }
+        if (md5) {
+            self.md5 = md5;
+        }
+        if (sha1) {
+            self.sha1 = sha1;
+        }
+
+        return self;
+    }
+
+    function removeItem(absHref) {
+
+        absHref = location.forceEncoding(absHref);
+
+        var self = cache[absHref];
+
+        if (self) {
+            delete cache[absHref];
+            if (self.parent) {
+                delete self.parent.content[self.absHref];
+            }
+            _.each(self.content, function (item) {
+
+                removeItem(item.absHref);
+            });
+        }
+    }
+
+    function fetchContent(absHref, callback) {
+
+        var self = getItem(absHref);
+
+        if (!_.isFunction(callback)) {
+            callback = function () {};
+        }
+
+        if (self.isContentFetched) {
+            callback(self);
+        } else {
+            server.request({action: 'get', items: true, itemsHref: self.absHref, itemsWhat: 1}, function (response) {
+
+                if (response.items) {
+                    _.each(response.items, function (item) {
+                        getItem(item.absHref, item.time, item.size, item.is_managed, item.content, item.md5, item.sha1);
+                    });
                 }
-                return split;
-            }
-        },
 
-
-
-        cache = {},
-
-        getItem = function (absHref, time, size, isManaged, isContentFetched, md5, sha1) {
-
-            absHref = location.forceEncoding(absHref);
-
-            if (!startsWith(absHref, settings.rootHref)) {
-                return null;
-            }
-
-            var self = cache[absHref] || new Item(absHref);
-
-            if (_.isNumber(time)) {
-                self.time = time;
-            }
-            if (_.isNumber(size)) {
-                self.size = size;
-            }
-            if (isManaged) {
-                self.isManaged = true;
-            }
-            if (isContentFetched) {
-                self.isContentFetched = true;
-            }
-            if (md5) {
-                self.md5 = md5;
-            }
-            if (sha1) {
-                self.sha1 = sha1;
-            }
-
-            return self;
-        },
-
-        removeItem = function (absHref) {
-
-            absHref = location.forceEncoding(absHref);
-
-            var self = cache[absHref];
-
-            if (self) {
-                delete cache[absHref];
-                if (self.parent) {
-                    delete self.parent.content[self.absHref];
-                }
-                _.each(self.content, function (item) {
-
-                    removeItem(item.absHref);
-                });
-            }
-        },
-
-        fetchContent = function (absHref, callback) {
-
-            var self = getItem(absHref);
-
-            if (!_.isFunction(callback)) {
-                callback = function () {};
-            }
-
-            if (self.isContentFetched) {
                 callback(self);
-            } else {
-                server.request({action: 'get', items: true, itemsHref: self.absHref, itemsWhat: 1}, function (response) {
-
-                    if (response.items) {
-                        _.each(response.items, function (item) {
-                            getItem(item.absHref, item.time, item.size, item.is_managed, item.content, item.md5, item.sha1);
-                        });
-                    }
-
-                    callback(self);
-                });
-            }
-        };
+            });
+        }
+    }
 
 
-
-    var Item = function (absHref) {
+    function Item(absHref) {
 
         var split = splitPath(absHref);
 
@@ -139,7 +131,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
                 this.parent.isContentFetched = true;
             }
         }
-    };
+    }
 
     _.extend(Item.prototype, {
 
@@ -190,8 +182,8 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
         getCrumb: function () {
 
-            var item = this,
-                crumb = [item];
+            var item = this;
+            var crumb = [item];
 
             while (item.parent) {
                 item = item.parent;
@@ -214,8 +206,8 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
         getStats: function () {
 
-            var folders = 0,
-                files = 0;
+            var folders = 0;
+            var files = 0;
 
             _.each(this.content, function (item) {
 
@@ -226,8 +218,8 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
                 }
             });
 
-            var depth = 0,
-                item = this;
+            var depth = 0;
+            var item = this;
 
             while (item.parent) {
                 depth += 1;
@@ -241,6 +233,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
             };
         }
     });
+
 
     return {
         get: getItem,

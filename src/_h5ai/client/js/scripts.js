@@ -1,4 +1,3 @@
-
 // other libs
 // ----------
 // @include "lib/modernizr-*.js"
@@ -16,7 +15,7 @@
 // app
 // ---
 (function () {
-    'use strict';
+'use strict';
 
     /*global jQuery, marked, Modernizr, moment, Prism, _ */
     modulejs.define('$', function () { return jQuery; });
@@ -28,10 +27,10 @@
 
     // @include "inc/**/*.js"
 
-    var $ = jQuery,
-        module = $('script[data-module]').data('module'),
-        data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true},
-        url;
+    var $ = jQuery;
+    var module = $('script[data-module]').data('module');
+    var data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true};
+    var url;
 
     if ($('html').hasClass('no-browser')) {
         return;
@@ -56,5 +55,4 @@
         modulejs.define('config', config);
         $(function () { modulejs.require(module); });
     });
-
 }());

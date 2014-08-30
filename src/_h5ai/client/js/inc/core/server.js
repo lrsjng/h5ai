@@ -1,4 +1,3 @@
-
 modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function ($, _, config, location) {
 
     var server = {

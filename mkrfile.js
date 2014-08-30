@@ -14,21 +14,19 @@ var build = path.join(root, 'build');
 var mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', '');
 var mapRoot = $.map.p(root, path.join(build, '_h5ai'));
 
-    // bad hack
-var getBuildSuffix = function (callback) {
 
-        var child_process = require('child_process');
+function getBuildSuffix(callback) {
 
-        child_process.exec('git rev-list v' + pkg.version + '..HEAD', {cwd: root}, function (err, out) {
+    require('child_process').exec('git rev-list v' + pkg.version + '..HEAD', {cwd: root}, function (err, out) {
 
-            try {
-                var lines = out.trim().split(/\r?\n/);
-                callback('+' + ('000' + lines.length).substr(-3) + '~' + lines[0].substring(0, 7));
-            } catch (e) {
-                callback('+X');
-            }
-        });
-    };
+        try {
+            var lines = out.trim().split(/\r?\n/);
+            callback('+' + ('000' + lines.length).substr(-3) + '~' + lines[0].substring(0, 7));
+        } catch (e) {
+            callback('+X');
+        }
+    });
+}
 
 
 $.plugin('fquery-cssmin');
@@ -96,10 +94,10 @@ module.exports = function (suite) {
     });
 
 
-    suite.target('build', ['check-version'], 'build all updated files').task(function () {
+    suite.target('build', ['check-version', 'lint'], 'build all updated files').task(function () {
 
-        var env = {pkg: pkg};
         var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
+        var env = {pkg: pkg};
 
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
@@ -136,10 +134,10 @@ module.exports = function (suite) {
     });
 
 
-    suite.target('build-uncompressed', ['check-version'], 'build all updated files').task(function () {
+    suite.target('build-uncompressed', ['check-version', 'lint'], 'build all updated files').task(function () {
 
-        var env = {pkg: pkg};
         var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
+        var env = {pkg: pkg};
 
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))

@@ -1,13 +1,11 @@
-
 modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event', 'core/server'], function (_, $, allsettings, langs, format, store, event, server) {
 
     var settings = _.extend({
             enabled: false,
             lang: 'en',
             useBrowserLang: true
-        }, allsettings.l10n),
-
-        defaultTranslations = {
+        }, allsettings.l10n);
+    var defaultTranslations = {
             isoCode: 'en',
             lang: 'english',
             details: 'details',
@@ -26,117 +24,116 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
             dateFormat: 'YYYY-MM-DD HH:mm',
             filter: 'filter',
             'delete': 'delete'
-        },
-
-        blockTemplate = '<div class="block"><div class="select"><select id="langs"/></div></div>',
-        optionTemplate = '<option/>',
-
-        storekey = 'ext/l10n',
-
-        loaded = {
+        };
+    var blockTemplate = '<div class="block"><div class="select"><select id="langs"/></div></div>';
+    var optionTemplate = '<option/>';
+    var storekey = 'ext/l10n';
+    var loaded = {
             en: _.extend({}, defaultTranslations)
-        },
-        currentLang = loaded.en,
+        };
+    var currentLang = loaded.en;
 
-        update = function (lang) {
 
-            if (lang) {
-                currentLang = lang;
-            }
+    function update(lang) {
 
-            $('#langs option')
-                .removeAttr('selected').removeProp('selected')
-                .filter('.' + currentLang.isoCode)
-                .attr('selected', 'selected').prop('selected', 'selected');
+        if (lang) {
+            currentLang = lang;
+        }
 
-            $.each(currentLang, function (key, value) {
-                $('.l10n-' + key).text(value);
-            });
-            format.setDefaultDateFormat(currentLang.dateFormat);
+        $('#langs option')
+            .removeAttr('selected').removeProp('selected')
+            .filter('.' + currentLang.isoCode)
+            .attr('selected', 'selected').prop('selected', 'selected');
 
-            $('#items .item .date').each(function () {
+        $.each(currentLang, function (key, value) {
+            $('.l10n-' + key).text(value);
+        });
+        format.setDefaultDateFormat(currentLang.dateFormat);
 
-                var $this = $(this);
+        $('#items .item .date').each(function () {
 
-                $this.text(format.formatDate($this.data('time')));
-            });
+            var $this = $(this);
 
-            $('#filter input').attr('placeholder', currentLang.filter);
-        },
+            $this.text(format.formatDate($this.data('time')));
+        });
 
-        loadLanguage = function (isoCode, callback) {
+        $('#filter input').attr('placeholder', currentLang.filter);
+    }
 
-            if (loaded[isoCode]) {
+    function loadLanguage(isoCode, callback) {
 
+        if (loaded[isoCode]) {
+
+            callback(loaded[isoCode]);
+        } else {
+
+            server.request({action: 'get', l10n: true, l10nCodes: isoCode}, function (response) {
+
+                var json = response.l10n && response.l10n[isoCode] ? response.l10n[isoCode] : {};
+                loaded[isoCode] = _.extend({}, defaultTranslations, json, {isoCode: isoCode});
                 callback(loaded[isoCode]);
-            } else {
+            });
+        }
+    }
 
-                server.request({action: 'get', l10n: true, l10nCodes: isoCode}, function (response) {
+    function localize(langs, isoCode, useBrowserLang) {
 
-                    var json = response.l10n && response.l10n[isoCode] ? response.l10n[isoCode] : {};
-                    loaded[isoCode] = _.extend({}, defaultTranslations, json, {isoCode: isoCode});
-                    callback(loaded[isoCode]);
-                });
-            }
-        },
+        var storedIsoCode = store.get(storekey);
 
-        localize = function (langs, isoCode, useBrowserLang) {
-
-            var storedIsoCode = store.get(storekey);
-
-            if (langs[storedIsoCode]) {
-                isoCode = storedIsoCode;
-            } else if (useBrowserLang) {
-                var browserLang = navigator.language || navigator.browserLanguage;
-                if (browserLang) {
-                    if (langs[browserLang]) {
-                        isoCode = browserLang;
-                    } else if (browserLang.length > 2 && langs[browserLang.substr(0, 2)]) {
-                        isoCode = browserLang.substr(0, 2);
-                    }
+        if (langs[storedIsoCode]) {
+            isoCode = storedIsoCode;
+        } else if (useBrowserLang) {
+            var browserLang = navigator.language || navigator.browserLanguage;
+            if (browserLang) {
+                if (langs[browserLang]) {
+                    isoCode = browserLang;
+                } else if (browserLang.length > 2 && langs[browserLang.substr(0, 2)]) {
+                    isoCode = browserLang.substr(0, 2);
                 }
             }
+        }
 
-            if (!langs[isoCode]) {
-                isoCode = 'en';
-            }
+        if (!langs[isoCode]) {
+            isoCode = 'en';
+        }
 
-            loadLanguage(isoCode, update);
-        },
+        loadLanguage(isoCode, update);
+    }
 
-        initLangSelector = function (langs) {
+    function initLangSelector(langs) {
 
-            var isoCodes = _.keys(langs).sort(),
-                $block = $(blockTemplate),
-                $select = $block.find('select')
-                    .on('change', function (event) {
-                        var isoCode = event.target.value;
-                        store.put(storekey, isoCode);
-                        localize(langs, isoCode, false);
-                    });
+        var isoCodes = _.keys(langs).sort();
+        var $block = $(blockTemplate);
+        var $select = $block.find('select')
+                .on('change', function (event) {
+                    var isoCode = event.target.value;
+                    store.put(storekey, isoCode);
+                    localize(langs, isoCode, false);
+                });
 
-            $.each(isoCodes, function (idx, isoCode) {
-                $(optionTemplate)
-                    .attr('value', isoCode)
-                    .addClass(isoCode)
-                    .text(isoCode + ' - ' + (_.isString(langs[isoCode]) ? langs[isoCode] : langs[isoCode].lang))
-                    .appendTo($select);
-            });
+        $.each(isoCodes, function (idx, isoCode) {
+            $(optionTemplate)
+                .attr('value', isoCode)
+                .addClass(isoCode)
+                .text(isoCode + ' - ' + (_.isString(langs[isoCode]) ? langs[isoCode] : langs[isoCode].lang))
+                .appendTo($select);
+        });
 
-            $block.appendTo('#settings');
-        },
+        $block.appendTo('#settings');
+    }
 
-        init = function () {
+    function init() {
 
-            if (settings.enabled) {
-                initLangSelector(langs);
-            }
+        if (settings.enabled) {
+            initLangSelector(langs);
+        }
 
-            event.sub('location.changed', function () {
+        event.sub('location.changed', function () {
 
-                localize(langs, settings.lang, settings.useBrowserLang);
-            });
-        };
+            localize(langs, settings.lang, settings.useBrowserLang);
+        });
+    }
+
 
     init();
 });
