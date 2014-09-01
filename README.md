@@ -18,7 +18,7 @@ install instructions on the [project page][web].
 There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. But to clone and build **h5ai** yourself run the
 following commands to find a fresh zipball in folder `build` (tested on linux
-only, requires `git` and `npm` to be installed).
+only, requires [`git`][git] and [`npm`][npm] to be installed).
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
@@ -61,7 +61,7 @@ THE SOFTWARE.
 [jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
 [jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
 [jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
-[Lo-Dash](http://lodash.com)&nbsp;(MIT),
+[Lo&#8209;Dash](http://lodash.com)&nbsp;(MIT),
 [marked](https://github.com/chjj/marked)&nbsp;(MIT),
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
@@ -74,7 +74,8 @@ THE SOFTWARE.
 [github-issues]: https://github.com/lrsjng/h5ai/issues
 [release]: http://release.larsjung.de/h5ai/
 [develop]: http://release.larsjung.de/h5ai/develop/
-[mkr]: http://larsjung.de/mkr/ (target and task based build tool for Node.js)
+[git]: http://git-scm.com
+[npm]: https://www.npmjs.org
 
 [license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
