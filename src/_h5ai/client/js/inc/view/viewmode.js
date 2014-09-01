@@ -7,6 +7,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
             sizes: sizes
         }, allsettings.view);
     var storekey = 'viewmode';
+    var storekeyMenu = 'menuIsVisible';
     var menuIsVisible = false;
     var sidebarToggleTemplate =
             '<li id="menu-toggle" class="view">' +
@@ -77,7 +78,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         $(sidebarToggleTemplate)
             .on('click', 'a', function (event) {
 
+                var menuIsVisible = store.get(storekeyMenu);
                 menuIsVisible = !menuIsVisible;
+                store.put(storekeyMenu, menuIsVisible);
                 $sidebar.stop().animate({
                     right: menuIsVisible ? 0 : -$sidebar.outerWidth()-1
                 });
@@ -115,6 +118,10 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         $viewBlock.appendTo($settings);
 
         update();
+
+        $sidebar.css({
+            right: store.get(storekeyMenu) ? 0 : -$sidebar.outerWidth()-1
+        });
 
         event.sub('location.changed', adjustSpacing);
         $(window).on('resize', adjustSpacing);
