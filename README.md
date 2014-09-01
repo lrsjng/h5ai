@@ -16,18 +16,14 @@ install instructions on the [project page][web].
 ## Build
 
 There are installation ready packages for the latest [releases][release] and
-[dev builds][develop]. To build **h5ai** yourself install the global command
-line trigger for the build tool [mkr][mkr]:
-
-    > npm install -g mkr-global
-
-To clone and build the project run the following commands, this will create a
-new folder `build` including a fresh zipball.
+[dev builds][develop]. But to clone and build **h5ai** yourself run the
+following commands to find a fresh zipball in folder `build` (tested on linux
+only, requires `git` and `npm` to be installed).
 
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
     > npm install
-    > mkr release
+    > npm run release
 
 
 ## License
