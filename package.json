@@ -16,7 +16,7 @@
     "test": "mocha --recursive test"
   },
   "dependencies": {
-    "fquery": "~0.13.3",
+    "fquery": "~0.14.0",
     "fquery-cssmin": "~0.3.0",
     "fquery-handlebars": "~0.2.0",
     "fquery-includeit": "~0.2.0",
