@@ -16,7 +16,12 @@
 
     .block {
         display: block;
-        margin: 12px 0;
+        margin: 0 0 24px 0;
+
+        h1 {
+            font-size: 1em;
+            border-bottom: 1px solid #e7e7e7;
+        }
     }
 
     a, a:active, a:visited, span.element {
@@ -77,7 +82,11 @@
         border: 0 solid #000;
         outline: none;
         cursor: pointer;
-    }
+
+        &:hover, &.hover {
+            background: @col-widget-back-highlight;
+        }
+   }
 
     select {
         width: 200px;

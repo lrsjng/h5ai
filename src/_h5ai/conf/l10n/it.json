@@ -1,7 +1,6 @@
 {
     "lang": "italiano",
     "details": "dettagli",
-    "list": "lista",
     "grid": "griglia",
     "icons": "icone",
     "name": "Nome",
@@ -14,6 +13,5 @@
     "download": "download",
     "noMatch": "nessun risultato",
     "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "filtra",
-    "delete": "elimina"
+    "filter": "filtra"
 }

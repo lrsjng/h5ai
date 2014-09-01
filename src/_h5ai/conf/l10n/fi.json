@@ -1,7 +1,6 @@
 {
     "lang": "finnish",
     "details": "tiedot",
-    "list": "lista",
     "grid": "ruudukko",
     "icons": "ikonit",
     "name": "Nimi",
@@ -14,6 +13,5 @@
     "download": "lataa",
     "noMatch": "ei osumia",
     "dateFormat": "DD.MM.YYYY HH:mm",
-    "filter": "suodata",
-    "delete": "poista"
+    "filter": "suodata"
 }

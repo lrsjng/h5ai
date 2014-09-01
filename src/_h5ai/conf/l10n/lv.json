@@ -1,7 +1,6 @@
 {
     "lang": "latviešu",
     "details": "detaļas",
-    "list": "saraksts",
     "grid": "režģis",
     "icons": "ikonas",
     "name": "Nosaukums",
@@ -14,6 +13,5 @@
     "download": "lejupielādēt",
     "noMatch": "nav sakritības",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "filtrēt",
-    "delete": "izdzēst"
+    "filter": "filtrēt"
 }

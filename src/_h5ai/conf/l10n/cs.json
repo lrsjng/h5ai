@@ -1,7 +1,6 @@
 {
     "lang": "čeština",
     "details": "Podrobnosti",
-    "list": "Dlaždice",
     "grid": "Seznam",
     "icons": "Velké ikony",
     "name": "Název",
@@ -14,6 +13,5 @@
     "download": "Stáhnout",
     "noMatch": "Žádná shoda",
     "dateFormat": "DD.MM.YYYY HH:mm",
-    "filter": "Filtr",
-    "delete": "Odstranit"
+    "filter": "Filtr"
 }

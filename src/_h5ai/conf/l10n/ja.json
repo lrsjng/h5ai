@@ -1,7 +1,6 @@
 {
     "lang": "日本語",
     "details": "詳細",
-    "list": "一覧",
     "grid": "グリッド",
     "icons": "アイコン",
     "name": "名前",
@@ -14,6 +13,5 @@
     "download": "ダウンロード",
     "noMatch": "一致する項目が見つかりません",
     "dateFormat": "YYYY-MM-DD HH:mm", /* syntax as specified on http://momentjs.com */
-    "filter": "フィルター",
-    "delete": "削除"
+    "filter": "フィルター"
 }

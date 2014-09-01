@@ -1,7 +1,6 @@
 {
     "lang": "български",
     "details": "детайли",
-    "list": "списък",
     "grid": "мрежа",
     "icons": "икони",
     "name": "Име",
@@ -14,6 +13,5 @@
     "download": "изтегляне",
     "noMatch": "няма съвпадение",
     "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "филтър",
-    "delete": "изтрий"
+    "filter": "филтър"
 }

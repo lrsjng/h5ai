@@ -1,7 +1,6 @@
 {
     "lang": "正體中文",
     "details": "詳細資料",
-    "list": "清單",
     "grid": "網格",
     "icons": "圖示",
     "name": "檔名",
@@ -14,6 +13,5 @@
     "download": "下載",
     "noMatch": "沒有符合的檔案",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "過濾",
-    "delete": "刪除"
+    "filter": "過濾"
 }

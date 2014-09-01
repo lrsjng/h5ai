@@ -1,7 +1,6 @@
 {
     "lang": "deutsch",
     "details": "Details",
-    "list": "Liste",
     "grid": "Gitter",
     "icons": "Icons",
     "name": "Name",
@@ -15,5 +14,6 @@
     "noMatch": "keine Treffer",
     "dateFormat": "DD.MM.YYYY HH:mm",
     "filter": "Filter",
-    "delete": "Löschen"
+    "view": "Ansicht",
+    "language": "Sprache"
 }

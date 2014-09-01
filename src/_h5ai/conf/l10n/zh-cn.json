@@ -1,7 +1,6 @@
 {
     "lang": "简体中文",
     "details": "详情",
-    "list": "列表",
     "grid": "网格",
     "icons": "图标",
     "name": "文件名",
@@ -14,6 +13,5 @@
     "download": "下载",
     "noMatch": "没有匹配",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "过滤",
-    "delete": "删除"
+    "filter": "过滤"
 }

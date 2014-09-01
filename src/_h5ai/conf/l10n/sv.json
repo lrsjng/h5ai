@@ -1,7 +1,6 @@
 {
     "lang": "svenska",
     "details": "detaljerad",
-    "list": "lista",
     "grid": "rutnät",
     "icons": "ikoner",
     "name": "Filnamn",
@@ -12,6 +11,5 @@
     "folders": "kataloger",
     "files": "filer",
     "download": "ladda ner",
-    "noMatch": "ingen matchning",
-    "delete": "radera"
+    "noMatch": "ingen matchning"
 }

@@ -1,7 +1,6 @@
 {
     "lang": "español",
     "details": "Detalles",
-    "list": "Lista",
     "grid": "Cuadrícula",
     "icons": "Íconos",
     "name": "Nombre",
@@ -14,6 +13,5 @@
     "download": "Descargar",
     "noMatch": "Sin coincidencias",
     "dateFormat": "DD/MM/YYYY HH:mm",
-    "filter": "Filtar",
-    "delete": "Borrar"
+    "filter": "Filtar"
 }

@@ -1,7 +1,6 @@
 {
     "lang": "français",
     "details": "détails",
-    "list": "liste",
     "grid": "grille",
     "icons": "icônes",
     "name": "Nom",
@@ -14,6 +13,5 @@
     "download": "télécharger",
     "noMatch": "rien trouvé",
     "dateFormat": "DD/MM/YYYY HH:mm",
-    "filter": "filtre",
-    "delete": "supprimer"
+    "filter": "filtre"
 }

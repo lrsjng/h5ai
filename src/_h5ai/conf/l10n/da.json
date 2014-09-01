@@ -1,7 +1,6 @@
 {
     "lang": "dansk",
     "details": "detaljer",
-    "list": "list",
     "grid": "grid",
     "icons": "ikoner",
     "name": "Navn",
@@ -14,6 +13,5 @@
     "download": "download",
     "noMatch": "ingen match",
     "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "filter",
-    "delete": "slet"
+    "filter": "filter"
 }

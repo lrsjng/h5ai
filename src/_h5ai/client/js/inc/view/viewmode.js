@@ -71,7 +71,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
         var $sidebar = $('#sidebar');
         var $settings = $('#settings');
-        var $viewBlock = $('<div class="block"/>');
+        var $viewBlock = $('<div class="block"><h1 class="l10n-view">View</h1></div>');
         var max;
 
         $(sidebarToggleTemplate)
