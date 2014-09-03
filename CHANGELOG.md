@@ -8,7 +8,9 @@
 * adds editorconfig
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
 * removes `jQuery.fracs`
-* updates `modulejs` to 1.0.0
+* updates `jQuery.qrcode` to 0.10.1
+* updates `jQuery.scrollpanel` to 0.4.0
+* updates `modulejs` to 1.4.0
 
 
 ## v0.26.1 - *2014-08-17*
