@@ -60,9 +60,12 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         adjustSpacing();
     }
 
-    function init() {
+    function addViewSettings() {
 
-        var $settings = $('#settings');
+        if (settings.modes.length < 2 && settings.sizes.length < 2) {
+            return;
+        }
+
         var $viewBlock = $('<div class="block"><h1 class="l10n-view">View</h1></div>');
         var max;
 
@@ -93,8 +96,12 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
                 .appendTo($viewBlock);
         }
 
-        $viewBlock.appendTo($settings);
+        $viewBlock.appendTo('#settings');
+    }
 
+    function init() {
+
+        addViewSettings();
         update();
 
         event.sub('location.changed', adjustSpacing);
