@@ -7,14 +7,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
             sizes: sizes
         }, allsettings.view);
     var storekey = 'viewmode';
-    var storekeyMenu = 'menuIsVisible';
-    var menuIsVisible = false;
-    var sidebarToggleTemplate =
-            '<li id="menu-toggle" class="view">' +
-                '<a href="#">' +
-                    '<img src="' + resource.image('settings') + '" alt="settings"/>' +
-                '</a>' +
-            '</li>';
     var modeTemplate =
             '<div id="view-[MODE]" class="view">' +
                 '<a href="#">' +
@@ -70,23 +62,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
     function init() {
 
-        var $sidebar = $('#sidebar');
         var $settings = $('#settings');
         var $viewBlock = $('<div class="block"><h1 class="l10n-view">View</h1></div>');
         var max;
-
-        $(sidebarToggleTemplate)
-            .on('click', 'a', function (event) {
-
-                var menuIsVisible = store.get(storekeyMenu);
-                menuIsVisible = !menuIsVisible;
-                store.put(storekeyMenu, menuIsVisible);
-                $sidebar.stop().animate({
-                    right: menuIsVisible ? 0 : -$sidebar.outerWidth()-1
-                });
-                event.preventDefault();
-            })
-            .appendTo('#navbar');
 
         settings.modes = _.intersection(settings.modes, modes);
 
@@ -95,10 +73,10 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
                 if (_.contains(settings.modes, mode)) {
                     $(modeTemplate.replace(/\[MODE\]/g, mode))
                         .appendTo($viewBlock)
-                        .on('click', 'a', function (event) {
+                        .on('click', 'a', function (ev) {
 
                             update(mode);
-                            event.preventDefault();
+                            ev.preventDefault();
                         });
                 }
             });
@@ -108,9 +86,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
             max = settings.sizes.length-1;
             $(sizeTemplate)
                 .prop('max', max).attr('max', max)
-                .on('input change', function (event) {
+                .on('input change', function (ev) {
 
-                    update(null, settings.sizes[parseInt(event.target.value, 10)]);
+                    update(null, settings.sizes[parseInt(ev.target.value, 10)]);
                 })
                 .appendTo($viewBlock);
         }
@@ -118,10 +96,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         $viewBlock.appendTo($settings);
 
         update();
-
-        $sidebar.css({
-            right: store.get(storekeyMenu) ? 0 : -$sidebar.outerWidth()-1
-        });
 
         event.sub('location.changed', adjustSpacing);
         $(window).on('resize', adjustSpacing);
