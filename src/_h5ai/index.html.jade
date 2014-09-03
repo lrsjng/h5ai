@@ -4,8 +4,8 @@ doctype html
 
 head
     meta( charset="utf-8" )
-    title {{pkg.name}} {{pkg.version}} Server Setup
-    meta( name="description", content="{{pkg.name}} {{pkg.version}} Server Setup" )
+    title #{pkg.name} #{pkg.version} Server Setup
+    meta( name="description", content="#{pkg.name} #{pkg.version} Server Setup" )
     meta( name="viewport", content="width=device-width, initial-scale=1" )
     link( rel="shortcut icon", href="client/images/favicon/favicon-16-32.ico" )
     link( rel="apple-touch-icon-precomposed", type="image/png", href="client/images/favicon/favicon-152.png" )
@@ -15,7 +15,7 @@ head
 body#h5ai-info
 
     h1
-        a( href="{{pkg.homepage}}" ) {{pkg.name}}
+        a( href="#{pkg.homepage}" ) #{pkg.name}
 
     div#support
         | show your love and support for h5ai with a small donation
@@ -34,8 +34,8 @@ body#h5ai-info
                 a( href="http://browsehappy.com" ) modern browsers
                 | ! ⚡
         span.right
-            a( href="{{pkg.homepage}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
-                | powered by {{pkg.name}} {{pkg.version}}
+            a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" )
+                | powered by #{pkg.name} #{pkg.version}
         span.center
 
 </html>

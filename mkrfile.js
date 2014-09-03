@@ -113,19 +113,18 @@ module.exports = function (suite) {
             .wrap(header)
             .write(mapSrc, true);
 
+        $(src + ': _h5ai/client/css/fonts/**')
+            .newerThan(mapSrc)
+            .write(mapSrc, true);
+
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
-            .handlebars(env)
-            .jade()
+            .jade(env)
             .write(mapSrc, true);
 
         $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
-            .write(mapSrc, true);
-
-        $(src + ': _h5ai/client/css/fonts/**')
-            .newerThan(mapSrc)
             .write(mapSrc, true);
 
         $(root + ': *.md')
@@ -153,19 +152,18 @@ module.exports = function (suite) {
             .wrap(header)
             .write(mapSrc, true);
 
+        $(src + ': _h5ai/client/css/fonts/**')
+            .newerThan(mapSrc)
+            .write(mapSrc, true);
+
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
-            .handlebars(env)
-            .jade()
+            .jade(env)
             .write(mapSrc, true);
 
         $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
-            .write(mapSrc, true);
-
-        $(src + ': _h5ai/client/css/fonts/**')
-            .newerThan(mapSrc)
             .write(mapSrc, true);
 
         $(root + ': *.md')

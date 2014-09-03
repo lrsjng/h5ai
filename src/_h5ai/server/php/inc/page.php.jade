@@ -9,8 +9,8 @@ doctype html
 
 head
     meta( charset="utf-8" )
-    title index · powered by {{pkg.name}} {{pkg.version}} ({{pkg.homepage}})
-    meta( name="description", content="index - powered by {{pkg.name}} {{pkg.version}} ({{pkg.homepage}})" )
+    title index · powered by #{pkg.name} #{pkg.version} (#{pkg.homepage})
+    meta( name="description", content="index - powered by #{pkg.name} #{pkg.version} (#{pkg.homepage})" )
     meta( name="viewport", content="width=device-width, initial-scale=1" )
     link( rel="shortcut icon", href!="#{app_href}client/images/favicon/favicon-16-32.ico" )
     link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{app_href}client/images/favicon/favicon-152.png" )
@@ -31,8 +31,8 @@ body
                 a( href="http://browsehappy.com" ) modern browsers
                 | ! ⚡
         span.right
-            a( href="{{pkg.homepage}}", title="{{pkg.name}} {{pkg.version}} · {{pkg.description}}" )
-                | powered by {{pkg.name}} {{pkg.version}}
+            a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" )
+                | powered by #{pkg.name} #{pkg.version}
         span.center
 
     div#sidebar
