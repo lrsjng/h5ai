@@ -4,9 +4,10 @@
 
 ## develop
 
-* improves menu
+* updates sidebar settings
 * adds editorconfig
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
+* removes `jQuery.fracs`
 * updates `modulejs` to 1.0.0
 
 
