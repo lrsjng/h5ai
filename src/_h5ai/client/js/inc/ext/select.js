@@ -22,25 +22,54 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         event.pub('selection', items);
     }
 
-    function selectionUpdate(event) {
+    function elementRect($element) {
 
-        l = Math.min(x, event.pageX);
-        t = Math.min(y, event.pageY);
-        w = Math.abs(x - event.pageX);
-        h = Math.abs(y - event.pageY);
+        if (!$element.is(':visible')) {
+            return null;
+        }
 
-        event.preventDefault();
+        var offset = $element.offset();
+        var l = offset.left;
+        var t = offset.top;
+        var w = $element.outerWidth();
+        var h = $element.outerHeight();
+        return {l: l, t: t, w: w, h: h, r: l + w, b: t + h};
+    }
+
+    function doOverlap(rect1, rect2) {
+
+        if (!rect1 || !rect2) {
+            return false;
+        }
+
+        var left = Math.max(rect1.l, rect2.l);
+        var right = Math.min(rect1.r, rect2.r);
+        var top = Math.max(rect1.t, rect2.t);
+        var bottom = Math.min(rect1.b, rect2.b);
+        var width = right - left;
+        var height = bottom - top;
+
+        return (width >= 0 && height >= 0);
+    }
+
+    function selectionUpdate(ev) {
+
+        l = Math.min(x, ev.pageX);
+        t = Math.min(y, ev.pageY);
+        w = Math.abs(x - ev.pageX);
+        h = Math.abs(y - ev.pageY);
+
+        ev.preventDefault();
         $selectionRect
             .stop(true, true)
             .css({left: l, top: t, width: w, height: h, opacity: 1})
             .show();
 
-        var selRect = $selectionRect.fracs('rect');
+        var selRect = elementRect($selectionRect);
         $('#items .item').removeClass('selecting').each(function () {
 
             var $item = $(this);
-            var rect = $item.find('a').fracs('rect');
-            var inter = selRect.intersection(rect);
+            var inter = doOverlap(selRect, elementRect($item.find('a')));
 
             if (inter && !$item.hasClass('folder-parent')) {
                 $item.addClass('selecting');
