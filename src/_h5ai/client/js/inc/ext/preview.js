@@ -31,22 +31,24 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
     function adjustSize() {
 
-        var rect = $(window).fracs('viewport');
+        var $window = $(window);
+        var winWidth = $window.width();
+        var winHeight = $window.height();
         var $container = $('#pv-content');
         var $spinner = $('#pv-spinner');
         var margin = isFullscreen ? 0 : 20;
-        var barheight = isFullscreen ? 0 : 31;
+        var barHeight = isFullscreen ? 0 : 31;
 
         $container.css({
-            width: rect.width - 2 * margin,
-            height: rect.height - 2 * margin - barheight,
+            width: winWidth - 2 * margin,
+            height: winHeight - 2 * margin - barHeight,
             left: margin,
             top: margin
         });
 
         $spinner.css({
-            left: rect.width * 0.5,
-            top: rect.height * 0.5
+            left: winWidth * 0.5,
+            top: winHeight * 0.5
         });
 
         if (isFullscreen) {
