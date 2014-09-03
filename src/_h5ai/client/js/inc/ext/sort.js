@@ -185,25 +185,25 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
             .find('a.label')
                 .append(template)
-                .click(function (event) {
+                .click(function (ev) {
                     sortItems(0, $(this).hasClass('ascending'));
-                    event.preventDefault();
+                    ev.preventDefault();
                 })
             .end()
 
             .find('a.date')
                 .prepend(template)
-                .click(function (event) {
+                .click(function (ev) {
                     sortItems(1, $(this).hasClass('ascending'));
-                    event.preventDefault();
+                    ev.preventDefault();
                 })
             .end()
 
             .find('a.size')
                 .prepend(template)
-                .click(function (event) {
+                .click(function (ev) {
                     sortItems(2, $(this).hasClass('ascending'));
-                    event.preventDefault();
+                    ev.preventDefault();
                 })
             .end();
 

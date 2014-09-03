@@ -3,6 +3,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
     var settings = _.extend({
             enabled: true
         }, allsettings.preview);
+    var $window = $(window);
     var template =
             '<div id="pv-overlay" class="noSelection">' +
                 '<div id="pv-content"/>' +
@@ -31,7 +32,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
 
     function adjustSize() {
 
-        var $window = $(window);
         var winWidth = $window.width();
         var winHeight = $window.height();
         var $container = $('#pv-content');
@@ -69,14 +69,14 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         $('#pv-content').empty();
         setLabels([]);
         $('#pv-overlay').stop(true, true).fadeIn(200);
-        $(window).on('keydown', onKeydown);
+        $window.on('keydown', onKeydown);
 
         adjustSize();
     }
 
     function onExit() {
 
-        $(window).off('keydown', onKeydown);
+        $window.off('keydown', onKeydown);
         $('#pv-overlay').stop(true, true).fadeOut(200, function () {
             $('#pv-content').empty();
             setLabels([]);
@@ -229,7 +229,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
                 ev.stopImmediatePropagation();
             });
 
-        $(window).on('resize load', adjustSize);
+        $window.on('resize load', adjustSize);
     }
 
 
