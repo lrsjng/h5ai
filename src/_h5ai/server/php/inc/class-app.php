@@ -12,7 +12,7 @@ class App {
 
     public function __construct() {
 
-        $this->options = load_commented_json(APP_PATH . "/conf/options.json");
+        $this->options = Util::load_commented_json(APP_PATH . "/conf/options.json");
     }
 
 
@@ -47,7 +47,7 @@ class App {
 
     public function get_types() {
 
-        return load_commented_json(APP_PATH . "/conf/types.json");
+        return Util::load_commented_json(APP_PATH . "/conf/types.json");
     }
 
 
@@ -85,14 +85,14 @@ class App {
             }
         }
 
-        return normalize_path(ROOT_HREF . implode("/", $encoded_parts), $trailing_slash);
+        return Util::normalize_path(ROOT_HREF . implode("/", $encoded_parts), $trailing_slash);
     }
 
 
     public function to_path($url) {
 
         $rel_url = substr($url, strlen(ROOT_HREF));
-        return normalize_path(ROOT_PATH . "/" . rawurldecode($rel_url));
+        return Util::normalize_path(ROOT_PATH . "/" . rawurldecode($rel_url));
     }
 
 
@@ -158,7 +158,7 @@ class App {
             if (@is_dir($path . "/_h5ai/server")) {
                 return false;
             }
-            $parent_path = normalize_path(dirname($path));
+            $parent_path = Util::normalize_path(dirname($path));
             if ($parent_path === $path) {
                 return false;
             }
@@ -303,8 +303,8 @@ class App {
         if (is_dir($l10n_path)) {
             if ($dir = opendir($l10n_path)) {
                 while (($file = readdir($dir)) !== false) {
-                    if (ends_with($file, ".json")) {
-                        $translations = load_commented_json($l10n_path . "/" . $file);
+                    if (Util::ends_with($file, ".json")) {
+                        $translations = Util::load_commented_json($l10n_path . "/" . $file);
                         $langs[basename($file, ".json")] = $translations["lang"];
                     }
                 }
@@ -326,7 +326,7 @@ class App {
         foreach ($iso_codes as $iso_code) {
             if ($iso_code !== "") {
                 $file = APP_PATH . "/conf/l10n/" . $iso_code . ".json";
-                $results[$iso_code] = load_commented_json($file);
+                $results[$iso_code] = Util::load_commented_json($file);
                 $results[$iso_code]["isoCode"] = $iso_code;
             }
         }
@@ -381,7 +381,7 @@ class App {
             if ($path === ROOT_PATH) {
                 break;
             }
-            $parent_path = normalize_path(dirname($path));
+            $parent_path = Util::normalize_path(dirname($path));
             if ($parent_path === $path) {
                 break;
             }

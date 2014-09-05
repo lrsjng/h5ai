@@ -26,7 +26,7 @@ class Thumb {
     public function thumb($type, $source_url, $mode, $width, $height) {
 
         $source_path = $this->app->to_path($source_url);
-        if (!file_exists($source_path) || starts_with($source_path, CACHE_PATH)) {
+        if (!file_exists($source_path) || Util::starts_with($source_path, CACHE_PATH)) {
             return null;
         }
 
@@ -96,7 +96,7 @@ class Thumb {
                 $arg = str_replace("[DEST]", $capture_path, $arg);
             }
 
-            exec_cmdv($cmdv);
+            Util::exec_cmdv($cmdv);
         }
 
         return file_exists($capture_path) ? $capture_path : null;

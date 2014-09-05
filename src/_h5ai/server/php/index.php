@@ -16,18 +16,15 @@ function normalized_require_once($lib) {
     require_once(preg_replace("#[\\\\/]+#", "/", dirname(__FILE__) . "/inc/${lib}.php"));
 }
 
-normalized_require_once("util");
-normalized_require_once("setup");
-normalized_require_once("class-api");
-normalized_require_once("class-app");
-normalized_require_once("class-archive");
-normalized_require_once("class-item");
-normalized_require_once("class-thumb");
+function __autoload($class_name) {
 
-setup();
+    normalized_require_once("class-" . strtolower($class_name));
+}
+
+Setup::init();
 $app = new App();
 
-if (has_request_param("action")) {
+if (Util::has_request_param("action")) {
     $api = new Api($app);
     $api->apply();
 } else {

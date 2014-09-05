@@ -52,7 +52,7 @@ class Archive {
         $cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
         $cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
         try {
-            passthru_cmd($cmd);
+            Util::passthru_cmd($cmd);
         } catch (Exeption $err) {
             return 500;
         }
@@ -100,7 +100,7 @@ class Archive {
     private function php_tar_header($filename, $size, $mtime, $type) {
 
         $name = substr(basename($filename), -99);
-        $prefix = substr(normalize_path(dirname($filename)), -154);
+        $prefix = substr(Util::normalize_path(dirname($filename)), -154);
         if ($prefix === '.') {
             $prefix = '';
         }
@@ -153,13 +153,13 @@ class Archive {
                 continue;
             }
 
-            $d = normalize_path(dirname($href), true);
+            $d = Util::normalize_path(dirname($href), true);
             $n = basename($href);
 
             if ($this->app->is_managed_url($d) && !$this->app->is_hidden($n)) {
 
                 $real_file = $this->app->to_path($href);
-                $archived_file = preg_replace("!^" . preg_quote(normalize_path(CURRENT_PATH, true)) . "!", "", $real_file);
+                $archived_file = preg_replace("!^" . preg_quote(Util::normalize_path(CURRENT_PATH, true)) . "!", "", $real_file);
 
                 if (is_dir($real_file)) {
                     $this->add_dir($real_file, $archived_file);
