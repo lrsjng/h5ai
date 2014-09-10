@@ -101,7 +101,7 @@ class Setup {
                 $cmds[$c] = ($cmd !== false) && Util::exec_0($cmd . " " . $c);
             }
 
-            Util::safe_json(CMDS_PATH, $cmds);
+            Util::save_json(CMDS_PATH, $cmds);
         }
         foreach ($cmds as $c => $has) {
             define("HAS_CMD_" . strtoupper($c), $has);

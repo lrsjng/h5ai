@@ -75,7 +75,7 @@ class Util {
     }
 
 
-    public static function safe_json($path, $obj) {
+    public static function save_json($path, $obj) {
 
         $json = json_encode($obj);
         return file_put_contents($path, $json) !== false;
