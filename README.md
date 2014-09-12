@@ -66,7 +66,7 @@ THE SOFTWARE.
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
 [Prism](http://prismjs.com)&nbsp;(MIT),
-[Ubuntu&nbsp;Font&nbsp;Family](http://font.ubuntu.com)&nbsp;(UBUNTU&nbsp;FONT&nbsp;LICENCE)
+[Ubuntu&nbsp;Font&nbsp;Family](http://font.ubuntu.com)&nbsp;(UFL)
 
 
 [web]: http://larsjung.de/h5ai/
