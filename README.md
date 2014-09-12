@@ -53,20 +53,9 @@ THE SOFTWARE.
 
 ## References
 
-**h5ai** profits from these great projects:  
-[GNOME&nbsp;Symbolic&nbsp;Icons](https://github.com/GNOME/gnome-icon-theme-symbolic)&nbsp;(CC&nbsp;BY&#8209;SA&nbsp;3.0),
-[HTML5&nbsp;★&nbsp;Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
-[jQuery](http://jquery.com)&nbsp;(MIT),
-[jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
-[jQuery.qrcode](http://larsjung.de/qrcode/)&nbsp;(MIT),
-[jQuery.scrollpanel](http://larsjung.de/scrollpanel/)&nbsp;(MIT),
-[Lo&#8209;Dash](http://lodash.com)&nbsp;(MIT),
-[marked](https://github.com/chjj/marked)&nbsp;(MIT),
-[Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
-[modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
-[Moment.js](http://momentjs.com)&nbsp;(MIT),
-[Prism](http://prismjs.com)&nbsp;(MIT),
-[Ubuntu&nbsp;Font&nbsp;Family](http://font.ubuntu.com)&nbsp;(UFL)
+**h5ai** profits from other great projects, all of them licened under The MIT
+License too. Exceptions are [GNOME Symbolic Icons][gnome-icons] (CC BY-SA 3.0)
+and [Ubuntu Font Family][ubuntu-fonts] (UFL).
 
 
 [web]: http://larsjung.de/h5ai/
@@ -76,6 +65,8 @@ THE SOFTWARE.
 [develop]: http://release.larsjung.de/h5ai/develop/
 [git]: http://git-scm.com
 [npm]: https://www.npmjs.org
+[gnome-icons]: https://github.com/GNOME/gnome-icon-theme-symbolic
+[ubuntu-fonts]: http://font.ubuntu.com
 
 [license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
