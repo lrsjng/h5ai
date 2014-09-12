@@ -54,7 +54,7 @@ THE SOFTWARE.
 ## References
 
 **h5ai** profits from these great projects:  
-[GNOME&nbsp;Symbolic&nbsp;Icons](https://github.com/GNOME/gnome-icon-theme-symbolic)&nbsp;(CC BY-SA 3.0),
+[GNOME&nbsp;Symbolic&nbsp;Icons](https://github.com/GNOME/gnome-icon-theme-symbolic)&nbsp;(CC&nbsp;BY&#8209;SA&nbsp;3.0),
 [HTML5&nbsp;★&nbsp;Boilerplate](http://html5boilerplate.com)&nbsp;(MIT),
 [jQuery](http://jquery.com)&nbsp;(MIT),
 [jQuery.mousewheel](https://github.com/brandonaaron/jquery-mousewheel)&nbsp;(MIT),
@@ -65,7 +65,8 @@ THE SOFTWARE.
 [Modernizr](http://www.modernizr.com)&nbsp;(MIT/BSD),
 [modulejs](http://larsjung.de/modulejs/)&nbsp;(MIT),
 [Moment.js](http://momentjs.com)&nbsp;(MIT),
-[Prism](http://prismjs.com)&nbsp;(MIT)
+[Prism](http://prismjs.com)&nbsp;(MIT),
+[Ubuntu&nbsp;Font&nbsp;Family](http://font.ubuntu.com)&nbsp;(UBUNTU&nbsp;FONT&nbsp;LICENCE)
 
 
 [web]: http://larsjung.de/h5ai/
