@@ -53,9 +53,9 @@ THE SOFTWARE.
 
 ## References
 
-**h5ai** profits from other great projects, all of them licened under The MIT
-License too. Exceptions are [GNOME Symbolic Icons][gnome-icons] (CC BY-SA 3.0)
-and [Ubuntu Font Family][ubuntu-fonts] (UFL).
+**h5ai** profits from other projects, all of them licened under the MIT license
+too. Exceptions are [GNOME Symbolic Icons][gnome-icons] (CC BY-SA 3.0) and
+[Ubuntu Font Family][ubuntu-fonts] (UFL).
 
 
 [web]: http://larsjung.de/h5ai/
