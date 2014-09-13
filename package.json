@@ -12,7 +12,7 @@
     "url": "https://github.com/lrsjng/h5ai.git"
   },
   "scripts": {
-    "release": "mkr release",
+    "build": "mkr release",
     "test": "mocha --recursive test"
   },
   "dependencies": {

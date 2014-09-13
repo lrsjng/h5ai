@@ -23,7 +23,7 @@ only, requires [`git`][git] and [`npm`][npm] to be installed).
     > git clone git://github.com/lrsjng/h5ai.git
     > cd h5ai
     > npm install
-    > npm run release
+    > npm run build
 
 
 ## License
