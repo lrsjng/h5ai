@@ -1,52 +1,56 @@
 modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function ($, _, config, location) {
 
-    var server = {
 
-            backend: config.setup.BACKEND,
-            api: config.setup.API === true,
-            name: config.setup.SERVER_NAME,
-            version: config.setup.SERVER_VERSION,
+    var hasApi = config.setup.API === true;
 
-            request: function (data, callback) {
 
-                if (server.api) {
-                    $.ajax({
-                            url: location.getAbsHref(),
-                            data: data,
-                            type: 'POST',
-                            dataType: 'json'
-                        })
-                        .done(function (json) {
+    function request(data, callback) {
 
-                            callback(json);
-                        })
-                        .fail(function () {
+        if (hasApi) {
+            $.ajax({
+                    url: location.getAbsHref(),
+                    data: data,
+                    type: 'POST',
+                    dataType: 'json'
+                })
+                .done(function (json) {
 
-                            callback();
-                        });
-                } else {
+                    callback(json);
+                })
+                .fail(function () {
+
                     callback();
-                }
-            },
+                });
+        } else {
+            callback();
+        }
+    }
 
-            formRequest: function (data) {
+    function formRequest(data) {
 
-                if (server.api) {
-                    var $form = $('<form method="post" style="display:none;"/>')
-                                    .attr('action', location.getAbsHref());
+        if (hasApi) {
+            var $form = $('<form method="post" style="display:none;"/>')
+                            .attr('action', location.getAbsHref());
 
-                    _.each(data, function (val, key) {
+            _.each(data, function (val, key) {
 
-                        $('<input type="hidden"/>')
-                            .attr('name', key)
-                            .attr('value', val)
-                            .appendTo($form);
-                    });
+                $('<input type="hidden"/>')
+                    .attr('name', key)
+                    .attr('value', val)
+                    .appendTo($form);
+            });
 
-                    $form.appendTo('body').submit().remove();
-                }
-            }
-        };
+            $form.appendTo('body').submit().remove();
+        }
+    }
 
-    return server;
+
+    return {
+        backend: config.setup.BACKEND,
+        api: hasApi,
+        name: config.setup.SERVER_NAME,
+        version: config.setup.SERVER_VERSION,
+        request: request,
+        formRequest: formRequest
+    };
 });
