@@ -2,7 +2,6 @@
 
 class Api {
 
-
     private $actions, $app, $options;
 
 
