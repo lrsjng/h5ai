@@ -147,7 +147,6 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
     function addLogin() {
 
-
         $(loginTemp).appendTo('body');
 
         if (setup.AS_ADMIN) {

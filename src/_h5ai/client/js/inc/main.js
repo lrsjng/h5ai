@@ -8,7 +8,7 @@ modulejs.define('main', ['_', 'core/event'], function (_, event) {
 
     _.each(modulejs.state(), function (state, id) {
 
-        if (/^ext\/.+/.test(id)) {
+        if (id.indexOf('ext/') === 0) {
             modulejs.require(id);
         }
     });
