@@ -28,13 +28,14 @@
     // @include "inc/**/*.js"
 
     var $ = jQuery;
-    var module = $('script[data-module]').data('module');
-    var data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true};
-    var url;
 
     if ($('html').hasClass('no-browser')) {
         return;
     }
+
+    var module = $('script[data-module]').data('module');
+    var data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true};
+    var url;
 
     if (module === 'main') {
         url = '.';
