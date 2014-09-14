@@ -1,19 +1,14 @@
-// other libs
-// ----------
+
 // @include "lib/modernizr-*.js"
+
+// @include "lib/jquery-*.js"
+// @include "lib/jquery.*.js"
 // @include "lib/lodash-*.js"
 // @include "lib/marked-*.js"
 // @include "lib/modulejs-*.js"
 // @include "lib/moment-*.js"
 // @include "lib/prism-*.js"
 
-// jQuery libs
-// -----------
-// @include "lib/jquery-*.js"
-// @include "lib/jquery.*.js"
-
-// app
-// ---
 (function () {
 'use strict';
 
