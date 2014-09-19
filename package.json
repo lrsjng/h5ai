@@ -15,7 +15,7 @@
     "build": "mkr release",
     "test": "mocha --recursive test"
   },
-  "dependencies": {
+  "devDependencies": {
     "fquery": "~0.16.2",
     "fquery-cssmin": "~0.3.0",
     "fquery-handlebars": "~0.2.0",
