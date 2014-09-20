@@ -34,11 +34,10 @@ class Item {
     }
 
 
-    public $app,
-            $path, $url,
-            $date, $size,
-            $is_folder,
-            $is_content_fetched;
+    public $app;
+    public $path, $url, $date, $size;
+    public $is_folder, $is_content_fetched;
+    public $md5, $sha1;
 
 
     private function __construct($app, $path) {
