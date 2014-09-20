@@ -21,13 +21,4 @@ function __autoload($class_name) {
     normalized_require_once("class-" . strtolower($class_name));
 }
 
-Setup::init();
-$app = new App();
-
-if (Util::has_request_param("action")) {
-    $api = new Api($app);
-    $api->apply();
-} else {
-    define("FALLBACK", $app->get_fallback());
-    normalized_require_once("page");
-}
+Bootstrap::run();

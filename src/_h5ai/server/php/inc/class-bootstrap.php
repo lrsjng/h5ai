@@ -1,8 +1,28 @@
 <?php
 
-class Setup {
+class Bootstrap {
 
-    public static function init() {
+    public static function run() {
+
+        Bootstrap::setup();
+
+        $app = new App();
+        if (Util::has_request_param("action")) {
+            $api = new Api($app);
+            $api->apply();
+        } else {
+            define("FALLBACK", $app->get_fallback());
+            normalized_require_once("page");
+        }
+    }
+
+
+    public static function setup() {
+
+        if (defined("NAME")) {
+            return;
+        }
+
 
         // MISC
         putenv("LANG=en_US.UTF-8");
