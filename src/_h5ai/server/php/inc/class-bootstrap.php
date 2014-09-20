@@ -19,11 +19,6 @@ class Bootstrap {
 
     public static function setup() {
 
-        if (defined("NAME")) {
-            return;
-        }
-
-
         // MISC
         putenv("LANG=en_US.UTF-8");
         setlocale(LC_CTYPE, "en_US.UTF-8");
