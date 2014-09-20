@@ -1,10 +1,8 @@
 # Changelog
-**h5ai** uses [semantic versioning](http://semver.org/).
 
-
-## develop
 
 * updates sidebar settings
+* adds rounded corners to QR code
 * adds editorconfig
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
 * removes `jQuery.fracs`
