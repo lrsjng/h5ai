@@ -118,18 +118,15 @@ class App {
 
         $names = array();
         if (is_dir($path)) {
-            if ($dir = opendir($path)) {
-                while (($name = readdir($dir)) !== false) {
-                    if (
-                        $this->is_hidden($name)
-                        || $this->is_hidden($this->to_url($path) . $name)
-                        || (!is_readable($path .'/'. $name) && $this->options["view"]["hideIf403"])
-                    ) {
-                        continue;
-                    }
-                    $names[] = $name;
+            foreach (scandir($path) as $name) {
+                if (
+                    $this->is_hidden($name)
+                    || $this->is_hidden($this->to_url($path) . $name)
+                    || (!is_readable($path .'/'. $name) && $this->options["view"]["hideIf403"])
+                ) {
+                    continue;
                 }
-                closedir($dir);
+                $names[] = $name;
             }
         }
         return $names;
