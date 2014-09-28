@@ -13,5 +13,7 @@
     "download": "lejupielādēt",
     "noMatch": "nav sakritības",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "filtrēt"
+    "filter": "filtrēt",
+    "view": "Skats",
+    "language": "Valoda"
 }
