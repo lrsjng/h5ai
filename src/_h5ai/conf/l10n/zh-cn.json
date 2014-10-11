@@ -13,5 +13,7 @@
     "download": "下载",
     "noMatch": "没有匹配",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "过滤"
+    "filter": "过滤",
+    "view": "视图",
+    "language": "语言"
 }
