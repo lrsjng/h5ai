@@ -1,3 +1,4 @@
+
 {
     "lang": "русский",
     "details": "Детали",
@@ -13,5 +14,7 @@
     "download": "Скачать",
     "noMatch": "Нет совпадений",
     "dateFormat": "YYYY-MM-DD HH:mm",
+    "view": "Вид",
+    "language": "Язык",
     "filter": "Фильтр"
 }
