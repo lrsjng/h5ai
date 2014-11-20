@@ -2,11 +2,12 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
     var settings = _.extend({
             enabled: false,
-            img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png'],
-            mov: ['video'],
-            doc: ['pdf', 'ps'],
-            delay: 1000,
-            size: 96
+            img: ['img-bmp', 'img-gif', 'img-ico', 'img-jpg', 'img-png'],
+            mov: ['vid-avi', 'vid-flv', 'vid-mkv', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm'],
+            doc: ['x-pdf', 'x-ps'],
+            delay: 1,
+            size: 128,
+            exif: true
         }, allsettings.thumbnails);
 
 
