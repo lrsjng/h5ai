@@ -117,12 +117,11 @@ class Api {
 
         $type = Util::use_request_param("type");
         $src_url = Util::use_request_param("href");
-        $mode = Util::use_request_param("mode");
         $width = Util::use_request_param("width");
         $height = Util::use_request_param("height");
 
         $thumb = new Thumb($this->app);
-        $thumb_url = $thumb->thumb($type, $src_url, $mode, $width, $height);
+        $thumb_url = $thumb->thumb($type, $src_url, $width, $height);
         Util::json_fail(3, "thumbnail creation failed", $thumb_url === null);
 
         Util::json_exit(array("absHref" => $thumb_url));
