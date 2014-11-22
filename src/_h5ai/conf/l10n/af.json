@@ -1,0 +1,19 @@
+{
+    "lang": "afrikaans",
+    "details": "besonderhede",
+    "list": "lys",
+    "grid": "rooster",
+    "icons": "ikone",
+    "name": "Naam",
+    "lastModified": "Laas verander",
+    "size": "Grootte",
+    "parentDirectory": "Hoër Vlak",
+    "empty": "leeg",
+    "folders": "gidse",
+    "files": "lêers",
+    "download": "aflaai",
+    "noMatch": "geen resultaat",
+    "dateFormat": "YYYY-MM-DD HH:mm",
+    "filter": "filter",
+    "delete": "verwyder"
+}
