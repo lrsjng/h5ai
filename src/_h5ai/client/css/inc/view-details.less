@@ -6,11 +6,11 @@
         &.item {
 
             a, a:active, a:visited {
-                height: @size + 6px;
+                height: @size + 14px;
             }
 
             .label, .date, .size {
-                padding: ((@size - 16px)/2) 8px;
+                padding: ((@size - 4px)/2) 8px;
             }
         }
 
@@ -39,6 +39,7 @@
         }
 
         &.item {
+            background: #fff;
 
             a, a:active, a:visited {
                 border-bottom: 1px solid @item-border-col-sep;
@@ -58,7 +59,7 @@
             display: inline-block;
             position: absolute;
             left: 0;
-            top: -4px;
+            top: -1px;
         }
 
         .date {

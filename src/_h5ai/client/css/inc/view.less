@@ -73,7 +73,8 @@
         }
 
         &.item {
-            font-size: 15px;
+            // font-size: 15px;
+            font-size: 13px;
 
             a, a:active, a:visited {
                 display: block;
@@ -128,17 +129,18 @@
 
             img {
                 vertical-align: top;
+                max-width: 64px;
             }
 
             .thumb {
-                box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
+                max-width: none;
             }
 
             &.rational {
-                .thumb {
-                    // padding: 2px;
-                    // border-radius: 3px;
-                }
+                border-radius: 1px;
+                background: #fff;
+                overflow: hidden;
+                box-shadow: 0 1px rgba(0,0,0,0.1), 1px 0 rgba(0,0,0,0.02), -1px 0 rgba(0,0,0,0.02);
             }
         }
 

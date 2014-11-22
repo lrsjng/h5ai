@@ -6,10 +6,8 @@
         &.item {
 
             a, a:active, a:visited {
-                // width: @size * 2;
-                // height: @size + 72px;
                 width: @size * 4/3;
-                height: @size + 22px;
+                height: @size + 28px;
             }
         }
 
@@ -20,11 +18,10 @@
                 width: @size;
                 height: @size;
             }
-            img.thumb {
-                width: auto;
-                height: auto;
-                max-width: @size * 2;
-                max-height: @size;
+
+            .thumb {
+                width: @size * 4/3;
+                height: @size;
             }
         }
     }
@@ -38,11 +35,10 @@
 
         &.item {
             float: left;
-            margin: 8px;
+            margin: 2px;
 
             a, a:active, a:visited {
                 padding: 8px;
-                min-width: 96px;
                 border: 1px solid rgba(0,0,0,0);
 
                 &:hover, &.hover {
@@ -57,9 +53,7 @@
         }
 
         .label {
-            text-align: center;
-            // word-wrap: break-word;
-            // white-space: normal;
+            padding: 0 8px;
         }
 
         .date, .size {

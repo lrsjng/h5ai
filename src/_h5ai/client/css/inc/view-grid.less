@@ -7,11 +7,11 @@
 
             a, a:active, a:visited {
                 width: @size + 182px;
-                height: @size + 6px;
+                height: @size + 14px;
             }
 
             .label, .date, .size {
-                padding: ((@size - 16px)/2) 8px;
+                padding: ((@size - 4px)/2) 8px;
             }
         }
 
@@ -38,6 +38,7 @@
         &.item {
             float: left;
             margin: 2px;
+            background: #fff;
 
             a, a:active, a:visited {
                 border: 1px solid rgba(0,0,0,0);
@@ -57,7 +58,6 @@
             display: inline-block;
             position: absolute;
             left: 0;
-            top: -4px;
         }
 
         .label {

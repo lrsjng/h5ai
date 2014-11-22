@@ -23,7 +23,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         var $view = $('#view');
         var itemWidth = ($view.hasClass('view-icons') || $view.hasClass('view-grid')) ? ($view.find('.item').eq(0).outerWidth(true) || 1) : 1;
 
-        $view.width(Math.floor(contentWidth / itemWidth) * itemWidth);
+        $view.width(Math.floor(contentWidth / itemWidth) * itemWidth + 4);
     }
 
     function update(mode, size) {
