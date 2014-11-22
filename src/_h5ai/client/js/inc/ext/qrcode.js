@@ -12,8 +12,7 @@ modulejs.define('ext/qrcode', ['_', '$', 'modernizr', 'core/settings', 'core/eve
 
         $qrcode.empty().qrcode({
             render: modernizr.canvas ? 'canvas' : 'div',
-            width: settings.size,
-            height: settings.size,
+            size: settings.size,
             color: '#333',
             bgColor: '#fff',
             radius: 0.5,
