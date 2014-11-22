@@ -4,7 +4,7 @@
     "grid": "그리드",
     "icons": "아이콘",
     "name": "파일명",
-    "lastModified": "최근수정일",
+    "lastModified": "최근 수정일",
     "size": "크기",
     "parentDirectory": "상위폴더",
     "empty": "빈폴더",
@@ -13,5 +13,7 @@
     "download": "다운로드",
     "noMatch": "해당파일이 없습니다.",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "필터"
+    "filter": "필터",
+    "view": "보기",
+    "language": "언어"
 }
