@@ -16,7 +16,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 10;
+    z-index: 2;
     border: 1px dashed @col-border-strong;
     background-color: rgba(0,0,0,0.01);
 }
@@ -45,9 +45,11 @@
         &.header {
             display: none;
             font-size: 13px;
+            background: #fafafa;
 
             a, a:active, a:visited {
-                padding: 6px 6px 18px 6px;
+                // padding: 6px 6px 18px 6px;
+                padding: 12px 8px;
                 opacity: 0.4;
                 .transition(all 0.2s ease-in-out);
 
@@ -130,6 +132,7 @@
             img {
                 vertical-align: top;
                 max-width: 64px;
+                // max-width: 32px;
             }
 
             .thumb {
@@ -140,7 +143,8 @@
                 border-radius: 1px;
                 background: #fff;
                 overflow: hidden;
-                box-shadow: 0 1px rgba(0,0,0,0.1), 1px 0 rgba(0,0,0,0.02), -1px 0 rgba(0,0,0,0.02);
+                // box-shadow: 0 1px rgba(0,0,0,0.1), 1px 0 rgba(0,0,0,0.02), -1px 0 rgba(0,0,0,0.02);
+                box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
             }
         }
 

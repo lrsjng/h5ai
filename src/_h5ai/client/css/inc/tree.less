@@ -8,8 +8,11 @@
     z-index: 3;
     overflow: auto;
     padding: 8px;
-    background-color: @col-widget-back;
-    border-right: @border-widget;
+    // background-color: @col-widget-back;
+    // border-right: @border-widget;
+    background: #eee;
+    border-right: 2px solid @col-border;
+    font-weight: lighter;
 
     .sp-scrollbar {
         width: 6px;
@@ -31,7 +34,7 @@
         width: 16px;
         height: 22px;
         float: left;
-        opacity: 0.7;
+        // opacity: 0.7;
         cursor: pointer;
 
         img {
@@ -62,12 +65,12 @@
         border: 1px solid rgba(0,0,0,0);
         border-radius: 3px;
         text-decoration: none;
-        opacity: 0.7;
+        // opacity: 0.7;
 
         &:hover, &.hover {
             color: @col-hover;
-            background-color: @col-widget-back-hover;
-            opacity: 1;
+            // background-color: @col-widget-back-hover;
+            // opacity: 1;
         }
     }
     .icon {
@@ -97,9 +100,10 @@
     }
     .current {
         > a, > a:active, > a:visited {
-            background-color: @col-widget-back-sel;
-            border-color: @col-widget-sep;
-            opacity: 1;
+            // background-color: @col-widget-back-sel;
+            // border-color: @col-widget-sep;
+            // opacity: 1;
+            font-weight: bold;
         }
     }
     .error {

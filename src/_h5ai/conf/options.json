@@ -17,7 +17,7 @@ Options
         "bottom": 50,
         "left": "auto",
         "right": "auto",
-        "maxWidth": 1024
+        "maxWidth": 1400
     },
 
     /*
@@ -52,7 +52,7 @@ Options
         "hideParentFolder": false,
         "modes": ["details", "grid", "icons"],
         "setParentFolderLabels": true,
-        "sizes": [24, 32, 48, 64, 96, 128, 192, 256, 384],
+        "sizes": [16, 24, 32, 48, 64, 96, 128, 192, 256, 384],
         "smartBrowsing": true,
         "theme": "",
         "unmanaged": ["index.html", "index.htm", "index.php"],

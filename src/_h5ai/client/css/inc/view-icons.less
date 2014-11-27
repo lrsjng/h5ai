@@ -28,6 +28,9 @@
 }
 
 
+@minsize: 64px;
+
+
 #view.view-icons {
 
     li {
@@ -40,6 +43,8 @@
             a, a:active, a:visited {
                 padding: 8px;
                 border: 1px solid rgba(0,0,0,0);
+                min-width: @minsize * 4/3;
+                min-height: @minsize + 28px;
 
                 &:hover, &.hover {
                     border-color: @item-border-col-hover;
@@ -50,6 +55,16 @@
         .icon.rational {
             display: block;
             margin-bottom: 6px;
+
+            min-height: @minsize;
+
+            img {
+                min-height: @minsize;
+            }
+
+            .thumb {
+                min-width: @minsize * 4/3;
+            }
         }
 
         .label {
