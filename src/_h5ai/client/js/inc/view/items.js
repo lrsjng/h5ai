@@ -160,7 +160,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
 
-        $content.appendTo('body');
+        // $content.appendTo('body');
+        $content.appendTo('#main-row');
     }
 
 

@@ -1,11 +1,13 @@
 
 #content {
-    max-width: 960px;
-    margin: 50px auto;
     font-size: 15px;
+    overflow: auto;
+    flex: 1 1 auto;
+    order: 50;
 }
 
 #content-header, #content-footer {
+    margin: 24px;
     color: #333;
 
     a, a:active, a:visited {
@@ -21,14 +23,4 @@
     pre, code {
         font-family: @font-family-mono;
     }
-}
-
-#content-header {
-    padding-bottom: 12px;
-    margin-bottom: 32px;
-}
-
-#content-footer {
-    padding-top: 12px;
-    margin-top: 32px;
 }

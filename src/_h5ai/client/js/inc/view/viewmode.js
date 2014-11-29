@@ -19,11 +19,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
     function adjustSpacing() {
 
-        var contentWidth = $('#content').width();
-        var $view = $('#view');
-        var itemWidth = ($view.hasClass('view-icons') || $view.hasClass('view-grid')) ? ($view.find('.item').eq(0).outerWidth(true) || 1) : 1;
-
-        $view.width(Math.floor(contentWidth / itemWidth) * itemWidth + 4);
+        // kept here for later use
     }
 
     function update(mode, size) {

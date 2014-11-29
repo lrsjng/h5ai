@@ -1,24 +1,16 @@
 
 #topbar {
-    position: fixed;
-    z-index: 5;
-    width: 100%;
+    overflow: hidden;
+    flex: 0 0 auto;
+    order: 1;
     min-height: 30px;
-    left: 0;
-    top: 0;
     background-color: @col-widget-back;
     border-bottom: @border-widget;
     font-weight: lighter;
 }
 
 
-.topbar-highlight {
-    // background-color: @col-widget-back-highlight;
-    opacity: 1.0;
-}
-
 .topbar-hover {
-    .topbar-highlight;
     color: @col-hover;
 }
 
@@ -43,7 +35,6 @@
         color: @col;
         cursor: pointer;
         text-decoration: none;
-        // opacity: 0.7;
         .transition(all 0.2s ease-in-out);
 
         display: block;
@@ -57,9 +48,6 @@
     }
     .current {
         font-weight: bold;
-        a, span.element {
-            .topbar-highlight;
-        }
     }
     img {
         position: relative;

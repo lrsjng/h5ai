@@ -9,7 +9,7 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store'], function (
             '</li>';
 
 
-    function update(toggle, animate) {
+    function update(toggle) {
 
         var $toggle = $('#sidebar-toggle');
         var $sidebar = $('#sidebar');
@@ -22,32 +22,24 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store'], function (
 
         if (isVisible) {
             $toggle.addClass('current');
+            $sidebar.show();
         } else {
             $toggle.removeClass('current');
-        }
-
-        if (animate) {
-            $sidebar.stop().animate({
-                right: isVisible ? 0 : -$sidebar.outerWidth()-1
-            });
-        } else {
-            $sidebar.css({
-                right: store.get(storekey) ? 0 : -$sidebar.outerWidth()-1
-            });
+            $sidebar.hide();
         }
     }
 
     function init() {
 
         $(toggleTemplate)
+            .appendTo('#navbar')
             .on('click', 'a', function (ev) {
 
-                update(true, true);
+                update(true);
                 ev.preventDefault();
-            })
-            .appendTo('#navbar');
+            });
 
-        update(false, false);
+        update(false);
     }
 
 

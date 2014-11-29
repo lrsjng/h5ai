@@ -1,6 +1,5 @@
 
 @col: rgb(85,85,85);
-// @col-back: rgb(255,255,255);
 @col-back: #eeeeee;
 @col-hover: rgb(29,119,194);
 @col-border: rgba(0,0,0,0.05);
@@ -30,7 +29,7 @@
 
 @font-family: Roboto, Ubuntu, Helvetica, Arial, sans-serif;
 @font-weight: 400;
-@font-family-mono: "Ubuntu Mono", monospace;
+@font-family-mono: monospace;
 
 
 ::-moz-selection { background: #68A9FF; color: #fff; text-shadow: none; }
@@ -51,7 +50,6 @@
 html {
     min-height: 100%;
     overflow: auto;
-    overflow-y: scroll;
 
     &.js .noJsMsg {
         display: none;
@@ -62,10 +60,34 @@ html {
 }
 
 body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
     font-family: @font-family;
     font-size: 13px;
     font-weight: @font-weight;
     color: @col;
-    background-color: @col-back;
-    margin: 30px;
+    background: @col-back;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: stretch;
+}
+
+#main-row {
+    flex: 1 1 auto;
+    order: 50;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: stretch;
 }

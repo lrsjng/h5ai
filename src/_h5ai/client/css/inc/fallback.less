@@ -2,7 +2,7 @@
 #fallback {
     display: none;
     max-width: 960px;
-    margin: 80px auto;
+    margin: 32px auto 64px;
 
     table {
         display: block;
@@ -65,7 +65,21 @@
 
 html.no-js, html.no-browser {
 
+    body {
+        position: static;
+        background: #fff;
+    }
+
     #fallback {
         display: block;
+    }
+
+    #bottombar {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 }

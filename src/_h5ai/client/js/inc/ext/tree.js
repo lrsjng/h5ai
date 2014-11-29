@@ -15,7 +15,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
                     '<span class="label"/>' +
                 '</a>' +
             '</span>';
-    var statusHintTemplate = '<span class="hint"/>';
 
 
     function update(item) {
@@ -67,7 +66,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
             // is it the current folder?
             if (item.isCurrentFolder()) {
                 $html.addClass('current');
-                // $img.attr('src', resource.image('folder-open'));
             }
 
             // does it have subfolders?
@@ -151,19 +149,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         };
     }
 
-    function shiftTree(forceVisible, dontAnimate) {
-
-        var $tree = $("#tree");
-        var $view = $("#view");
-        var left = ((settings.slide && $tree.outerWidth() < $view.offset().left) || forceVisible || !$view.is(':visible')) ? 0 : 18 - $tree.outerWidth();
-
-        if (dontAnimate) {
-            $tree.stop().css({ left: left });
-        } else {
-            $tree.stop().animate({ left: left });
-        }
-    }
-
     function fetchTree(item, callback) {
 
         item.isContentVisible = true;
@@ -177,19 +162,9 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         });
     }
 
-    function adjustSpacing() {
+    function updateScrollbar() {
 
-        var $tree = $('#tree');
-        var winHeight = $(window).height();
-        var navHeight = $('#topbar').outerHeight();
-        var footerHeight = $('#bottombar').outerHeight();
-
-        $tree.css({
-            top: navHeight,
-            height: winHeight - navHeight - footerHeight - 16
-        });
-
-        $tree.scrollpanel('update');
+        $('#tree').scrollpanel('update');
     }
 
     function onLocationChanged(item) {
@@ -199,8 +174,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
             $('#tree')
                 .find('.sp-container').append(update(root)).end()
                 .show();
-            adjustSpacing();
-            shiftTree(false, true);
+            updateScrollbar();
         });
     }
 
@@ -210,27 +184,15 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
             return;
         }
 
-        var $tree = $('<div id="tree"/>')
-                        .appendTo('body')
-                        .scrollpanel()
-                        .on('click', '.indicator', createOnIndicatorClick())
-                        .on('mouseenter', function () {
+        $('<div id="tree"/>')
+            .appendTo('#main-row')
+            .scrollpanel()
+            .on('click', '.indicator', createOnIndicatorClick());
 
-                            shiftTree(true);
-                        })
-                        .on('mouseleave', function () {
-
-                            shiftTree();
-                        });
-
-        event.sub('ready', adjustSpacing);
+        event.sub('ready', updateScrollbar);
         event.sub('location.changed', onLocationChanged);
 
-        $(window).on('resize', function () {
-
-            adjustSpacing();
-            shiftTree();
-        });
+        $(window).on('resize', updateScrollbar);
     }
 
 
