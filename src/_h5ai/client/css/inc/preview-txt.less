@@ -10,11 +10,10 @@
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.3);
 
     &.highlighted {
-        // word-break: break-all;
 
         code {
             font-family: @font-family-mono;
-            font-size: 16px;
+            font-size: @font-size;
             line-height: 1.2em;
         }
 
@@ -91,67 +90,11 @@
         .token.entity {
             cursor: help;
         }
-
-        // pre.line-numbers {
-        //  position: relative;
-        //  padding-left: 3.8em;
-        //  counter-reset: linenumber;
-        // }
-        // pre.line-numbers > code {
-        //  position: relative;
-        // }
-        // .line-numbers .line-numbers-rows {
-        //  position: absolute;
-        //  pointer-events: none;
-        //  top: 0;
-        //  font-size: 100%;
-        //  left: -3.8em;
-        //  width: 3em; /* works for line-numbers below 1000 lines */
-        //  letter-spacing: -1px;
-        //  border-right: 1px solid #999;
-
-        //  -webkit-user-select: none;
-        //  -moz-user-select: none;
-        //  -ms-user-select: none;
-        //  user-select: none;
-
-        // }
-        // .line-numbers-rows > span {
-        //  pointer-events: none;
-        //  display: block;
-        //  counter-increment: linenumber;
-        // }
-        // .line-numbers-rows > span:before {
-        //  content: counter(linenumber);
-        //  color: #999;
-        //  display: block;
-        //  padding-right: 0.8em;
-        //  text-align: right;
-        // }
-
-        // .token.tab:not(:empty):before,
-        // .token.cr:before,
-        // .token.lf:before {
-        //  color: hsl(24, 20%, 85%);
-        // }
-        // .token.tab:not(:empty):before {
-        //  content: '▸';
-        // }
-        // .token.cr:before {
-        //  content: '␍';
-        // }
-        // .token.lf:before {
-        //  // content: '␊';
-        //  content: '¶';
-        // }
-        // .token a {
-        //  color: inherit;
-        // }
     }
 
 
     &.markdown {
-        font-size: 16px;
+        font-size: 1.1em;
         padding: 8px 24px;
 
         a, a:active, a:visited {
