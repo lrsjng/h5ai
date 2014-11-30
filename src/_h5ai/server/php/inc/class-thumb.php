@@ -4,7 +4,7 @@ class Thumb {
 
     private static $FFMPEG_CMDV = array("ffmpeg", "-ss", "0:01:00", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]");
     private static $AVCONV_CMDV = array("avconv", "-ss", "0:01:00", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]");
-    private static $CONVERT_CMDV = array("convert", "-strip", "[SRC][0]", "[DEST]");
+    private static $CONVERT_CMDV = array("convert", "-density", "200", "-quality", "100", "-sharpen", "0x1.0", "-strip", "[SRC][0]", "[DEST]");
     private static $THUMB_CACHE = "thumbs";
 
 
