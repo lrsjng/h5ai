@@ -7,12 +7,10 @@
 
             a, a:active, a:visited {
                 width: @size * 4/3;
-                height: @size + 28px;
             }
         }
 
         .icon.rational {
-            height: @size;
 
             img {
                 width: @size;
@@ -36,27 +34,25 @@
     margin: 8px;
 
     li {
-        text-align: center;
+        background: #fff;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+
+        &:hover, &.hover {
+            box-shadow: 0 1px 12px 0px rgba(0,0,0,0.5);
+        }
 
         &.item {
             float: left;
             margin: 8px;
 
             a, a:active, a:visited {
-                // padding: 8px;
-                border: 1px solid rgba(0,0,0,0);
                 min-width: @minsize * 4/3;
-                min-height: @minsize + 28px;
-
-                &:hover, &.hover {
-                    border-color: @item-border-col-hover;
-                }
             }
         }
 
         .icon.rational {
             display: block;
-            margin-bottom: 6px;
+            background: #fafafa;
 
             min-height: @minsize;
 
@@ -70,7 +66,7 @@
         }
 
         .label {
-            padding: 0 8px;
+            padding: 4px 6px;
         }
 
         .date, .size {

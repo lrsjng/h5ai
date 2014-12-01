@@ -126,8 +126,8 @@
 
             img {
                 vertical-align: top;
-                max-width: 64px;
-                // max-width: 32px;
+                // max-width: 64px;
+                max-width: 32px;
             }
 
             .thumb {
@@ -135,10 +135,9 @@
             }
 
             &.rational {
-                border-radius: 1px;
-                background: #fff;
-                overflow: hidden;
-                box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+                img {
+                    min-width: 32px;
+                }
             }
         }
 
