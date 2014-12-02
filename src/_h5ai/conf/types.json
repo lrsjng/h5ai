@@ -42,6 +42,7 @@ File types mapped to file extensions
     "txt-html":         ["*.htm", "*.html", "*.shtml", "*.xhtml"],
     "txt-hpp":          ["*.hpp"],
     "txt-java":         ["*.java"],
+    "txt-scala":        ["*.scala"],
     "txt-js":           ["*.js"],
     "txt-json":         ["*.json"],
     "txt-log":          ["*.log", "changelog*"],
