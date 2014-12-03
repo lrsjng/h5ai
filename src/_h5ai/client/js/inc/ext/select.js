@@ -104,6 +104,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     function selectionStart(event) {
 
+        window.console.log(event);
+
         var $window = $(window);
         var viewRight = $window.scrollLeft() + $window.width();
         var viewBottom = $window.scrollTop() + $window.height();
@@ -197,7 +199,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
 
-        $document
+        // $document
+        $('#content')
             .on('mousedown', '.noSelection', noSelection)
             .on('mousedown', '.noSelectionUnlessCtrl,input,select,a', noSelectionUnlessCtrl)
             .on('mousedown', selectionStart);
