@@ -2,13 +2,8 @@
 .view-details-sized(@size) {
 
     .item {
-
-        a, a:active, a:visited {
-            height: @size + 14px;
-        }
-
         .label, .date, .size {
-            padding: (@size/2 - 2px) 8px;
+            line-height: @size + 14px;
         }
     }
 
@@ -36,18 +31,19 @@
         background: #fafafa;
         border-bottom: 1px solid rgba(0,0,0,0.07);
 
-        a, a:active, a:visited {
-            padding: 12px 8px;
+        .label, .date, .size {
+            line-height: 46px;
             opacity: 0.4;
+            outline: 0;
             .transition(all 0.2s ease-in-out);
 
             &:hover {
-                color: #555;
-                opacity: 0.9;
+                opacity: 1;
+                color: @col-hover;
             }
         }
 
-        img {
+        .sort {
             display: none;
             position: relative;
             top: -2px;
@@ -56,8 +52,8 @@
             padding: 0 8px;
         }
 
-        .ascending img.ascending,
-        .descending img.descending {
+        .ascending .sort.ascending,
+        .descending .sort.descending {
             display: inline;
         }
     }
@@ -68,11 +64,6 @@
         &:hover {
             border-bottom: 1px solid rgba(0,0,0,0.09);
         }
-
-        // needs to be here, to not conflict with header fields
-        .icon {
-            padding: 8px;
-        }
     }
 
     .icon.square {
@@ -80,10 +71,15 @@
         position: absolute;
         left: 16px;
         top: -1px;
+        padding: 8px;
 
         .thumb {
             box-shadow: 0 0 1px 0 rgba(0,0,0,0.2);
         }
+    }
+
+    .label, .date, .size {
+        padding: 0 8px;
     }
 
     .date {

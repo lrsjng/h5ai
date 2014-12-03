@@ -109,11 +109,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
             item.isContentVisible = down;
             $indicator.removeClass('open close').addClass(down ? 'open' : 'close');
-            // $tree.scrollpanel('update', true);
-            $content[down ? 'slideDown' : 'slideUp'](function () {
-
-                // $tree.scrollpanel('update');
-            });
+            $content[down ? 'slideDown' : 'slideUp']();
         }
 
         return function () {
@@ -162,20 +158,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         });
     }
 
-    function updateScrollbar() {
-
-        $('#tree').scrollpanel('update');
-    }
-
     function onLocationChanged(item) {
 
         fetchTree(item, function (root) {
 
             $('#tree')
-                // .find('.sp-container').append(update(root)).end()
                 .append(update(root))
                 .show();
-            // updateScrollbar();
         });
     }
 
@@ -187,13 +176,9 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
         $('<div id="tree"/>')
             .appendTo('#main-row')
-            // .scrollpanel()
             .on('click', '.indicator', createOnIndicatorClick());
 
-        // event.sub('ready', updateScrollbar);
         event.sub('location.changed', onLocationChanged);
-
-        // $(window).on('resize', updateScrollbar);
     }
 
 

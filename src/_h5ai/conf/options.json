@@ -49,7 +49,7 @@ Options
         "hidden": ["^\\.", "^_{{pkg.name}}"],
         "hideFolders": false,
         "hideIf403": true,
-        "hideParentFolder": false,
+        "hideParentFolder": true,
         "modes": ["details", "grid", "icons"],
         "setParentFolderLabels": true,
         "sizes": [16, 24, 32, 48, 64, 96, 128, 192, 256, 384],

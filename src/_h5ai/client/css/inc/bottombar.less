@@ -6,8 +6,10 @@
 
     height: 18px;
     padding: 6px;
-    background: @col-widget-back;
-    border-top: @border-widget;
+    // background: #fafafa;
+    background: #eee;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    z-index: 1;
 
     color: #999;
     text-align: right;
@@ -17,25 +19,21 @@
     }
 
     a, a:active, a:visited {
-        color: #555;
+        color: #999;
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
-        opacity: 0.7;
+        outline: 0;
 
         &:hover {
             color: @col-hover;
-            opacity: 1;
         }
     }
-    .noJsMsg {
-        color: @col-error;
-    }
-    .noBrowserMsg {
+
+    .noJsMsg, .noBrowserMsg {
         color: @col-error;
         a, a:active, a:visited {
             color: @col-error;
             text-decoration: underline;
-            opacity: 1;
             &:hover {
                 color: @col-hover;
             }

@@ -4,11 +4,13 @@
     flex: 0 0 auto;
     order: 1;
     min-height: 30px;
-    background-color: @col-widget-back;
-    border-bottom: @border-widget;
+    // background-color: @col-widget-back;
+    // border-bottom: @border-widget;
     font-weight: lighter;
-    // box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
-    // z-index: 1;
+
+    background: #fafafa;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
 
@@ -18,7 +20,7 @@
 
 .topbar-left {
     float: left;
-    border-right: @border-widget-sep;
+    // border-right: @border-widget-sep;
 }
 
 .topbar-right {
@@ -40,9 +42,13 @@
         .transition(all 0.2s ease-in-out);
 
         display: block;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
+        // height: 30px;
+        // line-height: 30px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 15px;
+        // padding: 0 10px;
+        padding: 0 6px;
 
         &:hover, &.hover {
             .topbar-hover;
@@ -53,12 +59,14 @@
     }
     img {
         position: relative;
-        top: -2px;
+        top: -1px;
         width: 16px;
         height: 16px;
+        opacity: 0.8;
     }
     img + span, img + input {
-        margin-left: 6px;
+        // margin-left: 6px;
+        margin-left: 8px;
     }
     .crumb {
         .topbar-left;
@@ -71,6 +79,9 @@
             opacity: 0.8;
             width: 12px;
             height: 12px;
+        }
+        &.root, &.domain {
+            margin-left: 10px;
         }
     }
     .view {
