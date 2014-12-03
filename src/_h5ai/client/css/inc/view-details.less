@@ -30,9 +30,11 @@
 #view.view-details {
 
     .header {
+        position: relative;
+        white-space: nowrap;
         display: list-item;
         background: #fafafa;
-        border-bottom: 1px solid rgba(0,0,0,0.065);
+        border-bottom: 1px solid rgba(0,0,0,0.07);
 
         a, a:active, a:visited {
             padding: 12px 8px;
@@ -61,13 +63,10 @@
     }
 
     .item {
-        border-bottom: 1px solid rgba(0,0,0,0.065);
+        border-bottom: 1px solid rgba(0,0,0,0.07);
 
-        a, a:active, a:visited {
-
-            &:hover, &.hover {
-                border-color: @item-border-col-hover;
-            }
+        &:hover {
+            border-bottom: 1px solid rgba(0,0,0,0.09);
         }
 
         // needs to be here, to not conflict with header fields
@@ -81,6 +80,10 @@
         position: absolute;
         left: 16px;
         top: -1px;
+
+        .thumb {
+            box-shadow: 0 0 1px 0 rgba(0,0,0,0.2);
+        }
     }
 
     .date {

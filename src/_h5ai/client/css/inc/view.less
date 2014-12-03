@@ -1,15 +1,12 @@
 
 
-@item-border-col-sep: @col-border;
-
+@item-col-hover: @col-hover;
 @item-background-col-hover: #fafafa;
 @item-border-col-hover: @col-border;
 
-// @item-background-col-sel: rgba(0,0,0,0.02);
-// @item-border-col-sel: @col-border-strong;
 @item-col-sel: #fff;
 @item-background-col-sel: #42A5F5;
-@item-border-col-sel: #2196F3;
+
 
 #selection-rect {
     display: none;
@@ -18,7 +15,7 @@
     top: 0;
     z-index: 2;
     border: 1px dashed @col-border-strong;
-    background-color: rgba(0,0,0,0.01);
+    background: rgba(0,0,0,0.01);
 }
 
 
@@ -38,16 +35,13 @@
         list-style: none;
     }
 
-    li {
-        position: relative;
-        white-space: nowrap;
-    }
-
     .header {
         display: none;
     }
 
     .item {
+        position: relative;
+        white-space: nowrap;
         background: #fff;
 
         a, a:active, a:visited {
@@ -55,7 +49,7 @@
         }
 
         &:hover, &.hover {
-            color: @col-hover;
+            color: @item-col-hover;
             background: @item-background-col-hover;
             border-color: @item-border-col-hover;
         }
@@ -67,19 +61,16 @@
         }
 
         &.selected:not(.selecting), &.selecting:not(.selected) {
-            background: @item-background-col-sel;
-            border-color: @item-border-col-sel;
             color: @item-col-sel;
+            background: @item-background-col-sel;
 
             &:hover, &.hover {
-                background: @item-background-col-sel;
-                border-color: @item-border-col-sel;
                 color: @item-col-sel;
+                background: @item-background-col-sel;
             }
 
             .selector {
                 display: block;
-                // border-color: @col-border-stronger;
 
                 img {
                     display: block;
@@ -157,14 +148,11 @@
     }
 
     .empty, .no-match {
-        margin: 50px 0;
+        display: none;
+        margin-top: 36px;
         text-align: center;
         color: #ddd;
         font-size: 5em;
         font-weight: bold;
-    }
-
-    .no-match {
-        display: none;
     }
 }
