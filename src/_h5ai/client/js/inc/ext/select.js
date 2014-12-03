@@ -204,5 +204,5 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
     }
 
 
-    // init();
+    init();
 });

@@ -1,31 +1,16 @@
 
 .view-grid-sized(@size) {
 
-    li {
+    .label {
+        padding: (@size/2 - 9px) 8px;
+    }
 
-        &.item {
+    .icon.square {
+        width: @size;
 
-            a, a:active, a:visited {
-                width: @size + 182px;
-                height: @size + 14px;
-            }
-
-            .label, .date, .size {
-                padding: ((@size - 4px)/2) 8px;
-            }
-        }
-
-        .icon.square {
+        img {
             width: @size;
-
-            img {
-                width: @size;
-                height: @size;
-            }
-        }
-
-        .label {
-            margin: 0 0 0 (@size + 8px);
+            height: @size;
         }
     }
 }
@@ -35,57 +20,37 @@
 
     margin: 8px;
 
-    li {
+    .item {
+        float: left;
+        margin: 8px;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
 
-        &.item {
-            float: left;
-            margin: 8px;
-            background: #fff;
-            box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
-
-            a, a:active, a:visited {
-                border: 1px solid rgba(0,0,0,0);
-
-                &:hover, &.hover {
-                    border-color: @item-border-col-hover;
-                }
-            }
-
-            // needs to be here, to not conflict with header fields
-            .icon {
-                padding: 8px;
-            }
-        }
-
-        .icon.square {
-            display: inline-block;
-            position: absolute;
-            left: 0;
-        }
-
-        .label {
-            display: block;
-        }
-
-        .date, .size {
-            display: none;
+        &:hover, &.hover {
+            box-shadow: 0 1px 10px 0px rgba(0,0,0,0.5);
         }
     }
 
-    .view-grid-sized(@icon-size);
-
-    &.size-16 {
-        .view-grid-sized(16px)
+    .icon.square {
+        display: inline-block;
+        vertical-align: top;
+        background: #fafafa;
     }
 
-    &.size-24 {
-        .view-grid-sized(24px)
+    .label {
+        display: inline-block;
+        vertical-align: top;
+        width: 180px;
     }
 
-    &.size-32 {
-        .view-grid-sized(32px)
+    .date, .size {
+        display: none;
     }
 
+    .view-grid-sized(48px);
+
+    &.size-16,
+    &.size-24,
+    &.size-32,
     &.size-48 {
         .view-grid-sized(48px)
     }

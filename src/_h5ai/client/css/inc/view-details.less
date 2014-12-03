@@ -1,85 +1,105 @@
 
 .view-details-sized(@size) {
 
-    li {
+    .item {
 
-        &.item {
-
-            a, a:active, a:visited {
-                height: @size + 14px;
-            }
-
-            .label, .date, .size {
-                padding: ((@size - 4px)/2) 8px;
-            }
+        a, a:active, a:visited {
+            height: @size + 14px;
         }
 
-        .icon.square {
+        .label, .date, .size {
+            padding: (@size/2 - 2px) 8px;
+        }
+    }
+
+    .icon.square {
+        width: @size;
+
+        img {
             width: @size;
-
-            img {
-                width: @size;
-                height: @size;
-            }
+            height: @size;
         }
+    }
 
-        .label {
-            margin: 0 246px 0 (@size + 32px);
-        }
+    .label {
+        margin: 0 246px 0 (@size + 32px);
     }
 }
 
 
 #view.view-details {
 
-    li {
+    .header {
+        display: list-item;
+        background: #fafafa;
         border-bottom: 1px solid rgba(0,0,0,0.065);
 
-        &.header {
-            display: list-item;
-        }
+        a, a:active, a:visited {
+            padding: 12px 8px;
+            opacity: 0.4;
+            .transition(all 0.2s ease-in-out);
 
-        &.item {
-            background: #fff;
-
-            a, a:active, a:visited {
-
-                &:hover, &.hover {
-                    border-color: @item-border-col-hover;
-                }
-            }
-
-            // needs to be here, to not conflict with header fields
-            .icon {
-                padding: 8px;
+            &:hover {
+                color: #555;
+                opacity: 0.9;
             }
         }
 
-        .icon.square {
-            display: inline-block;
-            position: absolute;
-            left: 16px;
-            top: -1px;
+        img {
+            display: none;
+            position: relative;
+            top: -2px;
+            width: 12px;
+            height: 12px;
+            padding: 0 8px;
         }
 
-        .date {
-            position: absolute;
-            right: 116px;
-            top: 0;
-        }
-
-        .size {
-            position: absolute;
-            right: 16px;
-            top: 0;
-        }
-
-        .selector {
-            margin-top: -1px;
+        .ascending img.ascending,
+        .descending img.descending {
+            display: inline;
         }
     }
 
-    .view-details-sized(@icon-size);
+    .item {
+        border-bottom: 1px solid rgba(0,0,0,0.065);
+
+        a, a:active, a:visited {
+
+            &:hover, &.hover {
+                border-color: @item-border-col-hover;
+            }
+        }
+
+        // needs to be here, to not conflict with header fields
+        .icon {
+            padding: 8px;
+        }
+    }
+
+    .icon.square {
+        display: inline-block;
+        position: absolute;
+        left: 16px;
+        top: -1px;
+    }
+
+    .date {
+        position: absolute;
+        right: 116px;
+        top: 0;
+    }
+
+    .size {
+        position: absolute;
+        right: 16px;
+        top: 0;
+    }
+
+    .selector {
+        margin-top: -1px;
+    }
+
+    .view-details-sized(24px);
 
     &.size-16 {
         .view-details-sized(16px)

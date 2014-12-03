@@ -1,77 +1,50 @@
 
 .view-icons-sized(@size) {
 
-    li {
+    .item {
+        width: @size * 4/3;
+    }
 
-        &.item {
+    .icon.rational {
 
-            a, a:active, a:visited {
-                width: @size * 4/3;
-            }
+        img {
+            width: @size;
+            height: @size;
         }
 
-        .icon.rational {
-
-            img {
-                width: @size;
-                height: @size;
-            }
-
-            .thumb {
-                width: @size * 4/3;
-                height: @size;
-            }
+        .thumb {
+            width: @size * 4/3;
+            height: @size;
         }
     }
 }
-
-
-@minsize: 64px;
 
 
 #view.view-icons {
 
     margin: 8px;
 
-    li {
-        background: #fff;
+    .item {
+        float: left;
+        margin: 8px;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
 
         &:hover, &.hover {
             box-shadow: 0 1px 12px 0px rgba(0,0,0,0.5);
         }
+    }
 
-        &.item {
-            float: left;
-            margin: 8px;
+    .icon.rational {
+        display: block;
+        background: #fafafa;
+    }
 
-            a, a:active, a:visited {
-                min-width: @minsize * 4/3;
-            }
-        }
+    .label {
+        padding: 4px 6px;
+    }
 
-        .icon.rational {
-            display: block;
-            background: #fafafa;
-
-            min-height: @minsize;
-
-            img {
-                min-height: @minsize;
-            }
-
-            .thumb {
-                min-width: @minsize * 4/3;
-            }
-        }
-
-        .label {
-            padding: 4px 6px;
-        }
-
-        .date, .size {
-            display: none;
-        }
+    .date, .size {
+        display: none;
     }
 
     .empty, .no-match {
@@ -80,28 +53,13 @@
         height: 120px;
     }
 
-    .view-icons-sized(@icon-size);
+    .view-icons-sized(96px);
 
-    &.size-16 {
-        .view-icons-sized(16px);
-    }
-
-    &.size-24 {
-        .view-icons-sized(24px);
-    }
-
-    &.size-32 {
-        .view-icons-sized(32px);
-    }
-
-    &.size-48 {
-        .view-icons-sized(48px);
-    }
-
-    &.size-64 {
-        .view-icons-sized(64px);
-    }
-
+    &.size-16,
+    &.size-24,
+    &.size-32,
+    &.size-48,
+    &.size-64,
     &.size-96 {
         .view-icons-sized(96px);
     }
