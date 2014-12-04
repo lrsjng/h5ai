@@ -6,8 +6,6 @@
     order: 99;
     width: 200px;
     padding: 8px 16px;
-    // background-color: @col-widget-back;
-    // border-left: @border-widget;
     background: #eaeaea;
 }
 
@@ -34,9 +32,9 @@
         height: 30px;
         line-height: 30px;
         padding: 0 10px;
-        outline: none;
+        outline: 0;
 
-        &:hover, &.hover {
+        &:hover {
             opacity: 1.0;
             box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
         }
@@ -45,8 +43,7 @@
     .current {
         a, span.element {
             opacity: 1.0;
-            // background: @col-widget-back-highlight;
-            background: rgba(0,0,0,0.02);
+            background: rgba(0,0,0,0.03);
             box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
         }
     }
@@ -64,11 +61,10 @@
     }
 
     .select {
-        // background-color: @col-widget-back-highlight;
         background: transparent;
         width: 175px;
         overflow: hidden;
-        outline: none;
+        outline: 0;
 
         &:hover, &.hover {
             box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
@@ -83,17 +79,15 @@
         font-size: @font-size;
         font-weight: @font-weight;
         color: @col;
-        // background: @col-widget-back;
         background: transparent;
         width: 100%;
         height: 30px;
         line-height: 30px;
         border: 0 solid #000;
         cursor: pointer;
-        outline: none;
+        outline: 0;
 
         &:hover, &.hover {
-            // background: @col-widget-back-highlight;
             box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
         }
    }
@@ -105,9 +99,9 @@
 
     input[type='range'] {
         border-radius: 2px;
-        width: 60px;
+        width: 50px;
         margin: 0 0 4px 12px;
-        padding: 0 2px;
+        padding: 0 8px;
         vertical-align: middle;
     }
 
