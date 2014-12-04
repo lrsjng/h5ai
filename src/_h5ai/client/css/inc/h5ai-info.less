@@ -1,20 +1,15 @@
 
 body#h5ai-info {
-    margin: 2em auto 4em auto;
-    // font-size: 20px;
-    color: @col;
-    max-width: 600px;
-    text-align: center;
 
-    a, a:active, a:visited {
+    #content {
+        flex: 1 1 auto;
+        order: 50;
         color: @col;
-        text-decoration: none;
-        .transition(all 0.2s ease-in-out);
-
-        &:hover {
-            color: @col-hover;
-        }
+        text-align: center;
+        background: #fff;
+        overflow-y: scroll;
     }
+
     code {
         margin: 0 0.2em;
         padding: 2px 4px;
@@ -23,21 +18,33 @@ body#h5ai-info {
         letter-spacing: 0.1em;
         background-color: @col-widget-back;
         border: @border-widget;
+        font-size: 0.8em;
     }
+
     h1 {
         font-size: 3.6em;
-        margin: 0;
+        margin: 0.8em 0 0 0;
     }
+
     h2 {
         font-size: 1.15em;
         margin: 2.6em 0 0 0;
     }
 
+    #header a {
+        color: @col;
+        text-decoration: none;
+        .transition(all 0.2s ease-in-out);
+
+        &:hover {
+            color: @col-hover;
+        }
+    }
 
     #support {
         margin: 12px auto 24px auto;
         padding: 6px 18px;
-        width: 164px;
+        width: 180px;
         background: @col-widget-back;
         border: @border-widget;
         border-radius: 4px;
@@ -45,11 +52,6 @@ body#h5ai-info {
         .paypal {
             margin: 6px 0 0 0;
         }
-    }
-
-
-    #login-wrapper {
-        font-size: 14px;
     }
 
     #pass {
@@ -82,63 +84,53 @@ body#h5ai-info {
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
 
-        &:hover, &.hover {
-            background-color: @col-widget-back-highlight;
+        &:hover {
             color: @col-hover;
         }
     }
 
     #hint {
         margin: 12px auto;
-        width: 360px;
+        width: 380px;
         color: @col;
-    }
-
-
-    #tests-wrapper {
-        margin: 96px 0;
     }
 
     #tests {
         display: inline-block;
-        list-style-type: none;
         text-align: left;
-        margin: 0;
+        list-style-type: none;
+        margin: 96px 0;
         padding: 0;
+        font-size: 1.4em;
 
         .test {
             margin: 12px 0 0 0;
             padding: 6px;
+        }
+        .label {
+            display: inline-block;
+            width: 250px;
+        }
+        .result {
+            display: inline-block;
+            width: 250px;
+            text-align: right;
+            font-weight: bold;
 
-            .label {
-                display: inline-block;
-                width: 250px;
+            &.passed {
+                color: #5a5;
             }
-            .result {
-                display: inline-block;
-                width: 250px;
-                text-align: right;
-                font-weight: bold;
-
-                &.passed {
-                    color: #5a5;
-                }
-                &.failed {
-                    color: #a55;
-                }
-            }
-            .info {
-                margin: 4px 0 12px 12px;
-                font-size: 0.7em;
-                color: #aaa;
-                width: 460px;
-                line-height: 1.2em;
+            &.failed {
+                color: #a55;
             }
         }
-    }
-
-
-    #bottombar {
-
+        .info {
+            margin: 4px 0 12px 12px;
+            font-size: 0.7em;
+            font-weight: lighter;
+            color: #aaa;
+            width: 460px;
+            line-height: 1.2em;
+        }
     }
 }

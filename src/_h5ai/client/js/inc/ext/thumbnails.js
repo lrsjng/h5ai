@@ -1,4 +1,4 @@
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server'], function (_, allsettings, event, server) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server', 'core/resource'], function (_, allsettings, event, server, resource) {
 
     var settings = _.extend({
             enabled: false,

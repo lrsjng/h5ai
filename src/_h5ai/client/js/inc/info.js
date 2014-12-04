@@ -1,9 +1,7 @@
 modulejs.define('info', ['$', 'config'], function ($, config) {
 
     var testsTemp =
-            '<div id="tests-wrapper">' +
-                '<ul id="tests">' +
-            '</div>';
+            '<ul id="tests">';
     var testTemp =
             '<li class="test">' +
                 '<span class="label"></span>' +
@@ -41,7 +39,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
     function addTests() {
 
-        $(testsTemp).appendTo('body');
+        $(testsTemp).appendTo('#content');
 
         addTest(
             'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',
@@ -147,7 +145,7 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
 
     function addLogin() {
 
-        $(loginTemp).appendTo('body');
+        $(loginTemp).appendTo('#content');
 
         if (setup.AS_ADMIN) {
             $('#pass').remove();
