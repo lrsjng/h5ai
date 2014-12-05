@@ -2,10 +2,10 @@
 .view-grid-sized(@size) {
 
     .label {
-        padding: (@size/2 - 9px) 8px;
+        line-height: @size;
     }
 
-    .icon.square {
+    .square {
         width: @size;
 
         img {
@@ -30,7 +30,7 @@
         }
     }
 
-    .icon.square {
+    .square {
         display: inline-block;
         vertical-align: top;
         background: #fafafa;
@@ -40,6 +40,7 @@
         display: inline-block;
         vertical-align: top;
         width: 180px;
+        padding: 0 8px;
     }
 
     .date, .size {

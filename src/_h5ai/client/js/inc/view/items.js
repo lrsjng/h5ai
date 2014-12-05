@@ -10,7 +10,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
             '<li class="item">' +
                 '<a>' +
                     '<span class="icon square"><img/></span>' +
-                    '<span class="icon rational"><img/></span>' +
+                    '<span class="icon landscape"><img/></span>' +
                     '<span class="label"/>' +
                     '<span class="date"/>' +
                     '<span class="size"/>' +

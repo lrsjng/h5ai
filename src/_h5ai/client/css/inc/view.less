@@ -1,5 +1,4 @@
 
-
 @item-col-hover: @col-hover;
 @item-background-col-hover: #fafafa;
 @item-border-col-hover: @col-border;
@@ -67,10 +66,7 @@
 
             .selector {
                 display: block;
-
-                img {
-                    opacity: 1;
-                }
+                opacity: 1;
             }
         }
     }
@@ -88,18 +84,11 @@
 
         img {
             vertical-align: top;
-            // max-width: 64px;
             max-width: 32px;
         }
 
         .thumb {
             max-width: none;
-        }
-
-        &.rational {
-            img {
-                min-width: 32px;
-            }
         }
     }
 
@@ -123,26 +112,22 @@
     .selector {
         display: none;
         position: absolute;
-        // left: 0;
-        // top: 0;
-        // width: 18px;
-        // height: 18px;
-        left: 4px;
+        left: -4px;
         top: 4px;
         width: 24px;
         height: 24px;
         background-color: #fff;
         cursor: pointer;
-        .transition(all 0.2s ease-in-out);
         box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
-        border-radius: 40px;
+        border-radius: 0 20px 20px 0;
+        opacity: 0.6;
 
         &:hover {
+            opacity: 0.8;
             box-shadow: 0 0 16px 0 rgba(0,0,0,0.3);
         }
 
         img {
-            opacity: 0.2;
             width: 100%;
             height: 100%;
         }

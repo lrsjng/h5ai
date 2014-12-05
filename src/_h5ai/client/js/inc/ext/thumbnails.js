@@ -50,13 +50,13 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
                 });
             }
             if (item.thumbRational) {
-                item.$view.find('.icon.rational img').addClass('thumb').attr('src', item.thumbRational);
+                item.$view.find('.icon.landscape img').addClass('thumb').attr('src', item.thumbRational);
             } else {
                 requestThumb(type, item.absHref, 4/3, function (src) {
 
                     if (src && item.$view) {
                         item.thumbRational = src;
-                        item.$view.find('.icon.rational img').addClass('thumb').attr('src', src);
+                        item.$view.find('.icon.landscape img').addClass('thumb').attr('src', src);
                     }
                 });
             }
