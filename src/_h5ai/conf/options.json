@@ -331,7 +331,7 @@ Options
         "mov": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"],
         "doc": ["x-pdf", "x-ps"],
         "delay": 1,
-        "size": 256,
+        "size": 96,
         "exif": true
     },
 
@@ -346,12 +346,10 @@ Options
     Show a folder tree.
     Note that this might affect performance significantly.
 
-    - slide: boolean, slide tree bar into viewport if there is enough space
     - maxSubfolders: max number of subfolders to show in tree
     */
     "tree": {
         "enabled": true,
-        "slide": true,
         "maxSubfolders": 50
     }
 }

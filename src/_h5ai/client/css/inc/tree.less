@@ -8,8 +8,7 @@
 
     padding: 8px 16px 8px 8px;
     // background: #eee;
-    // border-right: 1px solid @col-border;
-    background: #eaeaea;
+    border-right: 1px solid @col-border;
     font-weight: lighter;
     white-space: nowrap;
     max-width: 250px;
@@ -85,17 +84,6 @@
     .current {
         > a, > a:active, > a:visited {
             font-weight: bold;
-        }
-    }
-    .error {
-        > a, > a:active, > a:visited {
-            color: #999;
-            &:hover, &.hover {
-                color: @col-hover;
-            }
-        }
-        .hint {
-            color: #c55;
         }
     }
 }

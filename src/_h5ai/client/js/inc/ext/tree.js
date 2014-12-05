@@ -2,7 +2,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
     var settings = _.extend({
             enabled: false,
-            slide: true,
             maxSubfolders: 50
         }, allsettings.tree);
     var template =
@@ -54,13 +53,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
             // is it the domain?
             if (item.isDomain()) {
                 $html.addClass('domain');
-                $img.attr('src', resource.image('home'));
+                // $img.attr('src', resource.image('home'));
             }
 
             // is it the root?
             if (item.isRoot()) {
                 $html.addClass('root');
-                $img.attr('src', resource.image('home'));
+                // $img.attr('src', resource.image('home'));
             }
 
             // is it the current folder?
