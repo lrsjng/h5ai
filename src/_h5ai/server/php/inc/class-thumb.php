@@ -53,7 +53,7 @@ class Thumb {
             return null;
         }
 
-        $name = "thumb-" . sha1("$source_path-$width-$height") . ".jpg";
+        $name = "thumb-" . sha1("$source_path") . "-" . $width . "x" . $height . ".jpg";
         $thumb_path = $this->thumbs_path . "/" . $name;
         $thumb_url = $this->thumbs_href . "/" . $name;
 

@@ -69,8 +69,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
             // does it have subfolders?
             if (subfolders.length) {
-                var $ul = $('<ul class="content"/>').appendTo($html),
-                    counter = 0;
+                var $ul = $('<ul class="content"/>').appendTo($html);
+                var counter = 0;
                 _.each(subfolders, function (e) {
                     counter += 1;
                     if (counter <= settings.maxSubfolders) {

@@ -6,8 +6,7 @@
     flex: 0 0 auto;
     order: 1;
 
-    padding: 8px 16px 8px 8px;
-    // background: #eee;
+    padding: 16px 16px 16px 8px;
     border-right: 1px solid @col-border;
     font-weight: lighter;
     white-space: nowrap;
@@ -15,12 +14,9 @@
     overflow-x: hidden;
 
     .indicator {
-        position: relative;
-        top: 2px;
         display: inline-block;
-        width: 16px;
-        height: 22px;
-        float: left;
+        position: relative;
+        top: -1px;
         cursor: pointer;
 
         img {
@@ -42,14 +38,9 @@
         }
     }
     a, a:active, a.visited {
-        display: block;
-        height: 1.231em;
-        line-height: 1.231em;
-        margin-left: 14px;
-        padding: 4px 6px;
+        display: inline-block;
+        padding: 3px 0;
         color: #555;
-        border: 1px solid rgba(0,0,0,0);
-        border-radius: 3px;
         text-decoration: none;
 
         &:hover, &.hover {
@@ -59,27 +50,17 @@
     .icon {
         position: relative;
         top: -2px;
-        margin-right: 6px;
+        margin: 0 8px;
 
         img {
             width: 16px;
             height: 16px;
         }
     }
-    .hint {
-        margin-left: 6px;
-        font-size: 0.9em;
-        color: #ccc;
-    }
     .content {
         list-style: none;
         margin: 0;
         padding: 0 0 0 24px;
-    }
-    .summary {
-        margin: 0 0 0 24px;
-        color: #999;
-        font-style: italic;
     }
     .current {
         > a, > a:active, > a:visited {
