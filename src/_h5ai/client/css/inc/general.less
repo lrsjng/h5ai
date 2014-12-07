@@ -34,8 +34,8 @@
 @font-family-mono: monospace;
 
 
-::-moz-selection { background: #68A9ff; color: #fff; text-shadow: none; }
-::selection { background: #68A9ff; color: #fff; text-shadow: none; }
+::-moz-selection { background: #42a5f5; color: #fff; text-shadow: none; }
+::selection { background: #42a5f5; color: #fff; text-shadow: none; }
 
 .transition (@transition) {
     -webkit-transition: @transition;
@@ -95,4 +95,8 @@ body {
 
     // non-webkit fix;
     height: 0;
+}
+
+*:focus {
+    outline: 1px solid #42a5f5;
 }

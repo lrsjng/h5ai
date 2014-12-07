@@ -20,17 +20,9 @@ body#h5ai-info {
         font-size: 0.8em;
     }
 
-    h1 {
-        font-size: 3.6em;
-        margin: 0.8em 0 0 0;
-    }
-
-    h2 {
-        font-size: 1.15em;
-        margin: 2.6em 0 0 0;
-    }
-
     #header a {
+        font-size: 2.1em;
+        margin: 0.8em 0 0 0;
         color: @col;
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
@@ -76,17 +68,16 @@ body#h5ai-info {
         display: inline-block;
         margin: 8px;
         padding: 0 12px;
+        background: #42a5f5;
+        color: #fff;
         line-height: 28px;
         cursor: pointer;
-
+        border-radius: 2px;
         cursor: pointer;
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
 
-        background: #42a5f5;
-        color: #fff;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
-        border-radius: 2px;
 
         &:hover {
             box-shadow: 0 1px 8px 0px rgba(0,0,0,0.5);
@@ -96,7 +87,7 @@ body#h5ai-info {
     #hint {
         margin: 12px auto;
         width: 380px;
-        color: @col;
+        font-weight: lighter;
     }
 
     #tests {
@@ -105,7 +96,6 @@ body#h5ai-info {
         list-style-type: none;
         margin: 96px 0;
         padding: 0;
-        font-size: 1.4em;
 
         .test {
             margin: 12px 0 0 0;
@@ -117,11 +107,13 @@ body#h5ai-info {
         .label {
             display: inline-block;
             width: 250px;
+            font-size: 1.4em;
         }
         .result {
             display: inline-block;
             width: 250px;
             text-align: right;
+            font-size: 1.4em;
             font-weight: bold;
 
             &.passed {
@@ -132,7 +124,6 @@ body#h5ai-info {
             }
         }
         .info {
-            font-size: 0.7em;
             font-weight: lighter;
             margin: 4px 0 0 0;
         }
