@@ -6,7 +6,6 @@ body#h5ai-info {
         order: 50;
         color: @col;
         text-align: center;
-        background: #fff;
         overflow-y: scroll;
     }
 
@@ -45,7 +44,7 @@ body#h5ai-info {
         margin: 12px auto 24px auto;
         padding: 6px 18px;
         width: 180px;
-        background: @col-widget-back;
+        background: #fafafa;
         border: @border-widget;
         border-radius: 4px;
 
@@ -61,31 +60,36 @@ body#h5ai-info {
         font-family: @font-family;
         font-weight: @font-weight;
         color: @col;
-        background: @col-widget-back-highlight;
-        border: @border-widget;
+        background: #fff;
+        border: none;
         outline: none;
         display: inline-block;
         width: 200px;
-        height: 27px;
-        padding: 0 6px;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+        border-radius: 2px;
         margin: 8px;
+        padding: 0 12px;
+        line-height: 28px;
     }
 
     #login, #logout {
         display: inline-block;
-        padding: 4px 16px;
         margin: 8px;
-        background-color: @col-widget-back;
-        border: @border-widget;
+        padding: 0 12px;
+        line-height: 28px;
         cursor: pointer;
 
-        color: @col;
         cursor: pointer;
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
 
+        background: #42a5f5;
+        color: #fff;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+        border-radius: 2px;
+
         &:hover {
-            color: @col-hover;
+            box-shadow: 0 1px 8px 0px rgba(0,0,0,0.5);
         }
     }
 
@@ -105,7 +109,10 @@ body#h5ai-info {
 
         .test {
             margin: 12px 0 0 0;
-            padding: 6px;
+            padding: 8px;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+            background: #fff;
+            border-radius: 2px;
         }
         .label {
             display: inline-block;
@@ -118,19 +125,16 @@ body#h5ai-info {
             font-weight: bold;
 
             &.passed {
-                color: #5a5;
+                color: @col-okay;
             }
             &.failed {
-                color: #a55;
+                color: @col-error;
             }
         }
         .info {
-            margin: 4px 0 12px 12px;
             font-size: 0.7em;
             font-weight: lighter;
-            color: #aaa;
-            width: 460px;
-            line-height: 1.2em;
+            margin: 4px 0 0 0;
         }
     }
 }
