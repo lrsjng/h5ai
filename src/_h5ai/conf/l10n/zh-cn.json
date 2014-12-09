@@ -6,14 +6,14 @@
     "name": "文件名",
     "lastModified": "修改时间",
     "size": "大小",
-    "parentDirectory": "上层文件夹",
+    "parentDirectory": "父文件夹",
     "empty": "空文件夹",
     "folders": "文件夹",
     "files": "文件",
     "download": "下载",
-    "noMatch": "没有匹配",
+    "noMatch": "无匹配项",
     "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "过滤",
+    "filter": "查找",
     "view": "视图",
     "language": "语言"
 }
