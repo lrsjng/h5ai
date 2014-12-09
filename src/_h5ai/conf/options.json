@@ -7,20 +7,6 @@ Options
 
 {
     /*
-    Spacing of the main content.
-
-    Left and right will be added to a minimum of 30px. Top and bottom
-    are added to the top and bottom bar heights.
-    */
-    "spacing": {
-        "top": 50,
-        "bottom": 50,
-        "left": "auto",
-        "right": "auto",
-        "maxWidth": 1400
-    },
-
-    /*
     General view options.
 
     - binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
