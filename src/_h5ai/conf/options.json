@@ -242,6 +242,7 @@ Options
             "txt-install": "fixed",
             "txt-log": "fixed",
             "txt-java": "java",
+            "txt-scala": "scala",
             "txt-js": "javascript",
             "txt-json": "javascript",
             "txt-makefile": "fixed",
