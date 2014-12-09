@@ -1,10 +1,9 @@
 modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event'], function (_, $, allsettings, resource, store, event) {
 
     var modes = ['details', 'grid', 'icons'];
-    var sizes = [16, 24, 32, 48, 64, 96, 128, 192, 256];
     var settings = _.extend({}, {
             modes: modes,
-            sizes: sizes
+            sizes: [16, 24, 32, 48, 64, 96, 128, 192, 256]
         }, allsettings.view);
     var storekey = 'viewmode';
     var modeTemplate =
@@ -15,9 +14,8 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
             '</div>';
     var sizeTemplate =
             '<input id="view-size" type="range" min="0" max="0" value="0">';
+    var sortedSizes = settings.sizes.sort(function (a, b) { return a-b; });
     var dynamicStyleTag = null;
-
-    sizes = settings.sizes.sort(function (a, b) { return a-b; });
 
 
     function adjustSpacing() {
@@ -93,7 +91,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         });
 
         applyCssSizes(size);
-        $('#view-size').val(_.indexOf(sizes, size));
+        $('#view-size').val(_.indexOf(sortedSizes, size));
 
         adjustSpacing();
     }
