@@ -24,6 +24,12 @@
 
 #view.view-details {
 
+    margin: 16px;
+
+    #items {
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+    }
+
     .header {
         position: relative;
         white-space: nowrap;
@@ -62,7 +68,8 @@
         border-bottom: 1px solid rgba(0,0,0,0.07);
 
         &:hover {
-            border-bottom: 1px solid rgba(0,0,0,0.09);
+            box-shadow: 0 1px 10px 0px rgba(0,0,0,0.5);
+            z-index: 1;
         }
     }
 
@@ -98,41 +105,5 @@
         margin-top: -1px;
     }
 
-    &.size-16 {
-        .view-details-sized(16px)
-    }
-
-    .view-details-sized(24px);
-
-    &.size-32 {
-        .view-details-sized(32px)
-    }
-
-    &.size-48 {
-        .view-details-sized(48px)
-    }
-
-    &.size-64 {
-        .view-details-sized(64px)
-    }
-
-    &.size-96 {
-        .view-details-sized(96px)
-    }
-
-    &.size-128 {
-        .view-details-sized(128px)
-    }
-
-    &.size-192 {
-        .view-details-sized(192px)
-    }
-
-    &.size-256 {
-        .view-details-sized(256px)
-    }
-
-    &.size-384 {
-        .view-details-sized(384px)
-    }
+    .view-details-sized(16px)
 }

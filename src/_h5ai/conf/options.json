@@ -34,10 +34,10 @@ Options
         The user selected view mode is also stored local in modern browsers
         so that it will be persistent.
     - setParentFolderLabels: set parent folder labels to real folder names
-    - sizes: array, subset of [16, 24, 32, 48, 64, 96, 128, 192, 256, 384]
-        the first value indicates the default view mode. If only one value
-        is given the view mode is fixed and the selector buttons are hidden.
-        The user selected view mode is also stored local in modern browsers
+    - sizes: array of positive integers
+        the first value indicates the default view size. If only one value
+        is given the view size is fixed and the selector buttons are hidden.
+        The user selected view size is also stored local in modern browsers
         so that it will be persistent.
     - smartBrowsing: use History API if available (no need to reload the whole page)
     - theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to builtin fallback
@@ -52,7 +52,7 @@ Options
         "hideParentFolder": true,
         "modes": ["details", "grid", "icons"],
         "setParentFolderLabels": true,
-        "sizes": [16, 24, 32, 48, 64, 96, 128, 192, 256, 384],
+        "sizes": [16, 24, 32, 48, 64, 96, 128, 192, 256],
         "smartBrowsing": true,
         "theme": "",
         "unmanaged": ["index.html", "index.htm", "index.php"],
