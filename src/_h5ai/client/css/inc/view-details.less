@@ -27,6 +27,7 @@
     margin: 16px;
 
     #items {
+        .rounded();
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
     }
 
@@ -65,10 +66,11 @@
     }
 
     .item {
+        overflow: hidden;
         border-bottom: 1px solid rgba(0,0,0,0.07);
 
         &:hover {
-            box-shadow: 0 1px 10px 0px rgba(0,0,0,0.5);
+            .raised();
             z-index: 1;
         }
     }
@@ -81,6 +83,7 @@
         padding: 8px;
 
         .thumb {
+            .rounded();
             box-shadow: 0 0 1px 0 rgba(0,0,0,0.2);
         }
     }
@@ -102,7 +105,8 @@
     }
 
     .selector {
-        margin-top: -1px;
+        left: -2px;
+        top: -2px;
     }
 
     .view-details-sized(16px)

@@ -46,42 +46,20 @@ body#h5ai-info {
     }
 
     #pass {
-        -moz-appearance: none;
-        -ms-appearance: none;
-        -webkit-appearance: none;
-        font-family: @font-family;
-        font-weight: @font-weight;
-        color: @col;
-        background: #fff;
-        border: none;
-        outline: none;
+        .el-input();
         display: inline-block;
-        width: 200px;
-        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
-        border-radius: 2px;
         margin: 8px;
         padding: 0 12px;
         line-height: 28px;
+        width: 200px;
     }
 
     #login, #logout {
+        .el-button();
         display: inline-block;
         margin: 8px;
         padding: 0 12px;
-        background: #42a5f5;
-        color: #fff;
         line-height: 28px;
-        cursor: pointer;
-        border-radius: 2px;
-        cursor: pointer;
-        text-decoration: none;
-        .transition(all 0.2s ease-in-out);
-
-        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
-
-        &:hover {
-            box-shadow: 0 1px 8px 0px rgba(0,0,0,0.5);
-        }
     }
 
     #hint {
@@ -98,11 +76,10 @@ body#h5ai-info {
         padding: 0;
 
         .test {
+            .card();
+            .rounded();
             margin: 12px 0 0 0;
             padding: 8px;
-            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
-            background: #fff;
-            border-radius: 2px;
         }
         .label {
             display: inline-block;
