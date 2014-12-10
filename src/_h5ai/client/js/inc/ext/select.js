@@ -104,17 +104,13 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     function selectionStart(event) {
 
-        var $window = $(window);
-        var viewRight = $window.scrollLeft() + $window.width();
-        var viewBottom = $window.scrollTop() + $window.height();
+        // only on left button and don't block scrollbar
+        if (event.button !== 0 || event.offsetX >= $('#content').width() - 14) {
+            return;
+        }
 
         x = event.pageX;
         y = event.pageY;
-
-        // only on left button and don't block the scrollbars
-        if (event.button !== 0 || x >= viewRight || y >= viewBottom) {
-            return;
-        }
 
         $(':focus').blur();
         if (!event.ctrlKey && !event.metaKey) {
@@ -197,7 +193,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
 
-        $document
+        // $document
+        $('#content')
             .on('mousedown', '.noSelection', noSelection)
             .on('mousedown', '.noSelectionUnlessCtrl,input,select,a', noSelectionUnlessCtrl)
             .on('mousedown', selectionStart);

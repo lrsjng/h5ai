@@ -32,12 +32,14 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
 
         if (item.isDomain()) {
             $html.addClass('domain');
-            $a.find('img').attr('src', resource.image('home'));
+            // $a.find('img').attr('src', resource.image('home'));
+            $a.find('img').remove();
         }
 
         if (item.isRoot()) {
             $html.addClass('root');
-            $a.find('img').attr('src', resource.image('home'));
+            // $a.find('img').attr('src', resource.image('home'));
+            $a.find('img').remove();
         }
 
         if (item.isCurrentFolder()) {

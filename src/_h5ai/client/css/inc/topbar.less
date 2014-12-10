@@ -1,34 +1,29 @@
 
 #topbar {
-    position: fixed;
-    z-index: 5;
-    width: 100%;
+    overflow: hidden;
+    flex: 0 0 auto;
+    order: 1;
     min-height: 30px;
-    left: 0;
-    top: 0;
-    background-color: @col-widget-back;
-    border-bottom: @border-widget;
+    font-weight: lighter;
+
+    background: #fafafa;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
-
-.topbar-highlight {
-    background-color: @col-widget-back-highlight;
-    opacity: 1.0;
-}
 
 .topbar-hover {
-    .topbar-highlight;
     color: @col-hover;
 }
 
 .topbar-left {
     float: left;
-    border-right: @border-widget-sep;
+    // border-right: @border-widget-sep;
 }
 
 .topbar-right {
     float: right;
-    border-left: @border-widget-sep;
+    // border-left: @border-widget-sep;
 }
 
 
@@ -42,31 +37,32 @@
         color: @col;
         cursor: pointer;
         text-decoration: none;
-        opacity: 0.7;
         .transition(all 0.2s ease-in-out);
 
         display: block;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 15px;
+        padding: 0 6px;
 
         &:hover, &.hover {
             .topbar-hover;
         }
     }
     .current {
-        a, span.element {
-            .topbar-highlight;
-        }
+        font-weight: bold;
+    }
+    .element {
     }
     img {
         position: relative;
-        top: -2px;
+        top: -1px;
         width: 16px;
         height: 16px;
+        opacity: 0.8;
     }
     img + span, img + input {
-        margin-left: 6px;
+        margin-left: 8px;
     }
     .crumb {
         .topbar-left;
@@ -79,6 +75,9 @@
             opacity: 0.8;
             width: 12px;
             height: 12px;
+        }
+        &.root, &.domain {
+            margin-left: 10px;
         }
     }
     .view {

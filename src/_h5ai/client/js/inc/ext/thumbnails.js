@@ -1,22 +1,22 @@
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server'], function (_, allsettings, event, server) {
+modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server', 'core/resource'], function (_, allsettings, event, server, resource) {
 
     var settings = _.extend({
             enabled: false,
-            img: ['bmp', 'gif', 'ico', 'image', 'jpg', 'png'],
-            mov: ['video'],
-            doc: ['pdf', 'ps'],
-            delay: 1000,
-            size: 96
+            img: ['img-bmp', 'img-gif', 'img-ico', 'img-jpg', 'img-png'],
+            mov: ['vid-avi', 'vid-flv', 'vid-mkv', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm'],
+            doc: ['x-pdf', 'x-ps'],
+            delay: 1,
+            size: 128,
+            exif: true
         }, allsettings.thumbnails);
 
 
-    function requestThumb(type, href, mode, ratio, callback) {
+    function requestThumb(type, href, ratio, callback) {
 
         server.request({
             action: 'getThumbHref',
             type: type,
             href: href,
-            mode: mode,
             width: settings.size * ratio,
             height: settings.size
         }, function (json) {
@@ -41,7 +41,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
             if (item.thumbSquare) {
                 item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
             } else {
-                requestThumb(type, item.absHref, 'square', 1, function (src) {
+                requestThumb(type, item.absHref, 1, function (src) {
 
                     if (src && item.$view) {
                         item.thumbSquare = src;
@@ -50,13 +50,13 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
                 });
             }
             if (item.thumbRational) {
-                item.$view.find('.icon.rational img').addClass('thumb').attr('src', item.thumbRational);
+                item.$view.find('.icon.landscape img').addClass('thumb').attr('src', item.thumbRational);
             } else {
-                requestThumb(type, item.absHref, 'rational', 2, function (src) {
+                requestThumb(type, item.absHref, 4/3, function (src) {
 
                     if (src && item.$view) {
                         item.thumbRational = src;
-                        item.$view.find('.icon.rational img').addClass('thumb').attr('src', src);
+                        item.$view.find('.icon.landscape img').addClass('thumb').attr('src', src);
                     }
                 });
             }

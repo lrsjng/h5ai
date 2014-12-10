@@ -10,7 +10,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
             '<li class="item">' +
                 '<a>' +
                     '<span class="icon square"><img/></span>' +
-                    '<span class="icon rational"><img/></span>' +
+                    '<span class="icon landscape"><img/></span>' +
                     '<span class="label"/>' +
                     '<span class="date"/>' +
                     '<span class="size"/>' +
@@ -54,6 +54,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
         $iconImg.attr('src', resource.icon(item.type)).attr('alt', item.type);
         $label.text(item.label);
+        $label.attr('title', item.label);
         $date.data('time', item.time).text(format.formatDate(item.time));
         $size.data('bytes', item.size).text(format.formatSize(item.size));
 
@@ -159,7 +160,8 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
 
-        $content.appendTo('body');
+        // $content.appendTo('body');
+        $content.appendTo('#main-row');
     }
 
 

@@ -1,12 +1,16 @@
 
 #content {
-    max-width: 960px;
-    margin: 50px auto;
-    font-size: 15px;
+    overflow: auto;
+    flex: 1 1 auto;
+    order: 50;
 }
 
 #content-header, #content-footer {
-    color: #333;
+    margin: 16px;
+    color: @col;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+    background: #fafafa;
+    padding: 16px;
 
     a, a:active, a:visited {
         color: @col-link;
@@ -14,21 +18,15 @@
         cursor: pointer;
 
         &:hover {
-            color: #555;
+            color: #000;
         }
     }
 
     pre, code {
         font-family: @font-family-mono;
     }
-}
 
-#content-header {
-    padding-bottom: 12px;
-    margin-bottom: 32px;
-}
-
-#content-footer {
-    padding-top: 12px;
-    margin-top: 32px;
+    h1, h2, h3, h4, h5, h6, p {
+        margin: 0.1em 0;
+    }
 }

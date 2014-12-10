@@ -1,122 +1,117 @@
 
 .view-details-sized(@size) {
 
-    li {
-
-        &.item {
-
-            a, a:active, a:visited {
-                height: @size + 6px;
-            }
-
-            .label, .date, .size {
-                padding: ((@size - 16px)/2) 8px;
-            }
+    .item {
+        .label, .date, .size {
+            line-height: @size + 14px;
         }
+    }
 
-        .icon.square {
+    .square {
+        width: @size;
+
+        img {
             width: @size;
-
-            img {
-                width: @size;
-                height: @size;
-            }
+            height: @size;
         }
+    }
 
-        .label {
-            margin: 0 230px 0 (@size + 16px);
-        }
+    .label {
+        margin: 0 246px 0 (@size + 32px);
     }
 }
 
 
 #view.view-details {
 
-    li {
+    margin: 16px;
 
-        &.header {
-            display: list-item;
-        }
+    #items {
+        .rounded();
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+    }
 
-        &.item {
+    .header {
+        position: relative;
+        white-space: nowrap;
+        display: list-item;
+        background: #fafafa;
+        border-bottom: 1px solid rgba(0,0,0,0.07);
+        border-radius: 2px 2px 0 0;
 
-            a, a:active, a:visited {
-                border-bottom: 1px solid @item-border-col-sep;
+        .label, .date, .size {
+            line-height: 46px;
+            opacity: 0.4;
+            outline: 0;
+            .transition(all 0.2s ease-in-out);
 
-                &:hover, &.hover {
-                    border-color: @item-border-col-hover;
-                }
+            &:hover {
+                opacity: 1;
+                color: @col-hover;
             }
-
-            // needs to be here, to not conflict with header fields
-            .icon {
-                padding: 8px;
-            }
         }
 
-        .icon.square {
-            display: inline-block;
-            position: absolute;
-            left: 0;
-            top: -4px;
+        .sort {
+            display: none;
+            position: relative;
+            top: -2px;
+            width: 12px;
+            height: 12px;
+            padding: 0 8px;
         }
 
-        .date {
-            position: absolute;
-            right: 100px;
-            top: 0;
-        }
-
-        .size {
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-
-        .selector {
-            margin-top: -1px;
+        .ascending .sort.ascending,
+        .descending .sort.descending {
+            display: inline;
         }
     }
 
-    .view-details-sized(@icon-size);
+    .item {
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0,0,0,0.07);
 
-    &.size-16 {
-        .view-details-sized(16px)
+        &:hover {
+            .raised();
+            z-index: 1;
+        }
+
+        &:last-child {
+            border-radius: 0 0 2px 2px;
+        }
     }
 
-    &.size-24 {
-        .view-details-sized(24px)
+    .square {
+        display: inline-block;
+        position: absolute;
+        left: 16px;
+        top: -1px;
+        padding: 8px;
+
+        .thumb {
+            .rounded();
+            box-shadow: 0 0 1px 0 rgba(0,0,0,0.2);
+        }
     }
 
-    &.size-32 {
-        .view-details-sized(32px)
+    .label, .date, .size {
+        padding: 0 8px;
     }
 
-    &.size-48 {
-        .view-details-sized(48px)
+    .date {
+        position: absolute;
+        right: 116px;
+        top: 0;
     }
 
-    &.size-64 {
-        .view-details-sized(64px)
+    .size {
+        position: absolute;
+        right: 16px;
+        top: 0;
     }
 
-    &.size-96 {
-        .view-details-sized(96px)
+    .selector {
+        left: -5px;
     }
 
-    &.size-128 {
-        .view-details-sized(128px)
-    }
-
-    &.size-192 {
-        .view-details-sized(192px)
-    }
-
-    &.size-256 {
-        .view-details-sized(256px)
-    }
-
-    &.size-384 {
-        .view-details-sized(384px)
-    }
+    .view-details-sized(16px)
 }

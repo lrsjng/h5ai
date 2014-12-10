@@ -19,24 +19,15 @@ head
 
 body
 
-    div#topbar.clearfix
-        ul#navbar
-
-    div#bottombar.clearfix
-        span.left
-            span.noJsMsg
-                | ⚡ JavaScript disabled! ⚡
-            span.noBrowserMsg
-                | ⚡ Works best in 
-                a( href="http://browsehappy.com" ) modern browsers
-                | ! ⚡
-        span.right
-            a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" )
-                | powered by #{pkg.name} #{pkg.version}
-        span.center
-
-    div#sidebar
-        div#settings
+    div#bottombar
+        span.noJsMsg
+            | JavaScript disabled!
+        span.noBrowserMsg
+            | Works best in 
+            a( href="http://browsehappy.com" ) modern browsers
+            | !
+        a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" )
+            | powered by #{pkg.name} #{pkg.version}
 
     div#fallback !{fallback}
 

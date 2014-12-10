@@ -1,13 +1,28 @@
 
 body#h5ai-info {
-    font-family: @font-family;
-    margin: 2em auto 4em auto;
-    font-size: 20px;
-    color: @col;
-    max-width: 600px;
-    text-align: center;
 
-    a, a:active, a:visited {
+    #content {
+        flex: 1 1 auto;
+        order: 50;
+        color: @col;
+        text-align: center;
+        overflow-y: scroll;
+    }
+
+    code {
+        margin: 0 0.2em;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: @font-family-mono;
+        letter-spacing: 0.05em;
+        background-color: @col-widget-back;
+        border: @border-widget;
+        font-size: 0.9em;
+    }
+
+    #header a {
+        font-size: 2.1em;
+        margin: 0.8em 0 0 0;
         color: @col;
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
@@ -16,31 +31,12 @@ body#h5ai-info {
             color: @col-hover;
         }
     }
-    code {
-        margin: 0 0.2em;
-        padding: 2px 4px;
-        border-radius: 4px;
-        font-family: @font-family-mono;
-        letter-spacing: 0.1em;
-        background-color: @col-widget-back;
-        border: @border-widget;
-    }
-    h1 {
-        font-size: 3.6em;
-        margin: 0;
-    }
-    h2 {
-        font-size: 1.15em;
-        margin: 2.6em 0 0 0;
-    }
-
 
     #support {
         margin: 12px auto 24px auto;
         padding: 6px 18px;
-        width: 164px;
-        font-size: 12px;
-        background: @col-widget-back;
+        width: 180px;
+        background: #fafafa;
         border: @border-widget;
         border-radius: 4px;
 
@@ -49,99 +45,67 @@ body#h5ai-info {
         }
     }
 
-
-    #login-wrapper {
-        font-size: 14px;
-    }
-
     #pass {
-        -moz-appearance: none;
-        -ms-appearance: none;
-        -webkit-appearance: none;
-        font-family: @font-family;
-        font-weight: @font-weight;
-        color: @col;
-        background: @col-widget-back-highlight;
-        border: @border-widget;
-        outline: none;
+        .el-input();
         display: inline-block;
-        width: 200px;
-        height: 27px;
-        padding: 0 6px;
         margin: 8px;
+        padding: 0 12px;
+        line-height: 28px;
+        width: 200px;
+        vertical-align: top;
     }
 
     #login, #logout {
+        .el-button();
         display: inline-block;
-        padding: 4px 16px;
         margin: 8px;
-        background-color: @col-widget-back;
-        border: @border-widget;
-        cursor: pointer;
-
-        color: @col;
-        cursor: pointer;
-        text-decoration: none;
-        .transition(all 0.2s ease-in-out);
-
-        &:hover, &.hover {
-            background-color: @col-widget-back-highlight;
-            color: @col-hover;
-        }
+        padding: 0 12px;
+        line-height: 28px;
+        vertical-align: top;
     }
 
     #hint {
         margin: 12px auto;
-        width: 360px;
-        color: @col;
-        font-size: 12px;
-    }
-
-
-    #tests-wrapper {
-        margin: 96px 0;
+        width: 380px;
+        font-weight: lighter;
     }
 
     #tests {
         display: inline-block;
-        list-style-type: none;
         text-align: left;
-        margin: 0;
+        list-style-type: none;
+        margin: 96px 0;
         padding: 0;
 
         .test {
+            .card();
+            .rounded();
+            background: @col-light;
             margin: 12px 0 0 0;
-            padding: 6px;
+            padding: 8px 12px 12px 12px;
+        }
+        .label {
+            display: inline-block;
+            width: 250px;
+            font-size: 1.4em;
+        }
+        .result {
+            display: inline-block;
+            width: 250px;
+            text-align: right;
+            font-size: 1.4em;
+            font-weight: bold;
 
-            .label {
-                display: inline-block;
-                width: 250px;
+            &.passed {
+                color: @col-okay;
             }
-            .result {
-                display: inline-block;
-                width: 250px;
-                text-align: right;
-                font-weight: bold;
-
-                &.passed {
-                    color: #5a5;
-                }
-                &.failed {
-                    color: #a55;
-                }
-            }
-            .info {
-                margin: 4px 0 12px 12px;
-                font-size: 0.7em;
-                color: #aaa;
-                width: 460px;
-                line-height: 1.2em;
+            &.failed {
+                color: @col-error;
             }
         }
-    }
-
-
-    #bottombar {
-        font-size: 13px;
+        .info {
+            font-weight: lighter;
+            margin: 4px 0 0 0;
+        }
     }
 }

@@ -1,15 +1,12 @@
 
 #sidebar {
-    position: fixed;
-    right: -220px;
-    width: 200px;
-    top: 31px;
-    height: 100%;
-    z-index: 3;
+    display: none;
     overflow: auto;
-    padding: 8px;
-    background-color: @col-widget-back;
-    border-left: @border-widget;
+    flex: 0 0 auto;
+    order: 99;
+    width: 200px;
+    padding: 16px 8px 16px 16px;
+    border-left: 1px solid @col-border;
 }
 
 #settings {
@@ -20,7 +17,7 @@
 
         h1 {
             font-size: 1em;
-            border-bottom: 1px solid #e7e7e7;
+            margin: 2px 0 6px 0;
         }
     }
 
@@ -35,17 +32,19 @@
         height: 30px;
         line-height: 30px;
         padding: 0 10px;
+        outline: 0;
 
-        &:hover, &.hover {
+        &:hover {
             opacity: 1.0;
-            background: @col-widget-back-highlight;
+            box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
         }
     }
 
     .current {
         a, span.element {
             opacity: 1.0;
-            background: @col-widget-back-highlight;
+            background: rgba(0,0,0,0.03);
+            box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
         }
     }
 
@@ -62,9 +61,14 @@
     }
 
     .select {
-        background-color: @col-widget-back-highlight;
+        background: transparent;
         width: 175px;
         overflow: hidden;
+        outline: 0;
+
+        &:hover, &.hover {
+            box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
+        }
     }
 
     input, select {
@@ -72,19 +76,19 @@
         -ms-appearance: none;
         -webkit-appearance: none;
         font-family: @font-family;
-        font-size: 13px;
+        font-size: @font-size;
         font-weight: @font-weight;
         color: @col;
-        background: @col-widget-back;
+        background: transparent;
         width: 100%;
         height: 30px;
         line-height: 30px;
         border: 0 solid #000;
-        outline: none;
         cursor: pointer;
+        outline: 0;
 
         &:hover, &.hover {
-            background: @col-widget-back-highlight;
+            box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
         }
    }
 
@@ -95,9 +99,9 @@
 
     input[type='range'] {
         border-radius: 2px;
-        width: 64px;
+        width: 50px;
         margin: 0 0 4px 12px;
-        padding: 0 2px;
+        padding: 0 8px;
         vertical-align: middle;
     }
 

@@ -2,7 +2,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
     var settings = _.extend({
             enabled: false,
-            slide: true,
             maxSubfolders: 50
         }, allsettings.tree);
     var template =
@@ -15,7 +14,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
                     '<span class="label"/>' +
                 '</a>' +
             '</span>';
-    var statusHintTemplate = '<span class="hint"/>';
 
 
     function update(item) {
@@ -55,25 +53,24 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
             // is it the domain?
             if (item.isDomain()) {
                 $html.addClass('domain');
-                $img.attr('src', resource.image('home'));
+                // $img.attr('src', resource.image('home'));
             }
 
             // is it the root?
             if (item.isRoot()) {
                 $html.addClass('root');
-                $img.attr('src', resource.image('home'));
+                // $img.attr('src', resource.image('home'));
             }
 
             // is it the current folder?
             if (item.isCurrentFolder()) {
                 $html.addClass('current');
-                // $img.attr('src', resource.image('folder-open'));
             }
 
             // does it have subfolders?
             if (subfolders.length) {
-                var $ul = $('<ul class="content"/>').appendTo($html),
-                    counter = 0;
+                var $ul = $('<ul class="content"/>').appendTo($html);
+                var counter = 0;
                 _.each(subfolders, function (e) {
                     counter += 1;
                     if (counter <= settings.maxSubfolders) {
@@ -111,11 +108,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
             item.isContentVisible = down;
             $indicator.removeClass('open close').addClass(down ? 'open' : 'close');
-            $tree.scrollpanel('update', true);
-            $content[down ? 'slideDown' : 'slideUp'](function () {
-
-                $tree.scrollpanel('update');
-            });
+            $content[down ? 'slideDown' : 'slideUp']();
         }
 
         return function () {
@@ -151,19 +144,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         };
     }
 
-    function shiftTree(forceVisible, dontAnimate) {
-
-        var $tree = $("#tree");
-        var $view = $("#view");
-        var left = ((settings.slide && $tree.outerWidth() < $view.offset().left) || forceVisible || !$view.is(':visible')) ? 0 : 18 - $tree.outerWidth();
-
-        if (dontAnimate) {
-            $tree.stop().css({ left: left });
-        } else {
-            $tree.stop().animate({ left: left });
-        }
-    }
-
     function fetchTree(item, callback) {
 
         item.isContentVisible = true;
@@ -177,30 +157,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         });
     }
 
-    function adjustSpacing() {
-
-        var $tree = $('#tree');
-        var winHeight = $(window).height();
-        var navHeight = $('#topbar').outerHeight();
-        var footerHeight = $('#bottombar').outerHeight();
-
-        $tree.css({
-            top: navHeight,
-            height: winHeight - navHeight - footerHeight - 16
-        });
-
-        $tree.scrollpanel('update');
-    }
-
     function onLocationChanged(item) {
 
         fetchTree(item, function (root) {
 
             $('#tree')
-                .find('.sp-container').append(update(root)).end()
+                .append(update(root))
                 .show();
-            adjustSpacing();
-            shiftTree(false, true);
         });
     }
 
@@ -210,27 +173,11 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
             return;
         }
 
-        var $tree = $('<div id="tree"/>')
-                        .appendTo('body')
-                        .scrollpanel()
-                        .on('click', '.indicator', createOnIndicatorClick())
-                        .on('mouseenter', function () {
+        $('<div id="tree"/>')
+            .appendTo('#main-row')
+            .on('click', '.indicator', createOnIndicatorClick());
 
-                            shiftTree(true);
-                        })
-                        .on('mouseleave', function () {
-
-                            shiftTree();
-                        });
-
-        event.sub('ready', adjustSpacing);
         event.sub('location.changed', onLocationChanged);
-
-        $(window).on('resize', function () {
-
-            adjustSpacing();
-            shiftTree();
-        });
     }
 
 
