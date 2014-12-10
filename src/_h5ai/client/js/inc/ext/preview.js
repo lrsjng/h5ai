@@ -122,7 +122,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
     function onKeydown(ev) {
 
         var key = ev.which;
-        var delay = 300;
 
         if (key === 27) { // esc
             ev.preventDefault();
@@ -131,20 +130,14 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         } else if (key === 8 || key === 37) { // backspace, left
             ev.preventDefault();
             ev.stopImmediatePropagation();
-            $('#pv-bar-prev').addClass('hover');
-            setTimeout(function () { $('#pv-bar-prev').removeClass('hover'); }, delay);
             onPrevious();
         } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
             ev.preventDefault();
             ev.stopImmediatePropagation();
-            $('#pv-bar-next').addClass('hover');
-            setTimeout(function () { $('#pv-bar-next').removeClass('hover'); }, delay);
             onNext();
         } else if (key === 70) { // f
             ev.preventDefault();
             ev.stopImmediatePropagation();
-            $('#pv-bar-fullscreen').addClass('hover');
-            setTimeout(function () { $('#pv-bar-fullscreen').removeClass('hover'); }, delay);
             onFullscreen();
         }
     }
