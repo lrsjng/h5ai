@@ -37,6 +37,7 @@
         display: list-item;
         background: #fafafa;
         border-bottom: 1px solid rgba(0,0,0,0.07);
+        border-radius: 2px 2px 0 0;
 
         .label, .date, .size {
             line-height: 46px;
@@ -73,6 +74,10 @@
             .raised();
             z-index: 1;
         }
+
+        &:last-child {
+            border-radius: 0 0 2px 2px;
+        }
     }
 
     .square {
@@ -105,8 +110,7 @@
     }
 
     .selector {
-        left: -2px;
-        top: -2px;
+        left: -5px;
     }
 
     .view-details-sized(16px)
