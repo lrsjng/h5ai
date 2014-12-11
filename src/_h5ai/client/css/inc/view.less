@@ -1,12 +1,4 @@
 
-@item-col-hover: @col-hover;
-@item-background-col-hover: #fafafa;
-@item-border-col-hover: @col-border;
-
-@item-col-sel: #fff;
-@item-background-col-sel: #42a5f5;
-
-
 #selection-rect {
     display: none;
     position: absolute;
@@ -44,24 +36,22 @@
         background: #fff;
 
         &:hover {
-            color: @item-col-hover;
-            background: @item-background-col-hover;
-            border-color: @item-border-col-hover;
-        }
+            color: @col-hover;
+            background: @col-lightgray;
+            border-color: @col-border;
 
-        &:hover {
             .selector {
                 display: block;
             }
         }
 
         &.selected:not(.selecting), &.selecting:not(.selected) {
-            color: @item-col-sel;
-            background: @item-background-col-sel;
+            color: @col-text-selected;
+            background: @col-back-selected;
 
             &:hover {
-                color: @item-col-sel;
-                background: @item-background-col-sel;
+                color: @col-text-selected;
+                background: @col-back-selected;
             }
 
             .selector {
@@ -137,7 +127,7 @@
         display: none;
         margin-top: 36px;
         text-align: center;
-        color: #ddd;
+        color: @col-border;
         font-size: 5em;
         font-weight: bold;
     }
