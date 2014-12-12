@@ -6,7 +6,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
             mov: ['vid-avi', 'vid-flv', 'vid-mkv', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm'],
             doc: ['x-pdf', 'x-ps'],
             delay: 1,
-            size: 128,
+            size: 100,
             exif: true
         }, allsettings.thumbnails);
 
@@ -17,7 +17,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
             action: 'getThumbHref',
             type: type,
             href: href,
-            width: settings.size * ratio,
+            width: Math.round(settings.size * ratio),
             height: settings.size
         }, function (json) {
 

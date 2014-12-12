@@ -38,7 +38,7 @@ Options
         "hideParentFolder": true,
         "modes": ["details", "grid", "icons"],
         "setParentFolderLabels": true,
-        "sizes": [16, 24, 32, 48, 64, 96, 128, 192, 256],
+        "sizes": [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400],
         "smartBrowsing": true,
         "theme": "",
         "unmanaged": ["index.html", "index.htm", "index.php"],
@@ -310,7 +310,7 @@ Options
         "mov": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"],
         "doc": ["x-pdf", "x-ps"],
         "delay": 1,
-        "size": 96,
+        "size": 100,
         "exif": true
     },
 

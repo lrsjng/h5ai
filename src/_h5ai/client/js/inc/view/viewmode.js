@@ -3,7 +3,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
     var modes = ['details', 'grid', 'icons'];
     var settings = _.extend({}, {
             modes: modes,
-            sizes: [16, 24, 32, 48, 64, 96, 128, 192, 256]
+            sizes: [20, 40, 60, 80, 100, 150, 200],
         }, allsettings.view);
     var storekey = 'viewmode';
     var modeTemplate =
@@ -46,9 +46,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
     function applyCssSizes(size) {
 
-        var dsize = cropSize(size, 16, 96);
-        var gsize = cropSize(size, 48, 192);
-        var isize = cropSize(size, 96);
+        var dsize = cropSize(size, 10, 80);
+        var gsize = cropSize(size, 40, 150);
+        var isize = cropSize(size, 80);
         var rules = [
                 '#view.view-details .item .label { line-height: ' + (dsize+14) + 'px !important; }',
                 '#view.view-details .item .date { line-height: ' + (dsize+14) + 'px !important; }',
@@ -61,9 +61,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
                 '#view.view-grid .square { width: ' + gsize + 'px !important; }',
                 '#view.view-grid .square img { width: ' + gsize + 'px !important; height: ' + gsize + 'px !important; }',
 
-                '#view.view-icons .item { width: ' + (isize*4/3) + 'px !important; }',
+                '#view.view-icons .item { width: ' + Math.round(isize*4/3) + 'px !important; }',
                 '#view.view-icons .landscape img { width: ' + isize + 'px !important; height: ' + isize + 'px !important; }',
-                '#view.view-icons .landscape .thumb { width: ' + (isize*4/3) + 'px !important; }'
+                '#view.view-icons .landscape .thumb { width: ' + Math.round(isize*4/3) + 'px !important; }'
             ];
         applyCss(rules);
     }
