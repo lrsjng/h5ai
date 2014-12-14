@@ -1,13 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16" version="1.1">
-  <g transform="translate(-40.984 -646.99)" fill="#ccc">
-    <path d="m41.8 657a1 1 0 0 0-0.8 1v4a1 1 0 0 0 1 1h4a1 1 0 1 0 0-2h-3v-3a1 1 0 0 0-1.2-1zM46.9 656a1 1 0 0 0-0.6 0.3l-5 5a1 1 0 1 0 1.4 1.4l5-5a1 1 0 0 0-0.8-1.7z"/>
-    <rect height="1" width="1" y="662" x="41"/>
-    <path d="m51.9 647a1 1 0 1 0 0.1 2h3v3a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1h-4a1 1 0 0 0-0.1 0z"/>
-    <rect height="1" width="1" y="647" x="56"/>
-    <path d="m55.9 647a1 1 0 0 0-0.6 0.3l-5 5a1 1 0 1 0 1.4 1.4l5-5a1 1 0 0 0-0.8-1.7z"/>
-    <rect height="1" width="1" y="657" x="41"/>
-    <rect height="1" width="1" y="662" x="46"/>
-    <rect height="1" width="1" y="652" x="56"/>
-    <rect height="1" width="1" y="647" x="51"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="fullscreen.svg">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1871"
+     inkscape:window-height="1056"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="9.8333333"
+     inkscape:cx="-5.8983051"
+     inkscape:cy="12"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     d="M0 0h24v24h-24z"
+     fill="none"
+     id="path4" />
+  <path
+     d="M7 14h-2v5h5v-2h-3v-3zm-2-4h2v-3h3v-2h-5v5zm12 7h-3v2h5v-5h-2v3zm-3-12v2h3v3h2v-5h-5z"
+     id="path6"
+     style="fill:#ffffff;fill-opacity:1;stroke:none" />
 </svg>

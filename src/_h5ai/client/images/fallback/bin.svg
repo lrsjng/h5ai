@@ -1,4 +1,69 @@
-<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" height="96" width="96" viewBox="0 0 96 96" version="1.1">
-  <path d="M6 6 6 90 90 90 90 24 72 6zm6 6 57.6 0L84 26.6 84 84 12 84z" fill="#555"/>
-  <rect width="12" height="12" x="42" y="42" fill="#555"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="24"
+   width="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="bin.svg"
+   inkscape:export-filename="/home/lars/env/workspace/web/h5ai/src/_h5ai/client/images/fallback/file.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1871"
+     inkscape:window-height="1056"
+     id="namedview6"
+     showgrid="true"
+     inkscape:zoom="19.666667"
+     inkscape:cx="8.0363342"
+     inkscape:cy="9.1262198"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2987"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <path
+     style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
+     d="M 5 3 C 3.892 3 3 3.892 3 5 L 3 19 C 3 20.108 3.892 21 5 21 L 19 21 C 20.108 21 21 20.108 21 19 L 21 5 C 21 3.892 20.108 3 19 3 L 5 3 z M 5 5 L 19 5 L 19 19 L 5 19 L 5 5 z M 11.1875 8 C 11.08755 8 11.011995 8.05735 11 8.15625 L 10.84375 9.21875 C 10.599856 9.31905 10.395409 9.4686 10.1875 9.625 L 9.1875 9.21875 C 9.09554 9.17675 8.985479 9.2235 8.9375 9.3125 L 8.125 10.6875 C 8.07302 10.7765 8.11153 10.878 8.1875 10.9375 L 9.03125 11.59375 C 9.01526 11.72175 9 11.8679 9 12 C 9 12.1321 9.01525 12.27825 9.03125 12.40625 L 8.1875 13.0625 C 8.11154 13.1095 8.07702 13.2246 8.125 13.3125 L 8.9375 14.6875 C 8.98548 14.7765 9.099538 14.81215 9.1875 14.78125 L 10.1875 14.375 C 10.395409 14.535 10.599856 14.68165 10.84375 14.78125 L 11 15.84375 C 11.01199 15.94075 11.087544 16 11.1875 16 L 12.8125 16 C 12.91245 16 12.988006 15.94265 13 15.84375 L 13.15625 14.78125 C 13.400139 14.68095 13.604591 14.5314 13.8125 14.375 L 14.8125 14.78125 C 14.90446 14.82425 15.014521 14.7765 15.0625 14.6875 L 15.875 13.3125 C 15.92298 13.2235 15.88847 13.122 15.8125 13.0625 L 14.96875 12.40625 C 14.98474 12.27825 15 12.1359 15 12 C 15 11.864 14.98475 11.72175 14.96875 11.59375 L 15.8125 10.9375 C 15.88846 10.8905 15.92297 10.7754 15.875 10.6875 L 15.0625 9.3125 C 15.01452 9.2235 14.90046 9.18785 14.8125 9.21875 L 13.8125 9.625 C 13.604591 9.465 13.400139 9.31835 13.15625 9.21875 L 13 8.15625 C 12.98801 8.05925 12.912463 8 12.8125 8 L 11.1875 8 z M 12 10.59375 C 12.77166 10.59375 13.40625 11.2279 13.40625 12 C 13.40625 12.7721 12.77166 13.40625 12 13.40625 C 11.228341 13.40625 10.59375 12.7721 10.59375 12 C 10.59375 11.2279 11.228341 10.59375 12 10.59375 z "
+     id="rect2989" />
+  <g
+     id="g4"
+     transform="translate(-28,-1027.3622)" />
 </svg>

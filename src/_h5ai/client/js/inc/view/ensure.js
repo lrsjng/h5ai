@@ -1,14 +1,15 @@
 modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, config, event) {
 
     var templateTopbar =
-            '<div id="topbar" class="clearfix">' +
-                '<ul id="navbar"></ul>' +
+            '<div id="topbar">' +
+                '<div id="toolbar"/>' +
+                '<div id="crumbbar"/>' +
+                '<div id="navbar"/>' +
             '</div>';
     var templateMainRow =
             '<div id="main-row">' +
                 '<div id="sidebar">' +
-                    '<div id="settings">' +
-                    '</div>' +
+                    '<div id="settings"/>' +
                 '</div>' +
             '</div>';
 

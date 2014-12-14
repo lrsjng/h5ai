@@ -37,7 +37,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         var $container = $('#pv-content');
         var $spinner = $('#pv-spinner');
         var margin = isFullscreen ? 0 : 20;
-        var barHeight = isFullscreen ? 0 : 31;
+        var barHeight = isFullscreen ? 0 : 48;
 
         $container.css({
             width: winWidth - 2 * margin,

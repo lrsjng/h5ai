@@ -3,13 +3,13 @@
     display: none;
     overflow: auto;
     flex: 0 0 auto;
-    order: 99;
-    width: 200px;
-    padding: 16px 8px 16px 16px;
-    border-left: 1px solid @col-border;
+    order: 0;
+    width: 264px;
+    border-right: 1px solid @col-border;
 }
 
 #settings {
+    padding: 16px 8px 16px 16px;
 
     .block {
         display: block;
@@ -29,10 +29,8 @@
         .transition(all 0.2s ease-in-out);
 
         display: block;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
         outline: 0;
+        border-radius: 2px;
 
         &:hover {
             opacity: 1.0;
@@ -49,21 +47,22 @@
     }
 
     img {
-        position: relative;
-        top: -2px;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
+        padding: 12px;
     }
 
     .view {
         display: inline-block;
-        margin: 0 4px 0 0;
+        margin: 4px;
+        border-radius: 2px;
     }
 
     .select {
         background: transparent;
         width: 175px;
         overflow: hidden;
+        border-radius: 2px;
         outline: 0;
 
         &:hover {
@@ -99,9 +98,9 @@
 
     input[type='range'] {
         border-radius: 2px;
-        width: 50px;
-        margin: 0 0 4px 12px;
-        padding: 0 8px;
+        width: 142px;
+        margin: 4px;
+        padding: 9px;
         vertical-align: middle;
     }
 
@@ -110,9 +109,9 @@
         -ms-appearance: none;
         -webkit-appearance: none;
         border-width: 0;
-        border-radius: 2px;
+        border-radius: 20px;
         background: @col-range-back;
-        height: 2px;
+        height: 6px;
     }
 
     .range-thumb() {
@@ -120,10 +119,10 @@
         -ms-appearance: none;
         -webkit-appearance: none;
         border-width: 0;
-        border-radius: 2px;
+        border-radius: 20px;
         background: @col-range-thumb;
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: 16px;
     }
 
     input[type='range']::-webkit-slider-runnable-track { .range-track; }

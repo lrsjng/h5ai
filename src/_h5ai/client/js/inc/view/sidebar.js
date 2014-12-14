@@ -2,11 +2,9 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store'], function (
 
     var storekey = 'sidebarIsVisible';
     var toggleTemplate =
-            '<li id="sidebar-toggle" class="view">' +
-                '<a href="#">' +
-                    '<img src="' + resource.image('settings') + '" alt="settings"/>' +
-                '</a>' +
-            '</li>';
+            '<div id="sidebar-toggle" class="tool">' +
+                '<img src="' + resource.image('settings') + '" alt="settings"/>' +
+            '</div>';
 
 
     function update(toggle) {
@@ -32,8 +30,8 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store'], function (
     function init() {
 
         $(toggleTemplate)
-            .appendTo('#navbar')
-            .on('click', 'a', function (ev) {
+            .appendTo('#toolbar')
+            .on('click', function (ev) {
 
                 update(true);
                 ev.preventDefault();
