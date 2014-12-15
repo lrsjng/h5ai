@@ -9,8 +9,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="24"
    height="24"
-   version="1.1"
+   viewBox="0 0 24 24"
    id="svg2"
+   version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="settings.svg">
   <metadata
@@ -40,23 +41,18 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="-14.476267"
-     inkscape:cy="-3.677966"
+     inkscape:cx="-5.8983051"
+     inkscape:cy="12"
      inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
-  <g
-     id="g4"
-     transform="translate(-1.0504365e-7,-1028.3622)">
-    <path
-       d="m 19.432209,1041.3422 c 0.04,-0.32 0.07,-0.64 0.07,-0.98 0,-0.34 -0.03,-0.66 -0.07,-0.98 l 2.11,-1.65 c 0.19,-0.15 0.24,-0.42 0.12,-0.64 l -2,-3.46 c -0.12,-0.22 -0.39,-0.3 -0.61,-0.22 l -2.49,1 c -0.52,-0.4 -1.08,-0.73 -1.69,-0.98 l -0.38,-2.65 c -0.03,-0.24 -0.24,-0.42 -0.49,-0.42 h -4 c -0.2500003,0 -0.4600003,0.18 -0.4900003,0.42 l -0.38,2.65 c -0.61,0.25 -1.17,0.59 -1.69,0.98 l -2.49,-1 c -0.23,-0.09 -0.49,0 -0.61,0.22 l -2,3.46 c -0.13,0.22 -0.07,0.49 0.12,0.64 l 2.11,1.65 c -0.04,0.32 -0.07,0.65 -0.07,0.98 0,0.33 0.03,0.66 0.07,0.98 l -2.11,1.65 c -0.19,0.15 -0.24,0.42 -0.12,0.64 l 2,3.46 c 0.12,0.22 0.39,0.3 0.61,0.22 l 2.49,-1 c 0.52,0.4 1.08,0.73 1.69,0.98 l 0.38,2.65 c 0.03,0.24 0.24,0.42 0.4900003,0.42 h 4 c 0.25,0 0.46,-0.18 0.49,-0.42 l 0.38,-2.65 c 0.61,-0.25 1.17,-0.59 1.69,-0.98 l 2.49,1 c 0.23,0.09 0.49,0 0.61,-0.22 l 2,-3.46 c 0.12,-0.22 0.07,-0.49 -0.12,-0.64 l -2.11,-1.65 z m -7.43,2.52 c -1.93,0 -3.5000003,-1.57 -3.5000003,-3.5 0,-1.93 1.5700003,-3.5 3.5000003,-3.5 1.93,0 3.5,1.57 3.5,3.5 0,1.93 -1.57,3.5 -3.5,3.5 z"
-       style="fill:#555555"
-       id="path6"
-       inkscape:connector-curvature="0" />
-  </g>
+     inkscape:current-layer="svg2" />
+  <path
+     d="M0 0h24v24h-24z"
+     fill="none"
+     id="path4" />
+  <path
+     d="M3 18h18v-2h-18v2zm0-5h18v-2h-18v2zm0-7v2h18v-2h-18z"
+     id="path6"
+     style="fill:#555555;fill-opacity:1;stroke:none" />
 </svg>

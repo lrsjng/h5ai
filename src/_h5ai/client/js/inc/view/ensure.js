@@ -4,7 +4,6 @@ modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, confi
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +
                 '<div id="crumbbar"/>' +
-                '<div id="navbar"/>' +
             '</div>';
     var templateMainRow =
             '<div id="main-row">' +
@@ -12,6 +11,11 @@ modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, confi
                     '<div id="settings"/>' +
                 '</div>' +
             '</div>';
+    var templateBacklink =
+            '<a id="backlink" href="http://larsjung.de/h5ai/" title="h5ai project page">' +
+                '<div>powered by</div>' +
+                '<div>h5ai ' + config.setup.VERSION + '</div>' +
+            '</a>';
 
 
     var selb = '#bottombar';
@@ -47,12 +51,13 @@ modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, confi
 
         $(templateTopbar).appendTo('body');
         $(templateMainRow).appendTo('body');
+        $(templateBacklink).appendTo('#topbar');
 
-        event.sub('ready', function () {
+        // event.sub('ready', function () {
 
-            ensure();
-            setInterval(ensure, 60000);
-        });
+        //     ensure();
+        //     setInterval(ensure, 60000);
+        // });
     }
 
 

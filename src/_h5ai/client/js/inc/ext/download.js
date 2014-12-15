@@ -7,12 +7,9 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
             alwaysVisible: false
         }, allsettings.download);
     var downloadBtnTemplate =
-            '<li id="download">' +
-                '<a href="#">' +
-                    '<img src="' + resource.image('download') + '" alt="download"/>' +
-                    '<span class="l10n-download"/>' +
-                '</a>' +
-            '</li>';
+            '<div id="download" class="tool">' +
+                '<img src="' + resource.image('download') + '" alt="download"/>' +
+            '</div>';
     var selectedItems = [];
 
 
@@ -49,8 +46,8 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
         }
 
         $(downloadBtnTemplate)
-            .find('a').on('click', onClick).end()
-            .appendTo('#navbar');
+            .on('click', onClick)
+            .appendTo('#toolbar');
 
         if (settings.alwaysVisible) {
             $('#download').show();

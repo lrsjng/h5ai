@@ -17,8 +17,29 @@
 }
 
 
-#navbar {
-    display: none;
+#backlink {
+    overflow: hidden;
+    flex: 0 0 auto;
+    order: 99;
+    text-align: center;
+    padding: 6px 12px;
+    .transition(all 0.2s ease-in-out);
+
+    &, &:active, &:visited {
+        color: @col-text-disabled-black;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    &:hover {
+        color: @col-hover;
+    }
+    &:focus {
+        outline: 0;
+    }
+
+    div {
+        line-height: 18px;
+    }
 }
 
 
@@ -31,6 +52,7 @@
     .tool {
         display: inline-block;
         cursor: pointer;
+        .transition(all 0.2s ease-in-out);
 
         img {
             display: inline-block;
@@ -38,13 +60,17 @@
             height: 24px;
             padding: 12px;
         }
+
+        &:hover img {
+            background: rgba(0,0,0,0.03);
+        }
     }
 }
 
 
 #crumbbar {
     overflow: hidden;
-    flex: 0 0 auto;
+    flex: 1 1 auto;
     order: 2;
     height: 48px;
     font-size: 16px;

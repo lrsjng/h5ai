@@ -4,13 +4,12 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
             enabled: false
         }, allsettings.filter);
     var template =
-            '<li id="filter">' +
-                '<span class="element">' +
-                    '<img src="' + resource.image('filter') + '" alt="filter"/>' +
-                    '<input type="text" value="" placeholder="filter"/>' +
-                '</span>' +
-            '</li>';
+            '<div id="filter" class="tool">' +
+                '<img src="' + resource.image('filter') + '" alt="filter"/>' +
+                '<input type="text" value="" placeholder="filter"/>' +
+            '</div>';
     var noMatchTemplate = '<div class="no-match l10n-noMatch"/>';
+    var inputIsVisible = false;
     var $filter, $input, $noMatch;
 
 
@@ -66,36 +65,29 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
         return new RegExp(sequence, 'i');
     }
 
-    function reset() {
+    function update() {
 
-        $input.val('').blur();
-    }
-
-    function update(focus) {
-
-        var val = $input.val();
-
-        if (focus) {
-            $input.focus();
-        }
-
-        if (val || focus) {
+        if (inputIsVisible) {
+            var val = $input.val();
             filter(parseFilterSequence(val));
-            $filter.addClass('current');
+            $filter.addClass('active');
+            $input.focus();
         } else {
             filter();
-            $filter.removeClass('current');
+            $filter.removeClass('active');
         }
     }
 
-    function updt() {
+    function toggle() {
 
-        update(true);
+        inputIsVisible = !inputIsVisible;
+        update();
     }
 
-    function updf() {
+    function reset() {
 
-        update(false);
+        $input.val('');
+        update();
     }
 
     function init() {
@@ -104,22 +96,12 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
             return;
         }
 
-        $filter = $(template).appendTo('#navbar');
+        $filter = $(template).appendTo('#toolbar');
         $input = $filter.find('input');
         $noMatch = $(noMatchTemplate).appendTo('#view');
 
-        $filter.on('click', updt);
-        $input.on('focus blur keyup', updf);
-
-        $(document)
-            .on('keydown', function (event) {
-
-                if (event.which === 27) {
-                    reset();
-                }
-            })
-            .on('keypress', updt);
-
+        $filter.on('click', 'img', toggle);
+        $input.on('keyup', update);
         event.sub('location.changed', reset);
     }
 
