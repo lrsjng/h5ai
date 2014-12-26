@@ -1,4 +1,4 @@
-modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location'], function (_, $, allsettings, resource, event, location) {
+modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/location'], function (_, $, allsettings, resource, store, event, location) {
 
     var settings = _.extend({
             enabled: false,
@@ -14,6 +14,14 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
                     '<span class="label"/>' +
                 '</a>' +
             '</span>';
+    var settingsTemplate =
+            '<div class="block">' +
+                '<h1 class="l10n-tree">Tree</h1>' +
+                '<div id="view-tree" class="button view">' +
+                    '<img src="' + resource.image('view-tree') + '" alt="view-tree"/>' +
+                '</div>' +
+            '</div>';
+    var storekey = 'ext/tree';
 
 
     function update(item) {
@@ -50,18 +58,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
                 }
             }
 
-            // is it the domain?
-            if (item.isDomain()) {
-                $html.addClass('domain');
-                // $img.attr('src', resource.image('home'));
-            }
-
-            // is it the root?
-            if (item.isRoot()) {
-                $html.addClass('root');
-                // $img.attr('src', resource.image('home'));
-            }
-
             // is it the current folder?
             if (item.isCurrentFolder()) {
                 $html.addClass('current');
@@ -90,7 +86,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
                 $img.attr('src', resource.image('folder-page'));
             }
         }
-
 
         if (item.$tree) {
             item.$tree.replaceWith($html);
@@ -157,13 +152,23 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         });
     }
 
+    function updateSettings() {
+
+        if (store.get(storekey)) {
+            $('#view-tree').addClass('active');
+            $('#tree').show();
+        } else {
+            $('#view-tree').removeClass('active');
+            $('#tree').hide();
+        }
+    }
+
     function onLocationChanged(item) {
 
         fetchTree(item, function (root) {
 
-            $('#tree')
-                .append(update(root))
-                .show();
+            $('#tree').append(update(root));
+            updateSettings();
         });
     }
 
@@ -176,6 +181,20 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/e
         $('<div id="tree"/>')
             .appendTo('#main-row')
             .on('click', '.indicator', createOnIndicatorClick());
+
+        $(settingsTemplate)
+            .appendTo('#settings')
+            .find('#view-tree')
+            .on('click', function (ev) {
+
+                store.put(storekey, !store.get(storekey));
+                updateSettings();
+                ev.preventDefault();
+            });
+
+        // ensure stored value is boolean, default to true
+        store.put(storekey, store.get(storekey) !== false);
+        updateSettings();
 
         event.sub('location.changed', onLocationChanged);
     }

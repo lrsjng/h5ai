@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -42,7 +42,7 @@
      id="namedview6"
      showgrid="true"
      inkscape:zoom="39.333334"
-     inkscape:cx="12.511288"
+     inkscape:cx="11.031068"
      inkscape:cy="11.775301"
      inkscape:window-x="49"
      inkscape:window-y="24"
@@ -58,6 +58,8 @@
   </sodipodi:namedview>
   <path
      style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     d="M 4 4 C 2.892 4 2 4.892 2 6 L 2 18 C 2 19.108 2.892 20 4 20 L 20 20 C 21.108 20 22 19.108 22 18 L 22 6 C 22 4.892 21.108 4 20 4 L 4 4 z M 6 6 L 18 6 L 18 18 L 6 18 L 6 6 z M 3 7 L 5 7 L 5 8 L 3 8 L 3 7 z M 19 7 L 21 7 L 21 8 L 19 8 L 19 7 z M 8 8 L 8 16 L 16 16 L 16 12.6875 L 15 11 L 12 13 L 8 8 z M 12.96875 8 C 12.96875 9.1045695 13.864181 10 14.96875 10 C 15.343389 10 15.700256 9.897989 16 9.71875 L 16 8 L 12.96875 8 z M 3 10 L 5 10 L 5 11 L 3 11 L 3 10 z M 19 10 L 21 10 L 21 11 L 19 11 L 19 10 z M 3 13 L 5 13 L 5 14 L 3 14 L 3 13 z M 19 13 L 21 13 L 21 14 L 19 14 L 19 13 z M 3 16 L 5 16 L 5 17 L 3 17 L 3 16 z M 19 16 L 21 16 L 21 17 L 19 17 L 19 16 z "
-     id="rect2989" />
+     d="M 4,4 C 2.892,4 2,4.892 2,6 l 0,12 c 0,1.108 0.892,2 2,2 l 16,0 c 1.108,0 2,-0.892 2,-2 L 22,6 C 22,4.892 21.108,4 20,4 z M 3,7 5,7 5,8 3,8 z m 16,0 2,0 0,1 -2,0 z m -16,3 2,0 0,1 -2,0 z m 6.03125,0 4,5 3,-2 L 17,14.28125 17,17 7,17 7,13.5625 z M 19,10 l 2,0 0,1 -2,0 z m -16,3 2,0 0,1 -2,0 z m 16,0 2,0 0,1 -2,0 z m -16,3 2,0 0,1 -2,0 z m 16,0 2,0 0,1 -2,0 z"
+     id="rect2989"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ssssssssscccccccccccccccccccccccccccccccccccccccccccccccc" />
 </svg>

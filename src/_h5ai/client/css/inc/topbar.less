@@ -23,6 +23,9 @@
     order: 99;
     text-align: center;
     padding: 6px 12px;
+    // max-width: 80px;
+    overflow: hidden;
+    height: 36px;
     .transition(all 0.2s ease-in-out);
 
     &, &:active, &:visited {
@@ -32,6 +35,7 @@
     }
     &:hover {
         color: @col-hover;
+        background: rgba(0,0,0,0.03);
     }
     &:focus {
         outline: 0;
@@ -52,13 +56,13 @@
     .tool {
         display: inline-block;
         cursor: pointer;
-        .transition(all 0.2s ease-in-out);
 
         img {
             display: inline-block;
             width: 24px;
             height: 24px;
             padding: 12px;
+            .transition(all 0.2s ease-in-out);
         }
 
         &:hover img {

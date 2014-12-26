@@ -13,7 +13,7 @@
    version="1.1"
    id="svg2"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="txt.svg"
+   sodipodi:docname="file.svg"
    inkscape:export-filename="/home/lars/env/workspace/web/h5ai/src/_h5ai/client/images/fallback/file.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -45,8 +45,8 @@
      id="namedview6"
      showgrid="true"
      inkscape:zoom="19.666667"
-     inkscape:cx="8.0871817"
-     inkscape:cy="9.1262198"
+     inkscape:cx="8.5956562"
+     inkscape:cy="8.6177452"
      inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
@@ -61,28 +61,13 @@
   </sodipodi:namedview>
   <path
      style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     d="M 6 2 C 4.892 2 4 2.892 4 4 L 4 20 C 4 21.108 4.892 22 6 22 L 18 22 C 19.108 22 20 21.108 20 20 L 20 4 C 20 2.892 19.108 2 18 2 L 6 2 z M 6 4 L 18 4 L 18 20 L 6 20 L 6 4 z "
-     id="rect2989" />
-  <rect
-     style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     id="rect3031"
-     width="8"
-     height="2"
-     x="8"
-     y="6"
-     rx="0" />
-  <rect
-     style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     id="rect3801"
-     width="6"
-     height="2"
-     x="8"
-     y="10" />
-  <rect
-     style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     id="rect3803"
-     width="7"
-     height="2"
-     x="8"
-     y="14" />
+     d="m -22.98305,1.8983051 c -1.108,0 -2,0.892 -2,2 l 0,15.9999999 c 0,1.108 0.892,2 2,2 l 12,0 c 1.1079996,0 1.9999996,-0.892 1.9999996,-2 l 0,-15.9999999 c 0,-1.108 -0.892,-2 -1.9999996,-2 z"
+     id="rect2989"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sssssssss" />
+  <path
+     inkscape:connector-curvature="0"
+     d="M 14,1.9999996 H 6 c -1.1,0 -1.99,0.9 -1.99,2 L 4,20 c 0,1.1 0.89,2 1.99,2 H 18 c 1.1,0 2,-0.9 2,-2 V 7.9999996 l -6,-6 z M 16,18 H 8 v -2 h 8 v 2 z m 0,-4 H 8 v -2 h 8 v 2 z M 13,8.9999996 v -5.5 l 5.5,5.5 H 13 z"
+     id="path6"
+     style="stroke:none;fill:#555555;fill-opacity:1" />
 </svg>

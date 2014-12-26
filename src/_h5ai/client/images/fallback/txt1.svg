@@ -13,7 +13,7 @@
    version="1.1"
    id="svg2"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="ar.svg"
+   sodipodi:docname="txt.svg"
    inkscape:export-filename="/home/lars/env/workspace/web/h5ai/src/_h5ai/client/images/fallback/file.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -44,15 +44,13 @@
      inkscape:window-height="1056"
      id="namedview6"
      showgrid="true"
-     inkscape:zoom="27.812867"
-     inkscape:cx="14.432271"
-     inkscape:cy="11.316291"
+     inkscape:zoom="19.666667"
+     inkscape:cx="8.0871817"
+     inkscape:cy="9.1262198"
      inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2"
-     showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:current-layer="svg2">
     <inkscape:grid
        type="xygrid"
        id="grid2987"
@@ -63,6 +61,8 @@
   </sodipodi:namedview>
   <path
      style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     d="M 5 3 C 3.892 3 3 3.892 3 5 L 3 19 C 3 20.108 3.892 21 5 21 L 19 21 C 20.108 21 21 20.108 21 19 L 21 5 C 21 3.892 20.108 3 19 3 L 5 3 z M 10 5 L 14 5 L 14 11 L 10 11 L 10 5 z "
-     id="rect2989" />
+     d="M 6,2 C 4.892,2 4,2.892 4,4 l 0,16 c 0,1.108 0.892,2 2,2 l 12,0 c 1.108,0 2,-0.892 2,-2 L 20,4 C 20,2.892 19.108,2 18,2 z M 7,6 17,6 17,8 7,8 z m 0,4 8,0 0,2 -8,0 z m 0,4 9,0 0,2 -9,0 z"
+     id="rect2989"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sssssssssccccccccccccccc" />
 </svg>

@@ -7,10 +7,8 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         }, allsettings.view);
     var storekey = 'viewmode';
     var modeTemplate =
-            '<div id="view-[MODE]" class="view">' +
-                '<a href="#">' +
-                    '<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]"/>' +
-                '</a>' +
+            '<div id="view-[MODE]" class="button view">' +
+                '<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]"/>' +
             '</div>';
     var sizeTemplate =
             '<input id="view-size" type="range" min="0" max="0" value="0">';
@@ -82,10 +80,10 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
         _.each(modes, function (m) {
             if (m === mode) {
-                $('#view-' + m).addClass('current');
+                $('#view-' + m).addClass('active');
                 $view.addClass('view-' + m).show();
             } else {
-                $('#view-' + m).removeClass('current');
+                $('#view-' + m).removeClass('active');
                 $view.removeClass('view-' + m);
             }
         });
@@ -112,7 +110,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
                 if (_.contains(settings.modes, mode)) {
                     $(modeTemplate.replace(/\[MODE\]/g, mode))
                         .appendTo($viewBlock)
-                        .on('click', 'a', function (ev) {
+                        .on('click', function (ev) {
 
                             update(mode);
                             ev.preventDefault();

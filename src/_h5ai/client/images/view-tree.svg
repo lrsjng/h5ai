@@ -7,30 +7,26 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="24"
-   width="24"
-   viewBox="0 0 24 24"
    version="1.1"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
    id="svg2"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="ar.svg"
-   inkscape:export-filename="/home/lars/env/workspace/web/h5ai/src/_h5ai/client/images/fallback/file.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   sodipodi:docname="view-tree.svg">
   <metadata
-     id="metadata10">
+     id="metadata14">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs8" />
+     id="defs12" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -42,27 +38,27 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1871"
      inkscape:window-height="1056"
-     id="namedview6"
+     id="namedview10"
      showgrid="true"
-     inkscape:zoom="27.812867"
-     inkscape:cx="14.432271"
-     inkscape:cy="11.316291"
+     inkscape:zoom="29.5"
+     inkscape:cx="14.196793"
+     inkscape:cy="9.927285"
      inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2"
-     showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:current-layer="svg2">
     <inkscape:grid
        type="xygrid"
-       id="grid2987"
+       id="grid2991"
        empspacing="5"
        visible="true"
        enabled="true"
        snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <path
-     style="fill:#555555;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     d="M 5 3 C 3.892 3 3 3.892 3 5 L 3 19 C 3 20.108 3.892 21 5 21 L 19 21 C 20.108 21 21 20.108 21 19 L 21 5 C 21 3.892 20.108 3 19 3 L 5 3 z M 10 5 L 14 5 L 14 11 L 10 11 L 10 5 z "
-     id="rect2989" />
+     style="fill:#555555"
+     d="M 4,3 4,6 7,6 7,3 z m 5,0 0,3 8,0 0,-3 z m -3,5 0,3 3,0 0,-3 z m 5,0 0,3 9,0 0,-3 z m -5,5 0,3 3,0 0,-3 z m 5,0 0,3 6,0 0,-3 z m -5,5 0,3 3,0 0,-3 z m 5,0 0,3 8,0 0,-3 z"
+     id="rect2993"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccc" />
 </svg>

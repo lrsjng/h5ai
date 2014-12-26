@@ -39,14 +39,22 @@
      inkscape:window-width="1871"
      inkscape:window-height="1056"
      id="namedview8"
-     showgrid="false"
-     inkscape:zoom="9.8333333"
-     inkscape:cx="-5.8983051"
-     inkscape:cy="12"
+     showgrid="true"
+     inkscape:zoom="27.812867"
+     inkscape:cx="13.030903"
+     inkscape:cy="10.827333"
      inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2983"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
   <path
      d="M0 0h24v24h-24z"
      fill="none"
