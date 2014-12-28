@@ -54,7 +54,7 @@ class App {
     public function get_theme() {
 
         $theme = $this->options["view"]["theme"];
-        $theme_path = APP_PATH . "/client/images/${theme}";
+        $theme_path = APP_PATH . "/client/images/themes/${theme}";
 
         $icons = array();
 

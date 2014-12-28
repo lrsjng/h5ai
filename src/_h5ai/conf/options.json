@@ -26,7 +26,7 @@ Options
         The user selected view size is also stored local in modern browsers
         so that it will be persistent.
     - smartBrowsing: use History API if available (no need to reload the whole page)
-    - theme: name of one of the folders in "_{{pkg.name}}/client/themes", defaults to builtin fallback
+    - theme: name of one of the folders in "_{{pkg.name}}/images/themes", defaults to "default"
     - unmanaged: don't manage folders containing one of those files
     - unmanagedInNewWindow: open unmanaged links in new window/tab
     */
