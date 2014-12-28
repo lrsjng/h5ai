@@ -9,9 +9,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
             folders: 0
         }, allsettings.sort);
     var storekey = 'ext/sort';
-    var template =
-            '<img src="' + resource.image('ascending') + '" class="sort ascending" alt="ascending" />' +
-            '<img src="' + resource.image('descending') + '" class="sort descending" alt="descending" />';
+    var template = '<img src="' + resource.image('sort') + '" class="sort" alt="sort order" />';
 
 
     function getType(item) {

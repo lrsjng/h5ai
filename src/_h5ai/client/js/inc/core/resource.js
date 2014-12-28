@@ -1,17 +1,15 @@
-modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function (_, $, config, settings) {
+modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, config, settings) {
 
-    var win = window;
-    var appHref = settings.appHref;
-    var imagesHref = appHref + 'client/images/';
-    var fallbackHref = appHref + 'client/images/fallback/';
-    var themesHref = appHref + 'client/themes/';
-    var scriptsHref = appHref + 'client/js/';
-    var fallbacks = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid'];
+    var imagesHref = settings.appHref + 'client/images/';
+    var uiHref = imagesHref + 'ui/';
+    var themesHref = imagesHref + 'themes/';
+    var defaultThemeHref = themesHref + 'default/';
+    var defaultIcons = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid'];
 
 
     function image(id) {
 
-        return imagesHref + id + '.svg';
+        return uiHref + id + '.svg';
     }
 
     function icon(id) {
@@ -23,15 +21,15 @@ modulejs.define('core/resource', ['_', '$', 'config', 'core/settings'], function
             return themesHref + href;
         }
 
-        if (_.indexOf(fallbacks, id) >= 0) {
-            return fallbackHref + id + '.svg';
+        if (_.indexOf(defaultIcons, id) >= 0) {
+            return defaultThemeHref + id + '.svg';
         }
 
-        if (_.indexOf(fallbacks, baseId) >= 0) {
-            return fallbackHref + baseId + '.svg';
+        if (_.indexOf(defaultIcons, baseId) >= 0) {
+            return defaultThemeHref + baseId + '.svg';
         }
 
-        return fallbackHref + 'file.svg';
+        return defaultThemeHref + 'file.svg';
     }
 
 

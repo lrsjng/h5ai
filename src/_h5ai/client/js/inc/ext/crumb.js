@@ -8,7 +8,7 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
                 '<img class="sep" src="' + resource.image('crumb') + '" alt=">"/>' +
                 '<span class="label"/>' +
             '</a>';
-    var pageHintTemplate = '<img class="hint" src="' + resource.image('page') + '" alt="has index page"/>';
+    var pageHintTemplate = '<img class="hint" src="' + resource.icon('folder-page') + '" alt="has index page"/>';
 
 
     function update(item, force) {
@@ -31,7 +31,7 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
         }
 
         if (item.isCurrentFolder()) {
-            $html.addClass('current');
+            $html.addClass('active');
         }
 
         if (!item.isManaged) {
@@ -57,9 +57,9 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
             var $html = $(this);
             if ($html.data('item') === item) {
                 found = true;
-                $html.addClass('current');
+                $html.addClass('active');
             } else {
-                $html.removeClass('current');
+                $html.removeClass('active');
             }
         });
 

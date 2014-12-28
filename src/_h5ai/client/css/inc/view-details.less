@@ -60,9 +60,13 @@
             padding: 0 4px;
         }
 
-        .ascending .sort.ascending,
-        .descending .sort.descending {
+        .ascending .sort {
             display: inline;
+        }
+
+        .descending .sort {
+            display: inline;
+            .transform(rotate(180deg));
         }
     }
 

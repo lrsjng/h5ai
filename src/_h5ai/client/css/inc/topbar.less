@@ -23,7 +23,7 @@
     order: 99;
     text-align: center;
     padding: 6px 12px;
-    // max-width: 80px;
+    max-width: 80px;
     overflow: hidden;
     height: 36px;
     .transition(all 0.2s ease-in-out);
@@ -79,14 +79,14 @@
     height: 48px;
     font-size: 16px;
     padding: 0 8px;
-    border-left: 1px solid rgba(0,0,0,0.05);
+    // border-left: 1px solid rgba(0,0,0,0.05);
 
     a, a:active, a:visited {
         color: @col;
         cursor: pointer;
         text-decoration: none;
 
-        &.current {
+        &.active {
             font-weight: bold;
             color: @col-text-highlight;
         }

@@ -37,7 +37,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
             .data('item', item);
 
         location.setLink($a, item);
-        $img.attr('src', resource.image('folder'));
+        $img.attr('src', resource.icon('folder'));
         $label.text(item.label);
 
         if (item.isFolder()) {
@@ -60,7 +60,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
 
             // is it the current folder?
             if (item.isCurrentFolder()) {
-                $html.addClass('current');
+                $html.addClass('active');
             }
 
             // does it have subfolders?
@@ -83,7 +83,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
 
             // reflect folder status
             if (!item.isManaged) {
-                $img.attr('src', resource.image('folder-page'));
+                $img.attr('src', resource.icon('folder-page'));
             }
         }
 
