@@ -47,21 +47,23 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
         var dsize = cropSize(size, 10, 80);
         var gsize = cropSize(size, 40, 150);
         var isize = cropSize(size, 80);
+        var ilsize = Math.round(isize*4/3);
         var rules = [
                 '#view.view-details .item .label { line-height: ' + (dsize+14) + 'px !important; }',
                 '#view.view-details .item .date { line-height: ' + (dsize+14) + 'px !important; }',
                 '#view.view-details .item .size { line-height: ' + (dsize+14) + 'px !important; }',
-                '#view.view-details .square { width: ' + dsize + 'px !important; }',
+                '#view.view-details .square { width: ' + dsize + 'px !important; height: ' + dsize + 'px !important; }',
                 '#view.view-details .square img { width: ' + dsize + 'px !important; height: ' + dsize + 'px !important; }',
                 '#view.view-details .label { margin: 0 246px 0 ' + (dsize+32) + 'px !important; }',
 
                 '#view.view-grid .item .label { line-height: ' + gsize + 'px !important; }',
-                '#view.view-grid .square { width: ' + gsize + 'px !important; }',
+                '#view.view-grid .square { width: ' + gsize + 'px !important; height: ' + gsize + 'px !important; }',
                 '#view.view-grid .square img { width: ' + gsize + 'px !important; height: ' + gsize + 'px !important; }',
 
-                '#view.view-icons .item { width: ' + Math.round(isize*4/3) + 'px !important; }',
+                '#view.view-icons .item { width: ' + ilsize + 'px !important; }',
+                '#view.view-icons .landscape { width: ' + ilsize + 'px !important; height: ' + isize + 'px !important; }',
                 '#view.view-icons .landscape img { width: ' + isize + 'px !important; height: ' + isize + 'px !important; }',
-                '#view.view-icons .landscape .thumb { width: ' + Math.round(isize*4/3) + 'px !important; }'
+                '#view.view-icons .landscape .thumb { width: ' + ilsize + 'px !important; }'
             ];
         applyCss(rules);
     }

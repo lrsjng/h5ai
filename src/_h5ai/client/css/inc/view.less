@@ -73,12 +73,16 @@
         text-align: center;
 
         img {
-            vertical-align: top;
-            max-width: 32px;
+            max-width: @max-icon-size;
+            max-height: @max-icon-size;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .thumb {
             max-width: none;
+            max-height: none;
         }
     }
 

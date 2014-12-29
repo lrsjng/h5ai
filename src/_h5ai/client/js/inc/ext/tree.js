@@ -7,7 +7,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
     var template =
             '<div class="item">' +
                 '<span class="indicator none">' +
-                    '<img src="' + resource.image('tree') + '"/>' +
+                    '<img src="' + resource.image('tree-indicator') + '"/>' +
                 '</span>' +
                 '<a>' +
                     '<span class="icon"><img/></span>' +
@@ -18,7 +18,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
             '<div class="block">' +
                 '<h1 class="l10n-tree">Tree</h1>' +
                 '<div id="view-tree" class="button view">' +
-                    '<img src="' + resource.image('view-tree') + '" alt="view-tree"/>' +
+                    '<img src="' + resource.image('tree-toggle') + '" alt="view-tree"/>' +
                 '</div>' +
             '</div>';
     var storekey = 'ext/tree';
