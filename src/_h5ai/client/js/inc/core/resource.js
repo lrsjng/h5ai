@@ -4,7 +4,7 @@ modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, 
     var uiHref = imagesHref + 'ui/';
     var themesHref = imagesHref + 'themes/';
     var defaultThemeHref = themesHref + 'default/';
-    var defaultIcons = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid'];
+    var defaultIcons = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid', 'x'];
 
 
     function image(id) {
