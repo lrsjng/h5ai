@@ -34,12 +34,12 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
         if (selectedItems.length === 1) {
             name = selectedItems[0].label;
         } else {
-            name = settings.packageName || location.getItem().label;
+            name = location.getItem().label;
         }
 
         var query = {
                 action: 'download',
-                as: name + '.' + extension,
+                as: (settings.packageName || name) + '.' + extension,
                 type: type,
                 hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
             };
