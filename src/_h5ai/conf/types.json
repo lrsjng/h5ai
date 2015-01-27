@@ -29,7 +29,7 @@ File types mapped to file extensions
     "img-bmp":          ["*.bmp"],
     "img-gif":          ["*.gif"],
     "img-ico":          ["*.ico"],
-    "img-jpg":          ["*.jpg", "*.jpeg"],
+    "img-jpg":          ["*.jpg", "*.jpeg", "*.CR2"],
     "img-png":          ["*.png"],
     "img-tiff":         ["*.tiff"],
     "txt":              ["*.text", "*.txt"],
