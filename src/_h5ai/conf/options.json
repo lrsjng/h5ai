@@ -109,15 +109,16 @@ Options
 
     /*
     Calc the size of folders.
-    This operation is real slow. The calculated sizes differ slightly for both
-    calculation types since "php" only adds the file size, while "shell-du"
-    also adds the sizes for the actual folder files.
+    This operation is very fast with "shell-du" and is very slow with "php".
+    The calculated sizes differ slightly for both calculation types since "php"
+    only adds the file size, while "shell-du" also adds the sizes for the
+    actual folder files.
 
-    - type: "php" (sloooow) or "shell-du" (sloow)
+    - type: "shell-du" (fast) or "php" (sloooow)
     */
     "foldersize": {
         "enabled": false,
-        "type": "php"
+        "type": "shell-du"
     },
 
     /*

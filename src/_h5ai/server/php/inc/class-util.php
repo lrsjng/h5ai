@@ -159,15 +159,10 @@ class Util {
         } else if (is_dir($path)) {
 
             $options = $app->get_options();
-            if ($options["foldersize"]["enabled"]) {
-                if (HAS_CMD_DU && $options["foldersize"]["type"] === "shell-du") {
-                    $cmdv = array("du", "-sk", $path);
-                    $size = intval(preg_replace("#\s.*$#", "", Util::exec_cmdv($cmdv)), 10) * 1024;
-                } else {
-                    $size = 0;
-                    foreach ($app->read_dir($path) as $name) {
-                        $size += Util::filesize($app, $path . "/" . $name);
-                    }
+            if ($options["foldersize"]["enabled"] && $options["foldersize"]["type"] === "php") {
+                $size = 0;
+                foreach ($app->read_dir($path) as $name) {
+                    $size += Util::filesize($app, $path . "/" . $name);
                 }
             }
         }

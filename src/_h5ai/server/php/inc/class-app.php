@@ -174,8 +174,10 @@ class App {
         // return $this->get_all_items();
         // return json_decode(file_get_contents(CACHE_PATH . "/item.json"));
 
+        $requestPath = $this->to_path($url);
+
         $cache = array();
-        $folder = Item::get($this, $this->to_path($url), $cache);
+        $folder = Item::get($this, $requestPath, $cache);
 
         // add content of subfolders
         if ($what >= 2 && $folder !== null) {
@@ -193,7 +195,32 @@ class App {
 
         uasort($cache, array("Item", "cmp"));
         $result = array();
+
+        // Get file/folder sizes of immediate children of $requestPath
+        $fastSetFolderSizes = ($this->options["foldersize"]["enabled"] &&
+                                $this->options["foldersize"]["type"] === "shell-du" &&
+                                HAS_CMD_DU);
+        $folderSizes = array();
+        if ($fastSetFolderSizes) {
+            $stdoutLine = array();
+            exec("du -sk $requestPath/*/", $stdoutLine);  // trailing slash gets folders only
+            foreach ($stdoutLine as $line) {
+                // $line is bites separated by tab then full path (with trailing slash) i.e. "1024  /var/www/folder1/"
+                $lineParts = explode("\t", $line);
+
+                // add filesize to array with its path as the key
+                $folderSizes[$lineParts[1]] = intval($lineParts[0], 10) * 1024;
+            }
+        }
+
         foreach ($cache as $p => $item) {
+            // set folder size
+            if ($fastSetFolderSizes && $item->is_folder) { // check for folder to avoid case where a folder and file both share the same name
+                $itemPath = $item->path . '/'; // trailing slash needed to match folder name
+                if (isset($folderSizes[$itemPath])) {
+                    $item->size = $folderSizes[$itemPath];
+                }
+            }
             $result[] = $item->to_json_object();
         }
 
