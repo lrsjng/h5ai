@@ -114,11 +114,18 @@ Options
     only adds the file size, while "shell-du" also adds the sizes for the
     actual folder files.
 
+    Folder Size caching is recommended for sites with folders that contain large numbers of sub folders.
+    A minimum of 3 seconds is highly recommended to prevent double calculations on initial page load.
+
     - type: "shell-du" (fast) or "php" (sloooow)
+    - cacheEnabled: "true" or "false". Requires write access to "/_{{pkg.name}}/cache" folder
+    - cacheMaxAge: [seconds] A folder's sub folder sizes expire and refresh after this time
     */
     "foldersize": {
         "enabled": false,
-        "type": "shell-du"
+        "type": "shell-du",
+        "cacheEnabled": true,
+        "cacheMaxAge": 60
     },
 
     /*
