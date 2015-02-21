@@ -30,7 +30,7 @@ only, requires [`git`][git] and [`npm`][npm] to be installed).
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Lars Jung (http://larsjung.de)
+Copyright (c) 2015 Lars Jung (http://larsjung.de)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,8 +54,7 @@ THE SOFTWARE.
 ## References
 
 **h5ai** profits from other projects, all of them licensed under the MIT license
-too. Exceptions are [GNOME Symbolic Icons][gnome-icons] (CC BY-SA 3.0) and
-[Ubuntu Font Family][ubuntu-fonts] (UFL).
+too. Exceptions are the [Material Design icons][material-design-icons] (CC BY 4.0).
 
 
 [web]: http://larsjung.de/h5ai/
@@ -65,8 +64,7 @@ too. Exceptions are [GNOME Symbolic Icons][gnome-icons] (CC BY-SA 3.0) and
 [develop]: http://release.larsjung.de/h5ai/develop/
 [git]: http://git-scm.com
 [npm]: https://www.npmjs.org
-[gnome-icons]: https://github.com/GNOME/gnome-icon-theme-symbolic
-[ubuntu-fonts]: http://font.ubuntu.com
+[material-design-icons]: https://github.com/google/material-design-icons
 
 [license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
