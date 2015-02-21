@@ -2,6 +2,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     var settings = _.extend({
             enabled: false,
+            mouse: false,
             checkboxes: false
         }, allsettings.select);
     var template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>';
@@ -184,20 +185,22 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     function init() {
 
-        if (!settings.enabled) {
+        if (!settings.enabled || (!settings.mouse && !settings.checkboxes)) {
             return;
         }
-
-        $selectionRect.hide().appendTo('body');
 
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
 
-        // $document
-        $('#content')
-            .on('mousedown', '.noSelection', noSelection)
-            .on('mousedown', '.noSelectionUnlessCtrl,input,select,a', noSelectionUnlessCtrl)
-            .on('mousedown', selectionStart);
+        if (settings.mouse) {
+            $selectionRect.hide().appendTo('body');
+
+            // $document
+            $('#content')
+                .on('mousedown', '.noSelection', noSelection)
+                .on('mousedown', '.noSelectionUnlessCtrl,input,select,a', noSelectionUnlessCtrl)
+                .on('mousedown', selectionStart);
+        }
     }
 
 
