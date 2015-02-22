@@ -31,6 +31,7 @@ File types mapped to file extensions
     "img-ico":          ["*.ico"],
     "img-jpg":          ["*.jpg", "*.jpeg"],
     "img-png":          ["*.png"],
+    "img-raw":          ["*.cr2", "*.nef"],
     "img-tiff":         ["*.tiff"],
     "txt":              ["*.text", "*.txt"],
     "txt-build":        ["*.pom", "build.xml", "pom.xml"],

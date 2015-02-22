@@ -192,7 +192,7 @@ Options
     */
     "preview-img": {
         "enabled": true,
-        "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"]
+        "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw"]
     },
 
     /*
