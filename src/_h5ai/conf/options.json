@@ -163,6 +163,16 @@ Options
         "useBrowserLang": true
     },
 
+
+    /*
+     Adds peer5 p2p downloader which is based on webrtc (see peer5.com)
+     - id: the API key - get one your own key - http://peer5.com/downloader
+     */
+    "peer5": {
+        "enabled": true,
+        "id": "z142i5n5qypq4cxr"
+    },
+
     /*
     Adds Piwik tracker javascript code.
 
