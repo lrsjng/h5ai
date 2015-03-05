@@ -169,7 +169,7 @@ Options
      - id: the API key - get one your own key - http://peer5.com/downloader
      */
     "peer5": {
-        "enabled": true,
+        "enabled": false,
         "id": "z142i5n5qypq4cxr"
     },
 
