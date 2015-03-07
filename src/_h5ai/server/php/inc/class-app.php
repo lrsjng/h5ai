@@ -103,6 +103,13 @@ class App {
             return true;
         }
 
+        foreach ($this->options["view"]["shown"] as $re) {
+            $re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
+            if (preg_match($re, $name)) {
+                return false;
+            }
+        }
+
         foreach ($this->options["view"]["hidden"] as $re) {
             $re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
             if (preg_match($re, $name)) {
