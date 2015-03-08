@@ -80,7 +80,7 @@ class App {
         $parts = explode("/", $rel_path);
         $encoded_parts = array();
         foreach ($parts as $part) {
-            if ($part) {
+            if ($part != "") {
                 $encoded_parts[] = rawurlencode($part);
             }
         }
