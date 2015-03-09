@@ -163,11 +163,11 @@ Options
         "useBrowserLang": true
     },
 
-
     /*
-     Adds peer5 p2p downloader which is based on webrtc (see peer5.com)
-     - id: the API key - get your own key - http://peer5.com/downloader
-     */
+    Adds peer5 p2p downloader which is based on webrtc (see peer5.com).
+
+    - id: the API key - get your own key - http://peer5.com/downloader
+    */
     "peer5": {
         "enabled": false,
         "id": "z142i5n5qypq4cxr"
