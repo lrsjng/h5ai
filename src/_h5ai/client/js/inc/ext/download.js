@@ -28,18 +28,20 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
     function onClick(event) {
 
         var type = settings.type;
+        var name = settings.packageName;
         var extension = (type === 'shell-zip') ? 'zip' : 'tar';
 
-        var name;
-        if (selectedItems.length === 1) {
-            name = selectedItems[0].label;
-        } else {
-            name = location.getItem().label;
+        if (!name) {
+            if (selectedItems.length === 1) {
+                name = selectedItems[0].label;
+            } else {
+                name = location.getItem().label;
+            }
         }
 
         var query = {
                 action: 'download',
-                as: (settings.packageName || name) + '.' + extension,
+                as: name + '.' + extension,
                 type: type,
                 hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
             };
