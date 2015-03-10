@@ -270,12 +270,12 @@ Options
     Make entries selectable.
     At the moment only needed for packaged download.
 
-    - mouse: boolean, allow first mouse button + drag selection
+    - clickndrag: boolean, allow first mouse button + drag selection
     - checkboxes: boolean, show a checkbox on mouse over item
     */
     "select": {
         "enabled": true,
-        "mouse": true,
+        "clickndrag": true,
         "checkboxes": true
     },
 

@@ -185,14 +185,14 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     function init() {
 
-        if (!settings.enabled || (!settings.mouse && !settings.checkboxes)) {
+        if (!settings.enabled || (!settings.clickndrag && !settings.checkboxes)) {
             return;
         }
 
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
 
-        if (settings.mouse) {
+        if (settings.clickndrag) {
             $selectionRect.hide().appendTo('body');
 
             // $document
