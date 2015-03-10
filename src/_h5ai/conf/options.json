@@ -84,7 +84,7 @@ Options
     To select files the "select"-extension needs to be enabled.
 
     - type: "php-tar", "shell-tar" or "shell-zip"
-    - packageName: basename of the download package, null for current foldername
+    - packageName: basename of the download package, null for current filename or foldername
     - alwaysVisible: always show download button (defaults to download the current folder)
     */
     "download": {

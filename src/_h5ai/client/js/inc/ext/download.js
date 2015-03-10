@@ -29,9 +29,17 @@ modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'co
 
         var type = settings.type;
         var extension = (type === 'shell-zip') ? 'zip' : 'tar';
+
+        var name;
+        if (selectedItems.length === 1) {
+            name = selectedItems[0].label;
+        } else {
+            name = location.getItem().label;
+        }
+
         var query = {
                 action: 'download',
-                as: (settings.packageName || location.getItem().label) + '.' + extension,
+                as: (settings.packageName || name) + '.' + extension,
                 type: type,
                 hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
             };
