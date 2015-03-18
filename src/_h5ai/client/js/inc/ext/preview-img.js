@@ -6,15 +6,27 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
         }, allsettings['preview-img']);
 
 
-    function preloadImg(src, callback) {
+    function timeout(delay, arg) {
 
+        var $def = $.Deferred();
+        var timer = setTimeout(function() { $def.resolve(arg); }, delay);
+        $def.fail(function() { clearTimeout(timer); });
+        return $def.promise({
+            cancel: function() { $def.reject(arg); }
+        });
+    }
+
+    function preloadImg(src) {
+
+        var $def = $.Deferred();
         var $img = $('<img/>')
                         .one('load', function () {
 
-                            callback($img);
+                            $def.resolve($img);
                             // setTimeout(function () { callback($img); }, 1000); // for testing
                         })
                         .attr('src', src);
+        return $def.promise();
     }
 
     function onEnter(items, idx) {
@@ -48,31 +60,32 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
             currentItem = currentItems[currentIdx];
 
-            var spinnerTimeout = setTimeout(function () { preview.showSpinner(true); }, 200);
+            var spinnerTimeout = timeout(200).done(function () { preview.showSpinner(true); });
+            preloadImg(currentItem.absHref).then(function ($img) {
 
-            preloadImg(currentItem.absHref, function ($preloaded_img) {
-
-                clearTimeout(spinnerTimeout);
+                spinnerTimeout.cancel();
                 preview.showSpinner(false);
 
-                $('#pv-content').fadeOut(100, function () {
+                return $('#pv-content').fadeOut(100).promise()
+                    // propogate $img down handler chain
+                    .then(function() { return $img; });
+            }).then(function ($img) {
 
-                    $('#pv-content').empty().append($preloaded_img.attr('id', 'pv-img-image')).fadeIn(200);
+                $('#pv-content').empty().append($img.attr('id', 'pv-img-image')).fadeIn(200);
 
-                    // small timeout, so $preloaded_img is visible and therefore $preloaded_img.width is available
-                    setTimeout(function () {
+                // small timeout, so $img is visible and therefore $img.width is available
+                return timeout(10, $img);
+            }).done(function ($img) {
 
-                        onAdjustSize();
+                onAdjustSize();
 
-                        preview.setIndex(currentIdx + 1, currentItems.length);
-                        preview.setLabels([
-                            currentItem.label,
-                            '' + $preloaded_img[0].naturalWidth + 'x' + $preloaded_img[0].naturalHeight,
-                            '' + (100 * $preloaded_img.width() / $preloaded_img[0].naturalWidth).toFixed(0) + '%'
-                        ]);
-                        preview.setRawLink(currentItem.absHref);
-                    }, 10);
-                });
+                preview.setIndex(currentIdx + 1, currentItems.length);
+                preview.setLabels([
+                    currentItem.label,
+                    '' + $img[0].naturalWidth + 'x' + $img[0].naturalHeight,
+                    '' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%'
+                ]);
+                preview.setRawLink(currentItem.absHref);
             });
         }
 
