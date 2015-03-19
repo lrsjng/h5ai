@@ -2,7 +2,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
 
     var settings = _.extend({
             enabled: false,
-            types: []
+            types: [],
+            previewSize: false
         }, allsettings['preview-img']);
 
 
@@ -20,13 +21,11 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
 
         var $def = $.Deferred();
         var $img = $('<img/>')
-                        .one('load', function () {
+            .one('load', function() { $def.resolve($img); })
+            .attr('src', src);
 
-                            $def.resolve($img);
-                            // setTimeout(function () { callback($img); }, 1000); // for testing
-                        })
-                        .attr('src', src);
         return $def.promise();
+        //return timeout(1000).then(function() { return $def.promise(); }); // for testing
     }
 
     function onEnter(items, idx) {
@@ -85,10 +84,14 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
             currentItem = currentItems[currentIdx];
 
+            /* jshint laxbreak: true */// fix deprecated warning
+            var loader = settings.previewSize
+                ? thumbnails.requestSample('img', currentItem.absHref, settings.previewSize, 0)
+                .then(function(absHref) { return preloadImg(absHref); })
+                : preloadImg(currentItem.absHref);
+
             var spinnerTimeout = timeout(200).done(function () { preview.showSpinner(true); });
-            thumbnails.requestSample('img', currentItem.absHref, 1000, 0)
-            .then(function(absHref) { return preloadImg(absHref); })
-            .then(function ($img) {
+            loader = loader.then(function ($img) {
 
                 spinnerTimeout.cancel();
                 preview.showSpinner(false);
@@ -96,10 +99,13 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
                 return $('#pv-content').fadeOut(100).promise()
                     // propogate $img down handler chain
                     .then(function() { return $img; });
-            }).then(swapImg)
+            }).then(swapImg);
+
             // now full size
-            .then(function() { return preloadImg(currentItem.absHref); })
-            .then(swapImg);
+            if (settings.previewSize) {
+                // attempt even when preview fails
+                loader.always(function() { preloadImg(currentItem.absHref).then(swapImg); });
+            }
         }
 
         onIdxChange(0);

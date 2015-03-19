@@ -195,8 +195,8 @@ class Image {
         $src_r = 1.0 * $this->width / $this->height;
         // scale proportionally inside bounding square when $height is 0
         if ($height == 0) {
-            $height = $src_r <= 1 ? $width : $width / $src_r;
-            $width = $src_r <= 1 ? $width * $src_r : $width;
+            $height = min($this->height, $src_r <= 1 ? $width : $width / $src_r);
+            $width = min($this->width, $src_r <= 1 ? $width * $src_r : $width);
         }
         $ratio = 1.0 * $width / $height;
 
