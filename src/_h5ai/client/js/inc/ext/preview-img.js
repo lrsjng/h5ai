@@ -1,4 +1,4 @@
-modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ext/preview'], function (_, $, allsettings, event, preview) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ext/preview', 'ext/thumbnails'], function (_, $, allsettings, event, preview, thumbnails) {
 
     var settings = _.extend({
             enabled: false,
@@ -61,7 +61,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             currentItem = currentItems[currentIdx];
 
             var spinnerTimeout = timeout(200).done(function () { preview.showSpinner(true); });
-            preloadImg(currentItem.absHref).then(function ($img) {
+            thumbnails.requestSample('img', currentItem.absHref, 1000, 0)
+            .then(function(absHref) { return preloadImg(absHref); })
+            .then(function ($img) {
 
                 spinnerTimeout.cancel();
                 preview.showSpinner(false);
