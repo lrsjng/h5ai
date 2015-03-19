@@ -55,6 +55,31 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             }
         }
 
+        function swapImg($img) {
+
+            var container = $('#pv-content').empty()
+                .append($img.attr('id', 'pv-img-image'))
+                .filter(':hidden').fadeIn(200);
+
+            // small timeout, so $img is visible and therefore $img.width is available
+            var timer = timeout(10, $img);
+            if (!container.length) {
+                timer.cancel();
+            }
+            return timer.always(function($img) {
+
+                onAdjustSize();
+
+                preview.setIndex(currentIdx + 1, currentItems.length);
+                preview.setLabels([
+                    currentItem.label,
+                    '' + $img[0].naturalWidth + 'x' + $img[0].naturalHeight,
+                    '' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%'
+                ]);
+                preview.setRawLink(currentItem.absHref);
+            });
+        }
+
         function onIdxChange(rel) {
 
             currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
@@ -71,24 +96,10 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
                 return $('#pv-content').fadeOut(100).promise()
                     // propogate $img down handler chain
                     .then(function() { return $img; });
-            }).then(function ($img) {
-
-                $('#pv-content').empty().append($img.attr('id', 'pv-img-image')).fadeIn(200);
-
-                // small timeout, so $img is visible and therefore $img.width is available
-                return timeout(10, $img);
-            }).done(function ($img) {
-
-                onAdjustSize();
-
-                preview.setIndex(currentIdx + 1, currentItems.length);
-                preview.setLabels([
-                    currentItem.label,
-                    '' + $img[0].naturalWidth + 'x' + $img[0].naturalHeight,
-                    '' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%'
-                ]);
-                preview.setRawLink(currentItem.absHref);
-            });
+            }).then(swapImg)
+            // now full size
+            .then(function() { return preloadImg(currentItem.absHref); })
+            .then(swapImg);
         }
 
         onIdxChange(0);
