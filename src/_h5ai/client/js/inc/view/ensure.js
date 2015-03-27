@@ -1,7 +1,5 @@
 modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, config, event) {
 
-    var version = config.setup.VERSION;
-    var versionDisplay = version.replace(/\+[^+]*$/, '+');
     var templateTopbar =
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +
@@ -14,9 +12,9 @@ modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, confi
                 '</div>' +
             '</div>';
     var templateBacklink =
-            '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai ' + version + '">' +
-                '<div>powered by</div>' +
-                '<div>h5ai ' + versionDisplay + '</div>' +
+            '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai ' + config.setup.VERSION + '">' +
+                '<div>powered</div>' +
+                '<div>by h5ai</div>' +
             '</a>';
 
 
