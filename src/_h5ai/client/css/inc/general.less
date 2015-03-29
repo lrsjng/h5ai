@@ -159,23 +159,65 @@ body {
     color: @col-text-primary-black;
     background: @col-back;
 
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
     justify-content: flex-start;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
     align-content: flex-start;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
     align-items: stretch;
 }
 
 #main-row {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
     flex: 1 1 auto;
+    -webkit-box-ordinal-group: 51;
+    -webkit-order: 50;
+    -ms-flex-order: 50;
     order: 50;
 
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
     justify-content: flex-start;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
     align-content: flex-start;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
     align-items: stretch;
 
     // non-webkit fix;
