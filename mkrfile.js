@@ -29,6 +29,29 @@ function getBuildSuffix(callback) {
 }
 
 
+$.fn.autoprefixer = function (options) {
+
+    var autoprefixer = require('autoprefixer-core');
+    var options = {browsers: ['last 2 version']};
+
+    return this.edit(function (blob) {
+
+        try {
+            blob.content = autoprefixer.process(blob.content, options).css;
+        } catch (e) {
+            fQuery.report({
+                type: 'err',
+                method: 'autoprefixer',
+                message: e.message,
+                fquery: this,
+                blob: blob,
+                err: e
+            });
+        }
+    });
+};
+
+
 $.plugin('fquery-cssmin');
 $.plugin('fquery-handlebars');
 $.plugin('fquery-includeit');
@@ -109,6 +132,7 @@ module.exports = function (suite) {
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
+            .autoprefixer()
             .cssmin()
             .wrap(header)
             .write(mapSrc, true);
@@ -148,6 +172,7 @@ module.exports = function (suite) {
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
+            .autoprefixer()
             // .cssmin()
             .wrap(header)
             .write(mapSrc, true);
