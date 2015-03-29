@@ -42,6 +42,11 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
         $(testsTemp).appendTo('#content');
 
         addTest(
+            'h5ai version', 'Only green if this is an official h5ai release',
+            setup.VERSION.indexOf('+') < 0, setup.VERSION
+        );
+
+        addTest(
             'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',
             setup.INDEX_HREF
         );
