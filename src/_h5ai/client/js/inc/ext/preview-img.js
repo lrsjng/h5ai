@@ -43,15 +43,21 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             });
         }
 
-        function preloadImg(src) {
+        function preloadImg(src, idx) {
 
             var $def = $.Deferred();
             var $img = $('<img/>')
-                .one('load', function() { $def.resolve($img); })
+                .one('load', function() { $def.resolve(); })
                 .attr('src', src);
 
-            return $def.promise();
-            //return timeout(1000).then(function() { return $def.promise(); }); // for testing
+            //return timeout(Math.ceil(Math.random() * 2500)).then(function() { //for testing
+                return $def.then(function() {
+
+                    var idxChanged = idx !== -1 && idx !== currentIdx;
+                    // reject when index advances beyond loaded image
+                    return $.Deferred()[idxChanged ? 'reject' : 'resolve']($img);
+                });
+            //});
         }
 
         function swapImg($img) {
@@ -87,8 +93,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             /* jshint laxbreak: true */// fix deprecated warning
             var loader = settings.previewSize
                 ? thumbnails.requestSample('img', currentItem.absHref, settings.previewSize, 0)
-                .then(function(absHref) { return preloadImg(absHref); })
-                : preloadImg(currentItem.absHref);
+                .then(function(absHref) { return preloadImg(absHref, currentIdx); })
+                : preloadImg(currentItem.absHref, currentIdx);
 
             var spinnerTimeout = timeout(200).done(function () { preview.showSpinner(true); });
             loader = loader.then(function ($img) {
@@ -104,7 +110,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             // now full size
             if (settings.previewSize) {
                 // attempt even when preview fails
-                loader.always(function() { preloadImg(currentItem.absHref).then(swapImg); });
+                loader.always(function() { preloadImg(currentItem.absHref, currentIdx).then(swapImg); });
             }
         }
 
