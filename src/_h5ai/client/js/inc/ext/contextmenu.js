@@ -1,6 +1,8 @@
-modulejs.define('ext/contextmenu', ['$', '_', 'core/resource'], function ($, _, resource) {
+modulejs.define('ext/contextmenu', ['_', '$', 'core/settings', 'core/resource'], function (_, $, allsettings, resource) {
 
-
+    var settings = _.extend({
+            enabled: false
+        }, allsettings.contextmenu);
     var templateOverlay = '<div class="cm-overlay"/>';
     var templatePanel = '<div class="cm-panel"><ul/></div>';
     var templateSep = '<li class="cm-sep"/>';
@@ -134,6 +136,10 @@ modulejs.define('ext/contextmenu', ['$', '_', 'core/resource'], function ($, _, 
     }
 
     function init() {
+
+        if (!settings.enabled) {
+            return;
+        }
 
         $(document).on('contextmenu', function (ev) {
 

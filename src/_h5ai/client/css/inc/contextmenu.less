@@ -14,6 +14,8 @@
 
 
 .cm-panel {
+    .popup();
+    .rounded();
     display: block;
     position: absolute;
     left: 100px;
@@ -21,7 +23,6 @@
     background: #fff;
     color: @col;
     z-index: 10;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.2);
     overflow: auto;
     min-width: 200px;
 
@@ -44,7 +45,7 @@
 
             &:hover {
                 color: @col-hover;
-                background: rgba(0,0,0,0.05);
+                background: @col-darkgray;
             }
 
             .cm-icon {

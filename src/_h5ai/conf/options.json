@@ -60,6 +60,13 @@ Options
     },
 
     /*
+    Use a context menu (right-click) on selected elements.
+    */
+    "contextmenu": {
+        "enabled": true
+    },
+
+    /*
     Show a clickable breadcrumb.
     */
     "crumb": {
