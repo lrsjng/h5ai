@@ -1,34 +1,3 @@
-modulejs.define('ext/google-analytics-ga', ['_', 'core/settings'], function (_, allsettings) {
-
-    var settings = _.extend({
-            enabled: false,
-            gaq: []
-        }, allsettings['google-analytics-ga']);
-
-
-    function init() {
-
-        if (!settings.enabled) {
-            return;
-        }
-
-        window._gaq = settings.gaq;
-
-        var scriptLiteral = 'script';
-        var doc = document;
-        var newScriptTag = doc.createElement(scriptLiteral);
-        var firstScriptTag = doc.getElementsByTagName(scriptLiteral)[0];
-
-        newScriptTag.async = true;
-        newScriptTag.src = ('https:' === location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        firstScriptTag.parentNode.insertBefore(newScriptTag, firstScriptTag);
-    }
-
-
-    init();
-});
-
-
 modulejs.define('ext/google-analytics-ua', ['_', 'core/settings', 'core/event'], function (_, allsettings, event) {
 
     var settings = _.extend({

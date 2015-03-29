@@ -128,25 +128,6 @@ Options
     },
 
     /*
-    [DEPRECATED, will be removed]
-    Adds Google Analytics asynchronous tracking code.
-
-    for example:
-    "gaq": [
-        ["_setAccount", "UA-xxxxxx-x"],
-        ["_setDomainName", ".your-domain.tld"],
-        ["_trackPageview"],
-        ["_trackPageLoadTime"]
-    ]
-
-    see: https://developers.google.com/analytics/devguides/collection/gajs/
-    */
-    "google-analytics-ga": {
-        "enabled": false,
-        "gaq": []
-    },
-
-    /*
     Adds Google Universial Analytics asynchronous tracking code.
 
     see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
