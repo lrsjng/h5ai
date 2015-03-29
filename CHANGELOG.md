@@ -1,14 +1,24 @@
 # Changelog
 
 
-* updates sidebar settings
-* adds rounded corners to QR code
+* new layout
 * adds editorconfig
+* drops support for IE9 (gets fallback)
+* updates sidebar settings
+* adds opt-out for click'n'drag selection
+* adds package name option for single selections
+* adds initial support for Peer5
+* fixes problems with files/folders named `0`
+* changes font from `Ubuntu` to `Roboto` (smaller footprint, clearer for small sizes)
+* improves PDF thumbnail quality
+* fixes QRCode size option
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
 * removes `jQuery.fracs`
+* removes `jQuery.scrollpanel`
+* removes `jQuery.mousewheel`
 * updates `jQuery.qrcode` to 0.10.1
-* updates `jQuery.scrollpanel` to 0.4.0
 * updates `modulejs` to 1.4.0
+* language updates and additions (`af`, `es`, `ja`, `ko`, `ru`, `zh-cn`)
 
 
 ## v0.26.1 - *2014-08-17*
