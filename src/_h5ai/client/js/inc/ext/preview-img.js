@@ -7,27 +7,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
         }, allsettings['preview-img']);
 
 
-    function timeout(delay, arg) {
-
-        var $def = $.Deferred();
-        var timer = setTimeout(function() { $def.resolve(arg); }, delay);
-        $def.fail(function() { clearTimeout(timer); });
-        return $def.promise({
-            cancel: function() { $def.reject(arg); }
-        });
-    }
-
-    function preloadImg(src) {
-
-        var $def = $.Deferred();
-        var $img = $('<img/>')
-            .one('load', function() { $def.resolve($img); })
-            .attr('src', src);
-
-        return $def.promise();
-        //return timeout(1000).then(function() { return $def.promise(); }); // for testing
-    }
-
     function onEnter(items, idx) {
 
         var currentItems = items;
@@ -52,6 +31,27 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
                     '' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%'
                 ]);
             }
+        }
+
+        function timeout(delay, arg) {
+
+            var $def = $.Deferred();
+            var timer = setTimeout(function() { $def.resolve(arg); }, delay);
+            $def.fail(function() { clearTimeout(timer); });
+            return $def.promise({
+                cancel: function() { $def.reject(arg); }
+            });
+        }
+
+        function preloadImg(src) {
+
+            var $def = $.Deferred();
+            var $img = $('<img/>')
+                .one('load', function() { $def.resolve($img); })
+                .attr('src', src);
+
+            return $def.promise();
+            //return timeout(1000).then(function() { return $def.promise(); }); // for testing
         }
 
         function swapImg($img) {
