@@ -39,7 +39,7 @@ $.fn.autoprefixer = function (options) {
         try {
             blob.content = autoprefixer.process(blob.content, options).css;
         } catch (e) {
-            fQuery.report({
+            $.report({
                 type: 'err',
                 method: 'autoprefixer',
                 message: e.message,
