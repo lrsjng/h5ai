@@ -32,7 +32,7 @@ function getBuildSuffix(callback) {
 $.fn.autoprefixer = function (options) {
 
     var autoprefixer = require('autoprefixer-core');
-    var options = {browsers: ['last 2 version']};
+    var options = {browsers: ['last 2 versions']};
 
     return this.edit(function (blob) {
 
