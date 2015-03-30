@@ -3,13 +3,14 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store'], function (
     var storekey = 'sidebarIsVisible';
     var toggleTemplate =
             '<div id="sidebar-toggle" class="tool">' +
-                '<img src="' + resource.image('settings') + '" alt="settings"/>' +
+                '<img alt="settings"/>' +
             '</div>';
 
 
     function update(toggle) {
 
         var $toggle = $('#sidebar-toggle');
+        var $img = $toggle.find('img');
         var $sidebar = $('#sidebar');
         var isVisible = store.get(storekey);
 
@@ -20,9 +21,11 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store'], function (
 
         if (isVisible) {
             $toggle.addClass('current');
+            $img.attr('src', resource.image('back'));
             $sidebar.show();
         } else {
             $toggle.removeClass('current');
+            $img.attr('src', resource.image('settings'));
             $sidebar.hide();
         }
     }
