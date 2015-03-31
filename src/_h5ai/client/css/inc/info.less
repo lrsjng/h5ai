@@ -1,0 +1,33 @@
+
+#info {
+    display: none;
+
+    overflow: auto;
+    flex: 0 0 auto;
+    order: 99;
+
+    padding: 16px 16px 16px 8px;
+    border-left: 1px solid @col-border;
+    white-space: nowrap;
+    overflow-x: hidden;
+    // font-weight: lighter;
+    width: 250px;
+
+    .label, .time, .size {
+        line-height: 20px;
+    }
+
+    .qrcode {
+        background: #fff;
+        border-radius: 2px;
+        margin: 0 auto;
+        padding: 8px;
+        width: 150px;
+        // border: @border-widget;
+        box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.4);
+
+        canvas {
+            display: block;
+        }
+    }
+}

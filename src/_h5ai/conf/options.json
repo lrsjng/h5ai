@@ -60,7 +60,7 @@ Options
     },
 
     /*
-    Use a context menu (right-click) on selected elements.
+    Enable a context menu (right-click) on some elements.
     */
     "contextmenu": {
         "enabled": true
@@ -135,6 +135,13 @@ Options
     "google-analytics-ua": {
         "enabled": false,
         "id": "UA-000000-0"
+    },
+
+    /*
+    Enable a generic info side bar.
+    */
+    "info": {
+        "enabled": true
     },
 
     /*
@@ -245,16 +252,6 @@ Options
     },
 
     /*
-    Show QRCodes on hovering files.
-
-    - size: width and height in pixel
-    */
-    "qrcode": {
-        "enabled": true,
-        "size": 150
-    },
-
-    /*
     Make entries selectable.
     At the moment only needed for packaged download.
 
@@ -284,13 +281,6 @@ Options
         "ignorecase": true,
         "natural": false,
         "folders": 0
-    },
-
-    /*
-    Show additional info in a statusbar.
-    */
-    "statusbar": {
-        "enabled": true
     },
 
     /*
