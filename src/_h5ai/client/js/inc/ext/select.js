@@ -2,7 +2,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     var settings = _.extend({
             enabled: false,
-            mouse: false,
+            clickndrag: false,
             checkboxes: false
         }, allsettings.select);
     var template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>';
