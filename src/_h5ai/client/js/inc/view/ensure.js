@@ -20,6 +20,7 @@ modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, confi
 
     function init() {
 
+        $('#fallback, #fallback-hints').remove();
         $(templateTopbar).appendTo('body');
         $(templateMainRow).appendTo('body');
         $(templateBacklink).appendTo('#topbar');

@@ -60,20 +60,16 @@
 }
 
 
-#fallback-bar {
+#fallback-hints {
     display: none;
     overflow: hidden;
-
-    padding: 6px;
-    background: @col-lightgray;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
-
-    color: #999;
     text-align: right;
-    line-height: 36px;
+    background: @col-lightgray;
 
     a, a:active, a:visited {
-        margin: 0 8px;
+        display: inline-block;
+        line-height: 48px;
         color: @col-text-secondary-black;
         text-decoration: none;
         .transition(all 0.2s ease-in-out);
@@ -84,16 +80,13 @@
         }
     }
 
+    .backlink {
+        margin: 0 16px;
+    }
+
     .noJsMsg, .noBrowserMsg {
-        margin: 0 8px;
+        margin: 0 16px;
         color: @col-error;
-        a, a:active, a:visited {
-            color: @col-error;
-            text-decoration: underline;
-            &:hover {
-                color: @col-hover;
-            }
-        }
     }
 }
 
@@ -105,7 +98,7 @@ html.no-js, html.no-browser {
         background: #fff;
     }
 
-    #fallback, #fallback-bar {
+    #fallback, #fallback-hints {
         display: block;
     }
 }

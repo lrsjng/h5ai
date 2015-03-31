@@ -14,15 +14,15 @@ head
 
 body#h5ai-info
 
-    div#fallback-bar
+    div#fallback-hints
         span.noJsMsg
             | JavaScript disabled!
         span.noBrowserMsg
             | Works best in 
             a( href="http://browsehappy.com" ) modern browsers
             | !
-        a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" )
-            | powered by #{pkg.name}
+        span.backlink
+            a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" ) powered by #{pkg.name}
 
     div#content
         h1#header
