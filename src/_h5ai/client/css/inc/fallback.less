@@ -2,7 +2,7 @@
 #fallback {
     display: none;
     max-width: 960px;
-    margin: 0 auto 48px;
+    margin: 16px auto;
     padding: 32px 16px;
 
     table {
@@ -60,6 +60,44 @@
 }
 
 
+#fallback-bar {
+    display: none;
+    overflow: hidden;
+
+    padding: 6px;
+    background: @col-lightgray;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+
+    color: #999;
+    text-align: right;
+    line-height: 36px;
+
+    a, a:active, a:visited {
+        margin: 0 8px;
+        color: @col-text-secondary-black;
+        text-decoration: none;
+        .transition(all 0.2s ease-in-out);
+        outline: 0;
+
+        &:hover {
+            color: @col-hover;
+        }
+    }
+
+    .noJsMsg, .noBrowserMsg {
+        margin: 0 8px;
+        color: @col-error;
+        a, a:active, a:visited {
+            color: @col-error;
+            text-decoration: underline;
+            &:hover {
+                color: @col-hover;
+            }
+        }
+    }
+}
+
+
 html.no-js, html.no-browser {
 
     body {
@@ -67,16 +105,7 @@ html.no-js, html.no-browser {
         background: #fff;
     }
 
-    #fallback {
+    #fallback, #fallback-bar {
         display: block;
-    }
-
-    #bottombar {
-        display: block;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        right: 0;
-        bottom: 0;
     }
 }
