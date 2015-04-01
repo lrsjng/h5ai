@@ -139,9 +139,14 @@ Options
 
     /*
     Enable a generic info side bar.
+
+    - qrcode: show a QR-Code
+    - qrColor: QR-Code fill color
     */
     "info": {
-        "enabled": true
+        "enabled": true,
+        "qrcode": true,
+        "qrColor": "#999"
     },
 
     /*

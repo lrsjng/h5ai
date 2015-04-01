@@ -1,7 +1,9 @@
 modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/format'], function (_, $, modernizr, allsettings, resource, store, event, format) {
 
     var settings = _.extend({
-            enabled: false
+            enabled: false,
+            qrcode: true,
+            qrColor: "#999"
         }, allsettings.info);
     var template =
             '<div id="info">' +
@@ -64,15 +66,17 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
             $size.append(' - ' + stats.folders + ' - ' + stats.files);
         }
 
-        $qrcode.empty().qrcode({
-            render: modernizr.canvas ? 'canvas' : 'div',
-            size: 200,
-            fill: '#555',
-            background: null,
-            quiet: 2,
-            radius: 0.3,
-            text: window.location.protocol + '//' + window.location.host + item.absHref
-        });
+        if (settings.qrcode) {
+            $qrcode.empty().qrcode({
+                render: modernizr.canvas ? 'canvas' : 'div',
+                size: 200,
+                fill: settings.qrColor,
+                background: null,
+                quiet: 2,
+                // radius: 0.3,
+                text: window.location.protocol + '//' + window.location.host + item.absHref
+            });
+        }
     }
 
     function onMouseenter(item) {
@@ -103,6 +107,10 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         $time = $info.find('.time');
         $size = $info.find('.size');
         $qrcode = $info.find('.qrcode');
+
+        if (!settings.qrcode) {
+            $qrcode.remove();
+        }
 
         $(settingsTemplate)
             .appendTo('#settings')
