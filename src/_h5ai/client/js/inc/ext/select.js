@@ -11,6 +11,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
     var isDragSelect, isCtrlPressed;
     var shrink = 1/3;
     var $document = $(document);
+    var $html = $('html');
     var $selectionRect = $('<div id="selection-rect"/>');
 
 
@@ -56,17 +57,22 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     function selectionUpdate(ev) {
 
+        l = Math.min(x, ev.pageX);
+        t = Math.min(y, ev.pageY);
+        w = Math.abs(x - ev.pageX);
+        h = Math.abs(y - ev.pageY);
+
+        if (!isDragSelect && w < 4 && h < 4) {
+            return;
+        }
+
         if (!isDragSelect && !isCtrlPressed) {
             $('#items .item').removeClass('selected');
             publish();
         }
 
         isDragSelect = true;
-
-        l = Math.min(x, ev.pageX);
-        t = Math.min(y, ev.pageY);
-        w = Math.abs(x - ev.pageX);
-        h = Math.abs(y - ev.pageY);
+        $html.addClass('drag-select');
 
         ev.preventDefault();
         $selectionRect
@@ -99,6 +105,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         $('#items .item.selecting').removeClass('selecting').addClass('selected');
         publish();
 
+        $html.removeClass('drag-select');
         $selectionRect
             .stop(true, true)
             .animate(
