@@ -5,9 +5,12 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         }, allsettings.info);
     var template =
             '<div id="info">' +
-                '<div class="label"/>' +
-                '<div class="time"/>' +
-                '<div class="size"/>' +
+                '<div class="icon"><img/></div>' +
+                '<div class="block">' +
+                    '<div class="label"/>' +
+                    '<div class="time"/>' +
+                    '<div class="size"/>' +
+                '</div>' +
                 '<div class="qrcode"/>' +
             '</div>';
     var settingsTemplate =
@@ -19,7 +22,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
             '</div>';
     var sepTemplate = '<span class="sep"/>';
     var storekey = 'ext/info';
-    var $label, $time, $size, $qrcode;
+    var $img, $label, $time, $size, $qrcode;
     var currentFolder;
 
     // <span class="l10n-folders"/>
@@ -38,6 +41,12 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
 
     function update(item) {
 
+        var src = resource.icon('folder');
+        if (!item.isCurrentFolder() && item.$view) {
+            src = item.$view.find('.icon.landscape img').attr('src');
+        }
+
+        $img.attr('src', src);
         $label.text(item.label);
         if (_.isNumber(item.time)) {
             $time.text(format.formatDate(item.time));
@@ -45,7 +54,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
             $time.text('.');
         }
         if (_.isNumber(item.size)) {
-            $size.text(format.formatSize(item.size));
+            $size.text(format.formatSize(item.size) + ' (' + item.size + ' B)');
         } else {
             $size.text('.');
         }
@@ -55,22 +64,18 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
             $size.append(' - ' + stats.folders + ' - ' + stats.files);
         }
 
-
         $qrcode.empty().qrcode({
             render: modernizr.canvas ? 'canvas' : 'div',
-            size: 150,
-            color: '#333',
+            size: 200,
+            fill: '#555',
             background: null,
+            quiet: 2,
             radius: 0.3,
             text: window.location.protocol + '//' + window.location.host + item.absHref
         });
     }
 
     function onMouseenter(item) {
-
-        if (item.isCurrentParentFolder()) {
-            return;
-        }
 
         update(item);
     }
@@ -93,6 +98,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         }
 
         var $info = $(template).appendTo('#main-row');
+        $img = $info.find('.icon img');
         $label = $info.find('.label');
         $time = $info.find('.time');
         $size = $info.find('.size');
