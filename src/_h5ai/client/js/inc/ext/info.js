@@ -72,8 +72,6 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
                 size: 200,
                 fill: settings.qrColor,
                 background: null,
-                quiet: 2,
-                // radius: 0.3,
                 text: window.location.protocol + '//' + window.location.host + item.absHref
             });
         }
