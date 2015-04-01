@@ -5,7 +5,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         }, allsettings.preview);
     var $window = $(window);
     var template =
-            '<div id="pv-overlay" class="noSelection">' +
+            '<div id="pv-overlay">' +
                 '<div id="pv-content"/>' +
                 '<div id="pv-spinner"><img src="' + resource.image('spinner') + '"/></div>' +
                 '<div id="pv-prev-area" class="hof"><img src="' + resource.image('preview-prev') + '"/></div>' +

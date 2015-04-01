@@ -8,6 +8,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
     var template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>';
     var x = 0, y = 0;
     var l = 0, t = 0, w = 0, h = 0;
+    var isDragSelect, isCtrlPressed;
     var shrink = 1/3;
     var $document = $(document);
     var $selectionRect = $('<div id="selection-rect"/>');
@@ -55,6 +56,13 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
     function selectionUpdate(ev) {
 
+        if (!isDragSelect && !isCtrlPressed) {
+            $('#items .item').removeClass('selected');
+            publish();
+        }
+
+        isDragSelect = true;
+
         l = Math.min(x, ev.pageX);
         t = Math.min(y, ev.pageY);
         w = Math.abs(x - ev.pageX);
@@ -78,10 +86,15 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         });
     }
 
-    function selectionEnd(event) {
+    function selectionEnd(ev) {
 
-        event.preventDefault();
         $document.off('mousemove', selectionUpdate);
+
+        if (!isDragSelect) {
+            return;
+        }
+
+        ev.preventDefault();
         $('#items .item.selecting.selected').removeClass('selecting').removeClass('selected');
         $('#items .item.selecting').removeClass('selecting').addClass('selected');
         publish();
@@ -103,40 +116,21 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
             );
     }
 
-    function selectionStart(event) {
+    function selectionStart(ev) {
 
         // only on left button and don't block scrollbar
-        if (event.button !== 0 || event.offsetX >= $('#content').width() - 14) {
+        if (ev.button !== 0 || ev.offsetX >= $('#content').width() - 14) {
             return;
         }
 
-        x = event.pageX;
-        y = event.pageY;
-
-        $(':focus').blur();
-        if (!event.ctrlKey && !event.metaKey) {
-            $('#items .item').removeClass('selected');
-            publish();
-        }
+        isDragSelect = false;
+        isCtrlPressed = ev.ctrlKey || ev.metaKey;
+        x = ev.pageX;
+        y = ev.pageY;
 
         $document
             .on('mousemove', selectionUpdate)
             .one('mouseup', selectionEnd);
-
-        selectionUpdate(event);
-    }
-
-    function noSelection(event) {
-
-        event.stopImmediatePropagation();
-        return false;
-    }
-
-    function noSelectionUnlessCtrl(event) {
-
-        if (!event.ctrlKey && !event.metaKey) {
-            noSelection(event);
-        }
     }
 
     function initItem(item) {
@@ -144,10 +138,10 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         if (item.$view) {
             $(template)
                 .appendTo(item.$view.find('a'))
-                .on('click', function (event) {
+                .on('click', function (ev) {
 
-                    event.stopImmediatePropagation();
-                    event.preventDefault();
+                    ev.stopImmediatePropagation();
+                    ev.preventDefault();
 
                     item.$view.toggleClass('selected');
                     publish();
@@ -195,11 +189,13 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
         if (settings.clickndrag) {
             $selectionRect.hide().appendTo('body');
 
-            // $document
             $('#content')
-                .on('mousedown', '.noSelection', noSelection)
-                .on('mousedown', '.noSelectionUnlessCtrl,input,select,a', noSelectionUnlessCtrl)
-                .on('mousedown', selectionStart);
+                .on('mousedown', selectionStart)
+                .on('click', function (ev) {
+
+                    $('#items .item').removeClass('selected');
+                    publish();
+                });
         }
     }
 
