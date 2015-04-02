@@ -37,16 +37,14 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
 
     function cropSize(size, min, max) {
 
-        min = min || 4;
-        max = max || 2048;
         return Math.min(max, Math.max(min, size));
     }
 
     function applyCssSizes(size) {
 
-        var dsize = cropSize(size, 10, 80);
+        var dsize = cropSize(size, 20, 80);
         var gsize = cropSize(size, 40, 150);
-        var isize = cropSize(size, 80);
+        var isize = cropSize(size, 80, 2000);
         var ilsize = Math.round(isize*4/3);
         var rules = [
                 '#view.view-details .item .label { line-height: ' + (dsize+14) + 'px !important; }',
