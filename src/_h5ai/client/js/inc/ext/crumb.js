@@ -27,7 +27,7 @@ modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/
         $html.find('.label').text(item.label).end();
 
         if (item.isDomain() || item.isRoot()) {
-            $html.find('.sep').remove();
+            $html.find('.sep').width(0);
         }
 
         if (item.isCurrentFolder()) {
