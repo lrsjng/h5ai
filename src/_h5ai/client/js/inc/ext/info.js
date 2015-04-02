@@ -43,12 +43,20 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
 
     function update(item) {
 
-        var src = resource.icon('folder');
-        if (!item.isCurrentFolder() && item.$view) {
-            src = item.$view.find('.icon.landscape img').attr('src');
+        var src = item.thumbRational || item.icon;
+        var isThumb = !!item.thumbRational;
+
+        if (item.isCurrentFolder() || !src) {
+            src = resource.icon('folder');
         }
 
         $img.attr('src', src);
+        if (isThumb) {
+            $img.addClass('thumb');
+        } else {
+            $img.removeClass('thumb');
+        }
+
         $label.text(item.label);
         if (_.isNumber(item.time)) {
             $time.text(format.formatDate(item.time));

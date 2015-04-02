@@ -52,24 +52,24 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
 
         location.setLink($a, item);
 
-        $iconImg.attr('src', resource.icon(item.type)).attr('alt', item.type);
-        $label.text(item.label);
-        $label.attr('title', item.label);
+        $label.text(item.label).attr('title', item.label);
         $date.data('time', item.time).text(format.formatDate(item.time));
         $size.data('bytes', item.size).text(format.formatSize(item.size));
+        item.icon = resource.icon(item.type);
 
         if (item.isFolder() && !item.isManaged) {
             $html.addClass('page');
-            $iconImg.attr('src', resource.icon('folder-page'));
+            item.icon = resource.icon('folder-page');
         }
 
         if (item.isCurrentParentFolder()) {
-            $iconImg.attr('src', resource.icon('folder-parent'));
+            item.icon = resource.icon('folder-parent');
             if (!settings.setParentFolderLabels) {
                 $label.addClass('l10n-parentDirectory');
             }
             $html.addClass('folder-parent');
         }
+        $iconImg.attr('src', item.icon).attr('alt', item.type);
 
         if (item.$view) {
             item.$view.replaceWith($html);
