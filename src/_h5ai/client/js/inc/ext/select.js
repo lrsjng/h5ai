@@ -198,6 +198,11 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
             $('#content')
                 .on('mousedown', selectionStart)
+                .on('drag dragstart', function (ev) {
+
+                    ev.stopImmediatePropagation();
+                    ev.preventDefault();
+                })
                 .on('click', function (ev) {
 
                     $('#items .item').removeClass('selected');
