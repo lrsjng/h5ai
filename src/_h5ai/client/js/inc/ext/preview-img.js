@@ -1,21 +1,11 @@
-modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ext/preview'], function (_, $, allsettings, event, preview) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ext/preview', 'ext/thumbnails'], function (_, $, allsettings, event, preview, thumbnails) {
 
     var settings = _.extend({
             enabled: false,
-            types: []
+            types: [],
+            previewSize: false
         }, allsettings['preview-img']);
 
-
-    function preloadImg(src, callback) {
-
-        var $img = $('<img/>')
-                        .one('load', function () {
-
-                            callback($img);
-                            // setTimeout(function () { callback($img); }, 1000); // for testing
-                        })
-                        .attr('src', src);
-    }
 
     function onEnter(items, idx) {
 
@@ -43,37 +33,85 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'ex
             }
         }
 
+        function timeout(delay, arg) {
+
+            var $def = $.Deferred();
+            var timer = setTimeout(function() { $def.resolve(arg); }, delay);
+            $def.fail(function() { clearTimeout(timer); });
+            return $def.promise({
+                cancel: function() { $def.reject(arg); }
+            });
+        }
+
+        function preloadImg(src, idx) {
+
+            var $def = $.Deferred();
+            var $img = $('<img/>')
+                .one('load', function() { $def.resolve(); })
+                .attr('src', src);
+
+            //return timeout(Math.ceil(Math.random() * 2500)).then(function() { //for testing
+                return $def.then(function() {
+
+                    var idxChanged = idx !== -1 && idx !== currentIdx;
+                    // reject when index advances beyond loaded image
+                    return $.Deferred()[idxChanged ? 'reject' : 'resolve']($img);
+                });
+            //});
+        }
+
+        function swapImg($img) {
+
+            var container = $('#pv-content').empty()
+                .append($img.attr('id', 'pv-img-image'))
+                .filter(':hidden').fadeIn(200);
+
+            // small timeout, so $img is visible and therefore $img.width is available
+            var timer = timeout(10, $img);
+            if (!container.length) {
+                timer.cancel();
+            }
+            return timer.always(function($img) {
+
+                onAdjustSize();
+
+                preview.setIndex(currentIdx + 1, currentItems.length);
+                preview.setLabels([
+                    currentItem.label,
+                    '' + $img[0].naturalWidth + 'x' + $img[0].naturalHeight,
+                    '' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%'
+                ]);
+                preview.setRawLink(currentItem.absHref);
+            });
+        }
+
         function onIdxChange(rel) {
 
             currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
             currentItem = currentItems[currentIdx];
 
-            var spinnerTimeout = setTimeout(function () { preview.showSpinner(true); }, 200);
+            /* jshint laxbreak: true */// fix deprecated warning
+            var loader = settings.previewSize
+                ? thumbnails.requestSample('img', currentItem.absHref, settings.previewSize, 0)
+                .then(function(absHref) { return preloadImg(absHref, currentIdx); })
+                : preloadImg(currentItem.absHref, currentIdx);
 
-            preloadImg(currentItem.absHref, function ($preloaded_img) {
+            var spinnerTimeout = timeout(200).done(function () { preview.showSpinner(true); });
+            loader = loader.then(function ($img) {
 
-                clearTimeout(spinnerTimeout);
+                spinnerTimeout.cancel();
                 preview.showSpinner(false);
 
-                $('#pv-content').fadeOut(100, function () {
+                return $('#pv-content').fadeOut(100).promise()
+                    // propogate $img down handler chain
+                    .then(function() { return $img; });
+            }).then(swapImg);
 
-                    $('#pv-content').empty().append($preloaded_img.attr('id', 'pv-img-image')).fadeIn(200);
-
-                    // small timeout, so $preloaded_img is visible and therefore $preloaded_img.width is available
-                    setTimeout(function () {
-
-                        onAdjustSize();
-
-                        preview.setIndex(currentIdx + 1, currentItems.length);
-                        preview.setLabels([
-                            currentItem.label,
-                            '' + $preloaded_img[0].naturalWidth + 'x' + $preloaded_img[0].naturalHeight,
-                            '' + (100 * $preloaded_img.width() / $preloaded_img[0].naturalWidth).toFixed(0) + '%'
-                        ]);
-                        preview.setRawLink(currentItem.absHref);
-                    }, 10);
-                });
-            });
+            // now full size
+            if (settings.previewSize) {
+                // attempt even when preview fails
+                loader.always(function() { preloadImg(currentItem.absHref, currentIdx).then(swapImg); });
+            }
         }
 
         onIdxChange(0);

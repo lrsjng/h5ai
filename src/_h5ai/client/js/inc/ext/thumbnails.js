@@ -1,4 +1,4 @@
-modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/server', 'core/resource'], function (_, allsettings, event, server, resource) {
+modulejs.define('ext/thumbnails', ['_', '$', 'core/settings', 'core/event', 'core/server', 'core/resource'], function (_, $, allsettings, event, server, resource) {
 
     var settings = _.extend({
             enabled: false,
@@ -11,18 +11,25 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
         }, allsettings.thumbnails);
 
 
-    function requestThumb(type, href, ratio, callback) {
+    function requestSample(type, href, width, height, callback) {
 
+        var $def = $.Deferred();
         server.request({
             action: 'getThumbHref',
             type: type,
             href: href,
-            width: Math.round(settings.size * ratio),
-            height: settings.size
+            width: width,
+            height: height
         }, function (json) {
 
-            callback(json && json.code === 0 ? json.absHref : null);
+            $def.resolve(json && json.code === 0 ? json.absHref : null);
         });
+        return callback ? $def.done(callback) : $def.promise();
+    }
+
+    function requestThumb(type, href, ratio, callback) {
+
+        return requestSample(type, href, Math.round(settings.size * ratio), settings.size, callback);
     }
 
     function checkItem(item) {
@@ -88,4 +95,8 @@ modulejs.define('ext/thumbnails', ['_', 'core/settings', 'core/event', 'core/ser
 
 
     init();
+
+    return {
+        requestSample: requestSample
+    };
 });

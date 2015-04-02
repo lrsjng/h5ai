@@ -61,11 +61,10 @@ class Thumb {
 
             $image = new Image();
 
-            $et = false;
             $opts = $this->app->get_options();
-            if (HAS_PHP_EXIF && $opts["thumbnails"]["exif"] === true) {
-                $et = @exif_thumbnail($source_path);
-            }
+            $et = intval($height) !== 0 && // resample not thumb when $height is 0
+                HAS_PHP_EXIF && $opts["thumbnails"]["exif"] ?
+                @exif_thumbnail($source_path) : false;
             if($et !== false) {
                 file_put_contents($thumb_path, $et);
                 $image->set_source($thumb_path);
@@ -193,8 +192,13 @@ class Image {
             return;
         }
 
-        $ratio = 1.0 * $width / $height;
         $src_r = 1.0 * $this->width / $this->height;
+        // scale proportionally inside bounding square when $height is 0
+        if ($height == 0) {
+            $height = min($this->height, $src_r <= 1 ? $width : $width / $src_r);
+            $width = min($this->width, $src_r <= 1 ? $width * $src_r : $width);
+        }
+        $ratio = 1.0 * $width / $height;
 
         if ($src_r <= $ratio) {
             $src_w = $this->width;

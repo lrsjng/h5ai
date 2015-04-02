@@ -199,10 +199,12 @@ Options
     Show an image preview on click.
 
     - types: array of types
+    - previewSize: number, size in pixel of the generated previews, or false to skip
     */
     "preview-img": {
         "enabled": true,
-        "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw"]
+        "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw"],
+        "previewSize": 1000
     },
 
     /*
