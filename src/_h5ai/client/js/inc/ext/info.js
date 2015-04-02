@@ -12,6 +12,10 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
                     '<div class="label"/>' +
                     '<div class="time"/>' +
                     '<div class="size"/>' +
+                    '<div class="content">' +
+                        '<span class="folders"/> <span class="l10n-folders"/>, ' +
+                        '<span class="files"/> <span class="l10n-files"/>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="qrcode"/>' +
             '</div>';
@@ -24,7 +28,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
             '</div>';
     var sepTemplate = '<span class="sep"/>';
     var storekey = 'ext/info';
-    var $img, $label, $time, $size, $qrcode;
+    var $img, $label, $time, $size, $content, $folders, $files, $qrcode;
     var currentFolder;
 
     // <span class="l10n-folders"/>
@@ -63,15 +67,21 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         } else {
             $time.text('.');
         }
+
         if (_.isNumber(item.size)) {
-            $size.text(format.formatSize(item.size) + ' (' + item.size + ' B)');
+            $size.text(format.formatSize(item.size));
+            $size.show();
         } else {
-            $size.text('.');
+            $size.hide();
         }
 
-        if (item.isFolder()) {
+        if (item.isContentFetched) {
             var stats = item.getStats();
-            $size.append(' - ' + stats.folders + ' - ' + stats.files);
+            $folders.text(stats.folders);
+            $files.text(stats.files);
+            $content.show();
+        } else {
+            $content.hide();
         }
 
         if (settings.qrcode) {
@@ -112,6 +122,9 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         $label = $info.find('.label');
         $time = $info.find('.time');
         $size = $info.find('.size');
+        $content = $info.find('.content');
+        $folders = $info.find('.folders');
+        $files = $info.find('.files');
         $qrcode = $info.find('.qrcode');
 
         if (!settings.qrcode) {
