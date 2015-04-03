@@ -2,6 +2,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
 
     var settings = _.extend({
             enabled: false,
+            show: false,
             qrcode: true,
             qrColor: "#999"
         }, allsettings.info);
@@ -141,8 +142,10 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
                 ev.preventDefault();
             });
 
-        // ensure stored value is boolean, default to true
-        store.put(storekey, store.get(storekey) !== false);
+        // ensure stored value is boolean, otherwise set default
+        if (typeof(store.get(storekey)) !== 'boolean') {
+            store.put(storekey, settings.show);
+        }
         updateSettings();
 
         event.sub('location.changed', onLocationChanged);

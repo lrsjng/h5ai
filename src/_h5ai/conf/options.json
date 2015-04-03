@@ -9,26 +9,26 @@ Options
     /*
     General view options.
 
-    - binaryPrefix: set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
-    - hidden: don't list items matching these regular expressions
-    - hideFolders: hide all folders in the main view
-    - hideIf403: hide files and folders that are not readable by the server
-    - hideParentFolder: hide parent folder links in the main view
-    - modes: array, subset of ["details", "grid", "icons"]
+    - binaryPrefix: boolean, set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+    - hidden: array of strings, don't list items matching these regular expressions
+    - hideFolders: boolean, hide all folders in the main view
+    - hideIf403: boolean, hide files and folders that are not readable by the server
+    - hideParentFolder: boolean, hide parent folder links in the main view
+    - modes: array of strings, subset of ["details", "grid", "icons"]
         the first value indicates the default view mode. If only one value
         is given the view mode is fixed and the selector buttons are hidden.
         The user selected view mode is also stored local in modern browsers
         so that it will be persistent.
-    - setParentFolderLabels: set parent folder labels to real folder names
-    - sizes: array of positive integers
+    - setParentFolderLabels: boolean, set parent folder labels to real folder names
+    - sizes: array of numbers
         the first value indicates the default view size. If only one value
         is given the view size is fixed and the selector buttons are hidden.
         The user selected view size is also stored local in modern browsers
         so that it will be persistent.
-    - smartBrowsing: use History API if available (no need to reload the whole page)
-    - theme: name of one of the folders in "_{{pkg.name}}/images/themes", defaults to "default"
-    - unmanaged: don't manage folders containing one of those files
-    - unmanagedInNewWindow: open unmanaged links in new window/tab
+    - smartBrowsing: boolean, use History API if available (no need to reload the whole page)
+    - theme: string, name of one of the folders in "_{{pkg.name}}/images/themes", defaults to "default"
+    - unmanaged: array of strings, don't manage folders containing one of those files
+    - unmanagedInNewWindow: boolean, open unmanaged links in new window/tab
     */
     "view": {
         "binaryPrefix": false,
@@ -90,9 +90,9 @@ Options
     Enable packaged download of selected entries.
     To select files the "select"-extension needs to be enabled.
 
-    - type: "php-tar", "shell-tar" or "shell-zip"
-    - packageName: basename of the download package, null for current filename or foldername
-    - alwaysVisible: always show download button (defaults to download the current folder)
+    - type: string, "php-tar", "shell-tar" or "shell-zip"
+    - packageName: string, basename of the download package, null for current filename or foldername
+    - alwaysVisible: boolean, always show download button (defaults to download the current folder)
     */
     "download": {
         "enabled": true,
@@ -120,7 +120,7 @@ Options
     calculation types since "php" only adds the file size, while "shell-du"
     also adds the sizes for the actual folder files.
 
-    - type: "php" (sloooow) or "shell-du" (sloow)
+    - type: string, "php" (sloooow) or "shell-du" (sloow)
     */
     "foldersize": {
         "enabled": false,
@@ -129,8 +129,9 @@ Options
 
     /*
     Adds Google Universial Analytics asynchronous tracking code.
-
     see: https://developers.google.com/analytics/devguides/collection/analyticsjs/
+
+    - id: string, account ID
     */
     "google-analytics-ua": {
         "enabled": false,
@@ -140,11 +141,13 @@ Options
     /*
     Enable a generic info side bar.
 
-    - qrcode: show a QR-Code
-    - qrColor: QR-Code fill color
+    - show: boolean, initial visible to first time users
+    - qrcode: boolean, show a QR-Code
+    - qrColor: string, QR-Code fill color
     */
     "info": {
         "enabled": true,
+        "show": false,
         "qrcode": true,
         "qrColor": "#999"
     },
@@ -154,7 +157,7 @@ Options
     possible values. Adjust it to your needs. If lang is not found
     it defaults to "en".
 
-    - lang: default language
+    - lang: string, default language
     - useBroserLang: boolean, try to use browser language
     */
     "l10n": {
@@ -166,7 +169,7 @@ Options
     /*
     Adds peer5 p2p downloader which is based on webrtc (see peer5.com).
 
-    - id: the API key - get your own key - http://peer5.com/downloader
+    - id: string, the API key
     */
     "peer5": {
         "enabled": false,
@@ -176,7 +179,7 @@ Options
     /*
     Adds Piwik tracker javascript code.
 
-    - baseURL: do not include the protocol, e.g. "mydomain.tld/piwik"
+    - baseURL: string, do not include the protocol, e.g. "mydomain.tld/piwik"
     - idSite: number
     */
     "piwik-analytics": {
@@ -188,7 +191,7 @@ Options
     /*
     Play a audio preview on click.
 
-    - types: array of types
+    - types: array of strings
     */
     "preview-aud": {
         "enabled": true,
@@ -198,7 +201,7 @@ Options
     /*
     Show an image preview on click.
 
-    - types: array of types
+    - types: array of strings
     */
     "preview-img": {
         "enabled": true,
@@ -214,7 +217,7 @@ Options
      - "none" for floating text
      - "fixed" for fixed width text
 
-    - types: maps types to languages
+    - types: dict string to string, maps types to languages
     */
     "preview-txt": {
         "enabled": true,
@@ -249,7 +252,7 @@ Options
     /*
     Play a video preview on click.
 
-    - types: array of types
+    - types: array of strings
     */
     "preview-vid": {
         "enabled": true,
@@ -273,11 +276,11 @@ Options
     Default sort order.
     "column" and "reverse" are locally stored.
 
-    - column: int, 0 for "Name", 1 for "Date", 2 for "Size"
+    - column: number, 0 for "Name", 1 for "Date", 2 for "Size"
     - reverse: boolean, false for ascending, true for descending
     - ignorecase: boolean, compare ignorecase
     - natural: boolean, use natural sort order
-    - folders: where to place folders, 0 for "top", 1 for "in place", 2 for "bottom"
+    - folders: number, where to place folders, 0 for "top", 1 for "in place", 2 for "bottom"
     */
     "sort": {
         "enabled": true,
@@ -292,10 +295,10 @@ Options
     Show thumbnails for image files. Needs the "/_{{pkg.name}}/cache" folder to be
     writable for the web Server.
 
-    - img: array of types
-    - mov: array of types
-    - doc: array of types
-    - delay: delay in milliseconds after "dom-ready" before thumb-requesting starts
+    - img: array of strings
+    - mov: array of strings
+    - doc: array of strings
+    - delay: number, delay in milliseconds after "dom-ready" before thumb-requesting starts
     - size: number, size in pixel of the generated thumbnails
     - exif: boolean, use included EXIF thumbs if possible
     */
@@ -320,10 +323,12 @@ Options
     Show a folder tree.
     Note that this might affect performance significantly.
 
-    - maxSubfolders: max number of subfolders to show in tree
+    - show: boolean, initial visible to first time users
+    - maxSubfolders: number, max number of subfolders to show in tree
     */
     "tree": {
         "enabled": true,
+        "show": true,
         "maxSubfolders": 50
     }
 }

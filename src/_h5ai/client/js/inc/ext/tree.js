@@ -2,6 +2,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
 
     var settings = _.extend({
             enabled: false,
+            show: true,
             maxSubfolders: 50
         }, allsettings.tree);
     var template =
@@ -192,8 +193,10 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
                 ev.preventDefault();
             });
 
-        // ensure stored value is boolean, default to true
-        store.put(storekey, store.get(storekey) !== false);
+        // ensure stored value is boolean, otherwise set default
+        if (typeof(store.get(storekey)) !== 'boolean') {
+            store.put(storekey, settings.show);
+        }
         updateSettings();
 
         event.sub('location.changed', onLocationChanged);
