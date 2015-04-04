@@ -18,12 +18,17 @@
 * improves image preview
 * prevents listing `_h5ai` folder and subfolders
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
+* updates `jQuery` to 2.1.3
+* updates `jQuery.qrcode` to 0.11.0
+* updates `Lo-Dash` to 3.6.0
+* updates `Modernizr` to 2.8.3
+* updates `modulejs` to 1.4.0
+* updates `Moment.js` to 2.9.0
+* updates `Prism` to 2015-04-05
 * removes deprecated Google Analytics code
 * removes `jQuery.fracs`
 * removes `jQuery.scrollpanel`
 * removes `jQuery.mousewheel`
-* updates `jQuery.qrcode` to 0.11.0
-* updates `modulejs` to 1.4.0
 * language updates and additions (`af`, `es`, `ja`, `ko`, `ru`, `zh-cn`)
 
 
