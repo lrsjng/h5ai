@@ -63,7 +63,7 @@ class Thumb {
 
             $et = false;
             $opts = $this->app->get_options();
-            if (HAS_PHP_EXIF && $opts["thumbnails"]["exif"] === true) {
+            if (HAS_PHP_EXIF && $opts["thumbnails"]["exif"] === true && $height != 0) {
                 $et = @exif_thumbnail($source_path);
             }
             if($et !== false) {
@@ -193,8 +193,22 @@ class Image {
             return;
         }
 
-        $ratio = 1.0 * $width / $height;
         $src_r = 1.0 * $this->width / $this->height;
+
+        if ($height == 0) {
+            if ($src_r >= 1) {
+                $height = 1.0 * $width / $src_r;
+            } else {
+                $height = $width;
+                $width = 1.0 * $height * $src_r;
+            }
+            if ($width > $this->width) {
+                $width = $this->width;
+                $height = $this->height;
+            }
+        }
+
+        $ratio = 1.0 * $width / $height;
 
         if ($src_r <= $ratio) {
             $src_w = $this->width;
@@ -206,6 +220,8 @@ class Image {
             $src_x = 0.5 * ($this->width - $src_w);
         }
 
+        $width = intval($width);
+        $height = intval($height);
         $src_x = intval($src_x);
         $src_w = intval($src_w);
         $src_h = intval($src_h);

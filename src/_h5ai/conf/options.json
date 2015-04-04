@@ -202,9 +202,11 @@ Options
     Show an image preview on click.
 
     - types: array of strings
+    - size: number, sample size, or false for original size
     */
     "preview-img": {
         "enabled": true,
+        "size": false,
         "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw"]
     },
 
@@ -309,7 +311,7 @@ Options
         "doc": ["x-pdf", "x-ps"],
         "delay": 1,
         "size": 240,
-        "exif": true
+        "exif": false
     },
 
     /*
