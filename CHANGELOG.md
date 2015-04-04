@@ -12,17 +12,17 @@
 * adds option to down-sample images for preview
 * fixes problems with files/folders named `0`
 * changes font from `Ubuntu` to `Roboto` (smaller footprint, clearer for small sizes)
+* switches back to Google Fonts
 * improves PDF thumbnail quality
 * improves drag-select
 * improves image preview
-* fixes QRCode size option
 * prevents listing `_h5ai` folder and subfolders
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
 * removes deprecated Google Analytics code
 * removes `jQuery.fracs`
 * removes `jQuery.scrollpanel`
 * removes `jQuery.mousewheel`
-* updates `jQuery.qrcode` to 0.10.1
+* updates `jQuery.qrcode` to 0.11.0
 * updates `modulejs` to 1.4.0
 * language updates and additions (`af`, `es`, `ja`, `ko`, `ru`, `zh-cn`)
 
