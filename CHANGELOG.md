@@ -5,14 +5,20 @@
 * adds editorconfig
 * drops support for IE9 (gets fallback)
 * updates sidebar settings
+* adds info sidebar
 * adds opt-out for click'n'drag selection
 * adds package name option for single selections
 * adds initial support for Peer5
+* adds option to down-sample images for preview
 * fixes problems with files/folders named `0`
 * changes font from `Ubuntu` to `Roboto` (smaller footprint, clearer for small sizes)
 * improves PDF thumbnail quality
+* improves drag-select
+* improves image preview
 * fixes QRCode size option
+* prevents listing `_h5ai` folder and subfolders
 * updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
+* removes deprecated Google Analytics code
 * removes `jQuery.fracs`
 * removes `jQuery.scrollpanel`
 * removes `jQuery.mousewheel`
