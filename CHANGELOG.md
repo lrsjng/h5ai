@@ -10,6 +10,7 @@
 * adds package name option for single selections
 * adds initial support for Peer5
 * adds option to down-sample images for preview
+* adds option for natural sorting in tree sidebar
 * fixes problems with files/folders named `0`
 * changes font from `Ubuntu` to `Roboto` (smaller footprint, clearer for small sizes)
 * switches back to Google Fonts
