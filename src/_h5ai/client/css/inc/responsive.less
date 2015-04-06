@@ -3,9 +3,14 @@
 #topbar {
     .crumb {
         display: none;
-    }
-    .current {
-        display: block;
+
+        &.active {
+            display: inline-block;
+
+            .sep {
+                width: 0;
+            }
+        }
     }
 }
 #view.view-details {
