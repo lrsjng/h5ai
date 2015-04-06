@@ -2,6 +2,7 @@ modulejs.define('ext/preview-audio', ['_', '$', 'moment', 'core/settings', 'core
 
     var settings = _.extend({
             enabled: false,
+            autoplay: true,
             types: []
         }, allsettings['preview-aud']);
 
@@ -14,9 +15,13 @@ modulejs.define('ext/preview-audio', ['_', '$', 'moment', 'core/settings', 'core
                             callback($audio);
                             // setTimeout(function () { callback($img); }, 1000); // for testing
                         })
-                        .attr('autoplay', 'autoplay')
                         .attr('controls', 'controls')
                         .attr('src', src);
+
+         if(settings.autoplay) {
+             $audio.attr('autoplay', 'autoplay');
+         }
+
     }
 
     function onEnter(items, idx) {
