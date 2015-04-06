@@ -1,6 +1,8 @@
 # Changelog
 
 
+## v0.27.0 - *2015-04-06*
+
 * new layout
 * adds editorconfig
 * drops support for IE9 (gets fallback)

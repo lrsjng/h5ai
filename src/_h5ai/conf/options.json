@@ -63,7 +63,7 @@ Options
     Enable a context menu (right-click) on some elements.
     */
     "contextmenu": {
-        "enabled": true
+        "enabled": false
     },
 
     /*
