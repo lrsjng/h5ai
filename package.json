@@ -23,7 +23,7 @@
     "fquery-includeit": "~0.2.0",
     "fquery-jade": "~0.3.0",
     "fquery-jshint": "~0.2.0",
-    "fquery-jszip": "~0.4.0",
+    "fquery-jszip": "~0.5.0",
     "fquery-less": "~0.2.0",
     "fquery-uglifyjs": "~0.2.1",
     "mkr": "~0.6.1"

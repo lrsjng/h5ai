@@ -29,7 +29,7 @@ function getBuildSuffix(callback) {
 }
 
 
-$.fn.autoprefixer = function (options) {
+$.fn.autoprefixer = function () {
 
     var autoprefixer = require('autoprefixer-core');
     var options = {browsers: ['last 2 versions']};
@@ -202,7 +202,7 @@ module.exports = function (suite) {
         var target = path.join(build, pkg.name + '-' + pkg.version + '.zip');
 
         $(build + ': **')
-            .jszip({dir: build})
+            .jszip({dir: build, level: 9})
             .write(target, true);
     });
 };
