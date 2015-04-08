@@ -29,29 +29,7 @@ function getBuildSuffix(callback) {
 }
 
 
-$.fn.autoprefixer = function () {
-
-    var autoprefixer = require('autoprefixer-core');
-    var options = {browsers: ['last 2 versions']};
-
-    return this.edit(function (blob) {
-
-        try {
-            blob.content = autoprefixer.process(blob.content, options).css;
-        } catch (e) {
-            $.report({
-                type: 'err',
-                method: 'autoprefixer',
-                message: e.message,
-                fquery: this,
-                blob: blob,
-                err: e
-            });
-        }
-    });
-};
-
-
+$.plugin('fquery-autoprefixer');
 $.plugin('fquery-cssmin');
 $.plugin('fquery-handlebars');
 $.plugin('fquery-includeit');
