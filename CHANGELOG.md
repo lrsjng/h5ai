@@ -1,5 +1,11 @@
 # Changelog
 
+* fixes some styles in IE10
+* resets IE edge mode
+* updates h5bp styles to 5.1.0
+* updates `normalize.css` to 3.0.3
+* updates build process
+
 
 ## v0.27.0 - *2015-04-06*
 
