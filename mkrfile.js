@@ -103,7 +103,7 @@ module.exports = function (suite) {
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
             .includeit()
-            .uglifyjs()
+            .if(!suite.args.uncompressed, function () { this.uglifyjs(); })
             .wrap(header)
             .write(mapSrc, true);
 
@@ -111,7 +111,7 @@ module.exports = function (suite) {
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
             .less()
             .autoprefixer()
-            .cssmin()
+            .if(!suite.args.uncompressed, function () { this.cssmin(); })
             .wrap(header)
             .write(mapSrc, true);
 
@@ -135,43 +135,20 @@ module.exports = function (suite) {
     });
 
 
-    suite.target('build-uncompressed', ['check-version', 'lint'], 'build all updated files').task(function () {
+    suite.target('deploy', ['build'], 'deploy to a specified path (e.g. mkr deploy :dest=/some/path)').task(function () {
 
-        var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
-        var env = {pkg: pkg};
+        if (!$._.isString(suite.args.dest)) {
+            $.report({
+                type: 'err',
+                message: 'no destination path (e.g. mkr deploy :dest=/some/path)'
+            });
+        }
 
-        $(src + ': _h5ai/client/js/*.js')
-            .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
-            .includeit()
-            // .uglifyjs()
-            .wrap(header)
-            .write(mapSrc, true);
+        var mapper = $.map.p(build, path.resolve(suite.args.dest));
 
-        $(src + ': _h5ai/client/css/*.less')
-            .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
-            .less()
-            .autoprefixer()
-            // .cssmin()
-            .wrap(header)
-            .write(mapSrc, true);
-
-        $(src + ': _h5ai/client/css/fonts/**')
-            .newerThan(mapSrc)
-            .write(mapSrc, true);
-
-        $(src + ': **/*.jade')
-            .newerThan(mapSrc)
-            .jade(env)
-            .write(mapSrc, true);
-
-        $(src + ': **, ! _h5ai/client/js/**, ! _h5ai/client/css/**, ! **/*.jade')
-            .newerThan(mapSrc)
-            .handlebars(env)
-            .write(mapSrc, true);
-
-        $(root + ': *.md')
-            .newerThan(mapRoot)
-            .write(mapRoot, true);
+        $(build + ': _h5ai/**')
+            .newerThan(mapper)
+            .write(mapper, true);
     });
 
 
