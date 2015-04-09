@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "mkr release",
+    "develop": "mkr clean build-uncompressed && cd build; find -d _h5ai | cpio -pdm",
     "test": "mocha --recursive test"
   },
   "devDependencies": {
