@@ -66,6 +66,6 @@ too. Exceptions are the [Material Design icons][material-design-icons] (CC BY 4.
 [npm]: https://www.npmjs.org
 [material-design-icons]: https://github.com/google/material-design-icons
 
-[license-img]: http://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
-[web-img]: http://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
-[github-img]: http://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
+[license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
+[web-img]: https://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
+[github-img]: https://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
