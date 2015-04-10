@@ -95,7 +95,7 @@ module.exports = function (suite) {
     });
 
 
-    suite.target('build', ['check-version', 'lint'], 'build all updated files').task(function () {
+    suite.target('build', ['check-version', 'lint'], 'build all updated files, optionally use :uncompressed (e.g. mkr build :uncompressed)').task(function () {
 
         var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
         var env = {pkg: pkg};

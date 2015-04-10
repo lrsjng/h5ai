@@ -27,6 +27,6 @@
     "fquery-jszip": "~0.5.0",
     "fquery-less": "~0.2.0",
     "fquery-uglifyjs": "~0.2.1",
-    "mkr": "~0.8.1"
+    "mkr": "~0.8.2"
   }
 }
