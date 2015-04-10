@@ -24,7 +24,6 @@ class Logger {
         $message = number_format($now - self::$start, 3) . " " . number_format($now - self::$prev, 3) . " " . $message;
 
         @error_log($message . " " . var_export($obj, true));
-        // @ChromePhp::log($message, $obj);
 
         self::$prev = $now;
     }

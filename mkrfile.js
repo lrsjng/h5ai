@@ -115,10 +115,6 @@ module.exports = function (suite) {
             .wrap(header)
             .write(mapSrc, true);
 
-        $(src + ': _h5ai/client/css/fonts/**')
-            .newerThan(mapSrc)
-            .write(mapSrc, true);
-
         $(src + ': **/*.jade')
             .newerThan(mapSrc)
             .jade(env)
