@@ -2,9 +2,12 @@
 
 * fixes some styles in IE10
 * resets IE edge mode
+* fixes preview bottom bar for small screen widths
+* use wide links in tree view
+* updates build process
 * updates h5bp styles to 5.1.0
 * updates `normalize.css` to 3.0.3
-* updates build process
+* removes `Moment.js`
 
 
 ## v0.27.0 - *2015-04-06*

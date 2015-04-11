@@ -1,4 +1,4 @@
-modulejs.define('ext/preview-audio', ['_', '$', 'moment', 'core/settings', 'core/event', 'ext/preview'], function (_, $, moment, allsettings, event, preview) {
+modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', 'core/format', 'ext/preview'], function (_, $, allsettings, event, format, preview) {
 
     var settings = _.extend({
             enabled: false,
@@ -39,7 +39,7 @@ modulejs.define('ext/preview-audio', ['_', '$', 'moment', 'core/settings', 'core
 
                 preview.setLabels([
                     currentItem.label,
-                    moment(0).add('seconds', $audio[0].duration).format('m:ss')
+                    format.formatDate($audio[0].duration * 1000, 'm:ss')
                 ]);
             }
         }

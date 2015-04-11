@@ -4,17 +4,15 @@
 // @include "lib/lodash-*.js"
 // @include "lib/marked-*.js"
 // @include "lib/modulejs-*.js"
-// @include "lib/moment-*.js"
 // @include "lib/prism-*.js"
 
 (function () {
 'use strict';
 
-    /*global jQuery, marked, Modernizr, moment, Prism, _ */
+    /*global jQuery, marked, Modernizr, Prism, _ */
     modulejs.define('$', function () { return jQuery; });
     modulejs.define('marked', function () { return marked; });
     modulejs.define('modernizr', function () { return Modernizr; });
-    modulejs.define('moment', function () { return moment; });
     modulejs.define('prism', function () { return Prism; });
     modulejs.define('_', function () { return _; });
 
