@@ -16,7 +16,6 @@
     "test": "mocha --recursive test"
   },
   "devDependencies": {
-    "autoprefixer-core": "~5.1.8",
     "fquery": "~0.16.2",
     "fquery-autoprefixer": "~0.1.1",
     "fquery-cssmin": "~0.3.0",
