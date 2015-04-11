@@ -7,7 +7,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
     var template =
             '<div id="pv-overlay">' +
                 '<div id="pv-content"/>' +
-                '<div id="pv-spinner"><img src="' + resource.image('spinner') + '"/></div>' +
+                '<div id="pv-spinner"><img class="back"/><img class="spinner" src="' + resource.image('spinner') + '"/></div>' +
                 '<div id="pv-prev-area" class="hof"><img src="' + resource.image('preview-prev') + '"/></div>' +
                 '<div id="pv-next-area" class="hof"><img src="' + resource.image('preview-next') + '"/></div>' +
                 '<div id="pv-bottombar" class="clearfix hof">' +
@@ -28,6 +28,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
     var userAliveTimeoutId = null;
     var onIndexChange = null;
     var onAdjustSize = null;
+    var spinnerVisible = false;
 
 
     function adjustSize() {
@@ -182,17 +183,32 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         onAdjustSize = fn;
     }
 
-    function showSpinner(show, millis) {
+    function showSpinner(show, src, millis) {
 
         if (!_.isNumber(millis)) {
-            millis = 400;
+            millis = 300;
         }
 
+        var $spinner = $('#pv-spinner').stop(true, true);
+        var $back = $spinner.find('.back');
+
         if (show) {
-            $('#pv-spinner').stop(true, true).fadeIn(millis);
+            if (src) {
+                $back.attr('src', src).show();
+            } else {
+                $back.hide();
+            }
+            spinnerVisible = true;
+            $spinner.fadeIn(millis);
         } else {
-            $('#pv-spinner').stop(true, true).fadeOut(millis);
+            spinnerVisible = false;
+            $spinner.fadeOut(millis);
         }
+    }
+
+    function isSpinnerVisible() {
+
+        return spinnerVisible;
     }
 
     function init() {
@@ -206,7 +222,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         $('#pv-spinner').hide();
         $('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
         $('#pv-bar-next, #pv-next-area').on('click', onNext);
-        $('#pv-bar-close, #pv-close-area').on('click', onExit);
+        $('#pv-bar-close').on('click', onExit);
         $('#pv-bar-fullscreen').on('click', onFullscreen);
 
         $('#pv-overlay')
@@ -214,10 +230,8 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
             .on('mousemove mousedown', userAlive)
             .on('click mousedown mousemove keydown keypress', function (ev) {
 
-                if (ev.type === 'click') {
-                    if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content') {
-                        onExit();
-                    }
+                if (ev.type === 'click' && (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content')) {
+                    onExit();
                 }
                 ev.stopImmediatePropagation();
             });
@@ -236,6 +250,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
         setLabels: setLabels,
         setOnIndexChange: setOnIndexChange,
         setOnAdjustSize: setOnAdjustSize,
-        showSpinner: showSpinner
+        showSpinner: showSpinner,
+        isSpinnerVisible: isSpinnerVisible
     };
 });

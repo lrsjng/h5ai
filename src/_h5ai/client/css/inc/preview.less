@@ -25,7 +25,16 @@
 #pv-spinner {
     position: absolute;
 
-    img {
+    .back {
+        width: 240px;
+        height: 240px;
+        margin: -120px -120px;
+        border-radius: 120px;
+        background: #f00;
+        opacity: 0.5;
+        overflow: hidden;
+    }
+    .spinner {
         width: 100px;
         height: 100px;
         margin: -50px -50px;
@@ -137,7 +146,7 @@
 }
 
 @media only screen and (max-width: 700px) {
-#pv-prev-area, #pv-next-area, #pv-close-area {
+#pv-prev-area, #pv-next-area {
     display: none !important;
 }
 }
