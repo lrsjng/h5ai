@@ -20,10 +20,12 @@ There are installation ready packages for the latest [releases][release] and
 following commands to find a fresh zipball in folder `build` (tested on linux
 only, requires [`git`][git] and [`npm`][npm] to be installed).
 
-    > git clone git://github.com/lrsjng/h5ai.git
-    > cd h5ai
-    > npm install
-    > npm run build
+~~~sh
+> git clone git://github.com/lrsjng/h5ai.git
+> cd h5ai
+> npm install
+> npm run build
+~~~
 
 
 ## License
