@@ -6,7 +6,7 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ex
         }, allsettings['preview-vid']);
 
 
-    function preloadVid(src, callback) {
+    function preloadVideo(src, callback) {
 
         var $video = $('<video/>')
                         .one('loadedmetadata', function () {
@@ -27,20 +27,20 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ex
 
         function onAdjustSize() {
 
-            var $content = $('#pv-content'),
-                $vid = $('#pv-vid-video');
+            var $content = $('#pv-content');
+            var $vid = $('#pv-vid-video');
 
             if ($vid.length) {
 
                 $vid.css({
-                    'left': '' + (($content.width()-$vid.width())*0.5) + 'px',
-                    'top': '' + (($content.height()-$vid.height())*0.5) + 'px'
+                    left: String(($content.width() - $vid.width()) * 0.5) + 'px',
+                    top: String(($content.height() - $vid.height()) * 0.5) + 'px'
                 });
 
                 preview.setLabels([
                     currentItem.label,
-                    '' + $vid[0].videoWidth + 'x' + $vid[0].videoHeight,
-                    '' + (100 * $vid.width() / $vid[0].videoWidth).toFixed(0) + '%'
+                    String($vid[0].videoWidth) + 'x' + String($vid[0].videoHeight),
+                    String((100 * $vid.width() / $vid[0].videoWidth).toFixed(0)) + '%'
                 ]);
             }
         }
@@ -55,16 +55,16 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ex
             if ($('#pv-vid-video').length) {
                 $('#pv-vid-video')[0].pause();
             }
-            preloadVid(currentItem.absHref, function ($preloaded_vid) {
+            preloadVideo(currentItem.absHref, function ($preloadedVideo) {
 
                 clearTimeout(spinnerTimeout);
                 preview.showSpinner(false);
 
                 $('#pv-content').fadeOut(100, function () {
 
-                    $('#pv-content').empty().append($preloaded_vid.attr('id', 'pv-vid-video')).fadeIn(200);
+                    $('#pv-content').empty().append($preloadedVideo.attr('id', 'pv-vid-video')).fadeIn(200);
 
-                    // small timeout, so $preloaded_vid is visible and therefore $preloaded_vid.width is available
+                    // small timeout, so $preloadedVideo is visible and therefore $preloadedVideo.width is available
                     setTimeout(function () {
                         onAdjustSize();
 

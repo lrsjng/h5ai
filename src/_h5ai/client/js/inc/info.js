@@ -129,15 +129,15 @@ modulejs.define('info', ['$', 'config'], function ($, config) {
     function onLogin() {
 
         request({
-            'action': 'login',
-            'pass': $('#pass').val()
+            action: 'login',
+            pass: $('#pass').val()
         });
     }
 
     function onLogout() {
 
         request({
-            'action': 'logout'
+            action: 'logout'
         });
     }
 

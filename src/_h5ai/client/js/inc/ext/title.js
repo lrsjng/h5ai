@@ -6,8 +6,8 @@ modulejs.define('ext/title', ['_', 'core/settings', 'core/event'], function (_, 
 
     function onLocationChanged(item) {
 
-        var labels = _.pluck(item.getCrumb(), 'label'),
-            title = labels.join(' > ');
+        var labels = _.pluck(item.getCrumb(), 'label');
+        var title = labels.join(' > ');
 
         if (labels.length > 1) {
             title = labels[labels.length - 1] + ' - ' + title;

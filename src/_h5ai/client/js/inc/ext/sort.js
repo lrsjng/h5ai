@@ -62,7 +62,9 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
         return function (item1, item2) {
 
-            var res, val1, val2;
+            var res;
+            var val1;
+            var val2;
 
             res = getType(item1) - getType(item2);
             if (res !== 0) {
@@ -73,8 +75,8 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
             val2 = getValue(item2);
 
             if (isNaN(val1) || isNaN(val2)) {
-                val1 = '' + val1;
-                val2 = '' + val2;
+                val1 = String(val1);
+                val2 = String(val2);
 
                 if (ignorecase) {
                     val1 = val1.toLowerCase();
@@ -89,20 +91,20 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
 
     function sortItems(column, reverse) {
 
-        var headers = $('#items li.header a');
-        var header = $('#items li.header a.' + columnClasses[column]);
+        var $headers = $('#items li.header a');
+        var $header = $('#items li.header a.' + columnClasses[column]);
         var fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, column === 0 && settings.natural);
-        var current = $('#items .item');
-        var sorted = $('#items .item').sort(fn);
+        var $current = $('#items .item');
+        var $sorted = $('#items .item').sort(fn);
 
         store.put(storekey, {column: column, reverse: reverse});
 
-        headers.removeClass('ascending descending');
-        header.addClass(reverse ? 'descending' : 'ascending');
+        $headers.removeClass('ascending descending');
+        $header.addClass(reverse ? 'descending' : 'ascending');
 
-        for (var i = 0, l = current.length; i < l; i += 1) {
-            if (current[i] !== sorted[i]) {
-                sorted.detach().sort(fn).appendTo('#items');
+        for (var i = 0, l = $current.length; i < l; i += 1) {
+            if ($current[i] !== $sorted[i]) {
+                $sorted.detach().sort(fn).appendTo('#items');
                 break;
             }
         }

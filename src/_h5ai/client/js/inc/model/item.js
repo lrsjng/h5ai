@@ -13,19 +13,27 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
     function createLabel(sequence) {
 
         sequence = sequence.replace(reEndsWithSlash, '');
-        try { sequence = decodeURIComponent(sequence); } catch (e) {}
+        try {
+            sequence = decodeURIComponent(sequence);
+        } catch (e) {}
         return sequence;
     }
 
     function splitPath(sequence) {
 
         if (sequence === '/') {
-            return { parent: null, name: '/' };
+            return {
+                parent: null,
+                name: '/'
+            };
         }
 
         var match = reSplitPath.exec(sequence);
         if (match) {
-            var split = { parent: match[1], name: match[2] };
+            var split = {
+                    parent: match[1],
+                    name: match[2]
+                };
 
             if (split.parent && !startsWith(split.parent, settings.rootHref)) {
                 split.parent = null;
@@ -147,7 +155,7 @@ modulejs.define('model/item', ['_', 'core/types', 'core/event', 'core/settings',
 
         isInCurrentFolder: function () {
 
-            return !!this.parent && this.parent.isCurrentFolder();
+            return Boolean(this.parent) && this.parent.isCurrentFolder();
         },
 
         isCurrentParentFolder: function () {

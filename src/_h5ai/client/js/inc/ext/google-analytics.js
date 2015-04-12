@@ -16,7 +16,8 @@ modulejs.define('ext/google-analytics-ua', ['_', 'core/settings', 'core/event'],
             return;
         }
 
-        var el, firstScriptElement;
+        var el;
+        var firstScriptElement;
 
         win.GoogleAnalyticsObject = id;
         win[id] = win[id] || function () {

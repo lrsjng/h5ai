@@ -59,10 +59,11 @@ modulejs.define('core/format', ['_'], function (_) {
 
     function formatNumber(number, padding) {
 
+        var str = String(number);
         if (padding) {
-            number = ('000' + number).substr(-padding);
+            str = ('000' + str).substr(-padding);
         }
-        return '' + number;
+        return str;
     }
 
     function formatDate(millis, format) {

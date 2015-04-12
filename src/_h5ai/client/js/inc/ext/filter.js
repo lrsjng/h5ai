@@ -10,7 +10,9 @@ modulejs.define('ext/filter', ['_', '$', 'core/settings', 'core/resource', 'core
             '</div>';
     var noMatchTemplate = '<div class="no-match l10n-noMatch"/>';
     var inputIsVisible = false;
-    var $filter, $input, $noMatch;
+    var $filter;
+    var $input;
+    var $noMatch;
 
 
     function filter(re) {

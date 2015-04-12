@@ -6,8 +6,8 @@ modulejs.define('core/types', ['config', '_'], function (config, _) {
 
     function escapeRegExp(sequence) {
 
-        return sequence.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$]/g, "\\$&");
-        // return sequence.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+        return sequence.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$]/g, '\\$&');
+        // return sequence.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
     }
 
     function parse(types) {

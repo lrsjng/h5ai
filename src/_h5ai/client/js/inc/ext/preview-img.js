@@ -8,7 +8,9 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
     var templateLoading = '<img id="pv-img-image" class="loading"/>';
     var spinnerThreshold = 200;
     var spinnerTimeoutId;
-    var currentItems, currentIdx, currentItem;
+    var currentItems;
+    var currentIdx;
+    var currentItem;
 
 
     function requestSample(href, callback) {
@@ -30,7 +32,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
         });
     }
 
-    function preloadImg(item, callback) {
+    function preloadImage(item, callback) {
 
         requestSample(item.absHref, function (src) {
 
@@ -62,8 +64,8 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
 
         var labels = [currentItem.label];
         if (!settings.size) {
-            labels.push('' + $img[0].naturalWidth + 'x' + $img[0].naturalHeight);
-            labels.push('' + (100 * $img.width() / $img[0].naturalWidth).toFixed(0) + '%');
+            labels.push(String($img[0].naturalWidth) + 'x' + String($img[0].naturalHeight));
+            labels.push(String((100 * $img.width() / $img[0].naturalWidth).toFixed(0)) + '%');
         }
         preview.setLabels(labels);
     }
@@ -88,7 +90,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
             }, spinnerThreshold);
         }
 
-        preloadImg(currentItem, function (item, preloaded_img) {
+        preloadImage(currentItem, function (item, preloadedImage) {
 
             if (item !== currentItem) {
                 return;
@@ -98,7 +100,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
             preview.showSpinner(false);
             $('#pv-content')
                 .empty()
-                .append($(preloaded_img).attr('id', 'pv-img-image'))
+                .append($(preloadedImage).attr('id', 'pv-img-image'))
                 .show();
             onAdjustSize();
         });

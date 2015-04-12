@@ -43,12 +43,12 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/settings', 'core/event
 
     var hrefsAreDecoded = (function () {
 
-            var testpathname = '/a b';
-            var a = doc.createElement('a');
+        var testpathname = '/a b';
+        var a = doc.createElement('a');
 
-            a.href = testpathname;
-            return uriToPathname(a.href) === testpathname;
-        }());
+        a.href = testpathname;
+        return uriToPathname(a.href) === testpathname;
+    }());
 
     function encodedHref(href) {
 

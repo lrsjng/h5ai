@@ -3,7 +3,8 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/settings', 'core/server
     var settings = _.extend({
             enabled: false
         }, allsettings.custom);
-    var $header, $footer;
+    var $header;
+    var $footer;
     var duration = 200;
 
 
@@ -11,7 +12,10 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/settings', 'core/server
 
         server.request({action: 'get', custom: true, customHref: item.absHref}, function (response) {
 
-            var has_header, has_footer, data, content;
+            var hasHeader;
+            var hasFooter;
+            var data;
+            var content;
 
             if (response) {
                 data = response.custom;
@@ -19,26 +23,26 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/settings', 'core/server
                 if (data.header) {
                     content = data.header;
                     if (data.header_type === 'md') {
-                        content  = marked(content);
+                        content = marked(content);
                     }
                     $header.html(content).stop().slideDown(duration);
-                    has_header = true;
+                    hasHeader = true;
                 }
 
                 if (data.footer) {
                     content = data.footer;
                     if (data.footer_type === 'md') {
-                        content  = marked(content);
+                        content = marked(content);
                     }
                     $footer.html(content).stop().slideDown(duration);
-                    has_footer = true;
+                    hasFooter = true;
                 }
             }
 
-            if (!has_header) {
+            if (!hasHeader) {
                 $header.stop().slideUp(duration);
             }
-            if (!has_footer) {
+            if (!hasFooter) {
                 $footer.stop().slideUp(duration);
             }
         });

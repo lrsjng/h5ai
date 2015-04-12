@@ -146,7 +146,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
     function setIndex(idx, total) {
 
         if (_.isNumber(idx)) {
-            $('#pv-bar-idx').text('' + idx + (_.isNumber(total) ? '/' + total : '')).show();
+            $('#pv-bar-idx').text(String(idx) + (_.isNumber(total) ? '/' + String(total) : '')).show();
         } else {
             $('#pv-bar-idx').text('').hide();
         }

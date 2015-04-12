@@ -18,11 +18,11 @@ modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allset
         $.ajax({
             url: peer5js,
             dataType: 'script',
-            cache:true
+            cache: true
         });
 
         // attach to file items, once the DOM is ready
-        $(function() {
+        $(function () {
 
             $('body').on('click', '.item.file > a', function (e) {
 

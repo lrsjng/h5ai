@@ -33,8 +33,8 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', '
             if ($audio.length) {
 
                 $audio.css({
-                    'left': '' + (($content.width()-$audio.width())*0.5) + 'px',
-                    'top': '' + (($content.height()-$audio.height())*0.5) + 'px'
+                    left: String(($content.width() - $audio.width()) * 0.5) + 'px',
+                    top: String(($content.height() - $audio.height()) * 0.5) + 'px'
                 });
 
                 preview.setLabels([
@@ -54,16 +54,16 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', '
             if ($('#pv-aud-audio').length) {
                 $('#pv-aud-audio')[0].pause();
             }
-            preloadAudio(currentItem.absHref, function ($preloaded_audio) {
+            preloadAudio(currentItem.absHref, function ($preloadedAudio) {
 
                 clearTimeout(spinnerTimeout);
                 preview.showSpinner(false);
 
                 $('#pv-content').fadeOut(100, function () {
 
-                    $('#pv-content').empty().append($preloaded_audio.attr('id', 'pv-aud-audio')).fadeIn(200);
+                    $('#pv-content').empty().append($preloadedAudio.attr('id', 'pv-aud-audio')).fadeIn(200);
 
-                    // small timeout, so $preloaded_audio is visible and therefore $preloaded_audio.width is available
+                    // small timeout, so $preloadedAudio is visible and therefore $preloadedAudio.width is available
                     setTimeout(function () {
                         onAdjustSize();
 

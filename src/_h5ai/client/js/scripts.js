@@ -7,7 +7,7 @@
 // @include "lib/prism-*.js"
 
 (function () {
-'use strict';
+    'use strict';
 
     /*global jQuery, marked, Modernizr, Prism, _ */
     modulejs.define('$', function () { return jQuery; });

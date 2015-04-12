@@ -6,10 +6,15 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
             checkboxes: false
         }, allsettings.select);
     var template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>';
-    var x = 0, y = 0;
-    var l = 0, t = 0, w = 0, h = 0;
-    var isDragSelect, isCtrlPressed;
-    var shrink = 1/3;
+    var x = 0;
+    var y = 0;
+    var l = 0;
+    var t = 0;
+    var w = 0;
+    var h = 0;
+    var isDragSelect;
+    var isCtrlPressed;
+    var shrink = 1 / 3;
     var $document = $(document);
     var $html = $('html');
     var $selectionRect = $('<div id="selection-rect"/>');
@@ -19,9 +24,8 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
 
         var items = _.map($('#items .item.selected'), function (itemElement) {
 
-                return $(itemElement).data('item');
-            });
-
+            return $(itemElement).data('item');
+        });
         event.pub('selection', items);
     }
 
