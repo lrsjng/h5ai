@@ -5,7 +5,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
             size: null,
             types: []
         }, allsettings['preview-img']);
-    var templateLoading = '<img id="pv-img-image" class="loading"/>';
     var spinnerThreshold = 200;
     var spinnerTimeoutId;
     var currentItems;
@@ -139,7 +138,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'co
         _.each(item.content, initItem);
     }
 
-    function onLocationRefreshed(item, added, removed) {
+    function onLocationRefreshed(item, added) {
 
         _.each(added, initItem);
     }

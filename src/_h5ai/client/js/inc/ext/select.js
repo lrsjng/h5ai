@@ -207,7 +207,7 @@ modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core
                     ev.stopImmediatePropagation();
                     ev.preventDefault();
                 })
-                .on('click', function (ev) {
+                .on('click', function () {
 
                     $('#items .item').removeClass('selected');
                     publish();

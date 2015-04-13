@@ -109,8 +109,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
 
     function createOnIndicatorClick() {
 
-        var $tree = $('#tree');
-
         function slide(item, $indicator, $content, down) {
 
             item.isContentVisible = down;

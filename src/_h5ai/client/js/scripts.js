@@ -9,12 +9,11 @@
 (function () {
     'use strict';
 
-    /*global jQuery, marked, Modernizr, Prism, _ */
     modulejs.define('$', function () { return jQuery; });
+    modulejs.define('_', function () { return _; });
     modulejs.define('marked', function () { return marked; });
     modulejs.define('modernizr', function () { return Modernizr; });
     modulejs.define('prism', function () { return Prism; });
-    modulejs.define('_', function () { return _; });
 
     // @include "inc/**/*.js"
 

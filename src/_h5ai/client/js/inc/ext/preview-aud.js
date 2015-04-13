@@ -103,7 +103,7 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', '
         _.each(item.content, initItem);
     }
 
-    function onLocationRefreshed(item, added, removed) {
+    function onLocationRefreshed(item, added) {
 
         _.each(added, initItem);
     }

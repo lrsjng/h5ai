@@ -27,7 +27,6 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
                     '<img src="' + resource.image('info-toggle') + '" alt="view-info"/>' +
                 '</div>' +
             '</div>';
-    var sepTemplate = '<span class="sep"/>';
     var storekey = 'ext/info';
     var $img;
     var $label;
@@ -108,7 +107,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         update(item);
     }
 
-    function onMouseleave(item) {
+    function onMouseleave() {
 
         update(currentFolder);
     }

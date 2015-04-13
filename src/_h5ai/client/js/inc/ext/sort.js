@@ -110,7 +110,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/e
         }
     }
 
-    function onContentChanged(item) {
+    function onContentChanged() {
 
         var order = store.get(storekey);
         var column = order && order.column || settings.column;

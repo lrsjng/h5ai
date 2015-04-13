@@ -1,4 +1,4 @@
-modulejs.define('view/ensure', ['$', 'config', 'core/event'], function ($, config, event) {
+modulejs.define('view/ensure', ['$', 'config'], function ($, config) {
 
     var templateTopbar =
             '<div id="topbar">' +

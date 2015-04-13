@@ -23,7 +23,7 @@ modulejs.define('core/event', ['_'], function (_) {
         }
     }
 
-    function pub(topic, data) {
+    function pub(topic) {
 
         var args = slice.call(arguments, 1);
 

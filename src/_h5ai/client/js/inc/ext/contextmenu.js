@@ -81,9 +81,9 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/settings', 'core/resource'],
         var overlayWidth = $overlay.outerWidth(true);
         var overlayHeight = $overlay.outerHeight(true);
 
-        var panelOffset = $panel.offset();
-        var panelLeft = panelOffset.left;
-        var panelTop = panelOffset.top;
+        // var panelOffset = $panel.offset();
+        // var panelLeft = panelOffset.left;
+        // var panelTop = panelOffset.top;
         var panelWidth = $panel.outerWidth(true);
         var panelHeight = $panel.outerHeight(true);
 

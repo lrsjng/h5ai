@@ -70,28 +70,11 @@ module.exports = function (suite) {
 
     suite.target('lint', [], 'lint all JavaScript files with JSHint').task(function () {
 
-        var jshint = {
-                // Enforcing Options
-                bitwise: true,
-                curly: true,
-                eqeqeq: true,
-                forin: true,
-                latedef: true,
-                newcap: true,
-                noempty: true,
-                plusplus: true,
-                trailing: true,
-                undef: true,
-
-                // Environments
-                browser: true
-            };
-        var globals = {
-                modulejs: true
-            };
+        var fs = require('fs');
+        var jshint = JSON.parse(fs.readFileSync('.jshintrc', 'utf8'));
 
         $(src + '/_h5ai/client/js: **/*.js, ! lib/**')
-            .jshint(jshint, globals);
+            .jshint(jshint, jshint.globals);
     });
 
 

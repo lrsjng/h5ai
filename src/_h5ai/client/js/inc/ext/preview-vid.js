@@ -104,7 +104,7 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ex
         _.each(item.content, initItem);
     }
 
-    function onLocationRefreshed(item, added, removed) {
+    function onLocationRefreshed(item, added) {
 
         _.each(added, initItem);
     }

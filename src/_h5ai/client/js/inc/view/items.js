@@ -16,7 +16,6 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
                     '<span class="size"/>' +
                 '</a>' +
             '</li>';
-    var hintTemplate = '<span class="hint"/>';
     var contentTemplate =
             '<div id="content">' +
                 '<div id="view">' +
@@ -149,7 +148,7 @@ modulejs.define('view/items', ['_', '$', 'core/settings', 'core/resource', 'core
         var $content = $(contentTemplate);
         var $view = $content.find('#view');
         var $items = $view.find('#items');
-        var $emtpy = $view.find('.empty').hide();
+        $view.find('.empty').hide();
 
         format.setDefaultMetric(settings.binaryPrefix);
 

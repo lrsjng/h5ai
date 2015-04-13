@@ -1,0 +1,31 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "futurehostile": true,
+    "latedef": true,
+    "maxdepth": 3,
+    "noarg": true,
+    "nocomma": true,
+    "nonbsp": true,
+    "nonew": true,
+    "plusplus": true,
+    "strict": false,
+    "supernew": true,
+    "trailing": true,
+    "undef": true,
+    "unused": true,
+
+    "browser": true,
+
+    "globals": {
+        "jQuery": false,
+        "marked": false,
+        "Modernizr": false,
+        "modulejs": false,
+        "Prism": false,
+        "_": false
+    }
+}

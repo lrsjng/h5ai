@@ -22,8 +22,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'cor
                 '</div>' +
             '</div>';
     var storekey = 'ext/preview';
-    var currentEntries = [];
-    var currentIdx = 0;
     var isFullscreen = store.get(storekey) || false;
     var userAliveTimeoutId = null;
     var onIndexChange = null;

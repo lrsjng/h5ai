@@ -19,7 +19,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings'
                 callback(content);
                 // setTimeout(function () { callback(content); }, 1000); // for testing
             })
-            .fail(function (jqXHR, textStatus, errorThrown) {
+            .fail(function (jqXHR, textStatus) {
 
                 callback('[ajax error] ' + textStatus);
             });
@@ -119,7 +119,7 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings'
         _.each(item.content, initItem);
     }
 
-    function onLocationRefreshed(item, added, removed) {
+    function onLocationRefreshed(item, added) {
 
         _.each(added, initItem);
     }
