@@ -11,9 +11,6 @@ var root = path.resolve(__dirname);
 var src = path.join(root, 'src');
 var build = path.join(root, 'build');
 
-var mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', '');
-var mapRoot = $.map.p(root, path.join(build, '_h5ai'));
-
 
 function getBuildSuffix(callback) {
 
@@ -82,6 +79,8 @@ module.exports = function (suite) {
 
         var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
         var env = {pkg: pkg};
+        var mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', '');
+        var mapRoot = $.map.p(root, path.join(build, '_h5ai'));
 
         $(src + ': _h5ai/client/js/*.js')
             .newerThan(mapSrc, $(src + ': _h5ai/client/js/**'))
