@@ -12,17 +12,14 @@ var src = path.join(root, 'src');
 var build = path.join(root, 'build');
 
 
-function getBuildSuffix(callback) {
+function getBuildSuffixSync() {
 
-    require('child_process').exec('git rev-list v' + pkg.version + '..HEAD', {cwd: root}, function (err, out) {
-
-        try {
-            var lines = out.trim().split(/\r?\n/);
-            callback('+' + ('000' + lines.length).substr(-3) + '~' + lines[0].substring(0, 7));
-        } catch (e) {
-            callback('+X');
-        }
-    });
+    try {
+        var out = require('child_process').execSync('git rev-list v' + pkg.version + '..HEAD', {cwd: root, encoding: 'utf8'});
+        var lines = out.trim().split(/\r?\n/);
+        return '+' + ('000' + lines.length).substr(-3) + '~' + lines[0].substring(0, 7);
+    } catch (e) {}
+    return '+X';
 }
 
 
@@ -43,19 +40,12 @@ module.exports = function (suite) {
     suite.defaults('release');
 
 
-    suite.target('check-version', [], 'add git info to dev builds').task(function (done) {
+    suite.target('check-version', [], 'add git info to dev builds').task(function () {
 
-        if (!pkg.develop) {
-            done();
-            return;
-        }
-
-        getBuildSuffix(function (result) {
-
-            pkg.version += result;
+        if (pkg.develop) {
+            pkg.version += getBuildSuffixSync();
             $.report({type: 'info', method: 'check-version', message: 'version set to ' + pkg.version});
-            done();
-        });
+        }
     });
 
 

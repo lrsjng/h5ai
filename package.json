@@ -27,5 +27,8 @@
     "fquery-less": "~0.3.0",
     "fquery-uglifyjs": "~0.3.0",
     "mkr": "~0.8.2"
+  },
+  "engines": {
+    "node": "0.12.x"
   }
 }
