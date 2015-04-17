@@ -7,19 +7,19 @@ modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function (
 
         if (hasApi) {
             $.ajax({
-                    url: location.getAbsHref(),
-                    data: data,
-                    type: 'POST',
-                    dataType: 'json'
-                })
-                .done(function (json) {
+                url: location.getAbsHref(),
+                data: data,
+                type: 'POST',
+                dataType: 'json'
+            })
+            .done(function (json) {
 
-                    callback(json);
-                })
-                .fail(function () {
+                callback(json);
+            })
+            .fail(function () {
 
-                    callback();
-                });
+                callback();
+            });
         } else {
             callback();
         }
