@@ -1,4 +1,4 @@
-modulejs.define('main', ['_', 'core/event'], function (_, event) {
+modulejs.define('main/index', ['_', 'core/event'], function (_, event) {
 
     modulejs.require('view/ensure');
     modulejs.require('view/items');

@@ -1,4 +1,4 @@
-modulejs.define('info', ['$', 'config'], function ($, config) {
+modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
     var testsTemp =
             '<ul id="tests">';
