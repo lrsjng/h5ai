@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "mkr release",
-    "test": "mocha --recursive test"
+    "build-test": "mkr build-test"
   },
   "devDependencies": {
     "fquery": "~0.16.3",
