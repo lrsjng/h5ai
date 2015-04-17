@@ -45,8 +45,8 @@ modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function (
 
 
     return {
-        backend: config.setup.BACKEND,
         api: hasApi,
+        backend: config.setup.BACKEND,
         name: config.setup.SERVER_NAME,
         version: config.setup.SERVER_VERSION,
         request: request,
