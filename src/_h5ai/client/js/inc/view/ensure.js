@@ -7,9 +7,7 @@ modulejs.define('view/ensure', ['$', 'config'], function ($, config) {
             '</div>';
     var templateMainRow =
             '<div id="main-row">' +
-                '<div id="sidebar">' +
-                    '<div id="settings"/>' +
-                '</div>' +
+                '<div id="sidebar"/>' +
             '</div>';
     var templateBacklink =
             '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai ' + config.setup.VERSION + '">' +
