@@ -128,4 +128,39 @@ module.exports = function (suite) {
             .jszip({dir: build, level: 9})
             .write(target, true);
     });
+
+
+    suite.target('build-test', [], 'build a test suite').task(function () {
+
+        $(src + '/_h5ai/client/css/styles.less')
+            .less()
+            .autoprefixer()
+            .write(build + '/test/h5ai-styles.css', true);
+
+        $(src + '/_h5ai/client/js/scripts.js')
+            .includeit()
+            .write(build + '/test/h5ai-scripts.js', true);
+
+        $(root + '/test/styles.less')
+            .less()
+            .autoprefixer()
+            .write(build + '/test/styles.css', true);
+
+        $(root + '/test/scripts.js')
+            .includeit()
+            .write(build + '/test/scripts.js', true);
+
+        $(root + '/test/tests.js')
+            .includeit()
+            .write(build + '/test/tests.js', true);
+
+        $(root + '/test/index.html.jade')
+            .jade()
+            .write(build + '/test/index.html', true);
+
+        $.report({
+            type: 'info',
+            message: 'browse to file://' + build + '/test/index.html'
+        });
+    });
 };
