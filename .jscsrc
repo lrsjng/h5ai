@@ -1,7 +1,7 @@
 {
     // "disallowCommaBeforeLineBreak": true,
     "disallowDanglingUnderscores": {
-        "allExcept": ["_exception"]
+        "allExcept": ["_exception", "_private"]
     },
     "disallowEmptyBlocks": true,
     "disallowImplicitTypeConversion": [

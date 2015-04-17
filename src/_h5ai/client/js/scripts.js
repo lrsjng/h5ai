@@ -9,15 +9,17 @@
 (function () {
     'use strict';
 
-    modulejs.define('$', function () { return jQuery; });
-    modulejs.define('_', function () { return _; });
-    modulejs.define('marked', function () { return marked; });
-    modulejs.define('modernizr', function () { return Modernizr; });
-    modulejs.define('prism', function () { return Prism; });
+    var win = window;
+
+    modulejs.define('$', function () { return win.jQuery; });
+    modulejs.define('_', function () { return win._; });
+    modulejs.define('marked', function () { return win.marked; });
+    modulejs.define('modernizr', function () { return win.Modernizr; });
+    modulejs.define('prism', function () { return win.Prism; });
 
     // @include "inc/**/*.js"
 
-    var $ = jQuery;
+    var $ = win.jQuery;
 
     if ($('html').hasClass('no-browser')) {
         return;

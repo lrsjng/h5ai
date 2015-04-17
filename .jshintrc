@@ -21,11 +21,6 @@
     "browser": true,
 
     "globals": {
-        "jQuery": false,
-        "marked": false,
-        "Modernizr": false,
-        "modulejs": false,
-        "Prism": false,
-        "_": false
+        "modulejs": false
     }
 }
