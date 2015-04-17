@@ -139,7 +139,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resou
         }
 
         $(settingsTemplate)
-            .appendTo('#settings')
+            .appendTo('#sidebar')
             .find('#view-info')
             .on('click', function (ev) {
 

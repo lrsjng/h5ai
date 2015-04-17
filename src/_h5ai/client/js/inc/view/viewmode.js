@@ -130,7 +130,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'c
                 .appendTo($viewBlock);
         }
 
-        $viewBlock.appendTo('#settings');
+        $viewBlock.appendTo('#sidebar');
     }
 
     function init() {

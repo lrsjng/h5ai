@@ -119,7 +119,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/form
                 .appendTo($select);
         });
 
-        $block.appendTo('#settings');
+        $block.appendTo('#sidebar');
     }
 
     function init() {

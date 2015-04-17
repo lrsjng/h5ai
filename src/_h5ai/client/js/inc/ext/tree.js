@@ -193,7 +193,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/s
             .on('click', '.indicator', createOnIndicatorClick());
 
         $(settingsTemplate)
-            .appendTo('#settings')
+            .appendTo('#sidebar')
             .find('#view-tree')
             .on('click', function (ev) {
 
