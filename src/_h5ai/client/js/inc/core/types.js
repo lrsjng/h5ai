@@ -27,16 +27,17 @@ modulejs.define('core/types', ['config', '_'], function (config, _) {
 
         var slashidx = sequence.lastIndexOf('/');
         var name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence;
+        var result;
 
-        for (var type in regexps) {
-            if (regexps.hasOwnProperty(type)) {
-                if (regexps[type].test(name)) {
-                    return type;
-                }
+        _.each(regexps, function (regexp, type) {
+
+            if (regexps[type].test(name)) {
+                result = type;
+                return false;
             }
-        }
+        });
 
-        return 'file';
+        return result ? result : 'file';
     }
 
 
