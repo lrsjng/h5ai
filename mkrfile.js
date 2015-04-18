@@ -130,7 +130,9 @@ module.exports = function (suite) {
     });
 
 
-    suite.target('build-test', [], 'build a test suite').task(function () {
+    suite.target('build-test', ['check-version'], 'build a test suite').task(function () {
+
+        var env = {pkg: pkg};
 
         $(src + '/_h5ai/client/css/styles.less')
             .less()
@@ -155,7 +157,7 @@ module.exports = function (suite) {
             .write(build + '/test/tests.js', true);
 
         $(root + '/test/index.html.jade')
-            .jade()
+            .jade(env)
             .write(build + '/test/index.html', true);
 
         $.report({
