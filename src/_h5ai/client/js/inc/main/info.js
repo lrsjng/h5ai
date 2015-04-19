@@ -115,15 +115,15 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
     function request(data) {
 
         $.ajax({
-                url: 'server/php/index.php',
-                type: 'POST',
-                dataType: 'JSON',
-                data: data
-            })
-            .always(function () {
+            url: 'server/php/index.php',
+            type: 'POST',
+            dataType: 'JSON',
+            data: data
+        })
+        .always(function () {
 
-                window.location.reload();
-            });
+            window.location.reload();
+        });
     }
 
     function onLogin() {
