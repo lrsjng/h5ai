@@ -191,10 +191,12 @@ Options
     /*
     Play a audio preview on click.
 
+    - autoplay: boolean
     - types: array of strings
     */
     "preview-aud": {
         "enabled": true,
+        "autoplay": true,
         "types": ["aud"]
     },
 
@@ -254,10 +256,12 @@ Options
     /*
     Play a video preview on click.
 
+    - autoplay: boolean
     - types: array of strings
     */
     "preview-vid": {
         "enabled": true,
+        "autoplay": true,
         "types": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"]
     },
 
