@@ -152,10 +152,6 @@ module.exports = function (suite) {
             .includeit()
             .write(build + '/test/scripts.js', true);
 
-        $(root + '/test/tests.js')
-            .includeit()
-            .write(build + '/test/tests.js', true);
-
         $(root + '/test/index.html.jade')
             .jade(env)
             .write(build + '/test/index.html', true);
