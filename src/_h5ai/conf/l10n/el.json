@@ -13,5 +13,7 @@
     "download": "μεταμόρφωση",
     "noMatch": "κανένα αποτέλεσμα",
     "dateFormat": "DD/MM/YYYY HH:mm",
-    "filter": "φίλτρο"
+    "filter": "φίλτρο",
+    "view": "Προβολή",
+    "language": "Γλώσσα"
 }
