@@ -38,7 +38,7 @@ function onEnd() {
 }
 
 var count = 0;
-function onTest() {
+function onTestEnd() {
 
     if (count % 25 === 0) {
         update();
@@ -56,7 +56,7 @@ function setupMocha() {
 function runMocha() {
 
     mocha.run()
-        .on('test', onTest)
+        .on('test end', onTestEnd)
         .on('end', onEnd);
 }
 
