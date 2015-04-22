@@ -105,7 +105,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isTrue(this.xEvent.sub.calledOnce);
         });
 
-        it('subscribes to "location.changed"', function () {
+        it('subscribes to location.changed', function () {
 
             this.applyFn();
             assert.strictEqual(this.xEvent.sub.firstCall.args[0], 'location.changed');

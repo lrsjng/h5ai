@@ -110,14 +110,14 @@ describe('module \'' + ID + '\'', function () {
             assert.isTrue(this.xEvent.sub.calledTwice);
         });
 
-        it('subscribes to "location.changed"', function () {
+        it('subscribes to location.changed', function () {
 
             this.applyFn();
             assert.strictEqual(this.xEvent.sub.firstCall.args[0], 'location.changed');
             assert.isFunction(this.xEvent.sub.firstCall.args[1]);
         });
 
-        it('subscribes to "location.refreshed"', function () {
+        it('subscribes to location.refreshed', function () {
 
             this.applyFn();
             assert.strictEqual(this.xEvent.sub.secondCall.args[0], 'location.refreshed');

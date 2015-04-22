@@ -70,7 +70,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isUndefined(instance);
         });
 
-        it('publishes "ready" event', function () {
+        it('publishes ready event', function () {
 
             this.applyFn();
             assert.isTrue(this.xEvent.pub.calledOnce);

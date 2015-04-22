@@ -111,7 +111,7 @@ describe('module \'' + ID + '\'', function () {
             var arg = data[0];
             var exp = data[1];
 
-            it('.forceEncoding(\'' + arg + '\') => \'' + exp + '\'', function () {
+            it(arg + ' => ' + exp, function () {
 
                 var instance = this.applyFn();
                 assert.strictEqual(instance.forceEncoding(arg), exp);

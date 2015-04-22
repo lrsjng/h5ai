@@ -81,7 +81,7 @@ describe('module \'' + ID + '\'', function () {
             var arg2 = data[1];
             var exp = data[2];
 
-            it('.regularCmpFn(\'' + arg1 + '\', \'' + arg2 + '\') => \'' + exp + '\'', function () {
+            it(arg1 + ', ' + arg2 + ' => ' + exp, function () {
 
                 var instance = this.applyFn();
                 assert.strictEqual(instance.regularCmpFn(arg1, arg2), exp);
@@ -111,7 +111,7 @@ describe('module \'' + ID + '\'', function () {
             var arg2 = data[1];
             var exp = data[2];
 
-            it('.naturalCmpFn(\'' + arg1 + '\', \'' + arg2 + '\') => \'' + exp + '\'', function () {
+            it(arg1 + ', ' + arg2 + ' => ' + exp, function () {
 
                 var instance = this.applyFn();
                 assert.strictEqual(instance.naturalCmpFn(arg1, arg2), exp);

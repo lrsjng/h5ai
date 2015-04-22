@@ -109,7 +109,7 @@ describe('module \'' + ID + '\'', function () {
             var labels = data.slice(0, -1);
             var exp = data.slice(-1)[0];
 
-            it(String(labels) + ' => \'' + exp + '\'', function () {
+            it(labels + ' => ' + exp, function () {
 
                 this.xSettings.title.enabled = true;
 
