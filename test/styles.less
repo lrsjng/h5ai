@@ -1,0 +1,165 @@
+@import "lib/mocha";
+
+@col-red: #f44336;
+@col-red-text: #c62828;
+@col-green: #4caf50;
+@col-grey: #555;
+
+#mocha-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 10000;
+    overflow: auto;
+
+    #report {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        background: @col-grey;
+        z-index: 1;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 32px;
+        padding: 0 8px;
+
+        a, a:active, a:visited, a:hover {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    &.pass #report {
+        background: @col-green;
+    }
+
+    &.fail #report {
+        background: @col-red;
+    }
+}
+
+#mocha {
+    max-width: 900px;
+    margin: 80px auto;
+
+    .test.fail, .test pre.error {
+        color: @col-red-text;
+    }
+
+    .test.pass.fast .duration {
+        display: inline-block;
+        color: @col-grey;
+        border: none;
+        box-shadow: none;
+    }
+
+    .test::before {
+        display: block;
+        width: 10px;
+        height: 10px;
+        float: left;
+        margin-right: 5px;
+        background: @col-grey;
+        border-radius: 20px;
+        position: relative;
+        top: 4px;
+    }
+    .test.pass::before {
+        content: ' ';
+        background: @col-green;
+    }
+    .test.fail::before {
+        content: ' ';
+        background: @col-red;
+    }
+}
+
+#mocha-stats {
+    top: 40px;
+    right: 20px;
+    font-size: 13px;
+
+    em {
+        font-style: normal;
+        font-size: 14px;
+    }
+}
+
+#mocha-overlay.fail #mocha-stats .failures em {
+    font-weight: bold;
+    color: @col-red;
+}
+
+#mocha-report {
+
+    .suite {
+        margin: 8px 0 8px 16px;
+
+        > h1 {
+            color: @col-grey;
+            height: 24px;
+            line-height: 24px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+
+            a, a:active, a:visited, a:hover {
+                display: block;
+                padding: 0 8px;
+                font-size: inherit;
+                font-weight: inherit;
+                color: inherit;
+                background: inherit;
+                text-decoration: none;
+            }
+
+            a:hover {
+                background: #eee;
+                cursor: pointer;
+            }
+
+            .count {
+                font-size: 0.85em;
+
+                .passed {
+                    color: @col-green;
+                    margin-left: 1em;
+                }
+                .failed {
+                    color: @col-red;
+                    margin-left: 0.5em;
+                }
+            }
+        }
+    }
+
+    > .suite {
+        margin: 24px 0;
+
+        > h1 {
+            height: 32px;
+            line-height: 32px;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 24px 0 8px 0;
+        }
+    }
+
+    > .suite > ul > .suite {
+        margin: 12px 0;
+
+        > h1 {
+            height: 26px;
+            line-height: 26px;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 16px 0 8px 0;
+        }
+    }
+}

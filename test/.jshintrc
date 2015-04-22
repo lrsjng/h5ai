@@ -1,0 +1,35 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "futurehostile": true,
+    "latedef": true,
+    "maxdepth": 3,
+    "noarg": true,
+    "nocomma": true,
+    "nonbsp": true,
+    "nonew": true,
+    "plusplus": true,
+    "strict": false,
+    "supernew": true,
+    "trailing": true,
+    "undef": true,
+    "unused": true,
+
+    "browser": true,
+    "mocha": true,
+
+    "globals": {
+        "$": false,
+        "_": false,
+        "assert": false,
+        "chai": false,
+        "jQuery": false,
+        "mocha": false,
+        "modulejs": false,
+        "sinon": false,
+        "util": false
+    }
+}
