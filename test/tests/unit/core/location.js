@@ -80,6 +80,43 @@ describe('module "' + ID + '"', function () {
             var instance = this.applyFn();
             assert.isFunction(instance.forceEncoding);
         });
+
+        _.each([
+            ['', ''],
+            ['//', '/'],
+            ['////', '/'],
+            ['//a///b////c//', '/a/b/c/'],
+            ['a b', 'a%20b'],
+            ['ab ', 'ab%20'],
+            [' ab', '%20ab'],
+            ['a!b', 'a%21b'],
+            ['a#b', 'a%23b'],
+            ['a$b', 'a%24b'],
+            ['a&b', 'a%26b'],
+            ['a\'b', 'a%27b'],
+            ['a(b', 'a%28b'],
+            ['a)b', 'a%29b'],
+            ['a*b', 'a%2Ab'],
+            ['a+b', 'a%2Bb'],
+            ['a,b', 'a%2Cb'],
+            ['a:b', 'a%3Ab'],
+            ['a;b', 'a%3Bb'],
+            ['a=b', 'a%3Db'],
+            ['a?b', 'a%3Fb'],
+            ['a@b', 'a%40b'],
+            ['a[b', 'a%5Bb'],
+            ['a]b', 'a%5Db']
+        ], function (data) {
+
+            var arg = data[0];
+            var exp = data[1];
+
+            it('.forceEncoding("' + arg + '") => "' + exp + '"', function () {
+
+                var instance = this.applyFn();
+                assert.strictEqual(instance.forceEncoding(arg), exp);
+            });
+        });
     });
 
     describe('.getDomain()', function () {
@@ -93,7 +130,7 @@ describe('module "' + ID + '"', function () {
         it('returns document.domain', function () {
 
             var instance = this.applyFn();
-            assert.strictEqual(instance.getDomain(), document.domain);
+            assert.strictEqual(instance.getDomain(), window.document.domain);
         });
     });
 
@@ -145,6 +182,72 @@ describe('module "' + ID + '"', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.setLink);
+        });
+
+        it('sets href correct', function () {
+
+            var $el = $('<a/>');
+            var item = {
+                absHref: util.uniqId(),
+                isManaged: false,
+                isFolder: sinon.stub().returns(false)
+            };
+
+            var setLink = this.applyFn().setLink;
+            setLink($el, item);
+
+            assert.strictEqual($el.attr('href'), item.absHref);
+        });
+
+        it('sets target="_blank" for unmanaged folders', function () {
+
+            this.xSettings.unmanagedInNewWindow = true;
+
+            var $el = $('<a/>');
+            var item = {
+                absHref: util.uniqId(),
+                isManaged: false,
+                isFolder: sinon.stub().returns(true)
+            };
+
+            var setLink = this.applyFn().setLink;
+            setLink($el, item);
+
+            assert.strictEqual($el.attr('target'), '_blank');
+        });
+
+        it('does not set target="_blank" for managed folders', function () {
+
+            this.xSettings.unmanagedInNewWindow = true;
+
+            var $el = $('<a/>');
+            var item = {
+                absHref: util.uniqId(),
+                isManaged: true,
+                isFolder: sinon.stub().returns(true)
+            };
+
+            var setLink = this.applyFn().setLink;
+            setLink($el, item);
+
+            assert.isUndefined($el.attr('target'));
+        });
+
+        it('does not set target="_blank" for unmanaged folders if disabled', function () {
+
+            this.xSettings.unmanagedInNewWindow = false;
+
+            var $el = $('<a/>');
+            var item = {
+                absHref: util.uniqId(),
+                isManaged: true,
+                isFolder: sinon.stub().returns(true)
+            };
+
+            var setLink = this.applyFn().setLink;
+            setLink($el, item);
+
+            assert.isUndefined($el.attr('target'));
         });
     });
 });
