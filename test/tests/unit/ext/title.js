@@ -23,19 +23,11 @@ describe('module \'' + ID + '\'', function () {
 
             return this.definition.fn(_, this.xEvent, this.xSettings);
         };
-
-        this.titleBak = document.title;
-        this.dummyTitle = util.uniqId();
     });
 
     after(function () {
 
-        document.title = this.titleBak;
-    });
-
-    beforeEach(function () {
-
-        document.title = this.dummyTitle;
+        util.restoreHtml();
     });
 
     describe('definition', function () {
