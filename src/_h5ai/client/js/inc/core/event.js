@@ -27,7 +27,6 @@ modulejs.define('core/event', ['_'], function (_) {
 
         var args = slice.call(arguments, 1);
 
-        // console.log('EVENT PUB', topic, args);
         if (_.isString(topic) && subscriptions[topic]) {
 
             _.each(subscriptions[topic], function (callback) {

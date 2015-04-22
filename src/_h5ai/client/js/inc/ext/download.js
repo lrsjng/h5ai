@@ -1,4 +1,4 @@
-modulejs.define('ext/download', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location', 'core/server'], function (_, $, allsettings, resource, event, location, server) {
+modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/server', 'core/settings'], function (_, $, event, location, resource, server, allsettings) {
 
     var settings = _.extend({
             enabled: false,

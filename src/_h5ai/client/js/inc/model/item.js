@@ -1,4 +1,4 @@
-modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/settings', 'core/server', 'core/types'], function (_, event, location, settings, server, types) {
+modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server', 'core/settings', 'core/types'], function (_, event, location, server, settings, types) {
 
     var reEndsWithSlash = /\/$/;
     var reSplitPath = /^(.*\/)([^\/]+\/?)$/;

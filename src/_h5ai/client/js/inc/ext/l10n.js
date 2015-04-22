@@ -1,4 +1,4 @@
-modulejs.define('ext/l10n', ['_', '$', 'core/settings', 'core/langs', 'core/format', 'core/store', 'core/event', 'core/server'], function (_, $, allsettings, langs, format, store, event, server) {
+modulejs.define('ext/l10n', ['_', '$', 'core/event', 'core/format', 'core/langs', 'core/server', 'core/settings', 'core/store'], function (_, $, event, format, langs, server, allsettings, store) {
 
     var settings = _.extend({
             enabled: false,

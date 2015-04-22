@@ -1,4 +1,4 @@
-modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/format'], function (_, $, modernizr, allsettings, resource, store, event, format) {
+modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/event', 'core/format', 'core/resource', 'core/settings', 'core/store'], function (_, $, modernizr, event, format, resource, allsettings, store) {
 
     var settings = _.extend({
             enabled: false,
