@@ -4,7 +4,7 @@
 var ID = 'core/resource';
 var DEPS = ['_', 'config', 'core/settings'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

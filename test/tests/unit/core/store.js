@@ -4,7 +4,7 @@
 var ID = 'core/store';
 var DEPS = ['modernizr'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

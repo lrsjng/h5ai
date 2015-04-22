@@ -10,8 +10,8 @@
     'use strict';
 
     var win = window;
-    modulejs.define('$', function () { return win.jQuery; });
     modulejs.define('_', function () { return win._; });
+    modulejs.define('$', function () { return win.jQuery; });
     modulejs.define('marked', function () { return win.marked; });
     modulejs.define('modernizr', function () { return win.Modernizr; });
     modulejs.define('prism', function () { return win.Prism; });

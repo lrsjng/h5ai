@@ -4,7 +4,7 @@
 var ID = 'view/viewmode';
 var DEPS = ['_', '$', 'core/event', 'core/resource', 'core/settings', 'core/store'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

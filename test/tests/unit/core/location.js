@@ -4,7 +4,7 @@
 var ID = 'core/location';
 var DEPS = ['_', 'modernizr', 'core/event', 'core/notify', 'core/settings'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 
@@ -111,7 +111,7 @@ describe('module "' + ID + '"', function () {
             var arg = data[0];
             var exp = data[1];
 
-            it('.forceEncoding("' + arg + '") => "' + exp + '"', function () {
+            it('.forceEncoding(\'' + arg + '\') => \'' + exp + '\'', function () {
 
                 var instance = this.applyFn();
                 assert.strictEqual(instance.forceEncoding(arg), exp);
@@ -199,7 +199,7 @@ describe('module "' + ID + '"', function () {
             assert.strictEqual($el.attr('href'), item.absHref);
         });
 
-        it('sets target="_blank" for unmanaged folders', function () {
+        it('sets target=\'_blank\' for unmanaged folders', function () {
 
             this.xSettings.unmanagedInNewWindow = true;
 
@@ -216,7 +216,7 @@ describe('module "' + ID + '"', function () {
             assert.strictEqual($el.attr('target'), '_blank');
         });
 
-        it('does not set target="_blank" for managed folders', function () {
+        it('does not set target=\'_blank\' for managed folders', function () {
 
             this.xSettings.unmanagedInNewWindow = true;
 
@@ -233,7 +233,7 @@ describe('module "' + ID + '"', function () {
             assert.isUndefined($el.attr('target'));
         });
 
-        it('does not set target="_blank" for unmanaged folders if disabled', function () {
+        it('does not set target=\'_blank\' for unmanaged folders if disabled', function () {
 
             this.xSettings.unmanagedInNewWindow = false;
 

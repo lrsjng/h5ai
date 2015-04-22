@@ -4,7 +4,7 @@
 var ID = 'model/item';
 var DEPS = ['_', 'core/event', 'core/location', 'core/server', 'core/settings', 'core/types'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

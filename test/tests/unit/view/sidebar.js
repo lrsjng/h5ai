@@ -4,7 +4,7 @@
 var ID = 'view/sidebar';
 var DEPS = ['$', 'core/resource', 'core/store'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

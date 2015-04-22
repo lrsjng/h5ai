@@ -5,7 +5,7 @@ var ID = 'core/server';
 var DEPS = ['_', '$', 'config', 'core/location'];
 var $submitSnap;
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

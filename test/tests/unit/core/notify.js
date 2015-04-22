@@ -4,7 +4,7 @@
 var ID = 'core/notify';
 var DEPS = ['$'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

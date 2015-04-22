@@ -13,7 +13,7 @@ describe('libs', function () {
 
     _.each(libs, function (lib, id) {
 
-        describe('module "' + id + '"', function () {
+        describe('module \'' + id + '\'', function () {
 
             it('is defined', function () {
 

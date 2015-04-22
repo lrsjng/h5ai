@@ -4,7 +4,7 @@
 var ID = 'boot';
 var DEPS = ['$'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 
@@ -95,7 +95,7 @@ describe('module "' + ID + '"', function () {
             assert.isFalse(this.xRequire.called);
         });
 
-        it('data-module="test"', function () {
+        it('data-module=\'test\'', function () {
 
             $('<script/>').attr('data-module', 'test').appendTo('head');
             this.applyFn();
@@ -104,7 +104,7 @@ describe('module "' + ID + '"', function () {
             assert.isFalse(this.xRequire.called);
         });
 
-        it('data-module="info"', function () {
+        it('data-module=\'info\'', function () {
 
             $('<script/>').attr('data-module', 'info').appendTo('head');
 
@@ -126,7 +126,7 @@ describe('module "' + ID + '"', function () {
             assert.deepEqual(this.xRequire.lastCall.args, ['main/info']);
         });
 
-        it('data-module="index"', function () {
+        it('data-module=\'index\'', function () {
 
             $('<script/>').attr('data-module', 'index').appendTo('head');
 
@@ -148,7 +148,7 @@ describe('module "' + ID + '"', function () {
             assert.deepEqual(this.xRequire.lastCall.args, ['main/index']);
         });
 
-        it('"no-browser"-class and no data-module', function () {
+        it('\'no-browser\'-class and no data-module', function () {
 
             $('html').addClass('no-browser');
             this.applyFn();
@@ -157,7 +157,7 @@ describe('module "' + ID + '"', function () {
             assert.isFalse(this.xRequire.called);
         });
 
-        it('"no-browser"-class and data-module="test"', function () {
+        it('\'no-browser\'-class and data-module=\'test\'', function () {
 
             $('html').addClass('no-browser');
             $('<script/>').attr('data-module', 'test').appendTo('head');
@@ -167,7 +167,7 @@ describe('module "' + ID + '"', function () {
             assert.isFalse(this.xRequire.called);
         });
 
-        it('"no-browser"-class and data-module="info"', function () {
+        it('\'no-browser\'-class and data-module=\'info\'', function () {
 
             $('html').addClass('no-browser');
             $('<script/>').attr('data-module', 'info').appendTo('head');
@@ -177,7 +177,7 @@ describe('module "' + ID + '"', function () {
             assert.isFalse(this.xRequire.called);
         });
 
-        it('"no-browser"-class and data-module="index"', function () {
+        it('\'no-browser\'-class and data-module=\'index\'', function () {
 
             $('html').addClass('no-browser');
             $('<script/>').attr('data-module', 'index').appendTo('head');

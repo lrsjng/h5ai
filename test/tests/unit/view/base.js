@@ -4,7 +4,7 @@
 var ID = 'view/base';
 var DEPS = ['$', 'config'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

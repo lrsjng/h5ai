@@ -4,7 +4,7 @@
 var ID = 'config';
 var DEPS = [];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

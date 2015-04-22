@@ -4,7 +4,7 @@
 var ID = 'main/index';
 var DEPS = ['_', 'core/event'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 

@@ -4,7 +4,7 @@
 var ID = 'core/format';
 var DEPS = ['_'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 
@@ -112,7 +112,7 @@ describe('module "' + ID + '"', function () {
                 var arg = data[0];
                 var exp = data[1];
 
-                it('.formatSize(' + arg + ') => "' + exp + '"', function () {
+                it('.formatSize(' + arg + ') => \'' + exp + '\'', function () {
 
                     var instance = this.applyFn();
                     instance.setDefaultMetric(false);
@@ -148,7 +148,7 @@ describe('module "' + ID + '"', function () {
                 var arg = data[0];
                 var exp = data[1];
 
-                it('.formatSize(' + arg + ') => "' + exp + '"', function () {
+                it('.formatSize(' + arg + ') => \'' + exp + '\'', function () {
 
                     var instance = this.applyFn();
                     instance.setDefaultMetric(true);
@@ -209,7 +209,7 @@ describe('module "' + ID + '"', function () {
             var arg2 = data[1];
             var exp = data[2];
 
-            it('.formatDate(' + arg1 + ', ' + arg2 + ') => "' + exp + '"', function () {
+            it('.formatDate(' + arg1 + ', \'' + arg2 + '\') => \'' + exp + '\'', function () {
 
                 var instance = this.applyFn();
                 assert.strictEqual(instance.formatDate(arg1, arg2), exp);

@@ -4,7 +4,7 @@
 var ID = 'core/types';
 var DEPS = ['_', 'config'];
 
-describe('module "' + ID + '"', function () {
+describe('module \'' + ID + '\'', function () {
 
     before(function () {
 
