@@ -1,4 +1,4 @@
-modulejs.define('ext/preview', ['_', '$', 'core/settings', 'core/resource', 'core/store'], function (_, $, allsettings, resource, store) {
+modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'core/store'], function (_, $, resource, allsettings, store) {
 
     var settings = _.extend({
             enabled: true

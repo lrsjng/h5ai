@@ -1,4 +1,4 @@
-modulejs.define('ext/select', ['_', '$', 'core/settings', 'core/resource', 'core/event'], function (_, $, allsettings, resource, event) {
+modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/settings'], function (_, $, event, resource, allsettings) {
 
     var settings = _.extend({
             enabled: false,

@@ -1,4 +1,4 @@
-modulejs.define('core/settings', ['config', '_'], function (config, _) {
+modulejs.define('core/settings', ['_', 'config'], function (_, config) {
 
     return _.extend({}, config.options, {
         appHref: config.setup.APP_HREF,

@@ -1,4 +1,4 @@
-modulejs.define('core/types', ['config', '_'], function (config, _) {
+modulejs.define('core/types', ['_', 'config'], function (_, config) {
 
     var reEndsWithSlash = /\/$/;
     var regexps = {};

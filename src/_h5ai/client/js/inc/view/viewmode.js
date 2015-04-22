@@ -1,4 +1,4 @@
-modulejs.define('view/viewmode', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event'], function (_, $, allsettings, resource, store, event) {
+modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'core/store'], function (_, $, event, resource, allsettings, store) {
 
     var modes = ['details', 'grid', 'icons'];
     var settings = _.extend({}, {

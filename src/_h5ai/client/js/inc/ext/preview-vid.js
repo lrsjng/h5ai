@@ -1,4 +1,4 @@
-modulejs.define('ext/preview-vid', ['_', '$', 'core/settings', 'core/event', 'ext/preview'], function (_, $, allsettings, event, preview) {
+modulejs.define('ext/preview-vid', ['_', '$', 'core/event', 'core/settings', 'ext/preview'], function (_, $, event, allsettings, preview) {
 
     var settings = _.extend({
             enabled: false,

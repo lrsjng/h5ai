@@ -1,4 +1,4 @@
-modulejs.define('ext/sort', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/store', 'core/util'], function (_, $, allsettings, resource, event, store, util) {
+modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'core/store', 'core/util'], function (_, $, event, resource, allsettings, store, util) {
 
     var settings = _.extend({
             enabled: false,

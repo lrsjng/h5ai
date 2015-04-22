@@ -1,4 +1,4 @@
-modulejs.define('ext/custom', ['_', '$', 'marked', 'core/settings', 'core/server', 'core/event'], function (_, $, marked, allsettings, server, event) {
+modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 'core/settings'], function (_, $, marked, event, server, allsettings) {
 
     var settings = _.extend({
             enabled: false

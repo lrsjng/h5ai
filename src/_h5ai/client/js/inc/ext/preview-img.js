@@ -1,4 +1,4 @@
-modulejs.define('ext/preview-img', ['_', '$', 'core/settings', 'core/event', 'core/server', 'ext/preview'], function (_, $, allsettings, event, server, preview) {
+modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core/settings', 'ext/preview'], function (_, $, event, server, allsettings, preview) {
 
     var settings = _.extend({
             enabled: false,

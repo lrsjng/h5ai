@@ -1,4 +1,4 @@
-modulejs.define('ext/tree', ['_', '$', 'core/settings', 'core/resource', 'core/store', 'core/event', 'core/location', 'core/util'], function (_, $, allsettings, resource, store, event, location, util) {
+modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'core/store', 'core/util'], function (_, $, event, location, resource, allsettings, store, util) {
 
     var settings = _.extend({
             enabled: false,

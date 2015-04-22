@@ -1,4 +1,4 @@
-modulejs.define('ext/title', ['_', 'core/settings', 'core/event'], function (_, allsettings, event) {
+modulejs.define('ext/title', ['_', 'core/event', 'core/settings'], function (_, event, allsettings) {
 
     var settings = _.extend({
             enabled: false

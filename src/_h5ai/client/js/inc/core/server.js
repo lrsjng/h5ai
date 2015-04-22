@@ -1,4 +1,4 @@
-modulejs.define('core/server', ['$', '_', 'config', 'core/location'], function ($, _, config, location) {
+modulejs.define('core/server', ['_', '$', 'config', 'core/location'], function (_, $, config, location) {
 
     var hasApi = config.setup.API === true;
 

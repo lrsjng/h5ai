@@ -1,4 +1,4 @@
-modulejs.define('ext/autorefresh', ['_', '$', 'core/settings', 'core/event', 'core/location'], function (_, $, allsettings, event, location) {
+modulejs.define('ext/autorefresh', ['_', '$', 'core/event', 'core/location', 'core/settings'], function (_, $, event, location, allsettings) {
 
     var settings = _.extend({
             enabled: false,

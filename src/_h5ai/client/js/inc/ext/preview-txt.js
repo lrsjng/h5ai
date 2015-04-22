@@ -1,4 +1,4 @@
-modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/settings', 'core/event', 'ext/preview'], function (_, $, marked, prism, allsettings, event, preview) {
+modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', 'core/settings', 'ext/preview'], function (_, $, marked, prism, event, allsettings, preview) {
 
     var settings = _.extend({
             enabled: false,

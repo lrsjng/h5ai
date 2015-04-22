@@ -1,4 +1,4 @@
-modulejs.define('ext/crumb', ['_', '$', 'core/settings', 'core/resource', 'core/event', 'core/location'], function (_, $, allsettings, resource, event, location) {
+modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings'], function (_, $, event, location, resource, allsettings) {
 
     var settings = _.extend({
             enabled: false

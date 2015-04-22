@@ -1,4 +1,4 @@
-modulejs.define('ext/google-analytics-ua', ['_', 'core/settings', 'core/event'], function (_, allsettings, event) {
+modulejs.define('ext/google-analytics-ua', ['_', 'core/event', 'core/settings'], function (_, event, allsettings) {
 
     var settings = _.extend({
             enabled: false,

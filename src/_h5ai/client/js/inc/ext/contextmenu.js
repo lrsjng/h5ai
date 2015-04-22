@@ -1,4 +1,4 @@
-modulejs.define('ext/contextmenu', ['_', '$', 'core/settings', 'core/resource'], function (_, $, allsettings, resource) {
+modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'], function (_, $, resource, allsettings) {
 
     var settings = _.extend({
             enabled: false

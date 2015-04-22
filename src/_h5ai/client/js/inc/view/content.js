@@ -1,4 +1,4 @@
-modulejs.define('view/content', ['_', '$', 'core/settings', 'core/resource', 'core/format', 'core/event', 'core/location'], function (_, $, allsettings, resource, format, event, location) {
+modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings'], function (_, $, event, format, location, resource, allsettings) {
 
     var settings = _.extend({
             binaryPrefix: false,

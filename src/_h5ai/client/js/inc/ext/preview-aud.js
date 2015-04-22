@@ -1,4 +1,4 @@
-modulejs.define('ext/preview-audio', ['_', '$', 'core/settings', 'core/event', 'core/format', 'ext/preview'], function (_, $, allsettings, event, format, preview) {
+modulejs.define('ext/preview-audio', ['_', '$', 'core/event', 'core/format', 'core/settings', 'ext/preview'], function (_, $, event, format, allsettings, preview) {
 
     var settings = _.extend({
             enabled: false,
