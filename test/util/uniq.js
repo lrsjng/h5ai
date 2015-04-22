@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-var PREFIX = 'UQ';
-var SUFFIX = 'ID';
+var PREFIX = 'UNIQ-';
+var SUFFIX = '-ID';
 var LENGTH = 4;
 var RE = new RegExp('^' + PREFIX + '\\d{' + LENGTH + '}' + SUFFIX + '$');
 
@@ -14,19 +14,26 @@ function uniqId() {
     return PREFIX + ('00000000' + counter).substr(-LENGTH) + SUFFIX;
 }
 
-function uniqObj() {
-
-    return {uniqId: uniqId()};
-}
-
 function isUniqId(uid) {
 
     return RE.test(uid);
 }
 
+function uniqObj() {
+
+    return {uniqId: uniqId()};
+}
+
+function uniqPath(suffix) {
+
+    return '/some/path/' + uniqId() + (suffix ? suffix : '');
+}
+
+
 window.util = window.util || {};
 window.util.uniqId = uniqId;
-window.util.uniqObj = uniqObj;
 window.util.isUniqId = isUniqId;
+window.util.uniqObj = uniqObj;
+window.util.uniqPath = uniqPath;
 
 }());

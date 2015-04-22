@@ -14,7 +14,7 @@ describe('module "' + ID + '"', function () {
             view: {}
         };
         this.xResource = {
-            image: sinon.stub().returns('/some/path/' + util.uniqId() + '.png')
+            image: sinon.stub().returns(util.uniqPath('-image.png'))
         };
         this.xStore = {
             get: sinon.stub(),

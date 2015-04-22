@@ -71,27 +71,32 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.put()', function () {
 
-        var key1 = 'test1';
-        var value1 = '1234';
-        var key2 = 'test2';
-        var value2 = '5678';
-
-        it('.put() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.put);
         });
+    });
 
-        it('.get() is function', function () {
+    describe('.get()', function () {
+
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.get);
         });
+    });
+
+    describe('works', function () {
 
         it('works', function () {
 
+            var key1 = 'test1';
+            var value1 = '1234';
+            var key2 = 'test2';
+            var value2 = '5678';
             var instance = this.applyFn();
 
             assert.isNull(window.localStorage.getItem(this.storeKey));

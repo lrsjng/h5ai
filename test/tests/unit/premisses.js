@@ -34,8 +34,6 @@ describe('premisses', function () {
 
         assert.isFunction(util.uniqId);
 
-        var uid1 = parseInt(util.uniqObj().uniqId.replace(/\D/g, ''), 10);
-
         assert.lengthOfKeys(util.uniqObj(), 1);
         assert.isTrue(util.isUniqId(util.uniqObj().uniqId));
         assert.notEqual(util.uniqObj(), util.uniqObj());
@@ -44,9 +42,17 @@ describe('premisses', function () {
         assert.notEqual(util.uniqObj().uniqId, util.uniqObj().uniqId);
         assert.notDeepEqual(util.uniqObj().uniqId, util.uniqObj().uniqId);
         assert.notStrictEqual(util.uniqObj().uniqId, util.uniqObj().uniqId);
+    });
 
-        var uid2 = parseInt(util.uniqObj().uniqId.replace(/\D/g, ''), 10);
-        assert.strictEqual(uid2, uid1 + 15);
+    it('util.uniqPath() works', function () {
+
+        assert.isFunction(util.uniqPath);
+
+        assert.notEqual(util.uniqPath(), util.uniqPath());
+        assert.notDeepEqual(util.uniqPath(), util.uniqPath());
+        assert.notStrictEqual(util.uniqPath(), util.uniqPath());
+        assert.strictEqual(util.uniqPath('abc').substr(-3), 'abc');
+        assert.strictEqual(util.uniqPath('xyz/').substr(-4), 'xyz/');
     });
 
     it('assert.isPlainObject() works', function () {

@@ -64,15 +64,15 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.getType()', function () {
 
-        it('.getType() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.getType);
         });
 
-        it('.getType() works', function () {
+        it('works', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.getType('file.a'), 'a');

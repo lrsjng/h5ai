@@ -12,7 +12,7 @@ describe('module "' + ID + '"', function () {
 
         this.xSettings = util.uniqObj();
         this.xResource = {
-            icon: sinon.stub().returns('/some/path/' + util.uniqId() + '-icon.png')
+            icon: sinon.stub().returns(util.uniqPath('-icon.png'))
         };
         this.xFormat = {
             formatSize: sinon.stub().returns(util.uniqId()),

@@ -22,8 +22,8 @@
     "mocha": true,
 
     "globals": {
-        "$": false,
         "_": false,
+        "$": false,
         "assert": false,
         "chai": false,
         "jQuery": false,

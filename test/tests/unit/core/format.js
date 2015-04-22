@@ -59,33 +59,24 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.setDefaultMetric()', function () {
 
-        it('.setDefaultMetric() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.setDefaultMetric);
         });
+    });
 
-        it('.formatSize() is function', function () {
+    describe('.formatSize()', function () {
+
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.formatSize);
         });
 
-        it('.setDefaultDateFormat() is function', function () {
-
-            var instance = this.applyFn();
-            assert.isFunction(instance.setDefaultDateFormat);
-        });
-
-        it('.formatDate() is function', function () {
-
-            var instance = this.applyFn();
-            assert.isFunction(instance.formatDate);
-        });
-
-        it('.formatSize() defaults to decimal metric', function () {
+        it('defaults to decimal metric', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.formatSize(1024), '1 KB');
@@ -95,7 +86,7 @@ describe('module "' + ID + '"', function () {
             assert.strictEqual(instance.formatSize(1024), '1 KB');
         });
 
-        describe('.formatSize() with decimal metric', function () {
+        describe('decimal metric', function () {
 
             _.each([
                 [0, '0 B'],
@@ -130,7 +121,7 @@ describe('module "' + ID + '"', function () {
             });
         });
 
-        describe('.formatSize() with binary metric', function () {
+        describe('binary metric', function () {
 
             _.each([
                 [0, '0 B'],
@@ -165,8 +156,26 @@ describe('module "' + ID + '"', function () {
                 });
             });
         });
+    });
 
-        it('.formatDate() with default format', function () {
+    describe('.setDefaultDateFormat()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isFunction(instance.setDefaultDateFormat);
+        });
+    });
+
+    describe('.formatDate()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isFunction(instance.formatDate);
+        });
+
+        it('default format', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.formatDate(0), '');
@@ -187,26 +196,23 @@ describe('module "' + ID + '"', function () {
             assert.strictEqual(instance.formatDate(1400000000000), '18 14 20');
         });
 
-        describe('.formatDate()', function () {
+        _.each([
+            [0, 'YYYY-MM-DD HH:mm:ss', ''],
+            [1000, 'YYYY-MM-DD HH:mm:ss', '1970-01-01 01:00:01'],
+            [-1000, 'YYYY-MM-DD HH:mm:ss', '1970-01-01 00:59:59'],
+            [1400000000000, 'YYYY-MM-DD HH:mm:ss', '2014-05-13 18:53:20'],
+            [1400000000000, 'XYYYYXMMXDDXHHXmmXssX', 'X2014X05X13X18X53X20X'],
+            [1400000000000, 'YYYY YY Y MM M DD D HH H mm m ss s', '2014 14 2014 05 5 13 13 18 18 53 53 20 20']
+        ], function (data) {
 
-            _.each([
-                [0, 'YYYY-MM-DD HH:mm:ss', ''],
-                [1000, 'YYYY-MM-DD HH:mm:ss', '1970-01-01 01:00:01'],
-                [-1000, 'YYYY-MM-DD HH:mm:ss', '1970-01-01 00:59:59'],
-                [1400000000000, 'YYYY-MM-DD HH:mm:ss', '2014-05-13 18:53:20'],
-                [1400000000000, 'XYYYYXMMXDDXHHXmmXssX', 'X2014X05X13X18X53X20X'],
-                [1400000000000, 'YYYY YY Y MM M DD D HH H mm m ss s', '2014 14 2014 05 5 13 13 18 18 53 53 20 20']
-            ], function (data) {
+            var arg1 = data[0];
+            var arg2 = data[1];
+            var exp = data[2];
 
-                var arg1 = data[0];
-                var arg2 = data[1];
-                var exp = data[2];
+            it('.formatDate(' + arg1 + ', ' + arg2 + ') => "' + exp + '"', function () {
 
-                it('.formatDate(' + arg1 + ', ' + arg2 + ') => "' + exp + '"', function () {
-
-                    var instance = this.applyFn();
-                    assert.strictEqual(instance.formatDate(arg1, arg2), exp);
-                });
+                var instance = this.applyFn();
+                assert.strictEqual(instance.formatDate(arg1, arg2), exp);
             });
         });
     });

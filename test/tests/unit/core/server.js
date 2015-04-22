@@ -98,21 +98,27 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.backend', function () {
 
-        it('.backend is set correct', function () {
+        it('set correct', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.backend, this.xConfig.setup.BACKEND);
         });
+    });
 
-        it('.name is set correct', function () {
+    describe('.name', function () {
+
+        it('set correct', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.name, this.xConfig.setup.SERVER_NAME);
         });
+    });
 
-        it('.version is set correct', function () {
+    describe('.version', function () {
+
+        it('set correct', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.version, this.xConfig.setup.SERVER_VERSION);

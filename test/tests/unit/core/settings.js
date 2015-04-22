@@ -73,7 +73,7 @@ describe('module "' + ID + '"', function () {
 
     describe('publics', function () {
 
-        it('are extended from options', function () {
+        it('extended from options', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.someOptions, this.xConfig.options.someOptions);
@@ -81,20 +81,29 @@ describe('module "' + ID + '"', function () {
             assert.strictEqual(instance.more, this.xConfig.options.more);
             assert.strictEqual(_.keys(instance).length, _.keys(this.xConfig.options).length + 3);
         });
+    });
 
-        it('.appHref is set correct', function () {
+    describe('.appHref', function () {
+
+        it('set correct', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.appHref, this.xConfig.setup.APP_HREF);
         });
+    });
 
-        it('.rootHref is set correct', function () {
+    describe('.rootHref', function () {
+
+        it('set correct', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.rootHref, this.xConfig.setup.ROOT_HREF);
         });
+    });
 
-        it('.currentHref is set correct', function () {
+    describe('.currentHref', function () {
+
+        it('set correct', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.currentHref, this.xConfig.setup.CURRENT_HREF);

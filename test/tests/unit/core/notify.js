@@ -77,15 +77,15 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.set()', function () {
 
-        it('.set() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.ok(_.isFunction(instance.set));
         });
 
-        it('.set() works', function () {
+        it('works', function () {
 
             var instance = this.applyFn();
 

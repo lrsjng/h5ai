@@ -73,81 +73,78 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.forceEncoding()', function () {
 
-        describe('.forceEncoding()', function () {
+        it('is function', function () {
 
-            it('is function', function () {
+            var instance = this.applyFn();
+            assert.isFunction(instance.forceEncoding);
+        });
+    });
 
-                var instance = this.applyFn();
-                assert.isFunction(instance.forceEncoding);
-            });
+    describe('.getDomain()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isFunction(instance.getDomain);
         });
 
-        describe('.getDomain()', function () {
+        it('returns document.domain', function () {
 
-            it('is function', function () {
+            var instance = this.applyFn();
+            assert.strictEqual(instance.getDomain(), document.domain);
+        });
+    });
 
-                var instance = this.applyFn();
-                assert.isFunction(instance.getDomain);
-            });
+    describe('.getAbsHref()', function () {
 
-            it('returns document.domain', function () {
+        it('is function', function () {
 
-                var instance = this.applyFn();
-                assert.strictEqual(instance.getDomain(), document.domain);
-            });
+            var instance = this.applyFn();
+            assert.isFunction(instance.getAbsHref);
         });
 
-        describe('.getAbsHref()', function () {
+        it('returns null before .setLocation()', function () {
 
-            it('is function', function () {
-
-                var instance = this.applyFn();
-                assert.isFunction(instance.getAbsHref);
-            });
-
-            it('returns null before .setLocation()', function () {
-
-                var instance = this.applyFn();
-                assert.isNull(instance.getAbsHref());
-            });
+            var instance = this.applyFn();
+            assert.isNull(instance.getAbsHref());
         });
+    });
 
-        describe('.getItem()', function () {
+    describe('.getItem()', function () {
 
-            it('is function', function () {
+        it('is function', function () {
 
-                var instance = this.applyFn();
-                assert.isFunction(instance.getItem);
-            });
+            var instance = this.applyFn();
+            assert.isFunction(instance.getItem);
         });
+    });
 
-        describe('.setLocation()', function () {
+    describe('.setLocation()', function () {
 
-            it('is function', function () {
+        it('is function', function () {
 
-                var instance = this.applyFn();
-                assert.isFunction(instance.setLocation);
-            });
+            var instance = this.applyFn();
+            assert.isFunction(instance.setLocation);
         });
+    });
 
-        describe('.refresh()', function () {
+    describe('.refresh()', function () {
 
-            it('is function', function () {
+        it('is function', function () {
 
-                var instance = this.applyFn();
-                assert.isFunction(instance.refresh);
-            });
+            var instance = this.applyFn();
+            assert.isFunction(instance.refresh);
         });
+    });
 
-        describe('.setLink()', function () {
+    describe('.setLink()', function () {
 
-            it('is function', function () {
+        it('is function', function () {
 
-                var instance = this.applyFn();
-                assert.isFunction(instance.setLink);
-            });
+            var instance = this.applyFn();
+            assert.isFunction(instance.setLink);
         });
     });
 });

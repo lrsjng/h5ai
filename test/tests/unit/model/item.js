@@ -64,15 +64,18 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.get()', function () {
 
-        it('.get() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.get);
         });
+    });
 
-        it('.remove() is function', function () {
+    describe('.remove()', function () {
+
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.remove);

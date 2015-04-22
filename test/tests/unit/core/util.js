@@ -59,18 +59,12 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.regularCmpFn()', function () {
 
-        it('.regularCmpFn() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.regularCmpFn);
-        });
-
-        it('.naturalCmpFn() is function', function () {
-
-            var instance = this.applyFn();
-            assert.isFunction(instance.naturalCmpFn);
         });
 
         _.each([
@@ -92,6 +86,15 @@ describe('module "' + ID + '"', function () {
                 var instance = this.applyFn();
                 assert.strictEqual(instance.regularCmpFn(arg1, arg2), exp);
             });
+        });
+    });
+
+    describe('.naturalCmpFn()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isFunction(instance.naturalCmpFn);
         });
 
         _.each([

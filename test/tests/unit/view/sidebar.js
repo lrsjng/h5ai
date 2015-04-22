@@ -13,8 +13,8 @@ describe('module "' + ID + '"', function () {
         this.xResource = {
             image: sinon.stub().throws('invalid image request')
         };
-        this.xResource.image.withArgs('back').returns('/some/path/' + util.uniqId() + '-back.png');
-        this.xResource.image.withArgs('sidebar').returns('/some/path/' + util.uniqId() + '-sidebar.png');
+        this.xResource.image.withArgs('back').returns(util.uniqPath('-back.png'));
+        this.xResource.image.withArgs('sidebar').returns(util.uniqPath('-sidebar.png'));
         this.xStore = {
             get: sinon.stub().returns(false),
             put: sinon.stub()

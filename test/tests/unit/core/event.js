@@ -59,25 +59,34 @@ describe('module "' + ID + '"', function () {
         });
     });
 
-    describe('publics', function () {
+    describe('.sub()', function () {
 
-        it('.sub() is function', function () {
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.sub);
         });
+    });
 
-        it('.unsub() is function', function () {
+    describe('.unsub()', function () {
+
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.unsub);
         });
+    });
 
-        it('.pub() is function', function () {
+    describe('.pub()', function () {
+
+        it('is function', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.pub);
         });
+    });
+
+    describe('works', function () {
 
         it('works', function () {
 
