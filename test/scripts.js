@@ -4,10 +4,10 @@
 (function () {
 'use strict';
 
-modulejs.define('config', util.uniqObj());
-modulejs._private.instances = {};
-
 $(function () {
+
+    modulejs.define('config', util.uniqObj());
+    modulejs._private.instances = {};
 
     $('html').removeClass();
     util.pinHtml();
