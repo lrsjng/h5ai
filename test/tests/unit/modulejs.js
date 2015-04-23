@@ -3,9 +3,9 @@
 
 describe('modulejs', function () {
 
-    it('is global', function () {
+    it('is global object', function () {
 
-        assert.isObject(modulejs);
+        assert.isPlainObject(modulejs);
         assert.strictEqual(modulejs, window.modulejs);
     });
 

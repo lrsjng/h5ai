@@ -21,8 +21,8 @@ describe('unit tests', function () {
     // @include "tests/unit/premisses.js"
     // @include "tests/unit/modulejs.js"
     // @include "tests/unit/libs.js"
-    // @include "tests/unit/config.js"
     // @include "tests/unit/boot.js"
+    // @include "tests/unit/config.js"
     // @include "tests/unit/*/*.js"
 });
 
