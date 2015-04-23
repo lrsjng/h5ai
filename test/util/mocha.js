@@ -26,7 +26,7 @@ function update() {
 
 function onEnd() {
 
-    $('#mocha-overlay').addClass($('.test.fail').length ? 'fail' : 'pass');
+    $('#report').addClass($('.test.fail').length ? 'fail' : 'pass');
 
     $('#mocha-overlay code').each(function () {
 
