@@ -1,7 +1,9 @@
 (function () {
 'use strict';
 
-function update() {
+function onEnd() {
+
+    $('#report').addClass($('.test.fail').length ? 'fail' : 'pass');
 
     $('#mocha-overlay .suite').each(function () {
 
@@ -19,47 +21,26 @@ function update() {
         }
 
         $suite.addClass(tests === passed ? 'pass' : 'fail');
-        $header.find('.count').remove();
         $header.append($count);
     });
-}
-
-function onEnd() {
-
-    $('#report').addClass($('.test.fail').length ? 'fail' : 'pass');
 
     $('#mocha-overlay code').each(function () {
 
         var $code = $(this);
         $code.text($code.text().trim().replace(/;\n\s*/g, ';\n'));
     });
-
-    update();
-}
-
-var count = 0;
-function onTestEnd() {
-
-    if (count % 25 === 0) {
-        update();
-    }
-    count += 1;
 }
 
 function setupMocha() {
 
     window.assert = chai.assert;
     mocha.setup('bdd');
-    mocha.checkLeaks();
 }
 
 function runMocha() {
 
-    mocha.run()
-        .on('test end', onTestEnd)
-        .on('end', onEnd);
+    mocha.run().on('end', onEnd);
 }
-
 
 window.util = window.util || {};
 window.util.setupMocha = setupMocha;
