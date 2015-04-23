@@ -1,4 +1,4 @@
-@import "lib/mocha";
+@charset "utf-8";
 
 @col-red: #f44336;
 @col-red-text: #c62828;
@@ -48,55 +48,178 @@
     max-width: 900px;
     margin: 80px auto;
 
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    h1, h2 {
+        margin: 0;
+    }
+
+    h2 {
+        font-size: 12px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    code {
+        .comment {
+            color: #ddd;
+        }
+        .init {
+            color: #2f6fad;
+        }
+        .string {
+            color: #5890ad;
+        }
+        .keyword {
+            color: #8a6343;
+        }
+        .number {
+            color: #2f6fad;
+        }
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .replay {
+        display: none;
+    }
+
+    .test {
+        margin-left: 15px;
+        padding: 2px 4px;
+        overflow: hidden;
+
+        &:hover {
+            background: #eee;
+        }
+    }
+
     .test.fail, .test pre.error {
         color: @col-red-text;
     }
 
-    .test.pass.fast .duration {
+    .test .duration {
         display: inline-block;
         color: @col-grey;
         border: none;
         box-shadow: none;
+        font-size: 9px;
+        margin-left: 12px;
+    }
+
+    .test.medium .duration {
+        background: #c09853;
+    }
+
+    .test.slow .duration {
+        background: #b94a48;
     }
 
     .test::before {
+        content: ' ';
         display: block;
         width: 10px;
         height: 10px;
         float: left;
-        margin-right: 5px;
+        margin-right: 8px;
         background: @col-grey;
         border-radius: 20px;
         position: relative;
-        top: 4px;
+        top: 3px;
     }
     .test.pass::before {
-        content: ' ';
         background: @col-green;
     }
     .test.fail::before {
-        content: ' ';
         background: @col-red;
+    }
+    .test.pending::before {
+        background: @col-grey;
+    }
+
+    .test pre {
+        display: block;
+        float: left;
+        clear: left;
+        font: 12px monaco, monospace;
+        margin: 4px 0 16px 16px;
+        padding: 4px;
+        max-width: 80%;
+        word-wrap: break-word;
     }
 }
 
 #mocha-stats {
+    position: fixed;
     top: 40px;
     right: 20px;
+    margin: 0;
+    color: @col-grey;
+    z-index: 1;
     font-size: 13px;
 
     em {
         font-style: normal;
         font-size: 14px;
     }
-}
 
-#mocha-overlay.fail #mocha-stats .failures em {
-    font-weight: bold;
-    color: @col-red;
+    .progress {
+        float: right;
+        padding-top: 0;
+    }
+
+    em {
+        color: black;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a:hover {
+        border-bottom: 1px solid #eee;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 5px;
+        list-style: none;
+        padding-top: 11px;
+    }
+
+    canvas {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 #mocha-report {
+
+    &.pass .test.fail {
+        display: none;
+    }
+
+    &.fail .test.pass {
+        display: none;
+    }
+
+    &.pending .test.pass,
+    &.pending .test.fail {
+        display: none;
+    }
+    &.pending .test.pass.pending {
+        display: block;
+    }
 
     .suite {
         margin: 8px 0 8px 16px;
