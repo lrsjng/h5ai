@@ -21,7 +21,8 @@ describe('module \'' + ID + '\'', function () {
         this.xServer = util.uniqObj();
         this.xLocation = {
             forceEncoding: sinon.stub().returnsArg(0),
-            getDomain: sinon.stub().returns(util.uniqId())
+            getDomain: sinon.stub().returns(util.uniqId()),
+            getAbsHref: sinon.stub().returns(util.uniqId())
         };
         this.applyFn = function () {
 
@@ -196,6 +197,11 @@ describe('module \'' + ID + '\'', function () {
                 assert.isObject(this.item.parent);
             });
 
+            it('parent has same constructor', function () {
+
+                assert.strictEqual(this.item.constructor, this.item.parent.constructor);
+            });
+
             it('sets isManaged to null', function () {
 
                 assert.isNull(this.item.isManaged);
@@ -206,9 +212,49 @@ describe('module \'' + ID + '\'', function () {
                 assert.isPlainObject(this.item.content);
                 assert.lengthOfKeys(this.item.content, 0);
             });
+
+            it('.isFolder() returns true', function () {
+
+                assert.isTrue(this.item.isFolder());
+            });
+
+            it('.isCurrentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isCurrentFolder());
+            });
+
+            it('.isInCurrentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isInCurrentFolder());
+            });
+
+            it('.isCurrentParentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isCurrentParentFolder());
+            });
+
+            it('.isDomain() returns false', function () {
+
+                assert.isFalse(this.item.isDomain());
+            });
+
+            it('.isRoot() returns false', function () {
+
+                assert.isFalse(this.item.isRoot());
+            });
+
+            it('.isH5ai() returns false', function () {
+
+                assert.isFalse(this.item.isH5ai());
+            });
+
+            it('.isEmpty() returns true', function () {
+
+                assert.isTrue(this.item.isEmpty());
+            });
         });
 
-        describe('for file href other than rootHref', function () {
+        describe('for file href', function () {
 
             beforeEach(function () {
 
@@ -251,6 +297,11 @@ describe('module \'' + ID + '\'', function () {
                 assert.isObject(this.item.parent);
             });
 
+            it('parent has same constructor', function () {
+
+                assert.strictEqual(this.item.constructor, this.item.parent.constructor);
+            });
+
             it('sets isManaged to null', function () {
 
                 assert.isNull(this.item.isManaged);
@@ -260,6 +311,46 @@ describe('module \'' + ID + '\'', function () {
 
                 assert.isPlainObject(this.item.content);
                 assert.lengthOfKeys(this.item.content, 0);
+            });
+
+            it('.isFolder() returns false', function () {
+
+                assert.isFalse(this.item.isFolder());
+            });
+
+            it('.isCurrentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isCurrentFolder());
+            });
+
+            it('.isInCurrentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isInCurrentFolder());
+            });
+
+            it('.isCurrentParentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isCurrentParentFolder());
+            });
+
+            it('.isDomain() returns false', function () {
+
+                assert.isFalse(this.item.isDomain());
+            });
+
+            it('.isRoot() returns false', function () {
+
+                assert.isFalse(this.item.isRoot());
+            });
+
+            it('.isH5ai() returns false', function () {
+
+                assert.isFalse(this.item.isH5ai());
+            });
+
+            it('.isEmpty() returns true', function () {
+
+                assert.isTrue(this.item.isEmpty());
             });
         });
     });

@@ -164,7 +164,8 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
 
         isCurrentParentFolder: function () {
 
-            return this === getItem(location.getAbsHref()).parent;
+            var item = getItem(location.getAbsHref());
+            return Boolean(item) && this === item.parent;
         },
 
         isDomain: function () {
