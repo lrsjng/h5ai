@@ -3,7 +3,9 @@
 
 function onEnd() {
 
-    $('#report').addClass($('.test.fail').length ? 'fail' : 'pass');
+    var failed = $('.test.fail').length > 0;
+
+    $('#report').addClass(failed ? 'fail' : 'pass');
 
     $('#mocha-overlay .suite').each(function () {
 
@@ -33,18 +35,20 @@ function onEnd() {
     $('#mocha-stats .passes a').replaceWith('<span>passes:</span>');
     $('#mocha-stats .failures a').replaceWith('<span>failures:</span>');
 
-    var onlyFailures = false;
-    $('#mocha-stats .failures').on('click', function (ev) {
+    if (failed) {
+        var onlyFailures = false;
+        $('#mocha-stats .failures').on('click', function (ev) {
 
-        onlyFailures = !onlyFailures;
-        if (onlyFailures) {
-            $('.suite, .test').hide();
-            $('.suite.fail, .test.fail').show();
-        } else {
-            $('.suite, .test').show();
-        }
-        ev.stopImmediatePropagation();
-    });
+            onlyFailures = !onlyFailures;
+            if (onlyFailures) {
+                $('.suite, .test').hide();
+                $('.suite.fail, .test.fail').show();
+            } else {
+                $('.suite, .test').show();
+            }
+            ev.stopImmediatePropagation();
+        });
+    }
 }
 
 function setupMocha() {
