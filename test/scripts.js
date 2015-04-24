@@ -7,33 +7,30 @@
 $(function () {
 
     modulejs.define('config', util.uniqObj());
-    var insts = modulejs._private.instances;
-    for (var member in insts) {
-        if (insts.hasOwnProperty(member)) {
-            delete insts[member];
-        }
-    }
+    _.each(modulejs._private.instances, function (val, key) {
+        delete modulejs._private.instances[key];
+    });
 
-    $('html').removeClass();
     util.pinHtml();
     util.runMocha();
 });
 
 util.setupMocha();
 
-describe('unit tests', function () {
+describe('all tests', function () {
 
-    // @include "tests/unit/premisses.js"
-    // @include "tests/unit/modulejs.js"
-    // @include "tests/unit/libs.js"
-    // @include "tests/unit/boot.js"
-    // @include "tests/unit/config.js"
-    // @include "tests/unit/*/*.js"
-});
+    describe('unit tests', function () {
+        // @include "tests/unit/premisses.js"
+        // @include "tests/unit/modulejs.js"
+        // @include "tests/unit/libs.js"
+        // @include "tests/unit/boot.js"
+        // @include "tests/unit/config.js"
+        // @include "tests/unit/*/*.js"
+    });
 
-describe('integration tests', function () {
-
-    // @include "tests/integration/**/*.js"
+    describe('integration tests', function () {
+        // @include "tests/integration/**/*.js"
+    });
 });
 
 }());

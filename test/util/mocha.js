@@ -29,6 +29,22 @@ function onEnd() {
         var $code = $(this);
         $code.text($code.text().trim().replace(/;\n\s*/g, ';\n'));
     });
+
+    $('#mocha-stats .passes a').replaceWith('<span>passes:</span>');
+    $('#mocha-stats .failures a').replaceWith('<span>failures:</span>');
+
+    var onlyFailures = false;
+    $('#mocha-stats .failures').on('click', function (ev) {
+
+        onlyFailures = !onlyFailures;
+        if (onlyFailures) {
+            $('.suite, .test').hide();
+            $('.suite.fail, .test.fail').show();
+        } else {
+            $('.suite, .test').show();
+        }
+        ev.stopImmediatePropagation();
+    });
 }
 
 function setupMocha() {

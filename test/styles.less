@@ -140,7 +140,7 @@
     }
 
     .suite {
-        margin: 8px 0 8px 16px;
+        margin: 16px 0 8px 24px;
 
         > h1 {
             color: @col-grey;
@@ -148,7 +148,6 @@
             line-height: 24px;
             font-size: 16px;
             font-weight: bold;
-            margin: 0 0 4px 0;
 
             a, a:active, a:visited, a:hover {
                 display: block;
@@ -180,31 +179,8 @@
         }
     }
 
-    #mocha-report {
-
-        > .suite {
-            margin: 24px 0;
-
-            > h1 {
-                height: 32px;
-                line-height: 32px;
-                font-size: 24px;
-                font-weight: bold;
-                margin: 24px 0 8px 0;
-            }
-
-            > ul > .suite {
-                margin: 12px 0;
-
-                > h1 {
-                    height: 26px;
-                    line-height: 26px;
-                    font-size: 20px;
-                    font-weight: bold;
-                    margin: 16px 0 8px 0;
-                }
-            }
-        }
+    #mocha-report > .suite {
+        margin: 0;
     }
 }
 
@@ -224,10 +200,6 @@
     a {
         text-decoration: none;
         color: inherit;
-
-        &:hover {
-            border-bottom: 1px solid #eee;
-        }
     }
     li {
         display: inline-block;
@@ -242,5 +214,9 @@
     .progress {
         float: right;
         padding-top: 0;
+    }
+
+    .passes, .failures {
+        cursor: pointer;
     }
 }

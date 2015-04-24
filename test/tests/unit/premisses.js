@@ -9,6 +9,23 @@ describe('premisses', function () {
         assert.strictEqual(window, util.GLOBAL);
     });
 
+    it('jQuery is defined', function () {
+
+        assert.isFunction(jQuery);
+        assert.strictEqual(jQuery, window.jQuery);
+        assert.strictEqual(jQuery.fn.jquery, '2.1.3');
+
+        assert.strictEqual($, jQuery);
+        assert.strictEqual($, window.$);
+    });
+
+    it('lodash is defined', function () {
+
+        assert.isFunction(_);
+        assert.strictEqual(_, window._);
+        assert.strictEqual(_.VERSION, '3.6.0');
+    });
+
     it('util is global object', function () {
 
         assert.isPlainObject(util);
