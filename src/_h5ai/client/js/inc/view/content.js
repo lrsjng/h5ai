@@ -32,11 +32,7 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
             '</div>';
 
 
-    function update(item, force) {
-
-        if (!force && item.$view) {
-            return item.$view;
-        }
+    function update(item) {
 
         var $html = $(itemTemplate);
         var $a = $html.find('a');
@@ -98,13 +94,13 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
         $items.find('.item').remove();
 
         if (item.parent && !settings.hideParentFolder) {
-            $items.append(update(item.parent, true));
+            $items.append(update(item.parent));
         }
 
         _.each(item.content, function (e) {
 
             if (!(e.isFolder() && settings.hideFolders)) {
-                $items.append(update(e, true));
+                $items.append(update(e));
             }
         });
 
@@ -125,7 +121,7 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
         _.each(added, function (item) {
 
             if (!(item.isFolder() && settings.hideFolders)) {
-                update(item, true).hide().appendTo($items).fadeIn(400);
+                update(item).hide().appendTo($items).fadeIn(400);
             }
         });
 
