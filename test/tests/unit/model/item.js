@@ -152,6 +152,46 @@ describe('module \'' + ID + '\'', function () {
                 assert.isPlainObject(this.item.content);
                 assert.lengthOfKeys(this.item.content, 0);
             });
+
+            it('.isFolder() returns true', function () {
+
+                assert.isTrue(this.item.isFolder());
+            });
+
+            it('.isCurrentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isCurrentFolder());
+            });
+
+            it('.isInCurrentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isInCurrentFolder());
+            });
+
+            it('.isCurrentParentFolder() returns false', function () {
+
+                assert.isFalse(this.item.isCurrentParentFolder());
+            });
+
+            it('.isDomain() returns false', function () {
+
+                assert.isFalse(this.item.isDomain());
+            });
+
+            it('.isRoot() returns true', function () {
+
+                assert.isTrue(this.item.isRoot());
+            });
+
+            it('.isH5ai() returns false', function () {
+
+                assert.isFalse(this.item.isH5ai());
+            });
+
+            it('.isEmpty() returns true', function () {
+
+                assert.isTrue(this.item.isEmpty());
+            });
         });
 
         describe('for folder href other than rootHref', function () {
@@ -351,6 +391,57 @@ describe('module \'' + ID + '\'', function () {
             it('.isEmpty() returns true', function () {
 
                 assert.isTrue(this.item.isEmpty());
+            });
+        });
+
+        describe('parents', function () {
+
+            beforeEach(function () {
+
+                var instance = this.applyFn();
+                this.item = instance.get(this.xSettings.rootHref + 'p/a/');
+                this.parent = this.item.parent;
+                this.grandpa = this.parent.parent;
+            });
+
+            it('parent is object', function () {
+
+                assert.isObject(this.parent);
+            });
+
+            it('parent has correct href', function () {
+
+                assert.strictEqual(this.parent.absHref, this.xSettings.rootHref + 'p/');
+            });
+
+            it('parent has correct label', function () {
+
+                assert.strictEqual(this.parent.label, 'p');
+            });
+
+            it('parent .isEmpty() returns false', function () {
+
+                assert.isFalse(this.parent.isEmpty());
+            });
+
+            it('grandpa is object', function () {
+
+                assert.isObject(this.grandpa);
+            });
+
+            it('grandpa has correct href', function () {
+
+                assert.strictEqual(this.grandpa.absHref, this.xSettings.rootHref);
+            });
+
+            it('grandpa has correct label', function () {
+
+                assert.strictEqual(this.grandpa.label, this.xRootName);
+            });
+
+            it('grandpa .isEmpty() returns false', function () {
+
+                assert.isFalse(this.grandpa.isEmpty());
             });
         });
     });
