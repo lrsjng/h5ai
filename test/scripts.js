@@ -7,7 +7,12 @@
 $(function () {
 
     modulejs.define('config', util.uniqObj());
-    modulejs._private.instances = {};
+    var insts = modulejs._private.instances;
+    for (var member in insts) {
+        if (insts.hasOwnProperty(member)) {
+            delete insts[member];
+        }
+    }
 
     $('html').removeClass();
     util.pinHtml();
