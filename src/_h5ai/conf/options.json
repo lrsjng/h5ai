@@ -10,6 +10,7 @@ Options
     General view options.
 
     - binaryPrefix: boolean, set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+    - fastBrowsing: boolean, use History API if available (no need to reload the whole page)
     - hidden: array of strings, don't list items matching these regular expressions
     - hideFolders: boolean, hide all folders in the main view
     - hideIf403: boolean, hide files and folders that are not readable by the server
@@ -25,13 +26,13 @@ Options
         is given the view size is fixed and the selector buttons are hidden.
         The user selected view size is also stored local in modern browsers
         so that it will be persistent.
-    - smartBrowsing: boolean, use History API if available (no need to reload the whole page)
     - theme: string, name of one of the folders in "_{{pkg.name}}/images/themes", defaults to "default"
     - unmanaged: array of strings, don't manage folders containing one of those files
     - unmanagedInNewWindow: boolean, open unmanaged links in new window/tab
     */
     "view": {
         "binaryPrefix": false,
+        "fastBrowsing": true,
         "hidden": ["^\\.", "^_{{pkg.name}}"],
         "hideFolders": false,
         "hideIf403": true,
@@ -39,7 +40,6 @@ Options
         "modes": ["details", "grid", "icons"],
         "setParentFolderLabels": true,
         "sizes": [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400],
-        "smartBrowsing": true,
         "theme": "",
         "unmanaged": ["index.html", "index.htm", "index.php"],
         "unmanagedInNewWindow": false

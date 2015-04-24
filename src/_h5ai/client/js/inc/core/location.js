@@ -1,11 +1,11 @@
 modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/notify', 'core/settings'], function (_, modernizr, event, notify, allsettings) {
 
     var settings = _.extend({
-            smartBrowsing: true,
+            fastBrowsing: true,
             unmanagedInNewWindow: true
         }, allsettings.view);
     var doc = document;
-    var history = settings.smartBrowsing && modernizr.history ? window.history : null;
+    var history = settings.fastBrowsing && modernizr.history ? window.history : null;
     var reUriToPathname = /^.*:\/\/[^\/]*|[^\/]*$/g;
     var absHref = null;
 
