@@ -3,7 +3,7 @@
 
 var ID = 'core/server';
 var DEPS = ['_', '$', 'config', 'core/location'];
-var $submitSnap;
+var $submitEl;
 
 describe('module \'' + ID + '\'', function () {
 
@@ -31,7 +31,7 @@ describe('module \'' + ID + '\'', function () {
         this.xAjax = sinon.stub($, 'ajax').returns(this.xAjaxResult);
         this.xSubmit = sinon.stub($.fn, 'submit', function () {
 
-            $submitSnap = this;
+            $submitEl = this;
             return this;
         });
 
@@ -43,7 +43,7 @@ describe('module \'' + ID + '\'', function () {
             this.xAjaxResult.always.reset();
             this.xAjax.reset();
             this.xSubmit.reset();
-            $submitSnap = undefined;
+            $submitEl = undefined;
 
             return this.definition.fn(_, $, this.xConfig, this.xLocation);
         };
@@ -263,7 +263,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isUndefined(res);
 
             assert.isFalse(this.xSubmit.called);
-            assert.isUndefined($submitSnap);
+            assert.isUndefined($submitEl);
         });
 
         it('works', function () {
@@ -282,13 +282,13 @@ describe('module \'' + ID + '\'', function () {
 
             assert.isTrue(this.xSubmit.calledOnce);
 
-            assert.lengthOf($submitSnap, 1);
-            assert.strictEqual($submitSnap.get(0).tagName.toLowerCase(), 'form');
-            assert.strictEqual($submitSnap.attr('method'), 'post');
-            assert.strictEqual($submitSnap.attr('style'), 'display:none;');
-            assert.strictEqual($submitSnap.attr('action'), this.xAbsHref);
+            assert.lengthOf($submitEl, 1);
+            assert.strictEqual($submitEl.get(0).tagName.toLowerCase(), 'form');
+            assert.strictEqual($submitEl.attr('method'), 'post');
+            assert.strictEqual($submitEl.attr('style'), 'display:none;');
+            assert.strictEqual($submitEl.attr('action'), this.xAbsHref);
 
-            var $children = $submitSnap.children();
+            var $children = $submitEl.children();
 
             assert.lengthOf($children, 2);
 

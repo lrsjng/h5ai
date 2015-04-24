@@ -10,11 +10,19 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xTypes = util.uniqObj();
+        this.xRootName = util.uniqId();
+        this.xTypes = {
+            getType: sinon.stub().returns(util.uniqId())
+        };
         this.xEvent = util.uniqObj();
-        this.xSettings = util.uniqObj();
+        this.xSettings = {
+            rootHref: util.uniqPath('/' + this.xRootName + '/')
+        };
         this.xServer = util.uniqObj();
-        this.xLocation = util.uniqObj();
+        this.xLocation = {
+            forceEncoding: sinon.stub().returnsArg(0),
+            getDomain: sinon.stub().returns(util.uniqId())
+        };
         this.applyFn = function () {
 
             return this.definition.fn(_, this.xEvent, this.xLocation, this.xServer, this.xSettings, this.xTypes);
@@ -70,6 +78,189 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.isFunction(instance.get);
+        });
+
+        it('returns null with no argument', function () {
+
+            var instance = this.applyFn();
+            assert.isNull(instance.get());
+        });
+
+        it('returns null for no string argument', function () {
+
+            var instance = this.applyFn();
+            assert.isNull(instance.get(1));
+        });
+
+        it('returns null for href not starting with rootHref', function () {
+
+            var instance = this.applyFn();
+            assert.isNull(instance.get('/a/'));
+        });
+
+        describe('for rootHref', function () {
+
+            beforeEach(function () {
+
+                var instance = this.applyFn();
+                this.item = instance.get(this.xSettings.rootHref);
+            });
+
+            it('returns object', function () {
+
+                assert.isObject(this.item);
+            });
+
+            it('sets href correct', function () {
+
+                assert.strictEqual(this.item.absHref, this.xSettings.rootHref);
+            });
+
+            it('sets type correct', function () {
+
+                assert.strictEqual(this.item.type, this.xTypes.getType(this.absHref));
+            });
+
+            it('sets label correct', function () {
+
+                assert.strictEqual(this.item.label, this.xRootName);
+            });
+
+            it('sets time to null', function () {
+
+                assert.isNull(this.item.time);
+            });
+
+            it('sets size to null', function () {
+
+                assert.isNull(this.item.size);
+            });
+
+            it('sets parent to null', function () {
+
+                assert.isNull(this.item.parent);
+            });
+
+            it('sets isManaged to null', function () {
+
+                assert.isNull(this.item.isManaged);
+            });
+
+            it('sets content correct', function () {
+
+                assert.isPlainObject(this.item.content);
+                assert.lengthOfKeys(this.item.content, 0);
+            });
+        });
+
+        describe('for folder href other than rootHref', function () {
+
+            beforeEach(function () {
+
+                var instance = this.applyFn();
+                this.item = instance.get(this.xSettings.rootHref + 'a/');
+            });
+
+            it('returns object', function () {
+
+                assert.isObject(this.item);
+            });
+
+            it('sets href correct', function () {
+
+                assert.strictEqual(this.item.absHref, this.xSettings.rootHref + 'a/');
+            });
+
+            it('sets type correct', function () {
+
+                assert.strictEqual(this.item.type, this.xTypes.getType(this.absHref));
+            });
+
+            it('sets label correct', function () {
+
+                assert.strictEqual(this.item.label, 'a');
+            });
+
+            it('sets time to null', function () {
+
+                assert.isNull(this.item.time);
+            });
+
+            it('sets size to null', function () {
+
+                assert.isNull(this.item.size);
+            });
+
+            it('sets parent to object', function () {
+
+                assert.isObject(this.item.parent);
+            });
+
+            it('sets isManaged to null', function () {
+
+                assert.isNull(this.item.isManaged);
+            });
+
+            it('sets content correct', function () {
+
+                assert.isPlainObject(this.item.content);
+                assert.lengthOfKeys(this.item.content, 0);
+            });
+        });
+
+        describe('for file href other than rootHref', function () {
+
+            beforeEach(function () {
+
+                var instance = this.applyFn();
+                this.item = instance.get(this.xSettings.rootHref + 'a');
+            });
+
+            it('returns object', function () {
+
+                assert.isObject(this.item);
+            });
+
+            it('sets href correct', function () {
+
+                assert.strictEqual(this.item.absHref, this.xSettings.rootHref + 'a');
+            });
+
+            it('sets type correct', function () {
+
+                assert.strictEqual(this.item.type, this.xTypes.getType(this.absHref));
+            });
+
+            it('sets label correct', function () {
+
+                assert.strictEqual(this.item.label, 'a');
+            });
+
+            it('sets time to null', function () {
+
+                assert.isNull(this.item.time);
+            });
+
+            it('sets size to null', function () {
+
+                assert.isNull(this.item.size);
+            });
+
+            it('sets parent to object', function () {
+
+                assert.isObject(this.item.parent);
+            });
+
+            it('sets isManaged to null', function () {
+
+                assert.isNull(this.item.isManaged);
+            });
+
+            it('sets content correct', function () {
+
+                assert.isPlainObject(this.item.content);
+                assert.lengthOfKeys(this.item.content, 0);
+            });
         });
     });
 

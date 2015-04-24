@@ -87,6 +87,7 @@ describe('premisses', function () {
         assert.throws(function () { assert.isPlainObject(new Date()); });
         assert.throws(function () { assert.isPlainObject(/a/); });
         assert.throws(function () { assert.isPlainObject(function () {}); });
+        assert.throws(function () { assert.isPlainObject(new function A() {}); });
     });
 
     it('assert.lengthOfKeys() works', function () {
