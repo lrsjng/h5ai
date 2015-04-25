@@ -1,0 +1,20 @@
+#selection-rect {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    border: 1px dashed @col-border-strong;
+    background: rgba(0,0,0,0.1);
+}
+
+html.drag-select, html.drag-select * {
+    cursor: move !important;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

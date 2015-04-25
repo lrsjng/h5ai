@@ -90,7 +90,7 @@
 
 html.no-js, html.no-browser {
 
-    body {
+    #root {
         position: static;
         background: #fff;
     }
@@ -98,4 +98,12 @@ html.no-js, html.no-browser {
     #fallback, #fallback-hints {
         display: block;
     }
+}
+
+html.js .noJsMsg {
+    display: none;
+}
+
+html.browser .noBrowserMsg {
+    display: none;
 }
