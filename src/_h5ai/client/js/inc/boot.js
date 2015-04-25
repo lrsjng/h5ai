@@ -20,7 +20,7 @@ modulejs.define('boot', ['$'], function ($) {
     $.ajax({
         url: url,
         data: data,
-        type: 'POST',
+        type: 'post',
         dataType: 'json'
     }).done(function (config) {
 

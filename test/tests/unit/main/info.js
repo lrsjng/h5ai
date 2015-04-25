@@ -139,8 +139,8 @@ describe('module \'' + ID + '\'', function () {
                 assert.isTrue(this.xAjax.calledOnce);
                 assert.deepEqual(this.xAjax.lastCall.args, [{
                     url: 'server/php/index.php',
-                    type: 'POST',
-                    dataType: 'JSON',
+                    type: 'post',
+                    dataType: 'json',
                     data: {
                         action: 'login',
                         pass: pass
@@ -194,8 +194,8 @@ describe('module \'' + ID + '\'', function () {
                 assert.isTrue(this.xAjax.calledOnce);
                 assert.deepEqual(this.xAjax.lastCall.args, [{
                     url: 'server/php/index.php',
-                    type: 'POST',
-                    dataType: 'JSON',
+                    type: 'post',
+                    dataType: 'json',
                     data: {
                         action: 'logout'
                     }

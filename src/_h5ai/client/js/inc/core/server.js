@@ -9,7 +9,7 @@ modulejs.define('core/server', ['_', '$', 'config', 'core/location'], function (
             $.ajax({
                 url: location.getAbsHref(),
                 data: data,
-                type: 'POST',
+                type: 'post',
                 dataType: 'json'
             })
             .done(function (json) {

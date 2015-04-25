@@ -112,7 +112,7 @@ describe('module \'' + ID + '\'', function () {
 
             assert.isTrue(this.xAjax.calledOnce);
             assert.strictEqual(this.xAjax.lastCall.args[0].url, 'server/php/index.php');
-            assert.strictEqual(this.xAjax.lastCall.args[0].type, 'POST');
+            assert.strictEqual(this.xAjax.lastCall.args[0].type, 'post');
             assert.strictEqual(this.xAjax.lastCall.args[0].dataType, 'json');
 
             assert.isTrue(this.xAjaxResult.done.calledOnce);
@@ -134,7 +134,7 @@ describe('module \'' + ID + '\'', function () {
 
             assert.isTrue(this.xAjax.calledOnce);
             assert.strictEqual(this.xAjax.lastCall.args[0].url, '.');
-            assert.strictEqual(this.xAjax.lastCall.args[0].type, 'POST');
+            assert.strictEqual(this.xAjax.lastCall.args[0].type, 'post');
             assert.strictEqual(this.xAjax.lastCall.args[0].dataType, 'json');
 
             assert.isTrue(this.xAjaxResult.done.calledOnce);

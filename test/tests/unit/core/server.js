@@ -200,7 +200,7 @@ describe('module \'' + ID + '\'', function () {
             assert.deepEqual(this.xAjax.lastCall.args, [{
                 url: this.xAbsHref,
                 data: xData,
-                type: 'POST',
+                type: 'post',
                 dataType: 'json'
             }]);
             assert.isTrue(this.xAjaxResult.done.calledOnce);
@@ -229,7 +229,7 @@ describe('module \'' + ID + '\'', function () {
             assert.deepEqual(this.xAjax.lastCall.args, [{
                 url: this.xAbsHref,
                 data: xData,
-                type: 'POST',
+                type: 'post',
                 dataType: 'json'
             }]);
             assert.isTrue(this.xAjaxResult.done.calledOnce);

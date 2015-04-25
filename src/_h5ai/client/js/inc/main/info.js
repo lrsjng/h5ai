@@ -110,8 +110,8 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
         $.ajax({
             url: 'server/php/index.php',
-            type: 'POST',
-            dataType: 'JSON',
+            type: 'post',
+            dataType: 'json',
             data: data
         })
         .always(function () {
