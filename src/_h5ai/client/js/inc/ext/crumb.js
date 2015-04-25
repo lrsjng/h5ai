@@ -1,29 +1,24 @@
-modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings'], function (_, $, event, location, resource, allsettings) {
+modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'view/topbar'], function (_, $, event, location, resource, allsettings, topbar) {
 
     var settings = _.extend({
             enabled: false
         }, allsettings.crumb);
-    var template =
+    var template = '<div id="crumbbar"/>';
+    var crumbTemplate =
             '<a class="crumb">' +
                 '<img class="sep" src="' + resource.image('crumb') + '" alt=">"/>' +
                 '<span class="label"/>' +
             '</a>';
     var pageHintTemplate = '<img class="hint" src="' + resource.icon('folder-page') + '" alt="has index page"/>';
+    var $crumbbar = $(template).appendTo(topbar.$flowbar);
 
 
-    function update(item, force) {
+    function createHtml(item) {
 
-        if (!force && item.$crumb) {
-            return item.$crumb;
-        }
-
-        var $html = $(template);
-
-        $html
-            .addClass(item.isFolder() ? 'folder' : 'file')
-            .data('item', item);
-
+        var $html = $(crumbTemplate).data('item', item);
+        item.$crumb = $html;
         location.setLink($html, item);
+
         $html.find('.label').text(item.label);
 
         if (item.isDomain() || item.isRoot()) {
@@ -38,36 +33,20 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
             $html.append($(pageHintTemplate));
         }
 
-        if (item.$crumb) {
-            item.$crumb.replaceWith($html);
-        }
-        item.$crumb = $html;
-
         return $html;
     }
 
     function onLocationChanged(item) {
 
-        var crumb = item.getCrumb();
-        var $crumbbar = $('#crumbbar');
-        var found = false;
+        var $crumb = item.$crumb;
 
-        $crumbbar.find('.crumb').each(function () {
-
-            var $html = $(this);
-            if ($html.data('item') === item) {
-                found = true;
-                $html.addClass('active');
-            } else {
-                $html.removeClass('active');
-            }
-        });
-
-        if (!found) {
-            $crumbbar.find('.crumb').remove();
-            _.each(crumb, function (e) {
-
-                $crumbbar.append(update(e, true));
+        if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
+            $crumbbar.children().removeClass('active');
+            $crumb.addClass('active');
+        } else {
+            $crumbbar.empty();
+            _.each(item.getCrumb(), function (item) {
+                $crumbbar.append(createHtml(item));
             });
         }
     }

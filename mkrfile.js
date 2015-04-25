@@ -81,6 +81,7 @@ module.exports = function (suite) {
 
         $(src + ': _h5ai/client/css/*.less')
             .newerThan(mapSrc, $(src + ': _h5ai/client/css/**'))
+            .includeit()
             .less()
             .autoprefixer()
             .if(!suite.args.uncompressed, function () { this.cssmin(); })
@@ -135,6 +136,7 @@ module.exports = function (suite) {
         var env = {pkg: pkg};
 
         $(src + '/_h5ai/client/css/styles.less')
+            .includeit()
             .less()
             .autoprefixer()
             .write(build + '/test/h5ai-styles.css', true);
@@ -144,6 +146,7 @@ module.exports = function (suite) {
             .write(build + '/test/h5ai-scripts.js', true);
 
         $(root + '/test/styles.less')
+            .includeit()
             .less()
             .autoprefixer()
             .write(build + '/test/styles.css', true);

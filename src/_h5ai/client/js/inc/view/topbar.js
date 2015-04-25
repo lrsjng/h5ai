@@ -3,7 +3,7 @@ modulejs.define('view/topbar', ['$', 'config', 'view/root'], function ($, config
     var template =
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +
-                '<div id="crumbbar"/>' +
+                '<div id="flowbar"/>' +
                 '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai ' + config.setup.VERSION + '">' +
                     '<div>powered</div>' +
                     '<div>by h5ai</div>' +
@@ -14,6 +14,6 @@ modulejs.define('view/topbar', ['$', 'config', 'view/root'], function ($, config
     return {
         $el: $el,
         $toolbar: $el.find('#toolbar'),
-        $crumbbar: $el.find('#crumbbar')
+        $flowbar: $el.find('#flowbar')
     };
 });

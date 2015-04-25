@@ -1,0 +1,50 @@
+#crumbbar {
+    overflow: hidden;
+    height: 48px;
+    font-size: 16px;
+    padding: 0 8px;
+    // border-left: 1px solid rgba(0,0,0,0.05);
+
+    a, a:active, a:visited {
+        color: @col;
+        cursor: pointer;
+        text-decoration: none;
+
+        &.active {
+            font-weight: bold;
+            color: @col-text-highlight;
+        }
+        &:hover {
+            color: @col-hover;
+        }
+        &:focus {
+            outline: 0;
+        }
+    }
+    .crumb {
+        display: inline-block;
+        .transition(all 0.2s ease-in-out);
+    }
+    .sep {
+        width: 24px;
+        height: 24px;
+        padding: 12px 0;
+        line-height: 48px;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .label {
+        line-height: 48px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 0 8px;
+    }
+    .hint {
+        width: 16px;
+        height: 16px;
+        padding: 16px 4px 16px 0;
+        line-height: 48px;
+        display: inline-block;
+        vertical-align: top;
+    }
+}

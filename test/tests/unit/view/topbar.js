@@ -83,10 +83,10 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOf($('#topbar > #toolbar'), 1);
         });
 
-        it('adds HTML #crumbbar to #topbar', function () {
+        it('adds HTML #flowbar to #topbar', function () {
 
             this.applyFn();
-            assert.lengthOf($('#topbar > #crumbbar'), 1);
+            assert.lengthOf($('#topbar > #flowbar'), 1);
         });
 
         it('adds HTML #backlink to #topbar', function () {
@@ -139,15 +139,15 @@ describe('module \'' + ID + '\'', function () {
         });
     });
 
-    describe('.$crumbbar', function () {
+    describe('.$flowbar', function () {
 
-        it('is $(\'#crumbbar\')', function () {
+        it('is $(\'#flowbar\')', function () {
 
             var instance = this.applyFn();
-            assert.isObject(instance.$crumbbar);
-            assert.lengthOf(instance.$crumbbar, 1);
-            assert.isString(instance.$crumbbar.jquery);
-            assert.strictEqual(instance.$crumbbar.attr('id'), 'crumbbar');
+            assert.isObject(instance.$flowbar);
+            assert.lengthOf(instance.$flowbar, 1);
+            assert.isString(instance.$flowbar.jquery);
+            assert.strictEqual(instance.$flowbar.attr('id'), 'flowbar');
         });
     });
 });

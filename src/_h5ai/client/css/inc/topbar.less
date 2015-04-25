@@ -1,4 +1,3 @@
-
 #topbar {
     overflow: hidden;
     flex: 0 0 auto;
@@ -17,6 +16,40 @@
 }
 
 
+#toolbar {
+    overflow: hidden;
+    flex: 0 0 auto;
+    order: 1;
+    height: 48px;
+
+    .tool {
+        display: inline-block;
+        cursor: pointer;
+        .transition(all 0.2s ease-in-out);
+
+        img {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            padding: 12px;
+        }
+
+        &:hover {
+            background: rgba(0,0,0,0.03);
+        }
+    }
+}
+
+
+#flowbar {
+    overflow: hidden;
+    flex: 1 1 auto;
+    order: 2;
+    height: 48px;
+    font-size: 16px;
+}
+
+
 #backlink {
     display: block;
     overflow: hidden;
@@ -24,7 +57,6 @@
     order: 99;
     text-align: center;
     padding: 6px 12px;
-    max-width: 80px;
     overflow: hidden;
     height: 36px;
     .transition(all 0.2s ease-in-out);
@@ -45,84 +77,5 @@
     div {
         line-height: 18px;
         white-space: nowrap;
-    }
-}
-
-
-#toolbar {
-    overflow: hidden;
-    flex: 0 0 auto;
-    order: 1;
-    height: 48px;
-
-    .tool {
-        display: inline-block;
-        cursor: pointer;
-
-        img {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            padding: 12px;
-            .transition(all 0.2s ease-in-out);
-        }
-
-        &:hover img {
-            background: rgba(0,0,0,0.03);
-        }
-    }
-}
-
-
-#crumbbar {
-    overflow: hidden;
-    flex: 1 1 auto;
-    order: 2;
-    height: 48px;
-    font-size: 16px;
-    padding: 0 8px;
-    // border-left: 1px solid rgba(0,0,0,0.05);
-
-    a, a:active, a:visited {
-        color: @col;
-        cursor: pointer;
-        text-decoration: none;
-
-        &.active {
-            font-weight: bold;
-            color: @col-text-highlight;
-        }
-        &:hover {
-            color: @col-hover;
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
-    .crumb {
-        display: inline-block;
-        .transition(all 0.2s ease-in-out);
-    }
-    .sep {
-        width: 24px;
-        height: 24px;
-        padding: 12px 0;
-        line-height: 48px;
-        display: inline-block;
-        vertical-align: top;
-    }
-    .label {
-        line-height: 48px;
-        display: inline-block;
-        vertical-align: top;
-        padding: 0 8px;
-    }
-    .hint {
-        width: 16px;
-        height: 16px;
-        padding: 16px 4px 16px 0;
-        line-height: 48px;
-        display: inline-block;
-        vertical-align: top;
     }
 }
