@@ -23,18 +23,12 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
     function addTest(label, info, passed, result) {
 
-        $(testTemp)
-            .find('.label')
-                .text(label)
-            .end()
-            .find('.result')
+        var $test = $(testTemp).appendTo('#tests');
+        $test.find('.label').text(label);
+        $test.find('.result')
                 .addClass(passed ? 'passed' : 'failed')
-                .text(result ? result : (passed ? 'yes' : 'no'))
-            .end()
-            .find('.info')
-                .html(info)
-            .end()
-            .appendTo('#tests');
+                .text(result ? result : (passed ? 'yes' : 'no'));
+        $test.find('.info').html(info);
     }
 
     function addTests() {

@@ -153,9 +153,9 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
     function setRawLink(href) {
 
         if (href) {
-            $('#pv-bar-raw').find('a').attr('href', href).end().show();
+            $('#pv-bar-raw').show().find('a').attr('href', href);
         } else {
-            $('#pv-bar-raw').find('a').attr('href', '#').end().hide();
+            $('#pv-bar-raw').hide().find('a').attr('href', '#');
         }
     }
 

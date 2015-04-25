@@ -44,14 +44,16 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
 
             } else if (entry.type === 'l') {
                 $(templateLabel)
-                    .find('.cm-text').text(entry.text).end()
-                    .appendTo($ul);
+                    .appendTo($ul)
+                    .find('.cm-text')
+                    .text(entry.text);
 
             } else if (entry.type === 'e') {
                 $li = $(templateEntry)
+                        .appendTo($ul)
                         .data('cm-id', entry.id)
-                        .find('.cm-text').text(entry.text).end()
-                        .appendTo($ul);
+                        .find('.cm-text')
+                        .text(entry.text);
 
                 if (entry.icon) {
                     $li.find('.cm-icon img').attr('src', resource.icon(entry.icon));

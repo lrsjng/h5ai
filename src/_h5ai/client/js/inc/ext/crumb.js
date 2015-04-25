@@ -24,7 +24,7 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
             .data('item', item);
 
         location.setLink($html, item);
-        $html.find('.label').text(item.label).end();
+        $html.find('.label').text(item.label);
 
         if (item.isDomain() || item.isRoot()) {
             $html.find('.sep').width(0);

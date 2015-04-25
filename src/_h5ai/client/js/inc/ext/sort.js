@@ -125,31 +125,28 @@ modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/sett
             return;
         }
 
-        $('#items li.header')
+        var $header = $('#items li.header');
 
-            .find('a.label')
-                .append(template)
-                .click(function (ev) {
-                    sortItems(0, $(this).hasClass('ascending'));
-                    ev.preventDefault();
-                })
-            .end()
+        $header.find('a.label')
+            .append(template)
+            .click(function (ev) {
+                sortItems(0, $(this).hasClass('ascending'));
+                ev.preventDefault();
+            });
 
-            .find('a.date')
-                .prepend(template)
-                .click(function (ev) {
-                    sortItems(1, $(this).hasClass('ascending'));
-                    ev.preventDefault();
-                })
-            .end()
+        $header.find('a.date')
+            .prepend(template)
+            .click(function (ev) {
+                sortItems(1, $(this).hasClass('ascending'));
+                ev.preventDefault();
+            });
 
-            .find('a.size')
-                .prepend(template)
-                .click(function (ev) {
-                    sortItems(2, $(this).hasClass('ascending'));
-                    ev.preventDefault();
-                })
-            .end();
+        $header.find('a.size')
+            .prepend(template)
+            .click(function (ev) {
+                sortItems(2, $(this).hasClass('ascending'));
+                ev.preventDefault();
+            });
 
         event.sub('location.changed', onContentChanged);
         event.sub('location.refreshed', onContentChanged);
