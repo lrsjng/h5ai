@@ -77,22 +77,30 @@ describe('module \'' + ID + '\'', function () {
             assert.deepEqual(this.xEvent.pub.firstCall.args, ['ready']);
         });
 
-        it('requires all views and extensions (only)', function () {
+        it('requires view/viewmode', function () {
 
             this.applyFn();
-            var re = /^(view|ext)\//;
+            assert.isTrue(this.xRequire.calledWithExactly('view/viewmode'));
+        });
+
+        it('requires all extensions', function () {
+
+            this.applyFn();
+            var re = /^ext\//;
             var self = this;
-            var counter = 0;
 
             _.each(modulejs.state(), function (state, id) {
 
                 if (re.test(id)) {
-                    counter += 1;
                     assert.isTrue(self.xRequire.calledWithExactly(id));
                 }
             });
+        });
 
-            assert.strictEqual(self.xRequire.callCount, counter);
+        it('requires only views and extensions', function () {
+
+            this.applyFn();
+            assert.isTrue(this.xRequire.alwaysCalledWithMatch(/^(view|ext)\//));
         });
 
         it('requires views before extensions', function () {

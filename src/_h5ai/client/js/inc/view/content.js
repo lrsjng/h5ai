@@ -1,4 +1,4 @@
-modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings'], function (_, $, event, format, location, resource, allsettings) {
+modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'view/mainrow'], function (_, $, event, format, location, resource, allsettings, mainrow) {
 
     var settings = _.extend({
             binaryPrefix: false,
@@ -30,6 +30,10 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
                     '<div class="empty l10n-empty"/>' +
                 '</div>' +
             '</div>';
+    var $content = $(contentTemplate);
+    var $view = $content.find('#view');
+    var $items = $view.find('#items');
+    var $empty = $view.find('.empty');
 
 
     function update(item) {
@@ -88,9 +92,6 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
 
     function onLocationChanged(item) {
 
-        var $items = $('#items');
-        var $empty = $('#view').find('.empty');
-
         $items.find('.item').remove();
 
         if (item.parent && !settings.hideParentFolder) {
@@ -115,9 +116,6 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
 
     function onLocationRefreshed(item, added, removed) {
 
-        var $items = $('#items');
-        var $empty = $('#view').find('.empty');
-
         _.each(added, function (item) {
 
             if (!(item.isFolder() && settings.hideFolders)) {
@@ -141,10 +139,8 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
 
     function init() {
 
-        var $content = $(contentTemplate);
-        var $view = $content.find('#view');
-        var $items = $view.find('#items');
-        $view.find('.empty').hide();
+        $content.appendTo(mainrow.$el);
+        $empty.hide();
 
         format.setDefaultMetric(settings.binaryPrefix);
 
@@ -154,10 +150,14 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
 
         event.sub('location.changed', onLocationChanged);
         event.sub('location.refreshed', onLocationRefreshed);
-
-        $content.appendTo('#main-row');
     }
 
 
     init();
+
+    return {
+        $el: $content,
+        $view: $view,
+        $items: $items
+    };
 });

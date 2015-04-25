@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/sidebar';
-var DEPS = ['$', 'core/resource', 'core/store'];
+var DEPS = ['$', 'core/resource', 'core/store', 'view/mainrow', 'view/topbar'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -20,13 +20,15 @@ describe('module \'' + ID + '\'', function () {
             put: sinon.stub()
         };
         this.xStore.get.returns(false);
+        this.xMainrow = {$el: null};
+        this.xTopbar = {$toolbar: null};
         this.applyFn = function () {
 
             this.xResource.image.reset();
             this.xStore.get.reset();
             this.xStore.put.reset();
 
-            return this.definition.fn($, this.xResource, this.xStore);
+            return this.definition.fn($, this.xResource, this.xStore, this.xMainrow, this.xTopbar);
         };
     });
 
@@ -38,8 +40,8 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        $('<div id="toolbar"/>').appendTo('body');
-        $('<div id="sidebar"/>').appendTo('body');
+        this.xMainrow.$el = $('<div id="main-row"/>').appendTo('body');
+        this.xTopbar.$toolbar = $('<div id="toolbar"/>').appendTo('body');
     });
 
 
@@ -78,10 +80,11 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns undefined', function () {
+        it('returns object with 1 property', function () {
 
             var instance = this.applyFn();
-            assert.isUndefined(instance);
+            assert.isPlainObject(instance);
+            assert.lengthOfKeys(instance, 1);
         });
 
         it('adds HTML #sidebar-toggle', function () {
@@ -120,6 +123,18 @@ describe('module \'' + ID + '\'', function () {
             assert.isFalse(this.xStore.put.lastCall.args[1]);
 
             assert.lengthOf($('#sidebar:visible'), 0);
+        });
+    });
+
+    describe('.$el', function () {
+
+        it('is $(\'#sidebar\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$el);
+            assert.lengthOf(instance.$el, 1);
+            assert.isString(instance.$el.jquery);
+            assert.strictEqual(instance.$el.attr('id'), 'sidebar');
         });
     });
 });

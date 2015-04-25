@@ -1,4 +1,4 @@
-modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'core/store'], function (_, $, event, resource, allsettings, store) {
+modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/content', 'view/sidebar'], function (_, $, resource, allsettings, store, content, sidebar) {
 
     var modes = ['details', 'grid', 'icons'];
     var settings = _.extend({}, {
@@ -15,11 +15,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
     var sortedSizes = settings.sizes.sort(function (a, b) { return a - b; });
     var dynamicStyleTag = null;
 
-
-    function adjustSpacing() {
-
-        // kept here for later use
-    }
 
     function applyCss(rules) {
 
@@ -69,7 +64,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
 
     function update(mode, size) {
 
-        var $view = $('#view');
         var stored = store.get(storekey);
 
         mode = mode || stored && stored.mode;
@@ -81,17 +75,15 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
         _.each(modes, function (m) {
             if (m === mode) {
                 $('#view-' + m).addClass('active');
-                $view.addClass('view-' + m).show();
+                content.$view.addClass('view-' + m).show();
             } else {
                 $('#view-' + m).removeClass('active');
-                $view.removeClass('view-' + m);
+                content.$view.removeClass('view-' + m);
             }
         });
 
         applyCssSizes(size);
         $('#view-size').val(_.indexOf(sortedSizes, size));
-
-        adjustSpacing();
     }
 
     function addViewSettings() {
@@ -110,11 +102,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
                 if (_.contains(settings.modes, mode)) {
                     $(modeTemplate.replace(/\[MODE\]/g, mode))
                         .appendTo($viewBlock)
-                        .on('click', function (ev) {
-
-                            update(mode);
-                            ev.preventDefault();
-                        });
+                        .on('click', function () { update(mode); });
                 }
             });
         }
@@ -130,16 +118,13 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
                 .appendTo($viewBlock);
         }
 
-        $viewBlock.appendTo('#sidebar');
+        $viewBlock.appendTo(sidebar.$el);
     }
 
     function init() {
 
         addViewSettings();
         update();
-
-        event.sub('location.changed', adjustSpacing);
-        $(window).on('resize', adjustSpacing);
     }
 
 

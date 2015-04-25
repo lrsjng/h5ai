@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/content';
-var DEPS = ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings'];
+var DEPS = ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'view/mainrow'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -26,6 +26,8 @@ describe('module \'' + ID + '\'', function () {
         this.xLocation = {
             setLink: sinon.stub()
         };
+        this.xMainrow = {$el: null};
+
         this.applyFn = function () {
 
             this.xResource.icon.reset();
@@ -36,7 +38,7 @@ describe('module \'' + ID + '\'', function () {
             this.xEvent.pub.reset();
             this.xLocation.setLink.reset();
 
-            return this.definition.fn(_, $, this.xEvent, this.xFormat, this.xLocation, this.xResource, this.xSettings);
+            return this.definition.fn(_, $, this.xEvent, this.xFormat, this.xLocation, this.xResource, this.xSettings, this.xMainrow);
         };
     });
 
@@ -48,7 +50,7 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        $('<div id="main-row"/>').appendTo('body');
+        this.xMainrow.$el = $('<div id="main-row"/>').appendTo('body');
     });
 
     describe('definition', function () {
@@ -86,16 +88,29 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns undefined', function () {
+        it('returns object with 3 properties', function () {
 
             var instance = this.applyFn();
-            assert.isUndefined(instance);
+            assert.isPlainObject(instance);
+            assert.lengthOfKeys(instance, 3);
         });
 
-        it('adds HTML #content', function () {
+        it('adds HTML #content to #main-row', function () {
 
             this.applyFn();
             assert.lengthOf($('#main-row > #content'), 1);
+        });
+
+        it('adds HTML #view to #content', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#content > #view'), 1);
+        });
+
+        it('adds HTML #items to #view', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#view > #items'), 1);
         });
 
         it('sets default metric', function () {
@@ -122,6 +137,42 @@ describe('module \'' + ID + '\'', function () {
             this.applyFn();
             assert.strictEqual(this.xEvent.sub.secondCall.args[0], 'location.refreshed');
             assert.isFunction(this.xEvent.sub.secondCall.args[1]);
+        });
+    });
+
+    describe('.$el', function () {
+
+        it('is $(\'#content\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$el);
+            assert.lengthOf(instance.$el, 1);
+            assert.isString(instance.$el.jquery);
+            assert.strictEqual(instance.$el.attr('id'), 'content');
+        });
+    });
+
+    describe('.$view', function () {
+
+        it('is $(\'#view\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$view);
+            assert.lengthOf(instance.$view, 1);
+            assert.isString(instance.$view.jquery);
+            assert.strictEqual(instance.$view.attr('id'), 'view');
+        });
+    });
+
+    describe('.$items', function () {
+
+        it('is $(\'#items\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$items);
+            assert.lengthOf(instance.$items, 1);
+            assert.isString(instance.$items.jquery);
+            assert.strictEqual(instance.$items.attr('id'), 'items');
         });
     });
 });

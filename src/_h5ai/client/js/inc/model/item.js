@@ -7,11 +7,11 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
 
     function startsWith(sequence, part) {
 
-        if (!sequence || !sequence.substr || !part || !part.length) {
+        if (!sequence || !sequence.indexOf) {
             return false;
         }
 
-        return sequence.substr(0, part.length) === part;
+        return sequence.indexOf(part) === 0;
     }
 
     function createLabel(sequence) {

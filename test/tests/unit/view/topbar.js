@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-var ID = 'view/base';
-var DEPS = ['$', 'config'];
+var ID = 'view/topbar';
+var DEPS = ['$', 'config', 'view/root'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -11,9 +11,10 @@ describe('module \'' + ID + '\'', function () {
         this.definition = modulejs._private.definitions[ID];
 
         this.xConfig = {setup: {VERSION: util.uniqId()}};
+        this.xRoot = {$el: null};
         this.applyFn = function () {
 
-            return this.definition.fn($, this.xConfig);
+            return this.definition.fn($, this.xConfig, this.xRoot);
         };
     });
 
@@ -25,8 +26,7 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        $('<div ID="fallback"/>').appendTo('body');
-        $('<div id="fallback-hints"/>').appendTo('body');
+        this.xRoot.$el = $('<div id="root"/>').appendTo('body');
     });
 
     describe('definition', function () {
@@ -64,55 +64,32 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns undefined', function () {
+        it('returns object with 3 properties', function () {
 
             var instance = this.applyFn();
-            assert.isUndefined(instance);
+            assert.isPlainObject(instance);
+            assert.lengthOfKeys(instance, 3);
         });
 
-        it('removes HTML #fallback', function () {
+        it('adds HTML #topbar to #root', function () {
 
             this.applyFn();
-            assert.lengthOf($('#fallback'), 0);
+            assert.lengthOf($('#root > #topbar'), 1);
         });
 
-        it('removes HTML #fallback-hints', function () {
-
-            this.applyFn();
-            assert.lengthOf($('#fallback-hints'), 0);
-        });
-
-        it('adds HTML #topbar', function () {
-
-            this.applyFn();
-            assert.lengthOf($('body > #topbar'), 1);
-        });
-
-        it('adds HTML #toolbar', function () {
+        it('adds HTML #toolbar to #topbar', function () {
 
             this.applyFn();
             assert.lengthOf($('#topbar > #toolbar'), 1);
         });
 
-        it('adds HTML #crumbbar', function () {
+        it('adds HTML #crumbbar to #topbar', function () {
 
             this.applyFn();
             assert.lengthOf($('#topbar > #crumbbar'), 1);
         });
 
-        it('adds HTML #main-row', function () {
-
-            this.applyFn();
-            assert.lengthOf($('body > #main-row'), 1);
-        });
-
-        it('adds HTML #sidebar', function () {
-
-            this.applyFn();
-            assert.lengthOf($('#main-row > #sidebar'), 1);
-        });
-
-        it('adds HTML #backlink', function () {
+        it('adds HTML #backlink to #topbar', function () {
 
             this.applyFn();
             assert.lengthOf($('#topbar > #backlink'), 1);
@@ -135,6 +112,42 @@ describe('module \'' + ID + '\'', function () {
             this.applyFn();
             assert.strictEqual($('#backlink > div').eq(0).text(), 'powered');
             assert.strictEqual($('#backlink > div').eq(1).text(), 'by h5ai');
+        });
+    });
+
+    describe('.$el', function () {
+
+        it('is $(\'#topbar\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$el);
+            assert.lengthOf(instance.$el, 1);
+            assert.isString(instance.$el.jquery);
+            assert.strictEqual(instance.$el.attr('id'), 'topbar');
+        });
+    });
+
+    describe('.$toolbar', function () {
+
+        it('is $(\'#toolbar\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$toolbar);
+            assert.lengthOf(instance.$toolbar, 1);
+            assert.isString(instance.$toolbar.jquery);
+            assert.strictEqual(instance.$toolbar.attr('id'), 'toolbar');
+        });
+    });
+
+    describe('.$crumbbar', function () {
+
+        it('is $(\'#crumbbar\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$crumbbar);
+            assert.lengthOf(instance.$crumbbar, 1);
+            assert.isString(instance.$crumbbar.jquery);
+            assert.strictEqual(instance.$crumbbar.attr('id'), 'crumbbar');
         });
     });
 });

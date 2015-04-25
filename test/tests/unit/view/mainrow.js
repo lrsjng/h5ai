@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-var ID = 'view/viewmode';
-var DEPS = ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/content', 'view/sidebar'];
+var ID = 'view/mainrow';
+var DEPS = ['$', 'view/root'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -10,26 +10,10 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xSettings = {
-            view: {}
-        };
-        this.xResource = {
-            image: sinon.stub().returns(util.uniqPath('-image.png'))
-        };
-        this.xStore = {
-            get: sinon.stub(),
-            put: sinon.stub()
-        };
-        this.xContent = {$view: null};
-        this.xSidebar = {$el: null};
-
+        this.xRoot = {$el: null};
         this.applyFn = function () {
 
-            this.xResource.image.reset();
-            this.xStore.get.reset();
-            this.xStore.put.reset();
-
-            return this.definition.fn(_, $, this.xResource, this.xSettings, this.xStore, this.xContent, this.xSidebar);
+            return this.definition.fn($, this.xRoot);
         };
     });
 
@@ -41,8 +25,7 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        this.xContent.$view = $('<div id="view"/>').appendTo('body');
-        this.xSidebar.$el = $('<div id="sidebar"/>').appendTo('body');
+        this.xRoot.$el = $('<div id="root"/>').appendTo('body');
     });
 
     describe('definition', function () {
@@ -80,23 +63,29 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns undefined', function () {
+        it('returns object with 1 property', function () {
 
             var instance = this.applyFn();
-            assert.isUndefined(instance);
+            assert.isPlainObject(instance);
+            assert.lengthOfKeys(instance, 1);
         });
 
-        it('adds HTML to #sidebar', function () {
+        it('adds HTML #main-row to #root', function () {
 
             this.applyFn();
-            assert.lengthOf($('#sidebar > .block > .l10n-view'), 1);
+            assert.lengthOf($('#root > #main-row'), 1);
         });
+    });
 
-        it('adds Style to head', function () {
+    describe('.$el', function () {
 
-            var styleTagCount = $('head > style').length;
-            this.applyFn();
-            assert.lengthOf($('head > style'), styleTagCount + 1);
+        it('is $(\'#main-row\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$el);
+            assert.lengthOf(instance.$el, 1);
+            assert.isString(instance.$el.jquery);
+            assert.strictEqual(instance.$el.attr('id'), 'main-row');
         });
     });
 });
