@@ -3,7 +3,7 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
     var settings = _.extend({
             enabled: false
         }, allsettings.contextmenu);
-    var templateOverlay = '<div class="cm-overlay"/>';
+    var templateOverlay = '<div id="cm-overlay"/>';
     var templatePanel = '<div class="cm-panel"><ul/></div>';
     var templateSep = '<li class="cm-sep"/>';
     var templateEntry = '<li class="cm-entry"><span class="cm-icon"><img/></span><span class="cm-text"/></li>';
@@ -164,8 +164,8 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
         //     ];
         // var callback = function (res) {
 
-        //         window.console.log('>> CB-RESULT >> ' + res);
-        //     };
+        //     window.console.log('>> CB-RESULT >> ' + res);
+        // };
 
         // $(document).on('h5ai-contextmenu', '#items .item.folder', function (ev) {
 

@@ -1,27 +1,25 @@
+#view.view-icons {
 
-.view-icons-sized(@size) {
+    .view-icons-sized(@size) {
 
-    .item {
-        width: @size * 4/3;
-    }
-
-    .landscape {
-        width: @size * 4/3;
-        height: @size;
-
-        img {
-            width: @size;
-            height: @size;
-        }
-
-        .thumb {
+        .item {
             width: @size * 4/3;
         }
+
+        .landscape {
+            width: @size * 4/3;
+            height: @size;
+
+            img {
+                width: @size;
+                height: @size;
+            }
+
+            .thumb {
+                width: @size * 4/3;
+            }
+        }
     }
-}
-
-
-#view.view-icons {
 
     margin: 8px;
 

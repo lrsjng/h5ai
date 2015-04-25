@@ -1,23 +1,21 @@
+#view.view-grid {
 
-.view-grid-sized(@size) {
+    .view-grid-sized(@size) {
 
-    .label {
-        line-height: @size;
-    }
+        .label {
+            line-height: @size;
+        }
 
-    .square {
-        width: @size;
-        height: @size;
-
-        img {
+        .square {
             width: @size;
             height: @size;
+
+            img {
+                width: @size;
+                height: @size;
+            }
         }
     }
-}
-
-
-#view.view-grid {
 
     margin: 8px;
 

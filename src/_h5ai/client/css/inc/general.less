@@ -77,17 +77,6 @@
 ::-moz-selection { background: @col-pink-a200; color: @col-text-primary-white; text-shadow: none; }
 ::selection { background: @col-pink-a200; color: @col-text-primary-white; text-shadow: none; }
 
-.transition (@transition) {
-    -webkit-transition: @transition;
-    transition: @transition;
-}
-
-.transform (@transform) {
-    -webkit-transform: @transform;
-    -ms-transform: @transform;
-    transform: @transform;
-    zoom: 1;
-}
 
 .card() {
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
@@ -109,7 +98,7 @@
 .el-button() {
     .card();
     .rounded();
-    .transition(all 0.2s ease-in-out);
+    transition: all 0.2s ease-in-out;
     color: @col-text-primary-white;
     background: @col-blue-400;
     border-radius: 2px;

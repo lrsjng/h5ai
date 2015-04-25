@@ -1,4 +1,3 @@
-
 #tree {
     display: none;
 
@@ -40,11 +39,12 @@
         img {
             width: 20px;
             height: 20px;
-            .transition(all 0.2s ease-in-out);
+            transition: all 0.2s ease-in-out;
         }
         &.open {
             img {
-                .transform(rotate(90deg));
+                transform: rotate(90deg);
+                zoom: 1;
             }
         }
         &.unknown {
