@@ -22,9 +22,9 @@
     height: 48px;
 
     .tool {
+        .eased-transition;
         display: inline-block;
         cursor: pointer;
-        transition: all 0.2s ease-in-out;
 
         img {
             display: inline-block;
@@ -47,6 +47,7 @@
 }
 
 #backlink {
+    .eased-transition;
     display: block;
     overflow: hidden;
     flex: 0 0 auto;
@@ -55,7 +56,6 @@
     padding: 6px 12px;
     overflow: hidden;
     height: 36px;
-    transition: all 0.2s ease-in-out;
 
     &, &:active, &:visited {
         color: @col-text-disabled-black;

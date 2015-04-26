@@ -14,13 +14,22 @@
     border-radius: 2px;
 }
 
+.clear-appearance {
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -webkit-appearance: none;
+}
+
+.eased-transition {
+    transition: all 0.2s ease-in-out;
+}
+
 .el-button {
     .card;
     .rounded;
-    transition: all 0.2s ease-in-out;
+    .eased-transition;
     color: @col-text-primary-white;
     background: @col-blue-400;
-    border-radius: 2px;
     cursor: pointer;
     text-decoration: none;
 
@@ -32,9 +41,7 @@
 .el-input {
     .card;
     .rounded;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    -webkit-appearance: none;
+    .clear-appearance;
     font-family: @font-family;
     font-weight: @font-weight;
     color: @col-text-primary-black;
