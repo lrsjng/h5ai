@@ -18,3 +18,55 @@ html.drag-select, html.drag-select * {
     -ms-user-select: none;
     user-select: none;
 }
+
+#view {
+
+    .selector {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 22px;
+        height: 22px;
+        background: @col-back-selected;
+        cursor: pointer;
+        border-radius: 0 0 2px 0;
+        opacity: 0.6;
+
+        &:hover {
+            opacity: 0.8;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .item:hover .selector {
+        display: block;
+    }
+
+    .item.selected:not(.selecting),
+    .item.selecting:not(.selected) {
+        color: @col-text-selected;
+        background: @col-back-selected;
+
+        .selector {
+            display: block;
+            opacity: 1;
+        }
+        &:hover {
+            color: @col-text-selected;
+            background: @col-back-selected;
+        }
+    }
+
+    .no-match {
+        display: none;
+        margin-top: 36px;
+        text-align: center;
+        color: @col-border;
+        font-size: 5em;
+        font-weight: bold;
+    }
+}

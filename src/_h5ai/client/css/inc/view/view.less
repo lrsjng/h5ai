@@ -28,26 +28,6 @@
         &:hover {
             color: @col-text-hover;
             background: @col-back-panel;
-            border-color: @col-border;
-
-            .selector {
-                display: block;
-            }
-        }
-
-        &.selected:not(.selecting), &.selecting:not(.selected) {
-            color: @col-text-selected;
-            background: @col-back-selected;
-
-            &:hover {
-                color: @col-text-selected;
-                background: @col-back-selected;
-            }
-
-            .selector {
-                display: block;
-                opacity: 1;
-            }
         }
     }
 
@@ -93,29 +73,7 @@
         width: 80px;
     }
 
-    .selector {
-        display: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 22px;
-        height: 22px;
-        background: @col-back-selected;
-        cursor: pointer;
-        border-radius: 0 0 2px 0;
-        opacity: 0.6;
-
-        &:hover {
-            opacity: 0.8;
-        }
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-    .empty, .no-match {
+    .empty {
         display: none;
         margin-top: 36px;
         text-align: center;
