@@ -17,6 +17,7 @@ function toggleFailureFilter(ev) {
 }
 
 function addSuiteStats() {
+    /*jshint validthis: true */
 
     var $suite = $(this);
 
@@ -36,6 +37,7 @@ function addSuiteStats() {
 }
 
 function fixCodeFormatting() {
+    /*jshint validthis: true */
 
     var $code = $(this);
     $code.text($code.text().trim().replace(/;\n\s*/g, ';\n'));
@@ -43,6 +45,7 @@ function fixCodeFormatting() {
 
 
 function onEnd() {
+    /*jshint validthis: true */
 
     var runner = this;
     var failed = runner.stats.failures > 0;
@@ -60,6 +63,7 @@ function onEnd() {
 }
 
 function onTest() {
+    /*jshint validthis: true */
 
     var runner = this;
     var percent = 100.0 - 100.0 * runner.stats.tests / runner.total;
