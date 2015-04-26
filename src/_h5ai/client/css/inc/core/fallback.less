@@ -5,24 +5,27 @@
     padding: 32px 16px;
 
     table {
+        .card;
         display: block;
         width: 100%;
         border-collapse: collapse;
+        background: @col-back-paper;
     }
     th, td {
         padding: 6px;
         text-align: left;
         border: none;
+        border-bottom: 1px solid #eee;
     }
     th {
-        color: #ccc;
+        color: #aaa;
         font-weight: lighter;
-        line-height: 48px;
+        line-height: 36px;
+        background: @col-back-panel;
     }
     td {
         overflow: hidden;
         white-space: nowrap;
-        border-bottom: 1px solid #eee;
     }
     a, a:active, a:visited {
         display: block;
@@ -36,6 +39,7 @@
     }
     .fb-i {
         width: 24px;
+        padding-left: 12px;
 
         img {
             width: 24px;
@@ -55,15 +59,16 @@
         text-align: right;
         width: 70px;
         min-width: 70px;
+        padding-right: 12px;
     }
 }
 
 #fallback-hints {
     display: none;
     overflow: hidden;
-    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
     text-align: right;
     background: @col-back-panel;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
 
     a, a:active, a:visited {
         display: inline-block;
@@ -92,7 +97,6 @@ html.no-js, html.no-browser {
 
     #root {
         position: static;
-        background: @col-back-paper;
     }
 
     #fallback, #fallback-hints {
