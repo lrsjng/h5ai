@@ -14,7 +14,7 @@ modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, 
 
     function icon(id) {
 
-        var baseId = id.split('-')[0];
+        var baseId = (id || '').split('-')[0];
         var href = config.theme[id] || config.theme[baseId];
 
         if (href) {

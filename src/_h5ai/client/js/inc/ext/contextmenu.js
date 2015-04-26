@@ -43,18 +43,13 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
                 $(templateSep).appendTo($ul);
 
             } else if (entry.type === 'l') {
-                $(templateLabel)
-                    .appendTo($ul)
-                    .find('.cm-text')
-                    .text(entry.text);
+                $(templateLabel).appendTo($ul)
+                    .find('.cm-text').text(entry.text);
 
             } else if (entry.type === 'e') {
-                $li = $(templateEntry)
-                        .appendTo($ul)
-                        .data('cm-id', entry.id)
-                        .find('.cm-text')
-                        .text(entry.text);
-
+                $li = $(templateEntry).appendTo($ul);
+                $li.data('cm-id', entry.id);
+                $li.find('.cm-text').text(entry.text);
                 if (entry.icon) {
                     $li.find('.cm-icon img').attr('src', resource.icon(entry.icon));
                 } else {
@@ -137,6 +132,7 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
 
     function init() {
 
+        // settings.enabled = true;
         if (!settings.enabled) {
             return;
         }
