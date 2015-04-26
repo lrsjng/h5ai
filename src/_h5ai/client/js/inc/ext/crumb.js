@@ -3,14 +3,13 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
     var settings = _.extend({
             enabled: false
         }, allsettings.crumb);
-    var template = '<div id="crumbbar"/>';
     var crumbTemplate =
             '<a class="crumb">' +
                 '<img class="sep" src="' + resource.image('crumb') + '" alt=">"/>' +
                 '<span class="label"/>' +
             '</a>';
     var pageHintTemplate = '<img class="hint" src="' + resource.icon('folder-page') + '" alt="has index page"/>';
-    var $crumbbar = $(template).appendTo(topbar.$flowbar);
+    var $crumbbar;
 
 
     function createHtml(item) {
@@ -56,6 +55,8 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
         if (!settings.enabled) {
             return;
         }
+
+        $crumbbar = $('<div id="crumbbar"/>').appendTo(topbar.$flowbar);
 
         event.sub('location.changed', onLocationChanged);
     }

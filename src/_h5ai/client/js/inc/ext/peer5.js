@@ -24,11 +24,11 @@ modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allset
         // attach to file items, once the DOM is ready
         $(function () {
 
-            $('body').on('click', '.item.file > a', function (e) {
+            $('body').on('click', '.item.file > a', function (ev) {
 
                 if (window.peer5) {
-                    e.preventDefault();
-                    var url = e.currentTarget.href;
+                    ev.preventDefault();
+                    var url = ev.currentTarget.href;
                     window.peer5.download(url);
                     return false;
                 }

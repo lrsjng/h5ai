@@ -6,16 +6,15 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
             packageName: 'package',
             alwaysVisible: false
         }, allsettings.download);
-    var downloadBtnTemplate =
+    var template =
             '<div id="download" class="tool">' +
                 '<img src="' + resource.image('download') + '" alt="download"/>' +
             '</div>';
     var selectedItems = [];
+    var $download;
 
 
     function onSelection(items) {
-
-        var $download = $('#download');
 
         selectedItems = items.slice(0);
         if (selectedItems.length) {
@@ -55,12 +54,12 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
             return;
         }
 
-        $(downloadBtnTemplate)
-            .on('click', onClick)
-            .appendTo('#toolbar');
+        $download = $(template)
+            .appendTo('#toolbar')
+            .on('click', onClick);
 
         if (settings.alwaysVisible) {
-            $('#download').show();
+            $download.show();
         }
 
         event.sub('selection', onSelection);
