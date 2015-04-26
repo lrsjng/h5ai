@@ -10,7 +10,7 @@
     align-content: flex-start;
     align-items: stretch;
 
-    background: @col-lightgrey;
+    background: @col-back-panel;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -34,7 +34,7 @@
         }
 
         &:hover {
-            background: rgba(0,0,0,0.03);
+            background: @col-back-hover;
         }
     }
 }
@@ -64,8 +64,8 @@
         text-decoration: none;
     }
     &:hover {
-        color: @col-hover;
-        background: rgba(0,0,0,0.03);
+        color: @col-text-hover;
+        background: @col-back-hover;
     }
     &:focus {
         outline: 0;

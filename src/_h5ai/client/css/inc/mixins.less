@@ -1,22 +1,22 @@
-.card() {
+.card {
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
 }
 
-.raised() {
+.raised {
     box-shadow: 0 1px 10px 0 rgba(0,0,0,0.5);
 }
 
-.popup() {
+.popup {
     box-shadow: 0 1px 20px 0 rgba(0,0,0,0.5);
 }
 
-.rounded() {
+.rounded {
     border-radius: 2px;
 }
 
-.el-button() {
-    .card();
-    .rounded();
+.el-button {
+    .card;
+    .rounded;
     transition: all 0.2s ease-in-out;
     color: @col-text-primary-white;
     background: @col-blue-400;
@@ -25,20 +25,20 @@
     text-decoration: none;
 
     &:hover {
-        .raised();
+        .raised;
     }
 }
 
-.el-input() {
-    .card();
-    .rounded();
+.el-input {
+    .card;
+    .rounded;
     -moz-appearance: none;
     -ms-appearance: none;
     -webkit-appearance: none;
     font-family: @font-family;
     font-weight: @font-weight;
     color: @col-text-primary-black;
-    background: @col-light;
+    background: @col-back-paper;
     border: none;
     outline: none;
 }

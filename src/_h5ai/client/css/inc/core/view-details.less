@@ -26,7 +26,7 @@
     margin: 16px;
 
     #items {
-        .rounded();
+        .rounded;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
     }
 
@@ -34,7 +34,7 @@
         position: relative;
         white-space: nowrap;
         display: list-item;
-        background: #fafafa;
+        background: @col-back-panel;
         border-bottom: 1px solid rgba(0,0,0,0.07);
         border-radius: 2px 2px 0 0;
 
@@ -46,7 +46,7 @@
 
             &:hover {
                 opacity: 1;
-                color: @col-hover;
+                color: @col-text-hover;
             }
         }
 
@@ -75,7 +75,7 @@
         border-bottom: 1px solid rgba(0,0,0,0.07);
 
         &:hover {
-            .raised();
+            .raised;
             z-index: 1;
         }
 
@@ -92,7 +92,7 @@
         padding: 8px;
 
         .thumb {
-            .rounded();
+            .rounded;
             box-shadow: 0 0 1px 0 rgba(0,0,0,0.2);
         }
     }

@@ -14,7 +14,7 @@
 }
 
 #pv-overlay.fullscreen {
-    background: #111;
+    background: @col-grey-900;
 }
 
 #pv-content {
@@ -29,7 +29,6 @@
         height: 240px;
         margin: -120px -120px;
         border-radius: 120px;
-        background: #f00;
         opacity: 0.5;
         overflow: hidden;
     }
@@ -57,9 +56,9 @@
 
     &:hover {
         img {
+            .raised;
             opacity: 1;
             background: rgba(27,27,27,0.8);
-            box-shadow: 0 0 8px 2px rgba(0,0,0,0.3);
         }
     }
 }
@@ -126,13 +125,13 @@
 }
 
 #pv-bottombar {
+    .raised;
     position: fixed;
     z-index: 5;
     left: 0;
     right: 0;
     bottom: 0;
     background: rgb(27,27,27);
-    box-shadow: 0 0 8px 2px rgba(0,0,0,0.3);
     height: 48px;
 }
 

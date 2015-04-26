@@ -3,8 +3,16 @@ html {
     overflow: auto;
 }
 
-::-moz-selection { background: @col-pink-a200; color: @col-text-primary-white; text-shadow: none; }
-::selection { background: @col-pink-a200; color: @col-text-primary-white; text-shadow: none; }
+::-moz-selection {
+    color: @col-text-native-selection;
+    background: @col-back-native-selection;
+    text-shadow: none;
+}
+::selection {
+    color: @col-text-native-selection;
+    background: @col-back-native-selection;
+    text-shadow: none;
+}
 
 *:focus {
     outline: none;

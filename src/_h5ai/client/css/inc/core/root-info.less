@@ -13,7 +13,7 @@
         border-radius: 4px;
         font-family: @font-family-mono;
         letter-spacing: 0.05em;
-        background: @col-lightgrey;
+        background: @col-back-panel;
         border: 1px solid @col-border;
         font-size: 0.9em;
     }
@@ -27,7 +27,7 @@
         transition: all 0.2s ease-in-out;
 
         &:hover {
-            color: @col-hover;
+            color: @col-text-hover;
         }
     }
 
@@ -35,7 +35,7 @@
         margin: 12px auto 24px auto;
         padding: 6px 18px;
         width: 210px;
-        background: #fafafa;
+        background: @col-back-panel;
         border: 1px solid @col-border;
         border-radius: 4px;
 
@@ -45,7 +45,7 @@
     }
 
     #pass {
-        .el-input();
+        .el-input;
         display: inline-block;
         margin: 8px;
         padding: 0 12px;
@@ -55,7 +55,7 @@
     }
 
     #login, #logout {
-        .el-button();
+        .el-button;
         display: inline-block;
         margin: 8px;
         padding: 0 12px;
@@ -77,9 +77,9 @@
         padding: 0;
 
         .test {
-            .card();
-            .rounded();
-            background: @col-light;
+            .card;
+            .rounded;
+            background: @col-back-paper;
             margin: 12px 0 0 0;
             padding: 8px 12px 12px 12px;
         }

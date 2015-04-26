@@ -9,14 +9,14 @@
     z-index: 200;
 
     .cm-panel {
-        .popup();
-        .rounded();
+        .popup;
+        .rounded;
         display: block;
         position: absolute;
         left: 100px;
         top: 100px;
-        background: #fff;
-        color: @col;
+        background: @col-back-paper;
+        color: @col-text;
         z-index: 10;
         overflow: auto;
         min-width: 200px;
@@ -39,8 +39,8 @@
                 cursor: pointer;
 
                 &:hover {
-                    color: @col-hover;
-                    background: @col-darkgrey;
+                    color: @col-text-hover;
+                    background: @col-grey-100;
                 }
 
                 .cm-icon {

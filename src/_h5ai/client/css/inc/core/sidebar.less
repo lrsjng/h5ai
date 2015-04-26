@@ -3,7 +3,7 @@
     overflow: auto;
     flex: 0 0 auto;
     order: 0;
-    background: #fafafa;
+    background: @col-back-panel;
     border-right: 1px solid rgba(0,0,0,0.08);
     padding: 16px;
 
@@ -22,12 +22,12 @@
         display: inline-block;
         margin: 4px;
         border-radius: 2px;
-        color: @col;
+        color: @col-text;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
 
         &:hover {
-            background: rgba(0,0,0,0.03);
+            background: @col-back-hover;
         }
 
         &.active {
@@ -59,7 +59,7 @@
         font-family: @font-family;
         font-size: @font-size;
         font-weight: @font-weight;
-        color: @col;
+        color: @col-text;
         background: transparent;
         width: 100%;
         border: 0 solid #000;
@@ -67,7 +67,7 @@
         outline: 0;
 
         &:hover {
-            background: rgba(0,0,0,0.03);
+            background: @col-back-hover;
         }
     }
 
