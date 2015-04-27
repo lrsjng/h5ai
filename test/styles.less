@@ -3,14 +3,15 @@
 @col-white: #ffffff;
 @col-red-500: #f44336;
 @col-red-800: #c62828;
+@col-amber-800: #ff8f00;
 @col-green-500: #4caf50;
 @col-grey-200: #eeeeee;
 @col-grey-800: #424242;
 
-@col-medium: #c09853;
-@col-slow: #b94a48;
+@col-medium: @col-amber-800;
+@col-slow: @col-red-800;
 
-#report {
+#mocha-custom {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     position: fixed;
     left: 0;
@@ -47,13 +48,13 @@
         display: block;
         position: absolute;
         right: 0;
-        bottom: 0;
+        top: 0;
         height: 100%;
         background: rgba(255,255,255,0.2);
     }
 }
 
-#mocha-overlay {
+#mocha {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     position: fixed;
     left: 0;
@@ -64,11 +65,20 @@
     z-index: 10000;
     overflow-x: auto;
     overflow-y: scroll;
-}
 
-#mocha {
-    max-width: 900px;
-    margin: 0 auto;
+    #mocha-stats {
+        display: none;
+    }
+
+    #mocha-report {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 32px;
+
+        > .suite {
+            margin: 0;
+        }
+    }
 
     ul, li, h1, h2 {
         margin: 0;
@@ -83,81 +93,6 @@
         font-size: 12px;
         font-weight: normal;
         cursor: pointer;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .replay {
-        display: none;
-    }
-
-    .test {
-        margin-left: 15px;
-        padding: 2px 4px;
-        overflow: hidden;
-
-        &:hover {
-            background: @col-grey-200;
-        }
-
-        &.fail {
-            color: @col-red-800;
-        }
-
-        &::before {
-            content: ' ';
-            display: block;
-            width: 10px;
-            height: 10px;
-            float: left;
-            margin-right: 8px;
-            background: @col-grey-800;
-            border-radius: 20px;
-            position: relative;
-            top: 3px;
-        }
-        &.pass::before {
-            background: @col-green-500;
-        }
-        &.fail::before {
-            background: @col-red-500;
-        }
-        &.pending::before {
-            background: @col-grey-800;
-        }
-
-        .duration {
-            display: inline-block;
-            color: @col-grey-800;
-            border: none;
-            box-shadow: none;
-            font-size: 9px;
-            margin-left: 12px;
-        }
-        &.medium .duration {
-            background: @col-medium;
-        }
-        &.slow .duration {
-            background: @col-slow;
-        }
-
-        pre {
-            display: block;
-            float: left;
-            clear: left;
-            font: 12px monospace;
-            margin: 4px 0 16px 18px;
-            padding: 0 8px;
-            max-width: 80%;
-            word-wrap: break-word;
-            border-left: 2px solid @col-grey-800;
-
-            &.error {
-                color: @col-red-800;
-            }
-        }
     }
 
     .suite {
@@ -200,11 +135,75 @@
         }
     }
 
-    #mocha-report > .suite {
-        margin: 32px;
+    .test {
+        margin-left: 15px;
+        padding: 2px 4px;
+        overflow: hidden;
+
+        &:hover {
+            background: @col-grey-200;
+        }
+
+        &.fail {
+            color: @col-red-800;
+        }
+
+        &::before {
+            content: ' ';
+            display: block;
+            width: 10px;
+            height: 10px;
+            float: left;
+            margin-right: 8px;
+            background: @col-grey-800;
+            border-radius: 20px;
+            position: relative;
+            top: 3px;
+        }
+        &.pass::before {
+            background: @col-green-500;
+        }
+        &.fail::before {
+            background: @col-red-500;
+        }
+        &.pending::before {
+            background: @col-grey-800;
+        }
+
+        .duration {
+            display: inline-block;
+            color: @col-grey-800;
+            border: none;
+            box-shadow: none;
+            font-size: 10px;
+            margin-left: 12px;
+            float: right;
+        }
+        &.medium .duration {
+            color: @col-medium;
+        }
+        &.slow .duration {
+            color: @col-slow;
+        }
+
+        pre {
+            display: block;
+            float: left;
+            clear: left;
+            font: 12px monospace;
+            margin: 4px 0 16px 18px;
+            padding: 0 8px;
+            max-width: 80%;
+            word-wrap: break-word;
+            border-left: 2px solid @col-grey-800;
+
+            &.error {
+                color: @col-red-800;
+            }
+        }
     }
 
-    #mocha-stats {
+    .hidden, .replay {
         display: none;
     }
 }

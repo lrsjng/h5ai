@@ -52,14 +52,14 @@ function onEnd() {
     var stats = (runner.stats.duration / 1000.0).toFixed(3) + 's';
 
     if (failed) {
-        $('#report .stats').on('click', toggleFailureFilter);
+        $('#mocha-custom .stats').on('click', toggleFailureFilter);
     }
 
-    $('#report').addClass(failed ? 'fail' : 'pass');
-    $('#report .progress').hide();
-    $('#report .stats').text(stats);
-    $('#mocha-overlay .suite').each(addSuiteStats);
-    $('#mocha-overlay code').each(fixCodeFormatting);
+    $('#mocha-custom').addClass(failed ? 'fail' : 'pass');
+    $('#mocha-custom .progress').hide();
+    $('#mocha-custom .stats').text(stats);
+    $('#mocha-report .suite').each(addSuiteStats);
+    $('#mocha-report code').each(fixCodeFormatting);
 }
 
 function onTest() {
@@ -70,10 +70,10 @@ function onTest() {
     var stats = ((new Date().getTime() - runner.stats.start) / 1000.0).toFixed(3) + 's';
 
     if (runner.stats.failures) {
-        $('#report').addClass('fail');
+        $('#mocha-custom').addClass('fail');
     }
-    $('#report .progress').css('width', (100 - percent) + '%');
-    $('#report .stats').text(stats);
+    $('#mocha-custom .progress').css('width', (100 - percent) + '%');
+    $('#mocha-custom .stats').text(stats);
 }
 
 function setupMocha() {
