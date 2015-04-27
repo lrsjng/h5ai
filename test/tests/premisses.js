@@ -3,13 +3,13 @@
 
 describe('premisses', function () {
 
-    it('window is the global object', function () {
+    it('window is global object', function () {
 
         assert.isObject(window);
-        assert.strictEqual(window, util.GLOBAL);
+        assert.strictEqual(window, window.window);
     });
 
-    it('jQuery is defined', function () {
+    it('jQuery and $ are global objects', function () {
 
         assert.isFunction(jQuery);
         assert.strictEqual(jQuery, window.jQuery);
@@ -19,7 +19,7 @@ describe('premisses', function () {
         assert.strictEqual($, window.$);
     });
 
-    it('lodash is defined', function () {
+    it('_ is global object', function () {
 
         assert.isFunction(_);
         assert.strictEqual(_, window._);
