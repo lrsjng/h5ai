@@ -9,6 +9,12 @@ describe('premisses', function () {
         assert.strictEqual(window, window.window);
     });
 
+    it('document is global object', function () {
+
+        assert.isObject(document);
+        assert.strictEqual(document, window.document);
+    });
+
     it('jQuery and $ are global objects', function () {
 
         assert.isFunction(jQuery);

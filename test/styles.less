@@ -18,73 +18,76 @@
 @col-slow: @col-red-800;
 @col-progress: rgba(255,255,255,0.2);
 
-#mocha-custom {
+#mocha {
     position: fixed;
-    z-index: 10000;
     left: 0;
     top: 0;
     right: 0;
-    color: @col-white;
-    background: @col-pending;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 32px;
-    height: 32px;
-    padding: 0 8px;
-
-    a, a:active, a:visited, a:hover {
-        display: block;
-        color: inherit;
-        text-decoration: none;
-    }
-    &.pass {
-        background: @col-pass;
-    }
-    &.fail {
-        background: @col-fail;
-    }
-    .stats {
-        display: block;
-        position: absolute;
-        right: 8px;
-        top: 0;
-        cursor: pointer;
-    }
-    .progress {
-        display: block;
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        background: @col-progress;
-    }
-}
-
-#mocha {
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 32px;
-    right: 0;
     bottom: 0;
-    background: @col-white;
-    overflow-x: auto;
-    overflow-y: scroll;
+    z-index: 10000;
     font-family: Roboto, Helvetica, Arial, sans-serif;
+    background: @col-white;
+
+    #mocha-custom {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 32px;
+        color: @col-white;
+        background: @col-pending;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 32px;
+        padding: 0 8px;
+
+        &.pass {
+            background: @col-pass;
+        }
+        &.fail {
+            background: @col-fail;
+        }
+        .stats {
+            display: block;
+            position: absolute;
+            right: 8px;
+            top: 0;
+            cursor: pointer;
+        }
+        .progress {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: @col-progress;
+        }
+    }
 
     #mocha-stats {
         display: none;
     }
 
     #mocha-report {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 32px;
+        position: absolute;
+        left: 0;
+        top: 32px;
+        right: 0;
+        bottom: 0;
+        overflow-x: auto;
+        overflow-y: scroll;
 
         > .suite {
-            margin: 0;
+            margin: 0 auto;
+            padding: 32px;
+            max-width: 900px;
         }
+    }
+
+    a, a:active, a:visited, a:hover {
+        display: block;
+        color: inherit;
+        text-decoration: none;
     }
 
     ul, li, h1, h2 {
@@ -107,10 +110,7 @@
             background: @col-back-hover;
         }
         a, a:active, a:visited, a:hover {
-            display: block;
             padding: 0 8px;
-            color: inherit;
-            text-decoration: none;
         }
         .count {
             font-size: 0.85em;
