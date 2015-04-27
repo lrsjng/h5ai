@@ -2,6 +2,13 @@
 'use strict';
 
 var showOnlyFailures = false;
+var template =
+        '<div id="mocha-custom">' +
+            '<a href="index.html"/>' +
+            '<div class="stats"/>' +
+            '<div class="progress"/>' +
+        '</div>';
+
 
 function toggleFailureFilter(ev) {
 
@@ -84,6 +91,7 @@ function setupMocha() {
 
 function runMocha() {
 
+    $(template).appendTo('#mocha').find('a').text(document.title);
     mocha.run().on('test', onTest).on('end', onEnd);
 }
 
