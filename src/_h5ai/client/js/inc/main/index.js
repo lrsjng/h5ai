@@ -1,4 +1,4 @@
-modulejs.define('main/index', ['_', 'core/event'], function (_, event) {
+modulejs.define('main/index', ['_', 'core/location'], function (_, location) {
 
     modulejs.require('view/viewmode');
 
@@ -9,5 +9,5 @@ modulejs.define('main/index', ['_', 'core/event'], function (_, event) {
         }
     });
 
-    event.pub('ready');
+    location.setLocation(document.location.href, true);
 });

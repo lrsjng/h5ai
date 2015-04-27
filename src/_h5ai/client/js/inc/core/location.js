@@ -186,11 +186,6 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/notify',
         };
     }
 
-    event.sub('ready', function () {
-
-        setLocation(document.location.href, true);
-    });
-
 
     return {
         forceEncoding: forceEncoding,

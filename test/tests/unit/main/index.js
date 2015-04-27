@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'main/index';
-var DEPS = ['_', 'core/event'];
+var DEPS = ['_', 'core/location'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -10,22 +10,19 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xEvent = {pub: sinon.stub()};
-        this.xDefine = sinon.stub(modulejs, 'define');
+        this.xLocation = {setLocation: sinon.stub()};
         this.xRequire = sinon.stub(modulejs, 'require');
 
         this.applyFn = function () {
 
-            this.xEvent.pub.reset();
-            this.xDefine.reset();
+            this.xLocation.setLocation.reset();
             this.xRequire.reset();
-            return this.definition.fn(_, this.xEvent);
+            return this.definition.fn(_, this.xLocation);
         };
     });
 
     after(function () {
 
-        this.xDefine.restore();
         this.xRequire.restore();
     });
 
@@ -68,13 +65,6 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.isUndefined(instance);
-        });
-
-        it('publishes ready event', function () {
-
-            this.applyFn();
-            assert.isTrue(this.xEvent.pub.calledOnce);
-            assert.deepEqual(this.xEvent.pub.firstCall.args, ['ready']);
         });
 
         it('requires view/viewmode', function () {
@@ -120,6 +110,14 @@ describe('module \'' + ID + '\'', function () {
                     assert.match(args[0], reView);
                 }
             });
+        });
+
+        it('calls setLocation with current href, keeping browser url', function () {
+
+            this.applyFn();
+            assert.isTrue(this.xLocation.setLocation.calledOnce);
+            assert.deepEqual(this.xLocation.setLocation.firstCall.args, [document.location.href, true]);
+            assert.isTrue(this.xLocation.setLocation.calledAfter(this.xRequire));
         });
     });
 });
