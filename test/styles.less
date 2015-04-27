@@ -1,4 +1,4 @@
-@charset "utf-8";
+@charset 'utf-8';
 
 @col-white: #ffffff;
 @col-red-500: #f44336;
@@ -8,18 +8,25 @@
 @col-grey-200: #eeeeee;
 @col-grey-800: #424242;
 
+@col-text: @col-grey-800;
+@col-text-fail: @col-red-800;
+@col-back-hover: @col-grey-200;
+@col-pending: @col-grey-800;
+@col-pass: @col-green-500;
+@col-fail: @col-red-500;
 @col-medium: @col-amber-800;
 @col-slow: @col-red-800;
+@col-progress: rgba(255,255,255,0.2);
 
 #mocha-custom {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
     position: fixed;
+    z-index: 10000;
     left: 0;
     top: 0;
     right: 0;
-    background: @col-grey-800;
-    z-index: 10000;
     color: @col-white;
+    background: @col-pending;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 14px;
     font-weight: bold;
     line-height: 32px;
@@ -28,14 +35,14 @@
 
     a, a:active, a:visited, a:hover {
         display: block;
-        color: @col-white;
+        color: inherit;
         text-decoration: none;
     }
     &.pass {
-        background: @col-green-500;
+        background: @col-pass;
     }
     &.fail {
-        background: @col-red-500;
+        background: @col-fail;
     }
     .stats {
         display: block;
@@ -50,21 +57,21 @@
         right: 0;
         top: 0;
         height: 100%;
-        background: rgba(255,255,255,0.2);
+        background: @col-progress;
     }
 }
 
 #mocha {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
     position: fixed;
+    z-index: 10000;
     left: 0;
     top: 32px;
     right: 0;
     bottom: 0;
     background: @col-white;
-    z-index: 10000;
     overflow-x: auto;
     overflow-y: scroll;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
 
     #mocha-stats {
         display: none;
@@ -89,50 +96,57 @@
         list-style: none;
     }
 
+    h1 {
+        color: @col-text;
+        height: 24px;
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: bold;
+
+        &:hover {
+            background: @col-back-hover;
+        }
+        a, a:active, a:visited, a:hover {
+            display: block;
+            padding: 0 8px;
+            color: inherit;
+            text-decoration: none;
+        }
+        .count {
+            font-size: 0.85em;
+        }
+        .passed {
+            color: @col-pass;
+            margin-left: 1em;
+        }
+        .failed {
+            color: @col-fail;
+            margin-left: 0.5em;
+        }
+    }
+
     h2 {
         font-size: 12px;
         font-weight: normal;
         cursor: pointer;
     }
 
+    pre {
+        display: block;
+        font-family: monospace;
+        font-size: 12px;
+        margin: 4px 0 16px 18px;
+        padding: 0 8px;
+        word-wrap: break-word;
+        border-left: 2px solid @col-text;
+
+        &.error {
+            color: @col-text-fail;
+        }
+    }
+
     .suite {
         margin: 16px 0 8px 24px;
-
-        > h1 {
-            color: @col-grey-800;
-            height: 24px;
-            line-height: 24px;
-            font-size: 16px;
-            font-weight: bold;
-
-            a, a:active, a:visited, a:hover {
-                display: block;
-                padding: 0 8px;
-                font-size: inherit;
-                font-weight: inherit;
-                color: inherit;
-                background: inherit;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            a:hover {
-                background: @col-grey-200;
-            }
-
-            .count {
-                font-size: 0.85em;
-
-                .passed {
-                    color: @col-green-500;
-                    margin-left: 1em;
-                }
-                .failed {
-                    color: @col-red-500;
-                    margin-left: 0.5em;
-                }
-            }
-        }
     }
 
     .test {
@@ -141,11 +155,10 @@
         overflow: hidden;
 
         &:hover {
-            background: @col-grey-200;
+            background: @col-back-hover;
         }
-
         &.fail {
-            color: @col-red-800;
+            color: @col-text-fail;
         }
 
         &::before {
@@ -155,24 +168,24 @@
             height: 10px;
             float: left;
             margin-right: 8px;
-            background: @col-grey-800;
+            background: @col-pending;
             border-radius: 20px;
             position: relative;
             top: 3px;
         }
         &.pass::before {
-            background: @col-green-500;
+            background: @col-pass;
         }
         &.fail::before {
-            background: @col-red-500;
+            background: @col-fail;
         }
         &.pending::before {
-            background: @col-grey-800;
+            background: @col-pending;
         }
 
         .duration {
             display: inline-block;
-            color: @col-grey-800;
+            color: @col-text;
             border: none;
             box-shadow: none;
             font-size: 10px;
@@ -185,23 +198,9 @@
         &.slow .duration {
             color: @col-slow;
         }
-
-        pre {
-            display: block;
-            font-family: monospace;
-            font-size: 12px;
-            margin: 4px 0 16px 18px;
-            padding: 0 8px;
-            word-wrap: break-word;
-            border-left: 2px solid @col-grey-800;
-
-            &.error {
-                color: @col-red-800;
-            }
-        }
     }
 
-    .hidden, .replay {
+    .replay {
         display: none;
     }
 }
