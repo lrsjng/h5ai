@@ -66,12 +66,14 @@ function onTest() {
     /*jshint validthis: true */
 
     var runner = this;
-    var percent = 100.0 - 100.0 * runner.stats.tests / runner.total;
+    var percent = 100.0 * runner.stats.tests / runner.total;
+    var stats = ((new Date().getTime() - runner.stats.start) / 1000.0).toFixed(3) + 's';
 
     if (runner.stats.failures) {
         $('#report').addClass('fail');
     }
-    $('#report .progress').css('width', percent + '%');
+    $('#report .progress').css('width', (100 - percent) + '%');
+    $('#report .stats').text(stats);
 }
 
 function setupMocha() {
