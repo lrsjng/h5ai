@@ -3,11 +3,14 @@
 
 var showOnlyFailures = false;
 var template =
-        '<div id="mocha-custom">' +
-            '<a href="index.html"/>' +
+        '<div id="mocha-bar">' +
+            '<a class="title" href="?">' + document.title + '</a>' +
             '<div class="stats"/>' +
             '<div class="progress"/>' +
         '</div>';
+var $mochaBar = $(template);
+var $mochaStats = $mochaBar.find('.stats');
+var $mochaProgress = $mochaBar.find('.progress');
 
 
 function toggleFailureFilter(ev) {
@@ -59,12 +62,12 @@ function onEnd() {
     var stats = (runner.stats.duration / 1000.0).toFixed(3) + 's';
 
     if (failed) {
-        $('#mocha-custom .stats').on('click', toggleFailureFilter);
+        $mochaStats.on('click', toggleFailureFilter);
     }
 
-    $('#mocha-custom').addClass(failed ? 'fail' : 'pass');
-    $('#mocha-custom .progress').hide();
-    $('#mocha-custom .stats').text(stats);
+    $mochaBar.addClass(failed ? 'fail' : 'pass');
+    $mochaProgress.hide();
+    $mochaStats.text(stats);
     $('#mocha-report .suite').each(addSuiteStats);
     $('#mocha-report code').each(fixCodeFormatting);
 }
@@ -77,21 +80,21 @@ function onTest() {
     var stats = ((new Date().getTime() - runner.stats.start) / 1000.0).toFixed(3) + 's';
 
     if (runner.stats.failures) {
-        $('#mocha-custom').addClass('fail');
+        $mochaBar.addClass('fail');
     }
-    $('#mocha-custom .progress').css('width', (100 - percent) + '%');
-    $('#mocha-custom .stats').text(stats);
+    $mochaProgress.css('width', (100 - percent) + '%');
+    $mochaStats.text(stats);
 }
 
 function setupMocha() {
 
     window.assert = chai.assert;
     mocha.setup('bdd');
+    $(function () { $mochaBar.appendTo('#mocha'); });
 }
 
 function runMocha() {
 
-    $(template).appendTo('#mocha').find('a').text(document.title);
     mocha.run().on('test', onTest).on('end', onEnd);
 }
 
