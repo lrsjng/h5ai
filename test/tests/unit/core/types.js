@@ -72,22 +72,30 @@ describe('module \'' + ID + '\'', function () {
             assert.isFunction(instance.getType);
         });
 
-        it('works', function () {
+        _.each([
+            ['file.a', 'a'],
+            ['file.aa', 'a'],
+            ['foo.b', 'b'],
+            ['some/path/file.c', 'c'],
+            ['/some/abs/path/file.c', 'c'],
+            ['file.x', 'file'],
+            ['foo', 'file'],
+            ['some/path/foo', 'file'],
+            ['/some/path/foo', 'file'],
+            ['foo/', 'folder'],
+            ['/', 'folder'],
+            ['some/path/foo/', 'folder'],
+            ['/some/path/foo/', 'folder']
+        ], function (data) {
 
-            var instance = this.applyFn();
-            assert.strictEqual(instance.getType('file.a'), 'a');
-            assert.strictEqual(instance.getType('file.aa'), 'a');
-            assert.strictEqual(instance.getType('foo.b'), 'b');
-            assert.strictEqual(instance.getType('some/path/file.c'), 'c');
-            assert.strictEqual(instance.getType('/some/abs/path/file.c'), 'c');
-            assert.strictEqual(instance.getType('file.x'), 'file');
-            assert.strictEqual(instance.getType('foo'), 'file');
-            assert.strictEqual(instance.getType('some/path/foo'), 'file');
-            assert.strictEqual(instance.getType('/some/path/foo'), 'file');
-            assert.strictEqual(instance.getType('foo/'), 'folder');
-            assert.strictEqual(instance.getType('/'), 'folder');
-            assert.strictEqual(instance.getType('some/path/foo/'), 'folder');
-            assert.strictEqual(instance.getType('/some/path/foo/'), 'folder');
+            var arg = data[0];
+            var exp = data[1];
+
+            it(arg + ' => ' + exp, function () {
+
+                var instance = this.applyFn();
+                assert.strictEqual(instance.getType(arg), exp);
+            });
         });
     });
 });
