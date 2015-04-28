@@ -1,4 +1,4 @@
-modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/notify', 'core/settings'], function (_, modernizr, event, notify, allsettings) {
+modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/settings', 'view/notification'], function (_, modernizr, event, allsettings, notification) {
 
     var settings = _.extend({
             fastBrowsing: true,
@@ -135,10 +135,10 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/notify',
             event.pub('location.changed', item);
             refresh();
         } else {
-            notify.set('loading...');
+            notification.set('loading...');
             load(function () {
                 item.isLoaded = true;
-                notify.set();
+                notification.set();
                 event.pub('location.changed', item);
             });
         }

@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-var ID = 'core/notify';
+var ID = 'view/notification';
 var DEPS = ['$'];
 
 describe('module \'' + ID + '\'', function () {
@@ -71,9 +71,9 @@ describe('module \'' + ID + '\'', function () {
         it('adds HTML', function () {
 
             this.applyFn();
-            assert.lengthOf($('#notify'), 1);
-            assert.lengthOf($('#notify:visible'), 0);
-            assert.strictEqual($('#notify').text(), '');
+            assert.lengthOf($('#notification'), 1);
+            assert.lengthOf($('#notification:visible'), 0);
+            assert.strictEqual($('#notification').text(), '');
         });
     });
 
@@ -90,20 +90,20 @@ describe('module \'' + ID + '\'', function () {
             var instance = this.applyFn();
 
             instance.set();
-            assert.lengthOf($('#notify:visible'), 0);
-            assert.strictEqual($('#notify').text(), '');
+            assert.lengthOf($('#notification:visible'), 0);
+            assert.strictEqual($('#notification').text(), '');
 
             instance.set('hello');
-            assert.lengthOf($('#notify:visible'), 1);
-            assert.strictEqual($('#notify').text(), 'hello');
+            assert.lengthOf($('#notification:visible'), 1);
+            assert.strictEqual($('#notification').text(), 'hello');
 
             instance.set('world');
-            assert.lengthOf($('#notify:visible'), 1);
-            assert.strictEqual($('#notify').text(), 'world');
+            assert.lengthOf($('#notification:visible'), 1);
+            assert.strictEqual($('#notification').text(), 'world');
 
             instance.set();
-            // assert.lengthOf($('#notify:visible'), 0);
-            assert.strictEqual($('#notify').text(), 'world');
+            // assert.lengthOf($('#notification:visible'), 0);
+            assert.strictEqual($('#notification').text(), 'world');
         });
     });
 });

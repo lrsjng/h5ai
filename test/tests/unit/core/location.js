@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'core/location';
-var DEPS = ['_', 'modernizr', 'core/event', 'core/notify', 'core/settings'];
+var DEPS = ['_', 'modernizr', 'core/event', 'core/settings', 'view/notification'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -21,16 +21,16 @@ describe('module \'' + ID + '\'', function () {
             pub: sinon.stub(),
             sub: sinon.stub()
         };
-        this.xNotify = {
+        this.xNotification = {
             set: sinon.stub()
         };
         this.applyFn = function () {
 
             this.xEvent.pub.reset();
             this.xEvent.sub.reset();
-            this.xNotify.set.reset();
+            this.xNotification.set.reset();
 
-            return this.definition.fn(_, this.xModernizr, this.xEvent, this.xNotify, this.xSettings);
+            return this.definition.fn(_, this.xModernizr, this.xEvent, this.xSettings, this.xNotification);
         };
     });
 
