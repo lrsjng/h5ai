@@ -13,10 +13,10 @@ describe('module \'' + ID + '\'', function () {
         this.xModernizr = {
             history: true
         };
-        this.xSettings = {
-            smartBrowsing: true,
+        this.xSettings = {view: {
+            fastBrowsing: true,
             unmanagedInNewWindow: true
-        };
+        }};
         this.xEvent = {
             pub: sinon.stub(),
             sub: sinon.stub()
@@ -26,8 +26,22 @@ describe('module \'' + ID + '\'', function () {
         };
         this.applyFn = function () {
 
+            this.xEvent.pub.reset();
+            this.xEvent.sub.reset();
+            this.xNotify.set.reset();
+
             return this.definition.fn(_, this.xModernizr, this.xEvent, this.xNotify, this.xSettings);
         };
+    });
+
+    after(function () {
+
+        window.onpopstate = null;
+    });
+
+    beforeEach(function () {
+
+        window.onpopstate = null;
     });
 
     describe('definition', function () {
@@ -70,6 +84,46 @@ describe('module \'' + ID + '\'', function () {
             var instance = this.applyFn();
             assert.isPlainObject(instance);
             assert.lengthOfKeys(instance, 7);
+        });
+
+        it('sets window.onpopstate when history and fastBrowsing', function () {
+
+            this.xModernizr.history = true;
+            this.xSettings.view.fastBrowsing = true;
+
+            assert.isNull(window.onpopstate);
+            this.applyFn();
+            assert.isFunction(window.onpopstate);
+        });
+
+        it('does not set window.onpopstate when not history and fastBrowsing', function () {
+
+            this.xModernizr.history = false;
+            this.xSettings.view.fastBrowsing = true;
+
+            assert.isNull(window.onpopstate);
+            this.applyFn();
+            assert.isNull(window.onpopstate);
+        });
+
+        it('does not set window.onpopstate when history and not fastBrowsing', function () {
+
+            this.xModernizr.history = true;
+            this.xSettings.view.fastBrowsing = false;
+
+            assert.isNull(window.onpopstate);
+            this.applyFn();
+            assert.isNull(window.onpopstate);
+        });
+
+        it('does not set window.onpopstate when not history and not fastBrowsing', function () {
+
+            this.xModernizr.history = false;
+            this.xSettings.view.fastBrowsing = false;
+
+            assert.isNull(window.onpopstate);
+            this.applyFn();
+            assert.isNull(window.onpopstate);
         });
     });
 
@@ -201,7 +255,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('sets target=\'_blank\' for unmanaged folders', function () {
 
-            this.xSettings.unmanagedInNewWindow = true;
+            this.xSettings.view.unmanagedInNewWindow = true;
 
             var $el = $('<a/>');
             var item = {
@@ -218,7 +272,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('does not set target=\'_blank\' for managed folders', function () {
 
-            this.xSettings.unmanagedInNewWindow = true;
+            this.xSettings.view.unmanagedInNewWindow = true;
 
             var $el = $('<a/>');
             var item = {
@@ -235,7 +289,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('does not set target=\'_blank\' for unmanaged folders if disabled', function () {
 
-            this.xSettings.unmanagedInNewWindow = false;
+            this.xSettings.view.unmanagedInNewWindow = false;
 
             var $el = $('<a/>');
             var item = {
