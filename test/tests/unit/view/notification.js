@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/notification';
-var DEPS = ['$'];
+var DEPS = ['$', 'view/root'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -10,9 +10,10 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
+        this.xRoot = {$el: null};
         this.applyFn = function () {
 
-            return this.definition.fn($);
+            return this.definition.fn($, this.xRoot);
         };
     });
 
@@ -24,6 +25,7 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
+        this.xRoot.$el = $('<div id="root"/>').appendTo('body');
     });
 
     describe('definition', function () {
@@ -61,19 +63,31 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns plain object with 1 property', function () {
+        it('returns plain object with 2 properties', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 1);
+            assert.lengthOfKeys(instance, 2);
         });
 
-        it('adds HTML', function () {
+        it('adds HTML #notification to #root (hidden)', function () {
 
             this.applyFn();
-            assert.lengthOf($('#notification'), 1);
+            assert.lengthOf($('#root > #notification'), 1);
             assert.lengthOf($('#notification:visible'), 0);
             assert.strictEqual($('#notification').text(), '');
+        });
+    });
+
+    describe('.$el', function () {
+
+        it('is $(\'#notification\')', function () {
+
+            var instance = this.applyFn();
+            assert.isObject(instance.$el);
+            assert.lengthOf(instance.$el, 1);
+            assert.isString(instance.$el.jquery);
+            assert.strictEqual(instance.$el.attr('id'), 'notification');
         });
     });
 
