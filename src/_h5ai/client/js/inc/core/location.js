@@ -8,32 +8,34 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/notify',
     var history = settings.fastBrowsing && modernizr.history ? window.history : null;
     var reUriToPathname = /^.*:\/\/[^\/]*|[^\/]*$/g;
     var absHref = null;
-
+    var reForceEncoding = [
+            [/\/+/g, '/'],
+            [/ /g, '%20'],
+            [/!/g, '%21'],
+            [/#/g, '%23'],
+            [/\$/g, '%24'],
+            [/&/g, '%26'],
+            [/'/g, '%27'],
+            [/\(/g, '%28'],
+            [/\)/g, '%29'],
+            [/\*/g, '%2A'],
+            [/\+/g, '%2B'],
+            [/\,/g, '%2C'],
+            [/:/g, '%3A'],
+            [/;/g, '%3B'],
+            [/=/g, '%3D'],
+            [/\?/g, '%3F'],
+            [/@/g, '%40'],
+            [/\[/g, '%5B'],
+            [/\]/g, '%5D']
+        ];
 
     function forceEncoding(href) {
 
-        return href
-                .replace(/\/+/g, '/')
+        return reForceEncoding.reduce(function (href, data) {
 
-                .replace(/ /g, '%20')
-                .replace(/!/g, '%21')
-                .replace(/#/g, '%23')
-                .replace(/\$/g, '%24')
-                .replace(/&/g, '%26')
-                .replace(/'/g, '%27')
-                .replace(/\(/g, '%28')
-                .replace(/\)/g, '%29')
-                .replace(/\*/g, '%2A')
-                .replace(/\+/g, '%2B')
-                .replace(/\,/g, '%2C')
-                // .replace(/\//g, '%2F')
-                .replace(/:/g, '%3A')
-                .replace(/;/g, '%3B')
-                .replace(/=/g, '%3D')
-                .replace(/\?/g, '%3F')
-                .replace(/@/g, '%40')
-                .replace(/\[/g, '%5B')
-                .replace(/\]/g, '%5D');
+            return href.replace(data[0], data[1]);
+        }, href);
     }
 
     function uriToPathname(uri) {
