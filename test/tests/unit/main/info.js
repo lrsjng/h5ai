@@ -86,7 +86,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isUndefined(instance);
         });
 
-        it('adds HTML #login-wrapper', function () {
+        it('adds HTML #login-wrapper to #content', function () {
 
             this.applyFn();
             assert.lengthOf($('#content > #login-wrapper'), 1);
@@ -94,7 +94,7 @@ describe('module \'' + ID + '\'', function () {
 
         describe('no admin', function () {
 
-            it('adds HTML #pass', function () {
+            it('adds HTML #pass to #login-wrapper', function () {
 
                 this.xConfig.setup.AS_ADMIN = false;
                 this.applyFn();
@@ -108,21 +108,21 @@ describe('module \'' + ID + '\'', function () {
                 assert.strictEqual($('#login-wrapper > #pass').val(), '');
             });
 
-            it('adds HTML #login', function () {
+            it('adds HTML #login to #login-wrapper', function () {
 
                 this.xConfig.setup.AS_ADMIN = false;
                 this.applyFn();
                 assert.lengthOf($('#login-wrapper > #login'), 1);
             });
 
-            it('does not add HTML #logout', function () {
+            it('does not add HTML #logout to #login-wrapper', function () {
 
                 this.xConfig.setup.AS_ADMIN = false;
                 this.applyFn();
                 assert.lengthOf($('#login-wrapper > #logout'), 0);
             });
 
-            it('does not add HTML #tests', function () {
+            it('does not add HTML #tests to #content', function () {
 
                 this.xConfig.setup.AS_ADMIN = false;
                 this.applyFn();
@@ -151,35 +151,35 @@ describe('module \'' + ID + '\'', function () {
 
         describe('as admin', function () {
 
-            it('does not add HTML #pass', function () {
+            it('does not add HTML #pass to #login-wrapper', function () {
 
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
                 assert.lengthOf($('#login-wrapper > #pass'), 0);
             });
 
-            it('does not add #login', function () {
+            it('does not add #login to #login-wrapper', function () {
 
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
                 assert.lengthOf($('#login-wrapper > #login'), 0);
             });
 
-            it('adds HTML #logout', function () {
+            it('adds HTML #logout to #login-wrapper', function () {
 
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
                 assert.lengthOf($('#login-wrapper > #logout'), 1);
             });
 
-            it('adds HTML #tests', function () {
+            it('adds HTML #tests to #content', function () {
 
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
                 assert.lengthOf($('#content > #tests'), 1);
             });
 
-            it('adds HTML #test (14x)', function () {
+            it('adds HTML #test 14x to #tests', function () {
 
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
