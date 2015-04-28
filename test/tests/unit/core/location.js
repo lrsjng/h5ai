@@ -86,7 +86,7 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOfKeys(instance, 7);
         });
 
-        it('sets window.onpopstate when history and fastBrowsing', function () {
+        it('sets window.onpopstate function when history and fastBrowsing', function () {
 
             this.xModernizr.history = true;
             this.xSettings.view.fastBrowsing = true;
@@ -96,7 +96,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isFunction(window.onpopstate);
         });
 
-        it('does not set window.onpopstate when not history and fastBrowsing', function () {
+        it('sets window.onpopstate to null when not history and fastBrowsing', function () {
 
             this.xModernizr.history = false;
             this.xSettings.view.fastBrowsing = true;
@@ -106,7 +106,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isNull(window.onpopstate);
         });
 
-        it('does not set window.onpopstate when history and not fastBrowsing', function () {
+        it('sets window.onpopstate to null when history and not fastBrowsing', function () {
 
             this.xModernizr.history = true;
             this.xSettings.view.fastBrowsing = false;
@@ -116,7 +116,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isNull(window.onpopstate);
         });
 
-        it('does not set window.onpopstate when not history and not fastBrowsing', function () {
+        it('sets window.onpopstate to null when not history and not fastBrowsing', function () {
 
             this.xModernizr.history = false;
             this.xSettings.view.fastBrowsing = false;

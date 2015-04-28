@@ -178,15 +178,15 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/notify',
         }
     }
 
+    function onPopState(ev) {
 
-    if (history) {
-        window.onpopstate = function (ev) {
-
-            if (ev.state && ev.state.absHref) {
-                setLocation(ev.state.absHref, true);
-            }
-        };
+        if (ev.state && ev.state.absHref) {
+            setLocation(ev.state.absHref, true);
+        }
     }
+
+
+    window.onpopstate = history ? onPopState : null;
 
 
     return {
