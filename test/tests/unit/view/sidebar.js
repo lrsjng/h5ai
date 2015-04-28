@@ -87,7 +87,7 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOfKeys(instance, 1);
         });
 
-        it('adds HTML #sidebar-toggle', function () {
+        it('adds HTML #sidebar-toggle to #toolbar', function () {
 
             this.applyFn();
             assert.lengthOf($('#toolbar > #sidebar-toggle'), 1);

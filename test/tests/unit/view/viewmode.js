@@ -86,13 +86,13 @@ describe('module \'' + ID + '\'', function () {
             assert.isUndefined(instance);
         });
 
-        it('adds HTML to #sidebar', function () {
+        it('adds HTML .block to #sidebar', function () {
 
             this.applyFn();
             assert.lengthOf($('#sidebar > .block > .l10n-view'), 1);
         });
 
-        it('adds Style to head', function () {
+        it('adds style to head', function () {
 
             var styleTagCount = $('head > style').length;
             this.applyFn();
