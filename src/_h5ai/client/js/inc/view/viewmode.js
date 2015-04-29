@@ -91,7 +91,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
             return;
         }
 
-        var $viewBlock = $('<div class="block"><h1 class="l10n-view">View</h1></div>');
+        var $viewBlock = $('<div id="settings-viewmode" class="block"><h1 class="l10n-view">View</h1></div>');
         var max;
 
         settings.modes = _.intersection(settings.modes, modes);
@@ -112,7 +112,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
                 .prop('max', max).attr('max', max)
                 .on('input change', function (ev) {
 
-                    updateView(null, settings.sizes[parseInt(ev.target.value, 10)]);
+                    updateView(null, settings.sizes[ev.target.valueAsNumber]);
                 })
                 .appendTo($viewBlock);
         }

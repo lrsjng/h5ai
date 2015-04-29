@@ -86,34 +86,34 @@ describe('module \'' + ID + '\'', function () {
             assert.isUndefined(instance);
         });
 
-        it('adds HTML .block to #sidebar', function () {
+        it('adds HTML #settings-viewmode to #sidebar', function () {
 
             this.applyFn();
-            assert.lengthOf($('#sidebar > .block > .l10n-view'), 1);
+            assert.lengthOf($('#sidebar > #settings-viewmode'), 1);
         });
 
-        it('adds HTML #view-details to .block', function () {
+        it('adds HTML #view-details to #settings-viewmode', function () {
 
             this.applyFn();
-            assert.lengthOf($('#sidebar > .block > #view-details'), 1);
+            assert.lengthOf($('#settings-viewmode > #view-details'), 1);
         });
 
-        it('adds HTML #view-grid to .block', function () {
+        it('adds HTML #view-grid to #settings-viewmode', function () {
 
             this.applyFn();
-            assert.lengthOf($('#sidebar > .block > #view-grid'), 1);
+            assert.lengthOf($('#settings-viewmode > #view-grid'), 1);
         });
 
-        it('adds HTML #view-icons to .block', function () {
+        it('adds HTML #view-icons to #settings-viewmode', function () {
 
             this.applyFn();
-            assert.lengthOf($('#sidebar > .block > #view-icons'), 1);
+            assert.lengthOf($('#settings-viewmode > #view-icons'), 1);
         });
 
-        it('adds HTML #view-size to .block', function () {
+        it('adds HTML #view-size to #settings-viewmode', function () {
 
             this.applyFn();
-            assert.lengthOf($('#sidebar > .block > #view-size'), 1);
+            assert.lengthOf($('#settings-viewmode > #view-size'), 1);
         });
 
         it('adds style to head', function () {
