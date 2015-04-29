@@ -171,9 +171,17 @@ describe('module \'' + ID + '\'', function () {
 
             $('#view-size').val(0).trigger('change');
             assert.isTrue($('#view').hasClass('view-size-20'), 20);
+            assert.isFalse($('#view').hasClass('view-size-40'), 40);
+            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+
             $('#view-size').val(1).trigger('change');
+            assert.isFalse($('#view').hasClass('view-size-20'), 20);
             assert.isTrue($('#view').hasClass('view-size-40'), 40);
+            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+
             $('#view-size').val(2).trigger('change');
+            assert.isFalse($('#view').hasClass('view-size-20'), 20);
+            assert.isFalse($('#view').hasClass('view-size-40'), 40);
             assert.isTrue($('#view').hasClass('view-size-60'), 60);
         });
 
@@ -184,9 +192,17 @@ describe('module \'' + ID + '\'', function () {
 
             $('#view-size').val(0).trigger('input');
             assert.isTrue($('#view').hasClass('view-size-20'), 20);
+            assert.isFalse($('#view').hasClass('view-size-40'), 40);
+            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+
             $('#view-size').val(1).trigger('input');
+            assert.isFalse($('#view').hasClass('view-size-20'), 20);
             assert.isTrue($('#view').hasClass('view-size-40'), 40);
+            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+
             $('#view-size').val(2).trigger('input');
+            assert.isFalse($('#view').hasClass('view-size-20'), 20);
+            assert.isFalse($('#view').hasClass('view-size-40'), 40);
             assert.isTrue($('#view').hasClass('view-size-60'), 60);
         });
 
