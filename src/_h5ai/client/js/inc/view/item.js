@@ -15,7 +15,7 @@ modulejs.define('view/item', ['_', '$', 'core/format', 'core/location', 'core/re
             '</li>';
 
 
-    function renderItem(item) {
+    function render(item) {
 
         var $html = $(template);
         var $a = $html.find('a');
@@ -55,6 +55,6 @@ modulejs.define('view/item', ['_', '$', 'core/format', 'core/location', 'core/re
     }
 
     return {
-        render: renderItem
+        render: render
     };
 });
