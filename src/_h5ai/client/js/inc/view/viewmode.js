@@ -3,7 +3,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
     var modes = ['details', 'grid', 'icons'];
     var settings = _.extend({}, {
             modes: modes,
-            sizes: [20, 40, 60, 80, 100, 150, 200]
+            sizes: [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400]
         }, allsettings.view);
     var storekey = 'viewmode';
     var modeTemplate =
@@ -53,7 +53,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
         $('<style/>').text(styles.join('\n')).appendTo('head');
     }
 
-    function update(mode, size) {
+    function updateView(mode, size) {
 
         var stored = store.get(storekey);
 
@@ -101,7 +101,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
                 if (_.contains(settings.modes, mode)) {
                     $(modeTemplate.replace(/\[MODE\]/g, mode))
                         .appendTo($viewBlock)
-                        .on('click', function () { update(mode); });
+                        .on('click', function () { updateView(mode); });
                 }
             });
         }
@@ -112,7 +112,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
                 .prop('max', max).attr('max', max)
                 .on('input change', function (ev) {
 
-                    update(null, settings.sizes[parseInt(ev.target.value, 10)]);
+                    updateView(null, settings.sizes[parseInt(ev.target.value, 10)]);
                 })
                 .appendTo($viewBlock);
         }
@@ -124,7 +124,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
 
         addCssStyles();
         addViewSettings();
-        update();
+        updateView();
     }
 
 
