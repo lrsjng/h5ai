@@ -1,6 +1,6 @@
 modulejs.define('view/notification', ['$', 'view/root'], function ($, root) {
 
-    var $el = $('<div id="notification"/>');
+    var $el = $('<div id="notification"/>').hide().appendTo(root.$el);
 
     function set(content) {
 
@@ -10,8 +10,6 @@ modulejs.define('view/notification', ['$', 'view/root'], function ($, root) {
             $el.stop(true, true).fadeOut(400);
         }
     }
-
-    $el.hide().appendTo(root.$el);
 
     return {
         $el: $el,
