@@ -92,11 +92,65 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOf($('#sidebar > .block > .l10n-view'), 1);
         });
 
+        it('adds HTML #view-details to .block', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#sidebar > .block > #view-details'), 1);
+        });
+
+        it('adds HTML #view-grid to .block', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#sidebar > .block > #view-grid'), 1);
+        });
+
+        it('adds HTML #view-icons to .block', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#sidebar > .block > #view-icons'), 1);
+        });
+
+        it('adds HTML #view-size to .block', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#sidebar > .block > #view-size'), 1);
+        });
+
         it('adds style to head', function () {
 
             var styleTagCount = $('head > style').length;
             this.applyFn();
             assert.lengthOf($('head > style'), styleTagCount + 1);
+        });
+    });
+
+    describe('works', function () {
+
+        it('clicking #view-details changes #view class to .view-details', function () {
+
+            this.applyFn();
+            $('#view-details').trigger('click');
+            assert.isTrue($('#view').hasClass('view-details'));
+            assert.isFalse($('#view').hasClass('view-grid'));
+            assert.isFalse($('#view').hasClass('view-icons'));
+        });
+
+        it('clicking #view-grid changes #view class to .view-grid', function () {
+
+            this.applyFn();
+            $('#view-grid').trigger('click');
+            assert.isFalse($('#view').hasClass('view-details'));
+            assert.isTrue($('#view').hasClass('view-grid'));
+            assert.isFalse($('#view').hasClass('view-icons'));
+        });
+
+        it('clicking #view-icons changes #view class to .view-icons', function () {
+
+            this.applyFn();
+            $('#view-icons').trigger('click');
+            assert.isFalse($('#view').hasClass('view-details'));
+            assert.isFalse($('#view').hasClass('view-grid'));
+            assert.isTrue($('#view').hasClass('view-icons'));
         });
     });
 });
