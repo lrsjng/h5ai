@@ -1,7 +1,6 @@
 modulejs.define('view/notification', ['$', 'view/root'], function ($, root) {
 
-    var template = '<div id="notification"/>';
-    var $el = $(template);
+    var $el = $('<div id="notification"/>');
 
     function set(content) {
 

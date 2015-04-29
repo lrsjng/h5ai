@@ -1,8 +1,8 @@
 modulejs.define('view/content', ['$', 'view/mainrow'], function ($, mainrow) {
 
-    var $content = $('<div id="content"/>').appendTo(mainrow.$el);
+    var $el = $('<div id="content"/>').appendTo(mainrow.$el);
 
     return {
-        $el: $content
+        $el: $el
     };
 });
