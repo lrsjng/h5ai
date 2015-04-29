@@ -40,7 +40,7 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        this.xMainrow.$el = $('<div id="main-row"/>').appendTo('body');
+        this.xMainrow.$el = $('<div id="mainrow"/>').appendTo('body');
         this.xTopbar.$toolbar = $('<div id="toolbar"/>').appendTo('body');
     });
 

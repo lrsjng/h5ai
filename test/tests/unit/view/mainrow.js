@@ -70,22 +70,22 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOfKeys(instance, 1);
         });
 
-        it('adds HTML #main-row to #root', function () {
+        it('adds HTML #mainrow to #root', function () {
 
             this.applyFn();
-            assert.lengthOf($('#root > #main-row'), 1);
+            assert.lengthOf($('#root > #mainrow'), 1);
         });
     });
 
     describe('.$el', function () {
 
-        it('is $(\'#main-row\')', function () {
+        it('is $(\'#mainrow\')', function () {
 
             var instance = this.applyFn();
             assert.isObject(instance.$el);
             assert.lengthOf(instance.$el, 1);
             assert.isString(instance.$el.jquery);
-            assert.strictEqual(instance.$el.attr('id'), 'main-row');
+            assert.strictEqual(instance.$el.attr('id'), 'mainrow');
         });
     });
 });

@@ -50,7 +50,7 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        this.xMainrow.$el = $('<div id="main-row"/>').appendTo('body');
+        this.xMainrow.$el = $('<div id="mainrow"/>').appendTo('body');
     });
 
     describe('definition', function () {
@@ -95,10 +95,10 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOfKeys(instance, 3);
         });
 
-        it('adds HTML #content to #main-row', function () {
+        it('adds HTML #content to #mainrow', function () {
 
             this.applyFn();
-            assert.lengthOf($('#main-row > #content'), 1);
+            assert.lengthOf($('#mainrow > #content'), 1);
         });
 
         it('adds HTML #view to #content', function () {

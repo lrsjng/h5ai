@@ -124,7 +124,7 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/event', 'core/format',
             return;
         }
 
-        var $info = $(template).appendTo('#main-row');
+        var $info = $(template).appendTo('#mainrow');
         $img = $info.find('.icon img');
         $label = $info.find('.label');
         $time = $info.find('.time');

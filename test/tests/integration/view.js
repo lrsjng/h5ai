@@ -59,16 +59,16 @@ describe('view', function () {
             assert.lengthOf($('#fallback-hints'), 0);
         });
 
-        it('adds HTML #main-row to #root', function () {
+        it('adds HTML #mainrow to #root', function () {
 
             modulejs.require('view/viewmode');
-            assert.lengthOf($('#root > #main-row'), 1);
+            assert.lengthOf($('#root > #mainrow'), 1);
         });
 
-        it('adds HTML #content to #main-row', function () {
+        it('adds HTML #content to #mainrow', function () {
 
             modulejs.require('view/viewmode');
-            assert.lengthOf($('#main-row > #content'), 1);
+            assert.lengthOf($('#mainrow > #content'), 1);
         });
 
         it('adds HTML #view to #content', function () {

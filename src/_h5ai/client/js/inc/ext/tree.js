@@ -189,7 +189,7 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
         }
 
         $('<div id="tree"/>')
-            .appendTo('#main-row')
+            .appendTo('#mainrow')
             .on('click', '.indicator', createOnIndicatorClick());
 
         $(settingsTemplate)
