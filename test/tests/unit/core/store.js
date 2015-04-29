@@ -11,7 +11,6 @@ describe('module \'' + ID + '\'', function () {
         this.definition = modulejs._private.definitions[ID];
 
         this.storeKey = '_h5ai';
-        this.storeBackup = window.localStorage.getItem(this.storeKey);
         this.xModernizr = {localstorage: true};
         this.applyFn = function () {
 
@@ -21,11 +20,12 @@ describe('module \'' + ID + '\'', function () {
 
     after(function () {
 
-        if (this.storeBackup) {
-            window.localStorage.setItem(this.storeKey, this.storeBackup);
-        } else {
-            window.localStorage.removeItem(this.storeKey);
-        }
+        util.restoreHtml();
+    });
+
+    beforeEach(function () {
+
+        util.restoreHtml();
     });
 
     describe('definition', function () {
