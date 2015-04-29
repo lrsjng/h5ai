@@ -10,9 +10,9 @@ describe('view', function () {
         this.xConfig = {
             setup: {
                 API: true,
-                APP_HREF: util.uniqPath('/APP/'),
-                ROOT_HREF: util.uniqPath('/ROOT/'),
-                CURRENT_HREF: util.uniqPath('/CURRENT/')
+                APP_HREF: util.uniqPath('-APP/'),
+                ROOT_HREF: util.uniqPath('-ROOT/'),
+                CURRENT_HREF: util.uniqPath('-CURRENT/')
             }
         };
     });
@@ -34,9 +34,9 @@ describe('view', function () {
         $('<div id="fallback-hints"/>').appendTo('body');
     });
 
-    describe('requiring view/viewmode sets up basic HTML', function () {
+    describe('require(\'view/viewmode\') sets up basic HTML', function () {
 
-        it('requires without errors', function () {
+        it('runs without errors', function () {
 
             modulejs.require('view/viewmode');
         });
