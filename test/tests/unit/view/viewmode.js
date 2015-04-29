@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/viewmode';
-var DEPS = ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/content', 'view/sidebar'];
+var DEPS = ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/sidebar', 'view/view'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -10,18 +10,18 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xSettings = {
-            view: {}
-        };
         this.xResource = {
             image: sinon.stub().returns(util.uniqPath('-image.png'))
+        };
+        this.xSettings = {
+            view: {}
         };
         this.xStore = {
             get: sinon.stub(),
             put: sinon.stub()
         };
-        this.xContent = {$view: null};
         this.xSidebar = {$el: null};
+        this.xView = {$el: null};
 
         this.applyFn = function () {
 
@@ -29,7 +29,7 @@ describe('module \'' + ID + '\'', function () {
             this.xStore.get.reset();
             this.xStore.put.reset();
 
-            return this.definition.fn(_, $, this.xResource, this.xSettings, this.xStore, this.xContent, this.xSidebar);
+            return this.definition.fn(_, $, this.xResource, this.xSettings, this.xStore, this.xSidebar, this.xView);
         };
     });
 
@@ -41,8 +41,8 @@ describe('module \'' + ID + '\'', function () {
     beforeEach(function () {
 
         util.restoreHtml();
-        this.xContent.$view = $('<div id="view"/>').appendTo('body');
         this.xSidebar.$el = $('<div id="sidebar"/>').appendTo('body');
+        this.xView.$el = $('<div id="view"/>').appendTo('body');
     });
 
     describe('definition', function () {

@@ -1,4 +1,4 @@
-modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/content', 'view/sidebar'], function (_, $, resource, allsettings, store, content, sidebar) {
+modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/sidebar', 'view/view'], function (_, $, resource, allsettings, store, sidebar, view) {
 
     var modes = ['details', 'grid', 'icons'];
     var settings = _.extend({}, {
@@ -66,23 +66,23 @@ modulejs.define('view/viewmode', ['_', '$', 'core/resource', 'core/settings', 'c
         _.each(modes, function (m) {
             if (m === mode) {
                 $('#view-' + m).addClass('active');
-                content.$view.addClass('view-' + m);
+                view.$el.addClass('view-' + m);
             } else {
                 $('#view-' + m).removeClass('active');
-                content.$view.removeClass('view-' + m);
+                view.$el.removeClass('view-' + m);
             }
         });
 
         _.each(sortedSizes, function (s) {
             if (s === size) {
-                content.$view.addClass('view-size-' + s);
+                view.$el.addClass('view-size-' + s);
             } else {
-                content.$view.removeClass('view-size-' + s);
+                view.$el.removeClass('view-size-' + s);
             }
         });
         $('#view-size').val(_.indexOf(sortedSizes, size));
 
-        content.$view.show();
+        view.$el.show();
     }
 
     function addViewSettings() {
