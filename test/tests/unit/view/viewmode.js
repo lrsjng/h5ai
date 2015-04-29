@@ -13,9 +13,10 @@ describe('module \'' + ID + '\'', function () {
         this.xResource = {
             image: sinon.stub().returns(util.uniqPath('-image.png'))
         };
-        this.xSettings = {
-            view: {}
-        };
+        this.xSettings = {view: {
+            modes: ['details', 'grid', 'icons'],
+            sizes: [20, 40, 60, 80, 100]
+        }};
         this.xStore = {
             get: sinon.stub(),
             put: sinon.stub()
@@ -160,6 +161,46 @@ describe('module \'' + ID + '\'', function () {
             assert.isFalse($('#view').hasClass('view-details'));
             assert.isFalse($('#view').hasClass('view-grid'));
             assert.isTrue($('#view').hasClass('view-icons'));
+        });
+
+        it('changing #view-size changes #view class to .view-size-*', function () {
+
+            var sizes = [20, 40, 60];
+            this.xSettings.view.sizes = sizes;
+            this.applyFn();
+
+            $('#view-size').val(0).trigger('change');
+            assert.isTrue($('#view').hasClass('view-size-20'), 20);
+            $('#view-size').val(1).trigger('change');
+            assert.isTrue($('#view').hasClass('view-size-40'), 40);
+            $('#view-size').val(2).trigger('change');
+            assert.isTrue($('#view').hasClass('view-size-60'), 60);
+        });
+
+        it('inputing #view-size changes #view class to .view-size-*', function () {
+
+            this.xSettings.view.sizes = [20, 40, 60];
+            this.applyFn();
+
+            $('#view-size').val(0).trigger('input');
+            assert.isTrue($('#view').hasClass('view-size-20'), 20);
+            $('#view-size').val(1).trigger('input');
+            assert.isTrue($('#view').hasClass('view-size-40'), 40);
+            $('#view-size').val(2).trigger('input');
+            assert.isTrue($('#view').hasClass('view-size-60'), 60);
+        });
+
+        it('#view-size uses sorted sizes', function () {
+
+            this.xSettings.view.sizes = [60, 40, 20];
+            this.applyFn();
+
+            $('#view-size').val(0).trigger('change');
+            assert.isTrue($('#view').hasClass('view-size-20'));
+            $('#view-size').val(1).trigger('change');
+            assert.isTrue($('#view').hasClass('view-size-40'));
+            $('#view-size').val(2).trigger('change');
+            assert.isTrue($('#view').hasClass('view-size-60'));
         });
     });
 });
