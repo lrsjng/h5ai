@@ -33,8 +33,7 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store', 'view/mainr
 
 
     $sidebar.appendTo(mainrow.$el);
-    $toggle.appendTo(topbar.$toolbar)
-        .on('click', function () { update(true); });
+    $toggle.appendTo(topbar.$toolbar).on('click', function () { update(true); });
     update(false);
 
     return {
