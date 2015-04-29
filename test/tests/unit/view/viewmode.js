@@ -122,6 +122,15 @@ describe('module \'' + ID + '\'', function () {
             this.applyFn();
             assert.lengthOf($('head > style'), styleTagCount + 1);
         });
+
+        it('style contains possibly correct text', function () {
+
+            this.applyFn();
+            var text = $('head > style').eq(0).text();
+            assert.isTrue(text.indexOf('#view.view-details.view-size-') >= 0);
+            assert.isTrue(text.indexOf('#view.view-grid.view-size-') >= 0);
+            assert.isTrue(text.indexOf('#view.view-icons.view-size-') >= 0);
+        });
     });
 
     describe('works', function () {
