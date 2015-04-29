@@ -70,9 +70,6 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
         }
         $iconImg.attr('src', item.icon).attr('alt', item.type);
 
-        if (item.$view) {
-            item.$view.replaceWith($html);
-        }
         item.$view = $html;
 
         return $html;
@@ -111,7 +108,7 @@ modulejs.define('view/content', ['_', '$', 'core/event', 'core/format', 'core/lo
             $empty.hide();
         }
 
-        $('html,body').scrollLeft(0).scrollTop(0);
+        $content.scrollLeft(0).scrollTop(0);
     }
 
     function onLocationRefreshed(item, added, removed) {
