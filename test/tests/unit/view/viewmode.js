@@ -126,11 +126,28 @@ describe('module \'' + ID + '\'', function () {
 
         it('style contains possibly correct text', function () {
 
+            this.xSettings.view.sizes = [20];
             this.applyFn();
             var text = $('head > style').eq(0).text();
-            assert.isTrue(text.indexOf('#view.view-details.view-size-') >= 0);
-            assert.isTrue(text.indexOf('#view.view-grid.view-size-') >= 0);
-            assert.isTrue(text.indexOf('#view.view-icons.view-size-') >= 0);
+            assert.isTrue(text.indexOf('#view.view-details.view-size-20 ') >= 0);
+            assert.isTrue(text.indexOf('#view.view-grid.view-size-20 ') >= 0);
+            assert.isTrue(text.indexOf('#view.view-icons.view-size-20 ') >= 0);
+        });
+
+        it('does not HTML #view-details, #view-grid, #view-icons when only one mode', function () {
+
+            this.xSettings.view.modes = ['details'];
+            this.applyFn();
+            assert.lengthOf($('#view-details'), 0);
+            assert.lengthOf($('#view-grid'), 0);
+            assert.lengthOf($('#view-icons'), 0);
+        });
+
+        it('does not add HTML #view-size when only one size', function () {
+
+            this.xSettings.view.sizes = [20];
+            this.applyFn();
+            assert.lengthOf($('#view-size'), 0);
         });
     });
 
@@ -138,6 +155,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('clicking #view-details changes #view class to .view-details', function () {
 
+            this.xSettings.view.modes = ['details', 'grid', 'icons'];
             this.applyFn();
             $('#view-details').trigger('click');
             assert.isTrue($('#view').hasClass('view-details'));
@@ -147,6 +165,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('clicking #view-grid changes #view class to .view-grid', function () {
 
+            this.xSettings.view.modes = ['details', 'grid', 'icons'];
             this.applyFn();
             $('#view-grid').trigger('click');
             assert.isFalse($('#view').hasClass('view-details'));
@@ -156,6 +175,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('clicking #view-icons changes #view class to .view-icons', function () {
 
+            this.xSettings.view.modes = ['details', 'grid', 'icons'];
             this.applyFn();
             $('#view-icons').trigger('click');
             assert.isFalse($('#view').hasClass('view-details'));
@@ -165,8 +185,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('changing #view-size changes #view class to .view-size-*', function () {
 
-            var sizes = [20, 40, 60];
-            this.xSettings.view.sizes = sizes;
+            this.xSettings.view.sizes = [20, 40, 60];
             this.applyFn();
 
             $('#view-size').val(0).trigger('change');
