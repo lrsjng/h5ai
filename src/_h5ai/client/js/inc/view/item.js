@@ -54,6 +54,7 @@ modulejs.define('view/item', ['_', '$', 'core/format', 'core/location', 'core/re
         return $html;
     }
 
+
     return {
         render: render
     };
