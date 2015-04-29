@@ -81,6 +81,10 @@
             margin: 0 auto;
             padding: 32px;
             max-width: 900px;
+
+            > .toggle {
+                display: none;
+            }
         }
     }
 
@@ -146,7 +150,26 @@
     }
 
     .suite {
+        position: relative;
         margin: 16px 0 8px 24px;
+
+        .toggle {
+            position: absolute;
+            left: -24px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            color: @col-text;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+
+            &:hover {
+                background: @col-back-hover;
+            }
+        }
     }
 
     .test {

@@ -36,13 +36,31 @@ function addSuiteStats() {
     var failed = tests - passed;
 
     var $header = $suite.find('> h1 a');
+    var $list = $suite.find('> ul');
     var $count = $('<span class="count"><span class="passed">' + passed + '</span><span class="failed">' + failed + '</span></span>');
+    var $toggle = $('<span class="toggle">-</span>');
+    var visible = true;
+
+    $toggle.on('click', function (ev) {
+
+        ev.stopImmediatePropagation();
+
+        visible = !visible;
+        if (visible) {
+            $toggle.text('-');
+            $list.show();
+        } else {
+            $toggle.text('+');
+            $list.hide();
+        }
+    });
 
     if (!failed) {
         $count.find('.failed').remove();
     }
 
     $suite.addClass(tests === passed ? 'pass' : 'fail');
+    // $suite.append($toggle);
     $header.append($count);
 }
 
