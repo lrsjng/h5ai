@@ -22,8 +22,6 @@ describe('view', function () {
         modulejs._private.definitions.config = this.configBackup;
         util.clearModulejs();
         util.restoreHtml();
-        window.localStorage.removeItem(this.storeKey);
-        $('body').removeAttr('id');
     });
 
     beforeEach(function () {
@@ -32,13 +30,11 @@ describe('view', function () {
         modulejs.define('config', this.xConfig);
         util.clearModulejs();
         util.restoreHtml();
-        window.localStorage.removeItem(this.storeKey);
-        $('body').removeAttr('id');
         $('<div id="fallback"/>').appendTo('body');
         $('<div id="fallback-hints"/>').appendTo('body');
     });
 
-    describe('requiring view/viewmode', function () {
+    describe('requiring view/viewmode sets up basic HTML', function () {
 
         it('requires without errors', function () {
 

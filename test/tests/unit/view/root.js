@@ -19,13 +19,11 @@ describe('module \'' + ID + '\'', function () {
     after(function () {
 
         util.restoreHtml();
-        $('body').removeAttr('id');
     });
 
     beforeEach(function () {
 
         util.restoreHtml();
-        $('body').removeAttr('id');
         $('<div id="fallback"/>').appendTo('body');
         $('<div id="fallback-hints"/>').appendTo('body');
     });
