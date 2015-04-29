@@ -285,7 +285,7 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOf($submitEl, 1);
             assert.strictEqual($submitEl.get(0).tagName.toLowerCase(), 'form');
             assert.strictEqual($submitEl.attr('method'), 'post');
-            assert.strictEqual($submitEl.attr('style'), 'display:none;');
+            assert.strictEqual($submitEl.attr('style').replace(/\s+/g, ''), 'display:none;');
             assert.strictEqual($submitEl.attr('action'), this.xAbsHref);
 
             var $children = $submitEl.children();
