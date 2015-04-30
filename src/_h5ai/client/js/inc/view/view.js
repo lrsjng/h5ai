@@ -33,7 +33,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
     var $empty = $view.find('.empty');
 
 
-    function itemToHtml(item) {
+    function createHtml(item) {
 
         var $html = $(itemTemplate);
         var $a = $html.find('a');
@@ -89,13 +89,13 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         $items.find('.item').remove();
 
         if (item.parent && !settings.hideParentFolder) {
-            $items.append(itemToHtml(item.parent));
+            $items.append(createHtml(item.parent));
         }
 
         _.each(item.content, function (e) {
 
             if (!(e.isFolder() && settings.hideFolders)) {
-                $items.append(itemToHtml(e));
+                $items.append(createHtml(e));
             }
         });
 
@@ -113,7 +113,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         _.each(added, function (item) {
 
             if (!(item.isFolder() && settings.hideFolders)) {
-                itemToHtml(item).hide().appendTo($items).fadeIn(400);
+                createHtml(item).hide().appendTo($items).fadeIn(400);
             }
         });
 
