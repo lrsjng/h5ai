@@ -1,9 +1,10 @@
-modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/settings', 'view/content', 'view/item'], function (_, $, event, format, allsettings, content, viewitem) {
+modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'view/content'], function (_, $, event, format, location, resource, allsettings, content) {
 
     var settings = _.extend({
             binaryPrefix: false,
             hideFolders: false,
-            hideParentFolder: false
+            hideParentFolder: false,
+            setParentFolderLabels: false
         }, allsettings.view);
     var template =
             '<div id="view">' +
@@ -17,10 +18,59 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/setti
                 '</ul>' +
                 '<div class="empty l10n-empty"/>' +
             '</div>';
+    var itemTemplate =
+            '<li class="item">' +
+                '<a>' +
+                    '<span class="icon square"><img/></span>' +
+                    '<span class="icon landscape"><img/></span>' +
+                    '<span class="label"/>' +
+                    '<span class="date"/>' +
+                    '<span class="size"/>' +
+                '</a>' +
+            '</li>';
     var $view = $(template);
     var $items = $view.find('#items');
     var $empty = $view.find('.empty');
 
+
+    function itemToHtml(item) {
+
+        var $html = $(itemTemplate);
+        var $a = $html.find('a');
+        var $iconImg = $html.find('.icon img');
+        var $label = $html.find('.label');
+        var $date = $html.find('.date');
+        var $size = $html.find('.size');
+
+        $html
+            .addClass(item.isFolder() ? 'folder' : 'file')
+            .data('item', item);
+
+        location.setLink($a, item);
+
+        $label.text(item.label).attr('title', item.label);
+        $date.data('time', item.time).text(format.formatDate(item.time));
+        $size.data('bytes', item.size).text(format.formatSize(item.size));
+        item.icon = resource.icon(item.type);
+
+        if (item.isFolder() && !item.isManaged) {
+            $html.addClass('page');
+            item.icon = resource.icon('folder-page');
+        }
+
+        if (item.isCurrentParentFolder()) {
+            item.icon = resource.icon('folder-parent');
+            if (!settings.setParentFolderLabels) {
+                $label.addClass('l10n-parentDirectory');
+            }
+            $html.addClass('folder-parent');
+        }
+        $iconImg.attr('src', item.icon).attr('alt', item.type);
+
+        item.$view = $html;
+
+        return $html;
+    }
 
     function onMouseenter() {
 
@@ -39,13 +89,13 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/setti
         $items.find('.item').remove();
 
         if (item.parent && !settings.hideParentFolder) {
-            $items.append(viewitem.render(item.parent));
+            $items.append(itemToHtml(item.parent));
         }
 
         _.each(item.content, function (e) {
 
             if (!(e.isFolder() && settings.hideFolders)) {
-                $items.append(viewitem.render(e));
+                $items.append(itemToHtml(e));
             }
         });
 
@@ -63,7 +113,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/setti
         _.each(added, function (item) {
 
             if (!(item.isFolder() && settings.hideFolders)) {
-                viewitem.render(item).hide().appendTo($items).fadeIn(400);
+                itemToHtml(item).hide().appendTo($items).fadeIn(400);
             }
         });
 
