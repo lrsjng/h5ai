@@ -38,8 +38,6 @@ modulejs.define('ext/info', ['_', '$', 'modernizr', 'core/event', 'core/format',
     var $qrcode;
     var currentFolder;
 
-    // <span class="l10n-folders"/>
-    // <span class="l10n-files"/>
 
     function updateSettings() {
 
