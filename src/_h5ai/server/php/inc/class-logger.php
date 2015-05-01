@@ -9,8 +9,8 @@ class Logger {
 
         self::$start = self::time();
         self::$prev = self::$start;
-        register_shutdown_function(function () { Logger::log('shutdown'); });
-        Logger::log('--------------------------------');
+        register_shutdown_function(function () { Logger::log("shutdown"); });
+        Logger::log("--------------------------------");
     }
 
     private static function time() {
