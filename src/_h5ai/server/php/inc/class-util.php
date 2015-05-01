@@ -2,6 +2,14 @@
 
 class Util {
 
+
+    const RC_SUCCESS = "RC_SUCCESS";
+    const RC_MISSING_PARAM = "RC_MISSING_PARAM";
+    const RC_FAILED = "RC_FAILED";
+    const RC_DISABLED = "RC_DISABLED";
+    const RC_UNSUPPORTED = "RC_UNSUPPORTED";
+
+
     public static function normalize_path($path, $trailing_slash = false) {
 
         $path = preg_replace("#[\\\\/]+#", "/", $path);
@@ -12,7 +20,7 @@ class Util {
     public static function json_exit($obj = array()) {
 
         if (!isset($obj["code"])) {
-            $obj["code"] = 0;
+            $obj["code"] = Util::RC_SUCCESS;
         }
 
         header("Content-type: application/json;charset=utf-8");
@@ -31,26 +39,24 @@ class Util {
 
     public static function is_post_request() {
 
-        return (strtolower($_SERVER['REQUEST_METHOD']) === 'post');
+        return (strtolower($_SERVER["REQUEST_METHOD"]) === "post");
     }
 
 
-    public static function has_request_param($key) {
-
-        return array_key_exists($key, $_POST);
-    }
-
-
-    public static function use_request_param($key, $default = null) {
+    public static function get_request_param($key, $default = null) {
 
         if (!array_key_exists($key, $_POST)) {
-            Util::json_fail(100, "parameter '$key' is missing", $default === null);
+            Util::json_fail(Util::RC_MISSING_PARAM, "parameter '$key' is missing", $default === null);
             return $default;
         }
 
-        $value = $_POST[$key];
-        unset($_POST[$key]);
-        return $value;
+        return $_POST[$key];
+    }
+
+
+    public static function get_boolean_request_param($key, $default = null) {
+
+        return filter_var(Util::get_request_param($key, $default), FILTER_VALIDATE_BOOLEAN);
     }
 
 

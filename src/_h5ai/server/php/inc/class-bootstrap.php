@@ -101,7 +101,7 @@ class Bootstrap {
 
         // EXTERNAL COMMANDS
         $cmds = Util::load_commented_json(CMDS_PATH);
-        if (sizeof($cmds) === 0 || Util::has_request_param("updatecmds")) {
+        if (sizeof($cmds) === 0 || Util::get_boolean_request_param("updatecmds", false)) {
             $cmds["command"] = Util::exec_0("command -v command");
             $cmds["which"] = Util::exec_0("which which");
 
