@@ -41,7 +41,7 @@ class Bootstrap {
 
         // PHP
         define("MIN_PHP_VERSION", "5.4.0");
-        define("HAS_PHP_VERSION", version_compare(PHP_VERSION, MIN_PHP_VERSION) >= 0);
+        define("HAS_MIN_PHP_VERSION", version_compare(PHP_VERSION, MIN_PHP_VERSION) >= 0);
         define("HAS_PHP_EXIF", function_exists("exif_thumbnail"));
         $has_php_jpg = false;
         if (function_exists("gd_info")) {

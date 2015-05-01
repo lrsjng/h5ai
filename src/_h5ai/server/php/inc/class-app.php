@@ -22,6 +22,21 @@ class App {
     }
 
 
+    public function get_option($keypath, $default) {
+
+        $value = $this->options;
+        $keys = array_filter(explode(".", $keypath));
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $value)) {
+                $value = $value[$key];
+            } else {
+                return $default;
+            }
+        }
+        return $value;
+    }
+
+
     public function get_setup() {
 
         $consts = get_defined_constants(true);
@@ -53,7 +68,7 @@ class App {
 
     public function get_theme() {
 
-        $theme = $this->options["view"]["theme"];
+        $theme = $this->get_option("view.theme", "-NONE-");
         $theme_path = APP_PATH . "/client/images/themes/${theme}";
 
         $icons = array();
@@ -103,7 +118,7 @@ class App {
             return true;
         }
 
-        foreach ($this->options["view"]["hidden"] as $re) {
+        foreach ($this->get_option("view.hidden", array()) as $re) {
             $re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
             if (preg_match($re, $name)) {
                 return true;
@@ -122,7 +137,7 @@ class App {
                 if (
                     $this->is_hidden($name)
                     || $this->is_hidden($this->to_url($path) . $name)
-                    || (!is_readable($path .'/'. $name) && $this->options["view"]["hideIf403"])
+                    || (!is_readable($path .'/'. $name) && $this->get_option("view.hideIf403", false))
                 ) {
                     continue;
                 }
@@ -149,7 +164,7 @@ class App {
             return false;
         }
 
-        foreach ($this->options["view"]["unmanaged"] as $name) {
+        foreach ($this->get_option("view.unmanaged", array()) as $name) {
             if (file_exists($path . "/" . $name)) {
                 return false;
             }
@@ -351,7 +366,7 @@ class App {
 
     public function get_customizations($url) {
 
-        if (!$this->options["custom"]["enabled"]) {
+        if (!$this->get_option("custom.enabled", false)) {
             return array(
                 "header" => null,
                 "header_type" => null,

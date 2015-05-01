@@ -99,7 +99,7 @@ class Api {
 
     private function on_getThumbHref() {
 
-        Util::json_fail(Util::RC_DISABLED, "thumbnails disabled", !$this->options["thumbnails"]["enabled"]);
+        Util::json_fail(Util::RC_DISABLED, "thumbnails disabled", !$this->get_option("thumbnails.enabled", false));
         Util::json_fail(Util::RC_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPG);
 
         $type = Util::get_request_param("type");
@@ -117,7 +117,7 @@ class Api {
 
     private function on_download() {
 
-        Util::json_fail(Util::RC_DISABLED, "downloads disabled", !$this->options["download"]["enabled"]);
+        Util::json_fail(Util::RC_DISABLED, "downloads disabled", !$this->get_option("download.enabled", false));
 
         $as = Util::get_request_param("as");
         $type = Util::get_request_param("type");

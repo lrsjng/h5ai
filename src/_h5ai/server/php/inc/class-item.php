@@ -50,18 +50,6 @@ class Item {
         $this->date = @filemtime($this->path);
         $this->size = Util::filesize($app, $this->path);
         $this->is_content_fetched = false;
-
-        // $options = $app->get_options();
-        // if (!$this->is_folder && $options["hashes"]["enabled"]) {
-        if (!$this->is_folder) {
-            // $this->md5 = md5_file($this->path);
-            // $this->sha1 = sha1_file($this->path);
-            $this->md5 = null;
-            $this->sha1 = null;
-        } else {
-            $this->md5 = null;
-            $this->sha1 = null;
-        }
     }
 
 

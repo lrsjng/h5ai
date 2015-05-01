@@ -62,7 +62,7 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
         addTest(
             'PHP version', 'PHP version &gt;= ' + setup.MIN_PHP_VERSION,
-            setup.HAS_PHP_VERSION, setup.PHP_VERSION
+            setup.HAS_MIN_PHP_VERSION, setup.PHP_VERSION
         );
 
         addTest(
