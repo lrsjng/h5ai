@@ -29,21 +29,27 @@ class Util {
     }
 
 
+    public static function is_post_request() {
+
+        return (strtolower($_SERVER['REQUEST_METHOD']) === 'post');
+    }
+
+
     public static function has_request_param($key) {
 
-        return array_key_exists($key, $_REQUEST);
+        return array_key_exists($key, $_POST);
     }
 
 
     public static function use_request_param($key, $default = null) {
 
-        if (!array_key_exists($key, $_REQUEST)) {
-            Util::json_fail(101, "parameter '$key' is missing", $default === null);
+        if (!array_key_exists($key, $_POST)) {
+            Util::json_fail(100, "parameter '$key' is missing", $default === null);
             return $default;
         }
 
-        $value = $_REQUEST[$key];
-        unset($_REQUEST[$key]);
+        $value = $_POST[$key];
+        unset($_POST[$key]);
         return $value;
     }
 

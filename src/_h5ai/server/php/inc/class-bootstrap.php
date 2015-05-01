@@ -7,7 +7,7 @@ class Bootstrap {
         Bootstrap::setup();
 
         $app = new App();
-        if (Util::has_request_param("action")) {
+        if (Util::is_post_request()) {
             $api = new Api($app);
             $api->apply();
         } else {

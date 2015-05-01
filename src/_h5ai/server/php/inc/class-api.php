@@ -16,7 +16,7 @@ class Api {
     public function apply() {
 
         $action = Util::use_request_param("action");
-        Util::json_fail(100, "unsupported request", !in_array($action, $this->actions));
+        Util::json_fail(101, "unsupported action", !in_array($action, $this->actions));
 
         $methodname = "on_${action}";
         $this->$methodname();
@@ -100,10 +100,6 @@ class Api {
 
             Util::use_request_param("all_items");
             $response["all_items"] = $this->app->get_all_items();
-        }
-
-        if (AS_ADMIN && count($_REQUEST)) {
-            $response["unused"] = $_REQUEST;
         }
 
         Util::json_exit($response);
