@@ -160,7 +160,7 @@ describe('module \'' + ID + '\'', function () {
         });
     });
 
-    // describe('.render()', function () {
+    // describe('._.createHtml()', function () {
 
     //     before(function () {
 
@@ -182,14 +182,14 @@ describe('module \'' + ID + '\'', function () {
     //     it('is function', function () {
 
     //         var instance = this.applyFn();
-    //         assert.isFunction(instance.render);
+    //         assert.isFunction(instance._.createHtml);
     //     });
 
     //     it('returns jQuery instance of single HTML element', function () {
 
     //         var item = this.createItem();
     //         var instance = this.applyFn();
-    //         var $item = instance.render(item);
+    //         var $item = instance._.createHtml(item);
     //         assert.isObject($item);
     //         assert.lengthOf($item, 1);
     //         assert.isString($item.jquery);
@@ -199,7 +199,7 @@ describe('module \'' + ID + '\'', function () {
 
     //         var item = this.createItem();
     //         var instance = this.applyFn();
-    //         var $item = instance.render(item);
+    //         var $item = instance._.createHtml(item);
     //         assert.strictEqual($item.data('item'), item);
     //     });
 
@@ -207,7 +207,7 @@ describe('module \'' + ID + '\'', function () {
 
     //         var item = this.createItem();
     //         var instance = this.applyFn();
-    //         var $item = instance.render(item);
+    //         var $item = instance._.createHtml(item);
     //         assert.strictEqual(item.$view, $item);
     //     });
     // });
