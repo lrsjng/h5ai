@@ -78,7 +78,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
 
     function init() {
 
-        if (!settings.enabled || !server.api) {
+        if (!settings.enabled) {
             return;
         }
 

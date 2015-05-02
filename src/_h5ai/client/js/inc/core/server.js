@@ -1,54 +1,41 @@
-modulejs.define('core/server', ['_', '$', 'config', 'core/location'], function (_, $, config, location) {
-
-    var hasApi = config.setup.API === true;
-
+modulejs.define('core/server', ['_', '$', 'core/location'], function (_, $, location) {
 
     function request(data, callback) {
 
-        if (hasApi) {
-            $.ajax({
-                url: location.getAbsHref(),
-                data: data,
-                type: 'post',
-                dataType: 'json'
-            })
-            .done(function (json) {
+        $.ajax({
+            url: location.getAbsHref(),
+            data: data,
+            type: 'post',
+            dataType: 'json'
+        })
+        .done(function (json) {
 
-                callback(json);
-            })
-            .fail(function () {
+            callback(json);
+        })
+        .fail(function () {
 
-                callback();
-            });
-        } else {
             callback();
-        }
+        });
     }
 
     function formRequest(data) {
 
-        if (hasApi) {
-            var $form = $('<form method="post" style="display:none;"/>')
-                            .attr('action', location.getAbsHref());
+        var $form = $('<form method="post" style="display:none;"/>')
+                        .attr('action', location.getAbsHref());
 
-            _.each(data, function (val, key) {
+        _.each(data, function (val, key) {
 
-                $('<input type="hidden"/>')
-                    .attr('name', key)
-                    .attr('value', val)
-                    .appendTo($form);
-            });
+            $('<input type="hidden"/>')
+                .attr('name', key)
+                .attr('value', val)
+                .appendTo($form);
+        });
 
-            $form.appendTo('body').submit().remove();
-        }
+        $form.appendTo('body').submit().remove();
     }
 
 
     return {
-        api: hasApi,
-        backend: config.setup.BACKEND,
-        name: config.setup.SERVER_NAME,
-        version: config.setup.SERVER_VERSION,
         request: request,
         formRequest: formRequest
     };

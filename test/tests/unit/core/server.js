@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'core/server';
-var DEPS = ['_', '$', 'config', 'core/location'];
+var DEPS = ['_', '$', 'core/location'];
 var $submitEl;
 
 describe('module \'' + ID + '\'', function () {
@@ -11,14 +11,6 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xConfig = {
-            setup: {
-                API: true,
-                BACKEND: util.uniqId(),
-                SERVER_NAME: util.uniqId(),
-                SERVER_VERSION: util.uniqId()
-            }
-        };
         this.xAbsHref = util.uniqId();
         this.xLocation = {
             getAbsHref: sinon.stub().returns(this.xAbsHref)
@@ -45,7 +37,7 @@ describe('module \'' + ID + '\'', function () {
             this.xSubmit.reset();
             $submitEl = undefined;
 
-            return this.definition.fn(_, $, this.xConfig, this.xLocation);
+            return this.definition.fn(_, $, this.xLocation);
         };
     });
 
@@ -90,69 +82,11 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns plain object with 6 properties', function () {
+        it('returns plain object with 2 properties', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOf(_.keys(instance), 6);
-        });
-    });
-
-    describe('.backend', function () {
-
-        it('set correct', function () {
-
-            var instance = this.applyFn();
-            assert.strictEqual(instance.backend, this.xConfig.setup.BACKEND);
-        });
-    });
-
-    describe('.name', function () {
-
-        it('set correct', function () {
-
-            var instance = this.applyFn();
-            assert.strictEqual(instance.name, this.xConfig.setup.SERVER_NAME);
-        });
-    });
-
-    describe('.version', function () {
-
-        it('set correct', function () {
-
-            var instance = this.applyFn();
-            assert.strictEqual(instance.version, this.xConfig.setup.SERVER_VERSION);
-        });
-    });
-
-    describe('.api', function () {
-
-        it('set correct (false)', function () {
-
-            this.xConfig.setup.API = false;
-            var instance = this.applyFn();
-            assert.isFalse(instance.api);
-        });
-
-        it('set correct (falsy)', function () {
-
-            this.xConfig.setup.API = null;
-            var instance = this.applyFn();
-            assert.isFalse(instance.api);
-        });
-
-        it('set correct (truthy)', function () {
-
-            this.xConfig.setup.API = 1;
-            var instance = this.applyFn();
-            assert.isFalse(instance.api);
-        });
-
-        it('set correct (true)', function () {
-
-            this.xConfig.setup.API = true;
-            var instance = this.applyFn();
-            assert.isTrue(instance.api);
+            assert.lengthOf(_.keys(instance), 2);
         });
     });
 
@@ -164,28 +98,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isFunction(instance.request);
         });
 
-        it('no result if no API', function () {
-
-            this.xConfig.setup.API = false;
-
-            var instance = this.applyFn();
-
-            var xData = util.uniqObj();
-            var spy = sinon.spy();
-            var res = instance.request(xData, spy);
-
-            assert.isUndefined(res);
-            assert.isFalse(this.xAjax.called);
-            assert.isFalse(this.xAjaxResult.done.called);
-            assert.isFalse(this.xAjaxResult.fail.called);
-            assert.isFalse(this.xAjax.called);
-            assert.isTrue(spy.calledOnce);
-            assert.deepEqual(spy.lastCall.args, []);
-        });
-
         it('done() works', function () {
-
-            this.xConfig.setup.API = true;
 
             var instance = this.applyFn();
 
@@ -214,8 +127,6 @@ describe('module \'' + ID + '\'', function () {
         });
 
         it('fail() works', function () {
-
-            this.xConfig.setup.API = true;
 
             var instance = this.applyFn();
 
@@ -251,24 +162,7 @@ describe('module \'' + ID + '\'', function () {
             assert.isFunction(instance.formRequest);
         });
 
-        it('does nothing if no API', function () {
-
-            this.xConfig.setup.API = false;
-
-            var instance = this.applyFn();
-
-            var xData = util.uniqObj();
-            var res = instance.formRequest(xData);
-
-            assert.isUndefined(res);
-
-            assert.isFalse(this.xSubmit.called);
-            assert.isUndefined($submitEl);
-        });
-
         it('works', function () {
-
-            this.xConfig.setup.API = true;
 
             var instance = this.applyFn();
 
