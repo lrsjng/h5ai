@@ -2,12 +2,11 @@
 
 class Api {
 
-    private $actions, $app;
+    private $app;
 
 
     public function __construct($app) {
 
-        $this->actions = array("login", "logout", "get", "getThumbHref", "download");
         $this->app = $app;
     }
 
@@ -15,7 +14,8 @@ class Api {
     public function apply() {
 
         $action = Util::get_request_param("action");
-        Util::json_fail(Util::RC_UNSUPPORTED, "unsupported action", !in_array($action, $this->actions));
+        $supported = array("login", "logout", "get", "getThumbHref", "download");
+        Util::json_fail(Util::RC_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
 
         $methodname = "on_${action}";
         $this->$methodname();

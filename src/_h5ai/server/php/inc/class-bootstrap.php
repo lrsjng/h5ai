@@ -4,7 +4,13 @@ class Bootstrap {
 
     public static function run() {
 
-        Bootstrap::setup();
+        Bootstrap::setup_misc();
+        Bootstrap::setup_admin();
+        Bootstrap::setup_php();
+        Bootstrap::setup_server();
+        Bootstrap::setup_paths();
+        Bootstrap::setup_cache();
+        Bootstrap::setup_ext_cmds();
 
         $app = new App();
         if (Util::is_post_request()) {
@@ -17,9 +23,8 @@ class Bootstrap {
     }
 
 
-    public static function setup() {
+    private static function setup_misc() {
 
-        // MISC
         putenv("LANG=en_US.UTF-8");
         setlocale(LC_CTYPE, "en_US.UTF-8");
         date_default_timezone_set("UTC");
@@ -30,16 +35,20 @@ class Bootstrap {
         define("BACKEND", "PHP");
         define("API", true);
         define("FILE_PREFIX", "_{{pkg.name}}");
+    }
 
 
-        // ADMIN
+    private static function setup_admin() {
+
         session_start();
         define("AS_ADMIN_SESSION_KEY", "__H5AI_AS_ADMIN__");
         define("AS_ADMIN", isset($_SESSION[AS_ADMIN_SESSION_KEY]) && $_SESSION[AS_ADMIN_SESSION_KEY] === true);
         define("HAS_CUSTOM_PASSHASH", PASSHASH !== "da39a3ee5e6b4b0d3255bfef95601890afd80709");
+    }
 
 
-        // PHP
+    private static function setup_php() {
+
         define("MIN_PHP_VERSION", "5.4.0");
         define("HAS_MIN_PHP_VERSION", version_compare(PHP_VERSION, MIN_PHP_VERSION) >= 0);
         define("HAS_PHP_EXIF", function_exists("exif_thumbnail"));
@@ -49,9 +58,11 @@ class Bootstrap {
             $has_php_jpg = array_key_exists("JPG Support", $infos) && $infos["JPG Support"] || array_key_exists("JPEG Support", $infos) && $infos["JPEG Support"];
         }
         define("HAS_PHP_JPG", $has_php_jpg);
+    }
 
 
-        // SERVER
+    private static function setup_server() {
+
         $server_name = null;
         $server_version = null;
         $server_software = getenv("SERVER_SOFTWARE");
@@ -63,9 +74,11 @@ class Bootstrap {
         define("SERVER_VERSION", $server_version);
         define("HAS_SERVER", in_array($server_name, array("apache", "lighttpd", "nginx", "cherokee")));
         define("HAS_WIN_OS", strtolower(substr(PHP_OS, 0, 3)) === "win");
+    }
 
 
-        // PATHS
+    private static function setup_paths() {
+
         $script_name = getenv("SCRIPT_NAME");
         if (SERVER_NAME === "lighttpd") {
             $script_name = preg_replace("#^.*?//#", "/", $script_name);
@@ -92,14 +105,21 @@ class Bootstrap {
             $index_href = Util::normalize_path(APP_HREF . "/server/php/index.php", false);
         }
         define("INDEX_HREF", $index_href);
+    }
+
+
+    private static function setup_cache() {
 
         define("CACHE_HREF", Util::normalize_path(APP_HREF . "/cache", true));
         define("CACHE_PATH", Util::normalize_path(APP_PATH . "/cache", false));
         define("HAS_WRITABLE_CACHE", @is_writable(CACHE_PATH));
+    }
+
+
+    private static function setup_ext_cmds() {
+
         define("CMDS_PATH", Util::normalize_path(CACHE_PATH . "/cmds.json", false));
 
-
-        // EXTERNAL COMMANDS
         $cmds = Util::load_commented_json(CMDS_PATH);
         if (sizeof($cmds) === 0 || Util::get_boolean_request_param("updatecmds", false)) {
             $cmds["command"] = Util::exec_0("command -v command");
