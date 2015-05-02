@@ -190,9 +190,6 @@ class App {
             return array();
         }
 
-        // return $this->get_all_items();
-        // return json_decode(file_get_contents(CACHE_PATH . "/item.json"));
-
         $cache = array();
         $folder = Item::get($this, $this->to_path($url), $cache);
 
@@ -216,56 +213,6 @@ class App {
             $result[] = $item->to_json_object();
         }
 
-        return $result;
-    }
-
-
-    private function get_all_item_content($item, &$cache) {
-
-        foreach ($item->get_content($cache) as $child) {
-            if ($child->is_folder) {
-                $this->get_all_item_content($child, $cache);
-            }
-        }
-    }
-
-
-    public function cummulate_folders($item, &$cache) {
-
-        if (!$item->is_folder) {
-            return;
-        }
-
-        $max_date = $item->date;
-        $sum_size = 0;
-        foreach ($item->get_content($cache) as $child) {
-            $this->cummulate_folders($child, $cache);
-            if ($child->date > $max_date) {
-                $max_date = $child->date;
-            }
-            $sum_size += $child->size;
-        }
-
-        $item->date = $max_date;
-        $item->size = $sum_size;
-    }
-
-
-    public function get_all_items() {
-
-        $cache = array();
-        $root = Item::get($this, ROOT_PATH, $cache);
-
-        $this->get_all_item_content($root, $cache);
-        $this->cummulate_folders($root, $cache);
-
-        uasort($cache, array("Item", "cmp"));
-        $result = array();
-        foreach ($cache as $p => $item) {
-            $result[] = $item->to_json_object();
-        }
-
-        @file_put_contents(CACHE_PATH . "/item.json", json_encode($result));
         return $result;
     }
 

@@ -87,11 +87,6 @@ class Api {
             $response["items"] = $this->app->get_items($url, $what);
         }
 
-        if (Util::get_boolean_request_param("all_items", false)) {
-
-            $response["all_items"] = $this->app->get_all_items();
-        }
-
         Util::json_exit($response);
     }
 
