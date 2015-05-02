@@ -22,7 +22,7 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 
 
                 if (data.header) {
                     content = data.header;
-                    if (data.header_type === 'md') {
+                    if (data.headerType === 'md') {
                         content = marked(content);
                     }
                     $header.html(content).stop().slideDown(duration);
@@ -31,7 +31,7 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 
 
                 if (data.footer) {
                     content = data.footer;
-                    if (data.footer_type === 'md') {
+                    if (data.footerType === 'md') {
                         content = marked(content);
                     }
                     $footer.html(content).stop().slideDown(duration);

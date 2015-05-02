@@ -337,9 +337,9 @@ class App {
         if (!$this->get_option("custom.enabled", false)) {
             return array(
                 "header" => null,
-                "header_type" => null,
+                "headerType" => null,
                 "footer" => null,
-                "footer_type" => null
+                "footerType" => null
             );
         }
 
@@ -374,9 +374,9 @@ class App {
 
         return array(
             "header" => $header,
-            "header_type" => $header_type,
+            "headerType" => $header_type,
             "footer" => $footer,
-            "footer_type" => $footer_type
+            "footerType" => $footer_type
         );
     }
 }
