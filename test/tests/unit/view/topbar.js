@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/topbar';
-var DEPS = ['$', 'config', 'view/root'];
+var DEPS = ['$', 'core/settings', 'view/root'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -10,11 +10,11 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xConfig = {setup: {VERSION: util.uniqId()}};
+        this.xSettings = {version: util.uniqId()};
         this.xRoot = {$el: null};
         this.applyFn = function () {
 
-            return this.definition.fn($, this.xConfig, this.xRoot);
+            return this.definition.fn($, this.xSettings, this.xRoot);
         };
     });
 
@@ -104,7 +104,7 @@ describe('module \'' + ID + '\'', function () {
         it('#backlink has correct title', function () {
 
             this.applyFn();
-            assert.strictEqual($('#backlink').attr('title'), 'powered by h5ai ' + this.xConfig.setup.VERSION);
+            assert.strictEqual($('#backlink').attr('title'), 'powered by h5ai ' + this.xSettings.version);
         });
 
         it('#backlink has correct text', function () {

@@ -19,7 +19,7 @@ describe('module \'' + ID + '\'', function () {
             setup: {
                 APP_HREF: util.uniqId(),
                 ROOT_HREF: util.uniqId(),
-                CURRENT_HREF: util.uniqId()
+                VERSION: util.uniqId()
             }
         };
         this.applyFn = function () {
@@ -101,12 +101,12 @@ describe('module \'' + ID + '\'', function () {
         });
     });
 
-    describe('.currentHref', function () {
+    describe('.version', function () {
 
         it('set correct', function () {
 
             var instance = this.applyFn();
-            assert.strictEqual(instance.currentHref, this.xConfig.setup.CURRENT_HREF);
+            assert.strictEqual(instance.version, this.xConfig.setup.VERSION);
         });
     });
 });
