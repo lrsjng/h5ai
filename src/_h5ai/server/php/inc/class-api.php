@@ -77,7 +77,7 @@ class Api {
     private function on_getThumbHref() {
 
         Util::json_fail(Util::RC_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
-        Util::json_fail(Util::RC_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPG);
+        Util::json_fail(Util::RC_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
 
         $type = Util::get_request_param("type");
         $src_url = Util::get_request_param("href");

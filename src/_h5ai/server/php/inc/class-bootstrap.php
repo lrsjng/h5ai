@@ -4,13 +4,14 @@ class Bootstrap {
 
     public static function run() {
 
-        Bootstrap::setup_misc();
-        Bootstrap::setup_admin();
-        Bootstrap::setup_php();
-        Bootstrap::setup_server();
-        Bootstrap::setup_paths();
-        Bootstrap::setup_cache();
-        Bootstrap::setup_ext_cmds();
+        $bs = new Bootstrap();
+        $bs->setup_php();
+        $bs->setup_app();
+        $bs->setup_admin();
+        $bs->setup_server();
+        $bs->setup_paths();
+        $bs->setup_cache();
+        $bs->setup_ext_cmds();
 
         $app = new App();
         if (Util::is_post_request()) {
@@ -23,11 +24,25 @@ class Bootstrap {
     }
 
 
-    private static function setup_misc() {
+    private function setup_php() {
 
         putenv("LANG=en_US.UTF-8");
         setlocale(LC_CTYPE, "en_US.UTF-8");
         date_default_timezone_set("UTC");
+
+        define("MIN_PHP_VERSION", "5.4.0");
+        define("HAS_MIN_PHP_VERSION", version_compare(PHP_VERSION, MIN_PHP_VERSION) >= 0);
+        define("HAS_PHP_EXIF", function_exists("exif_thumbnail"));
+        $has_php_jpeg = false;
+        if (function_exists("gd_info")) {
+            $infos = gd_info();
+            $has_php_jpeg = array_key_exists("JPEG Support", $infos) && $infos["JPEG Support"];
+        }
+        define("HAS_PHP_JPEG", $has_php_jpeg);
+    }
+
+
+    private function setup_app() {
 
         define("NAME", "{{pkg.name}}");
         define("VERSION", "{{pkg.version}}");
@@ -38,7 +53,7 @@ class Bootstrap {
     }
 
 
-    private static function setup_admin() {
+    private function setup_admin() {
 
         session_start();
         define("AS_ADMIN_SESSION_KEY", "__H5AI_AS_ADMIN__");
@@ -47,21 +62,7 @@ class Bootstrap {
     }
 
 
-    private static function setup_php() {
-
-        define("MIN_PHP_VERSION", "5.4.0");
-        define("HAS_MIN_PHP_VERSION", version_compare(PHP_VERSION, MIN_PHP_VERSION) >= 0);
-        define("HAS_PHP_EXIF", function_exists("exif_thumbnail"));
-        $has_php_jpg = false;
-        if (function_exists("gd_info")) {
-            $infos = gd_info();
-            $has_php_jpg = array_key_exists("JPG Support", $infos) && $infos["JPG Support"] || array_key_exists("JPEG Support", $infos) && $infos["JPEG Support"];
-        }
-        define("HAS_PHP_JPG", $has_php_jpg);
-    }
-
-
-    private static function setup_server() {
+    private function setup_server() {
 
         $server_name = null;
         $server_version = null;
@@ -77,7 +78,7 @@ class Bootstrap {
     }
 
 
-    private static function setup_paths() {
+    private function setup_paths() {
 
         $script_name = getenv("SCRIPT_NAME");
         if (SERVER_NAME === "lighttpd") {
@@ -108,7 +109,7 @@ class Bootstrap {
     }
 
 
-    private static function setup_cache() {
+    private function setup_cache() {
 
         define("CACHE_HREF", Util::normalize_path(APP_HREF . "/cache", true));
         define("CACHE_PATH", Util::normalize_path(APP_PATH . "/cache", false));
@@ -116,7 +117,7 @@ class Bootstrap {
     }
 
 
-    private static function setup_ext_cmds() {
+    private function setup_ext_cmds() {
 
         define("CMDS_PATH", Util::normalize_path(CACHE_PATH . "/cmds.json", false));
 

@@ -72,7 +72,7 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
         addTest(
             'Image thumbs', 'PHP GD extension with JPEG support available',
-            setup.HAS_PHP_JPG
+            setup.HAS_PHP_JPEG
         );
 
         addTest(
