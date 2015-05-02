@@ -39,23 +39,44 @@ class App {
 
     public function get_setup() {
 
-        $consts = get_defined_constants(true);
-        $setup = $consts["user"];
+        $keys = array(
+            "APP_HREF",
+            "ROOT_HREF",
+            "VERSION",
 
-        $setup["PHP_VERSION"] = PHP_VERSION;
-        unset($setup["AS_ADMIN_SESSION_KEY"]);
-        unset($setup["PASSHASH"]);
+            "AS_ADMIN",
+            "HAS_CUSTOM_PASSHASH"
+        );
 
-        if (!AS_ADMIN) {
-            unset($setup["APP_PATH"]);
-            unset($setup["CACHE_PATH"]);
-            unset($setup["CURRENT_PATH"]);
-            unset($setup["PHP_VERSION"]);
-            unset($setup["ROOT_PATH"]);
-            unset($setup["SERVER_NAME"]);
-            unset($setup["SERVER_VERSION"]);
+        if (AS_ADMIN) {
+            $keys = array_merge($keys, array(
+                "PHP_VERSION",
+                "MIN_PHP_VERSION",
+                "HAS_MIN_PHP_VERSION",
+                "HAS_PHP_EXIF",
+                "HAS_PHP_JPEG",
+
+                "SERVER_NAME",
+                "SERVER_VERSION",
+                "HAS_SERVER",
+
+                "INDEX_HREF",
+
+                "HAS_WRITABLE_CACHE",
+
+                "HAS_CMD_TAR",
+                "HAS_CMD_ZIP",
+                "HAS_CMD_CONVERT",
+                "HAS_CMD_FFMPEG",
+                "HAS_CMD_AVCONV",
+                "HAS_CMD_DU"
+            ));
         }
 
+        $setup = array();
+        foreach ($keys as $key) {
+            $setup[$key] = constant($key);
+        }
         return $setup;
     }
 
