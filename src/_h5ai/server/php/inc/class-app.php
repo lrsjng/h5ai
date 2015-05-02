@@ -259,7 +259,7 @@ class App {
     }
 
 
-    public function get_l10n_list() {
+    public function get_langs() {
 
         $langs = array();
         $l10n_path = APP_PATH . "/conf/l10n";

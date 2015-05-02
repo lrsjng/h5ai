@@ -41,29 +41,12 @@ class Api {
 
         $response = array();
 
-        if (Util::get_boolean_request_param("setup", false)) {
+        foreach (array("setup", "options", "types", "theme", "langs") as $name) {
+            if (Util::get_boolean_request_param($name, false)) {
 
-            $response["setup"] = $this->app->get_setup();
-        }
-
-        if (Util::get_boolean_request_param("options", false)) {
-
-            $response["options"] = $this->app->get_options();
-        }
-
-        if (Util::get_boolean_request_param("types", false)) {
-
-            $response["types"] = $this->app->get_types();
-        }
-
-        if (Util::get_boolean_request_param("theme", false)) {
-
-            $response["theme"] = $this->app->get_theme();
-        }
-
-        if (Util::get_boolean_request_param("langs", false)) {
-
-            $response["langs"] = $this->app->get_l10n_list();
+                $methodname = "get_${name}";
+                $response[$name] = $this->app->$methodname();
+            }
         }
 
         if (Util::get_boolean_request_param("l10n", false)) {
