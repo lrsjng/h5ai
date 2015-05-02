@@ -3,11 +3,10 @@
 class Util {
 
 
-    const RC_SUCCESS = "RC_SUCCESS";
-    const RC_MISSING_PARAM = "RC_MISSING_PARAM";
-    const RC_FAILED = "RC_FAILED";
-    const RC_DISABLED = "RC_DISABLED";
-    const RC_UNSUPPORTED = "RC_UNSUPPORTED";
+    const ERR_MISSING_PARAM = "ERR_MISSING_PARAM";
+    const ERR_FAILED = "ERR_FAILED";
+    const ERR_DISABLED = "ERR_DISABLED";
+    const ERR_UNSUPPORTED = "ERR_UNSUPPORTED";
 
 
     public static function normalize_path($path, $trailing_slash = false) {
@@ -19,20 +18,16 @@ class Util {
 
     public static function json_exit($obj = array()) {
 
-        if (!isset($obj["code"])) {
-            $obj["code"] = Util::RC_SUCCESS;
-        }
-
         header("Content-type: application/json;charset=utf-8");
         echo json_encode($obj);
         exit;
     }
 
 
-    public static function json_fail($code, $msg = "", $cond = true) {
+    public static function json_fail($err, $msg = "", $cond = true) {
 
         if ($cond) {
-            Util::json_exit(array("code" => $code, "msg" => $msg));
+            Util::json_exit(array("err" => $err, "msg" => $msg));
         }
     }
 
@@ -46,7 +41,7 @@ class Util {
     public static function get_request_param($key, $default = null) {
 
         if (!array_key_exists($key, $_POST)) {
-            Util::json_fail(Util::RC_MISSING_PARAM, "parameter '$key' is missing", $default === null);
+            Util::json_fail(Util::ERR_MISSING_PARAM, "parameter '$key' is missing", $default === null);
             return $default;
         }
 

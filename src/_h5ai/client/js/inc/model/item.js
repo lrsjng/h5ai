@@ -46,7 +46,7 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         }
     }
 
-    function getItem(absHref, time, size, isManaged, isContentFetched, md5, sha1) {
+    function getItem(absHref, time, size, isManaged, isContentFetched) {
 
         absHref = location.forceEncoding(absHref);
 
@@ -67,12 +67,6 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         }
         if (isContentFetched) {
             self.isContentFetched = true;
-        }
-        if (md5) {
-            self.md5 = md5;
-        }
-        if (sha1) {
-            self.sha1 = sha1;
         }
 
         return self;
@@ -111,7 +105,7 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
 
                 if (response.items) {
                     _.each(response.items, function (item) {
-                        getItem(item.absHref, item.time, item.size, item.is_managed, item.content, item.md5, item.sha1);
+                        getItem(item.absHref, item.time, item.size, item.isManaged, item.content);
                     });
                 }
 

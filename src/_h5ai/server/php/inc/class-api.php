@@ -15,7 +15,7 @@ class Api {
 
         $action = Util::get_request_param("action");
         $supported = array("login", "logout", "get", "getThumbHref", "download");
-        Util::json_fail(Util::RC_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
+        Util::json_fail(Util::ERR_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
 
         $methodname = "on_${action}";
         $this->$methodname();
@@ -26,14 +26,14 @@ class Api {
 
         $pass = Util::get_request_param("pass");
         $_SESSION[AS_ADMIN_SESSION_KEY] = sha1($pass) === PASSHASH;
-        Util::json_exit(array("as_admin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
+        Util::json_exit(array("asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
     }
 
 
     private function on_logout() {
 
         $_SESSION[AS_ADMIN_SESSION_KEY] = false;
-        Util::json_exit(array("as_admin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
+        Util::json_exit(array("asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
     }
 
 
@@ -76,8 +76,8 @@ class Api {
 
     private function on_getThumbHref() {
 
-        Util::json_fail(Util::RC_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
-        Util::json_fail(Util::RC_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
+        Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
+        Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
 
         $type = Util::get_request_param("type");
         $src_url = Util::get_request_param("href");
@@ -86,7 +86,7 @@ class Api {
 
         $thumb = new Thumb($this->app);
         $thumb_url = $thumb->thumb($type, $src_url, $width, $height);
-        Util::json_fail(Util::RC_FAILED, "thumbnail creation failed", $thumb_url === null);
+        Util::json_fail(Util::ERR_FAILED, "thumbnail creation failed", $thumb_url === null);
 
         Util::json_exit(array("absHref" => $thumb_url));
     }
@@ -94,7 +94,7 @@ class Api {
 
     private function on_download() {
 
-        Util::json_fail(Util::RC_DISABLED, "downloads disabled", !$this->app->get_option("download.enabled", false));
+        Util::json_fail(Util::ERR_DISABLED, "downloads disabled", !$this->app->get_option("download.enabled", false));
 
         $as = Util::get_request_param("as");
         $type = Util::get_request_param("type");
@@ -110,7 +110,7 @@ class Api {
         header("Connection: close");
         $rc = $archive->output($type, $hrefs);
 
-        Util::json_fail(Util::RC_FAILED, "packaging failed", $rc !== 0);
+        Util::json_fail(Util::ERR_FAILED, "packaging failed", $rc !== 0);
         exit;
     }
 }

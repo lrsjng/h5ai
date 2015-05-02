@@ -37,7 +37,6 @@ class Item {
     public $app;
     public $path, $url, $date, $size;
     public $is_folder, $is_content_fetched;
-    public $md5, $sha1;
 
 
     private function __construct($app, $path) {
@@ -62,11 +61,8 @@ class Item {
         );
 
         if ($this->is_folder) {
-            $obj["is_managed"] = $this->app->is_managed_url($this->url);
+            $obj["isManaged"] = $this->app->is_managed_url($this->url);
             $obj["content"] = $this->is_content_fetched;
-        } else {
-            $obj["md5"] = $this->md5;
-            $obj["sha1"] = $this->sha1;
         }
 
         return $obj;
