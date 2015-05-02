@@ -170,7 +170,6 @@ class Util {
 
         } else if (is_dir($path)) {
 
-            $options = $app->get_options();
             if ($app->get_option("foldersize.enabled", false)) {
                 if (HAS_CMD_DU && $app->get_option("foldersize.type", null) === "shell-du") {
                     $cmdv = array("du", "-sk", $path);
