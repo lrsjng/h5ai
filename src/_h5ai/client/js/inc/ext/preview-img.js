@@ -27,7 +27,7 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
             height: 0
         }, function (json) {
 
-            callback(json && json.absHref ? json.absHref : null);
+            callback(json && json.href ? json.href : null);
         });
     }
 

@@ -88,7 +88,7 @@ class Api {
         $thumb_href = $thumb->thumb($type, $src_href, $width, $height);
         Util::json_fail(Util::ERR_FAILED, "thumbnail creation failed", $thumb_href === null);
 
-        Util::json_exit(array("absHref" => $thumb_href));
+        Util::json_exit(array("href" => $thumb_href));
     }
 
 

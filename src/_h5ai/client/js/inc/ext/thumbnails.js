@@ -21,7 +21,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
             height: settings.size
         }, function (json) {
 
-            callback(json && json.absHref ? json.absHref : null);
+            callback(json && json.href ? json.href : null);
         });
     }
 
