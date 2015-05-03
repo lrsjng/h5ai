@@ -238,10 +238,28 @@ class App {
     }
 
 
-    public function get_fallback() {
+    private function get_current_path() {
+
+        $uri_parts = parse_url(getenv("REQUEST_URI"));
+        $current_href = Util::normalize_path($uri_parts["path"], true);
+        $current_path = $this->to_path($current_href);
+
+        if (!is_dir($current_path)) {
+            $current_path = Util::normalize_path(dirname($current_path), false);
+        }
+
+        return $current_path;
+    }
+
+
+    public function get_fallback($path = null) {
+
+        if (!$path) {
+            $path = $this->get_current_path();
+        }
 
         $cache = array();
-        $folder = Item::get($this, CURRENT_PATH, $cache);
+        $folder = Item::get($this, $path, $cache);
         $items = $folder->get_content($cache);
         uasort($items, array("Item", "cmp"));
 

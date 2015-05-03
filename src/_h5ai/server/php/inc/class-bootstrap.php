@@ -90,17 +90,6 @@ class Bootstrap {
         define("ROOT_HREF", Util::normalize_path(dirname(APP_HREF), true));
         define("ROOT_PATH", Util::normalize_path(dirname(APP_PATH), false));
 
-        $uri_parts = parse_url(getenv("REQUEST_URI"));
-        $current_href = Util::normalize_path($uri_parts["path"], true);
-        $rel_href = substr($current_href, strlen(ROOT_HREF));
-        $current_path = Util::normalize_path(ROOT_PATH . "/" . rawurldecode($rel_href));
-        if (!is_dir($current_path)) {
-            $current_href = Util::normalize_path(dirname($current_href), true);
-            $current_path = Util::normalize_path(dirname($current_path), false);
-        }
-        define("CURRENT_HREF", $current_href);
-        define("CURRENT_PATH", $current_path);
-
         $index_href = null;
         if (@is_readable(Util::normalize_path(APP_PATH . "/server/php/index.php", false))) {
             $index_href = Util::normalize_path(APP_HREF . "/server/php/index.php", false);
