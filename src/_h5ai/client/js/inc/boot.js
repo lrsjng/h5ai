@@ -6,19 +6,19 @@ modulejs.define('boot', ['$'], function ($) {
 
     var module = $('script[data-module]').data('module');
     var data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true};
-    var url;
+    var href;
 
     if (module === 'index') {
-        url = '.';
+        href = '.';
     } else if (module === 'info') {
         data.updatecmds = true;
-        url = 'server/php/index.php';
+        href = 'server/php/index.php';
     } else {
         return;
     }
 
     $.ajax({
-        url: url,
+        url: href,
         data: data,
         type: 'post',
         dataType: 'json'

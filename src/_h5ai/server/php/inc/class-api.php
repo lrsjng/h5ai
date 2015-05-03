@@ -58,16 +58,16 @@ class Api {
 
         if (Util::get_boolean_request_param("custom", false)) {
 
-            $url = Util::get_request_param("customHref");
-            $response["custom"] = $this->app->get_customizations($url);
+            $href = Util::get_request_param("customHref");
+            $response["custom"] = $this->app->get_customizations($href);
         }
 
         if (Util::get_boolean_request_param("items", false)) {
 
-            $url = Util::get_request_param("itemsHref");
+            $href = Util::get_request_param("itemsHref");
             $what = Util::get_request_param("itemsWhat");
             $what = is_numeric($what) ? intval($what, 10) : 1;
-            $response["items"] = $this->app->get_items($url, $what);
+            $response["items"] = $this->app->get_items($href, $what);
         }
 
         Util::json_exit($response);
@@ -80,15 +80,15 @@ class Api {
         Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
 
         $type = Util::get_request_param("type");
-        $src_url = Util::get_request_param("href");
+        $src_href = Util::get_request_param("href");
         $width = Util::get_request_param("width");
         $height = Util::get_request_param("height");
 
         $thumb = new Thumb($this->app);
-        $thumb_url = $thumb->thumb($type, $src_url, $width, $height);
-        Util::json_fail(Util::ERR_FAILED, "thumbnail creation failed", $thumb_url === null);
+        $thumb_href = $thumb->thumb($type, $src_href, $width, $height);
+        Util::json_fail(Util::ERR_FAILED, "thumbnail creation failed", $thumb_href === null);
 
-        Util::json_exit(array("absHref" => $thumb_url));
+        Util::json_exit(array("absHref" => $thumb_href));
     }
 
 

@@ -23,9 +23,9 @@ class Thumb {
     }
 
 
-    public function thumb($type, $source_url, $width, $height) {
+    public function thumb($type, $source_href, $width, $height) {
 
-        $source_path = $this->app->to_path($source_url);
+        $source_path = $this->app->to_path($source_href);
         if (!file_exists($source_path) || Util::starts_with($source_path, CACHE_PATH)) {
             return null;
         }
@@ -55,7 +55,7 @@ class Thumb {
 
         $name = "thumb-" . sha1("$source_path") . "-" . $width . "x" . $height . ".jpg";
         $thumb_path = $this->thumbs_path . "/" . $name;
-        $thumb_url = $this->thumbs_href . "/" . $name;
+        $thumb_href = $this->thumbs_href . "/" . $name;
 
         if (!file_exists($thumb_path) || filemtime($source_path) >= filemtime($thumb_path)) {
 
@@ -77,7 +77,7 @@ class Thumb {
             $image->save_dest_jpeg($thumb_path, 80);
         }
 
-        return file_exists($thumb_path) ? $thumb_url : null;
+        return file_exists($thumb_path) ? $thumb_href : null;
     }
 
 

@@ -110,7 +110,7 @@ class App {
     }
 
 
-    public function to_url($path, $trailing_slash = true) {
+    public function to_href($path, $trailing_slash = true) {
 
         $rel_path = substr($path, strlen(ROOT_PATH));
         $parts = explode("/", $rel_path);
@@ -125,10 +125,10 @@ class App {
     }
 
 
-    public function to_path($url) {
+    public function to_path($href) {
 
-        $rel_url = substr($url, strlen(ROOT_HREF));
-        return Util::normalize_path(ROOT_PATH . "/" . rawurldecode($rel_url));
+        $rel_href = substr($href, strlen(ROOT_HREF));
+        return Util::normalize_path(ROOT_PATH . "/" . rawurldecode($rel_href));
     }
 
 
@@ -157,7 +157,7 @@ class App {
             foreach (scandir($path) as $name) {
                 if (
                     $this->is_hidden($name)
-                    || $this->is_hidden($this->to_url($path) . $name)
+                    || $this->is_hidden($this->to_href($path) . $name)
                     || (!is_readable($path .'/'. $name) && $this->get_option("view.hideIf403", false))
                 ) {
                     continue;
@@ -169,9 +169,9 @@ class App {
     }
 
 
-    public function is_managed_url($url) {
+    public function is_managed_href($href) {
 
-        return $this->is_managed_path($this->to_path($url));
+        return $this->is_managed_path($this->to_path($href));
     }
 
 
@@ -205,14 +205,14 @@ class App {
     }
 
 
-    public function get_items($url, $what) {
+    public function get_items($href, $what) {
 
-        if (!$this->is_managed_url($url)) {
+        if (!$this->is_managed_href($href)) {
             return array();
         }
 
         $cache = array();
-        $folder = Item::get($this, $this->to_path($url), $cache);
+        $folder = Item::get($this, $this->to_path($href), $cache);
 
         // add content of subfolders
         if ($what >= 2 && $folder !== null) {
@@ -286,7 +286,7 @@ class App {
 
             $html .= "<tr>";
             $html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/" . $type . ".png' alt='" . $type . "'/></td>";
-            $html .= "<td class='fb-n'><a href='" . $item->url . "'>" . basename($item->path) . "</a></td>";
+            $html .= "<td class='fb-n'><a href='" . $item->href . "'>" . basename($item->path) . "</a></td>";
             $html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
             $html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
             $html .= "</tr>";
@@ -350,7 +350,7 @@ class App {
     }
 
 
-    public function get_customizations($url) {
+    public function get_customizations($href) {
 
         if (!$this->get_option("custom.enabled", false)) {
             return array(
@@ -361,7 +361,7 @@ class App {
             );
         }
 
-        $path = $this->to_path($url);
+        $path = $this->to_path($href);
 
         $header = null;
         $header_type = null;

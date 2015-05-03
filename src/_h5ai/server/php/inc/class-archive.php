@@ -15,9 +15,9 @@ class Archive {
     }
 
 
-    public function output($type, $base_url, $urls) {
+    public function output($type, $base_href, $hrefs) {
 
-        $this->base_path = $this->app->to_path($base_url);
+        $this->base_path = $this->app->to_path($base_href);
         if (!$this->app->is_managed_path($this->base_path)) {
             return 500;
         }
@@ -25,7 +25,7 @@ class Archive {
         $this->dirs = array();
         $this->files = array();
 
-        $this->add_hrefs($urls);
+        $this->add_hrefs($hrefs);
 
         if (count($this->dirs) === 0 && count($this->files) === 0) {
             if ($type === "php-tar") {
@@ -150,9 +150,9 @@ class Archive {
     }
 
 
-    private function add_hrefs($urls) {
+    private function add_hrefs($hrefs) {
 
-        foreach ($urls as $href) {
+        foreach ($hrefs as $href) {
 
             if (trim($href) === "") {
                 continue;
@@ -161,7 +161,7 @@ class Archive {
             $d = Util::normalize_path(dirname($href), true);
             $n = basename($href);
 
-            if ($this->app->is_managed_url($d) && !$this->app->is_hidden($n)) {
+            if ($this->app->is_managed_href($d) && !$this->app->is_hidden($n)) {
 
                 $real_file = $this->app->to_path($href);
                 $archived_file = preg_replace("!^" . preg_quote(Util::normalize_path($this->base_path, true)) . "!", "", $real_file);

@@ -35,7 +35,7 @@ class Item {
 
 
     public $app;
-    public $path, $url, $date, $size;
+    public $path, $href, $date, $size;
     public $is_folder, $is_content_fetched;
 
 
@@ -45,7 +45,7 @@ class Item {
 
         $this->path = Util::normalize_path($path, false);
         $this->is_folder = is_dir($this->path);
-        $this->url = $app->to_url($this->path, $this->is_folder);
+        $this->href = $app->to_href($this->path, $this->is_folder);
         $this->date = @filemtime($this->path);
         $this->size = Util::filesize($app, $this->path);
         $this->is_content_fetched = false;
@@ -55,13 +55,13 @@ class Item {
     public function to_json_object() {
 
         $obj = array(
-            "absHref" => $this->url,
+            "absHref" => $this->href,
             "time" => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
             "size" => $this->size
         );
 
         if ($this->is_folder) {
-            $obj["isManaged"] = $this->app->is_managed_url($this->url);
+            $obj["isManaged"] = $this->app->is_managed_href($this->href);
             $obj["content"] = $this->is_content_fetched;
         }
 
@@ -83,7 +83,7 @@ class Item {
 
         $items = array();
 
-        if (!$this->app->is_managed_url($this->url)) {
+        if (!$this->app->is_managed_href($this->href)) {
             return $items;
         }
 
