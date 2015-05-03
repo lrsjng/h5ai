@@ -95,7 +95,7 @@ modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/settings
 
                 _.each(json.items, function (jsonItem) {
 
-                    var e = Item.get(jsonItem.href, jsonItem.time, jsonItem.size, jsonItem.isManaged, jsonItem.content);
+                    var e = Item.get(jsonItem);
                     found[e.absHref] = true;
                 });
 

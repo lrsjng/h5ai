@@ -46,26 +46,32 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         }
     }
 
-    function getItem(absHref, time, size, isManaged, isContentFetched) {
+    function getItem(options) {
 
-        absHref = location.forceEncoding(absHref);
-
-        if (!startsWith(absHref, settings.rootHref)) {
+        if (_.isString(options)) {
+            options = {href: options};
+        } else if (!options || !_.isString(options.href)) {
             return null;
         }
 
-        var self = cache[absHref] || new Item(absHref);
+        var href = location.forceEncoding(options.href);
 
-        if (_.isNumber(time)) {
-            self.time = time;
+        if (!startsWith(href, settings.rootHref)) {
+            return null;
         }
-        if (_.isNumber(size)) {
-            self.size = size;
+
+        var self = cache[href] || new Item(href);
+
+        if (_.isNumber(options.time)) {
+            self.time = options.time;
         }
-        if (isManaged) {
+        if (_.isNumber(options.size)) {
+            self.size = options.size;
+        }
+        if (options.managed) {
             self.isManaged = true;
         }
-        if (isContentFetched) {
+        if (options.fetched) {
             self.isContentFetched = true;
         }
 
@@ -105,7 +111,8 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
 
                 if (response.items) {
                     _.each(response.items, function (jsonItem) {
-                        getItem(jsonItem.href, jsonItem.time, jsonItem.size, jsonItem.isManaged, jsonItem.content);
+
+                        getItem(jsonItem);
                     });
                 }
 

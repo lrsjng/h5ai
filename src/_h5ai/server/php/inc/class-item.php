@@ -61,8 +61,8 @@ class Item {
         );
 
         if ($this->is_folder) {
-            $obj["isManaged"] = $this->app->is_managed_href($this->href);
-            $obj["content"] = $this->is_content_fetched;
+            $obj["managed"] = $this->app->is_managed_href($this->href);
+            $obj["fetched"] = $this->is_content_fetched;
         }
 
         return $obj;
