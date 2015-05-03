@@ -320,17 +320,12 @@ class App {
 
     public function get_l10n($iso_codes) {
 
-        if (!is_array($iso_codes)) {
-            $iso_codes = func_get_args();
-        }
-
         $results = array();
+
         foreach ($iso_codes as $iso_code) {
-            if ($iso_code !== "") {
-                $file = APP_PATH . "/conf/l10n/" . $iso_code . ".json";
-                $results[$iso_code] = Util::load_commented_json($file);
-                $results[$iso_code]["isoCode"] = $iso_code;
-            }
+            $file = APP_PATH . "/conf/l10n/" . $iso_code . ".json";
+            $results[$iso_code] = Util::load_commented_json($file);
+            $results[$iso_code]["isoCode"] = $iso_code;
         }
 
         return $results;

@@ -52,7 +52,7 @@ class Api {
         if (Util::get_boolean_request_param("l10n", false)) {
 
             $iso_codes = Util::get_request_param("l10nCodes");
-            $iso_codes = explode(":", $iso_codes);
+            $iso_codes = array_filter(explode(":", $iso_codes));
             $response["l10n"] = $this->app->get_l10n($iso_codes);
         }
 
