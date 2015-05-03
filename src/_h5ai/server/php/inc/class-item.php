@@ -55,7 +55,7 @@ class Item {
     public function to_json_object() {
 
         $obj = array(
-            "absHref" => $this->href,
+            "href" => $this->href,
             "time" => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
             "size" => $this->size
         );

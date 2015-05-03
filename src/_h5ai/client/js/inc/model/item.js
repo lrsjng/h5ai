@@ -104,8 +104,8 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
             server.request({action: 'get', items: true, itemsHref: self.absHref, itemsWhat: 1}, function (response) {
 
                 if (response.items) {
-                    _.each(response.items, function (item) {
-                        getItem(item.absHref, item.time, item.size, item.isManaged, item.content);
+                    _.each(response.items, function (jsonItem) {
+                        getItem(jsonItem.href, jsonItem.time, jsonItem.size, jsonItem.isManaged, jsonItem.content);
                     });
                 }
 
