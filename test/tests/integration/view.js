@@ -9,10 +9,8 @@ describe('view', function () {
         this.storeKey = '_h5ai';
         this.xConfig = {
             setup: {
-                API: true,
                 APP_HREF: util.uniqPath('-APP/'),
-                ROOT_HREF: util.uniqPath('-ROOT/'),
-                CURRENT_HREF: util.uniqPath('-CURRENT/')
+                ROOT_HREF: util.uniqPath('-ROOT/')
             }
         };
     });

@@ -6,7 +6,7 @@ class Archive {
     private static $TAR_PASSTHRU_CMD = "cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]";
     private static $ZIP_PASSTHRU_CMD = "cd [ROOTDIR] && zip - -- [FILES]";
 
-    private $app, $dirs, $files;
+    private $app, $base_path, $dirs, $files;
 
 
     public function __construct($app) {
@@ -15,7 +15,12 @@ class Archive {
     }
 
 
-    public function output($type, $urls) {
+    public function output($type, $base_url, $urls) {
+
+        $this->base_path = $this->app->to_path($base_url);
+        if (!$this->app->is_managed_path($this->base_path)) {
+            return 500;
+        }
 
         $this->dirs = array();
         $this->files = array();
@@ -24,9 +29,9 @@ class Archive {
 
         if (count($this->dirs) === 0 && count($this->files) === 0) {
             if ($type === "php-tar") {
-                $this->add_dir(CURRENT_PATH, "/");
+                $this->add_dir($this->base_path, "/");
             } else {
-                $this->add_dir(CURRENT_PATH, ".");
+                $this->add_dir($this->base_path, ".");
             }
         }
 
@@ -48,7 +53,7 @@ class Archive {
 
     private function shell_cmd($cmd) {
 
-        $cmd = str_replace("[ROOTDIR]", escapeshellarg(CURRENT_PATH), $cmd);
+        $cmd = str_replace("[ROOTDIR]", escapeshellarg($this->base_path), $cmd);
         $cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
         $cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
         try {
@@ -159,7 +164,7 @@ class Archive {
             if ($this->app->is_managed_url($d) && !$this->app->is_hidden($n)) {
 
                 $real_file = $this->app->to_path($href);
-                $archived_file = preg_replace("!^" . preg_quote(Util::normalize_path(CURRENT_PATH, true)) . "!", "", $real_file);
+                $archived_file = preg_replace("!^" . preg_quote(Util::normalize_path($this->base_path, true)) . "!", "", $real_file);
 
                 if (is_dir($real_file)) {
                     $this->add_dir($real_file, $archived_file);

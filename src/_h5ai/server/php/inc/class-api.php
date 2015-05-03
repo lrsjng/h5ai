@@ -98,6 +98,7 @@ class Api {
 
         $as = Util::get_request_param("as");
         $type = Util::get_request_param("type");
+        $base_href = Util::get_request_param("baseHref");
         $hrefs = Util::get_request_param("hrefs");
 
         $archive = new Archive($this->app);
@@ -108,7 +109,7 @@ class Api {
         header("Content-Type: application/octet-stream");
         header("Content-Disposition: attachment; filename=\"$as\"");
         header("Connection: close");
-        $rc = $archive->output($type, $hrefs);
+        $rc = $archive->output($type, $base_href, $hrefs);
 
         Util::json_fail(Util::ERR_FAILED, "packaging failed", $rc !== 0);
         exit;

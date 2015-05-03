@@ -42,6 +42,7 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
                 action: 'download',
                 as: name + '.' + extension,
                 type: type,
+                baseHref: location.getAbsHref(),
                 hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
             };
 
