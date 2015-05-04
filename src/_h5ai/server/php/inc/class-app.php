@@ -22,18 +22,9 @@ class App {
     }
 
 
-    public function get_option($keypath, $default) {
+    public function get_option($keypath = "", $default = null) {
 
-        $value = $this->options;
-        $keys = array_filter(explode(".", $keypath));
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $value)) {
-                $value = $value[$key];
-            } else {
-                return $default;
-            }
-        }
-        return $value;
+        return Util::array_query($this->options, $keypath, $default);
     }
 
 

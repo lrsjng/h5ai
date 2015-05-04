@@ -10,7 +10,7 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 
 
     function onLocationChanged(item) {
 
-        server.request({action: 'get', custom: true, customHref: item.absHref}, function (response) {
+        server.request({action: 'get', custom: item.absHref}, function (response) {
 
             var hasHeader;
             var hasFooter;

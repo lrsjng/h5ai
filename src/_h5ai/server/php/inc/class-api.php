@@ -49,23 +49,24 @@ class Api {
             }
         }
 
-        if (Util::get_boolean_request_param("l10n", false)) {
+        if (Util::get_request_param("l10n", false)) {
 
-            $iso_codes = Util::get_request_param("l10nCodes");
-            $iso_codes = array_filter(explode(":", $iso_codes));
+            $iso_codes = Util::get_request_param("l10n");
+            $iso_codes = array_filter($iso_codes);
             $response["l10n"] = $this->app->get_l10n($iso_codes);
         }
 
-        if (Util::get_boolean_request_param("custom", false)) {
+        if (Util::get_request_param("custom", false)) {
 
-            $href = Util::get_request_param("customHref");
+            $href = Util::get_request_param("custom");
             $response["custom"] = $this->app->get_customizations($href);
         }
 
-        if (Util::get_boolean_request_param("items", false)) {
+        if (Util::get_request_param("items", false)) {
 
-            $href = Util::get_request_param("itemsHref");
-            $what = Util::get_request_param("itemsWhat");
+            $items = Util::get_request_param("items");
+            $href = $items["href"];
+            $what = $items["what"];
             $what = is_numeric($what) ? intval($what, 10) : 1;
             $response["items"] = $this->app->get_items($href, $what);
         }

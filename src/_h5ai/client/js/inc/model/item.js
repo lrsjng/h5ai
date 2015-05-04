@@ -107,7 +107,7 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         if (self.isContentFetched) {
             callback(self);
         } else {
-            server.request({action: 'get', items: true, itemsHref: self.absHref, itemsWhat: 1}, function (response) {
+            server.request({action: 'get', items: {href: self.absHref, what: 1}}, function (response) {
 
                 if (response.items) {
                     _.each(response.items, function (jsonItem) {

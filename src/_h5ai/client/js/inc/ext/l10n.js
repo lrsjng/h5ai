@@ -67,7 +67,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/event', 'core/format', 'core/langs'
             callback(loaded[isoCode]);
         } else {
 
-            server.request({action: 'get', l10n: true, l10nCodes: isoCode}, function (response) {
+            server.request({action: 'get', l10n: [isoCode]}, function (response) {
 
                 var json = response.l10n && response.l10n[isoCode] ? response.l10n[isoCode] : {};
                 loaded[isoCode] = _.extend({}, defaultTranslations, json, {isoCode: isoCode});

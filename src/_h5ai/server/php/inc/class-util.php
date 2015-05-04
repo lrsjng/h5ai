@@ -32,8 +32,25 @@ class Util {
     }
 
 
+    public static function array_query($array, $keypath = "", $default = null) {
+
+        $value = $array;
+
+        $keys = array_filter(explode(".", $keypath));
+        foreach ($keys as $key) {
+            if (!is_array($value) || !array_key_exists($key, $value)) {
+                return $default;
+            }
+            $value = $value[$key];
+        }
+
+        return $value;
+    }
+
+
     public static function is_post_request() {
 
+        // Logger::log("POSTED", $_POST);
         return (strtolower($_SERVER["REQUEST_METHOD"]) === "post");
     }
 
