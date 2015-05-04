@@ -20,14 +20,16 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
         }
 
         server.request({
-            action: 'getThumbHref',
-            type: 'img',
-            href: href,
-            width: settings.size,
-            height: 0
+            action: 'get',
+            thumbs: [{
+                type: 'img',
+                href: href,
+                width: settings.size,
+                height: 0
+            }]
         }, function (json) {
 
-            callback(json && json.href ? json.href : null);
+            callback(json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null);
         });
     }
 

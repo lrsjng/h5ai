@@ -14,7 +14,7 @@ class Api {
     public function apply() {
 
         $action = Util::get_request_param("action");
-        $supported = array("login", "logout", "get", "getThumbHref", "download");
+        $supported = array("login", "logout", "get", "download");
         Util::json_fail(Util::ERR_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
 
         $methodname = "on_${action}";
@@ -71,25 +71,16 @@ class Api {
             $response["items"] = $this->app->get_items($href, $what);
         }
 
+        if (Util::get_request_param("thumbs", false)) {
+
+            Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
+            Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
+
+            $thumbs = Util::get_request_param("thumbs");
+            $response["thumbs"] = $this->app->get_thumbs($thumbs);
+        }
+
         Util::json_exit($response);
-    }
-
-
-    private function on_getThumbHref() {
-
-        Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
-        Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
-
-        $type = Util::get_request_param("type");
-        $src_href = Util::get_request_param("href");
-        $width = Util::get_request_param("width");
-        $height = Util::get_request_param("height");
-
-        $thumb = new Thumb($this->app);
-        $thumb_href = $thumb->thumb($type, $src_href, $width, $height);
-        Util::json_fail(Util::ERR_FAILED, "thumbnail creation failed", $thumb_href === null);
-
-        Util::json_exit(array("href" => $thumb_href));
     }
 
 
@@ -103,8 +94,6 @@ class Api {
         $hrefs = Util::get_request_param("hrefs");
 
         $archive = new Archive($this->app);
-
-        $hrefs = explode("|:|", trim($hrefs));
 
         set_time_limit(0);
         header("Content-Type: application/octet-stream");

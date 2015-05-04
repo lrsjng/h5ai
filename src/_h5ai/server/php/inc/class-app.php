@@ -383,4 +383,24 @@ class App {
             "footerType" => $footer_type
         );
     }
+
+
+    public function get_thumbs($requests) {
+
+        $hrefs = [];
+
+        foreach ($requests as $req) {
+            $type = $req["type"];
+            $src_href = $req["href"];
+            $width = $req["width"];
+            $height = $req["height"];
+
+            $thumb = new Thumb($this);
+            $thumb_href = $thumb->thumb($type, $src_href, $width, $height);
+
+            $hrefs[] = $thumb_href;
+        }
+
+        return $hrefs;
+    }
 }

@@ -7,21 +7,23 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
             doc: ['x-pdf', 'x-ps'],
             delay: 1,
             size: 100,
-            exif: true
+            exif: false
         }, allsettings.thumbnails);
 
 
     function requestThumb(type, href, ratio, callback) {
 
         server.request({
-            action: 'getThumbHref',
-            type: type,
-            href: href,
-            width: Math.round(settings.size * ratio),
-            height: settings.size
+            action: 'get',
+            thumbs: [{
+                type: type,
+                href: href,
+                width: Math.round(settings.size * ratio),
+                height: settings.size
+            }]
         }, function (json) {
 
-            callback(json && json.href ? json.href : null);
+            callback(json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null);
         });
     }
 

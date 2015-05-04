@@ -42,9 +42,13 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
                 action: 'download',
                 as: name + '.' + extension,
                 type: type,
-                baseHref: location.getAbsHref(),
-                hrefs: _.pluck(selectedItems, 'absHref').join('|:|')
+                baseHref: location.getAbsHref()
             };
+
+        _.each(selectedItems, function (item, idx) {
+
+            query['hrefs[' + idx + ']'] = item.absHref;
+        });
 
         server.formRequest(query);
     }
