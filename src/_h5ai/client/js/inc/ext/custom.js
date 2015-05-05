@@ -12,26 +12,27 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 
 
         server.request({action: 'get', custom: item.absHref}, function (response) {
 
+            var custom = response && response.custom;
             var hasHeader;
             var hasFooter;
-            var data;
-            var content;
 
-            if (response) {
-                data = response.custom;
+            if (custom) {
+                var header = custom.header;
+                var footer = custom.footer;
+                var content;
 
-                if (data.header) {
-                    content = data.header;
-                    if (data.headerType === 'md') {
+                if (header.content) {
+                    content = header.content;
+                    if (header.type === 'md') {
                         content = marked(content);
                     }
                     $header.html(content).stop().slideDown(duration);
                     hasHeader = true;
                 }
 
-                if (data.footer) {
-                    content = data.footer;
-                    if (data.footerType === 'md') {
+                if (footer.content) {
+                    content = footer.content;
+                    if (footer.type === 'md') {
                         content = marked(content);
                     }
                     $footer.html(content).stop().slideDown(duration);

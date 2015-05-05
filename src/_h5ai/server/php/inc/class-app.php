@@ -340,10 +340,8 @@ class App {
 
         if (!$this->get_option("custom.enabled", false)) {
             return array(
-                "header" => null,
-                "headerType" => null,
-                "footer" => null,
-                "footerType" => null
+                "header" => array("content" => null, "type" => null),
+                "footer" => array("content" => null, "type" => null)
             );
         }
 
@@ -377,10 +375,8 @@ class App {
         }
 
         return array(
-            "header" => $header,
-            "headerType" => $header_type,
-            "footer" => $footer,
-            "footerType" => $footer_type
+            "header" => array("content" => $header, "type" => $header_type),
+            "footer" => array("content" => $footer, "type" => $footer_type)
         );
     }
 
