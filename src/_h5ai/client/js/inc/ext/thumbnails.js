@@ -9,25 +9,10 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
             size: 100,
             exif: false
         }, allsettings.thumbnails);
+    var landscapeRatio = 4 / 3;
 
 
-    function requestThumb(type, href, ratio, callback) {
-
-        server.request({
-            action: 'get',
-            thumbs: [{
-                type: type,
-                href: href,
-                width: Math.round(settings.size * ratio),
-                height: settings.size
-            }]
-        }, function (json) {
-
-            callback(json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null);
-        });
-    }
-
-    function checkItem(item) {
+    function queueItem(queue, item) {
 
         var type = null;
 
@@ -37,31 +22,80 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
             type = 'mov';
         } else if (_.contains(settings.doc, item.type)) {
             type = 'doc';
+        } else {
+            return;
         }
 
-        if (type) {
-            if (item.thumbSquare) {
-                item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
-            } else {
-                requestThumb(type, item.absHref, 1, function (src) {
+        if (item.thumbSquare) {
+            item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
+        } else {
+            queue.push({
+                type: type,
+                href: item.absHref,
+                ratio: 1,
+                callback: function (src) {
 
                     if (src && item.$view) {
                         item.thumbSquare = src;
                         item.$view.find('.icon.square img').addClass('thumb').attr('src', src);
                     }
-                });
-            }
-            if (item.thumbRational) {
-                item.$view.find('.icon.landscape img').addClass('thumb').attr('src', item.thumbRational);
-            } else {
-                requestThumb(type, item.absHref, 4 / 3, function (src) {
+                }
+            });
+        }
+
+        if (item.thumbRational) {
+            item.$view.find('.icon.landscape img').addClass('thumb').attr('src', item.thumbRational);
+        } else {
+            queue.push({
+                type: type,
+                href: item.absHref,
+                ratio: landscapeRatio,
+                callback: function (src) {
 
                     if (src && item.$view) {
                         item.thumbRational = src;
                         item.$view.find('.icon.landscape img').addClass('thumb').attr('src', src);
                     }
-                });
-            }
+                }
+            });
+        }
+    }
+
+    function requestQueue(queue) {
+
+        var thumbs = _.map(queue, function (req) {
+
+            return {
+                type: req.type,
+                href: req.href,
+                width: Math.round(settings.size * req.ratio),
+                height: settings.size
+            };
+        });
+
+        server.request({
+            action: 'get',
+            thumbs: thumbs
+        }, function (json) {
+
+            _.each(queue, function (req, idx) {
+
+                req.callback(json && json.thumbs ? json.thumbs[idx] : null);
+            });
+        });
+    }
+
+    function handleItems(items) {
+
+        var queue = [];
+
+        _.each(items, function (item) {
+
+            queueItem(queue, item);
+        });
+
+        if (queue.length) {
+            requestQueue(queue);
         }
     }
 
@@ -69,13 +103,13 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
 
         setTimeout(function () {
 
-            _.each(item.content, checkItem);
+            handleItems(item.content);
         }, settings.delay);
     }
 
     function onLocationRefreshed(item, added) {
 
-        _.each(added, checkItem);
+        handleItems(added);
     }
 
     function init() {
