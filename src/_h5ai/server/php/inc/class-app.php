@@ -386,15 +386,8 @@ class App {
         $hrefs = [];
 
         foreach ($requests as $req) {
-            $type = $req["type"];
-            $src_href = $req["href"];
-            $width = $req["width"];
-            $height = $req["height"];
-
             $thumb = new Thumb($this);
-            $thumb_href = $thumb->thumb($type, $src_href, $width, $height);
-
-            $hrefs[] = $thumb_href;
+            $hrefs[] = $thumb->thumb($req["type"], $req["href"], $req["width"], $req["height"]);
         }
 
         return $hrefs;

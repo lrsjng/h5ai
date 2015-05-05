@@ -28,7 +28,7 @@ class Bootstrap {
 
         putenv("LANG=en_US.UTF-8");
         setlocale(LC_CTYPE, "en_US.UTF-8");
-        date_default_timezone_set("UTC");
+        date_default_timezone_set(@date_default_timezone_get());
 
         define("MIN_PHP_VERSION", "5.4.0");
         define("HAS_MIN_PHP_VERSION", version_compare(PHP_VERSION, MIN_PHP_VERSION) >= 0);
