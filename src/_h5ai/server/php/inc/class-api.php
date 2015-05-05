@@ -14,7 +14,7 @@ class Api {
     public function apply() {
 
         $action = Util::get_request_param("action");
-        $supported = array("login", "logout", "get", "download");
+        $supported = ["login", "logout", "get", "download"];
         Util::json_fail(Util::ERR_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
 
         $methodname = "on_${action}";
@@ -26,22 +26,22 @@ class Api {
 
         $pass = Util::get_request_param("pass");
         $_SESSION[AS_ADMIN_SESSION_KEY] = sha1($pass) === PASSHASH;
-        Util::json_exit(array("asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
+        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
     }
 
 
     private function on_logout() {
 
         $_SESSION[AS_ADMIN_SESSION_KEY] = false;
-        Util::json_exit(array("asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]));
+        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
     }
 
 
     private function on_get() {
 
-        $response = array();
+        $response = [];
 
-        foreach (array("setup", "options", "types", "theme", "langs") as $name) {
+        foreach (["setup", "options", "types", "theme", "langs"] as $name) {
             if (Util::get_boolean_request_param($name, false)) {
 
                 $methodname = "get_${name}";

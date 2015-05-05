@@ -54,11 +54,11 @@ class Item {
 
     public function to_json_object() {
 
-        $obj = array(
+        $obj = [
             "href" => $this->href,
             "time" => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
             "size" => $this->size
-        );
+        ];
 
         if ($this->is_folder) {
             $obj["managed"] = $this->app->is_managed_href($this->href);
@@ -81,7 +81,7 @@ class Item {
 
     public function get_content(&$cache) {
 
-        $items = array();
+        $items = [];
 
         if (!$this->app->is_managed_href($this->href)) {
             return $items;

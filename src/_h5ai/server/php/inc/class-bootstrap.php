@@ -70,7 +70,7 @@ class Bootstrap {
         }
         define("SERVER_NAME", $server_name);
         define("SERVER_VERSION", $server_version);
-        define("HAS_SERVER", in_array($server_name, array("apache", "lighttpd", "nginx", "cherokee")));
+        define("HAS_SERVER", in_array($server_name, ["apache", "lighttpd", "nginx", "cherokee"]));
     }
 
 
@@ -118,7 +118,7 @@ class Bootstrap {
                 $cmd = "which";
             }
 
-            foreach (array("tar", "zip", "convert", "ffmpeg", "avconv", "du") as $c) {
+            foreach (["tar", "zip", "convert", "ffmpeg", "avconv", "du"] as $c) {
                 $cmds[$c] = ($cmd !== false) && Util::exec_0($cmd . " " . $c);
             }
 

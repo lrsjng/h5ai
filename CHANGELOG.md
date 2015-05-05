@@ -1,5 +1,8 @@
 # Changelog
 
+* now requires PHP 5.4.0+
+* lots of code cleanup and refactorings
+* changes API
 * fixes some styles in IE10
 * resets IE edge mode
 * fixes preview bottom bar for small screen widths

@@ -2,9 +2,9 @@
 
 class Thumb {
 
-    private static $FFMPEG_CMDV = array("ffmpeg", "-ss", "0:00:10", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]");
-    private static $AVCONV_CMDV = array("avconv", "-ss", "0:00:10", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]");
-    private static $CONVERT_CMDV = array("convert", "-density", "200", "-quality", "100", "-sharpen", "0x1.0", "-strip", "[SRC][0]", "[DEST]");
+    private static $FFMPEG_CMDV = ["ffmpeg", "-ss", "0:00:10", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]"];
+    private static $AVCONV_CMDV = ["avconv", "-ss", "0:00:10", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]"];
+    private static $CONVERT_CMDV = ["convert", "-density", "200", "-quality", "100", "-sharpen", "0x1.0", "-strip", "[SRC][0]", "[DEST]"];
     private static $THUMB_CACHE = "thumbs";
 
 
@@ -240,7 +240,7 @@ class Image {
 
         $this->source = imagerotate($this->source, $angle, 0);
         if ( $angle === 90 || $angle === 270 ) {
-            list($this->width, $this->height) = array($this->height, $this->width);
+            list($this->width, $this->height) = [$this->height, $this->width];
         }
     }
 

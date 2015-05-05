@@ -16,7 +16,7 @@ class Util {
     }
 
 
-    public static function json_exit($obj = array()) {
+    public static function json_exit($obj = []) {
 
         header("Content-type: application/json;charset=utf-8");
         echo json_encode($obj);
@@ -27,7 +27,7 @@ class Util {
     public static function json_fail($err, $msg = "", $cond = true) {
 
         if ($cond) {
-            Util::json_exit(array("err" => $err, "msg" => $msg));
+            Util::json_exit(["err" => $err, "msg" => $msg]);
         }
     }
 
@@ -50,7 +50,6 @@ class Util {
 
     public static function is_post_request() {
 
-        // Logger::log("POSTED", $_POST);
         return (strtolower($_SERVER["REQUEST_METHOD"]) === "post");
     }
 
@@ -87,7 +86,7 @@ class Util {
     public static function load_commented_json($path) {
 
         if (!file_exists($path)) {
-            return array();
+            return [];
         }
 
         $content = file_get_contents($path);
@@ -121,7 +120,7 @@ class Util {
         }
         $cmd = implode(" ", array_map("escapeshellarg", $cmdv));
 
-        $lines = array();
+        $lines = [];
         $rc = null;
         exec($cmd, $lines, $rc);
         return implode("\n", $lines);
@@ -130,7 +129,7 @@ class Util {
 
     public static function exec_0($cmd) {
 
-        $lines = array();
+        $lines = [];
         $rc = null;
         try {
             @exec($cmd, $lines, $rc);
@@ -140,7 +139,7 @@ class Util {
     }
 
 
-    private static $size_cache = array();
+    private static $size_cache = [];
 
     public static function filesize($app, $path) {
 
@@ -184,7 +183,7 @@ class Util {
 
             if ($app->get_option("foldersize.enabled", false)) {
                 if (HAS_CMD_DU && $app->get_option("foldersize.type", null) === "shell-du") {
-                    $cmdv = array("du", "-sk", $path);
+                    $cmdv = ["du", "-sk", $path];
                     $size = intval(preg_replace("#\s.*$#", "", Util::exec_cmdv($cmdv)), 10) * 1024;
                 } else {
                     $size = 0;

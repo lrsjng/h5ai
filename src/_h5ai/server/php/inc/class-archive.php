@@ -22,8 +22,8 @@ class Archive {
             return 500;
         }
 
-        $this->dirs = array();
-        $this->files = array();
+        $this->dirs = [];
+        $this->files = [];
 
         $this->add_hrefs($hrefs);
 
@@ -67,7 +67,7 @@ class Archive {
 
     private function php_tar($dirs, $files) {
 
-        $filesizes = array();
+        $filesizes = [];
         $total_size = 512 * count($dirs);
         foreach (array_keys($files) as $real_file) {
 

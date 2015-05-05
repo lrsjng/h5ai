@@ -3,8 +3,8 @@
 class App {
 
     private static $RE_DELIMITER = "|";
-    private static $ICON_EXTS = array("svg", "png", "jpg");
-    private static $CUSTOM_EXTS = array("html", "md");
+    private static $ICON_EXTS = ["svg", "png", "jpg"];
+    private static $CUSTOM_EXTS = ["html", "md"];
 
 
     private $options;
@@ -30,17 +30,17 @@ class App {
 
     public function get_setup() {
 
-        $keys = array(
+        $keys = [
             "APP_HREF",
             "ROOT_HREF",
             "VERSION",
 
             "AS_ADMIN",
             "HAS_CUSTOM_PASSHASH"
-        );
+        ];
 
         if (AS_ADMIN) {
-            $keys = array_merge($keys, array(
+            $keys = array_merge($keys, [
                 "PHP_VERSION",
                 "MIN_PHP_VERSION",
                 "HAS_MIN_PHP_VERSION",
@@ -61,10 +61,10 @@ class App {
                 "HAS_CMD_FFMPEG",
                 "HAS_CMD_AVCONV",
                 "HAS_CMD_DU"
-            ));
+            ]);
         }
 
-        $setup = array();
+        $setup = [];
         foreach ($keys as $key) {
             $setup[$key] = constant($key);
         }
@@ -83,7 +83,7 @@ class App {
         $theme = $this->get_option("view.theme", "-NONE-");
         $theme_path = APP_PATH . "/client/images/themes/${theme}";
 
-        $icons = array();
+        $icons = [];
 
         if (is_dir($theme_path)) {
             if ($dir = opendir($theme_path)) {
@@ -105,7 +105,7 @@ class App {
 
         $rel_path = substr($path, strlen(ROOT_PATH));
         $parts = explode("/", $rel_path);
-        $encoded_parts = array();
+        $encoded_parts = [];
         foreach ($parts as $part) {
             if ($part != "") {
                 $encoded_parts[] = rawurlencode($part);
@@ -130,7 +130,7 @@ class App {
             return true;
         }
 
-        foreach ($this->get_option("view.hidden", array()) as $re) {
+        foreach ($this->get_option("view.hidden", []) as $re) {
             $re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
             if (preg_match($re, $name)) {
                 return true;
@@ -143,7 +143,7 @@ class App {
 
     public function read_dir($path) {
 
-        $names = array();
+        $names = [];
         if (is_dir($path)) {
             foreach (scandir($path) as $name) {
                 if (
@@ -176,7 +176,7 @@ class App {
             return false;
         }
 
-        foreach ($this->get_option("view.unmanaged", array()) as $name) {
+        foreach ($this->get_option("view.unmanaged", []) as $name) {
             if (file_exists($path . "/" . $name)) {
                 return false;
             }
@@ -199,10 +199,10 @@ class App {
     public function get_items($href, $what) {
 
         if (!$this->is_managed_href($href)) {
-            return array();
+            return [];
         }
 
-        $cache = array();
+        $cache = [];
         $folder = Item::get($this, $this->to_path($href), $cache);
 
         // add content of subfolders
@@ -219,8 +219,8 @@ class App {
             $folder = $folder->get_parent($cache);
         }
 
-        uasort($cache, array("Item", "cmp"));
-        $result = array();
+        uasort($cache, ["Item", "cmp"]);
+        $result = [];
         foreach ($cache as $p => $item) {
             $result[] = $item->to_json_object();
         }
@@ -249,10 +249,10 @@ class App {
             $path = $this->get_current_path();
         }
 
-        $cache = array();
+        $cache = [];
         $folder = Item::get($this, $path, $cache);
         $items = $folder->get_content($cache);
-        uasort($items, array("Item", "cmp"));
+        uasort($items, ["Item", "cmp"]);
 
         $html = "<table>";
 
@@ -291,7 +291,7 @@ class App {
 
     public function get_langs() {
 
-        $langs = array();
+        $langs = [];
         $l10n_path = APP_PATH . "/conf/l10n";
         if (is_dir($l10n_path)) {
             if ($dir = opendir($l10n_path)) {
@@ -311,7 +311,7 @@ class App {
 
     public function get_l10n($iso_codes) {
 
-        $results = array();
+        $results = [];
 
         foreach ($iso_codes as $iso_code) {
             $file = APP_PATH . "/conf/l10n/" . $iso_code . ".json";
@@ -339,10 +339,10 @@ class App {
     public function get_customizations($href) {
 
         if (!$this->get_option("custom.enabled", false)) {
-            return array(
-                "header" => array("content" => null, "type" => null),
-                "footer" => array("content" => null, "type" => null)
-            );
+            return [
+                "header" => ["content" => null, "type" => null],
+                "footer" => ["content" => null, "type" => null]
+            ];
         }
 
         $path = $this->to_path($href);
@@ -374,10 +374,10 @@ class App {
             $path = $parent_path;
         }
 
-        return array(
-            "header" => array("content" => $header, "type" => $header_type),
-            "footer" => array("content" => $footer, "type" => $footer_type)
-        );
+        return [
+            "header" => ["content" => $header, "type" => $header_type],
+            "footer" => ["content" => $footer, "type" => $footer_type]
+        ];
     }
 
 
