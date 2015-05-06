@@ -37,7 +37,7 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
         addTest(
             'h5ai version', 'Only green if this is an official h5ai release',
-            setup.VERSION.indexOf('+') < 0, setup.VERSION
+            /^\d+\.\d+\.\d+$/.test(setup.VERSION), setup.VERSION
         );
 
         addTest(
