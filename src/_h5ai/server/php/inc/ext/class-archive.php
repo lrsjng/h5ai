@@ -19,7 +19,7 @@ class Archive {
 
         $this->base_path = $this->app->to_path($base_href);
         if (!$this->app->is_managed_path($this->base_path)) {
-            return 500;
+            return false;
         }
 
         $this->dirs = [];
@@ -47,7 +47,7 @@ class Archive {
 
             return $this->shell_cmd(Archive::$ZIP_PASSTHRU_CMD);
         }
-        return 500;
+        return false;
     }
 
 
@@ -59,9 +59,9 @@ class Archive {
         try {
             Util::passthru_cmd($cmd);
         } catch (Exeption $err) {
-            return 500;
+            return false;
         }
-        return 0;
+        return true;
     }
 
 
@@ -98,7 +98,7 @@ class Archive {
             }
         }
 
-        return 0;
+        return true;
     }
 
 

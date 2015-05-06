@@ -37,9 +37,9 @@ class Api {
         header("Content-Type: application/octet-stream");
         header("Content-Disposition: attachment; filename=\"$as\"");
         header("Connection: close");
-        $rc = $archive->output($type, $base_href, $hrefs);
+        $ok = $archive->output($type, $base_href, $hrefs);
 
-        Util::json_fail(Util::ERR_FAILED, "packaging failed", $rc !== 0);
+        Util::json_fail(Util::ERR_FAILED, "packaging failed", !$ok);
         exit;
     }
 
