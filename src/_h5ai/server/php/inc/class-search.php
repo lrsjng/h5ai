@@ -10,11 +10,12 @@ class Search {
     function get_paths($root, $pattern = null) {
 
         $paths = [];
-        if ($this->app->is_managed_path($root)) {
+        if ($pattern && $this->app->is_managed_path($root)) {
+            $re = Util::wrap_pattern($pattern);
             $names = $this->app->read_dir($root);
             foreach ($names as $name) {
                 $path = $root . "/" . $name;
-                if ($pattern && $this->matches($path, $pattern)) {
+                if (preg_match($re, @basename($path))) {
                     $paths[] = $path;
                 }
                 if (@is_dir($path)) {
@@ -35,10 +36,5 @@ class Search {
             return Item::get($this->app, $path, $cache)->to_json_object();
         }, $paths);
         return $items;
-    }
-
-    function matches($path, $pattern) {
-
-        return preg_match($pattern, basename($path)) === 1;
     }
 }

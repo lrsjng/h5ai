@@ -2,7 +2,6 @@
 
 class App {
 
-    private static $RE_DELIMITER = "|";
     private static $ICON_EXTS = ["svg", "png", "jpg"];
     private static $CUSTOM_EXTS = ["html", "md"];
 
@@ -131,7 +130,7 @@ class App {
         }
 
         foreach ($this->get_option("view.hidden", []) as $re) {
-            $re = App::$RE_DELIMITER . str_replace(App::$RE_DELIMITER, '\\' . App::$RE_DELIMITER, $re) . App::$RE_DELIMITER;
+            $re = Util::wrap_pattern($re);
             if (preg_match($re, $name)) {
                 return true;
             }

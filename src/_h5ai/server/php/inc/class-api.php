@@ -59,24 +59,24 @@ class Api {
         if (Util::query_request_param("items", false)) {
 
             $href = Util::query_request_param("items.href");
-            $what = Util::query_request_param("items.what");
-            $what = is_numeric($what) ? intval($what, 10) : 1;
+            $what = Util::query_numeric_request_param("items.what");
+
             $response["items"] = $this->app->get_items($href, $what);
         }
 
         if (Util::query_request_param("custom", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "custom disabled", !$this->app->get_option("custom.enabled", false));
-
             $href = Util::query_request_param("custom");
+
             $response["custom"] = $this->app->get_customizations($href);
         }
 
         if (Util::query_request_param("l10n", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "l10n disabled", !$this->app->get_option("l10n.enabled", false));
+            $iso_codes = Util::query_array_request_param("l10n");
 
-            $iso_codes = Util::query_request_param("l10n");
             $iso_codes = array_filter($iso_codes);
             $response["l10n"] = $this->app->get_l10n($iso_codes);
         }
@@ -84,9 +84,9 @@ class Api {
         if (Util::query_request_param("search", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "search disabled", !$this->app->get_option("search.enabled", false));
-
             $href = Util::query_request_param("search.href");
             $pattern = Util::query_request_param("search.pattern");
+
             $search = new Search($this->app);
             $response["search"] = $search->get_items($href, $pattern);
         }
@@ -95,8 +95,8 @@ class Api {
 
             Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
             Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
+            $thumbs = Util::query_array_request_param("thumbs");
 
-            $thumbs = Util::query_request_param("thumbs");
             $response["thumbs"] = $this->app->get_thumbs($thumbs);
         }
 

@@ -4,10 +4,12 @@ class Util {
 
 
     const ERR_MISSING_PARAM = "ERR_MISSING_PARAM";
+    const ERR_ILLIGAL_PARAM = "ERR_ILLIGAL_PARAM";
     const ERR_FAILED = "ERR_FAILED";
     const ERR_DISABLED = "ERR_DISABLED";
     const ERR_UNSUPPORTED = "ERR_UNSUPPORTED";
     const NO_DEFAULT = "NO_*@+#?!_DEFAULT";
+    const RE_DELIMITER = "|";
 
 
     public static function normalize_path($path, $trailing_slash = false) {
@@ -70,7 +72,24 @@ class Util {
 
     public static function query_boolean_request_param($keypath = "", $default = Util::NO_DEFAULT) {
 
-        return filter_var(Util::query_request_param($keypath, $default), FILTER_VALIDATE_BOOLEAN);
+        $value = Util::query_request_param($keypath, $default);
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+
+    public static function query_numeric_request_param($keypath = "", $default = Util::NO_DEFAULT) {
+
+        $value = Util::query_request_param($keypath, $default);
+        Util::json_fail(Util::ERR_ILLIGAL_PARAM, "parameter '$keypath' is not numeric", !is_numeric($value));
+        return intval($value, 10);
+    }
+
+
+    public static function query_array_request_param($keypath = "", $default = Util::NO_DEFAULT) {
+
+        $value = Util::query_request_param($keypath, $default);
+        Util::json_fail(Util::ERR_ILLIGAL_PARAM, "parameter '$keypath' is no array", !is_array($value));
+        return $value;
     }
 
 
@@ -83,6 +102,12 @@ class Util {
     public static function ends_with($sequence, $tail) {
 
         return substr($sequence, -strlen($tail)) === $tail;
+    }
+
+
+    public static function wrap_pattern($pattern) {
+
+        return Util::RE_DELIMITER . str_replace(Util::RE_DELIMITER, '\\' . Util::RE_DELIMITER, $pattern) . Util::RE_DELIMITER;
     }
 
 
