@@ -4,6 +4,8 @@ class Bootstrap {
 
     public static function run() {
 
+        normalized_require_once("config");
+
         $bs = new Bootstrap();
         $bs->setup_php();
         $bs->setup_app();

@@ -23,5 +23,4 @@ function __autoload($class_name) {
     normalized_require_once("inc/class-" . strtolower($class_name));
 }
 
-normalized_require_once("config");
 Bootstrap::run();

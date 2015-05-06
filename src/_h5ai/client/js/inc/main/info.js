@@ -15,7 +15,7 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
                 '<span id="logout">logout</span>' +
                 '<div id="hint">' +
                     'The preset password is the empty string, so just hit login. ' +
-                    'You might change it in the index file to keep this information private.' +
+                    'You might change it in server/php/config.php to keep this information private.' +
                 '</div>' +
             '</div>';
     var setup = config.setup;
