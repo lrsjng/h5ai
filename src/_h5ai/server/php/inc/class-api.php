@@ -25,7 +25,7 @@ class Api {
     private function on_login() {
 
         $pass = Util::get_request_param("pass");
-        $_SESSION[AS_ADMIN_SESSION_KEY] = sha1($pass) === PASSHASH;
+        $_SESSION[AS_ADMIN_SESSION_KEY] = strcasecmp(hash("sha512", $pass), PASSHASH) === 0;
         Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
     }
 
