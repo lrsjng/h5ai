@@ -2,18 +2,27 @@
 
 class Bootstrap {
 
-    public static function run() {
+    private static $classpaths = ["/inc", "/inc/core", "/inc/ext"];
 
-        normalized_require_once("config");
+    private $basepath;
 
-        $bs = new Bootstrap();
-        $bs->setup_php();
-        $bs->setup_app();
-        $bs->setup_admin();
-        $bs->setup_server();
-        $bs->setup_paths();
-        $bs->setup_cache();
-        $bs->setup_ext_cmds();
+    public function __construct($basepath) {
+
+        $this->basepath = $basepath;
+    }
+
+    public function run() {
+
+        spl_autoload_register([$this, "autoload"]);
+
+        $this->once("config");
+        $this->setup_php();
+        $this->setup_app();
+        $this->setup_admin();
+        $this->setup_server();
+        $this->setup_paths();
+        $this->setup_cache();
+        $this->setup_ext_cmds();
 
         $app = new App();
         if (Util::is_post_request()) {
@@ -22,10 +31,29 @@ class Bootstrap {
         } else {
             $fallback = new Fallback($app);
             define("FALLBACK", $fallback->get_html());
-            normalized_require_once("inc/page");
+            $this->once("inc/page");
         }
     }
 
+    public function autoload($class_name) {
+
+        $filename = "class-" . strtolower($class_name) . ".php";
+
+        foreach (Bootstrap::$classpaths as $path) {
+            $file = $this->basepath . $path . "/" . $filename;
+            if (file_exists($file)) {
+                require_once($file);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function once($lib) {
+
+        require_once($this->basepath . "/" . $lib . ".php");
+    }
 
     private function setup_php() {
 
@@ -42,14 +70,12 @@ class Bootstrap {
         define("HAS_PHP_JPEG", $has_php_jpeg);
     }
 
-
     private function setup_app() {
 
         define("NAME", "{{pkg.name}}");
         define("VERSION", "{{pkg.version}}");
         define("FILE_PREFIX", "_{{pkg.name}}");
     }
-
 
     private function setup_admin() {
 
@@ -58,7 +84,6 @@ class Bootstrap {
         define("AS_ADMIN", isset($_SESSION[AS_ADMIN_SESSION_KEY]) && $_SESSION[AS_ADMIN_SESSION_KEY] === true);
         define("HAS_CUSTOM_PASSHASH", strcasecmp(PASSHASH, "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e") !== 0);
     }
-
 
     private function setup_server() {
 
@@ -73,7 +98,6 @@ class Bootstrap {
         define("SERVER_VERSION", $server_version);
         define("HAS_SERVER", in_array($server_name, ["apache", "lighttpd", "nginx", "cherokee"]));
     }
-
 
     private function setup_paths() {
 
@@ -94,14 +118,12 @@ class Bootstrap {
         define("INDEX_HREF", $index_href);
     }
 
-
     private function setup_cache() {
 
         define("CACHE_HREF", Util::normalize_path(APP_HREF . "/cache", true));
         define("CACHE_PATH", Util::normalize_path(APP_PATH . "/cache", false));
         define("HAS_WRITABLE_CACHE", @is_writable(CACHE_PATH));
     }
-
 
     private function setup_ext_cmds() {
 
