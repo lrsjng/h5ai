@@ -24,7 +24,7 @@ class Api {
 
     private function on_download() {
 
-        Util::json_fail(Util::ERR_DISABLED, "download disabled", !$this->app->get_option("download.enabled", false));
+        Util::json_fail(Util::ERR_DISABLED, "download disabled", !$this->app->query_option("download.enabled", false));
 
         $as = Util::query_request_param("as");
         $type = Util::query_request_param("type");
@@ -66,7 +66,7 @@ class Api {
 
         if (Util::query_request_param("custom", false)) {
 
-            Util::json_fail(Util::ERR_DISABLED, "custom disabled", !$this->app->get_option("custom.enabled", false));
+            Util::json_fail(Util::ERR_DISABLED, "custom disabled", !$this->app->query_option("custom.enabled", false));
             $href = Util::query_request_param("custom");
 
             $response["custom"] = $this->app->get_customizations($href);
@@ -74,7 +74,7 @@ class Api {
 
         if (Util::query_request_param("l10n", false)) {
 
-            Util::json_fail(Util::ERR_DISABLED, "l10n disabled", !$this->app->get_option("l10n.enabled", false));
+            Util::json_fail(Util::ERR_DISABLED, "l10n disabled", !$this->app->query_option("l10n.enabled", false));
             $iso_codes = Util::query_array_request_param("l10n");
 
             $iso_codes = array_filter($iso_codes);
@@ -83,7 +83,7 @@ class Api {
 
         if (Util::query_request_param("search", false)) {
 
-            Util::json_fail(Util::ERR_DISABLED, "search disabled", !$this->app->get_option("search.enabled", false));
+            Util::json_fail(Util::ERR_DISABLED, "search disabled", !$this->app->query_option("search.enabled", false));
             $href = Util::query_request_param("search.href");
             $pattern = Util::query_request_param("search.pattern");
 
@@ -93,7 +93,7 @@ class Api {
 
         if (Util::query_request_param("thumbs", false)) {
 
-            Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
+            Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->query_option("thumbnails.enabled", false));
             Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
             $thumbs = Util::query_array_request_param("thumbs");
 

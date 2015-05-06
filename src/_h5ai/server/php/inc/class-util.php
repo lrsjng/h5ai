@@ -209,8 +209,8 @@ class Util {
 
         } else if (is_dir($path)) {
 
-            if ($app->get_option("foldersize.enabled", false)) {
-                if (HAS_CMD_DU && $app->get_option("foldersize.type", null) === "shell-du") {
+            if ($app->query_option("foldersize.enabled", false)) {
+                if (HAS_CMD_DU && $app->query_option("foldersize.type", null) === "shell-du") {
                     $cmdv = ["du", "-sk", $path];
                     $size = intval(preg_replace("#\s.*$#", "", Util::exec_cmdv($cmdv)), 10) * 1024;
                 } else {

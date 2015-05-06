@@ -62,7 +62,7 @@ class Thumb {
             $image = new Image();
 
             $et = false;
-            if (HAS_PHP_EXIF && $this->app->get_option("thumbnails.exif", false) === true && $height != 0) {
+            if (HAS_PHP_EXIF && $this->app->query_option("thumbnails.exif", false) === true && $height != 0) {
                 $et = @exif_thumbnail($source_path);
             }
             if($et !== false) {

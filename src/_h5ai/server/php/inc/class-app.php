@@ -15,13 +15,13 @@ class App {
     }
 
 
-    public function get_options() {
+    public function query_options() {
 
         return $this->options;
     }
 
 
-    public function get_option($keypath = "", $default = null) {
+    public function query_option($keypath = "", $default = null) {
 
         return Util::array_query($this->options, $keypath, $default);
     }
@@ -79,7 +79,7 @@ class App {
 
     public function get_theme() {
 
-        $theme = $this->get_option("view.theme", "-NONE-");
+        $theme = $this->query_option("view.theme", "-NONE-");
         $theme_path = APP_PATH . "/client/images/themes/${theme}";
 
         $icons = [];
@@ -129,7 +129,7 @@ class App {
             return true;
         }
 
-        foreach ($this->get_option("view.hidden", []) as $re) {
+        foreach ($this->query_option("view.hidden", []) as $re) {
             $re = Util::wrap_pattern($re);
             if (preg_match($re, $name)) {
                 return true;
@@ -148,7 +148,7 @@ class App {
                 if (
                     $this->is_hidden($name)
                     || $this->is_hidden($this->to_href($path) . $name)
-                    || (!is_readable($path .'/'. $name) && $this->get_option("view.hideIf403", false))
+                    || (!is_readable($path .'/'. $name) && $this->query_option("view.hideIf403", false))
                 ) {
                     continue;
                 }
@@ -175,7 +175,7 @@ class App {
             return false;
         }
 
-        foreach ($this->get_option("view.unmanaged", []) as $name) {
+        foreach ($this->query_option("view.unmanaged", []) as $name) {
             if (file_exists($path . "/" . $name)) {
                 return false;
             }
@@ -337,7 +337,7 @@ class App {
 
     public function get_customizations($href) {
 
-        if (!$this->get_option("custom.enabled", false)) {
+        if (!$this->query_option("custom.enabled", false)) {
             return [
                 "header" => ["content" => null, "type" => null],
                 "footer" => ["content" => null, "type" => null]
