@@ -20,7 +20,8 @@ class Bootstrap {
             $api = new Api($app);
             $api->apply();
         } else {
-            define("FALLBACK", $app->get_fallback());
+            $fallback = new Fallback($app);
+            define("FALLBACK", $fallback->get_html());
             normalized_require_once("inc/page");
         }
     }

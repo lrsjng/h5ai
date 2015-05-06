@@ -48,12 +48,18 @@ class Api {
 
         $response = [];
 
-        foreach (["langs", "options", "setup", "theme", "types"] as $name) {
+        foreach (["langs", "options", "setup", "types"] as $name) {
             if (Util::query_boolean_request_param($name, false)) {
 
                 $methodname = "get_${name}";
                 $response[$name] = $this->app->$methodname();
             }
+        }
+
+        if (Util::query_boolean_request_param("theme", false)) {
+
+            $theme = new Theme($this->app);
+            $response["theme"] = $theme->get_icons();
         }
 
         if (Util::query_request_param("items", false)) {
@@ -69,7 +75,8 @@ class Api {
             Util::json_fail(Util::ERR_DISABLED, "custom disabled", !$this->app->query_option("custom.enabled", false));
             $href = Util::query_request_param("custom");
 
-            $response["custom"] = $this->app->get_customizations($href);
+            $custom = new Custom($this->app);
+            $response["custom"] = $custom->get_customizations($href);
         }
 
         if (Util::query_request_param("l10n", false)) {

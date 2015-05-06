@@ -2,10 +2,6 @@
 
 class App {
 
-    private static $ICON_EXTS = ["svg", "png", "jpg"];
-    private static $CUSTOM_EXTS = ["html", "md"];
-
-
     private $options;
 
 
@@ -15,7 +11,7 @@ class App {
     }
 
 
-    public function query_options() {
+    public function get_options() {
 
         return $this->options;
     }
@@ -74,29 +70,6 @@ class App {
     public function get_types() {
 
         return Util::load_commented_json(APP_PATH . "/conf/types.json");
-    }
-
-
-    public function get_theme() {
-
-        $theme = $this->query_option("view.theme", "-NONE-");
-        $theme_path = APP_PATH . "/client/images/themes/${theme}";
-
-        $icons = [];
-
-        if (is_dir($theme_path)) {
-            if ($dir = opendir($theme_path)) {
-                while (($name = readdir($dir)) !== false) {
-                    $path_parts = pathinfo($name);
-                    if (in_array(@$path_parts["extension"], App::$ICON_EXTS)) {
-                        $icons[$path_parts["filename"]] = "${theme}/${name}";
-                    }
-                }
-                closedir($dir);
-            }
-        }
-
-        return $icons;
     }
 
 
@@ -228,66 +201,6 @@ class App {
     }
 
 
-    private function get_current_path() {
-
-        $uri_parts = parse_url(getenv("REQUEST_URI"));
-        $current_href = Util::normalize_path($uri_parts["path"], true);
-        $current_path = $this->to_path($current_href);
-
-        if (!is_dir($current_path)) {
-            $current_path = Util::normalize_path(dirname($current_path), false);
-        }
-
-        return $current_path;
-    }
-
-
-    public function get_fallback($path = null) {
-
-        if (!$path) {
-            $path = $this->get_current_path();
-        }
-
-        $cache = [];
-        $folder = Item::get($this, $path, $cache);
-        $items = $folder->get_content($cache);
-        uasort($items, ["Item", "cmp"]);
-
-        $html = "<table>";
-
-        $html .= "<tr>";
-        $html .= "<th class='fb-i'></th>";
-        $html .= "<th class='fb-n'><span>Name</span></th>";
-        $html .= "<th class='fb-d'><span>Last modified</span></th>";
-        $html .= "<th class='fb-s'><span>Size</span></th>";
-        $html .= "</tr>";
-
-        if ($folder->get_parent($cache)) {
-            $html .= "<tr>";
-            $html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/folder-parent.png' alt='folder-parent'/></td>";
-            $html .= "<td class='fb-n'><a href='..'>Parent Directory</a></td>";
-            $html .= "<td class='fb-d'></td>";
-            $html .= "<td class='fb-s'></td>";
-            $html .= "</tr>";
-        }
-
-        foreach ($items as $item) {
-            $type = $item->is_folder ? "folder" : "file";
-
-            $html .= "<tr>";
-            $html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/" . $type . ".png' alt='" . $type . "'/></td>";
-            $html .= "<td class='fb-n'><a href='" . $item->href . "'>" . basename($item->path) . "</a></td>";
-            $html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
-            $html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
-            $html .= "</tr>";
-        }
-
-        $html .= "</table>";
-
-        return $html;
-    }
-
-
     public function get_langs() {
 
         $langs = [];
@@ -319,64 +232,6 @@ class App {
         }
 
         return $results;
-    }
-
-
-    private function read_custom_file($path, $name, &$content, &$type) {
-
-        foreach (APP::$CUSTOM_EXTS as $ext) {
-            $file = "$path/" . FILE_PREFIX . ".$name.$ext";
-            if (is_readable($file)) {
-                $content = file_get_contents($file);
-                $type = $ext;
-                return;
-            }
-        }
-    }
-
-
-    public function get_customizations($href) {
-
-        if (!$this->query_option("custom.enabled", false)) {
-            return [
-                "header" => ["content" => null, "type" => null],
-                "footer" => ["content" => null, "type" => null]
-            ];
-        }
-
-        $path = $this->to_path($href);
-
-        $header = null;
-        $header_type = null;
-        $footer = null;
-        $footer_type = null;
-
-        $this->read_custom_file($path, "header", $header, $header_type);
-        $this->read_custom_file($path, "footer", $footer, $footer_type);
-
-        while ($header === null || $footer === null) {
-
-            if ($header === null) {
-                $this->read_custom_file($path, "headers", $header, $header_type);
-            }
-            if ($footer === null) {
-                $this->read_custom_file($path, "footers", $footer, $footer_type);
-            }
-
-            if ($path === ROOT_PATH) {
-                break;
-            }
-            $parent_path = Util::normalize_path(dirname($path));
-            if ($parent_path === $path) {
-                break;
-            }
-            $path = $parent_path;
-        }
-
-        return [
-            "header" => ["content" => $header, "type" => $header_type],
-            "footer" => ["content" => $footer, "type" => $footer_type]
-        ];
     }
 
 
