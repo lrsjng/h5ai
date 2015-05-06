@@ -7,6 +7,7 @@ class Util {
     const ERR_FAILED = "ERR_FAILED";
     const ERR_DISABLED = "ERR_DISABLED";
     const ERR_UNSUPPORTED = "ERR_UNSUPPORTED";
+    const NO_DEFAULT = "NO_*@+#?!_DEFAULT";
 
 
     public static function normalize_path($path, $trailing_slash = false) {
@@ -32,7 +33,7 @@ class Util {
     }
 
 
-    public static function array_query($array, $keypath = "", $default = null) {
+    public static function array_query($array, $keypath = "", $default = Util::NO_DEFAULT) {
 
         $value = $array;
 
@@ -54,20 +55,22 @@ class Util {
     }
 
 
-    public static function get_request_param($key, $default = null) {
+    public static function query_request_param($keypath = "", $default = Util::NO_DEFAULT) {
 
-        if (!array_key_exists($key, $_POST)) {
-            Util::json_fail(Util::ERR_MISSING_PARAM, "parameter '$key' is missing", $default === null);
+        $value = Util::array_query($_POST, $keypath, Util::NO_DEFAULT);
+
+        if ($value === Util::NO_DEFAULT) {
+            Util::json_fail(Util::ERR_MISSING_PARAM, "parameter '$keypath' is missing", $default === Util::NO_DEFAULT);
             return $default;
         }
 
-        return $_POST[$key];
+        return $value;
     }
 
 
-    public static function get_boolean_request_param($key, $default = null) {
+    public static function query_boolean_request_param($keypath = "", $default = Util::NO_DEFAULT) {
 
-        return filter_var(Util::get_request_param($key, $default), FILTER_VALIDATE_BOOLEAN);
+        return filter_var(Util::query_request_param($keypath, $default), FILTER_VALIDATE_BOOLEAN);
     }
 
 

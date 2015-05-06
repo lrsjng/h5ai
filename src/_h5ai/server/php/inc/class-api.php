@@ -13,8 +13,8 @@ class Api {
 
     public function apply() {
 
-        $action = Util::get_request_param("action");
-        $supported = ["login", "logout", "get", "download"];
+        $action = Util::query_request_param("action");
+        $supported = ["download", "get", "login", "logout"];
         Util::json_fail(Util::ERR_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
 
         $methodname = "on_${action}";
@@ -22,76 +22,14 @@ class Api {
     }
 
 
-    private function on_login() {
-
-        $pass = Util::get_request_param("pass");
-        $_SESSION[AS_ADMIN_SESSION_KEY] = strcasecmp(hash("sha512", $pass), PASSHASH) === 0;
-        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
-    }
-
-
-    private function on_logout() {
-
-        $_SESSION[AS_ADMIN_SESSION_KEY] = false;
-        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
-    }
-
-
-    private function on_get() {
-
-        $response = [];
-
-        foreach (["setup", "options", "types", "theme", "langs"] as $name) {
-            if (Util::get_boolean_request_param($name, false)) {
-
-                $methodname = "get_${name}";
-                $response[$name] = $this->app->$methodname();
-            }
-        }
-
-        if (Util::get_request_param("l10n", false)) {
-
-            $iso_codes = Util::get_request_param("l10n");
-            $iso_codes = array_filter($iso_codes);
-            $response["l10n"] = $this->app->get_l10n($iso_codes);
-        }
-
-        if (Util::get_request_param("custom", false)) {
-
-            $href = Util::get_request_param("custom");
-            $response["custom"] = $this->app->get_customizations($href);
-        }
-
-        if (Util::get_request_param("items", false)) {
-
-            $items = Util::get_request_param("items");
-            $href = $items["href"];
-            $what = $items["what"];
-            $what = is_numeric($what) ? intval($what, 10) : 1;
-            $response["items"] = $this->app->get_items($href, $what);
-        }
-
-        if (Util::get_request_param("thumbs", false)) {
-
-            Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
-            Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
-
-            $thumbs = Util::get_request_param("thumbs");
-            $response["thumbs"] = $this->app->get_thumbs($thumbs);
-        }
-
-        Util::json_exit($response);
-    }
-
-
     private function on_download() {
 
-        Util::json_fail(Util::ERR_DISABLED, "downloads disabled", !$this->app->get_option("download.enabled", false));
+        Util::json_fail(Util::ERR_DISABLED, "download disabled", !$this->app->get_option("download.enabled", false));
 
-        $as = Util::get_request_param("as");
-        $type = Util::get_request_param("type");
-        $base_href = Util::get_request_param("baseHref");
-        $hrefs = Util::get_request_param("hrefs");
+        $as = Util::query_request_param("as");
+        $type = Util::query_request_param("type");
+        $base_href = Util::query_request_param("baseHref");
+        $hrefs = Util::query_request_param("hrefs");
 
         $archive = new Archive($this->app);
 
@@ -103,5 +41,80 @@ class Api {
 
         Util::json_fail(Util::ERR_FAILED, "packaging failed", $rc !== 0);
         exit;
+    }
+
+
+    private function on_get() {
+
+        $response = [];
+
+        foreach (["langs", "options", "setup", "theme", "types"] as $name) {
+            if (Util::query_boolean_request_param($name, false)) {
+
+                $methodname = "get_${name}";
+                $response[$name] = $this->app->$methodname();
+            }
+        }
+
+        if (Util::query_request_param("items", false)) {
+
+            $href = Util::query_request_param("items.href");
+            $what = Util::query_request_param("items.what");
+            $what = is_numeric($what) ? intval($what, 10) : 1;
+            $response["items"] = $this->app->get_items($href, $what);
+        }
+
+        if (Util::query_request_param("custom", false)) {
+
+            Util::json_fail(Util::ERR_DISABLED, "custom disabled", !$this->app->get_option("custom.enabled", false));
+
+            $href = Util::query_request_param("custom");
+            $response["custom"] = $this->app->get_customizations($href);
+        }
+
+        if (Util::query_request_param("l10n", false)) {
+
+            Util::json_fail(Util::ERR_DISABLED, "l10n disabled", !$this->app->get_option("l10n.enabled", false));
+
+            $iso_codes = Util::query_request_param("l10n");
+            $iso_codes = array_filter($iso_codes);
+            $response["l10n"] = $this->app->get_l10n($iso_codes);
+        }
+
+        if (Util::query_request_param("search", false)) {
+
+            Util::json_fail(Util::ERR_DISABLED, "search disabled", !$this->app->get_option("search.enabled", false));
+
+            $href = Util::query_request_param("search.href");
+            $pattern = Util::query_request_param("search.pattern");
+            $search = new Search($this->app);
+            $response["search"] = $search->get_items($href, $pattern);
+        }
+
+        if (Util::query_request_param("thumbs", false)) {
+
+            Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->get_option("thumbnails.enabled", false));
+            Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
+
+            $thumbs = Util::query_request_param("thumbs");
+            $response["thumbs"] = $this->app->get_thumbs($thumbs);
+        }
+
+        Util::json_exit($response);
+    }
+
+
+    private function on_login() {
+
+        $pass = Util::query_request_param("pass");
+        $_SESSION[AS_ADMIN_SESSION_KEY] = strcasecmp(hash("sha512", $pass), PASSHASH) === 0;
+        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
+    }
+
+
+    private function on_logout() {
+
+        $_SESSION[AS_ADMIN_SESSION_KEY] = false;
+        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
     }
 }
