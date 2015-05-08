@@ -90,11 +90,11 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns object with 2 properties', function () {
+        it('returns object with 5 properties', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 2);
+            assert.lengthOfKeys(instance, 5);
         });
 
         it('adds HTML #view to #content', function () {
@@ -157,6 +157,33 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOf(instance.$items, 1);
             assert.isString(instance.$items.jquery);
             assert.strictEqual(instance.$items.attr('id'), 'items');
+        });
+    });
+
+    describe('.setItems()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.ok(_.isFunction(instance.setItems));
+        });
+    });
+
+    describe('.changeItems()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.ok(_.isFunction(instance.changeItems));
+        });
+    });
+
+    describe('.setLocation()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.ok(_.isFunction(instance.setLocation));
         });
     });
 
