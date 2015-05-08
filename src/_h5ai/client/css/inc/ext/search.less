@@ -1,0 +1,23 @@
+#search {
+
+    input {
+        display: none;
+        border: none;
+        font-family: @font-family;
+        font-weight: lighter;
+        font-size: 16px;
+        color: @col-text;
+        background: transparent;
+        outline: 0;
+        width: 160px;
+        padding: 0 12px 0 4px;
+        line-height: 48px;
+        vertical-align: top;
+    }
+
+    &.active {
+        input {
+            display: inline-block;
+        }
+    }
+}

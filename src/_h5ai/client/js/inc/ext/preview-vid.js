@@ -99,12 +99,7 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/event', 'core/settings', 'ex
         }
     }
 
-    function onLocationChanged(item) {
-
-        _.each(item.content, initItem);
-    }
-
-    function onLocationRefreshed(item, added) {
+    function onViewChanged(added) {
 
         _.each(added, initItem);
     }
@@ -115,8 +110,7 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/event', 'core/settings', 'ex
             return;
         }
 
-        event.sub('location.changed', onLocationChanged);
-        event.sub('location.refreshed', onLocationRefreshed);
+        event.sub('view.changed', onViewChanged);
     }
 
 

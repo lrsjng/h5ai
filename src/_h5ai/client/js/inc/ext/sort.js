@@ -148,8 +148,7 @@ modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/sett
                 ev.preventDefault();
             });
 
-        event.sub('location.changed', onContentChanged);
-        event.sub('location.refreshed', onContentChanged);
+        event.sub('view.changed', onContentChanged);
     }
 
 

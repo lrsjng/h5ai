@@ -262,6 +262,19 @@ Options
     },
 
     /*
+    Allow searching files and folders.
+    Will check entries for right order of characters, i.e.
+    "ab" matches "ab", "axb", "xaxbx" but not "ba".
+    Space separated sequences get OR-ed.
+
+    Searches will be treated as JavaScript regular expressions
+    if you prefix them with "re:".
+    */
+    "search": {
+        "enabled": true
+    },
+
+    /*
     Make entries selectable.
     At the moment only needed for packaged download.
 

@@ -9,7 +9,7 @@ class Util {
     const ERR_DISABLED = "ERR_DISABLED";
     const ERR_UNSUPPORTED = "ERR_UNSUPPORTED";
     const NO_DEFAULT = "NO_*@+#?!_DEFAULT";
-    const RE_DELIMITER = "|";
+    const RE_DELIMITER = "@";
 
 
     public static function normalize_path($path, $trailing_slash = false) {

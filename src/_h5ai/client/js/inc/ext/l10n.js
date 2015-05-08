@@ -128,7 +128,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/event', 'core/format', 'core/langs'
             initLangSelector(langs);
         }
 
-        event.sub('location.changed', function () {
+        event.sub('view.changed', function () {
 
             localize(langs, settings.lang, settings.useBrowserLang);
         });

@@ -99,17 +99,12 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
         }
     }
 
-    function onLocationChanged(item) {
+    function onViewChanged(added) {
 
         setTimeout(function () {
 
-            handleItems(item.content);
+            handleItems(added);
         }, settings.delay);
-    }
-
-    function onLocationRefreshed(item, added) {
-
-        handleItems(added);
     }
 
     function init() {
@@ -118,8 +113,7 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
             return;
         }
 
-        event.sub('location.changed', onLocationChanged);
-        event.sub('location.refreshed', onLocationRefreshed);
+        event.sub('view.changed', onViewChanged);
     }
 
 

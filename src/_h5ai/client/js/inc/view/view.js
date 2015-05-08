@@ -84,51 +84,77 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         event.pub('item.mouseleave', item);
     }
 
-    function onLocationChanged(item) {
+    function setItems(context, items) {
+
+        var removed = _.map($items.find('.item'), function (item) {
+
+            return $(item).data('item');
+        });
 
         $items.find('.item').remove();
 
-        if (item.parent && !settings.hideParentFolder) {
-            $items.append(createHtml(item.parent));
-        }
+        _.each(items, function (e) {
 
-        _.each(item.content, function (e) {
-
-            if (!(e.isFolder() && settings.hideFolders)) {
-                $items.append(createHtml(e));
-            }
+            $items.append(createHtml(e));
         });
 
-        if (item.isEmpty()) {
-            $empty.show();
-        } else {
-            $empty.hide();
-        }
-
+        $empty.hide();
         content.$el.scrollLeft(0).scrollTop(0);
+        event.pub('view.changed', items, removed);
     }
 
-    function onLocationRefreshed(item, added, removed) {
+    function changeItems(context, add, remove) {
 
-        _.each(added, function (item) {
+        _.each(add, function (item) {
 
-            if (!(item.isFolder() && settings.hideFolders)) {
-                createHtml(item).hide().appendTo($items).fadeIn(400);
-            }
+            createHtml(item).hide().appendTo($items).fadeIn(400);
         });
 
-        _.each(removed, function (item) {
+        _.each(remove, function (item) {
 
             item.$view.fadeOut(400, function () {
                 item.$view.remove();
             });
         });
 
-        if (item.isEmpty()) {
-            setTimeout(function () { $empty.show(); }, 400);
-        } else {
-            $empty.hide();
+        $empty.hide();
+        event.pub('view.changed', add, remove);
+    }
+
+    function onLocationChanged(item) {
+
+        if (!item) {
+            item = location.getItem();
         }
+
+        var items = [];
+
+        if (item.parent && !settings.hideParentFolder) {
+            items.push(item.parent);
+        }
+
+        _.each(item.content, function (item) {
+
+            if (!(item.isFolder() && settings.hideFolders)) {
+                items.push(item);
+            }
+        });
+
+        setItems('location.changed', items);
+    }
+
+    function onLocationRefreshed(item, added, removed) {
+
+        var add = [];
+
+        _.each(added, function (item) {
+
+            if (!(item.isFolder() && settings.hideFolders)) {
+                add.push(item);
+            }
+        });
+
+        changeItems('location.refreshed', add, removed);
     }
 
     function init() {
@@ -151,6 +177,9 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
 
     return {
         $el: $view,
-        $items: $items
+        $items: $items,
+        setItems: setItems,
+        changeItems: changeItems,
+        setLocation: onLocationChanged
     };
 });

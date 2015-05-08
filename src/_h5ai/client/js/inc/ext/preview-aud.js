@@ -98,12 +98,7 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/event', 'core/format', 'co
         }
     }
 
-    function onLocationChanged(item) {
-
-        _.each(item.content, initItem);
-    }
-
-    function onLocationRefreshed(item, added) {
+    function onViewChanged(added) {
 
         _.each(added, initItem);
     }
@@ -114,8 +109,7 @@ modulejs.define('ext/preview-audio', ['_', '$', 'core/event', 'core/format', 'co
             return;
         }
 
-        event.sub('location.changed', onLocationChanged);
-        event.sub('location.refreshed', onLocationRefreshed);
+        event.sub('view.changed', onViewChanged);
     }
 
 

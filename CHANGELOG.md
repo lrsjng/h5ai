@@ -1,6 +1,7 @@
 # Changelog
 
 * now requires PHP 5.4.0+
+* adds search
 * lots of code cleanup and refactorings
 * changes API
 * fixes some styles in IE10
@@ -8,6 +9,7 @@
 * fixes preview bottom bar for small screen widths
 * use wide links in tree view
 * updates build process
+* updates `lodash` to 3.8.0 (adds debounce)
 * updates h5bp styles to 5.1.0
 * updates `normalize.css` to 3.0.3
 * removes `Moment.js`

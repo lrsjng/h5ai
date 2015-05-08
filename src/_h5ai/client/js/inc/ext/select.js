@@ -160,15 +160,7 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
         }
     }
 
-    function onLocationChanged(item) {
-
-        if (settings.checkboxes) {
-            _.each(item.content, initItem);
-        }
-        publish();
-    }
-
-    function onLocationRefreshed(item, added, removed) {
+    function onViewChanged(added, removed) {
 
         var selectionChanged = false;
 
@@ -194,8 +186,7 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
             return;
         }
 
-        event.sub('location.changed', onLocationChanged);
-        event.sub('location.refreshed', onLocationRefreshed);
+        event.sub('view.changed', onViewChanged);
 
         if (settings.clickndrag) {
             $selectionRect.hide().appendTo('body');
