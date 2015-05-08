@@ -144,40 +144,38 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
             .one('mouseup', selectionEnd);
     }
 
-    function initItem(item) {
+    function onSelectorClick(ev) {
 
-        if (item.$view) {
+        ev.stopImmediatePropagation();
+        ev.preventDefault();
+
+        $(ev.target).closest('.item').toggleClass('selected');
+        publish();
+    }
+
+    function addCheckbox(item) {
+
+        if (item.$view && !item.isCurrentParentFolder()) {
             $(template)
-                .appendTo(item.$view.find('a'))
-                .on('click', function (ev) {
-
-                    ev.stopImmediatePropagation();
-                    ev.preventDefault();
-
-                    item.$view.toggleClass('selected');
-                    publish();
-                });
+                .on('click', onSelectorClick)
+                .appendTo(item.$view.find('a'));
         }
     }
 
     function onViewChanged(added, removed) {
 
-        var selectionChanged = false;
-
         if (settings.checkboxes) {
-            _.each(added, initItem);
+            _.each(added, addCheckbox);
         }
+
         _.each(removed, function (item) {
 
-            if (item.$view && item.$view.hasClass('selected')) {
+            if (item.$view) {
                 item.$view.removeClass('selected');
-                selectionChanged = true;
             }
         });
 
-        if (selectionChanged) {
-            publish();
-        }
+        publish();
     }
 
     function init() {

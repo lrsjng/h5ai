@@ -269,9 +269,12 @@ Options
 
     Searches will be treated as JavaScript regular expressions
     if you prefix them with "re:".
+
+    - debounceTime: number, debounce wait time in milliseconds
     */
     "search": {
-        "enabled": true
+        "enabled": true,
+        "debounceTime": 300
     },
 
     /*

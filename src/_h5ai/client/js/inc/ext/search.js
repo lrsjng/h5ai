@@ -1,7 +1,8 @@
 modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/server', 'core/settings', 'model/item', 'view/view'], function (_, $, event, location, resource, server, allsettings, Item, view) {
 
     var settings = _.extend({
-            enabled: false
+            enabled: false,
+            debounceTime: 300
         }, allsettings.search);
     var template =
             '<div id="search" class="tool">' +
@@ -27,6 +28,8 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
             return;
         }
 
+        $search.addClass('pending');
+
         server.request({
             action: 'get',
             search: {
@@ -35,11 +38,11 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
             }
         }, function (response) {
 
-            var items = _.map(response.search, function (e) {
+            $search.removeClass('pending');
+            view.setItems('search', _.map(response.search, function (item) {
 
-                return Item.get(e);
-            });
-            view.setItems('search', items);
+                return Item.get(item);
+            }));
         });
     }
 
@@ -102,7 +105,7 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
         $input = $search.find('input');
 
         $search.on('click', 'img', toggle);
-        $input.on('keyup', _.debounce(update, 500, {trailing: true}));
+        $input.on('keyup', _.debounce(update, settings.debounceTime, {trailing: true}));
         event.sub('location.changed', reset);
     }
 
