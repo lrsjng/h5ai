@@ -141,7 +141,7 @@ class Bootstrap {
                 $cmd = "which";
             }
 
-            foreach (["tar", "zip", "convert", "ffmpeg", "avconv", "du"] as $c) {
+            foreach (["avconv", "convert", "du", "ffmpeg", "tar", "zip"] as $c) {
                 $cmds[$c] = ($cmd !== false) && Util::exec_0($cmd . " " . $c);
             }
 

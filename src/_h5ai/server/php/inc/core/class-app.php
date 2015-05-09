@@ -50,12 +50,12 @@ class App {
 
                 "HAS_WRITABLE_CACHE",
 
-                "HAS_CMD_TAR",
-                "HAS_CMD_ZIP",
-                "HAS_CMD_CONVERT",
-                "HAS_CMD_FFMPEG",
                 "HAS_CMD_AVCONV",
-                "HAS_CMD_DU"
+                "HAS_CMD_CONVERT",
+                "HAS_CMD_DU",
+                "HAS_CMD_FFMPEG",
+                "HAS_CMD_TAR",
+                "HAS_CMD_ZIP"
             ]);
         }
 
