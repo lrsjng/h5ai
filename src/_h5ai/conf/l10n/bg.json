@@ -1,17 +1,18 @@
 {
     "lang": "български",
+
+    "dateFormat": "DD-MM-YYYY HH:mm",
     "details": "детайли",
+    "download": "изтегляне",
+    "empty": "празна",
+    "files": "файлове",
+    "filter": "филтър",
+    "folders": "директории",
     "grid": "мрежа",
     "icons": "икони",
-    "name": "Име",
     "lastModified": "Последна промяна",
-    "size": "Размер",
-    "parentDirectory": "Предходна директория",
-    "empty": "празна",
-    "folders": "директории",
-    "files": "файлове",
-    "download": "изтегляне",
+    "name": "Име",
     "noMatch": "няма съвпадение",
-    "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "филтър"
+    "parentDirectory": "Предходна директория",
+    "size": "Размер"
 }

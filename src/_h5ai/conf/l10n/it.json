@@ -1,17 +1,18 @@
 {
     "lang": "italiano",
+
+    "dateFormat": "DD-MM-YYYY HH:mm",
     "details": "dettagli",
+    "download": "download",
+    "empty": "vuota",
+    "files": "file",
+    "filter": "filtra",
+    "folders": "cartelle",
     "grid": "griglia",
     "icons": "icone",
-    "name": "Nome",
     "lastModified": "Ultima modifica",
-    "size": "Dimensione",
-    "parentDirectory": "Cartella Superiore",
-    "empty": "vuota",
-    "folders": "cartelle",
-    "files": "file",
-    "download": "download",
+    "name": "Nome",
     "noMatch": "nessun risultato",
-    "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "filtra"
+    "parentDirectory": "Cartella Superiore",
+    "size": "Dimensione"
 }

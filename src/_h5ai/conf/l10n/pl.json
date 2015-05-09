@@ -1,17 +1,18 @@
 {
     "lang": "polski",
+
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "szczegóły",
+    "download": "pobierz",
+    "empty": "pusty",
+    "files": "plików",
+    "filter": "filtr",
+    "folders": "folderów",
     "grid": "kafelki",
     "icons": "ikony",
-    "name": "Nazwa",
     "lastModified": "Ostatnia modyfikacja",
-    "size": "Rozmiar",
-    "parentDirectory": "Katalog nadrzędny",
-    "empty": "pusty",
-    "folders": "folderów",
-    "files": "plików",
-    "download": "pobierz",
+    "name": "Nazwa",
     "noMatch": "nie znaleziono",
-    "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "filtr"
+    "parentDirectory": "Katalog nadrzędny",
+    "size": "Rozmiar"
 }

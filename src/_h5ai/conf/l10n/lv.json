@@ -1,19 +1,20 @@
 {
     "lang": "latviešu",
+
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "detaļas",
+    "download": "lejupielādēt",
+    "empty": "tukšs",
+    "files": "faili",
+    "filter": "filtrēt",
+    "folders": "mapes",
     "grid": "režģis",
     "icons": "ikonas",
-    "name": "Nosaukums",
+    "language": "Valoda",
     "lastModified": "Pēdējoreiz modificēts",
-    "size": "Izmērs",
-    "parentDirectory": "Vecākdirektorijs",
-    "empty": "tukšs",
-    "folders": "mapes",
-    "files": "faili",
-    "download": "lejupielādēt",
+    "name": "Nosaukums",
     "noMatch": "nav sakritības",
-    "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "filtrēt",
-    "view": "Skats",
-    "language": "Valoda"
+    "parentDirectory": "Vecākdirektorijs",
+    "size": "Izmērs",
+    "view": "Skats"
 }

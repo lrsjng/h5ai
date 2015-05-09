@@ -1,17 +1,18 @@
 {
     "lang": "dansk",
+
+    "dateFormat": "DD-MM-YYYY HH:mm",
     "details": "detaljer",
+    "download": "download",
+    "empty": "tom",
+    "files": "filer",
+    "filter": "filter",
+    "folders": "mapper",
     "grid": "grid",
     "icons": "ikoner",
-    "name": "Navn",
     "lastModified": "Sidst ændret",
-    "size": "Størrelse",
-    "parentDirectory": "Overordnet mappe",
-    "empty": "tom",
-    "folders": "mapper",
-    "files": "filer",
-    "download": "download",
+    "name": "Navn",
     "noMatch": "ingen match",
-    "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "filter"
+    "parentDirectory": "Overordnet mappe",
+    "size": "Størrelse"
 }

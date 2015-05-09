@@ -1,14 +1,15 @@
 {
     "lang": "srpski",
+
     "details": "detalji",
-    "icons": "ikone",
-    "name": "Ime",
-    "lastModified": "Poslednja modifikacija",
-    "size": "Veličina",
-    "parentDirectory": "Roditeljski direktorijum",
-    "empty": "prazno",
-    "folders": "direktorijum",
-    "files": "fajlovi",
     "download": "download",
-    "noMatch": "bez poklapanja"
+    "empty": "prazno",
+    "files": "fajlovi",
+    "folders": "direktorijum",
+    "icons": "ikone",
+    "lastModified": "Poslednja modifikacija",
+    "name": "Ime",
+    "noMatch": "bez poklapanja",
+    "parentDirectory": "Roditeljski direktorijum",
+    "size": "Veličina"
 }

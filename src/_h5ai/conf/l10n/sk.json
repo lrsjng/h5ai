@@ -1,12 +1,13 @@
 {
     "lang": "slovenčina",
+
     "details": "podrobnosti",
-    "icons": "ikony",
-    "name": "Názov",
-    "lastModified": "Upravené",
-    "size": "Velkosť",
-    "parentDirectory": "Nadriadený priečinok",
     "empty": "prázdny",
+    "files": "súborov",
     "folders": "priečinkov",
-    "files": "súborov"
+    "icons": "ikony",
+    "lastModified": "Upravené",
+    "name": "Názov",
+    "parentDirectory": "Nadriadený priečinok",
+    "size": "Velkosť"
 }

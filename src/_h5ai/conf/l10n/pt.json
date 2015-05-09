@@ -1,17 +1,18 @@
 {
     "lang": "português",
+
+    "dateFormat": "DD-MM-YYYY HH:mm",
     "details": "detalhes",
+    "download": "descarregar",
+    "empty": "vazio",
+    "files": "arquivos",
+    "filter": "filtro",
+    "folders": "pastas",
     "grid": "grelha",
     "icons": "ícones",
-    "name": "Nome",
     "lastModified": "última modificação",
-    "size": "Tamanho",
-    "parentDirectory": "diretório acima",
-    "empty": "vazio",
-    "folders": "pastas",
-    "files": "arquivos",
-    "download": "descarregar",
+    "name": "Nome",
     "noMatch": "sem resultados",
-    "dateFormat": "DD-MM-YYYY HH:mm",
-    "filter": "filtro"
+    "parentDirectory": "diretório acima",
+    "size": "Tamanho"
 }

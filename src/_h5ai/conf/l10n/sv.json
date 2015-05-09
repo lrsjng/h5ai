@@ -1,15 +1,16 @@
 {
     "lang": "svenska",
+
     "details": "detaljerad",
+    "download": "ladda ner",
+    "empty": "tom",
+    "files": "filer",
+    "folders": "kataloger",
     "grid": "rutnät",
     "icons": "ikoner",
-    "name": "Filnamn",
     "lastModified": "Senast ändrad",
-    "size": "Filstorlek",
+    "name": "Filnamn",
+    "noMatch": "ingen matchning",
     "parentDirectory": "Till överordnad mapp",
-    "empty": "tom",
-    "folders": "kataloger",
-    "files": "filer",
-    "download": "ladda ner",
-    "noMatch": "ingen matchning"
+    "size": "Filstorlek"
 }

@@ -1,19 +1,20 @@
 {
     "lang": "简体中文",
+
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "详情",
+    "download": "下载",
+    "empty": "空文件夹",
+    "files": "文件",
+    "filter": "查找",
+    "folders": "文件夹",
     "grid": "网格",
     "icons": "图标",
-    "name": "文件名",
+    "language": "语言",
     "lastModified": "修改时间",
-    "size": "大小",
-    "parentDirectory": "父文件夹",
-    "empty": "空文件夹",
-    "folders": "文件夹",
-    "files": "文件",
-    "download": "下载",
+    "name": "文件名",
     "noMatch": "无匹配项",
-    "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "查找",
-    "view": "视图",
-    "language": "语言"
+    "parentDirectory": "父文件夹",
+    "size": "大小",
+    "view": "视图"
 }

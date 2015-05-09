@@ -1,17 +1,18 @@
 {
     "lang": "українська",
+
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "Деталі",
+    "download": "Завантажити",
+    "empty": "Порожньо",
+    "files": "Файли(ів)",
+    "filter": "Фільтр",
+    "folders": "Тек(и))",
     "grid": "Гратка",
     "icons": "Піктограми",
-    "name": "Ім'я",
     "lastModified": "Останні зміни",
-    "size": "Розмір",
-    "parentDirectory": "Головна тека",
-    "empty": "Порожньо",
-    "folders": "Тек(и))",
-    "files": "Файли(ів)",
-    "download": "Завантажити",
+    "name": "Ім'я",
     "noMatch": "Немає співпадінь",
-    "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "Фільтр"
+    "parentDirectory": "Головна тека",
+    "size": "Розмір"
 }

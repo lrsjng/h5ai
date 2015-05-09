@@ -1,17 +1,18 @@
 {
     "lang": "ελληνικά",
+
+    "dateFormat": "DD/MM/YYYY HH:mm",
     "details": "λεπτομέρειες",
+    "download": "μεταμόρφωση",
+    "empty": "κενό",
+    "files": "αρχεία",
+    "filter": "φίλτρο",
+    "folders": "φάκελοι",
     "grid": "πλέγμα",
     "icons": "εικονίδια",
-    "name": "Όνομα",
     "lastModified": "Τελευταία τροποποίηση",
-    "size": "Μέγεθος",
-    "parentDirectory": "Προηγούμενος Κατάλογος",
-    "empty": "κενό",
-    "folders": "φάκελοι",
-    "files": "αρχεία",
-    "download": "μεταμόρφωση",
+    "name": "Όνομα",
     "noMatch": "κανένα αποτέλεσμα",
-    "dateFormat": "DD/MM/YYYY HH:mm",
-    "filter": "φίλτρο"
+    "parentDirectory": "Προηγούμενος Κατάλογος",
+    "size": "Μέγεθος"
 }

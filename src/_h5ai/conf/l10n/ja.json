@@ -1,19 +1,20 @@
 {
     "lang": "日本語",
+
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "詳細",
+    "download": "ダウンロード",
+    "empty": "(空)",
+    "files": "ファイル",
+    "filter": "フィルター",
+    "folders": "フォルダー",
     "grid": "グリッド",
     "icons": "アイコン",
-    "name": "名前",
+    "language": "言語",
     "lastModified": "最終変更日時",
-    "size": "サイズ",
-    "parentDirectory": "親ディレクトリへ",
-    "empty": "(空)",
-    "folders": "フォルダー",
-    "files": "ファイル",
-    "download": "ダウンロード",
+    "name": "名前",
     "noMatch": "一致する項目が見つかりません",
-    "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "フィルター",
-    "view": "ビュー",
-    "language": "言語"
+    "parentDirectory": "親ディレクトリへ",
+    "size": "サイズ",
+    "view": "ビュー"
 }

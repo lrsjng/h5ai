@@ -6,7 +6,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/resource', 'core/se
     var template =
             '<div id="filter" class="tool">' +
                 '<img src="' + resource.image('filter') + '" alt="filter"/>' +
-                '<input type="text" value="" placeholder="filter"/>' +
+                '<input class="l10n_ph-filter" type="text" value="" placeholder="filter"/>' +
             '</div>';
     var noMatchTemplate = '<div class="no-match l10n-noMatch"/>';
     var inputIsVisible = false;

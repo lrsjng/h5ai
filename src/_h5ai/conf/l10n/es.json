@@ -1,17 +1,18 @@
 {
     "lang": "español",
+
+    "dateFormat": "DD/MM/YYYY HH:mm",
     "details": "Detalles",
+    "download": "Descargar",
+    "empty": "vacío",
+    "files": "Archivos",
+    "filter": "Filtar",
+    "folders": "Directorios",
     "grid": "Cuadrícula",
     "icons": "Íconos",
-    "name": "Nombre",
     "lastModified": "Última modificación",
-    "size": "Tamaño",
-    "parentDirectory": "Directorio superior",
-    "empty": "vacío",
-    "folders": "Directorios",
-    "files": "Archivos",
-    "download": "Descargar",
+    "name": "Nombre",
     "noMatch": "Sin coincidencias",
-    "dateFormat": "DD/MM/YYYY HH:mm",
-    "filter": "Filtar"
+    "parentDirectory": "Directorio superior",
+    "size": "Tamaño"
 }

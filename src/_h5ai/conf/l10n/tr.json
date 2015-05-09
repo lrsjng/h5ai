@@ -1,13 +1,14 @@
 {
     "lang": "türkçe",
+
     "details": "detaylar",
-    "icons": "ikonlar",
-    "name": "İsim",
-    "lastModified": "Son Düzenleme",
-    "size": "Boyut",
-    "parentDirectory": "Üst Dizin",
+    "download": "indir",
     "empty": "boş",
-    "folders": "klasörler",
     "files": "dosyalar",
-    "download": "indir"
+    "folders": "klasörler",
+    "icons": "ikonlar",
+    "lastModified": "Son Düzenleme",
+    "name": "İsim",
+    "parentDirectory": "Üst Dizin",
+    "size": "Boyut"
 }

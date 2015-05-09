@@ -1,20 +1,23 @@
 /* only here as a reference, these values are the hardcoded defaults */
 {
     "lang": "english",
+
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "details",
+    "download": "download",
+    "empty": "empty",
+    "files": "files",
+    "filter": "filter",
+    "folders": "folders",
     "grid": "grid",
     "icons": "icons",
-    "name": "Name",
+    "language": "Language",
     "lastModified": "Last modified",
-    "size": "Size",
-    "parentDirectory": "Parent Directory",
-    "empty": "empty",
-    "folders": "folders",
-    "files": "files",
-    "download": "download",
+    "name": "Name",
     "noMatch": "no match",
-    "dateFormat": "YYYY-MM-DD HH:mm",
-    "filter": "filter",
-    "view": "View",
-    "language": "Language"
+    "parentDirectory": "Parent Directory",
+    "search": "search",
+    "size": "Size",
+    "tree": "Tree",
+    "view": "View"
 }

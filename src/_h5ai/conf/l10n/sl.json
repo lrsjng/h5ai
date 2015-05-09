@@ -1,17 +1,18 @@
 {
     "lang": "slovenščina",
+
+    "dateFormat": "DD. MM. YYYY HH:mm",
     "details": "podrobnosti",
+    "download": "prenesi",
+    "empty": "prazno",
+    "files": "datoteke",
+    "filter": "filter",
+    "folders": "mape",
     "grid": "mreža",
     "icons": "ikone",
-    "name": "Ime",
     "lastModified": "Zadnja sprememba",
-    "size": "Velikost",
-    "parentDirectory": "Nadrejena mapa",
-    "empty": "prazno",
-    "folders": "mape",
-    "files": "datoteke",
-    "download": "prenesi",
+    "name": "Ime",
     "noMatch": "ni zadetkov",
-    "dateFormat": "DD. MM. YYYY HH:mm",
-    "filter": "filter"
+    "parentDirectory": "Nadrejena mapa",
+    "size": "Velikost"
 }

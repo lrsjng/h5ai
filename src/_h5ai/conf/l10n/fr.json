@@ -1,17 +1,18 @@
 {
     "lang": "français",
+
+    "dateFormat": "DD/MM/YYYY HH:mm",
     "details": "détails",
+    "download": "télécharger",
+    "empty": "vide",
+    "files": "Fichiers",
+    "filter": "filtre",
+    "folders": "Répertoires",
     "grid": "grille",
     "icons": "icônes",
-    "name": "Nom",
     "lastModified": "Dernière modification",
-    "size": "Taille",
-    "parentDirectory": "Dossier parent",
-    "empty": "vide",
-    "folders": "Répertoires",
-    "files": "Fichiers",
-    "download": "télécharger",
+    "name": "Nom",
     "noMatch": "rien trouvé",
-    "dateFormat": "DD/MM/YYYY HH:mm",
-    "filter": "filtre"
+    "parentDirectory": "Dossier parent",
+    "size": "Taille"
 }

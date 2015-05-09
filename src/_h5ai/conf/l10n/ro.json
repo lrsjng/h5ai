@@ -1,14 +1,15 @@
 {
     "lang": "română",
+
     "details": "detalii",
-    "icons": "pictograme",
-    "name": "nume",
-    "lastModified": "ultima modificare",
-    "size": "mărime",
-    "parentDirectory": "dosar părinte",
-    "empty": "gol",
-    "folders": "dosar",
-    "files": "fişiere",
     "download": "descarcă",
-    "noMatch": "0 rezultate"
+    "empty": "gol",
+    "files": "fişiere",
+    "folders": "dosar",
+    "icons": "pictograme",
+    "lastModified": "ultima modificare",
+    "name": "nume",
+    "noMatch": "0 rezultate",
+    "parentDirectory": "dosar părinte",
+    "size": "mărime"
 }

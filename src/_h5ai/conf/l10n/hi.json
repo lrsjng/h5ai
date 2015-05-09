@@ -1,18 +1,18 @@
 {
     "lang": "हिंदी",
-    "details": "विस्तार",
-    "icons": "आइकॉन",
-    "name": "नाम",
-    "lastModified": "पिछला परिवर्तन",
-    "size": "माप",
-    "parentDirectory": "मूल डायरेक्टरी",
-    "empty": "खाली",
-    "folders": "फोल्डर",
-    "files": "फ़ाइलें",
-    "download": "डाउनलोड",
-    "list": "सूची",
-    "grid": "ग्रिड",
-    "noMatch": "कोई समानता नहीं",
+
     "dateFormat": "DD.MM.YYYY HH:mm",
-    "filter": "फ़िल्टर"
+    "details": "विस्तार",
+    "download": "डाउनलोड",
+    "empty": "खाली",
+    "files": "फ़ाइलें",
+    "filter": "फ़िल्टर",
+    "folders": "फोल्डर",
+    "grid": "ग्रिड",
+    "icons": "आइकॉन",
+    "lastModified": "पिछला परिवर्तन",
+    "name": "नाम",
+    "noMatch": "कोई समानता नहीं",
+    "parentDirectory": "मूल डायरेक्टरी",
+    "size": "माप"
 }

@@ -1,17 +1,18 @@
 {
     "lang": "finnish",
+
+    "dateFormat": "DD.MM.YYYY HH:mm",
     "details": "tiedot",
+    "download": "lataa",
+    "empty": "tyhjä",
+    "files": "tiedostoa",
+    "filter": "suodata",
+    "folders": "hakemistoa",
     "grid": "ruudukko",
     "icons": "ikonit",
-    "name": "Nimi",
     "lastModified": "Viimeksi muokattu",
-    "size": "Koko",
-    "parentDirectory": "Ylähakemisto",
-    "empty": "tyhjä",
-    "folders": "hakemistoa",
-    "files": "tiedostoa",
-    "download": "lataa",
+    "name": "Nimi",
     "noMatch": "ei osumia",
-    "dateFormat": "DD.MM.YYYY HH:mm",
-    "filter": "suodata"
+    "parentDirectory": "Ylähakemisto",
+    "size": "Koko"
 }

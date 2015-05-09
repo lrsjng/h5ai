@@ -7,7 +7,7 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
     var template =
             '<div id="search" class="tool">' +
                 '<img src="' + resource.image('search') + '" alt="search"/>' +
-                '<input type="text" value="" placeholder="search"/>' +
+                '<input class="l10n_ph-search" type="text" value="" placeholder="search"/>' +
             '</div>';
     var inputIsVisible = false;
     var prevPattern = '';

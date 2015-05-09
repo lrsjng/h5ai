@@ -8,22 +8,25 @@ modulejs.define('ext/l10n', ['_', '$', 'core/event', 'core/format', 'core/langs'
     var defaultTranslations = {
             isoCode: 'en',
             lang: 'english',
+
+            dateFormat: 'YYYY-MM-DD HH:mm',
             details: 'details',
+            download: 'download',
+            empty: 'empty',
+            files: 'files',
+            filter: 'filter',
+            folders: 'folders',
             grid: 'grid',
             icons: 'icons',
-            name: 'Name',
+            language: 'Language',
             lastModified: 'Last modified',
-            size: 'Size',
-            parentDirectory: 'Parent Directory',
-            empty: 'empty',
-            folders: 'folders',
-            files: 'files',
-            download: 'download',
+            name: 'Name',
             noMatch: 'no match',
-            dateFormat: 'YYYY-MM-DD HH:mm',
-            filter: 'filter',
-            view: 'View',
-            language: 'Language'
+            parentDirectory: 'Parent Directory',
+            search: 'search',
+            size: 'Size',
+            tree: 'Tree',
+            view: 'View'
         };
     var blockTemplate = '<div class="block"><h1 class="l10n-language">Language</h1><div class="select"><select id="langs"/></div></div>';
     var optionTemplate = '<option/>';
@@ -47,6 +50,7 @@ modulejs.define('ext/l10n', ['_', '$', 'core/event', 'core/format', 'core/langs'
 
         $.each(currentLang, function (key, value) {
             $('.l10n-' + key).text(value);
+            $('.l10n_ph-' + key).attr('placeholder', value);
         });
         format.setDefaultDateFormat(currentLang.dateFormat);
 
@@ -56,8 +60,6 @@ modulejs.define('ext/l10n', ['_', '$', 'core/event', 'core/format', 'core/langs'
 
             $this.text(format.formatDate($this.data('time')));
         });
-
-        $('#filter input').attr('placeholder', currentLang.filter);
     }
 
     function loadLanguage(isoCode, callback) {
