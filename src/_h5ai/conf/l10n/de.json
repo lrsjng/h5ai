@@ -6,7 +6,7 @@
     "download": "Download",
     "empty": "leer",
     "files": "Dateien",
-    "filter": "Filter",
+    "filter": "filtern",
     "folders": "Ordner",
     "grid": "Gitter",
     "icons": "Icons",
@@ -15,7 +15,7 @@
     "name": "Name",
     "noMatch": "keine Treffer",
     "parentDirectory": "Übergeordnetes Verzeichnis",
-    "search": "Suche",
+    "search": "suchen",
     "size": "Größe",
     "tree": "Baum",
     "view": "Ansicht"
