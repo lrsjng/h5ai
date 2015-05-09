@@ -2,8 +2,8 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
 
     var settings = _.extend({
             enabled: false,
-            debounceTime: 100,
-            advanced: false
+            advanced: false,
+            debounceTime: 100
         }, allsettings.filter);
     var template =
             '<div id="filter" class="tool">' +

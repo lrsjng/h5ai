@@ -2,8 +2,8 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
 
     var settings = _.extend({
             enabled: false,
-            debounceTime: 300,
-            advanced: false
+            advanced: false,
+            debounceTime: 300
         }, allsettings.search);
     var template =
             '<div id="search" class="tool">' +
