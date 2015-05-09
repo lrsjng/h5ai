@@ -43,7 +43,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
 
         $filter.removeClass('pending');
         view.setHint('noMatch');
-        view.setItems('filter', matchedItems);
+        view.setItems(matchedItems);
     }
 
     function update() {

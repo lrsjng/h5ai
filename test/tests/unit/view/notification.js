@@ -96,7 +96,7 @@ describe('module \'' + ID + '\'', function () {
         it('is function', function () {
 
             var instance = this.applyFn();
-            assert.ok(_.isFunction(instance.set));
+            assert.isTrue(_.isFunction(instance.set));
         });
 
         it('works', function () {

@@ -41,7 +41,7 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
 
             $search.removeClass('pending');
             view.setHint('noMatch');
-            view.setItems('search', _.map(response.search, function (item) {
+            view.setItems(_.map(response.search, function (item) {
 
                 return Item.get(item);
             }));

@@ -84,7 +84,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         event.pub('item.mouseleave', item);
     }
 
-    function setItems(context, items) {
+    function setItems(items) {
 
         var removed = _.map($items.find('.item'), function (item) {
 
@@ -103,7 +103,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         event.pub('view.changed', items, removed);
     }
 
-    function changeItems(context, add, remove) {
+    function changeItems(add, remove) {
 
         _.each(add, function (item) {
 
@@ -158,7 +158,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         });
 
         setHint('empty');
-        setItems('location.changed', items);
+        setItems(items);
     }
 
     function onLocationRefreshed(item, added, removed) {
@@ -173,7 +173,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         });
 
         setHint('empty');
-        changeItems('location.refreshed', add, removed);
+        changeItems(add, removed);
     }
 
     function init() {

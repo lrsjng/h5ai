@@ -26,6 +26,9 @@ describe('module \'' + ID + '\'', function () {
             icon: sinon.stub().returns(util.uniqId())
         };
         this.xSettings = {view: {
+            binaryPrefix: false,
+            hideFolders: false,
+            hideParentFolder: false,
             setParentFolderLabels: false
         }};
         this.xContent = {$el: null};
@@ -109,6 +112,12 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOf($('#view > #items'), 1);
         });
 
+        it('adds HTML #view-hint to #view', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#view > #view-hint'), 1);
+        });
+
         it('sets default metric', function () {
 
             this.applyFn();
@@ -165,7 +174,15 @@ describe('module \'' + ID + '\'', function () {
         it('is function', function () {
 
             var instance = this.applyFn();
-            assert.ok(_.isFunction(instance.setItems));
+            assert.isTrue(_.isFunction(instance.setItems));
+        });
+
+        it('publishes view.changed', function () {
+
+            var instance = this.applyFn();
+            instance.setItems();
+            assert.isTrue(this.xEvent.pub.calledOnce);
+            assert.strictEqual(this.xEvent.pub.lastCall.args[0], 'view.changed');
         });
     });
 
@@ -174,7 +191,7 @@ describe('module \'' + ID + '\'', function () {
         it('is function', function () {
 
             var instance = this.applyFn();
-            assert.ok(_.isFunction(instance.changeItems));
+            assert.isTrue(_.isFunction(instance.changeItems));
         });
     });
 
@@ -183,7 +200,7 @@ describe('module \'' + ID + '\'', function () {
         it('is function', function () {
 
             var instance = this.applyFn();
-            assert.ok(_.isFunction(instance.setLocation));
+            assert.isTrue(_.isFunction(instance.setLocation));
         });
     });
 
@@ -192,7 +209,24 @@ describe('module \'' + ID + '\'', function () {
         it('is function', function () {
 
             var instance = this.applyFn();
-            assert.ok(_.isFunction(instance.setHint));
+            assert.isTrue(_.isFunction(instance.setHint));
+        });
+
+        it('sets correct class to #view-hint', function () {
+
+            var key = util.uniqId();
+            var instance = this.applyFn();
+            instance.setHint(key);
+            assert.strictEqual($('#view-hint').attr('class'), 'l10n-' + key);
+        });
+
+        it('removes all other classes from #view-hint', function () {
+
+            var key = util.uniqId();
+            var instance = this.applyFn();
+            $('#view-hint').addClass('a');
+            instance.setHint(key);
+            assert.strictEqual($('#view-hint').attr('class'), 'l10n-' + key);
         });
     });
 
