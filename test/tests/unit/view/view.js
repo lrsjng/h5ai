@@ -90,11 +90,11 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns object with 5 properties', function () {
+        it('returns object with 6 properties', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 5);
+            assert.lengthOfKeys(instance, 6);
         });
 
         it('adds HTML #view to #content', function () {
@@ -184,6 +184,15 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.ok(_.isFunction(instance.setLocation));
+        });
+    });
+
+    describe('.setHint()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.ok(_.isFunction(instance.setHint));
         });
     });
 

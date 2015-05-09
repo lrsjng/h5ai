@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'core/util';
-var DEPS = [];
+var DEPS = ['_'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -12,7 +12,7 @@ describe('module \'' + ID + '\'', function () {
 
         this.applyFn = function () {
 
-            return this.definition.fn();
+            return this.definition.fn(_);
         };
     });
 
@@ -51,11 +51,11 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns plain object with 2 properties', function () {
+        it('returns plain object with 4 properties', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 2);
+            assert.lengthOfKeys(instance, 4);
         });
     });
 
@@ -115,6 +115,115 @@ describe('module \'' + ID + '\'', function () {
 
                 var instance = this.applyFn();
                 assert.strictEqual(instance.naturalCmpFn(arg1, arg2), exp);
+            });
+        });
+    });
+
+    describe('.escapePattern()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isFunction(instance.escapePattern);
+        });
+
+        _.each([
+            ['a', 'a'],
+            ['1', '1'],
+            ['ä', 'ä'],
+            ['~', '~'],
+            [':', ':'],
+            ['_', '_'],
+            ['<', '<'],
+            ['-', '\\-'],
+            ['[', '\\['],
+            [']', '\\]'],
+            ['{', '\\{'],
+            ['}', '\\}'],
+            ['(', '\\('],
+            [')', '\\)'],
+            ['*', '\\*'],
+            ['+', '\\+'],
+            ['?', '\\?'],
+            ['.', '\\.'],
+            [',', '\\,'],
+            ['\\', '\\\\'],
+            ['$', '\\$'],
+            ['^', '\\^'],
+            ['|', '\\|'],
+            ['#', '\\#'],
+            [' ', '\\ '],
+            ['-[]{}()*+?.,\\$^|# ', '\\-\\[\\]\\{\\}\\(\\)\\*\\+\\?\\.\\,\\\\\\$\\^\\|\\#\\ '],
+            ['abc123', 'abc123'],
+            ['a.b+c*1', 'a\\.b\\+c\\*1']
+        ], function (data) {
+
+            var arg = data[0];
+            var exp = data[1];
+
+            it(arg + ' => ' + exp, function () {
+
+                var instance = this.applyFn();
+                assert.strictEqual(instance.escapePattern(arg), exp);
+            });
+        });
+    });
+
+    describe('.parsePattern()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isFunction(instance.parsePattern);
+        });
+
+        _.each([
+            ['a', false, 'a'],
+            ['1', false, '1'],
+            ['ä', false, 'ä'],
+            ['~', false, '~'],
+            [':', false, ':'],
+            ['_', false, '_'],
+            ['<', false, '<'],
+            ['-', false, '\\-'],
+            ['[', false, '\\['],
+            [']', false, '\\]'],
+            ['{', false, '\\{'],
+            ['}', false, '\\}'],
+            ['(', false, '\\('],
+            [')', false, '\\)'],
+            ['*', false, '\\*'],
+            ['+', false, '\\+'],
+            ['?', false, '\\?'],
+            ['.', false, '\\.'],
+            [',', false, '\\,'],
+            ['\\', false, '\\\\'],
+            ['$', false, '\\$'],
+            ['^', false, '\\^'],
+            ['|', false, '\\|'],
+            ['#', false, '\\#'],
+            [' ', false, '\\ '],
+            ['-[]{}()*+?.,\\$^|# ', false, '\\-\\[\\]\\{\\}\\(\\)\\*\\+\\?\\.\\,\\\\\\$\\^\\|\\#\\ '],
+            ['abc123', false, 'abc123'],
+            ['a.b+c*1', false, 'a\\.b\\+c\\*1'],
+
+            ['abc', true, 'a.*?b.*?c'],
+            ['abc def', true, 'a.*?b.*?c|d.*?e.*?f'],
+            ['*#a b.=', true, '\\*.*?\\#.*?a|b.*?\\..*?='],
+            ['re:.', true, '.'],
+            [' .', true, '\\.'],
+            ['re: .', true, ' .']
+
+        ], function (data) {
+
+            var arg1 = data[0];
+            var arg2 = data[1];
+            var exp = data[2];
+
+            it(arg1 + ', ' + arg2 + ' => ' + exp, function () {
+
+                var instance = this.applyFn();
+                assert.strictEqual(instance.parsePattern(arg1, arg2), exp);
             });
         });
     });
