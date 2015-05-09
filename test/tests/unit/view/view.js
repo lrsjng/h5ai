@@ -193,6 +193,14 @@ describe('module \'' + ID + '\'', function () {
             var instance = this.applyFn();
             assert.isTrue(_.isFunction(instance.changeItems));
         });
+
+        it('publishes view.changed', function () {
+
+            var instance = this.applyFn();
+            instance.setItems();
+            assert.isTrue(this.xEvent.pub.calledOnce);
+            assert.strictEqual(this.xEvent.pub.lastCall.args[0], 'view.changed');
+        });
     });
 
     describe('.setLocation()', function () {
@@ -201,6 +209,14 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.isTrue(_.isFunction(instance.setLocation));
+        });
+
+        it('publishes view.changed', function () {
+
+            var instance = this.applyFn();
+            instance.setItems();
+            assert.isTrue(this.xEvent.pub.calledOnce);
+            assert.strictEqual(this.xEvent.pub.lastCall.args[0], 'view.changed');
         });
     });
 
