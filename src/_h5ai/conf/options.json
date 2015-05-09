@@ -109,9 +109,12 @@ Options
 
     Filters will be treated as JavaScript regular expressions
     if you prefix them with "re:".
+
+    - debounceTime: number, debounce wait time in milliseconds
     */
     "filter": {
-        "enabled": true
+        "enabled": true,
+        "debounceTime": 100
     },
 
     /*

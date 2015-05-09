@@ -16,7 +16,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
                         '<a class="size" href="#"><span class="l10n-size"/></a>' +
                     '</li>' +
                 '</ul>' +
-                '<div class="empty l10n-empty"/>' +
+                '<div id="view-hint"/>' +
             '</div>';
     var itemTemplate =
             '<li class="item">' +
@@ -30,7 +30,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
             '</li>';
     var $view = $(template);
     var $items = $view.find('#items');
-    var $empty = $view.find('.empty');
+    var $hint = $view.find('#view-hint');
 
 
     function createHtml(item) {
@@ -98,8 +98,8 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
             $items.append(createHtml(e));
         });
 
-        $empty.hide();
         content.$el.scrollLeft(0).scrollTop(0);
+        checkHint();
         event.pub('view.changed', items, removed);
     }
 
@@ -117,8 +117,25 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
             });
         });
 
-        $empty.hide();
+        checkHint();
         event.pub('view.changed', add, remove);
+    }
+
+    function checkHint() {
+
+        var hasNoItems = $items.find('.item').not('.folder-parent').length === 0;
+
+        if (hasNoItems) {
+            $hint.show();
+        } else {
+            $hint.hide();
+        }
+    }
+
+    function setHint(l10nKey) {
+
+        $hint.removeClass().addClass('l10n-' + l10nKey);
+        checkHint();
     }
 
     function onLocationChanged(item) {
@@ -140,6 +157,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
             }
         });
 
+        setHint('empty');
         setItems('location.changed', items);
     }
 
@@ -154,13 +172,14 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
             }
         });
 
+        setHint('empty');
         changeItems('location.refreshed', add, removed);
     }
 
     function init() {
 
         $view.appendTo(content.$el);
-        $empty.hide();
+        $hint.hide();
 
         format.setDefaultMetric(settings.binaryPrefix);
 
@@ -180,6 +199,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         $items: $items,
         setItems: setItems,
         changeItems: changeItems,
-        setLocation: onLocationChanged
+        setLocation: onLocationChanged,
+        setHint: setHint
     };
 });

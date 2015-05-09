@@ -1,48 +1,48 @@
-modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/resource', 'core/settings'], function (_, $, event, resource, allsettings) {
+modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'view/view'], function (_, $, event, location, resource, allsettings, view) {
 
     var settings = _.extend({
-            enabled: false
+            enabled: false,
+            debounceTime: 100
         }, allsettings.filter);
     var template =
             '<div id="filter" class="tool">' +
                 '<img src="' + resource.image('filter') + '" alt="filter"/>' +
-                '<input class="l10n_ph-filter" type="text" value="" placeholder="filter"/>' +
+                '<input class="l10n_ph-filter" type="text" value=""/>' +
             '</div>';
-    var noMatchTemplate = '<div class="no-match l10n-noMatch"/>';
     var inputIsVisible = false;
+    var prevPattern = '';
     var $filter;
     var $input;
-    var $noMatch;
 
 
-    function filter(re) {
+    function filter(pattern) {
 
-        var match = [];
-        var noMatch = [];
-        var duration = 200;
+        pattern = pattern || '';
+        if (pattern === prevPattern) {
+            return;
+        }
+        prevPattern = pattern;
 
-        if (re) {
-            $('#items .item').not('.folder-parent').each(function () {
-
-                var label = $(this).find('.label').text();
-
-                if (label.match(re)) {
-                    match.push(this);
-                } else {
-                    noMatch.push(this);
-                }
-            });
-        } else {
-            match = $('#items .item').not('.folder-parent');
+        if (!pattern) {
+            view.setLocation();
+            return;
         }
 
-        if (match.length) {
-            $noMatch.hide();
-        } else if (noMatch.length) {
-            setTimeout(function () { $noMatch.show(); }, duration);
-        }
-        $(match).fadeIn(duration);
-        $(noMatch).fadeOut(duration);
+        $filter.addClass('pending');
+
+        var re = new RegExp(pattern);
+        var matchedItems = [];
+
+        _.each(location.getItem().content, function (item) {
+
+            if (re.test(item.label)) {
+                matchedItems.push(item);
+            }
+        });
+
+        $filter.removeClass('pending');
+        view.setHint('noMatch');
+        view.setItems('filter', matchedItems);
     }
 
     function escapeRegExp(sequence) {
@@ -50,30 +50,31 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/resource', 'core/se
         return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
     }
 
-    function parseFilterSequence(sequence) {
+    function parseInput(sequence) {
 
         if (sequence.substr(0, 3) === 're:') {
-            return new RegExp(sequence.substr(3));
+            return sequence.substr(3);
         }
 
-        sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
+        return escapeRegExp(sequence);
 
-            return _.map(part.split(''), function (character) {
+        // sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
 
-                return escapeRegExp(character);
-            }).join('.*?');
-        }).join('|');
+        //     return _.map(part.split(''), function (character) {
 
-        return new RegExp(sequence, 'i');
+        //         return escapeRegExp(character);
+        //     }).join('.*?');
+        // }).join('|');
+
+        // return sequence;
     }
 
     function update() {
 
         if (inputIsVisible) {
-            var val = $input.val();
-            filter(parseFilterSequence(val));
             $filter.addClass('active');
             $input.focus();
+            filter(parseInput($input.val()));
         } else {
             filter();
             $filter.removeClass('active');
@@ -88,6 +89,7 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/resource', 'core/se
 
     function reset() {
 
+        inputIsVisible = false;
         $input.val('');
         update();
     }
@@ -100,10 +102,9 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/resource', 'core/se
 
         $filter = $(template).appendTo('#toolbar');
         $input = $filter.find('input');
-        $noMatch = $(noMatchTemplate).appendTo('#view');
 
         $filter.on('click', 'img', toggle);
-        $input.on('keyup', update);
+        $input.on('keyup', _.debounce(update, settings.debounceTime, {trailing: true}));
         event.sub('location.changed', reset);
     }
 

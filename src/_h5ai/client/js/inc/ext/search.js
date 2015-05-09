@@ -7,7 +7,7 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
     var template =
             '<div id="search" class="tool">' +
                 '<img src="' + resource.image('search') + '" alt="search"/>' +
-                '<input class="l10n_ph-search" type="text" value="" placeholder="search"/>' +
+                '<input class="l10n_ph-search" type="text" value=""/>' +
             '</div>';
     var inputIsVisible = false;
     var prevPattern = '';
@@ -39,6 +39,7 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
         }, function (response) {
 
             $search.removeClass('pending');
+            view.setHint('noMatch');
             view.setItems('search', _.map(response.search, function (item) {
 
                 return Item.get(item);
