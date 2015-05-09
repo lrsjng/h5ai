@@ -102,18 +102,20 @@ Options
     },
 
     /*
-    Allow filtering the displayed files and folders.
-    Will check entries for right order of characters, i.e.
-    "ab" matches "ab", "axb", "xaxbx" but not "ba".
-    Space separated sequences get OR-ed.
+    Allow filtering the displayed files and folders in current folder.
+    Checks for substrings.
 
-    Filters will be treated as JavaScript regular expressions
-    if you prefix them with "re:".
+    If advanced is enabled it checks entries for right order of characters,
+    i.e. "ab" matches "ab", "axb", "xaxbx" but not "ba". Space separated
+    sequences get OR-ed. Searches will be treated as JavaScript regular
+    expressions if you prefix them with "re:".
 
+    - advanced: boolean, use advanced pattern parsing
     - debounceTime: number, debounce wait time in milliseconds
     */
     "filter": {
         "enabled": true,
+        "advanced": true,
         "debounceTime": 100
     },
 
@@ -265,18 +267,20 @@ Options
     },
 
     /*
-    Allow searching files and folders.
-    Will check entries for right order of characters, i.e.
-    "ab" matches "ab", "axb", "xaxbx" but not "ba".
-    Space separated sequences get OR-ed.
+    Allow searching files and folders in and below current folder.
+    Checks for substrings.
 
-    Searches will be treated as JavaScript regular expressions
-    if you prefix them with "re:".
+    If advanced is enabled it checks entries for right order of characters,
+    i.e. "ab" matches "ab", "axb", "xaxbx" but not "ba". Space separated
+    sequences get OR-ed. Searches will be treated as JavaScript regular
+    expressions if you prefix them with "re:".
 
+    - advanced: boolean, use advanced pattern parsing
     - debounceTime: number, debounce wait time in milliseconds
     */
     "search": {
         "enabled": true,
+        "advanced": true,
         "debounceTime": 300
     },
 

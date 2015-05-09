@@ -1,8 +1,9 @@
-modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'view/view'], function (_, $, event, location, resource, allsettings, view) {
+modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'core/util', 'view/view'], function (_, $, event, location, resource, allsettings, util, view) {
 
     var settings = _.extend({
             enabled: false,
-            debounceTime: 100
+            debounceTime: 100,
+            advanced: false
         }, allsettings.filter);
     var template =
             '<div id="filter" class="tool">' +
@@ -45,36 +46,12 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
         view.setItems('filter', matchedItems);
     }
 
-    function escapeRegExp(sequence) {
-
-        return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
-    }
-
-    function parseInput(sequence) {
-
-        if (sequence.substr(0, 3) === 're:') {
-            return sequence.substr(3);
-        }
-
-        return escapeRegExp(sequence);
-
-        // sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
-
-        //     return _.map(part.split(''), function (character) {
-
-        //         return escapeRegExp(character);
-        //     }).join('.*?');
-        // }).join('|');
-
-        // return sequence;
-    }
-
     function update() {
 
         if (inputIsVisible) {
             $filter.addClass('active');
             $input.focus();
-            filter(parseInput($input.val()));
+            filter(util.parsePattern($input.val(), settings.advanced));
         } else {
             filter();
             $filter.removeClass('active');

@@ -1,8 +1,9 @@
-modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/server', 'core/settings', 'model/item', 'view/view'], function (_, $, event, location, resource, server, allsettings, Item, view) {
+modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/server', 'core/settings', 'core/util', 'model/item', 'view/view'], function (_, $, event, location, resource, server, allsettings, util, Item, view) {
 
     var settings = _.extend({
             enabled: false,
-            debounceTime: 300
+            debounceTime: 300,
+            advanced: false
         }, allsettings.search);
     var template =
             '<div id="search" class="tool">' +
@@ -47,36 +48,12 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
         });
     }
 
-    function escapeRegExp(sequence) {
-
-        return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
-    }
-
-    function parseInput(sequence) {
-
-        if (sequence.substr(0, 3) === 're:') {
-            return sequence.substr(3);
-        }
-
-        return escapeRegExp(sequence);
-
-        // sequence = $.map($.trim(sequence).split(/\s+/), function (part) {
-
-        //     return _.map(part.split(''), function (character) {
-
-        //         return escapeRegExp(character);
-        //     }).join('.*?');
-        // }).join('|');
-
-        // return sequence;
-    }
-
     function update() {
 
         if (inputIsVisible) {
             $search.addClass('active');
             $input.focus();
-            search(parseInput($input.val()));
+            search(util.parsePattern($input.val(), settings.advanced));
         } else {
             search();
             $search.removeClass('active');

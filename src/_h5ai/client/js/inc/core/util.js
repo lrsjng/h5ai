@@ -1,4 +1,4 @@
-modulejs.define('core/util', [], function () {
+modulejs.define('core/util', ['_'], function (_) {
 
 
     function regularCmpFn(val1, val2) {
@@ -65,9 +65,37 @@ modulejs.define('core/util', [], function () {
         return 0;
     }
 
+    function escapePattern(sequence) {
+
+        return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
+    }
+
+    function parsePattern(sequence, advanced) {
+
+        if (!advanced) {
+            return escapePattern(sequence);
+        }
+
+        if (sequence.substr(0, 3) === 're:') {
+            return sequence.substr(3);
+        }
+
+        sequence = _.map(_.trim(sequence).split(/\s+/), function (part) {
+
+            return _.map(part.split(''), function (character) {
+
+                return escapePattern(character);
+            }).join('.*?');
+        }).join('|');
+
+        return sequence;
+    }
+
 
     return {
         regularCmpFn: regularCmpFn,
-        naturalCmpFn: naturalCmpFn
+        naturalCmpFn: naturalCmpFn,
+        escapePattern: escapePattern,
+        parsePattern: parsePattern
     };
 });
