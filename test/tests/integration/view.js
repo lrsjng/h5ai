@@ -32,7 +32,7 @@ describe('view', function () {
         $('<div id="fallback-hints"/>').appendTo('body');
     });
 
-    describe('require(\'view/viewmode\') sets up basic HTML', function () {
+    describe('requiring \'view/viewmode\' sets up basic HTML', function () {
 
         it('runs without errors', function () {
 
