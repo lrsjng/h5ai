@@ -60,6 +60,7 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
         }
 
         $download = $(template)
+            .hide()
             .appendTo('#toolbar')
             .on('click', onClick);
 

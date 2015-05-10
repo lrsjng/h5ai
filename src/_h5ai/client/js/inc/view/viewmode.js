@@ -1,5 +1,8 @@
-modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view/sidebar', 'view/topbar', 'view/view'], function (_, $, event, resource, sidebar, topbar, view) {
+modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'view/sidebar', 'view/topbar', 'view/view'], function (_, $, event, resource, allsettings, sidebar, topbar, view) {
 
+    var settings = _.extend({
+            viewmodeToggle: false
+        }, allsettings.view);
     var tplSettings =
             '<div id="viewmode-settings" class="block"><h1 class="l10n-view">View</h1></div>';
     var tplMode =
@@ -68,7 +71,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view
 
     function addToggle() {
 
-        if (modes.length > 1) {
+        if (settings.viewmodeToggle && modes.length > 1) {
             $(tplToggle)
                 .on('click', onToggle)
                 .appendTo(topbar.$toolbar);
