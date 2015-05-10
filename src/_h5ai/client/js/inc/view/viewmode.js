@@ -12,8 +12,8 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view
             '<div id="viewmode-toggle" class="tool">' +
                 '<img alt="viewmode"/>' +
             '</div>';
-    var modes = view.getModes();
-    var sizes = view.getSizes();
+    var modes;
+    var sizes;
 
 
     function onChanged(mode, size) {
@@ -76,6 +76,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view
     }
 
     function init() {
+
+        modes = view.getModes();
+        sizes = view.getSizes();
 
         addSettings();
         addToggle();
