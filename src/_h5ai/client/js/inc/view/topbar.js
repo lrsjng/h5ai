@@ -1,6 +1,6 @@
 modulejs.define('view/topbar', ['$', 'core/settings', 'view/root'], function ($, settings, root) {
 
-    var template =
+    var tplTopbar =
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +
                 '<div id="flowbar"/>' +
@@ -9,7 +9,7 @@ modulejs.define('view/topbar', ['$', 'core/settings', 'view/root'], function ($,
                     '<div>by h5ai</div>' +
                 '</a>' +
             '</div>';
-    var $el = $(template).appendTo(root.$el);
+    var $el = $(tplTopbar).appendTo(root.$el);
 
     return {
         $el: $el,

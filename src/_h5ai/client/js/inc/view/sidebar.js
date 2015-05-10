@@ -1,13 +1,13 @@
 modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store', 'view/mainrow', 'view/topbar'], function ($, resource, store, mainrow, topbar) {
 
     var storekey = 'sidebarIsVisible';
-    var template = '<div id="sidebar"/>';
-    var toggleTemplate =
+    var tplSidebar = '<div id="sidebar"/>';
+    var tplToggle =
             '<div id="sidebar-toggle" class="tool">' +
                 '<img alt="sidebar"/>' +
             '</div>';
-    var $sidebar = $(template);
-    var $toggle = $(toggleTemplate);
+    var $sidebar = $(tplSidebar);
+    var $toggle = $(tplToggle);
     var $img = $toggle.find('img');
 
 
