@@ -1,12 +1,19 @@
-modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'view/content'], function (_, $, event, format, location, resource, allsettings, content) {
+modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'core/store', 'view/content'], function (_, $, event, format, location, resource, allsettings, store, content) {
 
+    var modes = ['details', 'grid', 'icons'];
+    var sizes = [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400];
     var settings = _.extend({
             binaryPrefix: false,
             hideFolders: false,
             hideParentFolder: false,
-            setParentFolderLabels: false
+            modes: modes,
+            setParentFolderLabels: false,
+            sizes: sizes
         }, allsettings.view);
-    var template =
+    var sortedSizes = settings.sizes.sort(function (a, b) { return a - b; });
+    var checkedModes = _.intersection(settings.modes, modes);
+    var storekey = 'view';
+    var tplView =
             '<div id="view">' +
                 '<ul id="items" class="clearfix">' +
                     '<li class="header">' +
@@ -18,7 +25,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
                 '</ul>' +
                 '<div id="view-hint"/>' +
             '</div>';
-    var itemTemplate =
+    var tplItem =
             '<li class="item">' +
                 '<a>' +
                     '<span class="icon square"><img/></span>' +
@@ -28,14 +35,111 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
                     '<span class="size"/>' +
                 '</a>' +
             '</li>';
-    var $view = $(template);
+    var $view = $(tplView);
     var $items = $view.find('#items');
     var $hint = $view.find('#view-hint');
 
 
+    function cropSize(size, min, max) {
+
+        return Math.min(max, Math.max(min, size));
+    }
+
+    function createStyles(size) {
+
+        var dsize = cropSize(size, 20, 80);
+        var gsize = cropSize(size, 40, 150);
+        var isize = cropSize(size, 80, 2000);
+        var ilsize = Math.round(isize * 4 / 3);
+        var rules = [
+                '#view.view-details.view-size-' + size + ' .item .label { line-height: ' + (dsize + 14) + 'px !important; }',
+                '#view.view-details.view-size-' + size + ' .item .date { line-height: ' + (dsize + 14) + 'px !important; }',
+                '#view.view-details.view-size-' + size + ' .item .size { line-height: ' + (dsize + 14) + 'px !important; }',
+                '#view.view-details.view-size-' + size + ' .square { width: ' + dsize + 'px !important; height: ' + dsize + 'px !important; }',
+                '#view.view-details.view-size-' + size + ' .square img { width: ' + dsize + 'px !important; height: ' + dsize + 'px !important; }',
+                '#view.view-details.view-size-' + size + ' .label { margin: 0 246px 0 ' + (dsize + 32) + 'px !important; }',
+
+                '#view.view-grid.view-size-' + size + ' .item .label { line-height: ' + gsize + 'px !important; }',
+                '#view.view-grid.view-size-' + size + ' .square { width: ' + gsize + 'px !important; height: ' + gsize + 'px !important; }',
+                '#view.view-grid.view-size-' + size + ' .square img { width: ' + gsize + 'px !important; height: ' + gsize + 'px !important; }',
+
+                '#view.view-icons.view-size-' + size + ' .item { width: ' + ilsize + 'px !important; }',
+                '#view.view-icons.view-size-' + size + ' .landscape { width: ' + ilsize + 'px !important; height: ' + isize + 'px !important; }',
+                '#view.view-icons.view-size-' + size + ' .landscape img { width: ' + isize + 'px !important; height: ' + isize + 'px !important; }',
+                '#view.view-icons.view-size-' + size + ' .landscape .thumb { width: ' + ilsize + 'px !important; }'
+            ];
+
+        return rules.join('\n');
+    }
+
+    function addCssStyles() {
+
+        var styles = _.map(sortedSizes, function (size) { return createStyles(size); });
+        $('<style/>').text(styles.join('\n')).appendTo('head');
+    }
+
+    function set(mode, size) {
+
+        var stored = store.get(storekey);
+
+        mode = mode || stored && stored.mode;
+        size = size || stored && stored.size;
+        mode = _.contains(settings.modes, mode) ? mode : settings.modes[0];
+        size = _.contains(settings.sizes, size) ? size : settings.sizes[0];
+        store.put(storekey, {mode: mode, size: size});
+
+        _.each(checkedModes, function (m) {
+            if (m === mode) {
+                $view.addClass('view-' + m);
+            } else {
+                $view.removeClass('view-' + m);
+            }
+        });
+
+        _.each(sortedSizes, function (s) {
+            if (s === size) {
+                $view.addClass('view-size-' + s);
+            } else {
+                $view.removeClass('view-size-' + s);
+            }
+        });
+
+        event.pub('view.mode.changed', mode, size);
+    }
+
+    function getModes() {
+
+        return checkedModes;
+    }
+
+    function getSizes() {
+
+        return sortedSizes;
+    }
+
+    function getMode() {
+
+        return store.get(storekey).mode;
+    }
+
+    function setMode(mode) {
+
+        set(mode, null);
+    }
+
+    function getSize() {
+
+        return store.get(storekey).size;
+    }
+
+    function setSize(size) {
+
+        set(null, size);
+    }
+
     function createHtml(item) {
 
-        var $html = $(itemTemplate);
+        var $html = $(tplItem);
         var $a = $html.find('a');
         var $iconImg = $html.find('.icon img');
         var $label = $html.find('.label');
@@ -178,6 +282,9 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
 
     function init() {
 
+        addCssStyles();
+        set();
+
         $view.appendTo(content.$el);
         $hint.hide();
 
@@ -200,6 +307,12 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
         setItems: setItems,
         changeItems: changeItems,
         setLocation: onLocationChanged,
-        setHint: setHint
+        setHint: setHint,
+        getModes: getModes,
+        getMode: getMode,
+        setMode: setMode,
+        getSizes: getSizes,
+        getSize: getSize,
+        setSize: setSize
     };
 });

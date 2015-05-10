@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/view';
-var DEPS = ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'view/content'];
+var DEPS = ['_', '$', 'core/event', 'core/format', 'core/location', 'core/resource', 'core/settings', 'core/store', 'view/content'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -29,8 +29,14 @@ describe('module \'' + ID + '\'', function () {
             binaryPrefix: false,
             hideFolders: false,
             hideParentFolder: false,
-            setParentFolderLabels: false
+            modes: ['details', 'grid', 'icons'],
+            setParentFolderLabels: false,
+            sizes: [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400]
         }};
+        this.xStore = {
+            get: sinon.stub(),
+            put: sinon.stub()
+        };
         this.xContent = {$el: null};
 
         this.applyFn = function () {
@@ -43,7 +49,7 @@ describe('module \'' + ID + '\'', function () {
             this.xLocation.setLink.reset();
             this.xResource.icon.reset();
 
-            return this.definition.fn(_, $, this.xEvent, this.xFormat, this.xLocation, this.xResource, this.xSettings, this.xContent);
+            return this.definition.fn(_, $, this.xEvent, this.xFormat, this.xLocation, this.xResource, this.xSettings, this.xStore, this.xContent);
         };
     });
 
@@ -93,11 +99,11 @@ describe('module \'' + ID + '\'', function () {
 
     describe('application', function () {
 
-        it('returns object with 6 properties', function () {
+        it('returns object with 12 properties', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 6);
+            assert.lengthOfKeys(instance, 12);
         });
 
         it('adds HTML #view to #content', function () {
@@ -116,6 +122,23 @@ describe('module \'' + ID + '\'', function () {
 
             this.applyFn();
             assert.lengthOf($('#view > #view-hint'), 1);
+        });
+
+        it('adds style to head', function () {
+
+            var styleTagCount = $('head > style').length;
+            this.applyFn();
+            assert.lengthOf($('head > style'), styleTagCount + 1);
+        });
+
+        it('style contains possibly correct text', function () {
+
+            this.xSettings.sizes = [20];
+            this.applyFn();
+            var text = $('head > style').eq(0).text();
+            assert.isTrue(text.indexOf('#view.view-details.view-size-20 ') >= 0);
+            assert.isTrue(text.indexOf('#view.view-grid.view-size-20 ') >= 0);
+            assert.isTrue(text.indexOf('#view.view-icons.view-size-20 ') >= 0);
         });
 
         it('sets default metric', function () {
@@ -181,7 +204,7 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             instance.setItems();
-            assert.isTrue(this.xEvent.pub.calledOnce);
+            assert.isTrue(this.xEvent.pub.calledTwice);
             assert.strictEqual(this.xEvent.pub.lastCall.args[0], 'view.changed');
         });
     });
@@ -198,7 +221,7 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             instance.setItems();
-            assert.isTrue(this.xEvent.pub.calledOnce);
+            assert.isTrue(this.xEvent.pub.calledTwice);
             assert.strictEqual(this.xEvent.pub.lastCall.args[0], 'view.changed');
         });
     });
@@ -215,7 +238,7 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             instance.setItems();
-            assert.isTrue(this.xEvent.pub.calledOnce);
+            assert.isTrue(this.xEvent.pub.calledTwice);
             assert.strictEqual(this.xEvent.pub.lastCall.args[0], 'view.changed');
         });
     });
@@ -243,6 +266,136 @@ describe('module \'' + ID + '\'', function () {
             $('#view-hint').addClass('a');
             instance.setHint(key);
             assert.strictEqual($('#view-hint').attr('class'), 'l10n-' + key);
+        });
+    });
+
+    describe('.getModes()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isTrue(_.isFunction(instance.getModes));
+        });
+    });
+
+    describe('.getMode()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isTrue(_.isFunction(instance.getMode));
+        });
+    });
+
+    describe('.setMode()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isTrue(_.isFunction(instance.setMode));
+        });
+
+        it('.setMode(\'details\') changes #view class to .view-details', function () {
+
+            this.xSettings.view.modes = ['details', 'grid', 'icons'];
+            var instance = this.applyFn();
+            instance.setMode('details');
+            assert.isTrue($('#view').hasClass('view-details'));
+            assert.isFalse($('#view').hasClass('view-grid'));
+            assert.isFalse($('#view').hasClass('view-icons'));
+        });
+
+        it('.setMode(\'grid\') changes #view class to .view-grid', function () {
+
+            this.xSettings.view.modes = ['details', 'grid', 'icons'];
+            var instance = this.applyFn();
+            instance.setMode('grid');
+            assert.isFalse($('#view').hasClass('view-details'));
+            assert.isTrue($('#view').hasClass('view-grid'));
+            assert.isFalse($('#view').hasClass('view-icons'));
+        });
+
+        it('.setMode(\'icons\') changes #view class to .view-icons', function () {
+
+            this.xSettings.view.modes = ['details', 'grid', 'icons'];
+            var instance = this.applyFn();
+            instance.setMode('icons');
+            assert.isFalse($('#view').hasClass('view-details'));
+            assert.isFalse($('#view').hasClass('view-grid'));
+            assert.isTrue($('#view').hasClass('view-icons'));
+        });
+    });
+
+    describe('.getSizes()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isTrue(_.isFunction(instance.getSizes));
+        });
+
+        it('returns sorted sizes', function () {
+
+            this.xSettings.view.sizes = [20, 60, 40];
+            var instance = this.applyFn();
+            assert.deepEqual(instance.getSizes(), [20, 40, 60]);
+        });
+
+        it('returns sorted sizes', function () {
+
+            this.xSettings.view.sizes = [60, 40, 20];
+            var instance = this.applyFn();
+            assert.deepEqual(instance.getSizes(), [20, 40, 60]);
+        });
+    });
+
+    describe('.getSize()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isTrue(_.isFunction(instance.getSize));
+        });
+    });
+
+    describe('.setSize()', function () {
+
+        it('is function', function () {
+
+            var instance = this.applyFn();
+            assert.isTrue(_.isFunction(instance.setSize));
+        });
+
+        it('.setSize(20) changes #view class to .view-size-20', function () {
+
+            this.xSettings.view.sizes = [20, 40, 60];
+            var instance = this.applyFn();
+            instance.setSize(20);
+            assert.isTrue($('#view').hasClass('view-size-20'), 20);
+            assert.isFalse($('#view').hasClass('view-size-40'), 40);
+            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+        });
+
+        it('.setSize(40) changes #view class to .view-size-40', function () {
+
+            this.xSettings.view.sizes = [20, 40, 60];
+            var instance = this.applyFn();
+            instance.setSize(20);
+            instance.setSize(40);
+            assert.isFalse($('#view').hasClass('view-size-20'), 20);
+            assert.isTrue($('#view').hasClass('view-size-40'), 40);
+            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+        });
+
+        it('.setSize(60) changes #view class to .view-size-60', function () {
+
+            this.xSettings.view.sizes = [20, 40, 60];
+            var instance = this.applyFn();
+            instance.setSize(20);
+            instance.setSize(60);
+            assert.isFalse($('#view').hasClass('view-size-20'), 20);
+            assert.isFalse($('#view').hasClass('view-size-40'), 40);
+            assert.isTrue($('#view').hasClass('view-size-60'), 60);
         });
     });
 

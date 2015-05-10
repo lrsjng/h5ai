@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/viewmode';
-var DEPS = ['_', '$', 'core/resource', 'core/settings', 'core/store', 'view/sidebar', 'view/view'];
+var DEPS = ['_', '$', 'core/event', 'core/resource', 'view/sidebar', 'view/topbar', 'view/view'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -10,27 +10,38 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
+        this.xEvent = {
+            sub: sinon.stub(),
+            pub: sinon.stub()
+        };
         this.xResource = {
             image: sinon.stub().returns(util.uniqPath('-image.png'))
         };
-        this.xSettings = {view: {
-            modes: ['details', 'grid', 'icons'],
-            sizes: [20, 40, 60, 80, 100]
-        }};
-        this.xStore = {
-            get: sinon.stub(),
-            put: sinon.stub()
-        };
         this.xSidebar = {$el: null};
-        this.xView = {$el: null};
+        this.xTopbar = {$el: null};
+        this.xView = {
+            $el: null,
+            getModes: sinon.stub().returns(['details', 'grid', 'icons']),
+            getMode: sinon.stub(),
+            setMode: sinon.stub(),
+            getSizes: sinon.stub().returns([1, 2]),
+            getSize: sinon.stub(),
+            setSize: sinon.stub()
+        };
 
         this.applyFn = function () {
 
+            this.xEvent.sub.reset();
+            this.xEvent.pub.reset();
             this.xResource.image.reset();
-            this.xStore.get.reset();
-            this.xStore.put.reset();
+            this.xView.getModes.reset();
+            this.xView.getMode.reset();
+            this.xView.setMode.reset();
+            this.xView.getSizes.reset();
+            this.xView.getSize.reset();
+            this.xView.setSize.reset();
 
-            return this.definition.fn(_, $, this.xResource, this.xSettings, this.xStore, this.xSidebar, this.xView);
+            return this.definition.fn(_, $, this.xEvent, this.xResource, this.xSidebar, this.xTopbar, this.xView);
         };
     });
 
@@ -43,6 +54,7 @@ describe('module \'' + ID + '\'', function () {
 
         util.restoreHtml();
         this.xSidebar.$el = $('<div id="sidebar"/>').appendTo('body');
+        this.xTopbar.$el = $('<div id="topbar"/>').appendTo('body');
         this.xView.$el = $('<div id="view"/>').appendTo('body');
     });
 
@@ -117,26 +129,9 @@ describe('module \'' + ID + '\'', function () {
             assert.lengthOf($('#settings-viewmode > #view-size'), 1);
         });
 
-        it('adds style to head', function () {
+        it('does not add HTML #view-details, #view-grid, #view-icons when only one mode', function () {
 
-            var styleTagCount = $('head > style').length;
-            this.applyFn();
-            assert.lengthOf($('head > style'), styleTagCount + 1);
-        });
-
-        it('style contains possibly correct text', function () {
-
-            this.xSettings.view.sizes = [20];
-            this.applyFn();
-            var text = $('head > style').eq(0).text();
-            assert.isTrue(text.indexOf('#view.view-details.view-size-20 ') >= 0);
-            assert.isTrue(text.indexOf('#view.view-grid.view-size-20 ') >= 0);
-            assert.isTrue(text.indexOf('#view.view-icons.view-size-20 ') >= 0);
-        });
-
-        it('does not HTML #view-details, #view-grid, #view-icons when only one mode', function () {
-
-            this.xSettings.view.modes = ['details'];
+            this.xView.getModes.returns(['details']);
             this.applyFn();
             assert.lengthOf($('#view-details'), 0);
             assert.lengthOf($('#view-grid'), 0);
@@ -145,7 +140,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('does not add HTML #view-size when only one size', function () {
 
-            this.xSettings.view.sizes = [20];
+            this.xView.getSizes.returns([20]);
             this.applyFn();
             assert.lengthOf($('#view-size'), 0);
         });
@@ -153,89 +148,67 @@ describe('module \'' + ID + '\'', function () {
 
     describe('works', function () {
 
-        it('clicking #view-details changes #view class to .view-details', function () {
+        it('clicking #view-details triggers view.setMode(\'details\')', function () {
 
-            this.xSettings.view.modes = ['details', 'grid', 'icons'];
+            this.xView.getModes.returns(['details', 'grid', 'icons']);
             this.applyFn();
             $('#view-details').trigger('click');
-            assert.isTrue($('#view').hasClass('view-details'));
-            assert.isFalse($('#view').hasClass('view-grid'));
-            assert.isFalse($('#view').hasClass('view-icons'));
+            assert.isTrue(this.xView.setMode.calledOnce);
+            assert.deepEqual(this.xView.setMode.lastCall.args, ['details']);
         });
 
-        it('clicking #view-grid changes #view class to .view-grid', function () {
+        it('clicking #view-grid triggers view.setMode(\'grid\')', function () {
 
-            this.xSettings.view.modes = ['details', 'grid', 'icons'];
+            this.xView.getModes.returns(['details', 'grid', 'icons']);
             this.applyFn();
             $('#view-grid').trigger('click');
-            assert.isFalse($('#view').hasClass('view-details'));
-            assert.isTrue($('#view').hasClass('view-grid'));
-            assert.isFalse($('#view').hasClass('view-icons'));
+            assert.isTrue(this.xView.setMode.calledOnce);
+            assert.deepEqual(this.xView.setMode.lastCall.args, ['grid']);
         });
 
-        it('clicking #view-icons changes #view class to .view-icons', function () {
+        it('clicking #view-icons triggers view.setMode(\'icons\')', function () {
 
-            this.xSettings.view.modes = ['details', 'grid', 'icons'];
+            this.xView.getModes.returns(['details', 'grid', 'icons']);
             this.applyFn();
             $('#view-icons').trigger('click');
-            assert.isFalse($('#view').hasClass('view-details'));
-            assert.isFalse($('#view').hasClass('view-grid'));
-            assert.isTrue($('#view').hasClass('view-icons'));
+            assert.isTrue(this.xView.setMode.calledOnce);
+            assert.deepEqual(this.xView.setMode.lastCall.args, ['icons']);
         });
 
-        it('changing #view-size changes #view class to .view-size-*', function () {
+        it('changing #view-size triggers view.setSize(*)', function () {
 
-            this.xSettings.view.sizes = [20, 40, 60];
+            this.xView.getSizes.returns([20, 40, 60]);
             this.applyFn();
 
             $('#view-size').val(0).trigger('change');
-            assert.isTrue($('#view').hasClass('view-size-20'), 20);
-            assert.isFalse($('#view').hasClass('view-size-40'), 40);
-            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+            assert.isTrue(this.xView.setSize.calledOnce);
+            assert.deepEqual(this.xView.setSize.lastCall.args, [20]);
 
             $('#view-size').val(1).trigger('change');
-            assert.isFalse($('#view').hasClass('view-size-20'), 20);
-            assert.isTrue($('#view').hasClass('view-size-40'), 40);
-            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+            assert.isTrue(this.xView.setSize.calledTwice);
+            assert.deepEqual(this.xView.setSize.lastCall.args, [40]);
 
             $('#view-size').val(2).trigger('change');
-            assert.isFalse($('#view').hasClass('view-size-20'), 20);
-            assert.isFalse($('#view').hasClass('view-size-40'), 40);
-            assert.isTrue($('#view').hasClass('view-size-60'), 60);
+            assert.isTrue(this.xView.setSize.calledThrice);
+            assert.deepEqual(this.xView.setSize.lastCall.args, [60]);
         });
 
-        it('inputing #view-size changes #view class to .view-size-*', function () {
+        it('inputing #view-size triggers view.setSize(*)', function () {
 
-            this.xSettings.view.sizes = [20, 40, 60];
+            this.xView.getSizes.returns([20, 40, 60]);
             this.applyFn();
 
             $('#view-size').val(0).trigger('input');
-            assert.isTrue($('#view').hasClass('view-size-20'), 20);
-            assert.isFalse($('#view').hasClass('view-size-40'), 40);
-            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+            assert.isTrue(this.xView.setSize.calledOnce);
+            assert.deepEqual(this.xView.setSize.lastCall.args, [20]);
 
             $('#view-size').val(1).trigger('input');
-            assert.isFalse($('#view').hasClass('view-size-20'), 20);
-            assert.isTrue($('#view').hasClass('view-size-40'), 40);
-            assert.isFalse($('#view').hasClass('view-size-60'), 60);
+            assert.isTrue(this.xView.setSize.calledTwice);
+            assert.deepEqual(this.xView.setSize.lastCall.args, [40]);
 
             $('#view-size').val(2).trigger('input');
-            assert.isFalse($('#view').hasClass('view-size-20'), 20);
-            assert.isFalse($('#view').hasClass('view-size-40'), 40);
-            assert.isTrue($('#view').hasClass('view-size-60'), 60);
-        });
-
-        it('#view-size uses sorted sizes', function () {
-
-            this.xSettings.view.sizes = [60, 40, 20];
-            this.applyFn();
-
-            $('#view-size').val(0).trigger('change');
-            assert.isTrue($('#view').hasClass('view-size-20'));
-            $('#view-size').val(1).trigger('change');
-            assert.isTrue($('#view').hasClass('view-size-40'));
-            $('#view-size').val(2).trigger('change');
-            assert.isTrue($('#view').hasClass('view-size-60'));
+            assert.isTrue(this.xView.setSize.calledThrice);
+            assert.deepEqual(this.xView.setSize.lastCall.args, [60]);
         });
     });
 });
