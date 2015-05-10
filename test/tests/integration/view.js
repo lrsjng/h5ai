@@ -111,10 +111,10 @@ describe('view', function () {
             assert.lengthOf($('#toolbar > #sidebar-toggle'), 1);
         });
 
-        it('adds HTML #settings-viewmode to #sidebar', function () {
+        it('adds HTML #viewmode-settings to #sidebar', function () {
 
             modulejs.require('view/viewmode');
-            assert.lengthOf($('#sidebar > #settings-viewmode'), 1);
+            assert.lengthOf($('#sidebar > #viewmode-settings'), 1);
         });
 
         it('adds style to head', function () {

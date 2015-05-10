@@ -1,13 +1,13 @@
 modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view/sidebar', 'view/topbar', 'view/view'], function (_, $, event, resource, sidebar, topbar, view) {
 
     var tplSettings =
-            '<div id="settings-viewmode" class="block"><h1 class="l10n-view">View</h1></div>';
+            '<div id="viewmode-settings" class="block"><h1 class="l10n-view">View</h1></div>';
     var tplMode =
-            '<div id="view-[MODE]" class="button view">' +
-                '<img src="' + resource.image('view-[MODE]') + '" alt="view-[MODE]"/>' +
+            '<div id="viewmode-[MODE]" class="button mode">' +
+                '<img src="' + resource.image('view-[MODE]') + '" alt="viewmode-[MODE]"/>' +
             '</div>';
     var tplSize =
-            '<input id="view-size" type="range" min="0" max="0" value="0">';
+            '<input id="viewmode-size" type="range" min="0" max="0" value="0">';
     var tplToggle =
             '<div id="viewmode-toggle" class="tool">' +
                 '<img alt="viewmode"/>' +
@@ -18,16 +18,9 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view
 
     function onChanged(mode, size) {
 
-        _.each(modes, function (m) {
-            if (m === mode) {
-                $('#view-' + m).addClass('active');
-            } else {
-                $('#view-' + m).removeClass('active');
-            }
-        });
-
-        $('#view-size').val(_.indexOf(sizes, size));
-
+        $('#viewmode-settings .mode').removeClass('active');
+        $('#viewmode-' + mode).addClass('active');
+        $('#viewmode-size').val(_.indexOf(sizes, size));
         $('#viewmode-toggle img').attr('src', resource.image('view-' + mode));
     }
 
@@ -64,18 +57,20 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'view
         $viewBlock.appendTo(sidebar.$el);
     }
 
+    function onToggle() {
+
+        var mode = view.getMode();
+        var nextIdx = (modes.indexOf(mode) + 1) % modes.length;
+        var nextMode = modes[nextIdx];
+
+        view.setMode(nextMode);
+    }
+
     function addToggle() {
 
         if (modes.length > 1) {
             $(tplToggle)
-                .on('click', function () {
-
-                    var mode = view.getMode();
-                    var nextIdx = (modes.indexOf(mode) + 1) % modes.length;
-                    var nextMode = modes[nextIdx];
-
-                    view.setMode(nextMode);
-                })
+                .on('click', onToggle)
                 .appendTo(topbar.$toolbar);
         }
     }
