@@ -27,7 +27,7 @@ describe('module \'' + ID + '\'', function () {
             getModes: sinon.stub().returns(['details', 'grid', 'icons']),
             getMode: sinon.stub(),
             setMode: sinon.stub(),
-            getSizes: sinon.stub().returns([1, 2]),
+            getSizes: sinon.stub().returns([20, 30, 40]),
             getSize: sinon.stub(),
             setSize: sinon.stub()
         };
