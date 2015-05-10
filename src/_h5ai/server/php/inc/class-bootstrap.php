@@ -46,8 +46,6 @@ class Bootstrap {
                 return true;
             }
         }
-
-        return false;
     }
 
     private function once($lib) {
