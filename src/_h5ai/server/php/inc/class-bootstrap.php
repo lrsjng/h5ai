@@ -22,7 +22,7 @@ class Bootstrap {
         $this->setup_server();
         $this->setup_paths();
         $this->setup_cache();
-        $this->setup_ext_cmds();
+        $this->setup_cmds();
 
         $app = new App();
         if (Util::is_post_request()) {
@@ -123,7 +123,7 @@ class Bootstrap {
         define("HAS_WRITABLE_CACHE", @is_writable(CACHE_PATH));
     }
 
-    private function setup_ext_cmds() {
+    private function setup_cmds() {
 
         define("CMDS_PATH", Util::normalize_path(CACHE_PATH . "/cmds.json", false));
 

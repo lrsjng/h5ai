@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'view/viewmode';
-var DEPS = ['_', '$', 'core/event', 'core/resource', 'view/sidebar', 'view/topbar', 'view/view'];
+var DEPS = ['_', '$', 'core/event', 'core/resource', 'core/settings', 'view/sidebar', 'view/topbar', 'view/view'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -17,6 +17,9 @@ describe('module \'' + ID + '\'', function () {
         this.xResource = {
             image: sinon.stub().returns(util.uniqPath('-image.png'))
         };
+        this.xSettings = {view: {
+            viewmodeToggle: false
+        }};
         this.xSidebar = {$el: null};
         this.xTopbar = {$el: null};
         this.xView = {
@@ -41,7 +44,7 @@ describe('module \'' + ID + '\'', function () {
             this.xView.getSize.reset();
             this.xView.setSize.reset();
 
-            return this.definition.fn(_, $, this.xEvent, this.xResource, this.xSidebar, this.xTopbar, this.xView);
+            return this.definition.fn(_, $, this.xEvent, this.xResource, this.xSettings, this.xSidebar, this.xTopbar, this.xView);
         };
     });
 

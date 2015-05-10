@@ -53,7 +53,7 @@ class Util {
 
     public static function is_post_request() {
 
-        return (strtolower($_SERVER["REQUEST_METHOD"]) === "post");
+        return (strtolower(getenv("REQUEST_METHOD")) === "post");
     }
 
 
