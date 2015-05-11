@@ -29,9 +29,6 @@ class Bootstrap {
         if (strtolower($setup->get('REQUEST_METHOD')) === 'post') {
             (new Api($app))->apply();
         } else {
-            // (new Page($app))->apply();
-                // define('PAGE_APP_HREF', $setup->get('APP_HREF'));
-                // define('PAGE_FALLBACK', (new Fallback($app))->get_html());
             define('APP_HREF', $setup->get('APP_HREF'));
             define('FALLBACK', (new Fallback($app))->get_html());
             $this->once('inc/page');
