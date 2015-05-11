@@ -14,7 +14,7 @@ class Search {
             $re = Util::wrap_pattern($pattern);
             $names = $this->app->read_dir($root);
             foreach ($names as $name) {
-                $path = $root . "/" . $name;
+                $path = $root . '/' . $name;
                 if (preg_match($re, @basename($path))) {
                     $paths[] = $path;
                 }

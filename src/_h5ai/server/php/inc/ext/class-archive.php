@@ -3,8 +3,8 @@
 class Archive {
 
     private static $SEGMENT_SIZE = 16777216;  // 1024 * 1024 * 16 = 16MiB
-    private static $TAR_PASSTHRU_CMD = "cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]";
-    private static $ZIP_PASSTHRU_CMD = "cd [ROOTDIR] && zip - -- [FILES]";
+    private static $TAR_PASSTHRU_CMD = 'cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]';
+    private static $ZIP_PASSTHRU_CMD = 'cd [ROOTDIR] && zip - -- [FILES]';
 
     private $app, $base_path, $dirs, $files;
 
@@ -28,22 +28,22 @@ class Archive {
         $this->add_hrefs($hrefs);
 
         if (count($this->dirs) === 0 && count($this->files) === 0) {
-            if ($type === "php-tar") {
-                $this->add_dir($this->base_path, "/");
+            if ($type === 'php-tar') {
+                $this->add_dir($this->base_path, '/');
             } else {
-                $this->add_dir($this->base_path, ".");
+                $this->add_dir($this->base_path, '.');
             }
         }
 
-        if ($type === "php-tar") {
+        if ($type === 'php-tar') {
 
             return $this->php_tar($this->dirs, $this->files);
 
-        } else if ($type === "shell-tar") {
+        } else if ($type === 'shell-tar') {
 
             return $this->shell_cmd(Archive::$TAR_PASSTHRU_CMD);
 
-        } else if ($type === "shell-zip") {
+        } else if ($type === 'shell-zip') {
 
             return $this->shell_cmd(Archive::$ZIP_PASSTHRU_CMD);
         }
@@ -53,9 +53,9 @@ class Archive {
 
     private function shell_cmd($cmd) {
 
-        $cmd = str_replace("[ROOTDIR]", escapeshellarg($this->base_path), $cmd);
-        $cmd = str_replace("[DIRS]", count($this->dirs) ? implode(" ", array_map("escapeshellarg", $this->dirs)) : "", $cmd);
-        $cmd = str_replace("[FILES]", count($this->files) ? implode(" ", array_map("escapeshellarg", $this->files)) : "", $cmd);
+        $cmd = str_replace('[ROOTDIR]', escapeshellarg($this->base_path), $cmd);
+        $cmd = str_replace('[DIRS]', count($this->dirs) ? implode(' ', array_map('escapeshellarg', $this->dirs)) : '', $cmd);
+        $cmd = str_replace('[FILES]', count($this->files) ? implode(' ', array_map('escapeshellarg', $this->files)) : '', $cmd);
         try {
             Util::passthru_cmd($cmd);
         } catch (Exeption $err) {
@@ -80,7 +80,7 @@ class Archive {
             }
         }
 
-        header("Content-Length: " . $total_size);
+        header('Content-Length: ' . $total_size);
 
         foreach ($dirs as $archived_dir) {
 
@@ -154,7 +154,7 @@ class Archive {
 
         foreach ($hrefs as $href) {
 
-            if (trim($href) === "") {
+            if (trim($href) === '') {
                 continue;
             }
 
@@ -164,7 +164,7 @@ class Archive {
             if ($this->app->is_managed_href($d) && !$this->app->is_hidden($n)) {
 
                 $real_file = $this->app->to_path($href);
-                $archived_file = preg_replace("!^" . preg_quote(Util::normalize_path($this->base_path, true)) . "!", "", $real_file);
+                $archived_file = preg_replace('!^' . preg_quote(Util::normalize_path($this->base_path, true)) . '!', '', $real_file);
 
                 if (is_dir($real_file)) {
                     $this->add_dir($real_file, $archived_file);
@@ -192,8 +192,8 @@ class Archive {
             $files = $this->app->read_dir($real_dir);
             foreach ($files as $file) {
 
-                $real_file = $real_dir . "/" . $file;
-                $archived_file = $archived_dir . "/" . $file;
+                $real_file = $real_dir . '/' . $file;
+                $archived_file = $archived_dir . '/' . $file;
 
                 if (is_dir($real_file)) {
                     $this->add_dir($real_file, $archived_file);

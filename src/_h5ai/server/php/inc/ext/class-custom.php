@@ -2,7 +2,7 @@
 
 class Custom {
 
-    private static $extensions = ["html", "md"];
+    private static $extensions = ['html', 'md'];
 
     function __construct($app) {
 
@@ -11,10 +11,10 @@ class Custom {
 
     private function read_custom_file($path, $name, &$content, &$type) {
 
-        $file_prefix = $this->app->get_setup()->get("FILE_PREFIX");
+        $file_prefix = $this->app->get_setup()->get('FILE_PREFIX');
 
         foreach (Custom::$extensions as $ext) {
-            $file = "${path}/${file_prefix}.${name}.${ext}";
+            $file = $path . '/' . $file_prefix . '.' . $name . '.' . $ext;
             if (is_readable($file)) {
                 $content = file_get_contents($file);
                 $type = $ext;
@@ -25,14 +25,14 @@ class Custom {
 
     public function get_customizations($href) {
 
-        if (!$this->app->query_option("custom.enabled", false)) {
+        if (!$this->app->query_option('custom.enabled', false)) {
             return [
-                "header" => ["content" => null, "type" => null],
-                "footer" => ["content" => null, "type" => null]
+                'header' => ['content' => null, 'type' => null],
+                'footer' => ['content' => null, 'type' => null]
             ];
         }
 
-        $root_path = $this->app->get_setup()->get("FILE_PREFIX");
+        $root_path = $this->app->get_setup()->get('FILE_PREFIX');
         $path = $this->app->to_path($href);
 
         $header = null;
@@ -40,16 +40,16 @@ class Custom {
         $footer = null;
         $footer_type = null;
 
-        $this->read_custom_file($path, "header", $header, $header_type);
-        $this->read_custom_file($path, "footer", $footer, $footer_type);
+        $this->read_custom_file($path, 'header', $header, $header_type);
+        $this->read_custom_file($path, 'footer', $footer, $footer_type);
 
         while ($header === null || $footer === null) {
 
             if ($header === null) {
-                $this->read_custom_file($path, "headers", $header, $header_type);
+                $this->read_custom_file($path, 'headers', $header, $header_type);
             }
             if ($footer === null) {
-                $this->read_custom_file($path, "footers", $footer, $footer_type);
+                $this->read_custom_file($path, 'footers', $footer, $footer_type);
             }
 
             if ($path === $root_path) {
@@ -63,8 +63,8 @@ class Custom {
         }
 
         return [
-            "header" => ["content" => $header, "type" => $header_type],
-            "footer" => ["content" => $footer, "type" => $footer_type]
+            'header' => ['content' => $header, 'type' => $header_type],
+            'footer' => ['content' => $footer, 'type' => $footer_type]
         ];
     }
 }
