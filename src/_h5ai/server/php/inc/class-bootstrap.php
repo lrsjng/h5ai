@@ -49,7 +49,7 @@ class Bootstrap {
         foreach ($this->classpaths as $classpath) {
             $file = $this->basepath . $classpath . '/' . $filename;
             if (file_exists($file)) {
-                require_once($file);
+                require_once $file;
                 return true;
             }
         }
@@ -57,6 +57,6 @@ class Bootstrap {
 
     private function once($lib) {
 
-        require_once($this->basepath . '/' . $lib . '.php');
+        require_once $this->basepath . '/' . $lib . '.php';
     }
 }
