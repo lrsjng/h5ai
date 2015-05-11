@@ -14,7 +14,6 @@ class Item {
         return strcasecmp($item1->path, $item2->path);
     }
 
-
     public static function get($app, $path, &$cache) {
 
         if (!Util::starts_with($path, $app->get_setup()->get('ROOT_PATH'))) {
@@ -33,11 +32,13 @@ class Item {
         return $item;
     }
 
-
     public $app;
-    public $path, $href, $date, $size;
-    public $is_folder, $is_content_fetched;
-
+    public $path;
+    public $href;
+    public $date;
+    public $size;
+    public $is_folder;
+    public $is_content_fetched;
 
     private function __construct($app, $path) {
 
@@ -50,7 +51,6 @@ class Item {
         $this->size = Util::filesize($app, $this->path);
         $this->is_content_fetched = false;
     }
-
 
     public function to_json_object() {
 
@@ -68,7 +68,6 @@ class Item {
         return $obj;
     }
 
-
     public function get_parent(&$cache) {
 
         $parent_path = Util::normalize_path(dirname($this->path), false);
@@ -77,7 +76,6 @@ class Item {
         }
         return null;
     }
-
 
     public function get_content(&$cache) {
 

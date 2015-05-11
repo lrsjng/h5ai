@@ -2,7 +2,6 @@
 
 class Util {
 
-
     const ERR_MISSING_PARAM = 'ERR_MISSING_PARAM';
     const ERR_ILLIGAL_PARAM = 'ERR_ILLIGAL_PARAM';
     const ERR_FAILED = 'ERR_FAILED';
@@ -11,13 +10,11 @@ class Util {
     const NO_DEFAULT = 'NO_*@+#?!_DEFAULT';
     const RE_DELIMITER = '@';
 
-
     public static function normalize_path($path, $trailing_slash = false) {
 
         $path = preg_replace('#[\\\\/]+#', '/', $path);
         return preg_match('#^(\w:)?/$#', $path) ? $path : (rtrim($path, '/') . ($trailing_slash ? '/' : ''));
     }
-
 
     public static function json_exit($obj = []) {
 
@@ -26,14 +23,12 @@ class Util {
         exit;
     }
 
-
     public static function json_fail($err, $msg = '', $cond = true) {
 
         if ($cond) {
             Util::json_exit(['err' => $err, 'msg' => $msg]);
         }
     }
-
 
     public static function array_query($array, $keypath = '', $default = Util::NO_DEFAULT) {
 
@@ -50,24 +45,20 @@ class Util {
         return $value;
     }
 
-
     public static function starts_with($sequence, $head) {
 
         return substr($sequence, 0, strlen($head)) === $head;
     }
-
 
     public static function ends_with($sequence, $tail) {
 
         return substr($sequence, -strlen($tail)) === $tail;
     }
 
-
     public static function wrap_pattern($pattern) {
 
         return Util::RE_DELIMITER . str_replace(Util::RE_DELIMITER, '\\' . Util::RE_DELIMITER, $pattern) . Util::RE_DELIMITER;
     }
-
 
     public static function load_commented_json($path) {
 
@@ -83,13 +74,11 @@ class Util {
         return json_decode($content, true);
     }
 
-
     public static function save_json($path, $obj) {
 
         $json = json_encode($obj);
         return file_put_contents($path, $json) !== false;
     }
-
 
     public static function passthru_cmd($cmd) {
 
@@ -97,7 +86,6 @@ class Util {
         passthru($cmd, $rc);
         return $rc;
     }
-
 
     public static function exec_cmdv($cmdv) {
 
@@ -112,7 +100,6 @@ class Util {
         return implode("\n", $lines);
     }
 
-
     public static function exec_0($cmd) {
 
         $lines = [];
@@ -123,7 +110,6 @@ class Util {
         } catch (Exception $e) {}
         return false;
     }
-
 
     private static $size_cache = [];
 

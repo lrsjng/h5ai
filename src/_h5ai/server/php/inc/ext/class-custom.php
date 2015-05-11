@@ -4,7 +4,7 @@ class Custom {
 
     private static $extensions = ['html', 'md'];
 
-    function __construct($app) {
+    public function __construct($app) {
 
         $this->app = $app;
     }

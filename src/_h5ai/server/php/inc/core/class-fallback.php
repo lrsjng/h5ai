@@ -5,7 +5,7 @@ class Fallback {
     private $setup;
     private $app;
 
-    function __construct($app) {
+    public function __construct($app) {
 
         $this->setup = $app->get_setup();
         $this->app = $app;

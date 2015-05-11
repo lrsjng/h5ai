@@ -4,7 +4,7 @@ class Theme {
 
     private static $extensions = ['svg', 'png', 'jpg'];
 
-    function __construct($app) {
+    public function __construct($app) {
 
         $this->app = $app;
     }

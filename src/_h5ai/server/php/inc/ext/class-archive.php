@@ -8,12 +8,10 @@ class Archive {
 
     private $app, $base_path, $dirs, $files;
 
-
     public function __construct($app) {
 
         $this->app = $app;
     }
-
 
     public function output($type, $base_href, $hrefs) {
 
@@ -50,7 +48,6 @@ class Archive {
         return false;
     }
 
-
     private function shell_cmd($cmd) {
 
         $cmd = str_replace('[ROOTDIR]', escapeshellarg($this->base_path), $cmd);
@@ -63,7 +60,6 @@ class Archive {
         }
         return true;
     }
-
 
     private function php_tar($dirs, $files) {
 
@@ -101,7 +97,6 @@ class Archive {
         return true;
     }
 
-
     private function php_tar_header($filename, $size, $mtime, $type) {
 
         $name = substr(basename($filename), -99);
@@ -135,7 +130,6 @@ class Archive {
         return $header;
     }
 
-
     private function print_file($file) {
 
         // Send file content in segments to not hit PHP's memory limit (default: 128M)
@@ -148,7 +142,6 @@ class Archive {
             fclose($fd);
         }
     }
-
 
     private function add_hrefs($hrefs) {
 
@@ -175,14 +168,12 @@ class Archive {
         }
     }
 
-
     private function add_file($real_file, $archived_file) {
 
         if (is_readable($real_file)) {
             $this->files[$real_file] = $archived_file;
         }
     }
-
 
     private function add_dir($real_dir, $archived_dir) {
 

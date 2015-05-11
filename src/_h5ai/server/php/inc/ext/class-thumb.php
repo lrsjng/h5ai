@@ -7,9 +7,9 @@ class Thumb {
     private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '-strip', '[SRC][0]', '[DEST]'];
     private static $THUMB_CACHE = 'thumbs';
 
-
-    private $app, $thumbs_path, $thumbs_href;
-
+    private $app;
+    private $thumbs_path;
+    private $thumbs_href;
 
     public function __construct($app) {
 
@@ -22,7 +22,6 @@ class Thumb {
             @mkdir($this->thumbs_path, 0755, true);
         }
     }
-
 
     public function thumb($type, $source_href, $width, $height) {
 
@@ -46,7 +45,6 @@ class Thumb {
 
         return $this->thumb_href($capture_path, $width, $height);
     }
-
 
     private function thumb_href($source_path, $width, $height) {
 
@@ -81,7 +79,6 @@ class Thumb {
         return file_exists($thumb_path) ? $thumb_href : null;
     }
 
-
     private function capture($cmdv, $source_path) {
 
         if (!file_exists($source_path)) {
@@ -104,11 +101,14 @@ class Thumb {
     }
 }
 
-
 class Image {
 
-    private $source_file, $source, $width, $height, $type, $dest;
-
+    private $source_file;
+    private $source;
+    private $width;
+    private $height;
+    private $type;
+    private $dest;
 
     public function __construct($filename = null) {
 
@@ -123,13 +123,11 @@ class Image {
         $this->set_source($filename);
     }
 
-
     public function __destruct() {
 
         $this->release_source();
         $this->release_dest();
     }
-
 
     public function set_source($filename) {
 
@@ -155,7 +153,6 @@ class Image {
         $this->source = imagecreatefromstring(file_get_contents($this->source_file));
     }
 
-
     public function save_dest_jpeg($filename, $quality = 80) {
 
         if (!is_null($this->dest)) {
@@ -164,7 +161,6 @@ class Image {
         }
     }
 
-
     public function release_dest() {
 
         if (!is_null($this->dest)) {
@@ -172,7 +168,6 @@ class Image {
             $this->dest = null;
         }
     }
-
 
     public function release_source() {
 
@@ -185,7 +180,6 @@ class Image {
             $this->type = null;
         }
     }
-
 
     public function thumb($width, $height) {
 
@@ -232,7 +226,6 @@ class Image {
         imagecopyresampled($this->dest, $this->source, 0, 0, $src_x, 0, $width, $height, $src_w, $src_h);
     }
 
-
     public function rotate($angle) {
 
         if (is_null($this->source) || ($angle !== 90 && $angle !== 180 && $angle !== 270)) {
@@ -244,7 +237,6 @@ class Image {
             list($this->width, $this->height) = [$this->height, $this->width];
         }
     }
-
 
     public function normalize_exif_orientation($exif_source_file = null) {
 

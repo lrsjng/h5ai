@@ -2,12 +2,12 @@
 
 class Search {
 
-    function __construct($app) {
+    public function __construct($app) {
 
         $this->app = $app;
     }
 
-    function get_paths($root, $pattern = null) {
+    public function get_paths($root, $pattern = null) {
 
         $paths = [];
         if ($pattern && $this->app->is_managed_path($root)) {
@@ -26,7 +26,7 @@ class Search {
         return $paths;
     }
 
-    function get_items($href, $pattern = null) {
+    public function get_items($href, $pattern = null) {
 
         $cache = [];
         $root = $this->app->to_path($href);
