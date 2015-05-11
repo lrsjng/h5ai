@@ -3,43 +3,43 @@
 class Util {
 
 
-    const ERR_MISSING_PARAM = "ERR_MISSING_PARAM";
-    const ERR_ILLIGAL_PARAM = "ERR_ILLIGAL_PARAM";
-    const ERR_FAILED = "ERR_FAILED";
-    const ERR_DISABLED = "ERR_DISABLED";
-    const ERR_UNSUPPORTED = "ERR_UNSUPPORTED";
-    const NO_DEFAULT = "NO_*@+#?!_DEFAULT";
-    const RE_DELIMITER = "@";
+    const ERR_MISSING_PARAM = 'ERR_MISSING_PARAM';
+    const ERR_ILLIGAL_PARAM = 'ERR_ILLIGAL_PARAM';
+    const ERR_FAILED = 'ERR_FAILED';
+    const ERR_DISABLED = 'ERR_DISABLED';
+    const ERR_UNSUPPORTED = 'ERR_UNSUPPORTED';
+    const NO_DEFAULT = 'NO_*@+#?!_DEFAULT';
+    const RE_DELIMITER = '@';
 
 
     public static function normalize_path($path, $trailing_slash = false) {
 
-        $path = preg_replace("#[\\\\/]+#", "/", $path);
-        return preg_match("#^(\w:)?/$#", $path) ? $path : (rtrim($path, "/") . ($trailing_slash ? "/" : ""));
+        $path = preg_replace('#[\\\\/]+#', '/', $path);
+        return preg_match('#^(\w:)?/$#', $path) ? $path : (rtrim($path, '/') . ($trailing_slash ? '/' : ''));
     }
 
 
     public static function json_exit($obj = []) {
 
-        header("Content-type: application/json;charset=utf-8");
+        header('Content-type: application/json;charset=utf-8');
         echo json_encode($obj);
         exit;
     }
 
 
-    public static function json_fail($err, $msg = "", $cond = true) {
+    public static function json_fail($err, $msg = '', $cond = true) {
 
         if ($cond) {
-            Util::json_exit(["err" => $err, "msg" => $msg]);
+            Util::json_exit(['err' => $err, 'msg' => $msg]);
         }
     }
 
 
-    public static function array_query($array, $keypath = "", $default = Util::NO_DEFAULT) {
+    public static function array_query($array, $keypath = '', $default = Util::NO_DEFAULT) {
 
         $value = $array;
 
-        $keys = array_filter(explode(".", $keypath));
+        $keys = array_filter(explode('.', $keypath));
         foreach ($keys as $key) {
             if (!is_array($value) || !array_key_exists($key, $value)) {
                 return $default;
@@ -78,7 +78,7 @@ class Util {
         $content = file_get_contents($path);
 
         // remove comments to get pure json
-        $content = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", "", $content);
+        $content = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", '', $content);
 
         return json_decode($content, true);
     }
@@ -104,7 +104,7 @@ class Util {
         if (!is_array($cmdv)) {
             $cmdv = func_get_args();
         }
-        $cmd = implode(" ", array_map("escapeshellarg", $cmdv));
+        $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
 
         $lines = [];
         $rc = null;
@@ -138,7 +138,7 @@ class Util {
         if (is_file($path)) {
 
             if (PHP_INT_SIZE < 8) {
-                $_handle = fopen($path, "r");
+                $_handle = fopen($path, 'r');
 
                 $_pos = 0;
                 $_size = 1073741824;
@@ -167,14 +167,14 @@ class Util {
 
         } else if (is_dir($path)) {
 
-            if ($app->query_option("foldersize.enabled", false)) {
-                if ($app->get_setup()->get("HAS_CMD_DU") && $app->query_option("foldersize.type", null) === "shell-du") {
-                    $cmdv = ["du", "-sk", $path];
-                    $size = intval(preg_replace("#\s.*$#", "", Util::exec_cmdv($cmdv)), 10) * 1024;
+            if ($app->query_option('foldersize.enabled', false)) {
+                if ($app->get_setup()->get('HAS_CMD_DU') && $app->query_option('foldersize.type', null) === 'shell-du') {
+                    $cmdv = ['du', '-sk', $path];
+                    $size = intval(preg_replace('#\s.*$#', '', Util::exec_cmdv($cmdv)), 10) * 1024;
                 } else {
                     $size = 0;
                     foreach ($app->read_dir($path) as $name) {
-                        $size += Util::filesize($app, $path . "/" . $name);
+                        $size += Util::filesize($app, $path . '/' . $name);
                     }
                 }
             }
