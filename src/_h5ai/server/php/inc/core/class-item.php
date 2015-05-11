@@ -17,7 +17,7 @@ class Item {
 
     public static function get($app, $path, &$cache) {
 
-        if (!Util::starts_with($path, ROOT_PATH)) {
+        if (!Util::starts_with($path, $app->get_setup()->get("ROOT_PATH"))) {
             return null;
         }
 
@@ -72,7 +72,7 @@ class Item {
     public function get_parent(&$cache) {
 
         $parent_path = Util::normalize_path(dirname($this->path), false);
-        if ($parent_path !== $this->path && Util::starts_with($parent_path, ROOT_PATH)) {
+        if ($parent_path !== $this->path && Util::starts_with($parent_path, $this->app->get_setup()->get("ROOT_PATH"))) {
             return Item::get($this->app, $parent_path, $cache);
         }
         return null;

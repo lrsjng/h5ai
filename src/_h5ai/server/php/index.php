@@ -1,8 +1,15 @@
 <?php
 
-$basepath = preg_replace("#[\\\\/]+#", "/", dirname(__FILE__));
+define('MIN_PHP_VERSION', '5.4.0');
 
-require_once($basepath . "/inc/version-check.php");
-require_once($basepath . "/inc/class-bootstrap.php");
+if (version_compare(PHP_VERSION, MIN_PHP_VERSION) < 0) {
+    header('Content-type: application/json;charset=utf-8');
+    echo '{"err":"ERR_PHP","msg":"PHP ' . MIN_PHP_VERSION . '+ required","ver":"' . PHP_VERSION . '"}';
+    exit;
+}
 
-(new Bootstrap($basepath))->run();
+$basepath = preg_replace('#[\\\\/]+#', '/', dirname(__FILE__));
+require_once($basepath . '/inc/class-bootstrap.php');
+
+$bootstrap = new Bootstrap($basepath);
+$bootstrap->run();

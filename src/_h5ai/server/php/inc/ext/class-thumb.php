@@ -13,9 +13,10 @@ class Thumb {
 
     public function __construct($app) {
 
+        $this->setup = $app->get_setup();
         $this->app = $app;
-        $this->thumbs_path = CACHE_PATH . "/" . Thumb::$THUMB_CACHE;
-        $this->thumbs_href = CACHE_HREF . Thumb::$THUMB_CACHE;
+        $this->thumbs_path = $this->setup->get("CACHE_PATH") . "/" . Thumb::$THUMB_CACHE;
+        $this->thumbs_href = $this->setup->get("CACHE_HREF") . Thumb::$THUMB_CACHE;
 
         if (!is_dir($this->thumbs_path)) {
             @mkdir($this->thumbs_path, 0755, true);
@@ -26,7 +27,7 @@ class Thumb {
     public function thumb($type, $source_href, $width, $height) {
 
         $source_path = $this->app->to_path($source_href);
-        if (!file_exists($source_path) || Util::starts_with($source_path, CACHE_PATH)) {
+        if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get("CACHE_PATH"))) {
             return null;
         }
 
@@ -34,12 +35,12 @@ class Thumb {
         if ($type === "img") {
             $capture_path = $source_path;
         } else if ($type === "mov") {
-            if (HAS_CMD_AVCONV) {
+            if ($this->setup->get("HAS_CMD_AVCONV")) {
                 $capture_path = $this->capture(Thumb::$AVCONV_CMDV, $source_path);
-            } else if (HAS_CMD_FFMPEG) {
+            } else if ($this->setup->get("HAS_CMD_FFMPEG")) {
                 $capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path);
             }
-        } else if ($type === "doc" && HAS_CMD_CONVERT) {
+        } else if ($type === "doc" && $this->setup->get("HAS_CMD_CONVERT")) {
             $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
         }
 
@@ -62,7 +63,7 @@ class Thumb {
             $image = new Image();
 
             $et = false;
-            if (HAS_PHP_EXIF && $this->app->query_option("thumbnails.exif", false) === true && $height != 0) {
+            if ($this->setup->get("HAS_PHP_EXIF") && $this->app->query_option("thumbnails.exif", false) === true && $height != 0) {
                 $et = @exif_thumbnail($source_path);
             }
             if($et !== false) {

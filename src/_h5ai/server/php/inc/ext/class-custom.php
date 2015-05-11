@@ -11,8 +11,10 @@ class Custom {
 
     private function read_custom_file($path, $name, &$content, &$type) {
 
+        $file_prefix = $this->app->get_setup()->get("FILE_PREFIX");
+
         foreach (Custom::$extensions as $ext) {
-            $file = "$path/" . FILE_PREFIX . ".$name.$ext";
+            $file = "${path}/${file_prefix}.${name}.${ext}";
             if (is_readable($file)) {
                 $content = file_get_contents($file);
                 $type = $ext;
@@ -30,6 +32,7 @@ class Custom {
             ];
         }
 
+        $root_path = $this->app->get_setup()->get("FILE_PREFIX");
         $path = $this->app->to_path($href);
 
         $header = null;
@@ -49,7 +52,7 @@ class Custom {
                 $this->read_custom_file($path, "footers", $footer, $footer_type);
             }
 
-            if ($path === ROOT_PATH) {
+            if ($path === $root_path) {
                 break;
             }
             $parent_path = Util::normalize_path(dirname($path));

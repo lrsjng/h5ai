@@ -11,7 +11,7 @@ modulejs.define('boot', ['$'], function ($) {
     if (module === 'index') {
         href = '.';
     } else if (module === 'info') {
-        data.updatecmds = true;
+        data.updateCachedSetup = true;
         href = 'server/php/index.php';
     } else {
         return;

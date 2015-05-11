@@ -2,18 +2,20 @@
 
 class Api {
 
+    private $request;
+    private $setup;
     private $app;
-
 
     public function __construct($app) {
 
+        $this->request = $app->get_request();
+        $this->setup = $app->get_setup();
         $this->app = $app;
     }
 
-
     public function apply() {
 
-        $action = Util::query_request_param("action");
+        $action = $this->request->query("action");
         $supported = ["download", "get", "login", "logout"];
         Util::json_fail(Util::ERR_UNSUPPORTED, "unsupported action", !in_array($action, $supported));
 
@@ -21,15 +23,14 @@ class Api {
         $this->$methodname();
     }
 
-
     private function on_download() {
 
         Util::json_fail(Util::ERR_DISABLED, "download disabled", !$this->app->query_option("download.enabled", false));
 
-        $as = Util::query_request_param("as");
-        $type = Util::query_request_param("type");
-        $base_href = Util::query_request_param("baseHref");
-        $hrefs = Util::query_request_param("hrefs");
+        $as = $this->request->query("as");
+        $type = $this->request->query("type");
+        $base_href = $this->request->query("baseHref");
+        $hrefs = $this->request->query("hrefs");
 
         $archive = new Archive($this->app);
 
@@ -43,66 +44,70 @@ class Api {
         exit;
     }
 
-
     private function on_get() {
 
         $response = [];
 
-        foreach (["langs", "options", "setup", "types"] as $name) {
-            if (Util::query_boolean_request_param($name, false)) {
+        foreach (["langs", "options", "types"] as $name) {
+            if ($this->request->query_boolean($name, false)) {
 
                 $methodname = "get_${name}";
                 $response[$name] = $this->app->$methodname();
             }
         }
 
-        if (Util::query_boolean_request_param("theme", false)) {
+        if ($this->request->query_boolean("setup", false)) {
+
+            $response["setup"] = $this->setup->to_jsono();
+        }
+
+        if ($this->request->query_boolean("theme", false)) {
 
             $theme = new Theme($this->app);
             $response["theme"] = $theme->get_icons();
         }
 
-        if (Util::query_request_param("items", false)) {
+        if ($this->request->query("items", false)) {
 
-            $href = Util::query_request_param("items.href");
-            $what = Util::query_numeric_request_param("items.what");
+            $href = $this->request->query("items.href");
+            $what = $this->request->query_numeric("items.what");
 
             $response["items"] = $this->app->get_items($href, $what);
         }
 
-        if (Util::query_request_param("custom", false)) {
+        if ($this->request->query("custom", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "custom disabled", !$this->app->query_option("custom.enabled", false));
-            $href = Util::query_request_param("custom");
+            $href = $this->request->query("custom");
 
             $custom = new Custom($this->app);
             $response["custom"] = $custom->get_customizations($href);
         }
 
-        if (Util::query_request_param("l10n", false)) {
+        if ($this->request->query("l10n", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "l10n disabled", !$this->app->query_option("l10n.enabled", false));
-            $iso_codes = Util::query_array_request_param("l10n");
+            $iso_codes = $this->request->query_array("l10n");
 
             $iso_codes = array_filter($iso_codes);
             $response["l10n"] = $this->app->get_l10n($iso_codes);
         }
 
-        if (Util::query_request_param("search", false)) {
+        if ($this->request->query("search", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "search disabled", !$this->app->query_option("search.enabled", false));
-            $href = Util::query_request_param("search.href");
-            $pattern = Util::query_request_param("search.pattern");
+            $href = $this->request->query("search.href");
+            $pattern = $this->request->query("search.pattern");
 
             $search = new Search($this->app);
             $response["search"] = $search->get_items($href, $pattern);
         }
 
-        if (Util::query_request_param("thumbs", false)) {
+        if ($this->request->query("thumbs", false)) {
 
             Util::json_fail(Util::ERR_DISABLED, "thumbnails disabled", !$this->app->query_option("thumbnails.enabled", false));
-            Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !HAS_PHP_JPEG);
-            $thumbs = Util::query_array_request_param("thumbs");
+            Util::json_fail(Util::ERR_UNSUPPORTED, "thumbnails not supported", !$this->setup->get("HAS_PHP_JPEG"));
+            $thumbs = $this->request->query_array("thumbs");
 
             $response["thumbs"] = $this->app->get_thumbs($thumbs);
         }
@@ -110,18 +115,14 @@ class Api {
         Util::json_exit($response);
     }
 
-
     private function on_login() {
 
-        $pass = Util::query_request_param("pass");
-        $_SESSION[AS_ADMIN_SESSION_KEY] = strcasecmp(hash("sha512", $pass), PASSHASH) === 0;
-        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
+        $pass = $this->request->query("pass");
+        Util::json_exit(["asAdmin" => $this->app->login_admin($pass)]);
     }
-
 
     private function on_logout() {
 
-        $_SESSION[AS_ADMIN_SESSION_KEY] = false;
-        Util::json_exit(["asAdmin" => $_SESSION[AS_ADMIN_SESSION_KEY]]);
+        Util::json_exit(["asAdmin" => $this->app->logout_admin()]);
     }
 }

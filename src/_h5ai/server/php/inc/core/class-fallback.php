@@ -26,6 +26,8 @@ class Fallback {
             $path = $this->get_current_path();
         }
 
+        $app_href = $this->app->get_setup()->get("APP_HREF");
+
         $cache = [];
         $folder = Item::get($this->app, $path, $cache);
         $items = $folder->get_content($cache);
@@ -42,7 +44,7 @@ class Fallback {
 
         if ($folder->get_parent($cache)) {
             $html .= "<tr>";
-            $html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/folder-parent.png' alt='folder-parent'/></td>";
+            $html .= "<td class='fb-i'><img src='${app_href}client/images/fallback/folder-parent.png' alt='folder-parent'/></td>";
             $html .= "<td class='fb-n'><a href='..'>Parent Directory</a></td>";
             $html .= "<td class='fb-d'></td>";
             $html .= "<td class='fb-s'></td>";
@@ -53,7 +55,7 @@ class Fallback {
             $type = $item->is_folder ? "folder" : "file";
 
             $html .= "<tr>";
-            $html .= "<td class='fb-i'><img src='" . APP_HREF . "client/images/fallback/" . $type . ".png' alt='" . $type . "'/></td>";
+            $html .= "<td class='fb-i'><img src='${app_href}client/images/fallback/${type}.png' alt='${type}'/></td>";
             $html .= "<td class='fb-n'><a href='" . $item->href . "'>" . basename($item->path) . "</a></td>";
             $html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
             $html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";

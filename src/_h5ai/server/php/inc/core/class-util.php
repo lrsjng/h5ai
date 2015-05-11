@@ -51,48 +51,6 @@ class Util {
     }
 
 
-    public static function is_post_request() {
-
-        return (strtolower(getenv("REQUEST_METHOD")) === "post");
-    }
-
-
-    public static function query_request_param($keypath = "", $default = Util::NO_DEFAULT) {
-
-        $value = Util::array_query($_POST, $keypath, Util::NO_DEFAULT);
-
-        if ($value === Util::NO_DEFAULT) {
-            Util::json_fail(Util::ERR_MISSING_PARAM, "parameter '$keypath' is missing", $default === Util::NO_DEFAULT);
-            return $default;
-        }
-
-        return $value;
-    }
-
-
-    public static function query_boolean_request_param($keypath = "", $default = Util::NO_DEFAULT) {
-
-        $value = Util::query_request_param($keypath, $default);
-        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-    }
-
-
-    public static function query_numeric_request_param($keypath = "", $default = Util::NO_DEFAULT) {
-
-        $value = Util::query_request_param($keypath, $default);
-        Util::json_fail(Util::ERR_ILLIGAL_PARAM, "parameter '$keypath' is not numeric", !is_numeric($value));
-        return intval($value, 10);
-    }
-
-
-    public static function query_array_request_param($keypath = "", $default = Util::NO_DEFAULT) {
-
-        $value = Util::query_request_param($keypath, $default);
-        Util::json_fail(Util::ERR_ILLIGAL_PARAM, "parameter '$keypath' is no array", !is_array($value));
-        return $value;
-    }
-
-
     public static function starts_with($sequence, $head) {
 
         return substr($sequence, 0, strlen($head)) === $head;
@@ -210,7 +168,7 @@ class Util {
         } else if (is_dir($path)) {
 
             if ($app->query_option("foldersize.enabled", false)) {
-                if (HAS_CMD_DU && $app->query_option("foldersize.type", null) === "shell-du") {
+                if ($app->get_setup()->get("HAS_CMD_DU") && $app->query_option("foldersize.type", null) === "shell-du") {
                     $cmdv = ["du", "-sk", $path];
                     $size = intval(preg_replace("#\s.*$#", "", Util::exec_cmdv($cmdv)), 10) * 1024;
                 } else {

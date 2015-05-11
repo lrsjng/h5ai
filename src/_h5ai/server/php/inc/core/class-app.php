@@ -2,80 +2,62 @@
 
 class App {
 
+    private $request;
+    private $setup;
     private $options;
 
+    public function __construct($request, $setup) {
 
-    public function __construct() {
-
-        $this->options = Util::load_commented_json(APP_PATH . "/conf/options.json");
+        $this->request = $request;
+        $this->setup = $setup;
+        $this->options = Util::load_commented_json($this->setup->get("APP_PATH") . "/conf/options.json");
     }
 
+    public function get_request() {
+
+        return $this->request;
+    }
+
+    public function get_setup() {
+
+        return $this->setup;
+    }
 
     public function get_options() {
 
         return $this->options;
     }
 
-
     public function query_option($keypath = "", $default = null) {
 
         return Util::array_query($this->options, $keypath, $default);
     }
 
-
-    public function get_setup() {
-
-        $keys = [
-            "APP_HREF",
-            "ROOT_HREF",
-            "VERSION",
-
-            "AS_ADMIN",
-            "HAS_CUSTOM_PASSHASH"
-        ];
-
-        if (AS_ADMIN) {
-            $keys = array_merge($keys, [
-                "PHP_VERSION",
-                "MIN_PHP_VERSION",
-                "HAS_MIN_PHP_VERSION",
-                "HAS_PHP_EXIF",
-                "HAS_PHP_JPEG",
-
-                "SERVER_NAME",
-                "SERVER_VERSION",
-                "HAS_SERVER",
-
-                "INDEX_HREF",
-
-                "HAS_WRITABLE_CACHE",
-
-                "HAS_CMD_AVCONV",
-                "HAS_CMD_CONVERT",
-                "HAS_CMD_DU",
-                "HAS_CMD_FFMPEG",
-                "HAS_CMD_TAR",
-                "HAS_CMD_ZIP"
-            ]);
-        }
-
-        $setup = [];
-        foreach ($keys as $key) {
-            $setup[$key] = constant($key);
-        }
-        return $setup;
-    }
-
-
     public function get_types() {
 
-        return Util::load_commented_json(APP_PATH . "/conf/types.json");
+        return Util::load_commented_json($this->setup->get("APP_PATH") . "/conf/types.json");
     }
 
+    public function login_admin($pass) {
+
+        $key = $this->setup->get("AS_ADMIN_SESSION_KEY");
+        $hash = $this->setup->get("PASSHASH");
+
+        $_SESSION[$key] = strcasecmp(hash("sha512", $pass), $hash) === 0;
+        return $_SESSION[$key];
+    }
+
+    public function logout_admin() {
+
+        $key = $this->setup->get("AS_ADMIN_SESSION_KEY");
+
+        $_SESSION[$key] = false;
+        return $_SESSION[$key];
+    }
 
     public function to_href($path, $trailing_slash = true) {
 
-        $rel_path = substr($path, strlen(ROOT_PATH));
+        $rel_path = substr($path, strlen($this->setup->get("ROOT_PATH")));
         $parts = explode("/", $rel_path);
         $encoded_parts = [];
         foreach ($parts as $part) {
@@ -84,16 +66,14 @@ class App {
             }
         }
 
-        return Util::normalize_path(ROOT_HREF . implode("/", $encoded_parts), $trailing_slash);
+        return Util::normalize_path($this->setup->get("ROOT_HREF") . implode("/", $encoded_parts), $trailing_slash);
     }
-
 
     public function to_path($href) {
 
-        $rel_href = substr($href, strlen(ROOT_HREF));
-        return Util::normalize_path(ROOT_PATH . "/" . rawurldecode($rel_href));
+        $rel_href = substr($href, strlen($this->setup->get("ROOT_HREF")));
+        return Util::normalize_path($this->setup->get("ROOT_PATH") . "/" . rawurldecode($rel_href));
     }
-
 
     public function is_hidden($name) {
 
@@ -111,7 +91,6 @@ class App {
 
         return false;
     }
-
 
     public function read_dir($path) {
 
@@ -131,12 +110,10 @@ class App {
         return $names;
     }
 
-
     public function is_managed_href($href) {
 
         return $this->is_managed_path($this->to_path($href));
     }
-
 
     public function is_managed_path($path) {
 
@@ -144,7 +121,7 @@ class App {
             return false;
         }
 
-        if ($path === APP_PATH || strpos($path, APP_PATH . '/') === 0) {
+        if ($path === $this->setup->get("APP_PATH") || strpos($path, $this->setup->get("APP_PATH") . '/') === 0) {
             return false;
         }
 
@@ -154,7 +131,7 @@ class App {
             }
         }
 
-        while ($path !== ROOT_PATH) {
+        while ($path !== $this->setup->get("ROOT_PATH")) {
             if (@is_dir($path . "/_h5ai/server")) {
                 return false;
             }
@@ -166,7 +143,6 @@ class App {
         }
         return true;
     }
-
 
     public function get_items($href, $what) {
 
@@ -200,11 +176,10 @@ class App {
         return $result;
     }
 
-
     public function get_langs() {
 
         $langs = [];
-        $l10n_path = APP_PATH . "/conf/l10n";
+        $l10n_path = $this->setup->get("APP_PATH") . "/conf/l10n";
         if (is_dir($l10n_path)) {
             if ($dir = opendir($l10n_path)) {
                 while (($file = readdir($dir)) !== false) {
@@ -220,20 +195,18 @@ class App {
         return $langs;
     }
 
-
     public function get_l10n($iso_codes) {
 
         $results = [];
 
         foreach ($iso_codes as $iso_code) {
-            $file = APP_PATH . "/conf/l10n/" . $iso_code . ".json";
+            $file = $this->setup->get("APP_PATH") . "/conf/l10n/" . $iso_code . ".json";
             $results[$iso_code] = Util::load_commented_json($file);
             $results[$iso_code]["isoCode"] = $iso_code;
         }
 
         return $results;
     }
-
 
     public function get_thumbs($requests) {
 
