@@ -2,7 +2,8 @@
 
 class Session {
 
-    private static $key_prefix = '__H5AI__';
+    private static $KEY_PREFIX = '__H5AI__';
+
     private $store;
 
     public function __construct(&$store) {
@@ -12,13 +13,13 @@ class Session {
 
     public function set($key, $value) {
 
-        $key = Session::$key_prefix . $key;
+        $key = Session::$KEY_PREFIX . $key;
         $this->store[$key] = $value;
     }
 
     public function get($key, $default = null) {
 
-        $key = Session::$key_prefix . $key;
+        $key = Session::$KEY_PREFIX . $key;
         return array_key_exists($key, $this->store) ? $this->store[$key] : $default;
     }
 }

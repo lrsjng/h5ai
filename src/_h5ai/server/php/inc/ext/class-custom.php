@@ -2,7 +2,7 @@
 
 class Custom {
 
-    private static $extensions = ['html', 'md'];
+    private static $EXTENSIONS = ['html', 'md'];
 
     public function __construct($app) {
 
@@ -13,7 +13,7 @@ class Custom {
 
         $file_prefix = $this->app->get_setup()->get('FILE_PREFIX');
 
-        foreach (Custom::$extensions as $ext) {
+        foreach (Custom::$EXTENSIONS as $ext) {
             $file = $path . '/' . $file_prefix . '.' . $name . '.' . $ext;
             if (is_readable($file)) {
                 $content = file_get_contents($file);

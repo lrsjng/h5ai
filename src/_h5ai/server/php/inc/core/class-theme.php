@@ -2,7 +2,7 @@
 
 class Theme {
 
-    private static $extensions = ['svg', 'png', 'jpg'];
+    private static $EXTENSIONS = ['svg', 'png', 'jpg'];
 
     public function __construct($app) {
 
@@ -21,7 +21,7 @@ class Theme {
             if ($dir = opendir($theme_path)) {
                 while (($name = readdir($dir)) !== false) {
                     $path_parts = pathinfo($name);
-                    if (in_array(@$path_parts['extension'], Theme::$extensions)) {
+                    if (in_array(@$path_parts['extension'], Theme::$EXTENSIONS)) {
                         $icons[$path_parts['filename']] = $theme . '/' . $name;
                     }
                 }
