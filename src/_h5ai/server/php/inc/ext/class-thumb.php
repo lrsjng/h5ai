@@ -2,10 +2,10 @@
 
 class Thumb {
 
-    private static $FFMPEG_CMDV = ["ffmpeg", "-ss", "0:00:10", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]"];
-    private static $AVCONV_CMDV = ["avconv", "-ss", "0:00:10", "-i", "[SRC]", "-an", "-vframes", "1", "[DEST]"];
-    private static $CONVERT_CMDV = ["convert", "-density", "200", "-quality", "100", "-sharpen", "0x1.0", "-strip", "[SRC][0]", "[DEST]"];
-    private static $THUMB_CACHE = "thumbs";
+    private static $FFMPEG_CMDV = ['ffmpeg', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
+    private static $AVCONV_CMDV = ['avconv', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
+    private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '-strip', '[SRC][0]', '[DEST]'];
+    private static $THUMB_CACHE = 'thumbs';
 
 
     private $app, $thumbs_path, $thumbs_href;
@@ -15,8 +15,8 @@ class Thumb {
 
         $this->setup = $app->get_setup();
         $this->app = $app;
-        $this->thumbs_path = $this->setup->get("CACHE_PATH") . "/" . Thumb::$THUMB_CACHE;
-        $this->thumbs_href = $this->setup->get("CACHE_HREF") . Thumb::$THUMB_CACHE;
+        $this->thumbs_path = $this->setup->get('CACHE_PATH') . '/' . Thumb::$THUMB_CACHE;
+        $this->thumbs_href = $this->setup->get('CACHE_HREF') . Thumb::$THUMB_CACHE;
 
         if (!is_dir($this->thumbs_path)) {
             @mkdir($this->thumbs_path, 0755, true);
@@ -27,20 +27,20 @@ class Thumb {
     public function thumb($type, $source_href, $width, $height) {
 
         $source_path = $this->app->to_path($source_href);
-        if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get("CACHE_PATH"))) {
+        if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get('CACHE_PATH'))) {
             return null;
         }
 
         $capture_path = $source_path;
-        if ($type === "img") {
+        if ($type === 'img') {
             $capture_path = $source_path;
-        } else if ($type === "mov") {
-            if ($this->setup->get("HAS_CMD_AVCONV")) {
+        } else if ($type === 'mov') {
+            if ($this->setup->get('HAS_CMD_AVCONV')) {
                 $capture_path = $this->capture(Thumb::$AVCONV_CMDV, $source_path);
-            } else if ($this->setup->get("HAS_CMD_FFMPEG")) {
+            } else if ($this->setup->get('HAS_CMD_FFMPEG')) {
                 $capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path);
             }
-        } else if ($type === "doc" && $this->setup->get("HAS_CMD_CONVERT")) {
+        } else if ($type === 'doc' && $this->setup->get('HAS_CMD_CONVERT')) {
             $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
         }
 
@@ -54,16 +54,16 @@ class Thumb {
             return null;
         }
 
-        $name = "thumb-" . sha1("$source_path") . "-" . $width . "x" . $height . ".jpg";
-        $thumb_path = $this->thumbs_path . "/" . $name;
-        $thumb_href = $this->thumbs_href . "/" . $name;
+        $name = 'thumb-' . sha1($source_path) . '-' . $width . 'x' . $height . '.jpg';
+        $thumb_path = $this->thumbs_path . '/' . $name;
+        $thumb_href = $this->thumbs_href . '/' . $name;
 
         if (!file_exists($thumb_path) || filemtime($source_path) >= filemtime($thumb_path)) {
 
             $image = new Image();
 
             $et = false;
-            if ($this->setup->get("HAS_PHP_EXIF") && $this->app->query_option("thumbnails.exif", false) === true && $height != 0) {
+            if ($this->setup->get('HAS_PHP_EXIF') && $this->app->query_option('thumbnails.exif', false) === true && $height != 0) {
                 $et = @exif_thumbnail($source_path);
             }
             if($et !== false) {
@@ -88,13 +88,13 @@ class Thumb {
             return null;
         }
 
-        $capture_path = $this->thumbs_path . "/capture-" . sha1($source_path) . ".jpg";
+        $capture_path = $this->thumbs_path . '/capture-' . sha1($source_path) . '.jpg';
 
         if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
 
             foreach ($cmdv as &$arg) {
-                $arg = str_replace("[SRC]", $source_path, $arg);
-                $arg = str_replace("[DEST]", $capture_path, $arg);
+                $arg = str_replace('[SRC]', $source_path, $arg);
+                $arg = str_replace('[DEST]', $capture_path, $arg);
             }
 
             Util::exec_cmdv($cmdv);
@@ -248,7 +248,7 @@ class Image {
 
     public function normalize_exif_orientation($exif_source_file = null) {
 
-        if (is_null($this->source) || !function_exists("exif_read_data")) {
+        if (is_null($this->source) || !function_exists('exif_read_data')) {
             return;
         }
 
@@ -257,7 +257,7 @@ class Image {
         }
 
         $exif = exif_read_data($exif_source_file);
-        switch(@$exif["Orientation"]) {
+        switch(@$exif['Orientation']) {
             case 3:
                 $this->rotate(180);
                 break;
