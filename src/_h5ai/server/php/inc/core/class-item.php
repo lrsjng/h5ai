@@ -17,7 +17,7 @@ class Item {
 
     public static function get($app, $path, &$cache) {
 
-        if (!Util::starts_with($path, $app->get_setup()->get("ROOT_PATH"))) {
+        if (!Util::starts_with($path, $app->get_setup()->get('ROOT_PATH'))) {
             return null;
         }
 
@@ -55,14 +55,14 @@ class Item {
     public function to_json_object() {
 
         $obj = [
-            "href" => $this->href,
-            "time" => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
-            "size" => $this->size
+            'href' => $this->href,
+            'time' => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
+            'size' => $this->size
         ];
 
         if ($this->is_folder) {
-            $obj["managed"] = $this->app->is_managed_href($this->href);
-            $obj["fetched"] = $this->is_content_fetched;
+            $obj['managed'] = $this->app->is_managed_href($this->href);
+            $obj['fetched'] = $this->is_content_fetched;
         }
 
         return $obj;
@@ -72,7 +72,7 @@ class Item {
     public function get_parent(&$cache) {
 
         $parent_path = Util::normalize_path(dirname($this->path), false);
-        if ($parent_path !== $this->path && Util::starts_with($parent_path, $this->app->get_setup()->get("ROOT_PATH"))) {
+        if ($parent_path !== $this->path && Util::starts_with($parent_path, $this->app->get_setup()->get('ROOT_PATH'))) {
             return Item::get($this->app, $parent_path, $cache);
         }
         return null;
@@ -89,7 +89,7 @@ class Item {
 
         $files = $this->app->read_dir($this->path);
         foreach ($files as $file) {
-            $item = Item::get($this->app, $this->path . "/" . $file, $cache);
+            $item = Item::get($this->app, $this->path . '/' . $file, $cache);
             $items[$item->path] = $item;
         }
 

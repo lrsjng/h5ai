@@ -9,8 +9,8 @@ class Fallback {
 
     private function get_current_path() {
 
-        $uri_parts = parse_url(getenv("REQUEST_URI"));
-        $current_href = Util::normalize_path($uri_parts["path"], true);
+        $uri_parts = parse_url(getenv('REQUEST_URI'));
+        $current_href = Util::normalize_path($uri_parts['path'], true);
         $current_path = $this->app->to_path($current_href);
 
         if (!is_dir($current_path)) {
@@ -26,12 +26,12 @@ class Fallback {
             $path = $this->get_current_path();
         }
 
-        $app_href = $this->app->get_setup()->get("APP_HREF");
+        $app_href = $this->app->get_setup()->get('APP_HREF');
 
         $cache = [];
         $folder = Item::get($this->app, $path, $cache);
         $items = $folder->get_content($cache);
-        uasort($items, ["Item", "cmp"]);
+        uasort($items, ['Item', 'cmp']);
 
         $html = "<table>";
 
@@ -52,13 +52,13 @@ class Fallback {
         }
 
         foreach ($items as $item) {
-            $type = $item->is_folder ? "folder" : "file";
+            $type = $item->is_folder ? 'folder' : 'file';
 
             $html .= "<tr>";
             $html .= "<td class='fb-i'><img src='${app_href}client/images/fallback/${type}.png' alt='${type}'/></td>";
             $html .= "<td class='fb-n'><a href='" . $item->href . "'>" . basename($item->path) . "</a></td>";
-            $html .= "<td class='fb-d'>" . date("Y-m-d H:i", $item->date) . "</td>";
-            $html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . " KB" : "" ) . "</td>";
+            $html .= "<td class='fb-d'>" . date('Y-m-d H:i', $item->date) . "</td>";
+            $html .= "<td class='fb-s'>" . ($item->size !== null ? intval($item->size / 1000) . ' KB' : '' ) . "</td>";
             $html .= "</tr>";
         }
 
