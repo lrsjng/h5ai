@@ -1,5 +1,5 @@
-- var app_href = '<?= APP_HREF; ?>'
-- var fallback = '<?= FALLBACK; ?>'
+- var APP_HREF = '<?= APP_HREF; ?>'
+- var FALLBACK = '<?= FALLBACK; ?>'
 
 <?php header('Content-type: text/html;charset=utf-8'); ?>
 doctype html
@@ -12,11 +12,11 @@ head
     title index · powered by #{pkg.name} #{pkg.version} (#{pkg.homepage})
     meta( name="description", content="index - powered by #{pkg.name} #{pkg.version} (#{pkg.homepage})" )
     meta( name="viewport", content="width=device-width, initial-scale=1" )
-    link( rel="shortcut icon", href!="#{app_href}client/images/favicon/favicon-16-32.ico" )
-    link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{app_href}client/images/favicon/favicon-152.png" )
+    link( rel="shortcut icon", href!="#{APP_HREF}client/images/favicon/favicon-16-32.ico" )
+    link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{APP_HREF}client/images/favicon/favicon-152.png" )
     link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:300,400,700" )
-    link( rel="stylesheet", href!="#{app_href}client/css/styles.css" )
-    script( src!="#{app_href}client/js/scripts.js", data-module="index" )
+    link( rel="stylesheet", href!="#{APP_HREF}client/css/styles.css" )
+    script( src!="#{APP_HREF}client/js/scripts.js", data-module="index" )
 
 body#root
 
@@ -30,6 +30,6 @@ body#root
         span.backlink
             a( href="#{pkg.homepage}", title="#{pkg.name} #{pkg.version} · #{pkg.description}" ) powered by #{pkg.name}
 
-    div#fallback !{fallback}
+    div#fallback !{FALLBACK}
 
 </html>
