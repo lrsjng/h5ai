@@ -19,18 +19,14 @@ class Bootstrap {
         date_default_timezone_set(@date_default_timezone_get());
         session_start();
 
-        $request_method = getenv('REQUEST_METHOD');
-        $request_uri = getenv('REQUEST_URI');
-        $script_name = getenv('SCRIPT_NAME');
-        $server_software = getenv('SERVER_SOFTWARE');
-
         $this->once('config');
 
+        $session = new Session($_SESSION);
         $request = new Request($_REQUEST);
-        $setup = new Setup($request->query_boolean('updateCachedSetup', false), $_ENV);
-        $app = new App($request, $setup);
+        $setup = new Setup($request->query_boolean('refresh', false));
+        $app = new App($session, $request, $setup);
 
-        if (strtolower(getenv('REQUEST_METHOD')) === 'post') {
+        if (strtolower($setup->get('REQUEST_METHOD')) === 'post') {
             (new Api($app))->apply();
         } else {
             // (new Page($app))->apply();

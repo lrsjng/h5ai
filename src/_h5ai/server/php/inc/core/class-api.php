@@ -58,7 +58,7 @@ class Api {
 
         if ($this->request->query_boolean('setup', false)) {
 
-            $response['setup'] = $this->setup->to_jsono();
+            $response['setup'] = $this->setup->to_jsono($this->app->is_admin());
         }
 
         if ($this->request->query_boolean('theme', false)) {

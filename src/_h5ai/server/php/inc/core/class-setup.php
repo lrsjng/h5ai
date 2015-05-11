@@ -3,32 +3,31 @@
 class Setup {
 
     const DEFAULT_PASSHASH = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e';
-    const AS_ADMIN_SESSION_KEY = '__H5AI_AS_ADMIN__';
 
-    private $consts;
+    private $store;
 
-    public function __construct($update_cached_setup = false, $env = []) {
+    public function __construct($refresh = false) {
 
-        $this->consts = [];
-        $this->update_cached_setup = $update_cached_setup;
-        $this->env = $env;
+        $this->store = [];
+        $this->refresh = $refresh;
 
-        $this->setup_php();
-        $this->setup_app();
-        $this->setup_admin();
-        $this->setup_server();
-        $this->setup_paths();
-        $this->setup_cache();
-        $this->setup_cmds();
+        $this->add_globals_and_envs();
+        $this->add_php_checks();
+        $this->add_app_metadata();
+        $this->add_admin_check();
+        $this->add_server_metadata_and_check();
+        $this->add_paths();
+        $this->add_cache_paths_and_check();
+        $this->add_sys_cmd_checks();
     }
 
     private function set($key, $value) {
 
-        if (array_key_exists($key, $this->consts)) {
+        if (array_key_exists($key, $this->store)) {
             Logger::log('setup key already taken', [
                 'key' => $key,
                 'value' => $value,
-                'found' => $this->consts[$key]
+                'found' => $this->store[$key]
             ]);
             exit;
         }
@@ -40,23 +39,33 @@ class Setup {
             exit;
         }
 
-        $this->consts[$key] = $value;
+        $this->store[$key] = $value;
     }
 
     public function get($key) {
 
-        if (!array_key_exists($key, $this->consts)) {
+        if (!array_key_exists($key, $this->store)) {
             Logger::log('setup key not found', ['key' => $key]);
             exit;
         }
 
-        return $this->consts[$key];
+        return $this->store[$key];
     }
 
-    private function setup_php() {
+    private function add_globals_and_envs() {
 
         $this->set('PHP_VERSION', PHP_VERSION);
         $this->set('MIN_PHP_VERSION', MIN_PHP_VERSION);
+        $this->set('PASSHASH', PASSHASH);
+
+        $this->set('REQUEST_METHOD', getenv('REQUEST_METHOD'));
+        $this->set('REQUEST_URI', getenv('REQUEST_URI'));
+        $this->set('SCRIPT_NAME', getenv('SCRIPT_NAME'));
+        $this->set('SERVER_SOFTWARE', getenv('SERVER_SOFTWARE'));
+    }
+
+    private function add_php_checks() {
+
         $this->set('HAS_PHP_EXIF', function_exists('exif_thumbnail'));
 
         $has_php_jpeg = false;
@@ -67,41 +76,41 @@ class Setup {
         $this->set('HAS_PHP_JPEG', $has_php_jpeg);
     }
 
-    private function setup_app() {
+    private function add_app_metadata() {
 
         $this->set('NAME', '{{pkg.name}}');
         $this->set('VERSION', '{{pkg.version}}');
         $this->set('FILE_PREFIX', '_{{pkg.name}}');
     }
 
-    private function setup_admin() {
+    private function add_admin_check() {
 
-        $this->set('AS_ADMIN_SESSION_KEY', Setup::AS_ADMIN_SESSION_KEY);
-        $this->set('AS_ADMIN', isset($_SESSION[Setup::AS_ADMIN_SESSION_KEY]) && $_SESSION[Setup::AS_ADMIN_SESSION_KEY] === true);
-        $this->set('PASSHASH', PASSHASH);
         $this->set('HAS_CUSTOM_PASSHASH', strtolower(PASSHASH) === strtolower(Setup::DEFAULT_PASSHASH));
     }
 
-    private function setup_server() {
+    private function add_server_metadata_and_check() {
 
+        $server_software = $this->get('SERVER_SOFTWARE');
         $server_name = null;
         $server_version = null;
-        $server_software = getenv('SERVER_SOFTWARE');
+
         if ($server_software && preg_match('#^(.*?)(?:/(.*?))?(?: |$)#', strtolower($server_software), $matches)) {
             $server_name = $matches[1];
             $server_version = count($matches) > 2 ? $matches[2] : '';
         }
+
         $this->set('SERVER_NAME', $server_name);
         $this->set('SERVER_VERSION', $server_version);
         $this->set('HAS_SERVER', in_array($server_name, ['apache', 'lighttpd', 'nginx', 'cherokee']));
     }
 
-    private function setup_paths() {
+    private function add_paths() {
 
-        $script_name = getenv('SCRIPT_NAME');
+        $script_name = $this->get('SCRIPT_NAME');
         if ($this->get('SERVER_NAME') === 'lighttpd') {
             $script_name = preg_replace('#^.*?//#', '/', $script_name);
         }
+
         $this->set('APP_HREF', Util::normalize_path(dirname(dirname(dirname($script_name))), true));
         $this->set('APP_PATH', Util::normalize_path(dirname(dirname(dirname(dirname(dirname(__FILE__))))), false));
 
@@ -115,19 +124,19 @@ class Setup {
         $this->set('INDEX_HREF', $index_href);
     }
 
-    private function setup_cache() {
+    private function add_cache_paths_and_check() {
 
         $this->set('CACHE_HREF', Util::normalize_path($this->get('APP_HREF') . '/cache', true));
         $this->set('CACHE_PATH', Util::normalize_path($this->get('APP_PATH') . '/cache', false));
         $this->set('HAS_WRITABLE_CACHE', @is_writable($this->get('CACHE_PATH')));
     }
 
-    private function setup_cmds() {
+    private function add_sys_cmd_checks() {
 
-        $this->set('CMDS_PATH', Util::normalize_path($this->get('CACHE_PATH') . '/cmds.json', false));
+        $cmds_cache_path = Util::normalize_path($this->get('CACHE_PATH') . '/cmds.json', false);
 
-        $cmds = Util::load_commented_json($this->get('CMDS_PATH'));
-        if (sizeof($cmds) === 0 || $this->update_cached_setup) {
+        $cmds = Util::load_commented_json($cmds_cache_path);
+        if (sizeof($cmds) === 0 || $this->refresh) {
             $cmds['command'] = Util::exec_0('command -v command');
             $cmds['which'] = Util::exec_0('which which');
 
@@ -142,25 +151,24 @@ class Setup {
                 $cmds[$c] = ($cmd !== false) && Util::exec_0($cmd . ' ' . $c);
             }
 
-            Util::save_json($this->get('CMDS_PATH'), $cmds);
+            Util::save_json($cmds_cache_path, $cmds);
         }
         foreach ($cmds as $c => $has) {
             $this->set('HAS_CMD_' . strtoupper($c), $has);
         }
     }
 
-    public function to_jsono() {
+    public function to_jsono($as_admin = false) {
 
         $keys = [
             'APP_HREF',
             'ROOT_HREF',
             'VERSION',
 
-            'AS_ADMIN',
             'HAS_CUSTOM_PASSHASH'
         ];
 
-        if ($this->get('AS_ADMIN')) {
+        if ($as_admin) {
             $keys = array_merge($keys, [
                 'PHP_VERSION',
                 'MIN_PHP_VERSION',
@@ -184,7 +192,7 @@ class Setup {
             ]);
         }
 
-        $jsono = [];
+        $jsono = ['AS_ADMIN' => $as_admin];
         foreach ($keys as $key) {
             $jsono[$key] = $this->get($key);
         }

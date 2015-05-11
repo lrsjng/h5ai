@@ -2,14 +2,18 @@
 
 class Fallback {
 
+    private $setup;
+    private $app;
+
     function __construct($app) {
 
+        $this->setup = $app->get_setup();
         $this->app = $app;
     }
 
     private function get_current_path() {
 
-        $uri_parts = parse_url(getenv('REQUEST_URI'));
+        $uri_parts = parse_url($this->setup->get('REQUEST_URI'));
         $current_href = Util::normalize_path($uri_parts['path'], true);
         $current_path = $this->app->to_path($current_href);
 
@@ -26,7 +30,7 @@ class Fallback {
             $path = $this->get_current_path();
         }
 
-        $app_href = $this->app->get_setup()->get('APP_HREF');
+        $app_href = $this->setup->get('APP_HREF');
 
         $cache = [];
         $folder = Item::get($this->app, $path, $cache);

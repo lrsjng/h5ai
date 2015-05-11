@@ -4,7 +4,7 @@ class Request {
 
     private $params;
 
-    public function __construct($params = null) {
+    public function __construct($params) {
 
         $this->params = $params;
     }

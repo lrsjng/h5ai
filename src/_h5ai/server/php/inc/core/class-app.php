@@ -2,15 +2,23 @@
 
 class App {
 
+    const AS_ADMIN_SESSION_KEY = 'AS_ADMIN';
+
     private $request;
     private $setup;
     private $options;
 
-    public function __construct($request, $setup) {
+    public function __construct($session, $request, $setup) {
 
+        $this->session = $session;
         $this->request = $request;
         $this->setup = $setup;
         $this->options = Util::load_commented_json($this->setup->get('APP_PATH') . '/conf/options.json');
+    }
+
+    public function get_session() {
+
+        return $this->session;
     }
 
     public function get_request() {
@@ -40,19 +48,20 @@ class App {
 
     public function login_admin($pass) {
 
-        $key = $this->setup->get('AS_ADMIN_SESSION_KEY');
         $hash = $this->setup->get('PASSHASH');
-
-        $_SESSION[$key] = strcasecmp(hash('sha512', $pass), $hash) === 0;
-        return $_SESSION[$key];
+        $this->session->set(App::AS_ADMIN_SESSION_KEY, strcasecmp(hash('sha512', $pass), $hash) === 0);
+        return $this->session->get(App::AS_ADMIN_SESSION_KEY);
     }
 
     public function logout_admin() {
 
-        $key = $this->setup->get('AS_ADMIN_SESSION_KEY');
+        $this->session->set(App::AS_ADMIN_SESSION_KEY, false);
+        return $this->session->get(App::AS_ADMIN_SESSION_KEY);
+    }
 
-        $_SESSION[$key] = false;
-        return $_SESSION[$key];
+    public function is_admin() {
+
+        return $this->session->get(App::AS_ADMIN_SESSION_KEY);
     }
 
     public function to_href($path, $trailing_slash = true) {
