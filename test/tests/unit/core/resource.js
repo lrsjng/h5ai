@@ -77,7 +77,7 @@ describe('module \'' + ID + '\'', function () {
         it('works', function () {
 
             var instance = this.applyFn();
-            var ui = this.xSettings.appHref + 'client/images/ui/';
+            var ui = this.xSettings.appHref + 'public/images/ui/';
 
             assert.strictEqual(instance.image(), ui + 'undefined.svg');
             assert.strictEqual(instance.image(1), ui + '1.svg');
@@ -97,7 +97,7 @@ describe('module \'' + ID + '\'', function () {
         it('works', function () {
 
             var instance = this.applyFn();
-            var themes = this.xSettings.appHref + 'client/images/themes/';
+            var themes = this.xSettings.appHref + 'public/images/themes/';
 
             assert.strictEqual(instance.icon(''), themes + 'default/file.svg');
             assert.strictEqual(instance.icon('a'), themes + 'myTheme/a.svg');

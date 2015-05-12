@@ -14,8 +14,8 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
                 '<span id="login">login</span>' +
                 '<span id="logout">logout</span>' +
                 '<div id="hint">' +
-                    'The preset password is the empty string, so just hit login. ' +
-                    'You might change it in server/php/config.php to keep this information private.' +
+                    'The preset password is the empty string, just hit login. ' +
+                    'Change it in \'_h5ai/conf/passhash.php\'.' +
                 '</div>' +
             '</div>';
     var setup = config.setup;
@@ -109,7 +109,7 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
     function request(data) {
 
         $.ajax({
-            url: 'server/php/index.php',
+            url: 'index.php',
             type: 'post',
             dataType: 'json',
             data: data

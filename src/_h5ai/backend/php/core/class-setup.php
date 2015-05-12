@@ -86,7 +86,7 @@ class Setup {
 
     private function add_admin_check() {
 
-        $this->set('HAS_CUSTOM_PASSHASH', strtolower(PASSHASH) === Setup::$DEFAULT_PASSHASH);
+        $this->set('HAS_CUSTOM_PASSHASH', strtolower(PASSHASH) !== Setup::$DEFAULT_PASSHASH);
     }
 
     private function add_server_metadata_and_check() {
@@ -112,23 +112,23 @@ class Setup {
             $script_name = preg_replace('#^.*?//#', '/', $script_name);
         }
 
-        $this->set('APP_HREF', Util::normalize_path(dirname(dirname(dirname($script_name))), true));
-        $this->set('APP_PATH', Util::normalize_path(dirname(dirname(dirname(dirname(dirname(__FILE__))))), false));
+        $this->set('APP_HREF', Util::normalize_path(dirname(dirname($script_name)), true));
+        $this->set('APP_PATH', Util::normalize_path(dirname(dirname(dirname(dirname(__FILE__)))), false));
 
         $this->set('ROOT_HREF', Util::normalize_path(dirname($this->get('APP_HREF')), true));
         $this->set('ROOT_PATH', Util::normalize_path(dirname($this->get('APP_PATH')), false));
 
         $index_href = null;
-        if (@is_readable(Util::normalize_path($this->get('APP_PATH') . '/server/php/index.php', false))) {
-            $index_href = Util::normalize_path($this->get('APP_HREF') . '/server/php/index.php', false);
+        if (@is_readable(Util::normalize_path($this->get('APP_PATH') . '/public/index.php', false))) {
+            $index_href = Util::normalize_path($this->get('APP_HREF') . '/public/index.php', false);
         }
         $this->set('INDEX_HREF', $index_href);
     }
 
     private function add_cache_paths_and_check() {
 
-        $this->set('CACHE_HREF', Util::normalize_path($this->get('APP_HREF') . '/cache', true));
-        $this->set('CACHE_PATH', Util::normalize_path($this->get('APP_PATH') . '/cache', false));
+        $this->set('CACHE_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/cache', true));
+        $this->set('CACHE_PATH', Util::normalize_path($this->get('APP_PATH') . '/public/cache', false));
         $this->set('HAS_WRITABLE_CACHE', @is_writable($this->get('CACHE_PATH')));
     }
 

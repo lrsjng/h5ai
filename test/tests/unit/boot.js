@@ -111,7 +111,7 @@ describe('module \'' + ID + '\'', function () {
             this.applyFn();
 
             assert.isTrue(this.xAjax.calledOnce);
-            assert.strictEqual(this.xAjax.lastCall.args[0].url, 'server/php/index.php');
+            assert.strictEqual(this.xAjax.lastCall.args[0].url, 'index.php');
             assert.strictEqual(this.xAjax.lastCall.args[0].type, 'post');
             assert.strictEqual(this.xAjax.lastCall.args[0].dataType, 'json');
 

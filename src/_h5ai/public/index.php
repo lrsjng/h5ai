@@ -8,5 +8,5 @@ if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
     exit;
 }
 
-require_once __DIR__ . '/inc/class-bootstrap.php';
+require_once __DIR__ . '/../backend/php/class-bootstrap.php';
 Bootstrap::main();

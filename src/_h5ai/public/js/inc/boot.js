@@ -12,7 +12,7 @@ modulejs.define('boot', ['$'], function ($) {
         href = '.';
     } else if (module === 'info') {
         data.refresh = true;
-        href = 'server/php/index.php';
+        href = 'index.php';
     } else {
         return;
     }

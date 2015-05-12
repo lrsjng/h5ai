@@ -138,7 +138,7 @@ describe('module \'' + ID + '\'', function () {
                 $('#login').trigger('click');
                 assert.isTrue(this.xAjax.calledOnce);
                 assert.deepEqual(this.xAjax.lastCall.args, [{
-                    url: 'server/php/index.php',
+                    url: 'index.php',
                     type: 'post',
                     dataType: 'json',
                     data: {
@@ -193,7 +193,7 @@ describe('module \'' + ID + '\'', function () {
                 $('#logout').trigger('click');
                 assert.isTrue(this.xAjax.calledOnce);
                 assert.deepEqual(this.xAjax.lastCall.args, [{
-                    url: 'server/php/index.php',
+                    url: 'index.php',
                     type: 'post',
                     dataType: 'json',
                     data: {
