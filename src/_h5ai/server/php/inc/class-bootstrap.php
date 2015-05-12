@@ -17,7 +17,7 @@ class Bootstrap {
         date_default_timezone_set(@date_default_timezone_get());
         session_start();
 
-        $this->once('../config');
+        require __DIR__ . '/../config.php';
 
         $session = new Session($_SESSION);
         $request = new Request($_REQUEST);
@@ -29,7 +29,7 @@ class Bootstrap {
         } else {
             define('APP_HREF', $setup->get('APP_HREF'));
             define('FALLBACK', (new Fallback($app))->get_html());
-            $this->once('page');
+            require __DIR__ . '/page.php';
         }
     }
 
@@ -40,14 +40,9 @@ class Bootstrap {
         foreach (Bootstrap::$autopaths as $path) {
             $file = __DIR__  . '/' . $path . '/' . $filename;
             if (file_exists($file)) {
-                require_once $file;
+                require $file;
                 return true;
             }
         }
-    }
-
-    private function once($lib) {
-
-        require_once __DIR__ . '/' . $lib . '.php';
     }
 }
