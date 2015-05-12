@@ -1,28 +1,22 @@
-modulejs.define('boot', ['$'], function ($) {
+modulejs.define('boot', ['$', 'core/server'], function ($, server) {
 
     if ($('html').hasClass('no-browser')) {
         return;
     }
 
     var module = $('script[data-module]').data('module');
-    var data = {action: 'get', setup: true, options: true, types: true, theme: true, langs: true};
-    var href;
+    var data = {action: 'get', setup: true, options: true, types: true};
 
     if (module === 'index') {
-        href = '.';
+        data.theme = true;
+        data.langs = true;
     } else if (module === 'info') {
         data.refresh = true;
-        href = 'index.php';
     } else {
         return;
     }
 
-    $.ajax({
-        url: href,
-        data: data,
-        type: 'post',
-        dataType: 'json'
-    }).done(function (config) {
+    server.request(data, function (config) {
 
         modulejs.define('config', config);
         $(function () { modulejs.require('main/' + module); });

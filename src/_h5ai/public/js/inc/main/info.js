@@ -1,4 +1,4 @@
-modulejs.define('main/info', ['$', 'config'], function ($, config) {
+modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config, server) {
 
     var testsTemp =
             '<ul id="tests">';
@@ -106,33 +106,24 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
         );
     }
 
-    function request(data) {
+    function reload() {
 
-        $.ajax({
-            url: 'index.php',
-            type: 'post',
-            dataType: 'json',
-            data: data
-        })
-        .always(function () {
-
-            window.location.reload();
-        });
+        window.location.reload();
     }
 
     function onLogin() {
 
-        request({
+        server.request({
             action: 'login',
             pass: $('#pass').val()
-        });
+        }, reload);
     }
 
     function onLogout() {
 
-        request({
+        server.request({
             action: 'logout'
-        });
+        }, reload);
     }
 
     function onKeydown(event) {

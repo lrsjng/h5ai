@@ -1,9 +1,9 @@
-modulejs.define('core/server', ['_', '$', 'core/location'], function (_, $, location) {
+modulejs.define('core/server', ['_', '$'], function (_, $) {
 
     function request(data, callback) {
 
         $.ajax({
-            url: location.getAbsHref(),
+            url: '?',
             data: data,
             type: 'post',
             dataType: 'json'
@@ -20,8 +20,7 @@ modulejs.define('core/server', ['_', '$', 'core/location'], function (_, $, loca
 
     function formRequest(data) {
 
-        var $form = $('<form method="post" style="display:none;"/>')
-                        .attr('action', location.getAbsHref());
+        var $form = $('<form method="post" action="?" style="display:none;"/>');
 
         _.each(data, function (val, key) {
 
