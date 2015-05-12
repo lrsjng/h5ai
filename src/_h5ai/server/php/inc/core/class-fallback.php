@@ -13,8 +13,7 @@ class Fallback {
 
     private function get_current_path() {
 
-        $uri_parts = parse_url($this->setup->get('REQUEST_URI'));
-        $current_href = Util::normalize_path($uri_parts['path'], true);
+        $current_href = Util::normalize_path(parse_url($this->setup->get('REQUEST_URI'), PHP_URL_PATH), true);
         $current_path = $this->app->to_path($current_href);
 
         if (!is_dir($current_path)) {
