@@ -59,7 +59,7 @@ class Setup {
         $this->set('PASSHASH', PASSHASH);
 
         $this->set('REQUEST_METHOD', getenv('REQUEST_METHOD'));
-        $this->set('REQUEST_URI', getenv('REQUEST_URI'));
+        $this->set('REQUEST_HREF', parse_url(getenv('REQUEST_URI'), PHP_URL_PATH));
         $this->set('SCRIPT_NAME', getenv('SCRIPT_NAME'));
         $this->set('SERVER_SOFTWARE', getenv('SERVER_SOFTWARE'));
     }

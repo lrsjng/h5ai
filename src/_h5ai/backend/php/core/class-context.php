@@ -72,7 +72,7 @@ class Context {
 
     public function is_info_request() {
 
-        return $this->get_current_path() === $this->setup->get('APP_PATH') . '/public';
+        return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('APP_HREF'));
     }
 
     public function to_href($path, $trailing_slash = true) {
@@ -166,7 +166,7 @@ class Context {
 
     public function get_current_path() {
 
-        $current_href = Util::normalize_path(parse_url($this->setup->get('REQUEST_URI'), PHP_URL_PATH), true);
+        $current_href = Util::normalize_path($this->setup->get('REQUEST_HREF'), true);
         $current_path = $this->to_path($current_href);
 
         if (!is_dir($current_path)) {
