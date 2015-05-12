@@ -8,8 +8,5 @@ if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
     exit;
 }
 
-$basepath = preg_replace('#[\\\\/]+#', '/', dirname(__FILE__));
-require_once $basepath . '/inc/class-bootstrap.php';
-
-$bootstrap = new Bootstrap($basepath);
-$bootstrap->run();
+require_once __DIR__ . '/inc/class-bootstrap.php';
+Bootstrap::main();

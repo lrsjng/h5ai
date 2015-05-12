@@ -2,14 +2,12 @@
 
 class Bootstrap {
 
-    private $basepath;
-    private $classpaths;
+    public static function main() {
 
-    public function __construct($basepath) {
-
-        $this->basepath = $basepath;
-        $this->classpaths = ['/inc', '/inc/core', '/inc/ext'];
+        (new Bootstrap())->run();
     }
+
+    private static $autopaths = ['core', 'ext'];
 
     public function run() {
 
@@ -19,7 +17,7 @@ class Bootstrap {
         date_default_timezone_set(@date_default_timezone_get());
         session_start();
 
-        $this->once('config');
+        $this->once('../config');
 
         $session = new Session($_SESSION);
         $request = new Request($_REQUEST);
@@ -31,7 +29,7 @@ class Bootstrap {
         } else {
             define('APP_HREF', $setup->get('APP_HREF'));
             define('FALLBACK', (new Fallback($app))->get_html());
-            $this->once('inc/page');
+            $this->once('page');
         }
     }
 
@@ -39,8 +37,8 @@ class Bootstrap {
 
         $filename = 'class-' . strtolower($class_name) . '.php';
 
-        foreach ($this->classpaths as $classpath) {
-            $file = $this->basepath . $classpath . '/' . $filename;
+        foreach (Bootstrap::$autopaths as $path) {
+            $file = __DIR__  . '/' . $path . '/' . $filename;
             if (file_exists($file)) {
                 require_once $file;
                 return true;
@@ -50,6 +48,6 @@ class Bootstrap {
 
     private function once($lib) {
 
-        require_once $this->basepath . '/' . $lib . '.php';
+        require_once __DIR__ . '/' . $lib . '.php';
     }
 }
