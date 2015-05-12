@@ -113,7 +113,7 @@ class Util {
 
     private static $size_cache = [];
 
-    public static function filesize($app, $path) {
+    public static function filesize($context, $path) {
 
         if (array_key_exists($path, Util::$size_cache)) {
             return Util::$size_cache[$path];
@@ -153,14 +153,14 @@ class Util {
 
         } else if (is_dir($path)) {
 
-            if ($app->query_option('foldersize.enabled', false)) {
-                if ($app->get_setup()->get('HAS_CMD_DU') && $app->query_option('foldersize.type', null) === 'shell-du') {
+            if ($context->query_option('foldersize.enabled', false)) {
+                if ($context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du') {
                     $cmdv = ['du', '-sk', $path];
                     $size = intval(preg_replace('#\s.*$#', '', Util::exec_cmdv($cmdv)), 10) * 1024;
                 } else {
                     $size = 0;
-                    foreach ($app->read_dir($path) as $name) {
-                        $size += Util::filesize($app, $path . '/' . $name);
+                    foreach ($context->read_dir($path) as $name) {
+                        $size += Util::filesize($context, $path . '/' . $name);
                     }
                 }
             }

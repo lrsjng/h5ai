@@ -4,15 +4,17 @@ class Theme {
 
     private static $EXTENSIONS = ['svg', 'png', 'jpg'];
 
-    public function __construct($app) {
+    private $context;
 
-        $this->app = $app;
+    public function __construct($context) {
+
+        $this->context = $context;
     }
 
     public function get_icons() {
 
-        $app_path = $this->app->get_setup()->get('APP_PATH');
-        $theme = $this->app->query_option('view.theme', '-NONE-');
+        $app_path = $this->context->get_setup()->get('APP_PATH');
+        $theme = $this->context->query_option('view.theme', '-NONE-');
         $theme_path = $app_path . '/client/images/themes/' . $theme;
 
         $icons = [];

@@ -4,14 +4,16 @@ class Custom {
 
     private static $EXTENSIONS = ['html', 'md'];
 
-    public function __construct($app) {
+    private $context;
 
-        $this->app = $app;
+    public function __construct($context) {
+
+        $this->context = $context;
     }
 
     private function read_custom_file($path, $name, &$content, &$type) {
 
-        $file_prefix = $this->app->get_setup()->get('FILE_PREFIX');
+        $file_prefix = $this->context->get_setup()->get('FILE_PREFIX');
 
         foreach (Custom::$EXTENSIONS as $ext) {
             $file = $path . '/' . $file_prefix . '.' . $name . '.' . $ext;
@@ -25,15 +27,15 @@ class Custom {
 
     public function get_customizations($href) {
 
-        if (!$this->app->query_option('custom.enabled', false)) {
+        if (!$this->context->query_option('custom.enabled', false)) {
             return [
                 'header' => ['content' => null, 'type' => null],
                 'footer' => ['content' => null, 'type' => null]
             ];
         }
 
-        $root_path = $this->app->get_setup()->get('FILE_PREFIX');
-        $path = $this->app->to_path($href);
+        $root_path = $this->context->get_setup()->get('FILE_PREFIX');
+        $path = $this->context->to_path($href);
 
         $header = null;
         $header_type = null;

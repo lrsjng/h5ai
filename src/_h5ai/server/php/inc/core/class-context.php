@@ -1,9 +1,10 @@
 <?php
 
-class App {
+class Context {
 
     private static $AS_ADMIN_SESSION_KEY = 'AS_ADMIN';
 
+    private $session;
     private $request;
     private $setup;
     private $options;
@@ -49,19 +50,19 @@ class App {
     public function login_admin($pass) {
 
         $hash = $this->setup->get('PASSHASH');
-        $this->session->set(App::$AS_ADMIN_SESSION_KEY, strcasecmp(hash('sha512', $pass), $hash) === 0);
-        return $this->session->get(App::$AS_ADMIN_SESSION_KEY);
+        $this->session->set(Context::$AS_ADMIN_SESSION_KEY, strcasecmp(hash('sha512', $pass), $hash) === 0);
+        return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
     public function logout_admin() {
 
-        $this->session->set(App::$AS_ADMIN_SESSION_KEY, false);
-        return $this->session->get(App::$AS_ADMIN_SESSION_KEY);
+        $this->session->set(Context::$AS_ADMIN_SESSION_KEY, false);
+        return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
     public function is_admin() {
 
-        return $this->session->get(App::$AS_ADMIN_SESSION_KEY);
+        return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
     public function to_href($path, $trailing_slash = true) {

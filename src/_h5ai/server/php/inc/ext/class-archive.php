@@ -6,17 +6,20 @@ class Archive {
     private static $TAR_PASSTHRU_CMD = 'cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]';
     private static $ZIP_PASSTHRU_CMD = 'cd [ROOTDIR] && zip - -- [FILES]';
 
-    private $app, $base_path, $dirs, $files;
+    private $context;
+    private $base_path;
+    private $dirs;
+    private $files;
 
-    public function __construct($app) {
+    public function __construct($context) {
 
-        $this->app = $app;
+        $this->context = $context;
     }
 
     public function output($type, $base_href, $hrefs) {
 
-        $this->base_path = $this->app->to_path($base_href);
-        if (!$this->app->is_managed_path($this->base_path)) {
+        $this->base_path = $this->context->to_path($base_href);
+        if (!$this->context->is_managed_path($this->base_path)) {
             return false;
         }
 
@@ -154,9 +157,9 @@ class Archive {
             $d = Util::normalize_path(dirname($href), true);
             $n = basename($href);
 
-            if ($this->app->is_managed_href($d) && !$this->app->is_hidden($n)) {
+            if ($this->context->is_managed_href($d) && !$this->context->is_hidden($n)) {
 
-                $real_file = $this->app->to_path($href);
+                $real_file = $this->context->to_path($href);
                 $archived_file = preg_replace('!^' . preg_quote(Util::normalize_path($this->base_path, true)) . '!', '', $real_file);
 
                 if (is_dir($real_file)) {
@@ -177,10 +180,10 @@ class Archive {
 
     private function add_dir($real_dir, $archived_dir) {
 
-        if ($this->app->is_managed_path($real_dir)) {
+        if ($this->context->is_managed_path($real_dir)) {
             $this->dirs[] = $archived_dir;
 
-            $files = $this->app->read_dir($real_dir);
+            $files = $this->context->read_dir($real_dir);
             foreach ($files as $file) {
 
                 $real_file = $real_dir . '/' . $file;

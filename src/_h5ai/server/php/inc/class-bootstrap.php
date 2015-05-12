@@ -22,13 +22,13 @@ class Bootstrap {
         $session = new Session($_SESSION);
         $request = new Request($_REQUEST);
         $setup = new Setup($request->query_boolean('refresh', false));
-        $app = new App($session, $request, $setup);
+        $context = new Context($session, $request, $setup);
 
         if (strtolower($setup->get('REQUEST_METHOD')) === 'post') {
-            (new Api($app))->apply();
+            (new Api($context))->apply();
         } else {
             define('APP_HREF', $setup->get('APP_HREF'));
-            define('FALLBACK', (new Fallback($app))->get_html());
+            define('FALLBACK', (new Fallback($context))->get_html());
             require __DIR__ . '/page.php';
         }
     }

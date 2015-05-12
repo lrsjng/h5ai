@@ -14,9 +14,9 @@ class Item {
         return strcasecmp($item1->path, $item2->path);
     }
 
-    public static function get($app, $path, &$cache) {
+    public static function get($context, $path, &$cache) {
 
-        if (!Util::starts_with($path, $app->get_setup()->get('ROOT_PATH'))) {
+        if (!Util::starts_with($path, $context->get_setup()->get('ROOT_PATH'))) {
             return null;
         }
 
@@ -24,7 +24,7 @@ class Item {
             return $cache[$path];
         }
 
-        $item = new Item($app, $path);
+        $item = new Item($context, $path);
 
         if (is_array($cache)) {
             $cache[$path] = $item;
@@ -32,7 +32,7 @@ class Item {
         return $item;
     }
 
-    public $app;
+    public $context;
     public $path;
     public $href;
     public $date;
@@ -40,15 +40,15 @@ class Item {
     public $is_folder;
     public $is_content_fetched;
 
-    private function __construct($app, $path) {
+    private function __construct($context, $path) {
 
-        $this->app = $app;
+        $this->context = $context;
 
         $this->path = Util::normalize_path($path, false);
         $this->is_folder = is_dir($this->path);
-        $this->href = $app->to_href($this->path, $this->is_folder);
+        $this->href = $context->to_href($this->path, $this->is_folder);
         $this->date = @filemtime($this->path);
-        $this->size = Util::filesize($app, $this->path);
+        $this->size = Util::filesize($context, $this->path);
         $this->is_content_fetched = false;
     }
 
@@ -61,7 +61,7 @@ class Item {
         ];
 
         if ($this->is_folder) {
-            $obj['managed'] = $this->app->is_managed_href($this->href);
+            $obj['managed'] = $this->context->is_managed_href($this->href);
             $obj['fetched'] = $this->is_content_fetched;
         }
 
@@ -71,8 +71,8 @@ class Item {
     public function get_parent(&$cache) {
 
         $parent_path = Util::normalize_path(dirname($this->path), false);
-        if ($parent_path !== $this->path && Util::starts_with($parent_path, $this->app->get_setup()->get('ROOT_PATH'))) {
-            return Item::get($this->app, $parent_path, $cache);
+        if ($parent_path !== $this->path && Util::starts_with($parent_path, $this->context->get_setup()->get('ROOT_PATH'))) {
+            return Item::get($this->context, $parent_path, $cache);
         }
         return null;
     }
@@ -81,13 +81,13 @@ class Item {
 
         $items = [];
 
-        if (!$this->app->is_managed_href($this->href)) {
+        if (!$this->context->is_managed_href($this->href)) {
             return $items;
         }
 
-        $files = $this->app->read_dir($this->path);
+        $files = $this->context->read_dir($this->path);
         foreach ($files as $file) {
-            $item = Item::get($this->app, $this->path . '/' . $file, $cache);
+            $item = Item::get($this->context, $this->path . '/' . $file, $cache);
             $items[$item->path] = $item;
         }
 

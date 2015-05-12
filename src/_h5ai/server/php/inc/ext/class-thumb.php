@@ -7,14 +7,15 @@ class Thumb {
     private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '-strip', '[SRC][0]', '[DEST]'];
     private static $THUMB_CACHE = 'thumbs';
 
-    private $app;
+    private $context;
+    private $setup;
     private $thumbs_path;
     private $thumbs_href;
 
-    public function __construct($app) {
+    public function __construct($context) {
 
-        $this->setup = $app->get_setup();
-        $this->app = $app;
+        $this->context = $context;
+        $this->setup = $context->get_setup();
         $this->thumbs_path = $this->setup->get('CACHE_PATH') . '/' . Thumb::$THUMB_CACHE;
         $this->thumbs_href = $this->setup->get('CACHE_HREF') . Thumb::$THUMB_CACHE;
 
@@ -25,7 +26,7 @@ class Thumb {
 
     public function thumb($type, $source_href, $width, $height) {
 
-        $source_path = $this->app->to_path($source_href);
+        $source_path = $this->context->to_path($source_href);
         if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get('CACHE_PATH'))) {
             return null;
         }
@@ -61,7 +62,7 @@ class Thumb {
             $image = new Image();
 
             $et = false;
-            if ($this->setup->get('HAS_PHP_EXIF') && $this->app->query_option('thumbnails.exif', false) === true && $height != 0) {
+            if ($this->setup->get('HAS_PHP_EXIF') && $this->context->query_option('thumbnails.exif', false) === true && $height != 0) {
                 $et = @exif_thumbnail($source_path);
             }
             if($et !== false) {

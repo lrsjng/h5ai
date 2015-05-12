@@ -2,19 +2,19 @@
 
 class Fallback {
 
+    private $context;
     private $setup;
-    private $app;
 
-    public function __construct($app) {
+    public function __construct($context) {
 
-        $this->setup = $app->get_setup();
-        $this->app = $app;
+        $this->context = $context;
+        $this->setup = $context->get_setup();
     }
 
     private function get_current_path() {
 
         $current_href = Util::normalize_path(parse_url($this->setup->get('REQUEST_URI'), PHP_URL_PATH), true);
-        $current_path = $this->app->to_path($current_href);
+        $current_path = $this->context->to_path($current_href);
 
         if (!is_dir($current_path)) {
             $current_path = Util::normalize_path(dirname($current_path), false);
@@ -32,7 +32,7 @@ class Fallback {
         $app_href = $this->setup->get('APP_HREF');
 
         $cache = [];
-        $folder = Item::get($this->app, $path, $cache);
+        $folder = Item::get($this->context, $path, $cache);
         $items = $folder->get_content($cache);
         uasort($items, ['Item', 'cmp']);
 
