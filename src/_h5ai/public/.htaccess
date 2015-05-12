@@ -2,7 +2,7 @@ Satisfy all
 Order allow,deny
 Allow from all
 
-DirectoryIndex info.html
+DirectoryIndex index.php
 
 <IfModule mod_autoindex.c>
     Options -Indexes

@@ -1,4 +1,4 @@
-- var APP_HREF = '<?= APP_HREF; ?>'
+- var PUBLIC_HREF = '<?= PUBLIC_HREF; ?>'
 - var FALLBACK = '<?= FALLBACK; ?>'
 
 <?php header('Content-type: text/html;charset=utf-8'); ?>
@@ -12,11 +12,11 @@ head
     title index · powered by #{pkg.name} #{pkg.version} (#{pkg.homepage})
     meta( name="description", content="index - powered by #{pkg.name} #{pkg.version} (#{pkg.homepage})" )
     meta( name="viewport", content="width=device-width, initial-scale=1" )
-    link( rel="shortcut icon", href!="#{APP_HREF}public/images/favicon/favicon-16-32.ico" )
-    link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{APP_HREF}public/images/favicon/favicon-152.png" )
+    link( rel="shortcut icon", href!="#{PUBLIC_HREF}images/favicon/favicon-16-32.ico" )
+    link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{PUBLIC_HREF}images/favicon/favicon-152.png" )
     link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:300,400,700" )
-    link( rel="stylesheet", href!="#{APP_HREF}public/css/styles.css" )
-    script( src!="#{APP_HREF}public/js/scripts.js", data-module="index" )
+    link( rel="stylesheet", href!="#{PUBLIC_HREF}css/styles.css" )
+    script( src!="#{PUBLIC_HREF}js/scripts.js", data-module="index" )
 
 body#root
 

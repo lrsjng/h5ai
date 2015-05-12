@@ -3,33 +3,18 @@
 class Fallback {
 
     private $context;
-    private $setup;
 
     public function __construct($context) {
 
         $this->context = $context;
-        $this->setup = $context->get_setup();
-    }
-
-    private function get_current_path() {
-
-        $current_href = Util::normalize_path(parse_url($this->setup->get('REQUEST_URI'), PHP_URL_PATH), true);
-        $current_path = $this->context->to_path($current_href);
-
-        if (!is_dir($current_path)) {
-            $current_path = Util::normalize_path(dirname($current_path), false);
-        }
-
-        return $current_path;
     }
 
     public function get_html($path = null) {
 
         if (!$path) {
-            $path = $this->get_current_path();
+            $path = $this->context->get_current_path();
         }
-
-        $fallback_images_href = $this->setup->get('APP_HREF') . 'public/images/fallback/';
+        $fallback_images_href = $this->context->get_setup()->get('APP_HREF') . 'public/images/fallback/';
 
         $cache = [];
         $folder = Item::get($this->context, $path, $cache);

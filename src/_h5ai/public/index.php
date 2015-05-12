@@ -3,8 +3,8 @@
 define('MIN_PHP_VERSION', '5.4.0');
 
 if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
-    header('Content-type: application/json;charset=utf-8');
-    echo '{"err":"ERR_PHP","msg":"PHP ' . MIN_PHP_VERSION . '+ required","ver":"' . PHP_VERSION . '"}';
+    header('Content-type: text/plain;charset=utf-8');
+    echo '[{{pkg.name}} {{pkg.version}}]  PHP ' . MIN_PHP_VERSION . '+ required, only found PHP ' . PHP_VERSION;
     exit;
 }
 

@@ -18,7 +18,6 @@ class Setup {
         $this->add_admin_check();
         $this->add_server_metadata_and_check();
         $this->add_paths();
-        $this->add_cache_paths_and_check();
         $this->add_sys_cmd_checks();
     }
 
@@ -118,14 +117,8 @@ class Setup {
         $this->set('ROOT_HREF', Util::normalize_path(dirname($this->get('APP_HREF')), true));
         $this->set('ROOT_PATH', Util::normalize_path(dirname($this->get('APP_PATH')), false));
 
-        $index_href = null;
-        if (@is_readable(Util::normalize_path($this->get('APP_PATH') . '/public/index.php', false))) {
-            $index_href = Util::normalize_path($this->get('APP_HREF') . '/public/index.php', false);
-        }
-        $this->set('INDEX_HREF', $index_href);
-    }
-
-    private function add_cache_paths_and_check() {
+        $this->set('PUBLIC_HREF', $this->get('APP_HREF') . 'public/');
+        $this->set('INDEX_HREF', $this->get('APP_HREF') . 'public/index.php');
 
         $this->set('CACHE_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/cache', true));
         $this->set('CACHE_PATH', Util::normalize_path($this->get('APP_PATH') . '/public/cache', false));

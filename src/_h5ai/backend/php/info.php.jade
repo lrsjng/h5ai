@@ -1,3 +1,6 @@
+- var PUBLIC_HREF = '<?= PUBLIC_HREF; ?>'
+
+<?php header('Content-type: text/html;charset=utf-8'); ?>
 doctype html
 <!--[if lt IE 10]><html class="no-js no-browser" lang="en"><![endif]-->
 <!--[if gt IE 9]><!--><html class="no-js browser" lang="en"><!--<![endif]-->
@@ -5,14 +8,14 @@ doctype html
 head
     meta( charset="utf-8" )
     meta( http-equiv="x-ua-compatible", content="ie=edge" )
-    title #{pkg.name} #{pkg.version} Server Setup
-    meta( name="description", content="#{pkg.name} #{pkg.version} Server Setup" )
+    title #{pkg.name} #{pkg.version} info page
+    meta( name="description", content="#{pkg.name} #{pkg.version} info page" )
     meta( name="viewport", content="width=device-width, initial-scale=1" )
-    link( rel="shortcut icon", href="images/favicon/favicon-16-32.ico" )
-    link( rel="apple-touch-icon-precomposed", type="image/png", href="images/favicon/favicon-152.png" )
+    link( rel="shortcut icon", href!="#{PUBLIC_HREF}images/favicon/favicon-16-32.ico" )
+    link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{PUBLIC_HREF}images/favicon/favicon-152.png" )
     link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:300,400,700" )
-    link( rel="stylesheet", href="css/styles.css" )
-    script( src="js/scripts.js", data-module="info" )
+    link( rel="stylesheet", href!="#{PUBLIC_HREF}css/styles.css" )
+    script( src!="#{PUBLIC_HREF}js/scripts.js", data-module="info" )
 
 body#root.info
 

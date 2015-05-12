@@ -65,6 +65,16 @@ class Context {
         return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
+    public function is_api_request() {
+
+        return strtolower($this->setup->get('REQUEST_METHOD')) === 'post';
+    }
+
+    public function is_info_request() {
+
+        return $this->get_current_path() === $this->setup->get('APP_PATH') . '/public';
+    }
+
     public function to_href($path, $trailing_slash = true) {
 
         $rel_path = substr($path, strlen($this->setup->get('ROOT_PATH')));
@@ -152,6 +162,18 @@ class Context {
             $path = $parent_path;
         }
         return true;
+    }
+
+    public function get_current_path() {
+
+        $current_href = Util::normalize_path(parse_url($this->setup->get('REQUEST_URI'), PHP_URL_PATH), true);
+        $current_path = $this->to_path($current_href);
+
+        if (!is_dir($current_path)) {
+            $current_path = Util::normalize_path(dirname($current_path), false);
+        }
+
+        return $current_path;
     }
 
     public function get_items($href, $what) {

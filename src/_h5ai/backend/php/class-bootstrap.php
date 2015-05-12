@@ -24,10 +24,13 @@ class Bootstrap {
         $setup = new Setup($request->query_boolean('refresh', false));
         $context = new Context($session, $request, $setup);
 
-        if (strtolower($setup->get('REQUEST_METHOD')) === 'post') {
+        if ($context->is_api_request()) {
             (new Api($context))->apply();
+        } else if ($context->is_info_request()) {
+            define('PUBLIC_HREF', $setup->get('PUBLIC_HREF'));
+            require __DIR__ . '/info.php';
         } else {
-            define('APP_HREF', $setup->get('APP_HREF'));
+            define('PUBLIC_HREF', $setup->get('PUBLIC_HREF'));
             define('FALLBACK', (new Fallback($context))->get_html());
             require __DIR__ . '/page.php';
         }

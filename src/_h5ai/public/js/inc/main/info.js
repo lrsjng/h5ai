@@ -162,12 +162,6 @@ modulejs.define('main/info', ['$', 'config'], function ($, config) {
 
     function init() {
 
-        if (config.err === 'ERR_PHP') {
-            $(testsTemp).appendTo('#content');
-            addTest('PHP version', config.msg, false, config.ver);
-            return;
-        }
-
         addLogin();
         if (setup.AS_ADMIN) {
             addTests();
