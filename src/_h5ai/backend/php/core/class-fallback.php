@@ -14,7 +14,7 @@ class Fallback {
         if (!$path) {
             $path = $this->context->get_current_path();
         }
-        $fallback_images_href = $this->context->get_setup()->get('APP_HREF') . 'public/images/fallback/';
+        $fallback_images_href = $this->context->get_setup()->get('PUBLIC_HREF') . 'images/fallback/';
 
         $cache = [];
         $folder = Item::get($this->context, $path, $cache);
