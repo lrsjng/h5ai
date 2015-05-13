@@ -17,8 +17,6 @@ class Bootstrap {
         date_default_timezone_set(@date_default_timezone_get());
         session_start();
 
-        require __DIR__ . '/../../conf/passhash.php';
-
         $session = new Session($_SESSION);
         $request = new Request($_REQUEST);
         $setup = new Setup($request->query_boolean('refresh', false));
