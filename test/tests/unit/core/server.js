@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'core/server';
-var DEPS = ['_', '$', 'core/location'];
+var DEPS = ['_', '$'];
 var $submitEl;
 
 describe('module \'' + ID + '\'', function () {
@@ -11,10 +11,6 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xAbsHref = util.uniqId();
-        this.xLocation = {
-            getAbsHref: sinon.stub().returns(this.xAbsHref)
-        };
         this.xAjaxResult = {
             done: sinon.stub().returnsThis(),
             fail: sinon.stub().returnsThis(),
@@ -29,7 +25,6 @@ describe('module \'' + ID + '\'', function () {
 
         this.applyFn = function () {
 
-            this.xLocation.getAbsHref.reset();
             this.xAjaxResult.done.reset();
             this.xAjaxResult.fail.reset();
             this.xAjaxResult.always.reset();
@@ -37,7 +32,7 @@ describe('module \'' + ID + '\'', function () {
             this.xSubmit.reset();
             $submitEl = undefined;
 
-            return this.definition.fn(_, $, this.xLocation);
+            return this.definition.fn(_, $);
         };
     });
 
@@ -108,10 +103,9 @@ describe('module \'' + ID + '\'', function () {
             var res = instance.request(xData, spy);
 
             assert.isUndefined(res);
-            assert.isTrue(this.xLocation.getAbsHref.calledOnce);
             assert.isTrue(this.xAjax.calledOnce);
             assert.deepEqual(this.xAjax.lastCall.args, [{
-                url: this.xAbsHref,
+                url: '?',
                 data: xData,
                 type: 'post',
                 dataType: 'json'
@@ -135,10 +129,9 @@ describe('module \'' + ID + '\'', function () {
             var res = instance.request(xData, spy);
 
             assert.isUndefined(res);
-            assert.isTrue(this.xLocation.getAbsHref.calledOnce);
             assert.isTrue(this.xAjax.calledOnce);
             assert.deepEqual(this.xAjax.lastCall.args, [{
-                url: this.xAbsHref,
+                url: '?',
                 data: xData,
                 type: 'post',
                 dataType: 'json'
@@ -180,7 +173,7 @@ describe('module \'' + ID + '\'', function () {
             assert.strictEqual($submitEl.get(0).tagName.toLowerCase(), 'form');
             assert.strictEqual($submitEl.attr('method'), 'post');
             assert.strictEqual($submitEl.attr('style').replace(/\s+/g, ''), 'display:none;');
-            assert.strictEqual($submitEl.attr('action'), this.xAbsHref);
+            assert.strictEqual($submitEl.attr('action'), '?');
 
             var $children = $submitEl.children();
 

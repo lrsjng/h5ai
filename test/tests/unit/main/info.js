@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'main/info';
-var DEPS = ['$', 'config'];
+var DEPS = ['$', 'config', 'core/server'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -15,27 +15,20 @@ describe('module \'' + ID + '\'', function () {
                 VERSION: util.uniqId()
             }
         };
-        this.xAjaxResult = {
-            done: sinon.stub(),
-            fail: sinon.stub(),
-            always: sinon.stub()
+        this.xServer = {
+            request: sinon.stub()
         };
-        this.xAjax = sinon.stub($, 'ajax').returns(this.xAjaxResult);
 
         this.applyFn = function () {
 
-            this.xAjaxResult.done.reset();
-            this.xAjaxResult.fail.reset();
-            this.xAjaxResult.always.reset();
-            this.xAjax.reset();
+            this.xServer.request.reset();
 
-            return this.definition.fn($, this.xConfig);
+            return this.definition.fn($, this.xConfig, this.xServer);
         };
     });
 
     after(function () {
 
-        this.xAjax.restore();
         util.restoreHtml();
     });
 
@@ -132,20 +125,20 @@ describe('module \'' + ID + '\'', function () {
             it('login works', function () {
 
                 var pass = util.uniqId();
+                var expectedData = {
+                        action: 'login',
+                        pass: pass
+                    };
+
                 this.xConfig.setup.AS_ADMIN = false;
                 this.applyFn();
                 $('#pass').val(pass);
                 $('#login').trigger('click');
-                assert.isTrue(this.xAjax.calledOnce);
-                assert.deepEqual(this.xAjax.lastCall.args, [{
-                    url: 'index.php',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {
-                        action: 'login',
-                        pass: pass
-                    }
-                }]);
+
+                assert.isTrue(this.xServer.request.calledOnce);
+                assert.isPlainObject(this.xServer.request.lastCall.args[0]);
+                assert.deepEqual(this.xServer.request.lastCall.args[0], expectedData);
+                assert.isFunction(this.xServer.request.lastCall.args[1]);
             });
         });
 
@@ -188,18 +181,18 @@ describe('module \'' + ID + '\'', function () {
 
             it('logout works', function () {
 
+                var expectedData = {
+                        action: 'logout'
+                    };
+
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
                 $('#logout').trigger('click');
-                assert.isTrue(this.xAjax.calledOnce);
-                assert.deepEqual(this.xAjax.lastCall.args, [{
-                    url: 'index.php',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {
-                        action: 'logout'
-                    }
-                }]);
+
+                assert.isTrue(this.xServer.request.calledOnce);
+                assert.isPlainObject(this.xServer.request.lastCall.args[0]);
+                assert.deepEqual(this.xServer.request.lastCall.args[0], expectedData);
+                assert.isFunction(this.xServer.request.lastCall.args[1]);
             });
         });
     });

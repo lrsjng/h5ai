@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'boot';
-var DEPS = ['$'];
+var DEPS = ['$', 'core/server'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -11,31 +11,24 @@ describe('module \'' + ID + '\'', function () {
         this.definition = modulejs._private.definitions[ID];
 
         this.xConfig = util.uniqObj();
-        this.xAjaxResult = {
-            done: sinon.stub().callsArgWith(0, this.xConfig),
-            fail: sinon.stub().callsArg(0),
-            always: sinon.stub().callsArg(0)
-        };
-        this.xAjax = sinon.stub($, 'ajax').returns(this.xAjaxResult);
         this.xDefine = sinon.stub(modulejs, 'define');
         this.xRequire = sinon.stub(modulejs, 'require');
+        this.xServer = {
+            request: sinon.stub().callsArgWith(1, this.xConfig)
+        };
 
         this.applyFn = function () {
 
-            this.xAjaxResult.done.reset();
-            this.xAjaxResult.fail.reset();
-            this.xAjaxResult.always.reset();
-            this.xAjax.reset();
             this.xDefine.reset();
             this.xRequire.reset();
+            this.xServer.request.reset();
 
-            return this.definition.fn($);
+            return this.definition.fn($, this.xServer);
         };
     });
 
     after(function () {
 
-        this.xAjax.restore();
         this.xDefine.restore();
         this.xRequire.restore();
         util.restoreHtml();
@@ -90,7 +83,7 @@ describe('module \'' + ID + '\'', function () {
         it('no data-module', function () {
 
             this.applyFn();
-            assert.isFalse(this.xAjax.called);
+            assert.isFalse(this.xServer.request.called);
             assert.isFalse(this.xDefine.called);
             assert.isFalse(this.xRequire.called);
         });
@@ -99,25 +92,29 @@ describe('module \'' + ID + '\'', function () {
 
             $('<script/>').attr('data-module', 'test').appendTo('head');
             this.applyFn();
-            assert.isFalse(this.xAjax.called);
+            assert.isFalse(this.xServer.request.called);
             assert.isFalse(this.xDefine.called);
             assert.isFalse(this.xRequire.called);
         });
 
         it('data-module=\'info\'', function () {
 
+            var expectedData = {
+                    action: 'get',
+                    setup: true,
+                    options: true,
+                    types: true,
+                    refresh: true
+                };
+
             $('<script/>').attr('data-module', 'info').appendTo('head');
 
             this.applyFn();
 
-            assert.isTrue(this.xAjax.calledOnce);
-            assert.strictEqual(this.xAjax.lastCall.args[0].url, 'index.php');
-            assert.strictEqual(this.xAjax.lastCall.args[0].type, 'post');
-            assert.strictEqual(this.xAjax.lastCall.args[0].dataType, 'json');
-
-            assert.isTrue(this.xAjaxResult.done.calledOnce);
-            assert.isFalse(this.xAjaxResult.fail.called);
-            assert.isFalse(this.xAjaxResult.always.called);
+            assert.isTrue(this.xServer.request.calledOnce);
+            assert.isPlainObject(this.xServer.request.lastCall.args[0]);
+            assert.deepEqual(this.xServer.request.lastCall.args[0], expectedData);
+            assert.isFunction(this.xServer.request.lastCall.args[1]);
 
             assert.isTrue(this.xDefine.calledOnce);
             assert.deepEqual(this.xDefine.lastCall.args, ['config', this.xConfig]);
@@ -128,18 +125,23 @@ describe('module \'' + ID + '\'', function () {
 
         it('data-module=\'index\'', function () {
 
+            var expectedData = {
+                    action: 'get',
+                    setup: true,
+                    options: true,
+                    types: true,
+                    theme: true,
+                    langs: true
+                };
+
             $('<script/>').attr('data-module', 'index').appendTo('head');
 
             this.applyFn();
 
-            assert.isTrue(this.xAjax.calledOnce);
-            assert.strictEqual(this.xAjax.lastCall.args[0].url, '.');
-            assert.strictEqual(this.xAjax.lastCall.args[0].type, 'post');
-            assert.strictEqual(this.xAjax.lastCall.args[0].dataType, 'json');
-
-            assert.isTrue(this.xAjaxResult.done.calledOnce);
-            assert.isFalse(this.xAjaxResult.fail.called);
-            assert.isFalse(this.xAjaxResult.always.called);
+            assert.isTrue(this.xServer.request.calledOnce);
+            assert.isPlainObject(this.xServer.request.lastCall.args[0]);
+            assert.deepEqual(this.xServer.request.lastCall.args[0], expectedData);
+            assert.isFunction(this.xServer.request.lastCall.args[1]);
 
             assert.isTrue(this.xDefine.calledOnce);
             assert.deepEqual(this.xDefine.lastCall.args, ['config', this.xConfig]);
@@ -152,7 +154,7 @@ describe('module \'' + ID + '\'', function () {
 
             $('html').addClass('no-browser');
             this.applyFn();
-            assert.isFalse(this.xAjax.called);
+            assert.isFalse(this.xServer.request.called);
             assert.isFalse(this.xDefine.called);
             assert.isFalse(this.xRequire.called);
         });
@@ -162,7 +164,7 @@ describe('module \'' + ID + '\'', function () {
             $('html').addClass('no-browser');
             $('<script/>').attr('data-module', 'test').appendTo('head');
             this.applyFn();
-            assert.isFalse(this.xAjax.called);
+            assert.isFalse(this.xServer.request.called);
             assert.isFalse(this.xDefine.called);
             assert.isFalse(this.xRequire.called);
         });
@@ -172,7 +174,7 @@ describe('module \'' + ID + '\'', function () {
             $('html').addClass('no-browser');
             $('<script/>').attr('data-module', 'info').appendTo('head');
             this.applyFn();
-            assert.isFalse(this.xAjax.called);
+            assert.isFalse(this.xServer.request.called);
             assert.isFalse(this.xDefine.called);
             assert.isFalse(this.xRequire.called);
         });
@@ -182,7 +184,7 @@ describe('module \'' + ID + '\'', function () {
             $('html').addClass('no-browser');
             $('<script/>').attr('data-module', 'index').appendTo('head');
             this.applyFn();
-            assert.isFalse(this.xAjax.called);
+            assert.isFalse(this.xServer.request.called);
             assert.isFalse(this.xDefine.called);
             assert.isFalse(this.xRequire.called);
         });
