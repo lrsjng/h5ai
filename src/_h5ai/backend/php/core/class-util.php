@@ -52,7 +52,8 @@ class Util {
 
     public static function ends_with($sequence, $tail) {
 
-        return substr($sequence, -strlen($tail)) === $tail;
+        $len = strlen($tail);
+        return $len === 0 ? true : substr($sequence, -$len) === $tail;
     }
 
     public static function wrap_pattern($pattern) {
