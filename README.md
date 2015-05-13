@@ -12,6 +12,11 @@ Do **not** install any files from the `src` folder, they need to be
 preprocessed to work correctly! Find a preprocessed package and detailed
 install instructions on the [project page][web].
 
+In short you have to take the following two steps:
+
+* place folder `_h5ai` in the document root folder of the web server
+* append `/_h5ai/public/index.php` to the end of the default index-file list
+
 
 ## Build
 
