@@ -2,8 +2,8 @@ extends ./page.tpl.jade
 
 block init
 
-    - var TITLE = pkg.name + ' info page - v' + pkg.version
-    - var MODULE = 'info'
+    - var title = pkg.name + ' info page - v' + pkg.version
+    - var module = 'info'
 
 block body
 
@@ -17,4 +17,4 @@ block body
                 form( action="https://www.paypal.com/cgi-bin/webscr", method="post", target="_blank" )
                     input( type="hidden", name="cmd", value="_s-xclick" )
                     input( type="hidden", name="hosted_button_id", value="8WSPKWT7YBTSQ" )
-                    input( type="image", src!="#{PUBLIC_HREF}images/ui/paypal.svg", name="submit", alt="PayPal" )
+                    input( type="image", src!="#{public_href}images/ui/paypal.svg", name="submit", alt="PayPal" )

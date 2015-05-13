@@ -20,11 +20,11 @@ class Bootstrap {
         if ($context->is_api_request()) {
             (new Api($context))->apply();
         } else if ($context->is_info_request()) {
-            define('PUBLIC_HREF', $setup->get('PUBLIC_HREF'));
+            $public_href = $setup->get('PUBLIC_HREF');
             require __DIR__ . '/pages/info.php';
         } else {
-            define('PUBLIC_HREF', $setup->get('PUBLIC_HREF'));
-            define('FALLBACK', (new Fallback($context))->get_html());
+            $public_href = $setup->get('PUBLIC_HREF');
+            $fallback_html = (new Fallback($context))->get_html();
             require __DIR__ . '/pages/index.php';
         }
     }

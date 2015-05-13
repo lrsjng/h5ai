@@ -2,9 +2,9 @@ extends ./page.tpl.jade
 
 block init
 
-    - var TITLE = 'index - powered by ' + pkg.name + ' v' + pkg.version + ' (' + pkg.homepage + ')'
-    - var MODULE = 'index'
+    - var title = 'index - powered by ' + pkg.name + ' v' + pkg.version + ' (' + pkg.homepage + ')'
+    - var module = 'index'
 
 block body
 
-    div#fallback <?= FALLBACK; ?>
+    div#fallback <?= $fallback_html; ?>
