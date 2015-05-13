@@ -17,7 +17,7 @@ describe('module \'' + ID + '\'', function () {
                 more: util.uniqObj()
             },
             setup: {
-                APP_HREF: util.uniqId(),
+                PUBLIC_HREF: util.uniqId(),
                 ROOT_HREF: util.uniqId(),
                 VERSION: util.uniqId()
             }
@@ -83,12 +83,12 @@ describe('module \'' + ID + '\'', function () {
         });
     });
 
-    describe('.appHref', function () {
+    describe('.publicHref', function () {
 
         it('set correct', function () {
 
             var instance = this.applyFn();
-            assert.strictEqual(instance.appHref, this.xConfig.setup.APP_HREF);
+            assert.strictEqual(instance.publicHref, this.xConfig.setup.PUBLIC_HREF);
         });
     });
 

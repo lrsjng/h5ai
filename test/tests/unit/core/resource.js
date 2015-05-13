@@ -16,7 +16,7 @@ describe('module \'' + ID + '\'', function () {
                 b: 'myTheme/b.jpg'
             }
         };
-        this.xSettings = {appHref: util.uniqPath('/appHref/')};
+        this.xSettings = {publicHref: util.uniqPath('/publicHref/')};
         this.applyFn = function () {
 
             return this.definition.fn(_, this.xConfig, this.xSettings);
@@ -77,7 +77,7 @@ describe('module \'' + ID + '\'', function () {
         it('works', function () {
 
             var instance = this.applyFn();
-            var ui = this.xSettings.appHref + 'public/images/ui/';
+            var ui = this.xSettings.publicHref + 'images/ui/';
 
             assert.strictEqual(instance.image(), ui + 'undefined.svg');
             assert.strictEqual(instance.image(1), ui + '1.svg');
@@ -97,7 +97,7 @@ describe('module \'' + ID + '\'', function () {
         it('works', function () {
 
             var instance = this.applyFn();
-            var themes = this.xSettings.appHref + 'public/images/themes/';
+            var themes = this.xSettings.publicHref + 'images/themes/';
 
             assert.strictEqual(instance.icon(''), themes + 'default/file.svg');
             assert.strictEqual(instance.icon('a'), themes + 'myTheme/a.svg');

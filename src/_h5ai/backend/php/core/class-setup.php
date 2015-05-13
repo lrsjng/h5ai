@@ -146,7 +146,7 @@ class Setup {
     public function to_jsono($as_admin = false) {
 
         $keys = [
-            'APP_HREF',
+            'PUBLIC_HREF',
             'ROOT_HREF',
             'VERSION'
         ];

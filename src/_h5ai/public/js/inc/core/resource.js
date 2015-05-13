@@ -1,6 +1,6 @@
 modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, config, settings) {
 
-    var imagesHref = settings.appHref + 'public/images/';
+    var imagesHref = settings.publicHref + 'images/';
     var uiHref = imagesHref + 'ui/';
     var themesHref = imagesHref + 'themes/';
     var defaultThemeHref = themesHref + 'default/';

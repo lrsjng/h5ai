@@ -183,11 +183,6 @@ describe('module \'' + ID + '\'', function () {
                 assert.isTrue(this.item.isRoot());
             });
 
-            it('.isH5ai() returns false', function () {
-
-                assert.isFalse(this.item.isH5ai());
-            });
-
             it('.isEmpty() returns true', function () {
 
                 assert.isTrue(this.item.isEmpty());
@@ -283,11 +278,6 @@ describe('module \'' + ID + '\'', function () {
                 assert.isFalse(this.item.isRoot());
             });
 
-            it('.isH5ai() returns false', function () {
-
-                assert.isFalse(this.item.isH5ai());
-            });
-
             it('.isEmpty() returns true', function () {
 
                 assert.isTrue(this.item.isEmpty());
@@ -381,11 +371,6 @@ describe('module \'' + ID + '\'', function () {
             it('.isRoot() returns false', function () {
 
                 assert.isFalse(this.item.isRoot());
-            });
-
-            it('.isH5ai() returns false', function () {
-
-                assert.isFalse(this.item.isH5ai());
             });
 
             it('.isEmpty() returns true', function () {

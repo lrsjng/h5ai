@@ -179,11 +179,6 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
             return this.absHref === settings.rootHref;
         },
 
-        isH5ai: function () {
-
-            return this.absHref === settings.appHref;
-        },
-
         isEmpty: function () {
 
             return _.keys(this.content).length === 0;
