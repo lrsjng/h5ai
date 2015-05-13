@@ -9,4 +9,4 @@ if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
 }
 
 require_once __DIR__ . '/../backend/php/class-bootstrap.php';
-Bootstrap::main();
+Bootstrap::run();
