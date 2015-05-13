@@ -20,10 +20,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
 
         $html.find('.label').text(item.label);
 
-        if (item.isDomain() || item.isRoot()) {
-            $html.find('.sep').width(0);
-        }
-
         if (item.isCurrentFolder()) {
             $html.addClass('active');
         }
