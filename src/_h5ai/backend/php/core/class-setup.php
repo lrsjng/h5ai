@@ -2,8 +2,6 @@
 
 class Setup {
 
-    private static $DEFAULT_PASSHASH = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e';
-
     private $store;
     private $refresh;
 
@@ -15,7 +13,6 @@ class Setup {
         $this->add_globals_and_envs();
         $this->add_php_checks();
         $this->add_app_metadata();
-        $this->add_admin_check();
         $this->add_server_metadata_and_check();
         $this->add_paths();
         $this->add_sys_cmd_checks();
@@ -56,7 +53,6 @@ class Setup {
 
         $this->set('PHP_VERSION', PHP_VERSION);
         $this->set('MIN_PHP_VERSION', MIN_PHP_VERSION);
-        $this->set('PASSHASH', PASSHASH);
 
         $this->set('REQUEST_METHOD', getenv('REQUEST_METHOD'));
         $this->set('REQUEST_HREF', parse_url(getenv('REQUEST_URI'), PHP_URL_PATH));
@@ -81,11 +77,6 @@ class Setup {
         $this->set('NAME', '{{pkg.name}}');
         $this->set('VERSION', '{{pkg.version}}');
         $this->set('FILE_PREFIX', '_{{pkg.name}}');
-    }
-
-    private function add_admin_check() {
-
-        $this->set('HAS_CUSTOM_PASSHASH', strtolower(PASSHASH) !== Setup::$DEFAULT_PASSHASH);
     }
 
     private function add_server_metadata_and_check() {
@@ -117,8 +108,8 @@ class Setup {
         $this->set('ROOT_HREF', Util::normalize_path(dirname($this->get('APP_HREF')), true));
         $this->set('ROOT_PATH', Util::normalize_path(dirname($this->get('APP_PATH')), false));
 
-        $this->set('PUBLIC_HREF', $this->get('APP_HREF') . 'public/');
-        $this->set('INDEX_HREF', $this->get('APP_HREF') . 'public/index.php');
+        $this->set('PUBLIC_HREF', Util::normalize_path($this->get('APP_HREF') . '/public', true));
+        $this->set('INDEX_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/index.php', false));
 
         $this->set('CACHE_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/cache', true));
         $this->set('CACHE_PATH', Util::normalize_path($this->get('APP_PATH') . '/public/cache', false));
@@ -157,9 +148,7 @@ class Setup {
         $keys = [
             'APP_HREF',
             'ROOT_HREF',
-            'VERSION',
-
-            'HAS_CUSTOM_PASSHASH'
+            'VERSION'
         ];
 
         if ($as_admin) {

@@ -14,8 +14,8 @@ modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config
                 '<span id="login">login</span>' +
                 '<span id="logout">logout</span>' +
                 '<div id="hint">' +
-                    'The preset password is the empty string, just hit login. ' +
-                    'Change it in \'_h5ai/conf/passhash.php\'.' +
+                    'The preset password is the empty string, just click login. ' +
+                    'Change it in \'_h5ai/conf/options.json\'.' +
                 '</div>' +
             '</div>';
     var setup = config.setup;
@@ -146,7 +146,7 @@ modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config
             $('#login').on('click', onLogin);
             $('#logout').remove();
         }
-        if (setup.HAS_CUSTOM_PASSHASH) {
+        if (config.options.hasCustomPasshash) {
             $('#hint').remove();
         }
     }
