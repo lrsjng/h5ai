@@ -13,7 +13,8 @@ describe('module \'' + ID + '\'', function () {
         this.xConfig = {
             setup: {
                 VERSION: util.uniqId()
-            }
+            },
+            options: {}
         };
         this.xServer = {
             request: sinon.stub()
