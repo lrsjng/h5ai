@@ -1,0 +1,10 @@
+extends ./page.tpl.jade
+
+block init
+
+    - var TITLE = 'index - powered by ' + pkg.name + ' v' + pkg.version + ' (' + pkg.homepage + ')'
+    - var MODULE = 'index'
+
+block body
+
+    div#fallback <?= FALLBACK; ?>

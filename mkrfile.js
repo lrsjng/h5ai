@@ -88,7 +88,7 @@ module.exports = function (suite) {
             .wrap(header)
             .write(mapSrc, true);
 
-        $(src + ': **/*.jade')
+        $(src + ': **/*.jade, ! **/*.tpl.jade')
             .newerThan(mapSrc)
             .jade(env)
             .write(mapSrc, true);

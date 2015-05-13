@@ -26,11 +26,11 @@ class Bootstrap {
             (new Api($context))->apply();
         } else if ($context->is_info_request()) {
             define('PUBLIC_HREF', $setup->get('PUBLIC_HREF'));
-            require __DIR__ . '/info.php';
+            require __DIR__ . '/pages/info.php';
         } else {
             define('PUBLIC_HREF', $setup->get('PUBLIC_HREF'));
             define('FALLBACK', (new Fallback($context))->get_html());
-            require __DIR__ . '/page.php';
+            require __DIR__ . '/pages/index.php';
         }
     }
 
