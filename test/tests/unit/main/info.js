@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'main/info';
-var DEPS = ['$', 'config', 'core/server'];
+var DEPS = ['$', 'config', 'core/resource', 'core/server'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -16,6 +16,9 @@ describe('module \'' + ID + '\'', function () {
             },
             options: {}
         };
+        this.xResource = {
+            image: sinon.stub()
+        };
         this.xServer = {
             request: sinon.stub()
         };
@@ -24,7 +27,7 @@ describe('module \'' + ID + '\'', function () {
 
             this.xServer.request.reset();
 
-            return this.definition.fn($, this.xConfig, this.xServer);
+            return this.definition.fn($, this.xConfig, this.xResource, this.xServer);
         };
     });
 
@@ -78,6 +81,14 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.isUndefined(instance);
+        });
+
+        it('adds HTML #support to #content', function () {
+
+            this.applyFn();
+            assert.lengthOf($('#content > #support'), 1);
+            assert.lengthOf($('#support > .paypal'), 1);
+            assert.lengthOf($('.paypal > form'), 1);
         });
 
         it('adds HTML #login-wrapper to #content', function () {

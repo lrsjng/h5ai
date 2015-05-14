@@ -44,19 +44,16 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
 
     function addTests() {
 
+        if (!setup.AS_ADMIN) {
+            return;
+        }
+
         $(tplTests).appendTo('#content');
 
         addTest(
             'h5ai version', 'Only green if this is an official h5ai release',
             /^\d+\.\d+\.\d+$/.test(setup.VERSION), setup.VERSION
         );
-
-        if (setup.AS_ADMIN) {
-            addAdminTests();
-        }
-    }
-
-    function addAdminTests() {
 
         addTest(
             'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',

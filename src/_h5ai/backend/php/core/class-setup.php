@@ -147,12 +147,13 @@ class Setup {
 
         $keys = [
             'PUBLIC_HREF',
-            'ROOT_HREF',
-            'VERSION'
+            'ROOT_HREF'
         ];
 
         if ($as_admin) {
             $keys = array_merge($keys, [
+                'VERSION',
+
                 'PHP_VERSION',
                 'MIN_PHP_VERSION',
                 'HAS_PHP_EXIF',

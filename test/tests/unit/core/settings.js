@@ -18,8 +18,7 @@ describe('module \'' + ID + '\'', function () {
             },
             setup: {
                 PUBLIC_HREF: util.uniqId(),
-                ROOT_HREF: util.uniqId(),
-                VERSION: util.uniqId()
+                ROOT_HREF: util.uniqId()
             }
         };
         this.applyFn = function () {
@@ -79,7 +78,7 @@ describe('module \'' + ID + '\'', function () {
             assert.strictEqual(instance.someOptions, this.xConfig.options.someOptions);
             assert.strictEqual(instance.otherOptions, this.xConfig.options.otherOptions);
             assert.strictEqual(instance.more, this.xConfig.options.more);
-            assert.strictEqual(_.keys(instance).length, _.keys(this.xConfig.options).length + 3);
+            assert.strictEqual(_.keys(instance).length, _.keys(this.xConfig.options).length + 2);
         });
     });
 
@@ -98,15 +97,6 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.strictEqual(instance.rootHref, this.xConfig.setup.ROOT_HREF);
-        });
-    });
-
-    describe('.version', function () {
-
-        it('set correct', function () {
-
-            var instance = this.applyFn();
-            assert.strictEqual(instance.version, this.xConfig.setup.VERSION);
         });
     });
 });

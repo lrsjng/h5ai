@@ -1,10 +1,10 @@
-modulejs.define('view/topbar', ['$', 'core/settings', 'view/root'], function ($, settings, root) {
+modulejs.define('view/topbar', ['$', 'view/root'], function ($, root) {
 
     var tplTopbar =
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +
                 '<div id="flowbar"/>' +
-                '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai ' + settings.version + '">' +
+                '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai - http://larsjung.de/h5ai/">' +
                     '<div>powered</div>' +
                     '<div>by h5ai</div>' +
                 '</a>' +
