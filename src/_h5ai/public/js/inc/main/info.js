@@ -1,14 +1,14 @@
-modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config, server) {
+modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], function ($, config, resource, server) {
 
-    var testsTemp =
+    var tplTests =
             '<ul id="tests">';
-    var testTemp =
+    var tplTest =
             '<li class="test">' +
                 '<span class="label"></span>' +
                 '<span class="result"></span>' +
                 '<div class="info"></div>' +
             '</li>';
-    var loginTemp =
+    var tplLogin =
             '<div id="login-wrapper">' +
                 '<input id="pass" type="password" placeholder="password"/>' +
                 '<span id="login">login</span>' +
@@ -18,12 +18,23 @@ modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config
                     'Change it in \'_h5ai/conf/options.json\'.' +
                 '</div>' +
             '</div>';
+    var tplSupport =
+            '<div id="support">' +
+                'Show your support with a donation!' +
+                '<div class="paypal">' +
+                    '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">' +
+                        '<input type="hidden" name="cmd" value="_s-xclick" />' +
+                        '<input type="hidden" name="hosted_button_id" value="8WSPKWT7YBTSQ" />' +
+                        '<input type="image" src="' + resource.image('paypal') + '" name="submit" alt="PayPal" />' +
+                    '</form>' +
+                '</div>' +
+            '</div>';
     var setup = config.setup;
 
 
     function addTest(label, info, passed, result) {
 
-        var $test = $(testTemp).appendTo('#tests');
+        var $test = $(tplTest).appendTo('#tests');
         $test.find('.label').text(label);
         $test.find('.result')
                 .addClass(passed ? 'passed' : 'failed')
@@ -33,12 +44,19 @@ modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config
 
     function addTests() {
 
-        $(testsTemp).appendTo('#content');
+        $(tplTests).appendTo('#content');
 
         addTest(
             'h5ai version', 'Only green if this is an official h5ai release',
             /^\d+\.\d+\.\d+$/.test(setup.VERSION), setup.VERSION
         );
+
+        if (setup.AS_ADMIN) {
+            addAdminTests();
+        }
+    }
+
+    function addAdminTests() {
 
         addTest(
             'Index file found', 'Add <code>' + setup.INDEX_HREF + '</code> to your index file list',
@@ -133,9 +151,14 @@ modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config
         }
     }
 
+    function addSupport() {
+
+        $(tplSupport).appendTo('#content');
+    }
+
     function addLogin() {
 
-        $(loginTemp).appendTo('#content');
+        $(tplLogin).appendTo('#content');
 
         if (setup.AS_ADMIN) {
             $('#pass').remove();
@@ -153,10 +176,9 @@ modulejs.define('main/info', ['$', 'config', 'core/server'], function ($, config
 
     function init() {
 
+        addSupport();
         addLogin();
-        if (setup.AS_ADMIN) {
-            addTests();
-        }
+        addTests();
     }
 
 
