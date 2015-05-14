@@ -1,15 +1,17 @@
 # Changelog
 
 * now requires PHP 5.4.0+
-* adds search
+* changes index path to `/_h5ai/public/index.php`
 * lots of code cleanup and refactorings
-* changes API
+* adds frontend tests
+* adds search
+* adds wide links in tree view
+* adds IE edge mode
 * fixes some styles in IE10
-* resets IE edge mode
 * fixes preview bottom bar for small screen widths
-* use wide links in tree view
+* changes API
 * updates build process
-* updates `lodash` to 3.8.0 (adds debounce)
+* updates `lodash` to 3.8.0 (adds debounce and trim)
 * updates h5bp styles to 5.1.0
 * updates `normalize.css` to 3.0.3
 * removes `Moment.js`

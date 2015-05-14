@@ -23,14 +23,26 @@ In short you have to take the following two steps:
 There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. But to clone and build **h5ai** yourself run the
 following commands to find a fresh zipball in folder `build` (tested on linux
-only, requires [`git`][git] and [`npm`][npm] to be installed).
+only, requires [`git`][git] and [`node 0.12+`][node] to be installed).
 
-~~~sh
+
+First install the global command line trigger for the [`mkr`][mkr] build tool:
+
+~~~
+> npm install -g mkr-global
+~~~
+
+Then run:
+
+~~~
 > git clone git://github.com/lrsjng/h5ai.git
 > cd h5ai
 > npm install
-> npm run build
+> mkr release
 ~~~
+
+To build the frontend test suite run `mkr build-test`. This will output a
+`file://`-URL you can look up in your browser to run the tests.
 
 
 ## License
@@ -70,7 +82,8 @@ too. Exceptions are the [Material Design icons][material-design-icons] (CC BY 4.
 [release]: http://release.larsjung.de/h5ai/
 [develop]: http://release.larsjung.de/h5ai/develop/
 [git]: http://git-scm.com
-[npm]: https://www.npmjs.org
+[node]: https://nodejs.org
+[mkr]: http://larsjung.de/mkr/
 [material-design-icons]: https://github.com/google/material-design-icons
 
 [license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
