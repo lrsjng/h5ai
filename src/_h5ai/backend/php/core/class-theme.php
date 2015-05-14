@@ -13,9 +13,9 @@ class Theme {
 
     public function get_icons() {
 
-        $app_path = $this->context->get_setup()->get('APP_PATH');
+        $public_path = $this->context->get_setup()->get('PUBLIC_PATH');
         $theme = $this->context->query_option('view.theme', '-NONE-');
-        $theme_path = $app_path . '/client/images/themes/' . $theme;
+        $theme_path = $public_path . '/images/themes/' . $theme;
 
         $icons = [];
 

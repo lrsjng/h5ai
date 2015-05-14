@@ -109,10 +109,12 @@ class Setup {
         $this->set('ROOT_PATH', Util::normalize_path(dirname($this->get('APP_PATH')), false));
 
         $this->set('PUBLIC_HREF', Util::normalize_path($this->get('APP_HREF') . '/public', true));
-        $this->set('INDEX_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/index.php', false));
+        $this->set('PUBLIC_PATH', Util::normalize_path($this->get('APP_PATH') . '/public', false));
 
-        $this->set('CACHE_PUB_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/cache', true));
-        $this->set('CACHE_PUB_PATH', Util::normalize_path($this->get('APP_PATH') . '/public/cache', false));
+        $this->set('INDEX_HREF', Util::normalize_path($this->get('PUBLIC_HREF') . '/index.php', false));
+
+        $this->set('CACHE_PUB_HREF', Util::normalize_path($this->get('PUBLIC_HREF') . '/cache', true));
+        $this->set('CACHE_PUB_PATH', Util::normalize_path($this->get('PUBLIC_PATH') . '/cache', false));
         $this->set('HAS_WRITABLE_CACHE_PUB', @is_writable($this->get('CACHE_PUB_PATH')));
 
         $this->set('CACHE_PRV_PATH', Util::normalize_path($this->get('APP_PATH') . '/backend/cache', false));
