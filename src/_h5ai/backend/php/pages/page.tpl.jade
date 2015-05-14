@@ -4,32 +4,27 @@ block init
 
 <?php header('Content-type: text/html;charset=utf-8'); ?>
 doctype html
-<!--[if lt IE 10]><html class="no-js no-browser" lang="en"><![endif]-->
-<!--[if gt IE 9]><!--><html class="no-js browser" lang="en"><!--<![endif]-->
+<!--[if lt IE 10]><html class='no-js no-browser' lang='en'><![endif]-->
+<!--[if gt IE 9]><!--><html class='no-js browser' lang='en'><!--<![endif]-->
 
 head
-    meta( charset="utf-8" )
-    meta( http-equiv="x-ua-compatible", content="ie=edge" )
+    meta(charset='utf-8')
+    meta(http-equiv='x-ua-compatible', content='ie=edge')
     title #{title}
-    meta( name="description", content="#{title}" )
-    meta( name="viewport", content="width=device-width, initial-scale=1" )
-    link( rel="shortcut icon", href!="#{public_href}images/favicon/favicon-16-32.ico" )
-    link( rel="apple-touch-icon-precomposed", type="image/png", href!="#{public_href}images/favicon/favicon-152.png" )
-    link( rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:300,400,700" )
-    link( rel="stylesheet", href!="#{public_href}css/styles.css" )
-    script( src!="#{public_href}js/scripts.js", data-module="#{module}" )
+    meta(name='description', content='#{title}')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon', href!='#{public_href}images/favicon/favicon-16-32.ico')
+    link(rel='apple-touch-icon-precomposed', type='image/png', href!='#{public_href}images/favicon/favicon-152.png')
+    link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Roboto:300,400,700')
+    link(rel='stylesheet', href!='#{public_href}css/styles.css')
+    script(src!='#{public_href}js/scripts.js', data-module='#{module}')
 
-body#root( class="#{module}" )
+body#root(class='#{module}')
 
     div#fallback-hints
-        span.noJsMsg
-            | Works best with JavaScript enabled!
-        span.noBrowserMsg
-            | Works best in 
-            a( href="http://browsehappy.com" ) modern browsers
-            | !
-        span.backlink
-            a( href="#{pkg.homepage}", title="#{pkg.name} v#{pkg.version} - #{pkg.description}" ) powered by #{pkg.name}
+        span.noJsMsg Works best with JavaScript enabled!
+        span.noBrowserMsg Works best in #[a(href='http://browsehappy.com') modern browsers]!
+        span.backlink #[a(href='#{pkg.homepage}', title='#{pkg.name} v#{pkg.version} - #{pkg.description}') powered by #{pkg.name}]
 
     block body
 
