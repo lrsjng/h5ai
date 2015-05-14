@@ -16,8 +16,8 @@ class Thumb {
 
         $this->context = $context;
         $this->setup = $context->get_setup();
-        $this->thumbs_path = $this->setup->get('CACHE_PATH') . '/' . Thumb::$THUMB_CACHE;
-        $this->thumbs_href = $this->setup->get('CACHE_HREF') . Thumb::$THUMB_CACHE;
+        $this->thumbs_path = $this->setup->get('CACHE_PUB_PATH') . '/' . Thumb::$THUMB_CACHE;
+        $this->thumbs_href = $this->setup->get('CACHE_PUB_HREF') . Thumb::$THUMB_CACHE;
 
         if (!is_dir($this->thumbs_path)) {
             @mkdir($this->thumbs_path, 0755, true);
@@ -27,7 +27,7 @@ class Thumb {
     public function thumb($type, $source_href, $width, $height) {
 
         $source_path = $this->context->to_path($source_href);
-        if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get('CACHE_PATH'))) {
+        if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get('CACHE_PUB_PATH'))) {
             return null;
         }
 

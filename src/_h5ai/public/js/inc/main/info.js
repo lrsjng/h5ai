@@ -81,8 +81,13 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
         );
 
         addTest(
-            'Cache directory', 'Web server has write access',
-            setup.HAS_WRITABLE_CACHE
+            'Public Cache directory', 'Web server has write access',
+            setup.HAS_WRITABLE_CACHE_PUB
+        );
+
+        addTest(
+            'Private Cache directory', 'Web server has write access',
+            setup.HAS_WRITABLE_CACHE_PRV
         );
 
         addTest(

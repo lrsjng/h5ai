@@ -1,6 +1,6 @@
 # Cache
 
-Public cache.
+Private cache.
 
 This directory is used for server side caching. To use caching make this
 directory writable for your webserver.

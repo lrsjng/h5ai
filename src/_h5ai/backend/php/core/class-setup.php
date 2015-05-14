@@ -111,14 +111,17 @@ class Setup {
         $this->set('PUBLIC_HREF', Util::normalize_path($this->get('APP_HREF') . '/public', true));
         $this->set('INDEX_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/index.php', false));
 
-        $this->set('CACHE_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/cache', true));
-        $this->set('CACHE_PATH', Util::normalize_path($this->get('APP_PATH') . '/public/cache', false));
-        $this->set('HAS_WRITABLE_CACHE', @is_writable($this->get('CACHE_PATH')));
+        $this->set('CACHE_PUB_HREF', Util::normalize_path($this->get('APP_HREF') . '/public/cache', true));
+        $this->set('CACHE_PUB_PATH', Util::normalize_path($this->get('APP_PATH') . '/public/cache', false));
+        $this->set('HAS_WRITABLE_CACHE_PUB', @is_writable($this->get('CACHE_PUB_PATH')));
+
+        $this->set('CACHE_PRV_PATH', Util::normalize_path($this->get('APP_PATH') . '/backend/cache', false));
+        $this->set('HAS_WRITABLE_CACHE_PRV', @is_writable($this->get('CACHE_PRV_PATH')));
     }
 
     private function add_sys_cmd_checks() {
 
-        $cmds_cache_path = Util::normalize_path($this->get('CACHE_PATH') . '/cmds.json', false);
+        $cmds_cache_path = Util::normalize_path($this->get('CACHE_PRV_PATH') . '/cmds.json', false);
 
         $cmds = Util::load_commented_json($cmds_cache_path);
         if (sizeof($cmds) === 0 || $this->refresh) {
@@ -165,7 +168,8 @@ class Setup {
 
                 'INDEX_HREF',
 
-                'HAS_WRITABLE_CACHE',
+                'HAS_WRITABLE_CACHE_PUB',
+                'HAS_WRITABLE_CACHE_PRV',
 
                 'HAS_CMD_AVCONV',
                 'HAS_CMD_CONVERT',
