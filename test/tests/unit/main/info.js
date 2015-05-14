@@ -184,11 +184,11 @@ describe('module \'' + ID + '\'', function () {
                 assert.lengthOf($('#content > #tests'), 1);
             });
 
-            it('adds HTML #test 14x to #tests', function () {
+            it('adds HTML #test 15x to #tests', function () {
 
                 this.xConfig.setup.AS_ADMIN = true;
                 this.applyFn();
-                assert.strictEqual($('#tests > .test').length, 14);
+                assert.strictEqual($('#tests > .test').length, 15);
             });
 
             it('logout works', function () {
