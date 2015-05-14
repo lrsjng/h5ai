@@ -5,6 +5,7 @@ class Thumb {
     private static $FFMPEG_CMDV = ['ffmpeg', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
     private static $AVCONV_CMDV = ['avconv', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
     private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '-strip', '[SRC][0]', '[DEST]'];
+    private static $GM_CONVERT_CMDV = ['gm', 'convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '[SRC][0]', '[DEST]'];
     private static $THUMB_CACHE = 'thumbs';
 
     private $context;
@@ -40,8 +41,12 @@ class Thumb {
             } else if ($this->setup->get('HAS_CMD_FFMPEG')) {
                 $capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path);
             }
-        } else if ($type === 'doc' && $this->setup->get('HAS_CMD_CONVERT')) {
-            $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
+        } else if ($type === 'doc') {
+            if ($this->setup->get('HAS_CMD_CONVERT')) {
+                $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
+            } else if ($this->setup->get('HAS_CMD_GM')) {
+                $capture_path = $this->capture(Thumb::$GM_CONVERT_CMDV, $source_path);
+            }
         }
 
         return $this->thumb_href($capture_path, $width, $height);

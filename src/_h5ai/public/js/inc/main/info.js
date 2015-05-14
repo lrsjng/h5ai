@@ -106,8 +106,8 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
         );
 
         addTest(
-            'PDF thumbs', 'Command line program <code>convert</code> available',
-            setup.HAS_CMD_CONVERT
+            'PDF thumbs', 'Command line program <code>convert</code> or <code>gm</code> available',
+            setup.HAS_CMD_CONVERT || setup.HAS_CMD_GM
         );
 
         addTest(
