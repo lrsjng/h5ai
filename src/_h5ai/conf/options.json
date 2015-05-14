@@ -25,6 +25,7 @@ Options
     - hideFolders: boolean, hide all folders in the main view
     - hideIf403: boolean, hide files and folders that are not readable by the server
     - hideParentFolder: boolean, hide parent folder links in the main view
+    - maxIconSize: number, max size for icons in the main view
     - modes: array of strings, subset of ["details", "grid", "icons"]
         the first value indicates the default view mode. If only one value
         is given the view mode is fixed and the selector buttons are hidden.
@@ -48,10 +49,11 @@ Options
         "hideFolders": false,
         "hideIf403": true,
         "hideParentFolder": false,
+        "maxIconSize": 40,
         "modes": ["details", "grid", "icons"],
         "modeToggle": false,
         "setParentFolderLabels": true,
-        "sizes": [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400],
+        "sizes": [20, 40, 60, 80, 100, 140, 180, 220, 260, 300],
         "theme": "",
         "unmanaged": ["index.html", "index.htm", "index.php"],
         "unmanagedInNewWindow": false

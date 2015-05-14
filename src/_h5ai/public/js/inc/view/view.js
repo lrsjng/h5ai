@@ -48,8 +48,8 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
     function createStyles(size) {
 
         var dsize = cropSize(size, 20, 80);
-        var gsize = cropSize(size, 40, 150);
-        var isize = cropSize(size, 80, 2000);
+        var gsize = cropSize(size, 40, 160);
+        var isize = cropSize(size, 80, 1000);
         var ilsize = Math.round(isize * 4 / 3);
         var rules = [
                 '#view.view-details.view-size-' + size + ' .item .label { line-height: ' + (dsize + 14) + 'px !important; }',
@@ -75,6 +75,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
     function addCssStyles() {
 
         var styles = _.map(sortedSizes, function (size) { return createStyles(size); });
+        styles.push('#view .icon img { max-width: ' + settings.maxIconSize + 'px; max-height: ' + settings.maxIconSize + 'px; }');
         $('<style/>').text(styles.join('\n')).appendTo('head');
     }
 
