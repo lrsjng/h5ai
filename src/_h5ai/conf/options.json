@@ -30,6 +30,7 @@ Options
         is given the view mode is fixed and the selector buttons are hidden.
         The user selected view mode is also stored local in modern browsers
         so that it will be persistent.
+    - modeToggle: boolean, show a view mode toggle in the toolbar, or "next"
     - setParentFolderLabels: boolean, set parent folder labels to real folder names
     - sizes: array of numbers
         the first value indicates the default view size. If only one value
@@ -39,7 +40,6 @@ Options
     - theme: string, name of one of the folders in "_{{pkg.name}}/images/themes", defaults to "default"
     - unmanaged: array of strings, don't manage folders containing one of those files
     - unmanagedInNewWindow: boolean, open unmanaged links in new window/tab
-    - viewmodeToggle: boolean, show a view mode toggle in the toolbar
     */
     "view": {
         "binaryPrefix": false,
@@ -49,12 +49,12 @@ Options
         "hideIf403": true,
         "hideParentFolder": false,
         "modes": ["details", "grid", "icons"],
+        "modeToggle": false,
         "setParentFolderLabels": true,
         "sizes": [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400],
         "theme": "",
         "unmanaged": ["index.html", "index.htm", "index.php"],
-        "unmanagedInNewWindow": false,
-        "viewmodeToggle": false
+        "unmanagedInNewWindow": false
     },
 
 

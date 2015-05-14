@@ -18,7 +18,7 @@ describe('module \'' + ID + '\'', function () {
             image: sinon.stub().returns(util.uniqPath('-image.png'))
         };
         this.xSettings = {view: {
-            viewmodeToggle: false
+            modeToggle: false
         }};
         this.xSidebar = {$el: null};
         this.xTopbar = {$el: null};

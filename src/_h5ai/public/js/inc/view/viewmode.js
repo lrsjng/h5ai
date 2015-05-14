@@ -1,7 +1,7 @@
 modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'view/sidebar', 'view/topbar', 'view/view'], function (_, $, event, resource, allsettings, sidebar, topbar, view) {
 
     var settings = _.extend({
-            viewmodeToggle: false
+            modeToggle: false
         }, allsettings.view);
     var tplSettings =
             '<div id="viewmode-settings" class="block"><h1 class="l10n-view">View</h1></div>';
@@ -24,6 +24,10 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
         $('#viewmode-settings .mode').removeClass('active');
         $('#viewmode-' + mode).addClass('active');
         $('#viewmode-size').val(_.indexOf(sizes, size));
+
+        if (settings.modeToggle === 'next') {
+            mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+        }
         $('#viewmode-toggle img').attr('src', resource.image('view-' + mode));
     }
 
@@ -71,7 +75,7 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
 
     function addToggle() {
 
-        if (settings.viewmodeToggle && modes.length > 1) {
+        if (settings.modeToggle && modes.length > 1) {
             $(tplToggle)
                 .on('click', onToggle)
                 .appendTo(topbar.$toolbar);
