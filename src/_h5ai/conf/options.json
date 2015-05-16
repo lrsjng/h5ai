@@ -388,11 +388,13 @@ Options
     - show: boolean, initial visible to first time users
     - maxSubfolders: number, max number of subfolders to show in tree
     - naturalSort: boolean, use natural sort order for folders
+    - ignorecase: boolean, sort ignorecase
     */
     "tree": {
         "enabled": true,
         "show": true,
         "maxSubfolders": 50,
-        "naturalSort": false
+        "naturalSort": false,
+        "ignorecase": true
     }
 }

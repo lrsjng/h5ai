@@ -4,7 +4,8 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
             enabled: false,
             show: true,
             maxSubfolders: 50,
-            naturalSort: false
+            naturalSort: false,
+            ignorecase: true
         }, allsettings.tree);
     var template =
             '<div class="item">' +
@@ -30,6 +31,11 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
 
         var val1 = item1.label;
         var val2 = item2.label;
+
+        if (settings.ignorecase) {
+            val1 = val1.toLowerCase();
+            val2 = val2.toLowerCase();
+        }
 
         return settings.natural ? util.naturalCmpFn(val1, val2) : util.regularCmpFn(val1, val2);
     }

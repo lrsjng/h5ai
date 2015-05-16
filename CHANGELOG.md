@@ -7,6 +7,7 @@
 * adds search
 * adds wide links in tree view
 * adds IE edge mode
+* adds ignorecase sorting option to tree
 * fixes some styles in IE10
 * fixes preview bottom bar for small screen widths
 * changes API
