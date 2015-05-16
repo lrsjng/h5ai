@@ -275,15 +275,11 @@ class Context {
         $html = '<style class="x-head">';
 
         if (sizeof($fonts) > 0) {
-            $html .= '#root, #root input, #root select {font-family: "';
-            $html .= implode('","', $fonts);
-            $html .= '" !important}';
+            $html .= '#root,input,select{font-family:"' . implode('","', $fonts) . '"!important}';
         }
 
         if (sizeof($fonts_mono) > 0) {
-            $html .= '#root pre, #root code {font-family: "';
-            $html .= implode('","', $fonts_mono);
-            $html .= '" !important}';
+            $html .= 'pre,code{font-family:"' . implode('","', $fonts_mono) . '"!important}';
         }
 
         $html .= '</style>';
