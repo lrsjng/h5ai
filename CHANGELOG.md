@@ -2,14 +2,17 @@
 
 * now requires PHP 5.4.0+
 * changes index path to `/_h5ai/public/index.php`
-* lots of code cleanup and refactorings
-* adds frontend tests
+* now only `/_h5ai/public/` needs to be accessable from web
+* adds support for custom script and style additions
+* adds options to set font families
 * adds search
+* adds ignorecase sorting option to tree
 * adds wide links in tree view
 * adds IE edge mode
-* adds ignorecase sorting option to tree
+* adds frontend tests
 * fixes some styles in IE10
 * fixes preview bottom bar for small screen widths
+* lots of code cleanup and refactorings
 * changes API
 * updates build process
 * updates `lodash` to 3.8.0 (adds debounce and trim)
