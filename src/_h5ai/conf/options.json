@@ -40,6 +40,8 @@ Options
 
     - binaryPrefix: boolean, set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
     - fastBrowsing: boolean, use History API if available (no need to reload the whole page)
+    - fonts: array of strings, fonts to use in regular context
+    - fontsMono: array of strings, fonts to use in monopspaced context
     - hidden: array of strings, don't list items matching these regular expressions
     - hideFolders: boolean, hide all folders in the main view
     - hideIf403: boolean, hide files and folders that are not readable by the server
@@ -64,6 +66,8 @@ Options
     "view": {
         "binaryPrefix": false,
         "fastBrowsing": true,
+        "fonts": ["Ubuntu", "Roboto", "Helvetica", "Arial", "sans-serif"],
+        "fontsMono": ["Ubuntu Mono", "Monaco", "Lucida Sans Typewriter", "monospace"],
         "hidden": ["^\\.", "^_{{pkg.name}}"],
         "hideFolders": false,
         "hideIf403": true,

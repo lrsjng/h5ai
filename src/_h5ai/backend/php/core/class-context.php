@@ -267,21 +267,47 @@ class Context {
         return $this->setup->get('PUBLIC_HREF') . 'ext/' . $href;
     }
 
+    private function get_fonts_html() {
+
+        $fonts = $this->query_option('view.fonts', []);
+        $fonts_mono = $this->query_option('view.fontsMono', []);
+
+        $html = '<style class="x-head">';
+
+        if (sizeof($fonts) > 0) {
+            $html .= '#root, #root input, #root select {font-family: "';
+            $html .= implode('","', $fonts);
+            $html .= '" !important}';
+        }
+
+        if (sizeof($fonts_mono) > 0) {
+            $html .= '#root pre, #root code {font-family: "';
+            $html .= implode('","', $fonts_mono);
+            $html .= '" !important}';
+        }
+
+        $html .= '</style>';
+
+        return $html;
+    }
+
     public function get_x_head_html() {
 
         $scripts = $this->query_option('resources.scripts', []);
         $styles = $this->query_option('resources.styles', []);
 
-        $tags = '';
+        $html = '';
 
         foreach ($styles as $href) {
-            $tags .= '<link rel="stylesheet" href="' . $this->prefix_x_head_href($href) . '" class="x-head">';
+            $html .= '<link rel="stylesheet" href="' . $this->prefix_x_head_href($href) . '" class="x-head">';
         }
 
         foreach ($scripts as $href) {
-            $tags .= '<script src="' . $this->prefix_x_head_href($href) . '" class="x-head"></script>';
+            $html .= '<script src="' . $this->prefix_x_head_href($href) . '" class="x-head"></script>';
         }
 
-        return $tags;
+        $html .= $this->get_fonts_html();
+
+        return $html;
     }
 }
