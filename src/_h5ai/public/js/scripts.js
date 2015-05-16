@@ -1,9 +1,9 @@
 (function () {
 
 if (function () {
-    var div = document.createElement('div');
-    div.innerHTML = '<!--[if lt IE 10]><br><![endif]-->';
-    return div.getElementsByTagName('br').length;
+    var el = document.createElement('i');
+    el.innerHTML = '<!--[if lt IE 10]><br><![endif]-->';
+    return el.getElementsByTagName('br').length;
 }()) {
     document.documentElement.className = 'js no-browser';
     return;
