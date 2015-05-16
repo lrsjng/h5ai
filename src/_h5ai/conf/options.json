@@ -17,6 +17,25 @@ Options
 
 
     /*
+    Resources.
+
+    Additional script and style tags added to all pages. Paths not beginning
+    with "http://", "https://" or "/" will be looked up relative to
+    "_h5ai/public/ext/" (no check for existence).
+
+    - scripts: array of strings
+    - styles: array of strings
+    */
+    "resources": {
+        "scripts": [],
+        "styles": [
+            "//fonts.googleapis.com/css?family=Roboto:300,400,700"
+        ]
+    },
+
+
+
+    /*
     General view options.
 
     - binaryPrefix: boolean, set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)

@@ -125,7 +125,7 @@ class Setup {
 
         $cmds_cache_path = Util::normalize_path($this->get('CACHE_PRV_PATH') . '/cmds.json', false);
 
-        $cmds = Util::load_commented_json($cmds_cache_path);
+        $cmds = Json::load($cmds_cache_path);
         if (sizeof($cmds) === 0 || $this->refresh) {
             $cmds['command'] = Util::exec_0('command -v command');
             $cmds['which'] = Util::exec_0('which which');
@@ -141,7 +141,7 @@ class Setup {
                 $cmds[$c] = ($cmd !== false) && Util::exec_0($cmd . ' ' . $c);
             }
 
-            Util::save_json($cmds_cache_path, $cmds);
+            Json::save($cmds_cache_path, $cmds);
         }
         foreach ($cmds as $c => $has) {
             $this->set('HAS_CMD_' . strtoupper($c), $has);

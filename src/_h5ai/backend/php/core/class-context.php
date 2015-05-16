@@ -17,7 +17,7 @@ class Context {
         $this->request = $request;
         $this->setup = $setup;
 
-        $this->options = Util::load_commented_json($this->setup->get('APP_PATH') . '/conf/options.json');
+        $this->options = Json::load($this->setup->get('APP_PATH') . '/conf/options.json');
 
         $this->passhash = $this->query_option('passhash', '');
         $this->options['hasCustomPasshash'] = strcasecmp($this->passhash, Context::$DEFAULT_PASSHASH) !== 0;
@@ -51,7 +51,7 @@ class Context {
 
     public function get_types() {
 
-        return Util::load_commented_json($this->setup->get('APP_PATH') . '/conf/types.json');
+        return Json::load($this->setup->get('APP_PATH') . '/conf/types.json');
     }
 
     public function login_admin($pass) {
@@ -222,7 +222,7 @@ class Context {
             if ($dir = opendir($l10n_path)) {
                 while (($file = readdir($dir)) !== false) {
                     if (Util::ends_with($file, '.json')) {
-                        $translations = Util::load_commented_json($l10n_path . '/' . $file);
+                        $translations = Json::load($l10n_path . '/' . $file);
                         $langs[basename($file, '.json')] = $translations['lang'];
                     }
                 }
@@ -239,7 +239,7 @@ class Context {
 
         foreach ($iso_codes as $iso_code) {
             $file = $this->setup->get('APP_PATH') . '/conf/l10n/' . $iso_code . '.json';
-            $results[$iso_code] = Util::load_commented_json($file);
+            $results[$iso_code] = Json::load($file);
             $results[$iso_code]['isoCode'] = $iso_code;
         }
 
@@ -256,5 +256,32 @@ class Context {
         }
 
         return $hrefs;
+    }
+
+    private function prefix_x_head_href($href) {
+
+        if (preg_match('@^(https?://|/)@i', $href)) {
+            return $href;
+        }
+
+        return $this->setup->get('PUBLIC_HREF') . 'ext/' . $href;
+    }
+
+    public function get_x_head_html() {
+
+        $scripts = $this->query_option('resources.scripts', []);
+        $styles = $this->query_option('resources.styles', []);
+
+        $tags = '';
+
+        foreach ($styles as $href) {
+            $tags .= '<link rel="stylesheet" href="' . $this->prefix_x_head_href($href) . '" class="x-head">';
+        }
+
+        foreach ($scripts as $href) {
+            $tags .= '<script src="' . $this->prefix_x_head_href($href) . '" class="x-head"></script>';
+        }
+
+        return $tags;
     }
 }

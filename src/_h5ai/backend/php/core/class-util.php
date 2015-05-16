@@ -61,26 +61,6 @@ class Util {
         return Util::RE_DELIMITER . str_replace(Util::RE_DELIMITER, '\\' . Util::RE_DELIMITER, $pattern) . Util::RE_DELIMITER;
     }
 
-    public static function load_commented_json($path) {
-
-        if (!file_exists($path)) {
-            return [];
-        }
-
-        $content = file_get_contents($path);
-
-        // remove comments to get pure json
-        $content = preg_replace("/\/\*.*?\*\/|\/\/.*?(\n|$)/s", '', $content);
-
-        return json_decode($content, true);
-    }
-
-    public static function save_json($path, $obj) {
-
-        $json = json_encode($obj);
-        return file_put_contents($path, $json) !== false;
-    }
-
     public static function passthru_cmd($cmd) {
 
         $rc = null;
