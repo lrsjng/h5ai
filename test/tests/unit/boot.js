@@ -149,45 +149,6 @@ describe('module \'' + ID + '\'', function () {
             assert.isTrue(this.xRequire.calledOnce);
             assert.deepEqual(this.xRequire.lastCall.args, ['main/index']);
         });
-
-        it('\'no-browser\'-class and no data-module', function () {
-
-            $('html').addClass('no-browser');
-            this.applyFn();
-            assert.isFalse(this.xServer.request.called);
-            assert.isFalse(this.xDefine.called);
-            assert.isFalse(this.xRequire.called);
-        });
-
-        it('\'no-browser\'-class and data-module=\'test\'', function () {
-
-            $('html').addClass('no-browser');
-            $('<script/>').attr('data-module', 'test').appendTo('head');
-            this.applyFn();
-            assert.isFalse(this.xServer.request.called);
-            assert.isFalse(this.xDefine.called);
-            assert.isFalse(this.xRequire.called);
-        });
-
-        it('\'no-browser\'-class and data-module=\'info\'', function () {
-
-            $('html').addClass('no-browser');
-            $('<script/>').attr('data-module', 'info').appendTo('head');
-            this.applyFn();
-            assert.isFalse(this.xServer.request.called);
-            assert.isFalse(this.xDefine.called);
-            assert.isFalse(this.xRequire.called);
-        });
-
-        it('\'no-browser\'-class and data-module=\'index\'', function () {
-
-            $('html').addClass('no-browser');
-            $('<script/>').attr('data-module', 'index').appendTo('head');
-            this.applyFn();
-            assert.isFalse(this.xServer.request.called);
-            assert.isFalse(this.xDefine.called);
-            assert.isFalse(this.xRequire.called);
-        });
     });
 });
 
