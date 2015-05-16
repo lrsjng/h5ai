@@ -1,9 +1,5 @@
 modulejs.define('boot', ['$', 'core/server'], function ($, server) {
 
-    if ($('html').hasClass('no-browser')) {
-        return;
-    }
-
     var module = $('script[data-module]').data('module');
     var data = {action: 'get', setup: true, options: true, types: true};
 

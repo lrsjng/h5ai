@@ -88,6 +88,7 @@
     }
 
     .noJsMsg, .noBrowserMsg {
+        display: none;
         margin: 0 16px;
         color: @col-error;
     }
@@ -104,10 +105,10 @@ html.no-js, html.no-browser {
     }
 }
 
-html.js .noJsMsg {
-    display: none;
+html.no-js .noJsMsg {
+    display: inline !important;
 }
 
-html.browser .noBrowserMsg {
-    display: none;
+html.no-browser .noBrowserMsg {
+    display: inline !important;
 }
