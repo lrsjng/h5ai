@@ -111,10 +111,10 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
 
         currentItems = items;
         currentIdx = idx;
-        onIdxChange(0);
         preview.setOnIndexChange(onIdxChange);
         preview.setOnAdjustSize(onAdjustSize);
         preview.enter();
+        onIdxChange(0);
     }
 
     function initItem(item) {

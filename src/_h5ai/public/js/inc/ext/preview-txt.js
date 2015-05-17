@@ -108,10 +108,10 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
         currentItems = items;
         currentIdx = idx;
         currentItem = items[idx];
-        onIdxChange(0);
         preview.setOnIndexChange(onIdxChange);
         preview.setOnAdjustSize(onAdjustSize);
         preview.enter();
+        onIdxChange(0);
     }
 
     function initItem(item) {

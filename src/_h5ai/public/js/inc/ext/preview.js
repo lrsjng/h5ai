@@ -65,6 +65,8 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
 
     function onEnter() {
 
+        setLabels([]);
+        $('#pv-content').empty();
         $('#pv-overlay').stop(true, true).fadeIn(200);
         $window.on('keydown', onKeydown);
         adjustSize();
