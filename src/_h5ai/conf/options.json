@@ -272,6 +272,7 @@ Options
             "txt-cpp": "cpp",
             "txt-css": "css",
             "txt-diff": "fixed",
+            "txt-go": "go",
             "txt-h": "c",
             "txt-hpp": "cpp",
             "txt-install": "fixed",

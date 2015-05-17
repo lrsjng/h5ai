@@ -39,6 +39,7 @@ File types mapped to file extensions
     "txt-cpp":          ["*.cpp"],
     "txt-css":          ["*.css"],
     "txt-diff":         ["*.diff", "*.patch"],
+    "txt-go":           ["*.go"],
     "txt-h":            ["*.h"],
     "txt-html":         ["*.htm", "*.html", "*.shtml", "*.xhtml"],
     "txt-hpp":          ["*.hpp"],
