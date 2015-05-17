@@ -4,8 +4,8 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
             enabled: false,
             types: {}
         }, allsettings['preview-txt']);
-    var templateText = '<pre id="pv-txt-text" class="highlighted"/>';
-    var templateMarkdown = '<div id="pv-txt-text" class="markdown"/>';
+    var tplText = '<pre id="pv-txt-text" class="highlighted"/>';
+    var tplMarkdown = '<div id="pv-txt-text" class="markdown"/>';
     var spinnerThreshold = 200;
     var spinnerTimeoutId;
     var currentItems;
@@ -76,13 +76,13 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
             var $code;
 
             if (type === 'none') {
-                $text = $(templateMarkdown).text(textContent);
+                $text = $(tplMarkdown).text(textContent);
             } else if (type === 'fixed') {
-                $text = $(templateText).text(textContent);
+                $text = $(tplText).text(textContent);
             } else if (type === 'markdown') {
-                $text = $(templateMarkdown).html(marked(textContent));
+                $text = $(tplMarkdown).html(marked(textContent));
             } else {
-                $text = $(templateText);
+                $text = $(tplText);
                 $code = $('<code/>').appendTo($text);
 
                 if (textContent.length < 20000) {

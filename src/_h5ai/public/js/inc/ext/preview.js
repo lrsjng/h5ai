@@ -4,7 +4,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
             enabled: true
         }, allsettings.preview);
     var $window = $(window);
-    var template =
+    var tplOverlay =
             '<div id="pv-overlay">' +
                 '<div id="pv-content"/>' +
                 '<div id="pv-spinner"><img class="back"/><img class="spinner" src="' + resource.image('spinner') + '"/></div>' +
@@ -65,11 +65,8 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
 
     function onEnter() {
 
-        $('#pv-content').empty();
-        setLabels([]);
         $('#pv-overlay').stop(true, true).fadeIn(200);
         $window.on('keydown', onKeydown);
-
         adjustSize();
     }
 
@@ -215,7 +212,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
             return;
         }
 
-        $(template).appendTo('body');
+        $(tplOverlay).appendTo('body');
 
         $('#pv-spinner').hide();
         $('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
