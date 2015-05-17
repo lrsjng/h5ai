@@ -6,11 +6,6 @@ File types mapped to file extensions
 */
 
 {
-    // "txt-authors":       ["author*"],
-    // "txt-install":       ["install*"],
-    // "txt-license":       ["copying*", "license*"],
-    // "txt-readme":        ["readme*"],
-
     "ar":               ["*.tar.bz2", "*.crx"],
     "ar-apk":           ["*.apk"],
     "ar-deb":           ["*.deb"],
@@ -21,10 +16,8 @@ File types mapped to file extensions
     "ar-zip":           ["*.7z", "*.bz2", "*.jar", "*.lzma", "*.war", "*.z", "*.Z", "*.zip"],
     "aud":              ["*.aif", "*.aiff", "*.flac", "*.m4a", "*.mid", "*.mp3", "*.mpa", "*.ra", "*.ogg", "*.wav", "*.wma"],
     "aud-pls":          ["*.m3u", "*.m3u8", "*.pls"],
-    "bak":              ["*.bak", "*~"],
     "bin":              ["*.class", "*.o", "*.so"],
     "bin-exe":          ["*.bat", "*.cmd", "*.exe"],
-    "disc":             ["*.cue", "*.iso"],
     "img":              ["*.xpm"],
     "img-bmp":          ["*.bmp"],
     "img-gif":          ["*.gif"],
@@ -75,7 +68,9 @@ File types mapped to file extensions
     "vid-webm":         ["*.webm"],
     "vid-wmv":          ["*.wmv"],
     "x":                [],
+    "x-bak":            ["*.bak", "*~"],
     "x-calc":           ["*.ods", "*.ots", "*.xlr", "*.xls", "*.xlsx"],
+    "x-disc":           ["*.cue", "*.iso"],
     "x-doc":            ["*.doc", "*.docx", "*.odm", "*.odt", "*.ott"],
     "x-draw":           ["*.drw"],
     "x-eps":            ["*.eps"],
