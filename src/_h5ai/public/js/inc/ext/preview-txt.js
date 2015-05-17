@@ -21,10 +21,10 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
             })
             .done(function (content) {
 
-                // callback(item, content);
+                callback(item, content);
 
                 // for testing
-                setTimeout(function () { callback(item, content); }, 1000);
+                // setTimeout(function () { callback(item, content); }, 1000);
             })
             .fail(function (jqXHR, textStatus) {
 
