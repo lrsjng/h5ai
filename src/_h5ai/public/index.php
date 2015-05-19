@@ -2,7 +2,7 @@
 
 define('MIN_PHP_VERSION', '5.4.0');
 
-if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
+if (!function_exists('version_compare') || version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
     header('Content-type: text/plain;charset=utf-8');
     echo '[err]  {{pkg.name}} requires PHP ' . MIN_PHP_VERSION . ' or later, but found PHP ' . PHP_VERSION;
     exit;
