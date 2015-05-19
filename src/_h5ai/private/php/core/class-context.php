@@ -17,7 +17,7 @@ class Context {
         $this->request = $request;
         $this->setup = $setup;
 
-        $this->options = Json::load($this->setup->get('APP_PATH') . '/conf/options.json');
+        $this->options = Json::load($this->setup->get('CONF_PATH') . '/options.json');
 
         $this->passhash = $this->query_option('passhash', '');
         $this->options['hasCustomPasshash'] = strcasecmp($this->passhash, Context::$DEFAULT_PASSHASH) !== 0;
@@ -51,7 +51,7 @@ class Context {
 
     public function get_types() {
 
-        return Json::load($this->setup->get('APP_PATH') . '/conf/types.json');
+        return Json::load($this->setup->get('CONF_PATH') . '/types.json');
     }
 
     public function login_admin($pass) {
@@ -78,7 +78,7 @@ class Context {
 
     public function is_info_request() {
 
-        return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('APP_HREF'));
+        return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('H5AI_HREF'));
     }
 
     public function to_href($path, $trailing_slash = true) {
@@ -147,7 +147,7 @@ class Context {
             return false;
         }
 
-        if ($path === $this->setup->get('APP_PATH') || strpos($path, $this->setup->get('APP_PATH') . '/') === 0) {
+        if ($path === $this->setup->get('H5AI_PATH') || strpos($path, $this->setup->get('H5AI_PATH') . '/') === 0) {
             return false;
         }
 
@@ -158,7 +158,7 @@ class Context {
         }
 
         while ($path !== $this->setup->get('ROOT_PATH')) {
-            if (@is_dir($path . '/_h5ai/server')) {
+            if (@is_dir($path . '/_h5ai/private/conf')) {
                 return false;
             }
             $parent_path = Util::normalize_path(dirname($path));
@@ -217,7 +217,7 @@ class Context {
     public function get_langs() {
 
         $langs = [];
-        $l10n_path = $this->setup->get('APP_PATH') . '/conf/l10n';
+        $l10n_path = $this->setup->get('CONF_PATH') . '/l10n';
         if (is_dir($l10n_path)) {
             if ($dir = opendir($l10n_path)) {
                 while (($file = readdir($dir)) !== false) {
@@ -238,7 +238,7 @@ class Context {
         $results = [];
 
         foreach ($iso_codes as $iso_code) {
-            $file = $this->setup->get('APP_PATH') . '/conf/l10n/' . $iso_code . '.json';
+            $file = $this->setup->get('CONF_PATH') . '/l10n/' . $iso_code . '.json';
             $results[$iso_code] = Json::load($file);
             $results[$iso_code]['isoCode'] = $iso_code;
         }

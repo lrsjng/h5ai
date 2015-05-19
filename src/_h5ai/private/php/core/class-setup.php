@@ -74,9 +74,9 @@ class Setup {
 
     private function add_app_metadata() {
 
-        $this->set('NAME', '{{pkg.name}}');
+        $this->set('NAME', 'h5ai');
         $this->set('VERSION', '{{pkg.version}}');
-        $this->set('FILE_PREFIX', '_{{pkg.name}}');
+        $this->set('FILE_PREFIX', '_h5ai');
     }
 
     private function add_server_metadata_and_check() {
@@ -102,22 +102,23 @@ class Setup {
             $script_name = preg_replace('#^.*?//#', '/', $script_name);
         }
 
-        $this->set('APP_HREF', Util::normalize_path(dirname(dirname($script_name)), true));
-        $this->set('APP_PATH', Util::normalize_path(dirname(dirname(dirname(dirname(__FILE__)))), false));
+        $this->set('H5AI_HREF', Util::normalize_path(dirname($script_name), true));
+        $this->set('H5AI_PATH', Util::normalize_path(dirname(dirname(dirname(dirname(__FILE__)))), false));
 
-        $this->set('ROOT_HREF', Util::normalize_path(dirname($this->get('APP_HREF')), true));
-        $this->set('ROOT_PATH', Util::normalize_path(dirname($this->get('APP_PATH')), false));
+        $this->set('ROOT_HREF', Util::normalize_path(dirname($this->get('H5AI_HREF')), true));
+        $this->set('ROOT_PATH', Util::normalize_path(dirname($this->get('H5AI_PATH')), false));
 
-        $this->set('PUBLIC_HREF', Util::normalize_path($this->get('APP_HREF') . '/public', true));
-        $this->set('PUBLIC_PATH', Util::normalize_path($this->get('APP_PATH') . '/public', false));
+        $this->set('PUBLIC_HREF', Util::normalize_path($this->get('H5AI_HREF') . '/', true));
+        $this->set('PUBLIC_PATH', Util::normalize_path($this->get('H5AI_PATH') . '/', false));
 
         $this->set('INDEX_HREF', Util::normalize_path($this->get('PUBLIC_HREF') . '/index.php', false));
-
         $this->set('CACHE_PUB_HREF', Util::normalize_path($this->get('PUBLIC_HREF') . '/cache', true));
         $this->set('CACHE_PUB_PATH', Util::normalize_path($this->get('PUBLIC_PATH') . '/cache', false));
         $this->set('HAS_WRITABLE_CACHE_PUB', @is_writable($this->get('CACHE_PUB_PATH')));
 
-        $this->set('CACHE_PRV_PATH', Util::normalize_path($this->get('APP_PATH') . '/backend/cache', false));
+        $this->set('PRIVATE_PATH', Util::normalize_path($this->get('H5AI_PATH') . '/private', false));
+        $this->set('CONF_PATH', Util::normalize_path($this->get('PRIVATE_PATH') . '/conf', false));
+        $this->set('CACHE_PRV_PATH', Util::normalize_path($this->get('PRIVATE_PATH') . '/cache', false));
         $this->set('HAS_WRITABLE_CACHE_PRV', @is_writable($this->get('CACHE_PRV_PATH')));
     }
 

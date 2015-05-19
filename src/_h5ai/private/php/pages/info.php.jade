@@ -2,11 +2,11 @@ extends ./page.tpl.jade
 
 block init
 
-    - var title = pkg.name + ' info page - v' + pkg.version
+    - var title = 'h5ai info page - v' + pkg.version
     - var module = 'info'
 
 block body
 
     div#content
         h1#header
-            a(href='#{pkg.homepage}') #{pkg.name}
+            a(href='#{pkg.homepage}') h5ai

@@ -60,7 +60,7 @@ module.exports = function (suite) {
         var fs = require('fs');
         var jshint = JSON.parse(fs.readFileSync('.jshintrc', 'utf8'));
 
-        $(src + '/_h5ai/public/js: **/*.js, ! lib/**')
+        $(src + '/_h5ai/js: **/*.js, ! lib/**')
             .jshint(jshint, jshint.globals);
     });
 
@@ -72,15 +72,15 @@ module.exports = function (suite) {
         var mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', '');
         var mapRoot = $.map.p(root, path.join(build, '_h5ai'));
 
-        $(src + ': _h5ai/public/js/*.js')
-            .newerThan(mapSrc, $(src + ': _h5ai/public/js/**'))
+        $(src + ': _h5ai/js/*.js')
+            .newerThan(mapSrc, $(src + ': _h5ai/js/**'))
             .includeit()
             .if(!suite.args.uncompressed, function () { this.uglifyjs(); })
             .wrap(header)
             .write(mapSrc, true);
 
-        $(src + ': _h5ai/public/css/*.less')
-            .newerThan(mapSrc, $(src + ': _h5ai/public/css/**'))
+        $(src + ': _h5ai/css/*.less')
+            .newerThan(mapSrc, $(src + ': _h5ai/css/**'))
             .includeit()
             .less()
             .autoprefixer()
@@ -93,7 +93,7 @@ module.exports = function (suite) {
             .jade(env)
             .write(mapSrc, true);
 
-        $(src + ': **, ! _h5ai/public/js/**, ! _h5ai/public/css/**, ! **/*.jade')
+        $(src + ': **, ! _h5ai/js/**, ! _h5ai/css/**, ! **/*.jade')
             .newerThan(mapSrc)
             .handlebars(env)
             .write(mapSrc, true);
@@ -135,13 +135,13 @@ module.exports = function (suite) {
 
         var env = {pkg: pkg};
 
-        $(src + '/_h5ai/public/css/styles.less')
+        $(src + '/_h5ai/css/styles.less')
             .includeit()
             .less()
             .autoprefixer()
             .write(build + '/test/h5ai-styles.css', true);
 
-        $(src + '/_h5ai/public/js/scripts.js')
+        $(src + '/_h5ai/js/scripts.js')
             .includeit()
             .write(build + '/test/h5ai-scripts.js', true);
 

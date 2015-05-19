@@ -15,7 +15,7 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
                 '<span id="logout">logout</span>' +
                 '<div id="hint">' +
                     'The preset password is the empty string, just click login. ' +
-                    'Change it in \'_h5ai/conf/options.json\'.' +
+                    'Change it in \'_h5ai/private/conf/options.json\'.' +
                 '</div>' +
             '</div>';
     var tplSupport =

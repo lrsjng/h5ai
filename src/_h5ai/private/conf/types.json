@@ -1,5 +1,5 @@
 /*
-{{pkg.name}} {{pkg.version}}
+h5ai {{pkg.version}}
 {{pkg.homepage}}
 
 File types mapped to file extensions
