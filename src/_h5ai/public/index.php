@@ -8,5 +8,5 @@ if (!function_exists('version_compare') || version_compare(PHP_VERSION, MIN_PHP_
     exit;
 }
 
-require_once __DIR__ . '/private/php/class-bootstrap.php';
+require_once __DIR__ . '/../private/php/class-bootstrap.php';
 Bootstrap::run();
