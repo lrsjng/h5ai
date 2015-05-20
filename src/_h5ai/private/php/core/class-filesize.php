@@ -17,8 +17,9 @@ class Filesize {
         fseek($handle, 0, SEEK_SET);
 
         while ($step > 1) {
-            if (fseek($handle, $step, SEEK_CUR) === 0) {
-                $size += $step;
+            fseek($handle, $step, SEEK_CUR);
+            if (fgetc($handle) !== false) {
+                $size += $step + 1;
             } else {
                 fseek($handle, -$step, SEEK_CUR);
                 $step = intval($step / 2, 10);
