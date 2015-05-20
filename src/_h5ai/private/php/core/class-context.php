@@ -78,7 +78,7 @@ class Context {
 
     public function is_info_request() {
 
-        return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('H5AI_HREF'));
+        return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('PUBLIC_HREF'));
     }
 
     public function to_href($path, $trailing_slash = true) {
@@ -147,7 +147,11 @@ class Context {
             return false;
         }
 
-        if ($path === $this->setup->get('H5AI_PATH') || strpos($path, $this->setup->get('H5AI_PATH') . '/') === 0) {
+        if (strpos($path, $this->setup->get('PUBLIC_PATH')) === 0) {
+            return false;
+        }
+
+        if (strpos($path, $this->setup->get('PRIVATE_PATH')) === 0) {
             return false;
         }
 

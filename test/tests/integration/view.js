@@ -9,7 +9,7 @@ describe('view', function () {
         this.storeKey = '_h5ai';
         this.xConfig = {
             setup: {
-                H5AI_HREF: util.uniqPath('-H5AI/'),
+                PUBLIC_HREF: util.uniqPath('-PUBLIC/'),
                 ROOT_HREF: util.uniqPath('-ROOT/')
             }
         };
