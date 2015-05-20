@@ -99,51 +99,21 @@ class Util {
         if (array_key_exists($path, Util::$size_cache)) {
             return Util::$size_cache[$path];
         }
+        $fs = new Filesize();
 
         $size = null;
 
         if (is_file($path)) {
-
             if (PHP_INT_SIZE < 8) {
-                $_handle = fopen($path, 'r');
-
-                $_pos = 0;
-                $_size = 1073741824;
-                fseek($_handle, 0, SEEK_SET);
-                while ($_size > 1) {
-                    fseek($_handle, $_size, SEEK_CUR);
-
-                    if (fgetc($_handle) === false) {
-                        fseek($_handle, -$_size, SEEK_CUR);
-                        $_size = (int)($_size / 2);
-                    } else {
-                        fseek($_handle, -1, SEEK_CUR);
-                        $_pos += $_size;
-                    }
-                }
-
-                while (fgetc($_handle) !== false) {
-                    $_pos++;
-                }
-                fclose($_handle);
-
-                $size = $_pos;
+                $size = $fs->fseek($path);
             } else {
-                $size = @filesize($path);
+                $size = $fs->filesize($path);
             }
-
-        } else if (is_dir($path)) {
-
-            if ($context->query_option('foldersize.enabled', false)) {
-                if ($context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du') {
-                    $cmdv = ['du', '-sk', $path];
-                    $size = intval(preg_replace('#\s.*$#', '', Util::exec_cmdv($cmdv)), 10) * 1024;
-                } else {
-                    $size = 0;
-                    foreach ($context->read_dir($path) as $name) {
-                        $size += Util::filesize($context, $path . '/' . $name);
-                    }
-                }
+        } else if (is_dir($path) && $context->query_option('foldersize.enabled', false)) {
+            if ($context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du') {
+                $size = $fs->du_path($path);
+            } else {
+                $size = $fs->add($path);
             }
         }
 
