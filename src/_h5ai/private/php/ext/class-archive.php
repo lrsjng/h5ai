@@ -2,6 +2,8 @@
 
 class Archive {
 
+    const NULL_BYTE = "\0";
+
     private static $SEGMENT_SIZE = 16777216;  // 1024 * 1024 * 16 = 16MiB
     private static $TAR_PASSTHRU_CMD = 'cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]';
     private static $ZIP_PASSTHRU_CMD = 'cd [ROOTDIR] && zip - -- [FILES]';
@@ -93,7 +95,7 @@ class Archive {
             $this->print_file($real_file);
 
             if ($size % 512 != 0) {
-                echo str_repeat("\0", 512 - ($size % 512));
+                echo str_repeat(Archive::NULL_BYTE, 512 - ($size % 512));
             }
         }
 
@@ -109,25 +111,25 @@ class Archive {
         }
 
         $header =
-            str_pad($name, 100, "\0")  // filename [100]
-            . "0000755\0"  // file mode [8]
-            . "0000000\0"  // uid [8]
-            . "0000000\0"  // gid [8]
-            . str_pad(decoct($size), 11, "0", STR_PAD_LEFT) . "\0"  // file size [12]
-            . str_pad(decoct($mtime), 11, "0", STR_PAD_LEFT) . "\0"  // file modification time [12]
-            . "        "  // checksum [8]
+            str_pad($name, 100, Archive::NULL_BYTE)  // filename [100]
+            . '0000755' . Archive::NULL_BYTE  // file mode [8]
+            . '0000000' . Archive::NULL_BYTE  // uid [8]
+            . '0000000' . Archive::NULL_BYTE  // gid [8]
+            . str_pad(decoct($size), 11, '0', STR_PAD_LEFT) . Archive::NULL_BYTE  // file size [12]
+            . str_pad(decoct($mtime), 11, '0', STR_PAD_LEFT) . Archive::NULL_BYTE  // file modification time [12]
+            . '        '  // checksum [8]
             . str_pad($type, 1)  // file type [1]
-            . str_repeat("\0", 100)  // linkname [100]
-            . "ustar\0"  // magic [6]
-            . "00"  // version [2]
-            . str_repeat("\0", 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]
-            . str_pad($prefix, 155, "\0")  // filename [155]
-            . str_repeat("\0", 12);  // fill [12]
+            . str_repeat(Archive::NULL_BYTE, 100)  // linkname [100]
+            . 'ustar' . Archive::NULL_BYTE  // magic [6]
+            . '00'  // version [2]
+            . str_repeat(Archive::NULL_BYTE, 80)  // uname, gname, defmajor, devminor [32 + 32 + 8 + 8]
+            . str_pad($prefix, 155, Archive::NULL_BYTE)  // filename [155]
+            . str_repeat(Archive::NULL_BYTE, 12);  // fill [12]
         assert(strlen($header) === 512);
 
         // checksum
         $checksum = array_sum(array_map('ord', str_split($header)));
-        $checksum = str_pad(decoct($checksum), 6, "0", STR_PAD_LEFT) . "\0 ";
+        $checksum = str_pad(decoct($checksum), 6, '0', STR_PAD_LEFT) . Archive::NULL_BYTE . ' ';
         $header = substr_replace($header, $checksum, 148, 8);
 
         return $header;
