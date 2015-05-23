@@ -16,17 +16,17 @@
     "build-test": "mkr build-test"
   },
   "devDependencies": {
-    "fquery": "~0.16.3",
+    "fquery": "~0.16.4",
     "fquery-autoprefixer": "~0.2.0",
     "fquery-cssmin": "~0.3.1",
     "fquery-handlebars": "~0.3.0",
     "fquery-includeit": "~0.3.0",
-    "fquery-jade": "~0.4.1",
+    "fquery-jade": "~0.5.0",
     "fquery-jshint": "~0.3.0",
     "fquery-jszip": "~0.5.1",
     "fquery-less": "~0.3.0",
     "fquery-uglifyjs": "~0.3.0",
-    "mkr": "~0.8.2"
+    "mkr": "~0.8.5"
   },
   "engines": {
     "node": "0.12.x"
