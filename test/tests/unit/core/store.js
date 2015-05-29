@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'core/store';
-var DEPS = ['modernizr'];
+var DEPS = ['core/modernizr'];
 
 describe('module \'' + ID + '\'', function () {
 

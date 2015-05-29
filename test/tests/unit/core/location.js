@@ -2,7 +2,7 @@
 'use strict';
 
 var ID = 'core/location';
-var DEPS = ['_', 'modernizr', 'core/event', 'core/settings', 'view/notification'];
+var DEPS = ['_', 'core/event', 'core/modernizr', 'core/settings', 'view/notification'];
 
 describe('module \'' + ID + '\'', function () {
 
@@ -30,7 +30,7 @@ describe('module \'' + ID + '\'', function () {
             this.xEvent.sub.reset();
             this.xNotification.set.reset();
 
-            return this.definition.fn(_, this.xModernizr, this.xEvent, this.xSettings, this.xNotification);
+            return this.definition.fn(_, this.xEvent, this.xModernizr, this.xSettings, this.xNotification);
         };
     });
 

@@ -7,7 +7,6 @@ describe('libs', function () {
         _: window._,
         $: window.jQuery,
         marked: window.marked,
-        modernizr: window.Modernizr,
         prism: window.Prism
     };
 

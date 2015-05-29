@@ -1,4 +1,4 @@
-modulejs.define('core/location', ['_', 'modernizr', 'core/event', 'core/settings', 'view/notification'], function (_, modernizr, event, allsettings, notification) {
+modulejs.define('core/location', ['_', 'core/event', 'core/modernizr', 'core/settings', 'view/notification'], function (_, event, modernizr, allsettings, notification) {
 
     var settings = _.extend({
             fastBrowsing: true,

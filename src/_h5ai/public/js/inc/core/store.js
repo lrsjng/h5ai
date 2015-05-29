@@ -1,4 +1,4 @@
-modulejs.define('core/store', ['modernizr'], function (modernizr) {
+modulejs.define('core/store', ['core/modernizr'], function (modernizr) {
 
     var store = modernizr.localstorage ? window.localStorage : {};
     var storekey = '_h5ai';
