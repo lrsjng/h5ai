@@ -1,21 +1,23 @@
 (function () {
+    'use strict';
 
-if (function () {
     var el = document.createElement('i');
     el.innerHTML = '<!--[if lt IE 10]><br><![endif]-->';
-    return el.getElementsByTagName('br').length;
-}()) {
-    document.documentElement.className = 'js no-browser';
-    return;
-}
+    var browser = el.getElementsByTagName('br').length === 0;
 
-// @include "lib/modernizr-*.js"
-// @include "lib/jquery-*.js"
-// @include "lib/jquery.*.js"
-// @include "lib/lodash-*.js"
-// @include "lib/marked-*.js"
-// @include "lib/modulejs-*.js"
-// @include "lib/prism-*.js"
+    if (!browser) {
+        document.documentElement.className = 'js no-browser';
+        throw 'no-browser';
+    }
+}());
+
+// @include 'lib/modernizr-*.js'
+// @include 'lib/jquery-*.js'
+// @include 'lib/jquery.*.js'
+// @include 'lib/lodash-*.js'
+// @include 'lib/marked-*.js'
+// @include 'lib/modulejs-*.js'
+// @include 'lib/prism-*.js'
 
 (function () {
     'use strict';
@@ -27,9 +29,7 @@ if (function () {
     modulejs.define('modernizr', function () { return win.Modernizr; });
     modulejs.define('prism', function () { return win.Prism; });
 
-    // @include "inc/**/*.js"
+    // @include 'inc/**/*.js'
 
     modulejs.require('boot');
-}());
-
 }());
