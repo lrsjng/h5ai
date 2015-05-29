@@ -4,11 +4,11 @@
 describe('libs', function () {
 
     var libs = {
-        _: window._,
-        $: window.jQuery,
-        marked: window.marked,
-        prism: window.Prism
-    };
+            _: window._,
+            $: window.jQuery,
+            marked: window.marked,
+            prism: window.Prism
+        };
 
     _.each(libs, function (lib, id) {
 

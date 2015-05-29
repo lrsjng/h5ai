@@ -29,7 +29,7 @@ describe('premisses', function () {
 
         assert.isFunction(_);
         assert.strictEqual(_, window._);
-        assert.strictEqual(_.VERSION, '3.8.0');
+        assert.strictEqual(_.VERSION, '3.9.3');
     });
 
     it('util is global object', function () {
