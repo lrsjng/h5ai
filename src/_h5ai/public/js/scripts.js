@@ -1,14 +1,11 @@
 (function () {
-    'use strict';
-
-    document.documentElement.className = '';
-    var el = document.createElement('i');
-    el.innerHTML = '<!--[if lt IE 10]><br><![endif]-->';
-    var browser = el.getElementsByTagName('br').length === 0;
-
-    if (!browser) {
-        document.documentElement.className = 'no-browser';
-        throw 'no-browser';
+    var doc = document;
+    var el = doc.documentElement;
+    var id = 'no-browser';
+    el.className = '';
+    if (doc.getElementById(id)) {
+        el.className = id;
+        throw id;
     }
 }());
 
