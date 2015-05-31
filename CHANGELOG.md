@@ -1,4 +1,3 @@
-
 # Changelog
 
 * now requires PHP 5.4.0+
