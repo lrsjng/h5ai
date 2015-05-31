@@ -1,10 +1,30 @@
-modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allsettings) {
+modulejs.define('ext/peer5', ['_', '$', 'core/event', 'core/resource', 'core/settings'], function (_, $, event, resource, allsettings) {
 
     var settings = _.extend({
             enabled: false,
             id: 'z142i5n5qypq4cxr'
         }, allsettings.peer5);
 
+    // Add icon and html for load peer5 download
+    var template = '<span class="peer5Download"><img src="' + resource.image('peer5-download') + '" alt="peer5Download"/></span>';
+
+    function peer5Download(items) {
+        _.each(items, function (item) {
+            var url =  item.absHref;
+            if (item.$view && !item.isFolder()) {
+                $(template)
+                    .on('click', function (ev) {
+
+                        if (window.peer5) {
+                            ev.preventDefault();
+                            window.peer5.download(url);
+                            return false;
+                        }
+                    })
+                    .appendTo(item.$view.find('a'));
+                }
+        });
+    }
 
     function init() {
 
@@ -21,10 +41,13 @@ modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allset
             cache: true
         });
 
+        event.sub('view.changed', peer5Download);
+
         // attach to file items, once the DOM is ready
         $(function () {
 
-            $('body').on('click', '.item.file > a', function (ev) {
+            // load peer5 download in preview mode
+            $('#pv-bar-raw').on('click', '.bar-button', function (ev) {
 
                 if (window.peer5) {
                     ev.preventDefault();
