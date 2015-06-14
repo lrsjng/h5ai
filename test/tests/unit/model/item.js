@@ -10,19 +10,19 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xRootName = util.uniqId();
+        this.xRootName = uniq.id();
         this.xTypes = {
-            getType: sinon.stub().returns(util.uniqId())
+            getType: sinon.stub().returns(uniq.id())
         };
-        this.xEvent = util.uniqObj();
+        this.xEvent = uniq.obj();
         this.xSettings = {
-            rootHref: util.uniqPath('/' + this.xRootName + '/')
+            rootHref: uniq.path('/' + this.xRootName + '/')
         };
-        this.xServer = util.uniqObj();
+        this.xServer = uniq.obj();
         this.xLocation = {
             forceEncoding: sinon.stub().returnsArg(0),
-            getDomain: sinon.stub().returns(util.uniqId()),
-            getAbsHref: sinon.stub().returns(util.uniqId())
+            getDomain: sinon.stub().returns(uniq.id()),
+            getAbsHref: sinon.stub().returns(uniq.id())
         };
         this.applyFn = function () {
 

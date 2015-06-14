@@ -12,7 +12,7 @@ describe('module \'' + ID + '\'', function () {
 
         this.xConfig = {
             setup: {
-                VERSION: util.uniqId()
+                VERSION: uniq.id()
             },
             options: {}
         };
@@ -136,7 +136,7 @@ describe('module \'' + ID + '\'', function () {
 
             it('login works', function () {
 
-                var pass = util.uniqId();
+                var pass = uniq.id();
                 var expectedData = {
                         action: 'login',
                         pass: pass

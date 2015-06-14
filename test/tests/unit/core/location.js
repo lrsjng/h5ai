@@ -242,7 +242,7 @@ describe('module \'' + ID + '\'', function () {
 
             var $el = $('<a/>');
             var item = {
-                absHref: util.uniqId(),
+                absHref: uniq.id(),
                 isManaged: false,
                 isFolder: sinon.stub().returns(false)
             };
@@ -259,7 +259,7 @@ describe('module \'' + ID + '\'', function () {
 
             var $el = $('<a/>');
             var item = {
-                absHref: util.uniqId(),
+                absHref: uniq.id(),
                 isManaged: false,
                 isFolder: sinon.stub().returns(true)
             };
@@ -276,7 +276,7 @@ describe('module \'' + ID + '\'', function () {
 
             var $el = $('<a/>');
             var item = {
-                absHref: util.uniqId(),
+                absHref: uniq.id(),
                 isManaged: true,
                 isFolder: sinon.stub().returns(true)
             };
@@ -293,7 +293,7 @@ describe('module \'' + ID + '\'', function () {
 
             var $el = $('<a/>');
             var item = {
-                absHref: util.uniqId(),
+                absHref: uniq.id(),
                 isManaged: true,
                 isFolder: sinon.stub().returns(true)
             };

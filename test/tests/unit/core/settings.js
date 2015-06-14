@@ -12,13 +12,13 @@ describe('module \'' + ID + '\'', function () {
 
         this.xConfig = {
             options: {
-                someOptions: util.uniqObj(),
-                otherOptions: util.uniqObj(),
-                more: util.uniqObj()
+                someOptions: uniq.obj(),
+                otherOptions: uniq.obj(),
+                more: uniq.obj()
             },
             setup: {
-                PUBLIC_HREF: util.uniqId(),
-                ROOT_HREF: util.uniqId()
+                PUBLIC_HREF: uniq.id(),
+                ROOT_HREF: uniq.id()
             }
         };
         this.applyFn = function () {

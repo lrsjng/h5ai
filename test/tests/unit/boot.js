@@ -10,7 +10,7 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xConfig = util.uniqObj();
+        this.xConfig = uniq.obj();
         this.xDefine = sinon.stub(modulejs, 'define');
         this.xRequire = sinon.stub(modulejs, 'require');
         this.xServer = {

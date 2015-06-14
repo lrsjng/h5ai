@@ -15,7 +15,7 @@ describe('module \'' + ID + '\'', function () {
             pub: sinon.stub()
         };
         this.xResource = {
-            image: sinon.stub().returns(util.uniqPath('-image.png'))
+            image: sinon.stub().returns(uniq.path('-image.png'))
         };
         this.xSettings = {view: {
             modeToggle: false

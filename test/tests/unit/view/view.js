@@ -16,14 +16,14 @@ describe('module \'' + ID + '\'', function () {
         };
         this.xFormat = {
             setDefaultMetric: sinon.stub(),
-            formatDate: sinon.stub().returns(util.uniqId()),
-            formatSize: sinon.stub().returns(util.uniqId())
+            formatDate: sinon.stub().returns(uniq.id()),
+            formatSize: sinon.stub().returns(uniq.id())
         };
         this.xLocation = {
-            setLink: sinon.stub().returns(util.uniqId())
+            setLink: sinon.stub().returns(uniq.id())
         };
         this.xResource = {
-            icon: sinon.stub().returns(util.uniqId())
+            icon: sinon.stub().returns(uniq.id())
         };
         this.xSettings = {view: {
             binaryPrefix: false,
@@ -253,7 +253,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('sets correct class to #view-hint', function () {
 
-            var key = util.uniqId();
+            var key = uniq.id();
             var instance = this.applyFn();
             instance.setHint(key);
             assert.strictEqual($('#view-hint').attr('class'), 'l10n-' + key);
@@ -261,7 +261,7 @@ describe('module \'' + ID + '\'', function () {
 
         it('removes all other classes from #view-hint', function () {
 
-            var key = util.uniqId();
+            var key = uniq.id();
             var instance = this.applyFn();
             $('#view-hint').addClass('a');
             instance.setHint(key);
@@ -407,10 +407,10 @@ describe('module \'' + ID + '\'', function () {
 
     //             return {
     //                 isFolder: sinon.stub().returns(false),
-    //                 label: util.uniqId(),
+    //                 label: uniq.id(),
     //                 time: 0,
     //                 size: 0,
-    //                 type: util.uniqId(),
+    //                 type: uniq.id(),
     //                 isManaged: false,
     //                 icon: null,
     //                 isCurrentParentFolder: sinon.stub().returns(false)

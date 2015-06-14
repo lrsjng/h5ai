@@ -30,6 +30,7 @@
         "mocha": false,
         "modulejs": false,
         "sinon": false,
+        "uniq": false,
         "util": false
     }
 }

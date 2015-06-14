@@ -38,44 +38,10 @@ describe('premisses', function () {
         assert.strictEqual(util, window.util);
     });
 
-    it('util.uniqId() works', function () {
+    it('uniq is global object', function () {
 
-        assert.isFunction(util.uniqId);
-
-        var uid1 = parseInt(util.uniqId().replace(/\D/g, ''), 10);
-
-        assert.isTrue(util.isUniqId(util.uniqId()));
-        assert.notEqual(util.uniqId(), util.uniqId());
-        assert.notDeepEqual(util.uniqId(), util.uniqId());
-        assert.notStrictEqual(util.uniqId(), util.uniqId());
-
-        var uid2 = parseInt(util.uniqId().replace(/\D/g, ''), 10);
-        assert.strictEqual(uid2, uid1 + 8);
-    });
-
-    it('util.uniqObj() works', function () {
-
-        assert.isFunction(util.uniqId);
-
-        assert.lengthOfKeys(util.uniqObj(), 1);
-        assert.isTrue(util.isUniqId(util.uniqObj().uniqId));
-        assert.notEqual(util.uniqObj(), util.uniqObj());
-        assert.notDeepEqual(util.uniqObj(), util.uniqObj());
-        assert.notStrictEqual(util.uniqObj(), util.uniqObj());
-        assert.notEqual(util.uniqObj().uniqId, util.uniqObj().uniqId);
-        assert.notDeepEqual(util.uniqObj().uniqId, util.uniqObj().uniqId);
-        assert.notStrictEqual(util.uniqObj().uniqId, util.uniqObj().uniqId);
-    });
-
-    it('util.uniqPath() works', function () {
-
-        assert.isFunction(util.uniqPath);
-
-        assert.notEqual(util.uniqPath(), util.uniqPath());
-        assert.notDeepEqual(util.uniqPath(), util.uniqPath());
-        assert.notStrictEqual(util.uniqPath(), util.uniqPath());
-        assert.strictEqual(util.uniqPath('abc').substr(-3), 'abc');
-        assert.strictEqual(util.uniqPath('xyz/').substr(-4), 'xyz/');
+        assert.isPlainObject(util);
+        assert.strictEqual(util, window.util);
     });
 
     it('assert.isPlainObject() works', function () {

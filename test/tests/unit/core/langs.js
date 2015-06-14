@@ -10,7 +10,7 @@ describe('module \'' + ID + '\'', function () {
 
         this.definition = modulejs._private.definitions[ID];
 
-        this.xConfig = {langs: util.uniqObj()};
+        this.xConfig = {langs: uniq.obj()};
         this.applyFn = function () {
 
             return this.definition.fn(_, this.xConfig);

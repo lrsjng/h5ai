@@ -11,7 +11,7 @@ function clearModulejs() {
 
 function mockConfigModule() {
 
-    modulejs.define('config', window.util.uniqObj());
+    modulejs.define('config', window.uniq.obj());
 }
 
 window.util = window.util || {};

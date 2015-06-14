@@ -53,7 +53,7 @@ describe('module \'' + ID + '\'', function () {
             var instance = this.applyFn();
             assert.isPlainObject(instance);
             assert.lengthOfKeys(instance, 1);
-            assert.isTrue(util.isUniqId(instance.uniqId));
+            assert.isTrue(uniq.isId(instance._uniq_id));
         });
     });
 });

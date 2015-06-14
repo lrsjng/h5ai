@@ -1,11 +1,8 @@
 {
-    "disallowDanglingUnderscores": {
-        "allExcept": ["_exception", "_obj" , "_private"]
-    },
     "disallowEmptyBlocks": true,
     "disallowImplicitTypeConversion": [
         "binary",
-        "boolean",
+        //"boolean",
         "numeric",
         "string"
     ],

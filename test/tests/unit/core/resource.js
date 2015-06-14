@@ -16,7 +16,7 @@ describe('module \'' + ID + '\'', function () {
                 b: 'myTheme/b.jpg'
             }
         };
-        this.xSettings = {publicHref: util.uniqPath('/publicHref/')};
+        this.xSettings = {publicHref: uniq.path('/publicHref/')};
         this.applyFn = function () {
 
             return this.definition.fn(_, this.xConfig, this.xSettings);
@@ -62,7 +62,7 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOf(_.keys(instance), 2);
+            assert.lengthOfKeys(instance, 2);
         });
     });
 

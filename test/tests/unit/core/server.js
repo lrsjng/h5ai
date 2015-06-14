@@ -81,7 +81,7 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
             assert.isPlainObject(instance);
-            assert.lengthOf(_.keys(instance), 2);
+            assert.lengthOfKeys(instance, 2);
         });
     });
 
@@ -97,8 +97,8 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
 
-            var xData = util.uniqObj();
-            var xResult = util.uniqObj();
+            var xData = uniq.obj();
+            var xResult = uniq.obj();
             var spy = sinon.spy();
             var res = instance.request(xData, spy);
 
@@ -124,7 +124,7 @@ describe('module \'' + ID + '\'', function () {
 
             var instance = this.applyFn();
 
-            var xData = util.uniqObj();
+            var xData = uniq.obj();
             var spy = sinon.spy();
             var res = instance.request(xData, spy);
 
@@ -160,8 +160,8 @@ describe('module \'' + ID + '\'', function () {
             var instance = this.applyFn();
 
             var xData = {
-                a: util.uniqId(),
-                b: util.uniqId()
+                a: uniq.id(),
+                b: uniq.id()
             };
             var res = instance.formRequest(xData);
 
