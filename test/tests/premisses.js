@@ -15,7 +15,7 @@ describe('premisses', function () {
         assert.strictEqual(document, window.document);
     });
 
-    it('jQuery and $ are global objects', function () {
+    it('jQuery and $ are global functions', function () {
 
         assert.isFunction(jQuery);
         assert.strictEqual(jQuery, window.jQuery);
@@ -25,7 +25,7 @@ describe('premisses', function () {
         assert.strictEqual($, window.$);
     });
 
-    it('_ is global object', function () {
+    it('_ is global function', function () {
 
         assert.isFunction(_);
         assert.strictEqual(_, window._);
