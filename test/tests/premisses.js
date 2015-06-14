@@ -40,8 +40,8 @@ describe('premisses', function () {
 
     it('uniq is global object', function () {
 
-        assert.isPlainObject(util);
-        assert.strictEqual(util, window.util);
+        assert.isPlainObject(uniq);
+        assert.strictEqual(uniq, window.uniq);
     });
 
     it('assert.isPlainObject() works', function () {
