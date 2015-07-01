@@ -12,7 +12,7 @@
     "nonbsp": true,
     "nonew": true,
     "plusplus": true,
-    "strict": false,
+    "strict": true,
     "supernew": true,
     "trailing": true,
     "undef": true,
