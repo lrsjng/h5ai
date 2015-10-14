@@ -83,9 +83,9 @@ class Archive {
 
         header('Content-Length: ' . $total_size);
 
-        foreach ($dirs as $archived_dir) {
+        foreach ($dirs as $real_dir => $archived_dir) {
 
-            echo $this->php_tar_header($archived_dir, 0, 0, 5);
+            echo $this->php_tar_header($archived_dir, 0, @filemtime($real_dir . DIRECTORY_SEPARATOR . "."), 5);
         }
         foreach ($files as $real_file => $archived_file) {
 
@@ -183,7 +183,7 @@ class Archive {
     private function add_dir($real_dir, $archived_dir) {
 
         if ($this->context->is_managed_path($real_dir)) {
-            $this->dirs[] = $archived_dir;
+            $this->dirs[$real_dir] = $archived_dir;
 
             $files = $this->context->read_dir($real_dir);
             foreach ($files as $file) {
