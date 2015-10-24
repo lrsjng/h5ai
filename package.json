@@ -2,33 +2,39 @@
   "name": "h5ai",
   "version": "0.27.0",
   "develop": true,
-  "description": "a modern HTTP web server index",
-  "homepage": "http://larsjung.de/h5ai/",
+  "description": "A modern HTTP web server index.",
+  "homepage": "https://larsjung.de/h5ai/",
   "bugs": "https://github.com/lrsjng/h5ai/issues",
-  "author": "Lars Jung <lrsjng@gmail.com> (http://larsjung.de)",
+  "author": "Lars Jung <lrsjng@gmail.com> (https://larsjung.de)",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/lrsjng/h5ai.git"
   },
   "scripts": {
-    "build": "mkr release",
-    "build-test": "mkr build-test"
+    "build": "mkr -b release",
+    "build-test": "mkr -b build-test"
   },
   "devDependencies": {
-    "fquery": "~0.16.4",
-    "fquery-autoprefixer": "~0.2.0",
-    "fquery-cssmin": "~0.3.1",
-    "fquery-handlebars": "~0.3.0",
-    "fquery-includeit": "~0.3.0",
-    "fquery-jade": "~0.5.0",
-    "fquery-jshint": "~0.3.0",
-    "fquery-jszip": "~0.5.1",
-    "fquery-less": "~0.3.0",
-    "fquery-uglifyjs": "~0.3.0",
-    "mkr": "~0.8.5"
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^5.3.2",
+    "dateformat": "^1.0.11",
+    "eslint": "^1.7.3",
+    "fquery": "^0.16.4",
+    "fquery-autoprefixer": "^0.3.0",
+    "fquery-cssmin": "^0.3.1",
+    "fquery-gethash": "^0.3.0",
+    "fquery-handlebars": "^0.3.0",
+    "fquery-includeit": "^0.3.0",
+    "fquery-jade": "^0.6.0",
+    "fquery-jszip": "^0.5.1",
+    "fquery-less": "^0.3.0",
+    "fquery-uglifyjs": "^0.3.0",
+    "mkr": "^0.10.0",
+    "webpack": "^1.12.2"
   },
   "engines": {
-    "node": "0.12.x"
+    "node": "4.x"
   }
 }

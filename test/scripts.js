@@ -1,4 +1,4 @@
-// @include "lib/*.js"
+// @include "vendor/*.js"
 // @include "util/*.js"
 
 $(function () {

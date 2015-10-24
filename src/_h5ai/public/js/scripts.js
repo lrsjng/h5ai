@@ -9,12 +9,12 @@
     }
 }());
 
-// @include 'lib/jquery-*.js'
-// @include 'lib/jquery.*.js'
-// @include 'lib/lodash-*.js'
-// @include 'lib/marked-*.js'
-// @include 'lib/modulejs-*.js'
-// @include 'lib/prism-*.js'
+// @include 'vendor/jquery-*.js'
+// @include 'vendor/jquery.*.js'
+// @include 'vendor/lodash-*.js'
+// @include 'vendor/marked-*.js'
+// @include 'vendor/modulejs-*.js'
+// @include 'vendor/prism-*.js'
 
 (function () {
     'use strict';

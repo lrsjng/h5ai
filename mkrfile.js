@@ -1,167 +1,243 @@
-/*jshint node: true */
-'use strict';
+import fq from 'fquery';
+import dateformat from 'dateformat';
+import {join, resolve} from 'path';
+import webpack from 'webpack';
+import {spawnSync} from 'child_process';
 
+const loadPlugins = () => {
+    const pkg = require('./package.json');
+    const deps = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.devDependencies || {})];
+    const plugs = deps.filter(name => name.startsWith('fquery-'));
+    plugs.forEach(plug => fq.plugin(plug));
+};
+loadPlugins();
 
-var path = require('path');
-var $ = require('fquery');
+const root = resolve(__dirname);
+const src = join(root, 'src');
+const build = join(root, 'build');
 
-var pkg = require('./package.json');
-
-var root = path.resolve(__dirname);
-var src = path.join(root, 'src');
-var build = path.join(root, 'build');
-
-
-function getBuildSuffixSync() {
-
-    try {
-        var out = require('child_process').execSync('git rev-list v' + pkg.version + '..HEAD', {cwd: root, encoding: 'utf8'});
-        var lines = out.trim().split(/\r?\n/);
-        return '+' + ('000' + lines.length).substr(-3) + '~' + lines[0].substring(0, 7);
-    } catch (e) {}
-    return '+X';
+function once(fn) {
+    let getter = () => {
+        const value = fn();
+        getter = () => value;
+        return value;
+    };
+    return () => getter();
 }
 
+function run(cmd, {info = true, stdout = true, stderr = true, liberal = false, local = true} = {}) {
+    const stdio = ['ignore', stdout ? 1 : 'pipe', stderr ? 2 : 'pipe'];
+    if (info) {
+        fq.report({type: 'info', method: 'run', message: cmd});
+    }
+    const precmd = local ? 'PATH=./node_modules/.bin:$PATH;' : '';
+    const res = spawnSync('sh', ['-c', precmd + cmd], {
+        cwd: root,
+        stdio,
+        encoding: 'utf-8'
+    });
+    if (res.status !== 0 && !liberal) {
+        fq.report({type: 'err', method: 'run', message: `${cmd} [${res.status}] ${String(res.error)}`});
+    }
+    return res;
+}
 
-$.plugin('fquery-autoprefixer');
-$.plugin('fquery-cssmin');
-$.plugin('fquery-handlebars');
-$.plugin('fquery-includeit');
-$.plugin('fquery-jade');
-$.plugin('fquery-jshint');
-$.plugin('fquery-jszip');
-$.plugin('fquery-less');
-$.plugin('fquery-uglifyjs');
+const getStamp = once(() => {
+    const stamp = new Date();
+    stamp.human = dateformat(stamp, 'yyyy-mm-dd HH:MM:ss');
+    stamp.id = stamp.human.replace(/\D/g, '-');
+    stamp.sha1 = fq.getHash(stamp.id);
+    return stamp;
+});
 
+const getPackage = once(() => {
+    const pkg = require('./package.json');
+    const res = run(`git rev-list v${pkg.version}..HEAD`, {info: false, stdout: false, stderr: false, liberal: true});
+    if (res.status === 0) {
+        const hashes = fq._.compact(res.stdout.split(/\r?\n/));
+        if (hashes.length) {
+            pkg.version += `+${hashes.length}~${hashes[0].substr(0, 7)}`;
+        }
+    }
+    return pkg;
+});
 
-module.exports = function (suite) {
+const getComment = once(() => {
+    const pkg = getPackage();
+    return `${pkg.name} v${pkg.version} - ${getStamp().human}`;
+});
 
+const getHeader = once(() => `/* ${getComment()} */\n`);
 
+function formatWebpackStats(stats, len) {
+    const json = stats.toJson();
+    const align = (s, i) => `          ${s}`.substr(-i);
+    const cmp = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+    const sortBy = (arr, selector = x => x) => Array.from(arr).sort((a, b) => cmp(selector(a), selector(b)));
+    let res = sortBy(json.modules, x => x.size);
+    if (len) {
+        res = 'stats\n' + res.slice(-len).map(r => {
+            return `${align(`[${r.id}]`, 7)}${align(r.size, 10)}   ${r.name}`;
+        }).join('\n');
+        res += `\n\n${align(json.modules.length, 7)}${align(json.assets[0].size, 10)}   ${json.assets[0].name}`;
+    } else {
+        res = `modules: ${json.modules.length}, bytes: ${json.assets[0].size}, bundle: ${json.assets[0].name}`;
+    }
+    return res;
+}
+
+module.exports = suite => {
     suite.defaults('release');
 
+    suite.target('clean', [], 'delete build folder').task(() => {
+        fq(build, {dirs: true}).delete();
+    });
 
-    suite.target('check-version', [], 'add git info to dev builds').task(function () {
+    suite.target('lint', [], 'lint all JavaScript files with eslint').task(() => {
+        run(`eslint ${src}/_h5ai/public/js`);
+    });
 
-        if (pkg.develop) {
-            pkg.version += getBuildSuffixSync();
-            $.report({type: 'info', method: 'check-version', message: 'version set to ' + pkg.version});
+    suite.target('build:scripts').task(done => {
+        const mapSrc = fq.map.p(src, build);
+        const scriptsChanged = fq(`${src}: _h5ai/public/js/scripts.js`)
+            .newerThan(mapSrc, fq(`${src}: _h5ai/public/js/**`)).length > 0;
+
+        if (!scriptsChanged) {
+            done();
+            return;
         }
+
+        const webpackConfig = {
+            context: src,
+            entry: './_h5ai/public/js/scripts.js',
+            output: {
+                path: build,
+                filename: '_h5ai/public/js/scripts.js'
+            },
+            module: {
+                loaders: [
+                    {
+                        include: [src],
+                        loader: 'babel',
+                        query: {
+                            cacheDirectory: true
+                        }
+                    }
+                ]
+            }
+        };
+
+        if (!suite.args.production) {
+            webpackConfig.output.pathinfo = true;
+            webpackConfig.devtool = '#inline-source-map';
+        }
+
+        webpack(webpackConfig, (err, stats) => {
+            if (err) {
+                fq.report({type: 'err', method: 'scripts', message: err});
+            }
+            console.log(stats.toString({colors: true}));
+            // fq.report({type: 'info', method: 'webpack', message: formatWebpackStats(stats, 10)});
+
+            fq(`${build}: _h5ai/public/js/scripts.js`)
+                .if(suite.args.production, function applyuglifyjs() {
+                    this.uglifyjs(); // eslint-disable-line no-invalid-this
+                })
+                .wrap(getHeader())
+                .write(mapSrc, true);
+            done();
+        });
     });
 
+    suite.target('build', [], 'build all updated files, optionally use :uncompressed (e.g. mkr -b build :uncompressed)').task(() => {
+        const env = {pkg: getPackage()};
+        const mapSrc = fq.map.p(src, build).s('.less', '.css').s('.jade', '');
+        const mapRoot = fq.map.p(root, join(build, '_h5ai'));
 
-    suite.target('clean', [], 'delete build folder').task(function () {
-
-        $(build, {dirs: true}).delete();
-    });
-
-
-    suite.target('lint', [], 'lint all JavaScript files with JSHint').task(function () {
-
-        var fs = require('fs');
-        var jshint = JSON.parse(fs.readFileSync('.jshintrc', 'utf8'));
-
-        $(src + '/_h5ai/public/js: **/*.js, ! lib/**')
-            .jshint(jshint, jshint.globals);
-    });
-
-
-    suite.target('build', ['check-version', 'lint'], 'build all updated files, optionally use :uncompressed (e.g. mkr build :uncompressed)').task(function () {
-
-        var header = '/* ' + pkg.name + ' ' + pkg.version + ' - ' + pkg.homepage + ' */\n';
-        var env = {pkg: pkg};
-        var mapSrc = $.map.p(src, build).s('.less', '.css').s('.jade', '');
-        var mapRoot = $.map.p(root, path.join(build, '_h5ai'));
-
-        $(src + ': _h5ai/public/js/*.js')
-            .newerThan(mapSrc, $(src + ': _h5ai/public/js/**'))
+        fq(`${src}: _h5ai/public/js/*.js`)
+            .newerThan(mapSrc, fq(`${src}: _h5ai/public/js/**`))
             .includeit()
-            .if(!suite.args.uncompressed, function () { this.uglifyjs(); })
-            .wrap(header)
+            .if(!suite.args.uncompressed, function applyuglifyjs() {
+                this.uglifyjs(); // eslint-disable-line no-invalid-this
+            })
+            .wrap(getHeader())
             .write(mapSrc, true);
 
-        $(src + ': _h5ai/public/css/*.less')
-            .newerThan(mapSrc, $(src + ': _h5ai/public/css/**'))
+        fq(`${src}: _h5ai/public/css/*.less`)
+            .newerThan(mapSrc, fq(`${src}: _h5ai/public/css/**`))
             .includeit()
             .less()
             .autoprefixer()
-            .if(!suite.args.uncompressed, function () { this.cssmin(); })
-            .wrap(header)
+            .if(!suite.args.uncompressed, function applycssmin() {
+                this.cssmin(); // eslint-disable-line no-invalid-this
+            })
+            .wrap(getHeader())
             .write(mapSrc, true);
 
-        $(src + ': **/*.jade, ! **/*.tpl.jade')
+        fq(`${src}: **/*.jade, ! **/*.tpl.jade`)
             .newerThan(mapSrc)
             .jade(env)
             .write(mapSrc, true);
 
-        $(src + ': **, ! _h5ai/public/js/**, ! _h5ai/public/css/**, ! **/*.jade')
+        fq(`${src}: **, ! _h5ai/public/js/**, ! _h5ai/public/css/**, ! **/*.jade`)
             .newerThan(mapSrc)
             .handlebars(env)
             .write(mapSrc, true);
 
-        $(root + ': *.md')
+        fq(`${root}: *.md`)
             .newerThan(mapRoot)
             .write(mapRoot, true);
+
+        fq.report({type: 'info', message: getComment()});
     });
 
-
-    suite.target('deploy', ['build'], 'deploy to a specified path (e.g. mkr deploy :dest=/some/path)').task(function () {
-
-        if (!$._.isString(suite.args.dest)) {
-            $.report({
-                type: 'err',
-                message: 'no destination path (e.g. mkr deploy :dest=/some/path)'
-            });
+    suite.target('deploy', ['build'], 'deploy to a specified path (e.g. mkr -b deploy :dest=/some/path)').task(() => {
+        if (!fq._.isString(suite.args.dest)) {
+            fq.report({type: 'err', message: 'no destination path (e.g. mkr -b deploy :dest=/some/path)'});
         }
 
-        var mapper = $.map.p(build, path.resolve(suite.args.dest));
+        const mapper = fq.map.p(build, resolve(suite.args.dest));
 
-        $(build + ': _h5ai/**')
+        fq(`${build}: _h5ai/**`)
             .newerThan(mapper)
             .write(mapper, true);
     });
 
+    // suite.target('release', ['clean', 'lint', 'build'], 'create a zipball').task(() => {
+    suite.target('release', ['clean', 'build'], 'create a zipball').task(() => {
+        const pkg = getPackage();
+        const target = join(build, `${pkg.name}-${pkg.version}.zip`);
 
-    suite.target('release', ['clean', 'build'], 'create a zipball').task(function () {
-
-        var target = path.join(build, pkg.name + '-' + pkg.version + '.zip');
-
-        $(build + ': **')
+        fq(`${build}: **`)
             .jszip({dir: build, level: 9})
             .write(target, true);
     });
 
-
-    suite.target('build-test', ['check-version'], 'build a test suite').task(function () {
-
-        var env = {pkg: pkg};
-
-        $(src + '/_h5ai/public/css/styles.less')
+    suite.target('build-test', [], 'build a test suite').task(() => {
+        fq(`${src}/_h5ai/public/css/styles.less`)
             .includeit()
             .less()
             .autoprefixer()
-            .write(build + '/test/h5ai-styles.css', true);
+            .write(`${build}/test/h5ai-styles.css`, true);
 
-        $(src + '/_h5ai/public/js/scripts.js')
+        fq(`${src}/_h5ai/public/js/scripts.js`)
             .includeit()
-            .write(build + '/test/h5ai-scripts.js', true);
+            .write(`${build}/test/h5ai-scripts.js`, true);
 
-        $(root + '/test/styles.less')
+        fq(`${root}/test/styles.less`)
             .includeit()
             .less()
             .autoprefixer()
-            .write(build + '/test/styles.css', true);
+            .write(`${build}/test/styles.css`, true);
 
-        $(root + '/test/scripts.js')
+        fq(`${root}/test/scripts.js`)
             .includeit()
-            .write(build + '/test/scripts.js', true);
+            .write(`${build}/test/scripts.js`, true);
 
-        $(root + '/test/index.html.jade')
-            .jade(env)
-            .write(build + '/test/index.html', true);
+        fq(`${root}/test/index.html.jade`)
+            .jade({pkg: getPackage()})
+            .write(`${build}/test/index.html`, true);
 
-        $.report({
-            type: 'info',
-            message: 'browse to file://' + build + '/test/index.html'
-        });
+        fq.report({type: 'info', message: `browse to file://${build}/test/index.html`});
     });
 };
