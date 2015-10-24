@@ -136,8 +136,8 @@ module.exports = suite => {
             if (err) {
                 fq.report({type: 'err', method: 'scripts', message: err});
             }
-            console.log(stats.toString({colors: true}));
-            // fq.report({type: 'info', method: 'webpack', message: formatWebpackStats(stats, 10)});
+            // console.log(stats.toString({colors: true}));
+            fq.report({type: 'info', method: 'webpack', message: formatWebpackStats(stats, 10)});
 
             fq(`${build}: _h5ai/public/js/scripts.js`)
                 .if(suite.args.production, function applyuglifyjs() {
