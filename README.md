@@ -24,7 +24,7 @@ There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. But to build **h5ai** yourself either *git-clone* or
 *download* the repository. From within the root folder run the following
 commands to find a fresh zipball in folder `build` (tested on linux only,
-requires [`node4+`][node] to be installed).
+requires [`node 4.0+`][node] to be installed).
 
 ~~~sh
 > npm install
@@ -60,7 +60,7 @@ THE SOFTWARE.
 ## References
 
 **h5ai** profits from other projects, all of them licensed under the MIT license
-too. Exceptions are the [Material Design icons][material-design-icons] (CC BY 4.0).
+too. Exceptions are some [Material Design icons][material-design-icons] (CC BY 4.0).
 
 
 [web]: https://larsjung.de/h5ai/
@@ -68,9 +68,7 @@ too. Exceptions are the [Material Design icons][material-design-icons] (CC BY 4.
 [github-issues]: https://github.com/lrsjng/h5ai/issues
 [release]: https://release.larsjung.de/h5ai/
 [develop]: https://release.larsjung.de/h5ai/develop/
-[git]: https://git-scm.com
 [node]: https://nodejs.org
-[mkr]: https://larsjung.de/mkr/
 [material-design-icons]: https://github.com/google/material-design-icons
 
 [license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
