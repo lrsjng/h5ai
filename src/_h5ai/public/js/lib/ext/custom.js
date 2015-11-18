@@ -1,17 +1,14 @@
 modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 'core/settings'], function (_, $, marked, event, server, allsettings) {
-
     var settings = _.extend({
-            enabled: false
-        }, allsettings.custom);
+        enabled: false
+    }, allsettings.custom);
     var $header;
     var $footer;
     var duration = 200;
 
 
     function onLocationChanged(item) {
-
         server.request({action: 'get', custom: item.absHref}, function (response) {
-
             var custom = response && response.custom;
             var hasHeader;
             var hasFooter;
@@ -50,7 +47,6 @@ modulejs.define('ext/custom', ['_', '$', 'marked', 'core/event', 'core/server', 
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

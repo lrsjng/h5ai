@@ -1,11 +1,9 @@
 modulejs.define('ext/title', ['_', 'core/event', 'core/settings'], function (_, event, allsettings) {
-
     var settings = _.extend({
-            enabled: false
-        }, allsettings.title);
+        enabled: false
+    }, allsettings.title);
 
     function onLocationChanged(item) {
-
         var labels = _.pluck(item.getCrumb(), 'label');
         var title = labels.join(' > ');
 
@@ -17,7 +15,6 @@ modulejs.define('ext/title', ['_', 'core/event', 'core/settings'], function (_, 
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

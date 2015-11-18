@@ -14,7 +14,8 @@
 * fixes preview bottom bar for small screen widths
 * lots of code cleanup and refactorings
 * changes API
-* updates build process
+* updates build process, now uses [ghu](https://larsjung.de/ghu/)
+* switches from jshint and jscs to [eslint](http://eslint.org/)
 * updates `lodash` to 3.8.0 (adds debounce and trim)
 * updates h5bp styles to 5.1.0
 * updates `normalize.css` to 3.0.3
@@ -40,7 +41,7 @@
 * improves drag-select
 * improves image preview
 * prevents listing `_h5ai` folder and subfolders
-* updates build process, now uses [mkr](http://larsjung.de/mkr/) and [fQuery](http://larsjung.de/fquery/)
+* updates build process, now uses [mkr](https://larsjung.de/mkr/) and [fQuery](https://larsjung.de/fquery/)
 * updates `jQuery` to 2.1.3
 * updates `jQuery.qrcode` to 0.11.0
 * updates `Lo-Dash` to 3.6.0
@@ -222,9 +223,9 @@
 * changes language code `gr` to `el`
 * adds localization for filter placeholder
 * adds `hu` translation by [Rodolffo](https://github.com/Rodolffo)
-* updates to [jQuery.qrcode](http://larsjung.de/qrcode/) 0.2
-* updates to [jQuery.scrollpanel](http://larsjung.de/scrollpanel/) 0.1
-* updates to [modulejs](http://larsjung.de/modulejs/) 0.2
+* updates to [jQuery.qrcode](https://larsjung.de/qrcode/) 0.2
+* updates to [jQuery.scrollpanel](https://larsjung.de/scrollpanel/) 0.1
+* updates to [modulejs](https://larsjung.de/modulejs/) 0.2
 * updates to [Moment.js](http://momentjs.com) 1.7.0
 * updates to [Underscore.js](http://underscorejs.org) 1.3.3
 

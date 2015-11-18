@@ -1,8 +1,5 @@
 modulejs.define('core/util', ['_'], function (_) {
-
-
     function regularCmpFn(val1, val2) {
-
         if (val1 < val2) {
             return -1;
         }
@@ -17,7 +14,6 @@ modulejs.define('core/util', ['_'], function (_) {
     //
     // Modified to make it work with h5ai
     function naturalCmpFn(val1, val2) {
-
         var re = /(^-?[0-9]+(\.?[0-9]*)[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/gi;
         var sre = /(^[ ]*|[ ]*$)/g;
         var dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/;
@@ -30,7 +26,7 @@ modulejs.define('core/util', ['_'], function (_) {
         var xN = x.replace(re, '\0$1\0').replace(/\0$/, '').replace(/^\0/, '').split('\0');
         var yN = y.replace(re, '\0$1\0').replace(/\0$/, '').replace(/^\0/, '').split('\0');
         // numeric, hex or date detection
-        var xD = parseInt(x.match(hre), 10) || (xN.length !== 1 && x.match(dre) && Date.parse(x));
+        var xD = parseInt(x.match(hre), 10) || xN.length !== 1 && x.match(dre) && Date.parse(x);
         var yD = parseInt(y.match(hre), 10) || xD && y.match(dre) && Date.parse(y) || null;
         var oFxNcL;
         var oFyNcL;
@@ -49,7 +45,7 @@ modulejs.define('core/util', ['_'], function (_) {
             oFyNcL = !(yN[cLoc] || '').match(ore) && parseFloat(yN[cLoc]) || yN[cLoc] || 0;
             // handle numeric vs string comparison - number < string - (Kyle Adams)
             if (isNaN(oFxNcL) !== isNaN(oFyNcL)) {
-                return (isNaN(oFxNcL)) ? 1 : -1;
+                return isNaN(oFxNcL) ? 1 : -1;
             } else if (typeof oFxNcL !== typeof oFyNcL) {
                 // rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
                 oFxNcL += '';
@@ -66,12 +62,10 @@ modulejs.define('core/util', ['_'], function (_) {
     }
 
     function escapePattern(sequence) {
-
         return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
     }
 
     function parsePattern(sequence, advanced) {
-
         if (!advanced) {
             return escapePattern(sequence);
         }
@@ -81,9 +75,7 @@ modulejs.define('core/util', ['_'], function (_) {
         }
 
         sequence = _.map(_.trim(sequence).split(/\s+/), function (part) {
-
             return _.map(part.split(''), function (character) {
-
                 return escapePattern(character);
             }).join('.*?');
         }).join('|');

@@ -1,5 +1,4 @@
 modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store', 'view/mainrow', 'view/topbar'], function ($, resource, store, mainrow, topbar) {
-
     var storekey = 'sidebarIsVisible';
     var tplSidebar = '<div id="sidebar"/>';
     var tplToggle =
@@ -12,7 +11,6 @@ modulejs.define('view/sidebar', ['$', 'core/resource', 'core/store', 'view/mainr
 
 
     function update(toggle) {
-
         var isVisible = store.get(storekey);
 
         if (toggle) {

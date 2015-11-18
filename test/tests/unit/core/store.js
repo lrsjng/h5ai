@@ -1,131 +1,108 @@
 (function () {
-'use strict';
+    var ID = 'core/store';
+    var DEPS = ['core/modernizr'];
 
-var ID = 'core/store';
-var DEPS = ['core/modernizr'];
+    describe('module \'' + ID + '\'', function () {
+        before(function () {
+            this.definition = modulejs._private.definitions[ID];
 
-describe('module \'' + ID + '\'', function () {
-
-    before(function () {
-
-        this.definition = modulejs._private.definitions[ID];
-
-        this.storeKey = '_h5ai';
-        this.xModernizr = {localstorage: true};
-        this.applyFn = function () {
-
-            return this.definition.fn(this.xModernizr);
-        };
-    });
-
-    after(function () {
-
-        util.restoreHtml();
-    });
-
-    beforeEach(function () {
-
-        util.restoreHtml();
-    });
-
-    describe('definition', function () {
-
-        it('is defined', function () {
-
-            assert.isPlainObject(this.definition);
+            this.storeKey = '_h5ai';
+            this.xModernizr = {localstorage: true};
+            this.applyFn = function () {
+                return this.definition.fn(this.xModernizr);
+            };
         });
 
-        it('has correct id', function () {
-
-            assert.strictEqual(this.definition.id, ID);
+        after(function () {
+            util.restoreHtml();
         });
 
-        it('requires correct', function () {
-
-            assert.deepEqual(this.definition.deps, DEPS);
+        beforeEach(function () {
+            util.restoreHtml();
         });
 
-        it('args for each request', function () {
+        describe('definition', function () {
+            it('is defined', function () {
+                assert.isPlainObject(this.definition);
+            });
 
-            assert.strictEqual(this.definition.deps.length, this.definition.fn.length);
+            it('has correct id', function () {
+                assert.strictEqual(this.definition.id, ID);
+            });
+
+            it('requires correct', function () {
+                assert.deepEqual(this.definition.deps, DEPS);
+            });
+
+            it('args for each request', function () {
+                assert.strictEqual(this.definition.deps.length, this.definition.fn.length);
+            });
+
+            it('has no instance', function () {
+                assert.notProperty(modulejs._private.instances, ID);
+            });
+
+            it('inits without errors', function () {
+                this.applyFn();
+            });
         });
 
-        it('has no instance', function () {
-
-            assert.notProperty(modulejs._private.instances, ID);
+        describe('application', function () {
+            it('returns plain object with 2 properties', function () {
+                var instance = this.applyFn();
+                assert.isPlainObject(instance);
+                assert.lengthOfKeys(instance, 2);
+            });
         });
 
-        it('inits without errors', function () {
-
-            this.applyFn();
+        describe('.put()', function () {
+            it('is function', function () {
+                var instance = this.applyFn();
+                assert.isFunction(instance.put);
+            });
         });
-    });
 
-    describe('application', function () {
-
-        it('returns plain object with 2 properties', function () {
-
-            var instance = this.applyFn();
-            assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 2);
+        describe('.get()', function () {
+            it('is function', function () {
+                var instance = this.applyFn();
+                assert.isFunction(instance.get);
+            });
         });
-    });
 
-    describe('.put()', function () {
+        describe('works', function () {
+            it('works', function () {
+                var key1 = 'test1';
+                var value1 = '1234';
+                var key2 = 'test2';
+                var value2 = '5678';
+                var instance = this.applyFn();
 
-        it('is function', function () {
+                assert.isNull(window.localStorage.getItem(this.storeKey));
 
-            var instance = this.applyFn();
-            assert.isFunction(instance.put);
-        });
-    });
+                assert.isUndefined(instance.get(key1));
+                assert.isNull(window.localStorage.getItem(this.storeKey));
 
-    describe('.get()', function () {
+                assert.isUndefined(instance.put(key1, value1));
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234"}');
 
-        it('is function', function () {
+                assert.strictEqual(instance.get(key1), value1);
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234"}');
 
-            var instance = this.applyFn();
-            assert.isFunction(instance.get);
-        });
-    });
+                assert.isUndefined(instance.put(key1, undefined));
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{}');
 
-    describe('works', function () {
+                assert.isUndefined(instance.get(key1));
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{}');
 
-        it('works', function () {
+                assert.isUndefined(instance.put(key1, value1));
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234"}');
 
-            var key1 = 'test1';
-            var value1 = '1234';
-            var key2 = 'test2';
-            var value2 = '5678';
-            var instance = this.applyFn();
+                assert.isUndefined(instance.put(key2, value2));
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234","test2":"5678"}');
 
-            assert.isNull(window.localStorage.getItem(this.storeKey));
-
-            assert.isUndefined(instance.get(key1));
-            assert.isNull(window.localStorage.getItem(this.storeKey));
-
-            assert.isUndefined(instance.put(key1, value1));
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234"}');
-
-            assert.strictEqual(instance.get(key1), value1);
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234"}');
-
-            assert.isUndefined(instance.put(key1, undefined));
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{}');
-
-            assert.isUndefined(instance.get(key1));
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{}');
-
-            assert.isUndefined(instance.put(key1, value1));
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234"}');
-
-            assert.isUndefined(instance.put(key2, value2));
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test1":"1234","test2":"5678"}');
-
-            assert.isUndefined(instance.put(key1, undefined));
-            assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test2":"5678"}');
+                assert.isUndefined(instance.put(key1, undefined));
+                assert.strictEqual(window.localStorage.getItem(this.storeKey), '{"test2":"5678"}');
+            });
         });
     });
-});
-
 }());

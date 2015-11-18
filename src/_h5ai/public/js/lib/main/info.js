@@ -1,5 +1,4 @@
 modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], function ($, config, resource, server) {
-
     var tplTests =
             '<ul id="tests">';
     var tplTest =
@@ -33,17 +32,15 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
 
 
     function addTest(label, info, passed, result) {
-
         var $test = $(tplTest).appendTo('#tests');
         $test.find('.label').text(label);
         $test.find('.result')
                 .addClass(passed ? 'passed' : 'failed')
-                .text(result ? result : (passed ? 'yes' : 'no'));
+                .text(result ? result : passed ? 'yes' : 'no');
         $test.find('.info').html(info);
     }
 
     function addTests() {
-
         if (!setup.AS_ADMIN) {
             return;
         }
@@ -52,7 +49,7 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
 
         addTest(
             'h5ai version', 'Only green if this is an official h5ai release',
-            /^\d+\.\d+\.\d+$/.test(setup.VERSION), setup.VERSION
+            (/^\d+\.\d+\.\d+$/).test(setup.VERSION), setup.VERSION
         );
 
         addTest(
@@ -127,12 +124,10 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
     }
 
     function reload() {
-
         window.location.reload();
     }
 
     function onLogin() {
-
         server.request({
             action: 'login',
             pass: $('#pass').val()
@@ -140,26 +135,22 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
     }
 
     function onLogout() {
-
         server.request({
             action: 'logout'
         }, reload);
     }
 
     function onKeydown(event) {
-
         if (event.which === 13) {
             onLogin();
         }
     }
 
     function addSupport() {
-
         $(tplSupport).appendTo('#content');
     }
 
     function addLogin() {
-
         $(tplLogin).appendTo('#content');
 
         if (setup.AS_ADMIN) {
@@ -177,7 +168,6 @@ modulejs.define('main/info', ['$', 'config', 'core/resource', 'core/server'], fu
     }
 
     function init() {
-
         addSupport();
         addLogin();
         addTests();

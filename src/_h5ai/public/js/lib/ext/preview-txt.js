@@ -1,9 +1,8 @@
 modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', 'core/settings', 'ext/preview'], function (_, $, marked, prism, event, allsettings, preview) {
-
     var settings = _.extend({
-            enabled: false,
-            types: {}
-        }, allsettings['preview-txt']);
+        enabled: false,
+        types: {}
+    }, allsettings['preview-txt']);
     var tplText = '<pre id="pv-txt-text" class="highlighted"/>';
     var tplMarkdown = '<div id="pv-txt-text" class="markdown"/>';
     var spinnerThreshold = 200;
@@ -14,26 +13,22 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
 
 
     function preloadText(item, callback) {
-
         $.ajax({
-                url: item.absHref,
-                dataType: 'text'
-            })
-            .done(function (content) {
+            url: item.absHref,
+            dataType: 'text'
+        })
+        .done(function (content) {
+            callback(item, content);
 
-                callback(item, content);
-
-                // for testing
-                // setTimeout(function () { callback(item, content); }, 1000);
-            })
-            .fail(function (jqXHR, textStatus) {
-
-                callback(item, '[ajax error] ' + textStatus);
-            });
+            // for testing
+            // setTimeout(function () { callback(item, content); }, 1000);
+        })
+        .fail(function (jqXHR, textStatus) {
+            callback(item, '[ajax error] ' + textStatus);
+        });
     }
 
     function onAdjustSize() {
-
         var $content = $('#pv-content');
         var $text = $('#pv-txt-text');
 
@@ -43,7 +38,6 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
     }
 
     function onIdxChange(rel) {
-
         currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
         currentItem = currentItems[currentIdx];
 
@@ -60,13 +54,11 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
         } else {
             clearTimeout(spinnerTimeoutId);
             spinnerTimeoutId = setTimeout(function () {
-
                 preview.showSpinner(true, currentItem.icon);
             }, spinnerThreshold);
         }
 
         preloadText(currentItem, function (item, textContent) {
-
             if (item !== currentItem) {
                 return;
             }
@@ -104,7 +96,6 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
     }
 
     function onEnter(items, idx) {
-
         currentItems = items;
         currentIdx = idx;
         currentItem = items[idx];
@@ -115,30 +106,25 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
     }
 
     function initItem(item) {
-
         if (item.$view && _.indexOf(_.keys(settings.types), item.type) >= 0) {
-            item.$view.find('a').on('click', function (event) {
+            item.$view.find('a').on('click', function (ev) {
+                ev.preventDefault();
 
-                event.preventDefault();
-
-                var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
-
-                    item = $(item).data('item');
-                    return _.indexOf(_.keys(settings.types), item.type) >= 0 ? item : null;
+                var matchedItems = _.compact(_.map($('#items .item'), function (matchedItem) {
+                    matchedItem = $(matchedItem).data('item');
+                    return _.indexOf(_.keys(settings.types), matchedItem.type) >= 0 ? matchedItem : null;
                 }));
 
-                onEnter(matchedEntries, _.indexOf(matchedEntries, item));
+                onEnter(matchedItems, _.indexOf(matchedItems, item));
             });
         }
     }
 
     function onViewChanged(added) {
-
         _.each(added, initItem);
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

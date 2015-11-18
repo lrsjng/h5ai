@@ -1,8 +1,7 @@
 modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'view/sidebar', 'view/topbar', 'view/view'], function (_, $, event, resource, allsettings, sidebar, topbar, view) {
-
     var settings = _.extend({
-            modeToggle: false
-        }, allsettings.view);
+        modeToggle: false
+    }, allsettings.view);
     var tplSettings =
             '<div id="viewmode-settings" class="block"><h1 class="l10n-view">View</h1></div>';
     var tplMode =
@@ -20,7 +19,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
 
 
     function onChanged(mode, size) {
-
         $('#viewmode-settings .mode').removeClass('active');
         $('#viewmode-' + mode).addClass('active');
         $('#viewmode-size').val(_.indexOf(sizes, size));
@@ -32,7 +30,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
     }
 
     function addSettings() {
-
         if (modes.length < 2 && sizes.length < 2) {
             return;
         }
@@ -43,7 +40,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
             _.each(modes, function (mode) {
                 $(tplMode.replace(/\[MODE\]/g, mode))
                     .on('click', function () {
-
                         view.setMode(mode);
                     })
                     .appendTo($viewBlock);
@@ -55,7 +51,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
             $(tplSize)
                 .prop('max', max).attr('max', max)
                 .on('input change', function (ev) {
-
                     view.setSize(sizes[ev.target.valueAsNumber]);
                 })
                 .appendTo($viewBlock);
@@ -65,7 +60,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
     }
 
     function onToggle() {
-
         var mode = view.getMode();
         var nextIdx = (modes.indexOf(mode) + 1) % modes.length;
         var nextMode = modes[nextIdx];
@@ -74,7 +68,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
     }
 
     function addToggle() {
-
         if (settings.modeToggle && modes.length > 1) {
             $(tplToggle)
                 .on('click', onToggle)
@@ -83,7 +76,6 @@ modulejs.define('view/viewmode', ['_', '$', 'core/event', 'core/resource', 'core
     }
 
     function init() {
-
         modes = view.getModes();
         sizes = view.getSizes();
 

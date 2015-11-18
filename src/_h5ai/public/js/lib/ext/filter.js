@@ -1,10 +1,9 @@
 modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'core/util', 'view/view'], function (_, $, event, location, resource, allsettings, util, view) {
-
     var settings = _.extend({
-            enabled: false,
-            advanced: false,
-            debounceTime: 100
-        }, allsettings.filter);
+        enabled: false,
+        advanced: false,
+        debounceTime: 100
+    }, allsettings.filter);
     var template =
             '<div id="filter" class="tool">' +
                 '<img src="' + resource.image('filter') + '" alt="filter"/>' +
@@ -17,7 +16,6 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
 
 
     function filter(pattern) {
-
         pattern = pattern || '';
         if (pattern === prevPattern) {
             return;
@@ -35,7 +33,6 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
         var matchedItems = [];
 
         _.each(location.getItem().content, function (item) {
-
             if (re.test(item.label)) {
                 matchedItems.push(item);
             }
@@ -47,7 +44,6 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
     }
 
     function update() {
-
         if (inputIsVisible) {
             $filter.addClass('active');
             $input.focus();
@@ -59,20 +55,17 @@ modulejs.define('ext/filter', ['_', '$', 'core/event', 'core/location', 'core/re
     }
 
     function toggle() {
-
         inputIsVisible = !inputIsVisible;
         update();
     }
 
     function reset() {
-
         inputIsVisible = false;
         $input.val('');
         update();
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

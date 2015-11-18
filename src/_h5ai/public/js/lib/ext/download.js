@@ -1,11 +1,10 @@
 modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/server', 'core/settings'], function (_, $, event, location, resource, server, allsettings) {
-
     var settings = _.extend({
-            enabled: false,
-            type: 'php-tar',
-            packageName: 'package',
-            alwaysVisible: false
-        }, allsettings.download);
+        enabled: false,
+        type: 'php-tar',
+        packageName: 'package',
+        alwaysVisible: false
+    }, allsettings.download);
     var template =
             '<div id="download" class="tool">' +
                 '<img src="' + resource.image('download') + '" alt="download"/>' +
@@ -15,7 +14,6 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
 
 
     function onSelection(items) {
-
         selectedItems = items.slice(0);
         if (selectedItems.length) {
             $download.show();
@@ -25,10 +23,9 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
     }
 
     function onClick() {
-
         var type = settings.type;
         var name = settings.packageName;
-        var extension = (type === 'shell-zip') ? 'zip' : 'tar';
+        var extension = type === 'shell-zip' ? 'zip' : 'tar';
 
         if (!name) {
             if (selectedItems.length === 1) {
@@ -39,14 +36,13 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
         }
 
         var query = {
-                action: 'download',
-                as: name + '.' + extension,
-                type: type,
-                baseHref: location.getAbsHref()
-            };
+            action: 'download',
+            as: name + '.' + extension,
+            type: type,
+            baseHref: location.getAbsHref()
+        };
 
         _.each(selectedItems, function (item, idx) {
-
             query['hrefs[' + idx + ']'] = item.absHref;
         });
 
@@ -54,7 +50,6 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

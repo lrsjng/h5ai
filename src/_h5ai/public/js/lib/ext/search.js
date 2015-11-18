@@ -1,10 +1,9 @@
 modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/server', 'core/settings', 'core/util', 'model/item', 'view/view'], function (_, $, event, location, resource, server, allsettings, util, Item, view) {
-
     var settings = _.extend({
-            enabled: false,
-            advanced: false,
-            debounceTime: 300
-        }, allsettings.search);
+        enabled: false,
+        advanced: false,
+        debounceTime: 300
+    }, allsettings.search);
     var template =
             '<div id="search" class="tool">' +
                 '<img src="' + resource.image('search') + '" alt="search"/>' +
@@ -17,7 +16,6 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
 
 
     function search(pattern) {
-
         pattern = pattern || '';
         if (pattern === prevPattern) {
             return;
@@ -38,18 +36,15 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
                 pattern: pattern
             }
         }, function (response) {
-
             $search.removeClass('pending');
             view.setHint('noMatch');
             view.setItems(_.map(response.search, function (item) {
-
                 return Item.get(item);
             }));
         });
     }
 
     function update() {
-
         if (inputIsVisible) {
             $search.addClass('active');
             $input.focus();
@@ -61,20 +56,17 @@ modulejs.define('ext/search', ['_', '$', 'core/event', 'core/location', 'core/re
     }
 
     function toggle() {
-
         inputIsVisible = !inputIsVisible;
         update();
     }
 
     function reset() {
-
         inputIsVisible = false;
         $input.val('');
         update();
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

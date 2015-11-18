@@ -1,19 +1,21 @@
 // @include "vendor/*.js"
-// @include "util/*.js"
 
-$(function () {
-    'use strict';
+(function () {
+    'use strict'; // eslint-disable-line strict
+    // @include "util/*.js"
+}());
+
+jQuery(function () {
+    'use strict'; // eslint-disable-line strict
 
     util.mockConfigModule();
     util.clearModulejs();
     util.setupMocha();
 
     describe('all tests', function () {
-
         // @include "tests/premisses.js"
 
         describe('unit tests', function () {
-
             // @include "tests/unit/modulejs.js"
             // @include "tests/unit/libs.js"
             // @include "tests/unit/boot.js"
@@ -23,7 +25,6 @@ $(function () {
         });
 
         describe('integration tests', function () {
-
             // @include "tests/integration/*.js"
             // @-include "tests/integration/*/*.js"
         });

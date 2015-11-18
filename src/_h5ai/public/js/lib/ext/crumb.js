@@ -1,8 +1,7 @@
 modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'view/topbar'], function (_, $, event, location, resource, allsettings, topbar) {
-
     var settings = _.extend({
-            enabled: false
-        }, allsettings.crumb);
+        enabled: false
+    }, allsettings.crumb);
     var crumbTemplate =
             '<a class="crumb">' +
                 '<img class="sep" src="' + resource.image('crumb') + '" alt=">"/>' +
@@ -13,7 +12,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
 
 
     function createHtml(item) {
-
         var $html = $(crumbTemplate).data('item', item);
         item.$crumb = $html;
         location.setLink($html, item);
@@ -32,7 +30,6 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
     }
 
     function onLocationChanged(item) {
-
         var $crumb = item.$crumb;
 
         if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
@@ -40,14 +37,13 @@ modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/res
             $crumb.addClass('active');
         } else {
             $crumbbar.empty();
-            _.each(item.getCrumb(), function (item) {
-                $crumbbar.append(createHtml(item));
+            _.each(item.getCrumb(), function (crumbItem) {
+                $crumbbar.append(createHtml(crumbItem));
             });
         }
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

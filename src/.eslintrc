@@ -1,0 +1,43 @@
+---
+  env:
+    es6: false
+    node: false
+    browser: true
+    mocha: false
+
+  globals:
+    modulejs: false
+
+  ecmaFeatures:
+    arrowFunctions: false
+    binaryLiterals: false
+    blockBindings: false
+    classes: false
+    defaultParams: false
+    destructuring: false
+    forOf: false
+    generators: false
+    globalReturn: false
+    jsx: false
+    modules: false
+    objectLiteralComputedProperties: false
+    objectLiteralDuplicateProperties: false
+    objectLiteralShorthandMethods: false
+    objectLiteralShorthandProperties: false
+    octalLiterals: false
+    regexUFlag: false
+    regexYFlag: false
+    spread: false
+    superInFunctions: false
+    templateStrings: false
+    unicodeCodePointEscapes: false
+
+  rules:
+    consistent-this: 0
+    func-names: 0
+    max-params: [1, 10]
+    no-invalid-this: 0
+    no-var: 0
+    object-shorthand: 0
+    prefer-arrow-callback: 0
+    prefer-reflect: 0

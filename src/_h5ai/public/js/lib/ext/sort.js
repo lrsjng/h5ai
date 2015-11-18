@@ -1,19 +1,17 @@
 modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/settings', 'core/store', 'core/util'], function (_, $, event, resource, allsettings, store, util) {
-
     var settings = _.extend({
-            enabled: false,
-            column: 0,
-            reverse: false,
-            ignorecase: true,
-            natural: false,
-            folders: 0
-        }, allsettings.sort);
+        enabled: false,
+        column: 0,
+        reverse: false,
+        ignorecase: true,
+        natural: false,
+        folders: 0
+    }, allsettings.sort);
     var storekey = 'ext/sort';
     var template = '<img src="' + resource.image('sort') + '" class="sort" alt="sort order" />';
 
 
     function getType(item) {
-
         var $item = $(item);
 
         if ($item.hasClass('folder-parent')) {
@@ -31,37 +29,32 @@ modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/sett
     }
 
     function getName(item) {
-
         return $(item).find('.label').text();
     }
 
     function getTime(item) {
-
         return $(item).find('.date').data('time');
     }
 
     function getSize(item) {
-
         return $(item).find('.size').data('bytes');
     }
 
 
     var columnGetters = {
-            0: getName,
-            1: getTime,
-            2: getSize
-        };
+        0: getName,
+        1: getTime,
+        2: getSize
+    };
     var columnClasses = {
-            0: 'label',
-            1: 'date',
-            2: 'size'
-        };
+        0: 'label',
+        1: 'date',
+        2: 'size'
+    };
 
 
     function cmpFn(getValue, reverse, ignorecase, natural) {
-
         return function (item1, item2) {
-
             var res;
             var val1;
             var val2;
@@ -90,7 +83,6 @@ modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/sett
     }
 
     function sortItems(column, reverse) {
-
         var $headers = $('#items li.header a');
         var $header = $('#items li.header a.' + columnClasses[column]);
         var fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, column === 0 && settings.natural);
@@ -111,7 +103,6 @@ modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/sett
     }
 
     function onContentChanged() {
-
         var order = store.get(storekey);
         var column = order && order.column || settings.column;
         var reverse = order && order.reverse || settings.reverse;
@@ -120,7 +111,6 @@ modulejs.define('ext/sort', ['_', '$', 'core/event', 'core/resource', 'core/sett
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }

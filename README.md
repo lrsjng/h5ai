@@ -40,7 +40,7 @@ To build the frontend test suite run `npm run build-test`. This will output a
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Lars Jung (http://larsjung.de)
+Copyright (c) 2015 Lars Jung (https://larsjung.de)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -67,14 +67,14 @@ THE SOFTWARE.
 too. Exceptions are the [Material Design icons][material-design-icons] (CC BY 4.0).
 
 
-[web]: http://larsjung.de/h5ai/
+[web]: https://larsjung.de/h5ai/
 [github]: https://github.com/lrsjng/h5ai
 [github-issues]: https://github.com/lrsjng/h5ai/issues
-[release]: http://release.larsjung.de/h5ai/
-[develop]: http://release.larsjung.de/h5ai/develop/
-[git]: http://git-scm.com
+[release]: https://release.larsjung.de/h5ai/
+[develop]: https://release.larsjung.de/h5ai/develop/
+[git]: https://git-scm.com
 [node]: https://nodejs.org
-[mkr]: http://larsjung.de/mkr/
+[mkr]: https://larsjung.de/mkr/
 [material-design-icons]: https://github.com/google/material-design-icons
 
 [license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square

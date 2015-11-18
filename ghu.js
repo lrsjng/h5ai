@@ -2,12 +2,13 @@ import {resolve, join} from 'path';
 import dateformat from 'dateformat';
 import ghu from 'ghu';
 import {
-    autoprefixer, babel, cssmin, ife, includeit, jade, jszip,
+    autoprefixer, cssmin, ife, includeit, jade, jszip,
     less, mapfn, newerThan, read, remove, run, uglify, watch, wrap, write
 } from 'ghu';
 
 const ROOT = resolve(__dirname);
 const SRC = join(ROOT, 'src');
+const TEST = join(ROOT, 'test');
 const BUILD = join(ROOT, 'build');
 
 const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.jade', '');
@@ -54,7 +55,6 @@ ghu.task('build:scripts', runtime => {
     return read(`${SRC}/_h5ai/public/js/*.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
         .then(includeit())
-        // .then(babel({compact: false}))
         .then(ife(() => runtime.args.production, uglify()))
         .then(wrap(runtime.commentJs))
         .then(write(mapper, {overwrite: true}));
@@ -100,19 +100,19 @@ ghu.task('build:copy', runtime => {
 
 ghu.task('build:tests', ['build:scripts', 'build:styles'], 'build the test suite', runtime => {
     return Promise.all([
-        read(`${ROOT}/test/scripts.js`)
+        read(`${TEST}/scripts.js`)
             .then(newerThan(`${BUILD}/test/scripts.js`))
             .then(includeit())
             .then(write(`${BUILD}/test/scripts.js`, {overwrite: true})),
 
-        read(`${ROOT}/test/styles.less`)
+        read(`${TEST}/styles.less`)
             .then(newerThan(`${BUILD}/test/styles.css`))
             .then(includeit())
             .then(less())
             .then(autoprefixer())
             .then(write(`${BUILD}/test/styles.css`, {overwrite: true})),
 
-        read(`${ROOT}/test/index.html.jade`)
+        read(`${TEST}/index.html.jade`)
             .then(newerThan(`${BUILD}/test/index.html`))
             .then(jade({pkg: runtime.pkg}))
             .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
@@ -146,7 +146,7 @@ ghu.task('deploy', ['build'], 'deploy to a specified path with :dest=/some/path'
 });
 
 ghu.task('watch', runtime => {
-    return watch([SRC], () => ghu.run(runtime.sequence.filter(x => x !== 'watch'), runtime.args, true));
+    return watch([SRC, TEST], () => ghu.run(runtime.sequence.filter(x => x !== 'watch'), runtime.args, true));
 });
 
 ghu.task('release', ['force-production', 'clean', 'build'], 'create a zipball', runtime => {

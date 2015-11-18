@@ -1,8 +1,7 @@
 modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'core/store'], function (_, $, resource, allsettings, store) {
-
     var settings = _.extend({
-            enabled: true
-        }, allsettings.preview);
+        enabled: true
+    }, allsettings.preview);
     var $window = $(window);
     var tplOverlay =
             '<div id="pv-overlay">' +
@@ -30,7 +29,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
 
 
     function adjustSize() {
-
         var winWidth = $window.width();
         var winHeight = $window.height();
         var $container = $('#pv-content');
@@ -63,53 +61,40 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
         }
     }
 
-    function onEnter() {
-
-        setLabels([]);
-        $('#pv-content').empty();
-        $('#pv-overlay').stop(true, true).fadeIn(200);
-        $window.on('keydown', onKeydown);
-        adjustSize();
-    }
-
-    function onExit() {
-
-        $window.off('keydown', onKeydown);
-        $('#pv-overlay').stop(true, true).fadeOut(200, function () {
-            $('#pv-content').empty();
-            setLabels([]);
+    function setLabels(labels) {
+        $('#pv-buttons .bar-left').remove();
+        _.each(labels, function (label) {
+            $('<li/>')
+                .addClass('bar-left bar-label')
+                .text(label)
+                .appendTo('#pv-buttons');
         });
     }
 
     function onNext() {
-
         if (_.isFunction(onIndexChange)) {
             onIndexChange(1);
         }
     }
 
     function onPrevious() {
-
         if (_.isFunction(onIndexChange)) {
             onIndexChange(-1);
         }
     }
 
     function userAlive() {
-
         clearTimeout(userAliveTimeoutId);
         $('#pv-overlay .hof').stop(true, true).fadeIn(200);
 
         if (isFullscreen) {
             userAliveTimeoutId = setTimeout(function () {
-
                 $('#pv-overlay .hof').stop(true, true).fadeOut(2000);
             }, 2000);
         }
     }
 
     function onFullscreen() {
-
         isFullscreen = !isFullscreen;
         store.put(storekey, isFullscreen);
 
@@ -118,7 +103,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
     }
 
     function onKeydown(ev) {
-
         var key = ev.which;
 
         if (key === 27) { // esc
@@ -140,8 +124,23 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
         }
     }
 
-    function setIndex(idx, total) {
+    function onEnter() {
+        setLabels([]);
+        $('#pv-content').empty();
+        $('#pv-overlay').stop(true, true).fadeIn(200);
+        $window.on('keydown', onKeydown);
+        adjustSize();
+    }
 
+    function onExit() {
+        $window.off('keydown', onKeydown);
+        $('#pv-overlay').stop(true, true).fadeOut(200, function () {
+            $('#pv-content').empty();
+            setLabels([]);
+        });
+    }
+
+    function setIndex(idx, total) {
         if (_.isNumber(idx)) {
             $('#pv-bar-idx').text(String(idx) + (_.isNumber(total) ? '/' + String(total) : '')).show();
         } else {
@@ -150,7 +149,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
     }
 
     function setRawLink(href) {
-
         if (href) {
             $('#pv-bar-raw').show().find('a').attr('href', href);
         } else {
@@ -158,30 +156,15 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
         }
     }
 
-    function setLabels(labels) {
-
-        $('#pv-buttons .bar-left').remove();
-        _.each(labels, function (label) {
-
-            $('<li/>')
-                .addClass('bar-left bar-label')
-                .text(label)
-                .appendTo('#pv-buttons');
-        });
-    }
-
     function setOnIndexChange(fn) {
-
         onIndexChange = fn;
     }
 
     function setOnAdjustSize(fn) {
-
         onAdjustSize = fn;
     }
 
     function showSpinner(show, src, millis) {
-
         if (!_.isNumber(millis)) {
             millis = 300;
         }
@@ -204,12 +187,10 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
     }
 
     function isSpinnerVisible() {
-
         return spinnerVisible;
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }
@@ -226,7 +207,6 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
             .on('keydown', onKeydown)
             .on('mousemove mousedown', userAlive)
             .on('click mousedown mousemove keydown keypress', function (ev) {
-
                 if (ev.type === 'click' && (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content')) {
                     onExit();
                 }

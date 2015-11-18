@@ -1,10 +1,9 @@
 modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/settings'], function (_, $, event, resource, allsettings) {
-
     var settings = _.extend({
-            enabled: false,
-            clickndrag: false,
-            checkboxes: false
-        }, allsettings.select);
+        enabled: false,
+        clickndrag: false,
+        checkboxes: false
+    }, allsettings.select);
     var template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>';
     var x = 0;
     var y = 0;
@@ -21,30 +20,26 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
 
 
     function publish() {
-
         var items = _.map($('#items .item.selected'), function (itemElement) {
-
             return $(itemElement).data('item');
         });
         event.pub('selection', items);
     }
 
     function elementRect($element) {
-
         if (!$element.is(':visible')) {
             return null;
         }
 
         var offset = $element.offset();
-        var l = offset.left;
-        var t = offset.top;
-        var w = $element.outerWidth();
-        var h = $element.outerHeight();
-        return {l: l, t: t, w: w, h: h, r: l + w, b: t + h};
+        var elL = offset.left;
+        var elT = offset.top;
+        var elW = $element.outerWidth();
+        var elH = $element.outerHeight();
+        return {l: elL, t: elT, w: elW, h: elH, r: elL + elW, b: elT + elH};
     }
 
     function doOverlap(rect1, rect2) {
-
         if (!rect1 || !rect2) {
             return false;
         }
@@ -56,11 +51,10 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
         var width = right - left;
         var height = bottom - top;
 
-        return (width >= 0 && height >= 0);
+        return width >= 0 && height >= 0;
     }
 
     function selectionUpdate(ev) {
-
         l = Math.min(x, ev.pageX);
         t = Math.min(y, ev.pageY);
         w = Math.abs(x - ev.pageX);
@@ -86,7 +80,6 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
 
         var selRect = elementRect($selectionRect);
         $('#items .item').removeClass('selecting').each(function () {
-
             var $item = $(this);
             var inter = doOverlap(selRect, elementRect($item.find('a')));
 
@@ -97,7 +90,6 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
     }
 
     function selectionEnd(ev) {
-
         $document.off('mousemove', selectionUpdate);
 
         if (!isDragSelect) {
@@ -112,23 +104,20 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
         $html.removeClass('drag-select');
         $selectionRect
             .stop(true, true)
-            .animate(
-                {
-                    left: l + w * 0.5 * shrink,
-                    top: t + h * 0.5 * shrink,
-                    width: w * (1 - shrink),
-                    height: h * (1 - shrink),
-                    opacity: 0
-                },
-                300,
-                function () {
-                    $selectionRect.hide();
-                }
-            );
+            .animate({
+                left: l + w * 0.5 * shrink,
+                top: t + h * 0.5 * shrink,
+                width: w * (1 - shrink),
+                height: h * (1 - shrink),
+                opacity: 0
+            },
+            300,
+            function () {
+                $selectionRect.hide();
+            });
     }
 
     function selectionStart(ev) {
-
         // only on left button and don't block scrollbar
         if (ev.button !== 0 || ev.offsetX >= $('#content').width() - 14) {
             return;
@@ -145,7 +134,6 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
     }
 
     function onSelectorClick(ev) {
-
         ev.stopImmediatePropagation();
         ev.preventDefault();
 
@@ -154,7 +142,6 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
     }
 
     function addCheckbox(item) {
-
         if (item.$view && !item.isCurrentParentFolder()) {
             $(template)
                 .on('click', onSelectorClick)
@@ -163,13 +150,11 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
     }
 
     function onViewChanged(added, removed) {
-
         if (settings.checkboxes) {
             _.each(added, addCheckbox);
         }
 
         _.each(removed, function (item) {
-
             if (item.$view) {
                 item.$view.removeClass('selected');
             }
@@ -179,8 +164,7 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
     }
 
     function init() {
-
-        if (!settings.enabled || (!settings.clickndrag && !settings.checkboxes)) {
+        if (!settings.enabled || !settings.clickndrag && !settings.checkboxes) {
             return;
         }
 
@@ -192,12 +176,10 @@ modulejs.define('ext/select', ['_', '$', 'core/event', 'core/resource', 'core/se
             $('#content')
                 .on('mousedown', selectionStart)
                 .on('drag dragstart', function (ev) {
-
                     ev.stopImmediatePropagation();
                     ev.preventDefault();
                 })
                 .on('click', function () {
-
                     $('#items .item').removeClass('selected');
                     publish();
                 });

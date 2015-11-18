@@ -1,11 +1,10 @@
 modulejs.define('ext/info', ['_', '$', 'core/event', 'core/format', 'core/modernizr', 'core/resource', 'core/settings', 'core/store'], function (_, $, event, format, modernizr, resource, allsettings, store) {
-
     var settings = _.extend({
-            enabled: false,
-            show: false,
-            qrcode: true,
-            qrColor: '#999'
-        }, allsettings.info);
+        enabled: false,
+        show: false,
+        qrcode: true,
+        qrColor: '#999'
+    }, allsettings.info);
     var template =
             '<div id="info">' +
                 '<div class="icon"><img/></div>' +
@@ -40,7 +39,6 @@ modulejs.define('ext/info', ['_', '$', 'core/event', 'core/format', 'core/modern
 
 
     function updateSettings() {
-
         if (store.get(storekey)) {
             $('#view-info').addClass('active');
             $('#info').show();
@@ -51,7 +49,6 @@ modulejs.define('ext/info', ['_', '$', 'core/event', 'core/format', 'core/modern
     }
 
     function update(item) {
-
         var src = item.thumbRational || item.icon;
         var isThumb = Boolean(item.thumbRational);
 
@@ -101,23 +98,19 @@ modulejs.define('ext/info', ['_', '$', 'core/event', 'core/format', 'core/modern
     }
 
     function onMouseenter(item) {
-
         update(item);
     }
 
     function onMouseleave() {
-
         update(currentFolder);
     }
 
     function onLocationChanged(item) {
-
         currentFolder = item;
         update(currentFolder);
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }
@@ -140,14 +133,13 @@ modulejs.define('ext/info', ['_', '$', 'core/event', 'core/format', 'core/modern
             .appendTo('#sidebar')
             .find('#view-info')
             .on('click', function (ev) {
-
                 store.put(storekey, !store.get(storekey));
                 updateSettings();
                 ev.preventDefault();
             });
 
         // ensure stored value is boolean, otherwise set default
-        if (typeof (store.get(storekey)) !== 'boolean') {
+        if (typeof store.get(storekey) !== 'boolean') {
             store.put(storekey, settings.show);
         }
         updateSettings();

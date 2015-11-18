@@ -1,8 +1,7 @@
 modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'], function (_, $, resource, allsettings) {
-
     var settings = _.extend({
-            enabled: false
-        }, allsettings.contextmenu);
+        enabled: false
+    }, allsettings.contextmenu);
     var templateOverlay = '<div id="cm-overlay"/>';
     var templatePanel = '<div class="cm-panel"><ul/></div>';
     var templateSep = '<li class="cm-sep"/>';
@@ -11,12 +10,10 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
 
 
     function createOverlay(callback) {
-
         var $overlay = $(templateOverlay);
 
         $overlay
             .on('click contextmenu', function (ev) {
-
                 ev.stopPropagation();
                 ev.preventDefault();
 
@@ -32,20 +29,16 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
     }
 
     function createPanel(menu) {
-
         var $panel = $(templatePanel);
         var $ul = $panel.find('ul');
         var $li;
 
         _.each(menu, function (entry) {
-
             if (entry.type === '-') {
                 $(templateSep).appendTo($ul);
-
             } else if (entry.type === 'l') {
                 $(templateLabel).appendTo($ul)
                     .find('.cm-text').text(entry.text);
-
             } else if (entry.type === 'e') {
                 $li = $(templateEntry).appendTo($ul);
                 $li.data('cm-id', entry.id);
@@ -62,7 +55,6 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
     }
 
     function positionPanel($overlay, $panel, x, y) {
-
         var margin = 4;
 
         $panel.css({
@@ -123,7 +115,6 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
     }
 
     function showMenuAt(x, y, menu, callback) {
-
         var $overlay = createOverlay(callback);
         var $panel = createPanel(menu);
         $overlay.append($panel).appendTo('body');
@@ -131,20 +122,17 @@ modulejs.define('ext/contextmenu', ['_', '$', 'core/resource', 'core/settings'],
     }
 
     function init() {
-
         // settings.enabled = true;
         if (!settings.enabled) {
             return;
         }
 
         $(document).on('contextmenu', function (ev) {
-
             ev.stopPropagation();
             ev.preventDefault();
             $(ev.target).trigger($.Event('h5ai-contextmenu', {
                 originalEvent: ev,
                 showMenu: function (menu, callback) {
-
                     showMenuAt(ev.pageX, ev.pageY, menu, callback);
                 }
             }));

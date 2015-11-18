@@ -1,13 +1,11 @@
 modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allsettings) {
-
     var settings = _.extend({
-            enabled: false,
-            id: 'z142i5n5qypq4cxr'
-        }, allsettings.peer5);
+        enabled: false,
+        id: 'z142i5n5qypq4cxr'
+    }, allsettings.peer5);
 
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }
@@ -23,9 +21,7 @@ modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allset
 
         // attach to file items, once the DOM is ready
         $(function () {
-
             $('body').on('click', '.item.file > a', function (ev) {
-
                 if (window.peer5) {
                     ev.preventDefault();
                     var url = ev.currentTarget.href;

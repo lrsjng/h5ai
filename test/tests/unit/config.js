@@ -1,61 +1,47 @@
 (function () {
-'use strict';
+    var ID = 'config';
+    var DEPS = [];
 
-var ID = 'config';
-var DEPS = [];
+    describe('module \'' + ID + '\'', function () {
+        before(function () {
+            this.definition = modulejs._private.definitions[ID];
 
-describe('module \'' + ID + '\'', function () {
-
-    before(function () {
-
-        this.definition = modulejs._private.definitions[ID];
-
-        this.applyFn = function () {
-
-            return this.definition.fn($);
-        };
-    });
-
-    describe('definition', function () {
-
-        it('is defined', function () {
-
-            assert.isPlainObject(this.definition);
+            this.applyFn = function () {
+                return this.definition.fn($);
+            };
         });
 
-        it('has correct id', function () {
+        describe('definition', function () {
+            it('is defined', function () {
+                assert.isPlainObject(this.definition);
+            });
 
-            assert.strictEqual(this.definition.id, ID);
-        });
+            it('has correct id', function () {
+                assert.strictEqual(this.definition.id, ID);
+            });
 
-        it('requires correct', function () {
+            it('requires correct', function () {
+                assert.deepEqual(this.definition.deps, DEPS);
+            });
 
-            assert.deepEqual(this.definition.deps, DEPS);
-        });
+            it('args for each request', function () {
+                assert.strictEqual(this.definition.deps.length, this.definition.fn.length);
+            });
 
-        it('args for each request', function () {
+            it('has no instance', function () {
+                assert.notProperty(modulejs._private.instances, ID);
+            });
 
-            assert.strictEqual(this.definition.deps.length, this.definition.fn.length);
-        });
+            it('inits without errors', function () {
+                this.applyFn();
+            });
 
-        it('has no instance', function () {
-
-            assert.notProperty(modulejs._private.instances, ID);
-        });
-
-        it('inits without errors', function () {
-
-            this.applyFn();
-        });
-
-        it('is only dummy definition', function () {
-
-            var instance = this.applyFn();
-            assert.isPlainObject(instance);
-            assert.lengthOfKeys(instance, 1);
-            assert.isTrue(uniq.isId(instance._uniq_id));
+            it('is only dummy definition', function () {
+                var instance = this.applyFn();
+                assert.isPlainObject(instance);
+                assert.lengthOfKeys(instance, 1);
+                assert.isTrue(uniq.isId(instance._uniq_id));
+            });
         });
     });
-});
-
 }());

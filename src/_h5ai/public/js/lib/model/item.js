@@ -1,12 +1,10 @@
 modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server', 'core/settings', 'core/types'], function (_, event, location, server, settings, types) {
-
     var reEndsWithSlash = /\/$/;
     var reSplitPath = /^(.*\/)([^\/]+\/?)$/;
     var cache = {};
 
 
     function startsWith(sequence, part) {
-
         if (!sequence || !sequence.indexOf) {
             return false;
         }
@@ -15,16 +13,14 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
     }
 
     function createLabel(sequence) {
-
         sequence = sequence.replace(reEndsWithSlash, '');
         try {
             sequence = decodeURIComponent(sequence);
-        } catch (e) {}
+        } catch (e) {/* skip */}
         return sequence;
     }
 
     function splitPath(sequence) {
-
         if (sequence === '/') {
             return {
                 parent: null,
@@ -35,9 +31,9 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         var match = reSplitPath.exec(sequence);
         if (match) {
             var split = {
-                    parent: match[1],
-                    name: match[2]
-                };
+                parent: match[1],
+                name: match[2]
+            };
 
             if (split.parent && !startsWith(split.parent, settings.rootHref)) {
                 split.parent = null;
@@ -47,7 +43,6 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
     }
 
     function getItem(options) {
-
         if (_.isString(options)) {
             options = {href: options};
         } else if (!options || !_.isString(options.href)) {
@@ -60,70 +55,64 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
             return null;
         }
 
-        var self = cache[href] || new Item(href);
+        var item = cache[href] || new Item(href);
 
         if (_.isNumber(options.time)) {
-            self.time = options.time;
+            item.time = options.time;
         }
         if (_.isNumber(options.size)) {
-            self.size = options.size;
+            item.size = options.size;
         }
         if (options.managed) {
-            self.isManaged = true;
+            item.isManaged = true;
         }
         if (options.fetched) {
-            self.isContentFetched = true;
+            item.isContentFetched = true;
         }
 
-        return self;
+        return item;
     }
 
     function removeItem(absHref) {
-
         absHref = location.forceEncoding(absHref);
 
-        var self = cache[absHref];
+        var item = cache[absHref];
 
-        if (self) {
+        if (item) {
             delete cache[absHref];
-            if (self.parent) {
-                delete self.parent.content[self.absHref];
+            if (item.parent) {
+                delete item.parent.content[item.absHref];
             }
-            _.each(self.content, function (item) {
-
-                removeItem(item.absHref);
+            _.each(item.content, function (child) {
+                removeItem(child.absHref);
             });
         }
     }
 
     function fetchContent(absHref, callback) {
-
-        var self = getItem(absHref);
+        var item = getItem(absHref);
 
         if (!_.isFunction(callback)) {
             callback = function () {};
         }
 
-        if (self.isContentFetched) {
-            callback(self);
+        if (item.isContentFetched) {
+            callback(item);
         } else {
-            server.request({action: 'get', items: {href: self.absHref, what: 1}}, function (response) {
-
+            server.request({action: 'get', items: {href: item.absHref, what: 1}}, function (response) {
                 if (response.items) {
                     _.each(response.items, function (jsonItem) {
-
                         getItem(jsonItem);
                     });
                 }
 
-                callback(self);
+                callback(item);
             });
         }
     }
 
 
     function Item(absHref) {
-
         var split = splitPath(absHref);
 
         cache[absHref] = this;
@@ -149,49 +138,40 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
     _.extend(Item.prototype, {
 
         isFolder: function () {
-
             return reEndsWithSlash.test(this.absHref);
         },
 
         isCurrentFolder: function () {
-
             return this.absHref === location.getAbsHref();
         },
 
         isInCurrentFolder: function () {
-
             return Boolean(this.parent) && this.parent.isCurrentFolder();
         },
 
         isCurrentParentFolder: function () {
-
             var item = getItem(location.getAbsHref());
             return Boolean(item) && this === item.parent;
         },
 
         isDomain: function () {
-
             return this.absHref === '/';
         },
 
         isRoot: function () {
-
             return this.absHref === settings.rootHref;
         },
 
         isEmpty: function () {
-
             return _.keys(this.content).length === 0;
         },
 
         fetchContent: function (callback) {
-
             return fetchContent(this.absHref, callback);
         },
 
         getCrumb: function () {
-
-            var item = this;
+            var item = this; // eslint-disable-line consistent-this
             var crumb = [item];
 
             while (item.parent) {
@@ -203,23 +183,18 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         },
 
         getSubfolders: function () {
-
             return _.sortBy(_.filter(this.content, function (item) {
-
                 return item.isFolder();
             }), function (item) {
-
                 return item.label.toLowerCase();
             });
         },
 
         getStats: function () {
-
             var folders = 0;
             var files = 0;
 
             _.each(this.content, function (item) {
-
                 if (item.isFolder()) {
                     folders += 1;
                 } else {
@@ -228,7 +203,7 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
             });
 
             var depth = 0;
-            var item = this;
+            var item = this; // eslint-disable-line consistent-this
 
             while (item.parent) {
                 depth += 1;

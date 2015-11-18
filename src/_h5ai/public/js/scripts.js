@@ -17,7 +17,7 @@
 // @include 'vendor/prism-*.js'
 
 (function () {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     var win = window;
     modulejs.define('_', function () { return win._; });

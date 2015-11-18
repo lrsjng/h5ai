@@ -1,5 +1,4 @@
 modulejs.define('view/topbar', ['$', 'view/root'], function ($, root) {
-
     var tplTopbar =
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +

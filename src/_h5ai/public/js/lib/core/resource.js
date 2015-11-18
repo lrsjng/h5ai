@@ -1,5 +1,4 @@
 modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, config, settings) {
-
     var imagesHref = settings.publicHref + 'images/';
     var uiHref = imagesHref + 'ui/';
     var themesHref = imagesHref + 'themes/';
@@ -8,12 +7,10 @@ modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, 
 
 
     function image(id) {
-
         return uiHref + id + '.svg';
     }
 
     function icon(id) {
-
         var baseId = (id || '').split('-')[0];
         var href = config.theme[id] || config.theme[baseId];
 

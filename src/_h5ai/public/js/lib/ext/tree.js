@@ -1,12 +1,11 @@
 modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'core/store', 'core/util'], function (_, $, event, location, resource, allsettings, store, util) {
-
     var settings = _.extend({
-            enabled: false,
-            show: true,
-            maxSubfolders: 50,
-            naturalSort: false,
-            ignorecase: true
-        }, allsettings.tree);
+        enabled: false,
+        show: true,
+        maxSubfolders: 50,
+        naturalSort: false,
+        ignorecase: true
+    }, allsettings.tree);
     var template =
             '<div class="item">' +
                 '<span class="indicator none">' +
@@ -28,7 +27,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
 
 
     function cmpFn(item1, item2) {
-
         var val1 = item1.label;
         var val2 = item2.label;
 
@@ -41,7 +39,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
     }
 
     function update(item) {
-
         var $html = $(template);
         var $indicator = $html.find('.indicator');
         var $a = $html.find('a');
@@ -57,15 +54,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
         $label.text(item.label);
 
         if (item.isFolder()) {
-
             var subfolders = item.getSubfolders();
 
             // indicator
-            if ((item.isManaged && !item.isContentFetched) || subfolders.length) {
-
+            if (item.isManaged && !item.isContentFetched || subfolders.length) {
                 $indicator.removeClass('none');
 
-                if ((item.isManaged && !item.isContentFetched)) {
+                if (item.isManaged && !item.isContentFetched) {
                     $indicator.addClass('unknown');
                 } else if (item.isContentVisible) {
                     $indicator.addClass('open');
@@ -114,52 +109,41 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
     }
 
     function createOnIndicatorClick() {
-
         function slide(item, $indicator, $content, down) {
-
             item.isContentVisible = down;
             $indicator.removeClass('open close').addClass(down ? 'open' : 'close');
             $content[down ? 'slideDown' : 'slideUp']();
         }
 
         return function () {
-
             var $indicator = $(this);
             var $item = $indicator.closest('.item');
             var item = $item.data('item');
             var $content = $item.find('> ul.content');
 
             if ($indicator.hasClass('unknown')) {
-
-                item.fetchContent(function (item) {
-
+                item.fetchContent(function () {
                     item.isContentVisible = false;
 
-                    var $item = update(item);
-                    var $indicator = $item.find('> .indicator');
-                    var $content = $item.find('> ul.content');
+                    $item = update(item);
+                    $indicator = $item.find('> .indicator');
+                    $content = $item.find('> ul.content');
 
                     if (!$indicator.hasClass('none')) {
                         slide(item, $indicator, $content, true);
                     }
                 });
-
             } else if ($indicator.hasClass('open')) {
-
                 slide(item, $indicator, $content, false);
-
             } else if ($indicator.hasClass('close')) {
-
                 slide(item, $indicator, $content, true);
             }
         };
     }
 
     function fetchTree(item, callback) {
-
         item.isContentVisible = true;
-        item.fetchContent(function (item) {
-
+        item.fetchContent(function () {
             if (item.parent) {
                 fetchTree(item.parent, callback);
             } else {
@@ -169,7 +153,6 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
     }
 
     function updateSettings() {
-
         if (store.get(storekey)) {
             $('#view-tree').addClass('active');
             $('#tree').show();
@@ -180,16 +163,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
     }
 
     function onLocationChanged(item) {
-
         fetchTree(item, function (root) {
-
             $('#tree').append(update(root));
             updateSettings();
         });
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }
@@ -202,14 +182,13 @@ modulejs.define('ext/tree', ['_', '$', 'core/event', 'core/location', 'core/reso
             .appendTo('#sidebar')
             .find('#view-tree')
             .on('click', function (ev) {
-
                 store.put(storekey, !store.get(storekey));
                 updateSettings();
                 ev.preventDefault();
             });
 
         // ensure stored value is boolean, otherwise set default
-        if (typeof (store.get(storekey)) !== 'boolean') {
+        if (typeof store.get(storekey) !== 'boolean') {
             store.put(storekey, settings.show);
         }
         updateSettings();

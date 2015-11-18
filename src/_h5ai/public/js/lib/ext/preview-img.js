@@ -1,10 +1,9 @@
 modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core/settings', 'ext/preview'], function (_, $, event, server, allsettings, preview) {
-
     var settings = _.extend({
-            enabled: false,
-            size: null,
-            types: []
-        }, allsettings['preview-img']);
+        enabled: false,
+        size: null,
+        types: []
+    }, allsettings['preview-img']);
     var spinnerThreshold = 200;
     var spinnerTimeoutId;
     var currentItems;
@@ -13,7 +12,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
 
 
     function requestSample(href, callback) {
-
         if (!settings.size) {
             callback(href);
             return;
@@ -28,18 +26,14 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
                 height: 0
             }]
         }, function (json) {
-
             callback(json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null);
         });
     }
 
     function preloadImage(item, callback) {
-
         requestSample(item.absHref, function (src) {
-
             $('<img/>')
                 .one('load', function (ev) {
-
                     callback(item, ev.target);
 
                     // for testing
@@ -50,7 +44,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
     }
 
     function onAdjustSize() {
-
         var $content = $('#pv-content');
         var $img = $('#pv-img-image');
 
@@ -72,7 +65,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
     }
 
     function onIdxChange(rel) {
-
         currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
         currentItem = currentItems[currentIdx];
 
@@ -86,13 +78,11 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
         } else {
             clearTimeout(spinnerTimeoutId);
             spinnerTimeoutId = setTimeout(function () {
-
                 preview.showSpinner(true, currentItem.thumbSquare);
             }, spinnerThreshold);
         }
 
         preloadImage(currentItem, function (item, preloadedImage) {
-
             if (item !== currentItem) {
                 return;
             }
@@ -108,7 +98,6 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
     }
 
     function onEnter(items, idx) {
-
         currentItems = items;
         currentIdx = idx;
         preview.setOnIndexChange(onIdxChange);
@@ -118,30 +107,25 @@ modulejs.define('ext/preview-img', ['_', '$', 'core/event', 'core/server', 'core
     }
 
     function initItem(item) {
-
         if (item.$view && _.indexOf(settings.types, item.type) >= 0) {
             item.$view.find('a').on('click', function (ev) {
-
                 ev.preventDefault();
 
-                var matchedEntries = _.compact(_.map($('#items .item'), function (item) {
-
-                    item = $(item).data('item');
-                    return _.indexOf(settings.types, item.type) >= 0 ? item : null;
+                var matchedItems = _.compact(_.map($('#items .item'), function (matchedItem) {
+                    matchedItem = $(matchedItem).data('item');
+                    return _.indexOf(settings.types, matchedItem.type) >= 0 ? matchedItem : null;
                 }));
 
-                onEnter(matchedEntries, _.indexOf(matchedEntries, item));
+                onEnter(matchedItems, _.indexOf(matchedItems, item));
             });
         }
     }
 
     function onViewChanged(added) {
-
         _.each(added, initItem);
     }
 
     function init() {
-
         if (!settings.enabled) {
             return;
         }
