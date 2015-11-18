@@ -14,7 +14,6 @@ var $mochaProgress = $mochaBar.find('.progress');
 
 
 function toggleFailureFilter(ev) {
-
     ev.stopImmediatePropagation();
 
     showOnlyFailures = !showOnlyFailures;
@@ -27,8 +26,6 @@ function toggleFailureFilter(ev) {
 }
 
 function addSuiteStats() {
-    /*jshint validthis: true */
-
     var $suite = $(this);
 
     var tests = $suite.find('.test').length;
@@ -65,16 +62,12 @@ function addSuiteStats() {
 }
 
 function fixCodeFormatting() {
-    /*jshint validthis: true */
-
     var $code = $(this);
     $code.text($code.text().trim().replace(/;\n\s*/g, ';\n'));
 }
 
 
 function onEnd() {
-    /*jshint validthis: true */
-
     var runner = this;
     var failed = runner.stats.failures > 0;
     var stats = (runner.stats.duration / 1000.0).toFixed(3) + 's';
@@ -91,8 +84,6 @@ function onEnd() {
 }
 
 function onTest() {
-    /*jshint validthis: true */
-
     var runner = this;
     var percent = 100.0 * runner.stats.tests / runner.total;
     var stats = ((new Date().getTime() - runner.stats.start) / 1000.0).toFixed(3) + 's';
@@ -105,14 +96,12 @@ function onTest() {
 }
 
 function setupMocha() {
-
     window.assert = chai.assert;
     mocha.setup('bdd');
     $(function () { $mochaBar.appendTo('#mocha'); });
 }
 
 function runMocha() {
-
     mocha.run().on('test', onTest).on('end', onEnd);
 }
 

@@ -25,7 +25,7 @@
     modulejs.define('marked', function () { return win.marked; });
     modulejs.define('prism', function () { return win.Prism; });
 
-    // @include 'inc/**/*.js'
+    // @include 'lib/**/*.js'
 
     modulejs.require('boot');
 }());

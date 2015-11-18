@@ -25,7 +25,7 @@ $(function () {
         describe('integration tests', function () {
 
             // @include "tests/integration/*.js"
-            // @include "tests/integration/*/*.js"
+            // @-include "tests/integration/*/*.js"
         });
     });
 

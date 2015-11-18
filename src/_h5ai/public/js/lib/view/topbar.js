@@ -4,7 +4,7 @@ modulejs.define('view/topbar', ['$', 'view/root'], function ($, root) {
             '<div id="topbar">' +
                 '<div id="toolbar"/>' +
                 '<div id="flowbar"/>' +
-                '<a id="backlink" href="http://larsjung.de/h5ai/" title="powered by h5ai - http://larsjung.de/h5ai/">' +
+                '<a id="backlink" href="https://larsjung.de/h5ai/" title="powered by h5ai - https://larsjung.de/h5ai/">' +
                     '<div>powered</div>' +
                     '<div>by h5ai</div>' +
                 '</a>' +

@@ -1,10 +1,3 @@
-/*
-h5ai {{pkg.version}}
-{{pkg.homepage}}
-
-Options
-*/
-
 {
     /*
     Password hash.
@@ -29,7 +22,7 @@ Options
     "resources": {
         "scripts": [],
         "styles": [
-            "//fonts.googleapis.com/css?family=Ubuntu:300,400,700|Ubuntu+Mono:400,700"
+            "//fonts.googleapis.com/css?family=Ubuntu:300,400,700%7CUbuntu+Mono:400,700"
         ]
     },
 

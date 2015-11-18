@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+node -r babel-core/register ghu.js "$@"

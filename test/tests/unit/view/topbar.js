@@ -97,13 +97,13 @@ describe('module \'' + ID + '\'', function () {
         it('#backlink has correct href', function () {
 
             this.applyFn();
-            assert.strictEqual($('#backlink').attr('href'), 'http://larsjung.de/h5ai/');
+            assert.strictEqual($('#backlink').attr('href'), 'https://larsjung.de/h5ai/');
         });
 
         it('#backlink has correct title', function () {
 
             this.applyFn();
-            assert.strictEqual($('#backlink').attr('title'), 'powered by h5ai - http://larsjung.de/h5ai/');
+            assert.strictEqual($('#backlink').attr('title'), 'powered by h5ai - https://larsjung.de/h5ai/');
         });
 
         it('#backlink has correct text', function () {

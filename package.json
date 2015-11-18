@@ -12,29 +12,19 @@
     "url": "https://github.com/lrsjng/h5ai.git"
   },
   "scripts": {
-    "build": "mkr -b release",
-    "build-test": "mkr -b build-test"
+    "lint": "eslint .",
+    "ghu": "node -r babel-core/register ghu.js",
+    "build": "npm run -s ghu release"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-eslint": "^4.1.3",
-    "babel-loader": "^5.3.2",
-    "dateformat": "^1.0.11",
-    "eslint": "^1.7.3",
-    "fquery": "^0.16.4",
-    "fquery-autoprefixer": "^0.3.0",
-    "fquery-cssmin": "^0.3.1",
-    "fquery-gethash": "^0.3.0",
-    "fquery-handlebars": "^0.3.0",
-    "fquery-includeit": "^0.3.0",
-    "fquery-jade": "^0.6.0",
-    "fquery-jszip": "^0.5.1",
-    "fquery-less": "^0.3.0",
-    "fquery-uglifyjs": "^0.3.0",
-    "mkr": "^0.10.0",
-    "webpack": "^1.12.2"
+    "babel-core": "6.1.2",
+    "babel-eslint": "4.1.3",
+    "babel-preset-es2015": "6.1.2",
+    "dateformat": "1.0.11",
+    "eslint": "1.7.3",
+    "ghu": "0.1.1"
   },
   "engines": {
-    "node": "4.x"
+    "node": ">=5.0.0"
   }
 }
