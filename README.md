@@ -5,6 +5,9 @@
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
 For bug reports and feature requests please use [issues][github-issues].
 
+There was a [security flaw][cve] in versions 0.22.0 - 0.24.1 that was fixed in
+0.25.0. If you are still using one of these versions you are advised to
+upgrade.
 
 ## Install
 
@@ -21,8 +24,8 @@ In short you have to take the following two steps:
 ## Build
 
 There are installation ready packages for the latest [releases][release] and
-[dev builds][develop]. But to build **h5ai** yourself either *git-clone* or
-*download* the repository. From within the root folder run the following
+[dev builds][develop]. But to build **h5ai** yourself either `git clone` or
+download the repository. From within the root folder run the following
 commands to find a fresh zipball in folder `build` (tested on linux only,
 requires [`node 4.0+`][node] to be installed).
 
@@ -74,3 +77,5 @@ too. Exceptions are some [Material Design icons][material-design-icons] (CC BY 4
 [license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: https://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
 [github-img]: https://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
+
+[cve]: https://larsjung.de/h5ai/cve-2015-3203.txt

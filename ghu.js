@@ -1,10 +1,10 @@
-import {resolve, join} from 'path';
-import dateformat from 'dateformat';
-import ghu from 'ghu';
-import {
+const {resolve, join} = require('path');
+const dateformat = require('dateformat');
+const {
+    default: ghu,
     autoprefixer, cssmin, ife, includeit, jade, jszip,
     less, mapfn, newerThan, read, remove, run, uglify, watch, wrap, write
-} from 'ghu';
+} = require('ghu');
 
 const ROOT = resolve(__dirname);
 const SRC = join(ROOT, 'src');
