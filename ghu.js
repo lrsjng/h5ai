@@ -1,5 +1,4 @@
 const {resolve, join} = require('path');
-const dateformat = require('dateformat');
 const {
     default: ghu,
     autoprefixer, cssmin, ife, includeit, jade, jszip,
@@ -24,8 +23,7 @@ ghu.before(runtime => {
         if (hashes.length) {
             const counter = ('000' + hashes.length).substr(-3);
             const hash = hashes[0].substr(0, 7);
-            const stamp = dateformat(Date.now(), 'yyyy-mm-dd-HH-MM-ss');
-            runtime.pkg.version += `+${counter}~${hash}~${stamp}`;
+            runtime.pkg.version += `+${counter}~${hash}`;
         }
     }
 
