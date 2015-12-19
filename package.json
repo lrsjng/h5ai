@@ -1,7 +1,7 @@
 {
   "name": "h5ai",
   "version": "0.27.0",
-  "description": "A modern HTTP web server index.",
+  "description": "Modern HTTP web server index.",
   "homepage": "https://larsjung.de/h5ai/",
   "bugs": "https://github.com/lrsjng/h5ai/issues",
   "author": "Lars Jung <lrsjng@gmail.com> (https://larsjung.de)",
@@ -23,6 +23,6 @@
     "ghu": "0.4.0"
   },
   "engines": {
-    "node": ">=5.0.0"
+    "node": ">=4.0.0"
   }
 }
