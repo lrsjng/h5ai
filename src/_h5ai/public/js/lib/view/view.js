@@ -54,7 +54,7 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
             '#view.view-details.view-size-' + size + ' .item .size { line-height: ' + (dsize + 14) + 'px !important; }',
             '#view.view-details.view-size-' + size + ' .square { width: ' + dsize + 'px !important; height: ' + dsize + 'px !important; }',
             '#view.view-details.view-size-' + size + ' .square img { width: ' + dsize + 'px !important; height: ' + dsize + 'px !important; }',
-            '#view.view-details.view-size-' + size + ' .label { margin: 0 246px 0 ' + (dsize + 32) + 'px !important; }',
+            '#view.view-details.view-size-' + size + ' .label { margin-left: ' + (dsize + 32) + 'px !important; }',
 
             '#view.view-grid.view-size-' + size + ' .item .label { line-height: ' + gsize + 'px !important; }',
             '#view.view-grid.view-size-' + size + ' .square { width: ' + gsize + 'px !important; height: ' + gsize + 'px !important; }',
