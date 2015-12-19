@@ -1,7 +1,7 @@
 const {resolve, join} = require('path');
 const {
-    default: ghu,
-    autoprefixer, cssmin, ife, includeit, jade, jszip,
+    ghu,
+    autoprefixer, cssmin, each, ife, includeit, jade, jszip,
     less, mapfn, newerThan, read, remove, run, uglify, watch, wrap, write
 } = require('ghu');
 
@@ -88,6 +88,11 @@ ghu.task('build:copy', runtime => {
 
         read(`${SRC}: **, ! **/*.js, ! **/*.less, ! **/*.jade, ! **/conf/*.json`)
             .then(newerThan(mapper))
+            .then(each(obj => {
+                if (/index\.php$/.test(obj.source)) {
+                    obj.content = obj.content.replace('{{VERSION}}', runtime.pkg.version);
+                }
+            }))
             .then(write(mapper, {overwrite: true, cluster: true})),
 
         read(`${ROOT}/*.md`)

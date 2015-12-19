@@ -75,7 +75,7 @@ class Setup {
     private function add_app_metadata() {
 
         $this->set('NAME', 'h5ai');
-        $this->set('VERSION', '{{pkg.version}}');
+        $this->set('VERSION', H5AI_VERSION);
         $this->set('FILE_PREFIX', '_h5ai');
     }
 
