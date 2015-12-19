@@ -144,7 +144,7 @@
     - debounceTime: number, debounce wait time in milliseconds
     */
     "filter": {
-        "enabled": true,
+        "enabled": false,
         "advanced": true,
         "debounceTime": 100
     },

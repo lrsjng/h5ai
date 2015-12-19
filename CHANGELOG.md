@@ -1,6 +1,9 @@
 # Changelog
 
-* now requires PHP 5.4.0+
+
+## v0.28.0 - *2015-12-19*
+
+* now requires PHP 5.5.0+
 * changes index path to `/_h5ai/public/index.php`
 * now only `/_h5ai/public/` needs to be accessable from web
 * adds support for custom script and style additions
@@ -16,8 +19,12 @@
 * changes API
 * updates build process, now uses [ghu](https://larsjung.de/ghu/)
 * switches from jshint and jscs to [eslint](http://eslint.org/)
-* updates `lodash` to 3.8.0 (adds debounce and trim)
-* updates h5bp styles to 5.1.0
+* updates `jQuery` to 2.1.4
+* updates `lodash` to 3.9.3 (adds debounce and trim)
+* updates `marked` to 0.3.5
+* updates `modulejs` to 1.13.0
+* updates `prism` to 2015-12-19
+* updates h5bp styles to 5.2.0
 * updates `normalize.css` to 3.0.3
 * removes `Moment.js`
 
