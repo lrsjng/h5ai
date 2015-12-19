@@ -1,6 +1,4 @@
-Satisfy all
-Order allow,deny
-Allow from all
+Require all granted
 
 DirectoryIndex disabled
 
