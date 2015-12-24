@@ -39,7 +39,8 @@ modulejs.define('ext/download', ['_', '$', 'core/event', 'core/location', 'core/
             action: 'download',
             as: name + '.' + extension,
             type: type,
-            baseHref: location.getAbsHref()
+            baseHref: location.getAbsHref(),
+            hrefs: ''
         };
 
         _.each(selectedItems, function (item, idx) {
