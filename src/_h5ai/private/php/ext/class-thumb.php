@@ -1,7 +1,6 @@
 <?php
 
 class Thumb {
-
     private static $FFMPEG_CMDV = ['ffmpeg', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
     private static $AVCONV_CMDV = ['avconv', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
     private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '-strip', '[SRC][0]', '[DEST]'];
@@ -14,7 +13,6 @@ class Thumb {
     private $thumbs_href;
 
     public function __construct($context) {
-
         $this->context = $context;
         $this->setup = $context->get_setup();
         $this->thumbs_path = $this->setup->get('CACHE_PUB_PATH') . '/' . Thumb::$THUMB_CACHE;
@@ -26,7 +24,6 @@ class Thumb {
     }
 
     public function thumb($type, $source_href, $width, $height) {
-
         $source_path = $this->context->to_path($source_href);
         if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get('CACHE_PUB_PATH'))) {
             return null;
@@ -53,7 +50,6 @@ class Thumb {
     }
 
     private function thumb_href($source_path, $width, $height) {
-
         if (!file_exists($source_path)) {
             return null;
         }
@@ -63,7 +59,6 @@ class Thumb {
         $thumb_href = $this->thumbs_href . '/' . $name;
 
         if (!file_exists($thumb_path) || filemtime($source_path) >= filemtime($thumb_path)) {
-
             $image = new Image();
 
             $et = false;
@@ -86,7 +81,6 @@ class Thumb {
     }
 
     private function capture($cmdv, $source_path) {
-
         if (!file_exists($source_path)) {
             return null;
         }
@@ -94,7 +88,6 @@ class Thumb {
         $capture_path = $this->thumbs_path . '/capture-' . sha1($source_path) . '.jpg';
 
         if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
-
             foreach ($cmdv as &$arg) {
                 $arg = str_replace('[SRC]', $source_path, $arg);
                 $arg = str_replace('[DEST]', $capture_path, $arg);
@@ -108,7 +101,6 @@ class Thumb {
 }
 
 class Image {
-
     private $source_file;
     private $source;
     private $width;
@@ -117,7 +109,6 @@ class Image {
     private $dest;
 
     public function __construct($filename = null) {
-
         $this->source_file = null;
         $this->source = null;
         $this->width = null;
@@ -130,13 +121,11 @@ class Image {
     }
 
     public function __destruct() {
-
         $this->release_source();
         $this->release_dest();
     }
 
     public function set_source($filename) {
-
         $this->release_source();
         $this->release_dest();
 
@@ -160,7 +149,6 @@ class Image {
     }
 
     public function save_dest_jpeg($filename, $quality = 80) {
-
         if (!is_null($this->dest)) {
             @imagejpeg($this->dest, $filename, $quality);
             @chmod($filename, 0775);
@@ -168,7 +156,6 @@ class Image {
     }
 
     public function release_dest() {
-
         if (!is_null($this->dest)) {
             @imagedestroy($this->dest);
             $this->dest = null;
@@ -176,7 +163,6 @@ class Image {
     }
 
     public function release_source() {
-
         if (!is_null($this->source)) {
             @imagedestroy($this->source);
             $this->source_file = null;
@@ -188,7 +174,6 @@ class Image {
     }
 
     public function thumb($width, $height) {
-
         if (is_null($this->source)) {
             return;
         }
@@ -233,7 +218,6 @@ class Image {
     }
 
     public function rotate($angle) {
-
         if (is_null($this->source) || ($angle !== 90 && $angle !== 180 && $angle !== 270)) {
             return;
         }
@@ -245,7 +229,6 @@ class Image {
     }
 
     public function normalize_exif_orientation($exif_source_file = null) {
-
         if (is_null($this->source) || !function_exists('exif_read_data')) {
             return;
         }

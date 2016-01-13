@@ -1,12 +1,10 @@
 <?php
 
 class Json {
-
     const SINGLE = 1;
     const MULTI = 2;
 
     public static function load($path) {
-
         if (!is_readable($path)) {
             return [];
         }
@@ -16,25 +14,21 @@ class Json {
     }
 
     public static function save($path, $obj) {
-
         $json = json_encode($obj);
         return file_put_contents($path, $json) !== false;
     }
 
     public static function decode($json) {
-
         $json = Json::strip($json);
         return json_decode($json, true);
     }
 
     public static function strip($commented_json) {
-
         $insideString = false;
         $insideComment = false;
         $json = '';
 
         for ($i = 0; $i < strlen($commented_json); $i += 1) {
-
             $char = $commented_json[$i];
             $charchar = $char . @$commented_json[$i + 1];
             $prevChar = @$commented_json[$i - 1];

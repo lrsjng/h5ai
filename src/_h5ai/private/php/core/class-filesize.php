@@ -1,15 +1,12 @@
 <?php
 
 class Filesize {
-
     private $cache = [];
 
     public function __construct() {
-
     }
 
     public function fseek($path) {
-
         $size = 0;
         $step = 1073741824;
 
@@ -36,12 +33,10 @@ class Filesize {
     }
 
     public function filesize($path) {
-
         return @filesize($path);
     }
 
     private function read_dir($path) {
-
         $paths = [];
         if (is_dir($path)) {
             foreach (scandir($path) as $name) {
@@ -54,7 +49,6 @@ class Filesize {
     }
 
     private function exec($cmdv) {
-
         $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
         $lines = [];
         $rc = null;
@@ -63,7 +57,6 @@ class Filesize {
     }
 
     public function du_paths($paths) {
-
         $cmdv = array_merge(['du', '-sk'], $paths);
         $lines = $this->exec($cmdv);
 
@@ -78,18 +71,15 @@ class Filesize {
     }
 
     public function du_dir($path) {
-
         return $this->du_paths($this->read_dir($path));
     }
 
     public function du_path($path) {
-
         $sizes = $this->du_paths([$path]);
         return $sizes[$path];
     }
 
     public function add($path) {
-
         $size = 0;
         foreach ($this->read_dir($path) as $p) {
             $size += $this->filesize($p);

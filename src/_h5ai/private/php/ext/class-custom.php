@@ -1,18 +1,14 @@
 <?php
 
 class Custom {
-
     private static $EXTENSIONS = ['html', 'md'];
-
     private $context;
 
     public function __construct($context) {
-
         $this->context = $context;
     }
 
     private function read_custom_file($path, $name, &$content, &$type) {
-
         $file_prefix = $this->context->get_setup()->get('FILE_PREFIX');
 
         foreach (Custom::$EXTENSIONS as $ext) {
@@ -26,7 +22,6 @@ class Custom {
     }
 
     public function get_customizations($href) {
-
         if (!$this->context->query_option('custom.enabled', false)) {
             return [
                 'header' => ['content' => null, 'type' => null],
@@ -46,14 +41,12 @@ class Custom {
         $this->read_custom_file($path, 'footer', $footer, $footer_type);
 
         while ($header === null || $footer === null) {
-
             if ($header === null) {
                 $this->read_custom_file($path, 'headers', $header, $header_type);
             }
             if ($footer === null) {
                 $this->read_custom_file($path, 'footers', $footer, $footer_type);
             }
-
             if ($path === $root_path) {
                 break;
             }
