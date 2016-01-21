@@ -1,7 +1,6 @@
 <?php
 
 class Context {
-
     private static $DEFAULT_PASSHASH = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e';
     private static $AS_ADMIN_SESSION_KEY = 'AS_ADMIN';
 
@@ -12,7 +11,6 @@ class Context {
     private $passhash;
 
     public function __construct($session, $request, $setup) {
-
         $this->session = $session;
         $this->request = $request;
         $this->setup = $setup;
@@ -25,64 +23,52 @@ class Context {
     }
 
     public function get_session() {
-
         return $this->session;
     }
 
     public function get_request() {
-
         return $this->request;
     }
 
     public function get_setup() {
-
         return $this->setup;
     }
 
     public function get_options() {
-
         return $this->options;
     }
 
     public function query_option($keypath = '', $default = null) {
-
         return Util::array_query($this->options, $keypath, $default);
     }
 
     public function get_types() {
-
         return Json::load($this->setup->get('CONF_PATH') . '/types.json');
     }
 
     public function login_admin($pass) {
-
         $this->session->set(Context::$AS_ADMIN_SESSION_KEY, strcasecmp(hash('sha512', $pass), $this->passhash) === 0);
         return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
     public function logout_admin() {
-
         $this->session->set(Context::$AS_ADMIN_SESSION_KEY, false);
         return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
     public function is_admin() {
-
         return $this->session->get(Context::$AS_ADMIN_SESSION_KEY);
     }
 
     public function is_api_request() {
-
         return strtolower($this->setup->get('REQUEST_METHOD')) === 'post';
     }
 
     public function is_info_request() {
-
         return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('PUBLIC_HREF'));
     }
 
     public function to_href($path, $trailing_slash = true) {
-
         $rel_path = substr($path, strlen($this->setup->get('ROOT_PATH')));
         $parts = explode('/', $rel_path);
         $encoded_parts = [];
@@ -96,13 +82,11 @@ class Context {
     }
 
     public function to_path($href) {
-
         $rel_href = substr($href, strlen($this->setup->get('ROOT_HREF')));
         return Util::normalize_path($this->setup->get('ROOT_PATH') . '/' . rawurldecode($rel_href));
     }
 
     public function is_hidden($name) {
-
         // always hide
         if ($name === '.' || $name === '..') {
             return true;
@@ -119,7 +103,6 @@ class Context {
     }
 
     public function read_dir($path) {
-
         $names = [];
         if (is_dir($path)) {
             foreach (scandir($path) as $name) {
@@ -137,12 +120,10 @@ class Context {
     }
 
     public function is_managed_href($href) {
-
         return $this->is_managed_path($this->to_path($href));
     }
 
     public function is_managed_path($path) {
-
         if (!is_dir($path) || strpos($path, '../') !== false || strpos($path, '/..') !== false || $path === '..') {
             return false;
         }
@@ -175,7 +156,6 @@ class Context {
     }
 
     public function get_current_path() {
-
         $current_href = Util::normalize_path($this->setup->get('REQUEST_HREF'), true);
         $current_path = $this->to_path($current_href);
 
@@ -187,7 +167,6 @@ class Context {
     }
 
     public function get_items($href, $what) {
-
         if (!$this->is_managed_href($href)) {
             return [];
         }
@@ -219,7 +198,6 @@ class Context {
     }
 
     public function get_langs() {
-
         $langs = [];
         $l10n_path = $this->setup->get('CONF_PATH') . '/l10n';
         if (is_dir($l10n_path)) {
@@ -238,7 +216,6 @@ class Context {
     }
 
     public function get_l10n($iso_codes) {
-
         $results = [];
 
         foreach ($iso_codes as $iso_code) {
@@ -251,7 +228,6 @@ class Context {
     }
 
     public function get_thumbs($requests) {
-
         $hrefs = [];
 
         foreach ($requests as $req) {
@@ -263,7 +239,6 @@ class Context {
     }
 
     private function prefix_x_head_href($href) {
-
         if (preg_match('@^(https?://|/)@i', $href)) {
             return $href;
         }
@@ -272,7 +247,6 @@ class Context {
     }
 
     private function get_fonts_html() {
-
         $fonts = $this->query_option('view.fonts', []);
         $fonts_mono = $this->query_option('view.fontsMono', []);
 
@@ -292,7 +266,6 @@ class Context {
     }
 
     public function get_x_head_html() {
-
         $scripts = $this->query_option('resources.scripts', []);
         $styles = $this->query_option('resources.styles', []);
 

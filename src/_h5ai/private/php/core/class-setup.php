@@ -1,12 +1,10 @@
 <?php
 
 class Setup {
-
     private $store;
     private $refresh;
 
     public function __construct($refresh = false) {
-
         $this->store = [];
         $this->refresh = $refresh;
 
@@ -19,7 +17,6 @@ class Setup {
     }
 
     private function set($key, $value) {
-
         if (array_key_exists($key, $this->store)) {
             Logger::log('setup key already taken', [
                 'key' => $key,
@@ -40,7 +37,6 @@ class Setup {
     }
 
     public function get($key) {
-
         if (!array_key_exists($key, $this->store)) {
             Logger::log('setup key not found', ['key' => $key]);
             exit;
@@ -50,7 +46,6 @@ class Setup {
     }
 
     private function add_globals_and_envs() {
-
         $this->set('PHP_VERSION', PHP_VERSION);
         $this->set('MIN_PHP_VERSION', MIN_PHP_VERSION);
 
@@ -61,7 +56,6 @@ class Setup {
     }
 
     private function add_php_checks() {
-
         $this->set('HAS_PHP_EXIF', function_exists('exif_thumbnail'));
 
         $has_php_jpeg = false;
@@ -73,14 +67,12 @@ class Setup {
     }
 
     private function add_app_metadata() {
-
         $this->set('NAME', 'h5ai');
         $this->set('VERSION', H5AI_VERSION);
         $this->set('FILE_PREFIX', '_h5ai');
     }
 
     private function add_server_metadata_and_check() {
-
         $server_software = $this->get('SERVER_SOFTWARE');
         $server_name = null;
         $server_version = null;
@@ -96,7 +88,6 @@ class Setup {
     }
 
     private function add_paths() {
-
         $script_name = $this->get('SCRIPT_NAME');
         if ($this->get('SERVER_NAME') === 'lighttpd') {
             $script_name = preg_replace('#^.*?//#', '/', $script_name);
@@ -123,7 +114,6 @@ class Setup {
     }
 
     private function add_sys_cmd_checks() {
-
         $cmds_cache_path = Util::normalize_path($this->get('CACHE_PRV_PATH') . '/cmds.json', false);
 
         $cmds = Json::load($cmds_cache_path);
@@ -150,7 +140,6 @@ class Setup {
     }
 
     public function to_jsono($as_admin = false) {
-
         $keys = [
             'PUBLIC_HREF',
             'ROOT_HREF'

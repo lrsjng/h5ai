@@ -1,7 +1,6 @@
 <?php
 
 class Util {
-
     const ERR_MISSING_PARAM = 'ERR_MISSING_PARAM';
     const ERR_ILLIGAL_PARAM = 'ERR_ILLIGAL_PARAM';
     const ERR_FAILED = 'ERR_FAILED';
@@ -11,27 +10,23 @@ class Util {
     const RE_DELIMITER = '@';
 
     public static function normalize_path($path, $trailing_slash = false) {
-
         $path = preg_replace('#[\\\\/]+#', '/', $path);
         return preg_match('#^(\w:)?/$#', $path) ? $path : (rtrim($path, '/') . ($trailing_slash ? '/' : ''));
     }
 
     public static function json_exit($obj = []) {
-
         header('Content-type: application/json;charset=utf-8');
         echo json_encode($obj);
         exit;
     }
 
     public static function json_fail($err, $msg = '', $cond = true) {
-
         if ($cond) {
             Util::json_exit(['err' => $err, 'msg' => $msg]);
         }
     }
 
     public static function array_query($array, $keypath = '', $default = Util::NO_DEFAULT) {
-
         $value = $array;
 
         $keys = array_filter(explode('.', $keypath));
@@ -46,30 +41,25 @@ class Util {
     }
 
     public static function starts_with($sequence, $head) {
-
         return substr($sequence, 0, strlen($head)) === $head;
     }
 
     public static function ends_with($sequence, $tail) {
-
         $len = strlen($tail);
         return $len === 0 ? true : substr($sequence, -$len) === $tail;
     }
 
     public static function wrap_pattern($pattern) {
-
         return Util::RE_DELIMITER . str_replace(Util::RE_DELIMITER, '\\' . Util::RE_DELIMITER, $pattern) . Util::RE_DELIMITER;
     }
 
     public static function passthru_cmd($cmd) {
-
         $rc = null;
         passthru($cmd, $rc);
         return $rc;
     }
 
     public static function exec_cmdv($cmdv) {
-
         if (!is_array($cmdv)) {
             $cmdv = func_get_args();
         }
@@ -82,7 +72,6 @@ class Util {
     }
 
     public static function exec_0($cmd) {
-
         $lines = [];
         $rc = null;
         try {
@@ -95,7 +84,6 @@ class Util {
     private static $size_cache = [];
 
     public static function filesize($context, $path) {
-
         if (array_key_exists($path, Util::$size_cache)) {
             return Util::$size_cache[$path];
         }

@@ -1,7 +1,6 @@
 <?php
 
 class Archive {
-
     const NULL_BYTE = "\0";
 
     private static $SEGMENT_SIZE = 16777216;  // 1024 * 1024 * 16 = 16MiB
@@ -14,12 +13,10 @@ class Archive {
     private $files;
 
     public function __construct($context) {
-
         $this->context = $context;
     }
 
     public function output($type, $base_href, $hrefs) {
-
         $this->base_path = $this->context->to_path($base_href);
         if (!$this->context->is_managed_path($this->base_path)) {
             return false;
@@ -39,22 +36,16 @@ class Archive {
         }
 
         if ($type === 'php-tar') {
-
             return $this->php_tar($this->dirs, $this->files);
-
         } else if ($type === 'shell-tar') {
-
             return $this->shell_cmd(Archive::$TAR_PASSTHRU_CMD);
-
         } else if ($type === 'shell-zip') {
-
             return $this->shell_cmd(Archive::$ZIP_PASSTHRU_CMD);
         }
         return false;
     }
 
     private function shell_cmd($cmd) {
-
         $cmd = str_replace('[ROOTDIR]', escapeshellarg($this->base_path), $cmd);
         $cmd = str_replace('[DIRS]', count($this->dirs) ? implode(' ', array_map('escapeshellarg', $this->dirs)) : '', $cmd);
         $cmd = str_replace('[FILES]', count($this->files) ? implode(' ', array_map('escapeshellarg', $this->files)) : '', $cmd);
@@ -67,11 +58,9 @@ class Archive {
     }
 
     private function php_tar($dirs, $files) {
-
         $filesizes = [];
         $total_size = 512 * count($dirs);
         foreach (array_keys($files) as $real_file) {
-
             $size = filesize($real_file);
 
             $filesizes[$real_file] = $size;
@@ -84,11 +73,10 @@ class Archive {
         header('Content-Length: ' . $total_size);
 
         foreach ($dirs as $real_dir => $archived_dir) {
-
             echo $this->php_tar_header($archived_dir, 0, @filemtime($real_dir . DIRECTORY_SEPARATOR . "."), 5);
         }
-        foreach ($files as $real_file => $archived_file) {
 
+        foreach ($files as $real_file => $archived_file) {
             $size = $filesizes[$real_file];
 
             echo $this->php_tar_header($archived_file, $size, @filemtime($real_file), 0);
@@ -103,7 +91,6 @@ class Archive {
     }
 
     private function php_tar_header($filename, $size, $mtime, $type) {
-
         $name = substr(basename($filename), -99);
         $prefix = substr(Util::normalize_path(dirname($filename)), -154);
         if ($prefix === '.') {
@@ -136,7 +123,6 @@ class Archive {
     }
 
     private function print_file($file) {
-
         // Send file content in segments to not hit PHP's memory limit (default: 128M)
         if ($fd = fopen($file, 'rb')) {
             while (!feof($fd)) {
@@ -149,9 +135,7 @@ class Archive {
     }
 
     private function add_hrefs($hrefs) {
-
         foreach ($hrefs as $href) {
-
             if (trim($href) === '') {
                 continue;
             }
@@ -174,20 +158,17 @@ class Archive {
     }
 
     private function add_file($real_file, $archived_file) {
-
         if (is_readable($real_file)) {
             $this->files[$real_file] = $archived_file;
         }
     }
 
     private function add_dir($real_dir, $archived_dir) {
-
         if ($this->context->is_managed_path($real_dir)) {
             $this->dirs[$real_dir] = $archived_dir;
 
             $files = $this->context->read_dir($real_dir);
             foreach ($files as $file) {
-
                 $real_file = $real_dir . '/' . $file;
                 $archived_file = $archived_dir . '/' . $file;
 

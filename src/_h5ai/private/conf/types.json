@@ -41,6 +41,7 @@
     "txt-rb":           ["*.rb"],
     "txt-rss":          ["*.rss"],
     "txt-rtf":          ["*.rtf"],
+    "txt-rust":         ["*.rs", "*.rlib"],
     "txt-script":       ["*.conf", "*.bsh", "*.csh", "*.ini", "*.ksh", "*.sh", "*.shar", "*.tcl", "*.zsh"],
     "txt-source":       [],
     "txt-svg":          ["*.svg"],

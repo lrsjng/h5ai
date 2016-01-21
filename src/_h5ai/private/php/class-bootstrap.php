@@ -1,11 +1,9 @@
 <?php
 
 class Bootstrap {
-
     private static $autopaths = ['core', 'ext'];
 
     public static function run() {
-
         spl_autoload_register(['Bootstrap', 'autoload']);
         putenv('LANG=en_US.UTF-8');
         setlocale(LC_CTYPE, 'en_US.UTF-8');
@@ -32,7 +30,6 @@ class Bootstrap {
     }
 
     public static function autoload($class_name) {
-
         $filename = 'class-' . strtolower($class_name) . '.php';
 
         foreach (Bootstrap::$autopaths as $path) {

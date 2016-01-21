@@ -1,16 +1,13 @@
 <?php
 
 class Fallback {
-
     private $context;
 
     public function __construct($context) {
-
         $this->context = $context;
     }
 
     public function get_html($path = null) {
-
         if (!$path) {
             $path = $this->context->get_current_path();
         }
