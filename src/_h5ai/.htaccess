@@ -1,3 +1,10 @@
-Satisfy all
-Order deny,allow
-Deny from all
+<IfModule mod_authz_core.c>
+    #Apache 2.4
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    #Apache 2.2
+    Satisfy all
+    Order deny,allow
+    Deny from all
+</IfModule>
