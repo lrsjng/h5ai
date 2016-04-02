@@ -32,16 +32,16 @@ class Thumb {
         $capture_path = $source_path;
         if ($type === 'img') {
             $capture_path = $source_path;
-        } else if ($type === 'mov') {
+        } elseif ($type === 'mov') {
             if ($this->setup->get('HAS_CMD_AVCONV')) {
                 $capture_path = $this->capture(Thumb::$AVCONV_CMDV, $source_path);
-            } else if ($this->setup->get('HAS_CMD_FFMPEG')) {
+            } elseif ($this->setup->get('HAS_CMD_FFMPEG')) {
                 $capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path);
             }
-        } else if ($type === 'doc') {
+        } elseif ($type === 'doc') {
             if ($this->setup->get('HAS_CMD_CONVERT')) {
                 $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
-            } else if ($this->setup->get('HAS_CMD_GM')) {
+            } elseif ($this->setup->get('HAS_CMD_GM')) {
                 $capture_path = $this->capture(Thumb::$GM_CONVERT_CMDV, $source_path);
             }
         }
@@ -238,7 +238,7 @@ class Image {
         }
 
         $exif = exif_read_data($exif_source_file);
-        switch(@$exif['Orientation']) {
+        switch (@$exif['Orientation']) {
             case 3:
                 $this->rotate(180);
                 break;

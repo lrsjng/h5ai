@@ -24,7 +24,7 @@ class Filesize {
         }
 
         while (fgetc($handle) !== false) {
-            $size += 1;
+            $size++;
         }
 
         fclose($handle);

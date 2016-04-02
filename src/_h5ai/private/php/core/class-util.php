@@ -68,7 +68,7 @@ class Util {
         $lines = [];
         $rc = null;
         exec($cmd, $lines, $rc);
-        return implode("\n", $lines);
+        return implode('\n', $lines);
     }
 
     public static function exec_0($cmd) {
@@ -97,7 +97,7 @@ class Util {
             } else {
                 $size = $fs->filesize($path);
             }
-        } else if (is_dir($path) && $context->query_option('foldersize.enabled', false)) {
+        } elseif (is_dir($path) && $context->query_option('foldersize.enabled', false)) {
             if ($context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du') {
                 $size = $fs->du_path($path);
             } else {
