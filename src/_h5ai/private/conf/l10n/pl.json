@@ -10,9 +10,13 @@
     "folders": "folderów",
     "grid": "kafelki",
     "icons": "ikony",
+    "language": "Język",
     "lastModified": "Ostatnia modyfikacja",
     "name": "Nazwa",
     "noMatch": "nie znaleziono",
     "parentDirectory": "Katalog nadrzędny",
-    "size": "Rozmiar"
+    "search": "szukaj",
+    "size": "Rozmiar",
+    "tree": "Drzewo",
+    "view": "Układ"
 }
