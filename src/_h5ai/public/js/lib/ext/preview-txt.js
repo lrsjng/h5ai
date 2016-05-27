@@ -106,13 +106,13 @@ modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', '
     }
 
     function initItem(item) {
-        if (item.$view && _.indexOf(_.keys(settings.types), item.type) >= 0) {
+        if (item.$view && _.includes(_.keys(settings.types), item.type)) {
             item.$view.find('a').on('click', function (ev) {
                 ev.preventDefault();
 
                 var matchedItems = _.compact(_.map($('#items .item'), function (matchedItem) {
                     matchedItem = $(matchedItem).data('item');
-                    return _.indexOf(_.keys(settings.types), matchedItem.type) >= 0 ? matchedItem : null;
+                    return _.includes(_.keys(settings.types), matchedItem.type) ? matchedItem : null;
                 }));
 
                 onEnter(matchedItems, _.indexOf(matchedItems, item));

@@ -18,11 +18,11 @@ modulejs.define('core/resource', ['_', 'config', 'core/settings'], function (_, 
             return themesHref + href;
         }
 
-        if (_.indexOf(defaultIcons, id) >= 0) {
+        if (_.includes(defaultIcons, id)) {
             return defaultThemeHref + id + '.svg';
         }
 
-        if (_.indexOf(defaultIcons, baseId) >= 0) {
+        if (_.includes(defaultIcons, baseId)) {
             return defaultThemeHref + baseId + '.svg';
         }
 

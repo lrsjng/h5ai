@@ -79,13 +79,13 @@ modulejs.define('ext/preview-vid', ['_', '$', 'core/event', 'core/settings', 'ex
     }
 
     function initItem(item) {
-        if (item.$view && _.indexOf(settings.types, item.type) >= 0) {
+        if (item.$view && _.includes(settings.types, item.type)) {
             item.$view.find('a').on('click', function (ev) {
                 ev.preventDefault();
 
                 var matchedItems = _.compact(_.map($('#items .item'), function (matchedItem) {
                     matchedItem = $(matchedItem).data('item');
-                    return _.indexOf(settings.types, matchedItem.type) >= 0 ? matchedItem : null;
+                    return _.includes(settings.types, matchedItem.type) ? matchedItem : null;
                 }));
 
                 onEnter(matchedItems, _.indexOf(matchedItems, item));
