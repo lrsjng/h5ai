@@ -80,8 +80,8 @@ modulejs.define('view/view', ['_', '$', 'core/event', 'core/format', 'core/locat
 
         mode = mode || stored && stored.mode;
         size = size || stored && stored.size;
-        mode = _.contains(settings.modes, mode) ? mode : settings.modes[0];
-        size = _.contains(settings.sizes, size) ? size : settings.sizes[0];
+        mode = _.includes(settings.modes, mode) ? mode : settings.modes[0];
+        size = _.includes(settings.sizes, size) ? size : settings.sizes[0];
         store.put(storekey, {mode: mode, size: size});
 
         _.each(checkedModes, function (m) {

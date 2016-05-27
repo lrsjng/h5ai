@@ -13,7 +13,7 @@
         it('jQuery and $ are global functions', function () {
             assert.isFunction(jQuery);
             assert.strictEqual(jQuery, window.jQuery);
-            assert.strictEqual(jQuery.fn.jquery, '2.1.3');
+            assert.strictEqual(jQuery.fn.jquery, '2.2.4');
 
             assert.strictEqual($, jQuery);
             assert.strictEqual($, window.$);
@@ -22,7 +22,7 @@
         it('_ is global function', function () {
             assert.isFunction(_);
             assert.strictEqual(_, window._);
-            assert.strictEqual(_.VERSION, '3.9.3');
+            assert.strictEqual(_.VERSION, '4.13.1');
         });
 
         it('util is global object', function () {

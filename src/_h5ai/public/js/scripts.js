@@ -10,7 +10,6 @@
 }());
 
 // @include 'vendor/jquery-*.js'
-// @include 'vendor/jquery.*.js'
 // @include 'vendor/lodash-*.js'
 // @include 'vendor/marked-*.js'
 // @include 'vendor/modulejs-*.js'

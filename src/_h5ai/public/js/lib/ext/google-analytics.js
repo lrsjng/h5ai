@@ -28,7 +28,7 @@ modulejs.define('ext/google-analytics-ua', ['_', 'core/event', 'core/settings'],
             var loc = WIN.location;
             WIN[GA]('send', 'pageview', {
                 location: loc.protocol + '//' + loc.host + item.absHref,
-                title: _.pluck(item.getCrumb(), 'label').join(' > ')
+                title: _.map(item.getCrumb(), 'label').join(' > ')
             });
         });
     }

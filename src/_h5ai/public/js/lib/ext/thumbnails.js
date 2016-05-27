@@ -14,11 +14,11 @@ modulejs.define('ext/thumbnails', ['_', 'core/event', 'core/server', 'core/setti
     function queueItem(queue, item) {
         var type = null;
 
-        if (_.contains(settings.img, item.type)) {
+        if (_.includes(settings.img, item.type)) {
             type = 'img';
-        } else if (_.contains(settings.mov, item.type)) {
+        } else if (_.includes(settings.mov, item.type)) {
             type = 'mov';
-        } else if (_.contains(settings.doc, item.type)) {
+        } else if (_.includes(settings.doc, item.type)) {
             type = 'doc';
         } else {
             return;
