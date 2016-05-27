@@ -1,12 +1,14 @@
-/* uniq 0.3.1 - http://larsjung.de/uniq/ */
+/* uniq 0.4.0 - http://larsjung.de/uniq/ */
 (function (root, factory) {
-    'use strict';
+'use strict';
 
-    if (typeof module !== 'undefined') {
-        module.exports = factory();
-    } else {
-        root.uniq = factory();
-    }
+// istanbul ignore else
+if (typeof exports === 'object') {
+    module.exports = factory();
+} else {
+    root.uniq = factory();
+}
+
 }(this, function () {
     'use strict';
 
@@ -19,23 +21,19 @@
     var counter = 0;
 
     function id() {
-
         counter += 1;
         return PREFIX + (ZERO_PAD + counter).substr(-LENGTH) + SUFFIX;
     }
 
     function isId(sequence) {
-
         return RE_ID.test(sequence);
     }
 
     function obj() {
-
         return {_uniq_id: id()};
     }
 
     function path(suffix) {
-
         return '/_uniq_path/' + id() + (suffix ? suffix : '');
     }
 

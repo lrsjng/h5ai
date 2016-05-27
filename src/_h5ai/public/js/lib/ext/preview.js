@@ -108,7 +108,7 @@ modulejs.define('ext/preview', ['_', '$', 'core/resource', 'core/settings', 'cor
         if (key === 27) { // esc
             ev.preventDefault();
             ev.stopImmediatePropagation();
-            onExit();
+            onExit(); // eslint-disable-line no-use-before-define
         } else if (key === 8 || key === 37) { // backspace, left
             ev.preventDefault();
             ev.stopImmediatePropagation();

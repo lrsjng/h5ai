@@ -12,17 +12,13 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "ghu": "node -r babel-core/register ghu.js",
-    "build": "npm run -s ghu release"
+    "build": "node ghu release"
   },
   "devDependencies": {
-    "babel-core": "6.9.0",
-    "babel-eslint": "6.0.4",
-    "babel-preset-es2015": "6.9.0",
     "eslint": "2.10.2",
     "ghu": "0.4.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   }
 }
