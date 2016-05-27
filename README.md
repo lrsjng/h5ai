@@ -19,7 +19,7 @@ In short you have to take the following two steps:
 
 * place folder `_h5ai` in the document root folder of the web server
 * append `/_h5ai/public/index.php` to the end of the default index-file list
-
+* make sure the php function `exec` and `passthru` are not disabled by `disable_functions` in `php.ini` if you want to enalbe the optional features such as "shell zip","shell tar" and "shell du"
 
 ## Build
 
