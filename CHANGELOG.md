@@ -5,7 +5,7 @@
 
 * now requires PHP 5.5.0+
 * changes index path to `/_h5ai/public/index.php`
-* now only `/_h5ai/public/` needs to be accessable from web
+* now only `/_h5ai/public/` needs to be accessible from web
 * adds support for custom script and style additions
 * adds options to set font families
 * adds search

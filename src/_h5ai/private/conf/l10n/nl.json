@@ -1,11 +1,22 @@
 {
     "lang": "nederlands",
 
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "details",
-    "empty": "lege",
+    "download": "download",
+    "empty": "leeg",
+    "files": "bestanden",
+    "filter": "filter",
+    "folders": "mappen",
+    "grid": "grid",
     "icons": "iconen",
+    "language": "Taal",
     "lastModified": "Laatste wijziging",
     "name": "Naam",
+    "noMatch": "geen overeenkomst",
     "parentDirectory": "Bovenliggende map",
-    "size": "Grootte"
+    "search": "zoeken",
+    "size": "Grootte",
+    "tree": "Boom",
+    "view": "Bekijk"
 }
