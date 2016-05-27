@@ -21,7 +21,7 @@ modulejs.define('ext/peer5', ['_', '$', 'core/settings'], function (_, $, allset
 
         // attach to file items, once the DOM is ready
         $(function () {
-            $('body').on('click', '.item.file > a', function (ev) {
+            $('body').on('click', '.item.file > a', function (ev) { // eslint-disable-line consistent-return
                 if (window.peer5) {
                     ev.preventDefault();
                     var url = ev.currentTarget.href;

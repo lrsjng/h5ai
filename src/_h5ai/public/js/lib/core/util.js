@@ -48,8 +48,8 @@ modulejs.define('core/util', ['_'], function (_) {
                 return isNaN(oFxNcL) ? 1 : -1;
             } else if (typeof oFxNcL !== typeof oFyNcL) {
                 // rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
-                oFxNcL += '';
-                oFyNcL += '';
+                oFxNcL = String(oFxNcL);
+                oFxNcL = String(oFxNcL);
             }
             if (oFxNcL < oFyNcL) {
                 return -1;

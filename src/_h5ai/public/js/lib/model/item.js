@@ -20,7 +20,7 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
         return sequence;
     }
 
-    function splitPath(sequence) {
+    function splitPath(sequence) { // eslint-disable-line consistent-return
         if (sequence === '/') {
             return {
                 parent: null,
@@ -55,7 +55,7 @@ modulejs.define('model/item', ['_', 'core/event', 'core/location', 'core/server'
             return null;
         }
 
-        var item = cache[href] || new Item(href);
+        var item = cache[href] || new Item(href); // eslint-disable-line no-use-before-define
 
         if (_.isNumber(options.time)) {
             item.time = options.time;

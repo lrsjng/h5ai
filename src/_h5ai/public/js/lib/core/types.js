@@ -24,7 +24,7 @@ modulejs.define('core/types', ['_', 'config'], function (_, config) {
         var name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence;
         var result;
 
-        _.each(regexps, function (regexp, type) {
+        _.each(regexps, function (regexp, type) { // eslint-disable-line consistent-return
             if (regexps[type].test(name)) {
                 result = type;
                 return false;
