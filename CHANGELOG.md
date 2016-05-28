@@ -1,5 +1,6 @@
 # Changelog
 
+* change type `txt-svg` to `img-svg`, no thumbs but preview
 * fixes a tree indentaion glitch
 * fixes shell command detection on Windows
 * fixes `.htaccess` auth issues
