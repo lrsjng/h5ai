@@ -5,20 +5,11 @@
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
 For bug reports and feature requests please use [issues][github-issues].
 
-There was a [security flaw][cve] in versions 0.22.0 - 0.24.1 that was fixed in
-0.25.0. If you are still using one of these versions you are advised to
-upgrade.
+**Do not install any files from the `src` folder, they need to be
+preprocessed to work correctly!**
 
-## Install
-
-Do **not** install any files from the `src` folder, they need to be
-preprocessed to work correctly! Find a preprocessed package and detailed
-install instructions on the [project page][web].
-
-In short you have to take the following two steps:
-
-* place folder `_h5ai` in the document root folder of the web server
-* append `/_h5ai/public/index.php` to the end of the default index-file list
+Find a preprocessed package and detailed install instructions on the
+[project page][web].
 
 
 ## Build
@@ -27,7 +18,7 @@ There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. But to build **h5ai** yourself either `git clone` or
 download the repository. From within the root folder run the following
 commands to find a fresh zipball in folder `build` (tested on linux only,
-requires [`node 4.0+`][node] to be installed).
+requires [`node 6.0+`][node] to be installed).
 
 ~~~sh
 > npm install
@@ -39,7 +30,7 @@ requires [`node 4.0+`][node] to be installed).
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Lars Jung (https://larsjung.de)
+Copyright (c) 2016 Lars Jung (https://larsjung.de)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -77,5 +68,3 @@ too. Exceptions are some [Material Design icons][material-design-icons] (CC BY 4
 [license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
 [web-img]: https://img.shields.io/badge/web-larsjung.de/h5ai-a0a060.svg?style=flat-square
 [github-img]: https://img.shields.io/badge/github-lrsjng/h5ai-a0a060.svg?style=flat-square
-
-[cve]: https://larsjung.de/h5ai/cve-2015-3203.txt

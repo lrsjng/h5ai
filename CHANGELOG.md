@@ -1,5 +1,18 @@
 # Changelog
 
+* fixes a tree indentaion glitch
+* fixes shell command detection on Windows
+* fixes `.htaccess` auth issues
+* adds `rust` type and icon
+* removes *Install* section from `README.md`, to much trouble
+* updates `nl` translation
+* updates `pl` translation
+* updates build process to use `node 6.0+`, no need for babel now
+* updates `jQuery` to 2.2.4
+* updates `jquery-qrcode` to 0.14.0
+* updates `lodash` to 4.13.1 (removes `contains`)
+* updates `modulejs` to 1.14.0
+
 
 ## v0.28.0 - *2015-12-19*
 
