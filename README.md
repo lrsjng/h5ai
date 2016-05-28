@@ -3,13 +3,15 @@
 [![license][license-img]][github] [![web][web-img]][web] [![github][github-img]][github]
 
 A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
-For bug reports and feature requests please use [issues][github-issues].
 
-**Do not install any files from the `src` folder, they need to be
-preprocessed to work correctly!**
 
-Find a preprocessed package and detailed install instructions on the
-[project page][web].
+## Important
+
+* Do **not** install any files from the `src` folder, they need to be
+  preprocessed to work correctly!
+* Find a preprocessed package and detailed install instructions on the
+  [project page][web].
+* For bug reports and feature requests please use [issues][github-issues].
 
 
 ## Build
