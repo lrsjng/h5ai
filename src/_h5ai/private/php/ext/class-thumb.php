@@ -3,8 +3,8 @@
 class Thumb {
     private static $FFMPEG_CMDV = ['ffmpeg', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
     private static $AVCONV_CMDV = ['avconv', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
-    private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '-strip', '[SRC][0]', '[DEST]'];
-    private static $GM_CONVERT_CMDV = ['gm', 'convert', '-density', '200', '-quality', '100', '-sharpen', '0x1.0', '[SRC][0]', '[DEST]'];
+    private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-strip', '[SRC][0]', '[DEST]'];
+    private static $GM_CONVERT_CMDV = ['gm', 'convert', '-density', '200', '-quality', '100', '[SRC][0]', '[DEST]'];
     private static $THUMB_CACHE = 'thumbs';
 
     private $context;
