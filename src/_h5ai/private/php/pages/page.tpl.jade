@@ -16,8 +16,8 @@ html(class='no-js', lang='en')
         link(rel='stylesheet', href!='<?= $public_href; ?>css/styles.css')
         <?php if (!$fallback_mode) { ?>
         script(src!='<?= $public_href; ?>js/scripts.js', data-module='#{module}')
-        <?= $x_head_tags; ?>
         <?php } ?>
+        <?= $x_head_tags; ?>
 
     body#root(class='#{module}')
 
