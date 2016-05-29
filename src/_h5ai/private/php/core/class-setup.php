@@ -49,11 +49,11 @@ class Setup {
         $this->set('PHP_VERSION', PHP_VERSION);
         $this->set('MIN_PHP_VERSION', MIN_PHP_VERSION);
 
-        $this->set('REQUEST_METHOD', getenv('REQUEST_METHOD'));
-        $this->set('REQUEST_HREF', parse_url(getenv('REQUEST_URI'), PHP_URL_PATH));
-        $this->set('SCRIPT_NAME', getenv('SCRIPT_NAME'));
-        $this->set('SERVER_SOFTWARE', getenv('SERVER_SOFTWARE'));
-        $this->set('HTTP_USER_AGENT', getenv('HTTP_USER_AGENT'));
+        $this->set('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
+        $this->set('REQUEST_HREF', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+        $this->set('SCRIPT_NAME', $_SERVER['SCRIPT_NAME']);
+        $this->set('SERVER_SOFTWARE', $_SERVER['SERVER_SOFTWARE']);
+        $this->set('HTTP_USER_AGENT', $_SERVER['HTTP_USER_AGENT']);
     }
 
     private function add_php_checks() {

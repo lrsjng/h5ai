@@ -1,5 +1,6 @@
 # Changelog
 
+* replace PHP `getenv` calls with `$_SERVER` lookups
 * adds `view.fallbackMode` option to generally serve only fallback mode
 * serves fallback mode for text browsers (`curl`, `links`, `lynx`, `w3m`)
 * change type `txt-svg` to `img-svg`, no thumbs but preview
