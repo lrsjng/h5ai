@@ -14,14 +14,18 @@ html(class='no-js', lang='en')
         link(rel='shortcut icon', href!='<?= $public_href; ?>images/favicon/favicon-16-32.ico')
         link(rel='apple-touch-icon-precomposed', type='image/png', href!='<?= $public_href; ?>images/favicon/favicon-152.png')
         link(rel='stylesheet', href!='<?= $public_href; ?>css/styles.css')
+        <?php if (!$fallback_mode) { ?>
         script(src!='<?= $public_href; ?>js/scripts.js', data-module='#{module}')
         <?= $x_head_tags; ?>
+        <?php } ?>
 
     body#root(class='#{module}')
 
         div#fallback-hints
+            <?php if (!$fallback_mode) { ?>
             span.noJsMsg Works best with JavaScript enabled!
             span.noBrowserMsg Works best in #[a(href='http://browsehappy.com') modern browsers]!
+            <?php } ?>
             span.backlink #[a(href='#{pkg.homepage}', title='h5ai v#{pkg.version} - #{pkg.description}') powered by h5ai]
 
         block body

@@ -68,6 +68,14 @@ class Context {
         return Util::starts_with($this->setup->get('REQUEST_HREF') . '/', $this->setup->get('PUBLIC_HREF'));
     }
 
+    public function is_text_browser() {
+        return preg_match('/curl|links|lynx|w3m/i', $this->setup->get('HTTP_USER_AGENT')) === 1;
+    }
+
+    public function is_fallback_mode() {
+        return $this->query_option('view.fallbackMode', false) || $this->is_text_browser();
+    }
+
     public function to_href($path, $trailing_slash = true) {
         $rel_path = substr($path, strlen($this->setup->get('ROOT_PATH')));
         $parts = explode('/', $rel_path);

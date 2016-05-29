@@ -24,6 +24,7 @@ class Bootstrap {
         } else {
             $public_href = $setup->get('PUBLIC_HREF');
             $x_head_tags = $context->get_x_head_html();
+            $fallback_mode = $context->is_fallback_mode();
             $fallback_html = (new Fallback($context))->get_html();
             require __DIR__ . '/pages/index.php';
         }

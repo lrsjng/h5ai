@@ -53,6 +53,7 @@ class Setup {
         $this->set('REQUEST_HREF', parse_url(getenv('REQUEST_URI'), PHP_URL_PATH));
         $this->set('SCRIPT_NAME', getenv('SCRIPT_NAME'));
         $this->set('SERVER_SOFTWARE', getenv('SERVER_SOFTWARE'));
+        $this->set('HTTP_USER_AGENT', getenv('HTTP_USER_AGENT'));
     }
 
     private function add_php_checks() {
