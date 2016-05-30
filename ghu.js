@@ -1,8 +1,7 @@
 const {resolve, join} = require('path');
 const {
-    ghu,
-    autoprefixer, cssmin, each, ife, includeit, jade, jszip,
-    less, mapfn, newerThan, read, remove, run, uglify, watch, wrap, write
+    ghu, autoprefixer, cssmin, each, ife, includeit, jszip, less, mapfn,
+    newerThan, pug, read, remove, run, uglify, watch, wrap, write
 } = require('ghu');
 
 const ROOT = resolve(__dirname);
@@ -72,7 +71,7 @@ ghu.task('build:styles', runtime => {
 ghu.task('build:pages', runtime => {
     return read(`${SRC}: **/*.jade, ! **/*.tpl.jade`)
         .then(newerThan(mapper, `${SRC}/**/*.tpl.jade`))
-        .then(jade({pkg: runtime.pkg}))
+        .then(pug({pkg: runtime.pkg}))
         .then(wrap('', runtime.commentHtml))
         .then(write(mapper, {overwrite: true}));
 });
@@ -117,7 +116,7 @@ ghu.task('build:tests', ['build:scripts', 'build:styles'], 'build the test suite
 
         read(`${TEST}/index.html.jade`)
             .then(newerThan(`${BUILD}/test/index.html`))
-            .then(jade({pkg: runtime.pkg}))
+            .then(pug({pkg: runtime.pkg}))
             .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
 
         read(`${BUILD}/_h5ai/public/js/scripts.js`)

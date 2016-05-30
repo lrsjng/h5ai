@@ -15,8 +15,8 @@
     "build": "node ghu release"
   },
   "devDependencies": {
-    "eslint": "2.10.2",
-    "ghu": "0.4.0"
+    "eslint": "2.11.0",
+    "ghu": "0.6.0"
   },
   "engines": {
     "node": ">=6.0.0"
