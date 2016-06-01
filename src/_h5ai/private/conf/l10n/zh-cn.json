@@ -6,7 +6,7 @@
     "download": "下载",
     "empty": "空文件夹",
     "files": "文件",
-    "filter": "查找",
+    "filter": "过滤",
     "folders": "文件夹",
     "grid": "网格",
     "icons": "图标",
@@ -15,6 +15,9 @@
     "name": "文件名",
     "noMatch": "无匹配项",
     "parentDirectory": "父文件夹",
+    "search": "搜索",
     "size": "大小",
-    "view": "视图"
+    "tree": "树形目录",
+    "view": "视图",
+    "info": "信息"
 }
