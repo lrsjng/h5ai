@@ -10,9 +10,14 @@
     "folders": "資料夾",
     "grid": "網格",
     "icons": "圖示",
+    "language": "語言",
     "lastModified": "上次修改",
     "name": "檔名",
     "noMatch": "沒有符合的檔案",
     "parentDirectory": "上層目錄",
-    "size": "大小"
+    "search": "搜尋",
+    "size": "大小",
+    "tree": "樹形目錄",
+    "view": "檢視",
+    "info": "資訊"
 }
