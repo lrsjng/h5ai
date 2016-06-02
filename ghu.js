@@ -1,7 +1,7 @@
 const {resolve, join} = require('path');
 const {
     ghu, autoprefixer, cssmin, each, ife, includeit, jszip, less, mapfn,
-    newerThan, pug, read, remove, run, uglify, watch, wrap, write
+    newerThan, pug, read, remove, run, uglify, watch, webpack, wrap, write
 } = require('ghu');
 
 const ROOT = resolve(__dirname);
@@ -49,8 +49,27 @@ ghu.task('lint', 'lint all JavaScript files with eslint', () => {
 });
 
 ghu.task('build:scripts', runtime => {
-    return read(`${SRC}/_h5ai/public/js/*.js`)
+    const webpackConfig = {
+        output: {},
+        module: {
+            loaders: [
+                {
+                    include: [SRC],
+                    loader: 'babel',
+                    query: {
+                        presets: ['es2015'],
+                        cacheDirectory: true
+                    }
+                }
+            ],
+            presets: ['es2015']
+        }
+    };
+
+    return read(`${SRC}/_h5ai/public/js/scripts.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
+        .then(webpack(webpackConfig, {showStats: true}))
+        .then(wrap('\n\n// @include "vendor/*"\n\n'))
         .then(includeit())
         .then(ife(() => runtime.args.production, uglify()))
         .then(wrap(runtime.commentJs))

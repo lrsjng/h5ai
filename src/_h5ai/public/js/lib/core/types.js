@@ -1,43 +1,44 @@
-modulejs.define('core/types', ['_', 'config'], function (_, config) {
-    var reEndsWithSlash = /\/$/;
-    var regexps = {};
+const {_: lo} = require('../win');
+const config = require('../config');
+
+const reEndsWithSlash = /\/$/;
+const regexps = {};
 
 
-    function escapeRegExp(sequence) {
-        return sequence.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$]/g, '\\$&');
-        // return sequence.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+function escapeRegExp(sequence) {
+    return sequence.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$]/g, '\\$&');
+    // return sequence.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+}
+
+function parse(types) {
+    lo.each(types, (patterns, type) => {
+        const pattern = '^(' + lo.map(patterns, p => '(' + escapeRegExp(p).replace(/\*/g, '.*') + ')').join('|') + ')$';
+        regexps[type] = new RegExp(pattern, 'i');
+    });
+}
+
+function getType(sequence) {
+    if (reEndsWithSlash.test(sequence)) {
+        return 'folder';
     }
 
-    function parse(types) {
-        _.each(types, function (patterns, type) {
-            var pattern = '^(' + _.map(patterns, function (p) { return '(' + escapeRegExp(p).replace(/\*/g, '.*') + ')'; }).join('|') + ')$';
-            regexps[type] = new RegExp(pattern, 'i');
-        });
-    }
+    const slashidx = sequence.lastIndexOf('/');
+    const name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence;
+    let result;
 
-    function getType(sequence) {
-        if (reEndsWithSlash.test(sequence)) {
-            return 'folder';
+    lo.each(regexps, (regexp, type) => { // eslint-disable-line consistent-return
+        if (regexps[type].test(name)) {
+            result = type;
+            return false;
         }
+    });
 
-        var slashidx = sequence.lastIndexOf('/');
-        var name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence;
-        var result;
-
-        _.each(regexps, function (regexp, type) { // eslint-disable-line consistent-return
-            if (regexps[type].test(name)) {
-                result = type;
-                return false;
-            }
-        });
-
-        return result ? result : 'file';
-    }
+    return result ? result : 'file';
+}
 
 
-    parse(_.extend({}, config.types));
+parse(Object.assign({}, config.types));
 
-    return {
-        getType: getType
-    };
-});
+module.exports = {
+    getType
+};

@@ -45,7 +45,6 @@ class Api {
 
         foreach (['langs', 'options', 'types'] as $name) {
             if ($this->request->query_boolean($name, false)) {
-
                 $methodname = 'get_' . $name;
                 $response[$name] = $this->context->$methodname();
             }
@@ -84,8 +83,9 @@ class Api {
             Util::json_fail(Util::ERR_DISABLED, 'search disabled', !$this->context->query_option('search.enabled', false));
             $href = $this->request->query('search.href');
             $pattern = $this->request->query('search.pattern');
+            $ignorecase = $this->request->query_boolean('search.ignorecase', false);
             $search = new Search($this->context);
-            $response['search'] = $search->get_items($href, $pattern);
+            $response['search'] = $search->get_items($href, $pattern, $ignorecase);
         }
 
         if ($this->request->query('thumbs', false)) {

@@ -1,9 +1,9 @@
-modulejs.define('view/root', ['$'], function ($) {
-    var $el = $('body').attr('id', 'root');
+const {jQuery: jq} = require('../win');
 
-    $('#fallback, #fallback-hints').remove();
+const $el = jq('body').attr('id', 'root');
 
-    return {
-        $el: $el
-    };
-});
+jq('#fallback, #fallback-hints').remove();
+
+module.exports = {
+    $el
+};

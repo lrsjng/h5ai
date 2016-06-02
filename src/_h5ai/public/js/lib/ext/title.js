@@ -1,26 +1,29 @@
-modulejs.define('ext/title', ['_', 'core/event', 'core/settings'], function (_, event, allsettings) {
-    var settings = _.extend({
-        enabled: false
-    }, allsettings.title);
+const {document: doc, _: lo} = require('../win');
+const event = require('../core/event');
+const allsettings = require('../core/settings');
 
-    function onLocationChanged(item) {
-        var labels = _.map(item.getCrumb(), 'label');
-        var title = labels.join(' > ');
 
-        if (labels.length > 1) {
-            title = labels[labels.length - 1] + ' - ' + title;
-        }
+const settings = lo.extend({
+    enabled: false
+}, allsettings.title);
 
-        document.title = title;
+function onLocationChanged(item) {
+    const labels = lo.map(item.getCrumb(), 'label');
+    let title = labels.join(' > ');
+
+    if (labels.length > 1) {
+        title = labels[labels.length - 1] + ' - ' + title;
     }
 
-    function init() {
-        if (!settings.enabled) {
-            return;
-        }
+    doc.title = title;
+}
 
-        event.sub('location.changed', onLocationChanged);
+function init() {
+    if (!settings.enabled) {
+        return;
     }
 
-    init();
-});
+    event.sub('location.changed', onLocationChanged);
+}
+
+init();

@@ -1,37 +1,41 @@
-modulejs.define('ext/autorefresh', ['_', '$', 'core/event', 'core/location', 'core/settings'], function (_, $, event, location, allsettings) {
-    var settings = _.extend({
-        enabled: false,
-        interval: 5000
-    }, allsettings.autorefresh);
-    var timeoutId = null;
+const {setTimeout} = require('../win');
+const event = require('../core/event');
+const location = require('../core/location');
+const allsettings = require('../core/settings');
 
 
-    function heartbeat() {
-        location.refresh();
+const settings = Object.assign({
+    enabled: false,
+    interval: 5000
+}, allsettings.autorefresh);
+let timeoutId = null;
+
+
+function heartbeat() {
+    location.refresh();
+}
+
+function before() {
+    clearTimeout(timeoutId);
+}
+
+function after() {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(heartbeat, settings.interval);
+}
+
+function init() {
+    if (!settings.enabled) {
+        return;
     }
 
-    function before() {
-        clearTimeout(timeoutId);
-    }
+    settings.interval = Math.max(1000, settings.interval);
 
-    function after() {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(heartbeat, settings.interval);
-    }
-
-    function init() {
-        if (!settings.enabled) {
-            return;
-        }
-
-        settings.interval = Math.max(1000, settings.interval);
-
-        event.sub('location.beforeChange', before);
-        event.sub('location.beforeRefresh', before);
-        event.sub('location.changed', after);
-        event.sub('location.refreshed', after);
-    }
+    event.sub('location.beforeChange', before);
+    event.sub('location.beforeRefresh', before);
+    event.sub('location.changed', after);
+    event.sub('location.refreshed', after);
+}
 
 
-    init();
-});
+init();

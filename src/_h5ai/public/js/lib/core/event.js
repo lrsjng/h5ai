@@ -1,36 +1,33 @@
-modulejs.define('core/event', ['_'], function (_) {
-    var slice = Array.prototype.slice;
-    var subscriptions = {};
+const {_: lo} = require('../win');
 
-    function sub(topic, callback) {
-        if (_.isString(topic) && _.isFunction(callback)) {
-            if (!subscriptions[topic]) {
-                subscriptions[topic] = [];
-            }
-            subscriptions[topic].push(callback);
+const subscriptions = {};
+
+function sub(topic, listener) {
+    if (lo.isString(topic) && lo.isFunction(listener)) {
+        if (!subscriptions[topic]) {
+            subscriptions[topic] = [];
         }
+        subscriptions[topic].push(listener);
     }
+}
 
-    function unsub(topic, callback) {
-        if (_.isString(topic) && _.isFunction(callback) && subscriptions[topic]) {
-            subscriptions[topic] = _.without(subscriptions[topic], callback);
-        }
+function unsub(topic, listener) {
+    if (lo.isString(topic) && lo.isFunction(listener) && subscriptions[topic]) {
+        subscriptions[topic] = lo.without(subscriptions[topic], listener);
     }
+}
 
-    function pub(topic) {
-        var args = slice.call(arguments, 1);
-
-        if (_.isString(topic) && subscriptions[topic]) {
-            _.each(subscriptions[topic], function (callback) {
-                callback.apply(topic, args);
-            });
-        }
+function pub(topic, ...args) {
+    // console.log(topic, args);
+    if (lo.isString(topic) && subscriptions[topic]) {
+        lo.each(subscriptions[topic], listener => {
+            listener.apply(topic, args);
+        });
     }
+}
 
-
-    return {
-        sub: sub,
-        unsub: unsub,
-        pub: pub
-    };
-});
+module.exports = {
+    sub,
+    unsub,
+    pub
+};

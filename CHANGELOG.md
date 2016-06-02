@@ -1,5 +1,6 @@
 # Changelog
 
+* add options to filter/search ignore case
 * replace PHP `getenv` calls with `$_SERVER` lookups
 * adds `view.fallbackMode` option to generally serve only fallback mode
 * serves fallback mode for text browsers (`curl`, `links`, `lynx`, `w3m`)
@@ -15,7 +16,7 @@
 * updates `jQuery` to 2.2.4
 * updates `jquery-qrcode` to 0.14.0
 * updates `lodash` to 4.13.1 (removes `contains`)
-* updates `modulejs` to 1.14.0
+* removes `modulejs`
 
 
 ## v0.28.0 - *2015-12-19*

@@ -1,25 +1,25 @@
-modulejs.define('core/modernizr', function () {
-    var hasCanvas = (function () {
-        var elem = document.createElement('canvas');
-        return Boolean(elem.getContext && elem.getContext('2d'));
-    }());
+const win = require('../win');
 
-    var hasHistory = Boolean(window.history && history.pushState);
+const hasCanvas = (() => {
+    const elem = win.document.createElement('canvas');
+    return !!(elem.getContext && elem.getContext('2d'));
+})();
 
-    var hasLocalStorage = (function () {
-        var key = '#test#';
-        try {
-            localStorage.setItem(key, key);
-            localStorage.removeItem(key);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }());
+const hasHistory = !!(win.history && win.history.pushState);
 
-    return {
-        canvas: hasCanvas,
-        history: hasHistory,
-        localstorage: hasLocalStorage
-    };
-});
+const hasLocalStorage = (() => {
+    const key = '#test#';
+    try {
+        win.localStorage.setItem(key, key);
+        win.localStorage.removeItem(key);
+        return true;
+    } catch (e) {
+        return false;
+    }
+})();
+
+module.exports = {
+    canvas: hasCanvas,
+    history: hasHistory,
+    localstorage: hasLocalStorage
+};

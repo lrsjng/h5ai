@@ -1,137 +1,143 @@
-modulejs.define('ext/preview-txt', ['_', '$', 'marked', 'prism', 'core/event', 'core/settings', 'ext/preview'], function (_, $, marked, prism, event, allsettings, preview) {
-    var settings = _.extend({
-        enabled: false,
-        types: {}
-    }, allsettings['preview-txt']);
-    var tplText = '<pre id="pv-txt-text" class="highlighted"/>';
-    var tplMarkdown = '<div id="pv-txt-text" class="markdown"/>';
-    var spinnerThreshold = 200;
-    var spinnerTimeoutId;
-    var currentItems;
-    var currentIdx;
-    var currentItem;
+const {setTimeout, jQuery: jq, _: lo, marked, Prism: prism} = require('../win');
+const event = require('../core/event');
+const allsettings = require('../core/settings');
+const preview = require('./preview');
 
 
-    function preloadText(item, callback) {
-        $.ajax({
-            url: item.absHref,
-            dataType: 'text'
-        })
-        .done(function (content) {
-            callback(item, content);
+const settings = lo.extend({
+    enabled: false,
+    types: {}
+}, allsettings['preview-txt']);
+const tplText = '<pre id="pv-txt-text" class="highlighted"/>';
+const tplMarkdown = '<div id="pv-txt-text" class="markdown"/>';
+const spinnerThreshold = 200;
+let spinnerTimeoutId;
+let currentItems;
+let currentIdx;
+let currentItem;
 
-            // for testing
-            // setTimeout(function () { callback(item, content); }, 1000);
-        })
-        .fail(function (jqXHR, textStatus) {
-            callback(item, '[ajax error] ' + textStatus);
-        });
+
+function preloadText(item, callback) {
+    jq.ajax({
+        url: item.absHref,
+        dataType: 'text'
+    })
+    .done(content => {
+        callback(item, content);
+
+        // for testing
+        // setTimeout(function () { callback(item, content); }, 1000);
+    })
+    .fail((jqXHR, textStatus) => {
+        callback(item, '[ajax error] ' + textStatus);
+    });
+}
+
+function onAdjustSize() {
+    const $content = jq('#pv-content');
+    const $text = jq('#pv-txt-text');
+
+    if ($text.length) {
+        $text.height($content.height() - 16);
     }
+}
 
-    function onAdjustSize() {
-        var $content = $('#pv-content');
-        var $text = $('#pv-txt-text');
+function onIdxChange(rel) {
+    currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
+    currentItem = currentItems[currentIdx];
 
-        if ($text.length) {
-            $text.height($content.height() - 16);
-        }
-    }
+    preview.setLabels([
+        currentItem.label,
+        String(currentItem.size) + ' bytes'
+    ]);
+    preview.setIndex(currentIdx + 1, currentItems.length);
+    preview.setRawLink(currentItem.absHref);
 
-    function onIdxChange(rel) {
-        currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
-        currentItem = currentItems[currentIdx];
-
-        preview.setLabels([
-            currentItem.label,
-            String(currentItem.size) + ' bytes'
-        ]);
-        preview.setIndex(currentIdx + 1, currentItems.length);
-        preview.setRawLink(currentItem.absHref);
-
-        $('#pv-content').hide();
-        if (preview.isSpinnerVisible()) {
+    jq('#pv-content').hide();
+    if (preview.isSpinnerVisible()) {
+        preview.showSpinner(true, currentItem.icon);
+    } else {
+        clearTimeout(spinnerTimeoutId);
+        spinnerTimeoutId = setTimeout(() => {
             preview.showSpinner(true, currentItem.icon);
-        } else {
-            clearTimeout(spinnerTimeoutId);
-            spinnerTimeoutId = setTimeout(function () {
-                preview.showSpinner(true, currentItem.icon);
-            }, spinnerThreshold);
-        }
-
-        preloadText(currentItem, function (item, textContent) {
-            if (item !== currentItem) {
-                return;
-            }
-
-            var type = settings.types[currentItem.type];
-            var $text;
-            var $code;
-
-            if (type === 'none') {
-                $text = $(tplMarkdown).text(textContent);
-            } else if (type === 'fixed') {
-                $text = $(tplText).text(textContent);
-            } else if (type === 'markdown') {
-                $text = $(tplMarkdown).html(marked(textContent));
-            } else {
-                $text = $(tplText);
-                $code = $('<code/>').appendTo($text);
-
-                if (textContent.length < 20000) {
-                    $code.empty().html(prism.highlight(textContent, prism.languages[type]));
-                } else {
-                    $code.empty().text(textContent);
-                    setTimeout(function () { $code.empty().html(prism.highlight(textContent, prism.languages[type])); }, 300);
-                }
-            }
-
-            clearTimeout(spinnerTimeoutId);
-            preview.showSpinner(false);
-            $('#pv-content')
-                .empty()
-                .append($text)
-                .show();
-            onAdjustSize();
-        });
+        }, spinnerThreshold);
     }
 
-    function onEnter(items, idx) {
-        currentItems = items;
-        currentIdx = idx;
-        currentItem = items[idx];
-        preview.setOnIndexChange(onIdxChange);
-        preview.setOnAdjustSize(onAdjustSize);
-        preview.enter();
-        onIdxChange(0);
-    }
-
-    function initItem(item) {
-        if (item.$view && _.includes(_.keys(settings.types), item.type)) {
-            item.$view.find('a').on('click', function (ev) {
-                ev.preventDefault();
-
-                var matchedItems = _.compact(_.map($('#items .item'), function (matchedItem) {
-                    matchedItem = $(matchedItem).data('item');
-                    return _.includes(_.keys(settings.types), matchedItem.type) ? matchedItem : null;
-                }));
-
-                onEnter(matchedItems, _.indexOf(matchedItems, item));
-            });
-        }
-    }
-
-    function onViewChanged(added) {
-        _.each(added, initItem);
-    }
-
-    function init() {
-        if (!settings.enabled) {
+    preloadText(currentItem, (item, textContent) => {
+        if (item !== currentItem) {
             return;
         }
 
-        event.sub('view.changed', onViewChanged);
+        const type = settings.types[currentItem.type];
+        let $text;
+        let $code;
+
+        if (type === 'none') {
+            $text = jq(tplMarkdown).text(textContent);
+        } else if (type === 'fixed') {
+            $text = jq(tplText).text(textContent);
+        } else if (type === 'markdown') {
+            $text = jq(tplMarkdown).html(marked(textContent));
+        } else {
+            $text = jq(tplText);
+            $code = jq('<code/>').appendTo($text);
+
+            if (textContent.length < 20000) {
+                $code.empty().html(prism.highlight(textContent, prism.languages[type]));
+            } else {
+                $code.empty().text(textContent);
+                setTimeout(() => {
+                    $code.empty().html(prism.highlight(textContent, prism.languages[type]));
+                }, 300);
+            }
+        }
+
+        clearTimeout(spinnerTimeoutId);
+        preview.showSpinner(false);
+        jq('#pv-content')
+            .empty()
+            .append($text)
+            .show();
+        onAdjustSize();
+    });
+}
+
+function onEnter(items, idx) {
+    currentItems = items;
+    currentIdx = idx;
+    currentItem = items[idx];
+    preview.setOnIndexChange(onIdxChange);
+    preview.setOnAdjustSize(onAdjustSize);
+    preview.enter();
+    onIdxChange(0);
+}
+
+function initItem(item) {
+    if (item.$view && lo.includes(lo.keys(settings.types), item.type)) {
+        item.$view.find('a').on('click', ev => {
+            ev.preventDefault();
+
+            const matchedItems = lo.compact(lo.map(jq('#items .item'), matchedItem => {
+                matchedItem = jq(matchedItem).data('item');
+                return lo.includes(lo.keys(settings.types), matchedItem.type) ? matchedItem : null;
+            }));
+
+            onEnter(matchedItems, lo.indexOf(matchedItems, item));
+        });
+    }
+}
+
+function onViewChanged(added) {
+    lo.each(added, initItem);
+}
+
+function init() {
+    if (!settings.enabled) {
+        return;
     }
 
+    event.sub('view.changed', onViewChanged);
+}
 
-    init();
-});
+
+init();

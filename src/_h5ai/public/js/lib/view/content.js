@@ -1,7 +1,8 @@
-modulejs.define('view/content', ['$', 'view/mainrow'], function ($, mainrow) {
-    var $el = $('<div id="content"/>').appendTo(mainrow.$el);
+const {jQuery: jq} = require('../win');
+const mainrow = require('./mainrow');
 
-    return {
-        $el: $el
-    };
-});
+const $el = jq('<div id="content"/>').appendTo(mainrow.$el);
+
+module.exports = {
+    $el
+};

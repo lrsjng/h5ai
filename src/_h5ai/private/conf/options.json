@@ -144,11 +144,13 @@
 
     - advanced: boolean, use advanced pattern parsing
     - debounceTime: number, debounce wait time in milliseconds
+    - ignorecase: boolean, ignore case
     */
     "filter": {
-        "enabled": false,
+        "enabled": true,
         "advanced": true,
-        "debounceTime": 100
+        "debounceTime": 100,
+        "ignorecase": true
     },
 
     /*
@@ -311,11 +313,13 @@
 
     - advanced: boolean, use advanced pattern parsing
     - debounceTime: number, debounce wait time in milliseconds
+    - ignorecase: boolean, ignore case
     */
     "search": {
         "enabled": true,
         "advanced": true,
-        "debounceTime": 300
+        "debounceTime": 300,
+        "ignorecase": true
     },
 
     /*

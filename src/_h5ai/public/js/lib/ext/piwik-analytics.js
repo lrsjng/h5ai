@@ -1,30 +1,35 @@
-modulejs.define('ext/piwik-analytics', ['_', '$', 'core/settings'], function (_, $, allsettings) {
-    var settings = _.extend({
-        enabled: false,
-        baseURL: 'not-set',
-        idSite: 0
-    }, allsettings['piwik-analytics']);
+const {window: win, jQuery: jq, _: lo} = require('../win');
+const event = require('../core/event');
+const allsettings = require('../core/settings');
 
 
-    function init() {
-        if (!settings.enabled) {
-            return;
-        }
+const settings = lo.extend({
+    enabled: false,
+    baseURL: 'not-set',
+    idSite: 0
+}, allsettings['piwik-analytics']);
 
-        // reference: http://piwik.org/docs/javascript-tracking/
-
-        var pkBaseURL = (document.location.protocol === 'https:' ? 'https://' : 'http://') + settings.baseURL + '/';
-
-        $('<script/>').attr('src', pkBaseURL + 'piwik.js').appendTo('body');
-        $(window).load(function () {
-            /* global Piwik */
-
-            var piwikTracker = Piwik.getTracker(pkBaseURL + 'piwik.php', settings.idSite);
-            piwikTracker.trackPageView();
-            piwikTracker.enableLinkTracking();
-        });
+function init() {
+    if (!settings.enabled) {
+        return;
     }
 
+    // reference: http://piwik.org/docs/javascript-tracking/
 
-    init();
-});
+    const pkBaseURL = (win.location.protocol === 'https:' ? 'https://' : 'http://') + settings.baseURL + '/';
+    let piwikTracker = null;
+
+    jq('<script/>').attr('src', pkBaseURL + 'piwik.js').appendTo('body');
+    jq(win).load(() => {
+        piwikTracker = win.Piwik.getTracker(pkBaseURL + 'piwik.php', settings.idSite);
+        piwikTracker.enableLinkTracking();
+    });
+
+    event.sub('location.changed', item => {
+        const title = lo.map(item.getCrumb(), 'label').join(' > ');
+        piwikTracker.trackPageView(title);
+    });
+}
+
+
+init();

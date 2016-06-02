@@ -1,11 +1,28 @@
-modulejs.define('main/index', ['_', 'core/location'], function (_, location) {
-    modulejs.require('view/viewmode');
+const {document: doc} = require('../win');
+const location = require('../core/location');
 
-    _.each(modulejs.state(), function (state, id) {
-        if (id.indexOf('ext/') === 0) {
-            modulejs.require(id);
-        }
-    });
+require('../view/viewmode');
+require('../ext/autorefresh');
+require('../ext/contextmenu');
+require('../ext/crumb');
+require('../ext/custom');
+require('../ext/download');
+require('../ext/filter');
+require('../ext/google-analytics');
+require('../ext/info');
+require('../ext/l10n');
+require('../ext/peer5');
+require('../ext/piwik-analytics');
+require('../ext/preview');
+require('../ext/preview-aud');
+require('../ext/preview-img');
+require('../ext/preview-txt');
+require('../ext/preview-vid');
+require('../ext/search');
+require('../ext/select');
+require('../ext/sort');
+require('../ext/thumbnails');
+require('../ext/title');
+require('../ext/tree');
 
-    location.setLocation(document.location.href, true);
-});
+location.setLocation(doc.location.href, true);

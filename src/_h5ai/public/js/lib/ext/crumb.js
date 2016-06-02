@@ -1,58 +1,65 @@
-modulejs.define('ext/crumb', ['_', '$', 'core/event', 'core/location', 'core/resource', 'core/settings', 'view/topbar'], function (_, $, event, location, resource, allsettings, topbar) {
-    var settings = _.extend({
-        enabled: false
-    }, allsettings.crumb);
-    var crumbTemplate =
-            '<a class="crumb">' +
-                '<img class="sep" src="' + resource.image('crumb') + '" alt=">"/>' +
-                '<span class="label"/>' +
-            '</a>';
-    var pageHintTemplate = '<img class="hint" src="' + resource.icon('folder-page') + '" alt="has index page"/>';
-    var $crumbbar;
+const {jQuery: jq, _: lo} = require('../win');
+const event = require('../core/event');
+const location = require('../core/location');
+const resource = require('../core/resource');
+const allsettings = require('../core/settings');
+const topbar = require('../view/topbar');
 
 
-    function createHtml(item) {
-        var $html = $(crumbTemplate).data('item', item);
-        item.$crumb = $html;
-        location.setLink($html, item);
+const settings = lo.extend({
+    enabled: false
+}, allsettings.crumb);
+const crumbTemplate =
+        `<a class="crumb">
+            <img class="sep" src="${resource.image('crumb')}" alt=">"/>
+            <span class="label"/>
+        </a>`;
+const pageHintTemplate =
+        `<img class="hint" src="${resource.icon('folder-page')}" alt="has index page"/>`;
+let $crumbbar;
 
-        $html.find('.label').text(item.label);
 
-        if (item.isCurrentFolder()) {
-            $html.addClass('active');
-        }
+function createHtml(item) {
+    const $html = jq(crumbTemplate).data('item', item);
+    item.$crumb = $html;
+    location.setLink($html, item);
 
-        if (!item.isManaged) {
-            $html.append($(pageHintTemplate));
-        }
+    $html.find('.label').text(item.label);
 
-        return $html;
+    if (item.isCurrentFolder()) {
+        $html.addClass('active');
     }
 
-    function onLocationChanged(item) {
-        var $crumb = item.$crumb;
-
-        if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
-            $crumbbar.children().removeClass('active');
-            $crumb.addClass('active');
-        } else {
-            $crumbbar.empty();
-            _.each(item.getCrumb(), function (crumbItem) {
-                $crumbbar.append(createHtml(crumbItem));
-            });
-        }
+    if (!item.isManaged) {
+        $html.append(jq(pageHintTemplate));
     }
 
-    function init() {
-        if (!settings.enabled) {
-            return;
-        }
+    return $html;
+}
 
-        $crumbbar = $('<div id="crumbbar"/>').appendTo(topbar.$flowbar);
+function onLocationChanged(item) {
+    const $crumb = item.$crumb;
 
-        event.sub('location.changed', onLocationChanged);
+    if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
+        $crumbbar.children().removeClass('active');
+        $crumb.addClass('active');
+    } else {
+        $crumbbar.empty();
+        lo.each(item.getCrumb(), crumbItem => {
+            $crumbbar.append(createHtml(crumbItem));
+        });
+    }
+}
+
+function init() {
+    if (!settings.enabled) {
+        return;
     }
 
+    $crumbbar = jq('<div id="crumbbar"/>').appendTo(topbar.$flowbar);
 
-    init();
-});
+    event.sub('location.changed', onLocationChanged);
+}
+
+
+init();
