@@ -147,7 +147,7 @@
     - ignorecase: boolean, ignore case
     */
     "filter": {
-        "enabled": true,
+        "enabled": false,
         "advanced": true,
         "debounceTime": 100,
         "ignorecase": true
