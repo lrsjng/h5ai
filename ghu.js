@@ -69,7 +69,7 @@ ghu.task('build:scripts', runtime => {
     return read(`${SRC}/_h5ai/public/js/scripts.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
         .then(webpack(webpackConfig, {showStats: true}))
-        .then(wrap('\n\n// @include "vendor/*"\n\n'))
+        .then(wrap('\n\n// @include "global.js"\n\n'))
         .then(includeit())
         .then(ife(() => runtime.args.production, uglify()))
         .then(wrap(runtime.commentJs))
