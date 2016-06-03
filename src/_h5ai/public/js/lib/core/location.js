@@ -1,7 +1,6 @@
 const {window: win, document: doc, _: lo} = require('../win');
 const {request} = require('./server');
 const allsettings = require('./settings');
-const modernizr = require('./modernizr');
 const event = require('./event');
 
 const notification = require('../view/notification');
@@ -11,7 +10,7 @@ const settings = lo.extend({
     fastBrowsing: true,
     unmanagedInNewWindow: true
 }, allsettings.view);
-const history = settings.fastBrowsing && modernizr.history ? win.history : null;
+const history = settings.fastBrowsing ? win.history : null;
 const reUriToPathname = /^.*:\/\/[^\/]*|[^\/]*$/g;
 const reForceEncoding = [
     [/\/+/g, '/'],

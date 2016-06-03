@@ -1,7 +1,6 @@
 const {window: win, jQuery: jq, _: lo} = require('../win');
 const event = require('../core/event');
 const format = require('../core/format');
-const modernizr = require('../core/modernizr');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
@@ -96,7 +95,7 @@ function update(item) {
 
     if (settings.qrcode) {
         $qrcode.empty().qrcode({
-            render: modernizr.canvas ? 'canvas' : 'div',
+            render: 'canvas',
             size: 200,
             fill: settings.qrColor,
             background: null,

@@ -1,7 +1,6 @@
 const win = require('../win');
-const modernizr = require('./modernizr');
 
-const store = modernizr.localstorage ? win.localStorage : {};
+const store = win.localStorage;
 const storekey = '_h5ai';
 
 
