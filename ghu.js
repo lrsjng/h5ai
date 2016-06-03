@@ -7,7 +7,6 @@ const {
 const ROOT = resolve(__dirname);
 const SRC = join(ROOT, 'src');
 const TEST = join(ROOT, 'test');
-const TEST_SCAR = join(ROOT, 'test-scar');
 const BUILD = join(ROOT, 'build');
 
 const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.jade', '');
@@ -120,43 +119,12 @@ ghu.task('build:copy', runtime => {
     ]);
 });
 
-ghu.task('build:tests', ['build:scripts', 'build:styles'], 'build the test suite', runtime => {
-    return Promise.all([
-        read(`${TEST}/scripts.js`)
-            .then(newerThan(`${BUILD}/test/scripts.js`))
-            .then(includeit())
-            .then(write(`${BUILD}/test/scripts.js`, {overwrite: true})),
-
-        read(`${TEST}/styles.less`)
-            .then(newerThan(`${BUILD}/test/styles.css`))
-            .then(includeit())
-            .then(less())
-            .then(autoprefixer())
-            .then(write(`${BUILD}/test/styles.css`, {overwrite: true})),
-
-        read(`${TEST}/index.html.jade`)
-            .then(newerThan(`${BUILD}/test/index.html`))
-            .then(pug({pkg: runtime.pkg}))
-            .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
-
-        read(`${BUILD}/_h5ai/public/js/scripts.js`)
-            .then(newerThan(`${BUILD}/test/h5ai-scripts.js`))
-            .then(write(`${BUILD}/test/h5ai-scripts.js`, {overwrite: true})),
-
-        read(`${BUILD}/_h5ai/public/css/styles.css`)
-            .then(newerThan(`${BUILD}/test/h5ai-styles.css`))
-            .then(write(`${BUILD}/test/h5ai-styles.css`, {overwrite: true}))
-    ]).then(() => {
-        console.log(`browse to file://${BUILD}/test/index.html to run the test suite`);
-    });
-});
-
-ghu.task('build:tests-scar', ['build:scripts', 'build:styles'], 'build the test suite', () => {
+ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
     const webpackConfig = {
         module: {
             loaders: [
                 {
-                    include: [TEST_SCAR],
+                    include: [TEST],
                     loader: 'babel',
                     query: {cacheDirectory: true}
                 }
@@ -165,27 +133,25 @@ ghu.task('build:tests-scar', ['build:scripts', 'build:styles'], 'build the test 
     };
 
     return Promise.all([
-        read(`${BUILD}/_h5ai/public/js/scripts.js`)
-            .then(newerThan(`${BUILD}/test-scar/h5ai-scripts.js`))
-            .then(write(`${BUILD}/test-scar/h5ai-scripts.js`, {overwrite: true})),
-
         read(`${BUILD}/_h5ai/public/css/styles.css`)
-            .then(newerThan(`${BUILD}/test-scar/h5ai-styles.css`))
-            .then(write(`${BUILD}/test-scar/h5ai-styles.css`, {overwrite: true})),
+            .then(newerThan(`${BUILD}/test/h5ai-styles.css`))
+            .then(write(`${BUILD}/test/h5ai-styles.css`, {overwrite: true})),
 
-        read(`${TEST_SCAR}/tests.html`)
-            .then(newerThan(`${BUILD}/test-scar/tests.html`))
-            .then(write(`${BUILD}/test-scar/tests.html`, {overwrite: true})),
+        read(`${TEST}/tests.html`)
+            .then(newerThan(`${BUILD}/test/tests.html`))
+            .then(write(`${BUILD}/test/tests.html`, {overwrite: true})),
 
-        read(`${TEST_SCAR}: tests.js`)
+        read(`${TEST}: tests.js`)
             .then(webpack(webpackConfig, {showStats: false}))
-            .then(write(mapfn.p(TEST_SCAR, `${BUILD}/test-scar`), {overwrite: true}))
+            .then(wrap(`\n\n// @include "${SRC}/**/js/global.js"\n\n`))
+            .then(includeit())
+            .then(write(mapfn.p(TEST, `${BUILD}/test`), {overwrite: true}))
     ]).then(() => {
-        console.log(`browse to file://${BUILD}/test-scar/tests.html to run the test suite`);
+        console.log(`browse to file://${BUILD}/test/tests.html to run the test suite`);
     });
 });
 
-ghu.task('build', ['build:scripts', 'build:styles', 'build:pages', 'build:copy', 'build:tests', 'build:tests-scar'],
+ghu.task('build', ['build:scripts', 'build:styles', 'build:pages', 'build:copy', 'build:tests'],
     'build all updated files, optionally use :production');
 
 ghu.task('deploy', ['build'], 'deploy to a specified path with :dest=/some/path', runtime => {
@@ -202,7 +168,7 @@ ghu.task('deploy', ['build'], 'deploy to a specified path with :dest=/some/path'
 });
 
 ghu.task('watch', runtime => {
-    return watch([SRC, TEST, TEST_SCAR], () => ghu.run(runtime.sequence.filter(x => x !== 'watch'), runtime.args, true));
+    return watch([SRC, TEST], () => ghu.run(runtime.sequence.filter(x => x !== 'watch'), runtime.args, true));
 });
 
 ghu.task('release', ['force-production', 'clean', 'build'], 'create a zipball', runtime => {

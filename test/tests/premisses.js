@@ -1,69 +1,21 @@
-(function () {
-    describe('premisses', function () {
-        it('window is global object', function () {
-            assert.isObject(window);
-            assert.strictEqual(window, window.window);
-        });
+const {test, assert} = require('scar');
 
-        it('document is global object', function () {
-            assert.isObject(document);
-            assert.strictEqual(document, window.document);
-        });
+test('window is global object', () => {
+    assert.equal(typeof global, 'object');
+    assert.equal(global, global.window);
+});
 
-        it('jQuery and $ are global functions', function () {
-            assert.isFunction(jQuery);
-            assert.strictEqual(jQuery, window.jQuery);
-            assert.strictEqual(jQuery.fn.jquery, '2.2.4');
+test('document is global object', () => {
+    assert.equal(typeof global.document, 'object');
+});
 
-            assert.strictEqual($, jQuery);
-            assert.strictEqual($, window.$);
-        });
+test('jQuery and $ are global functions', () => {
+    assert.equal(typeof global.jQuery, 'function');
+    assert.equal(global.jQuery.fn.jquery, '2.2.4');
+    assert.equal(global.jQuery, global.$);
+});
 
-        it('_ is global function', function () {
-            assert.isFunction(_);
-            assert.strictEqual(_, window._);
-            assert.strictEqual(_.VERSION, '4.13.1');
-        });
-
-        it('util is global object', function () {
-            assert.isPlainObject(util);
-            assert.strictEqual(util, window.util);
-        });
-
-        it('uniq is global object', function () {
-            assert.isPlainObject(uniq);
-            assert.strictEqual(uniq, window.uniq);
-        });
-
-        it('assert.isPlainObject() works', function () {
-            assert.isFunction(assert.isPlainObject);
-
-            assert.isPlainObject({});
-            assert.isPlainObject({a: 1});
-            assert.isPlainObject(Object());
-            assert.isPlainObject(new Object()); // eslint-disable-line no-new-object
-
-            assert.throws(function () { assert.isPlainObject(); });
-            assert.throws(function () { assert.isPlainObject(1); });
-            assert.throws(function () { assert.isPlainObject('a'); });
-            assert.throws(function () { assert.isPlainObject(new Date()); });
-            assert.throws(function () { assert.isPlainObject(/a/); });
-            assert.throws(function () { assert.isPlainObject(function () {}); });
-            assert.throws(function () { assert.isPlainObject(new function A() {}); });
-        });
-
-        it('assert.lengthOfKeys() works', function () {
-            assert.isFunction(assert.lengthOfKeys);
-
-            assert.lengthOfKeys({}, 0);
-            assert.lengthOfKeys({a: true}, 1);
-            assert.lengthOfKeys({a: true, b: 0, c: undefined}, 3);
-
-            assert.throws(function () { assert.lengthOfKeys(); });
-            assert.throws(function () { assert.lengthOfKeys(1); });
-            assert.throws(function () { assert.lengthOfKeys('a'); });
-            assert.throws(function () { assert.lengthOfKeys({}); });
-            assert.throws(function () { assert.lengthOfKeys({}, 1); });
-        });
-    });
-}());
+test('_ is global function', () => {
+    assert.equal(typeof global._, 'function');
+    assert.equal(global._.VERSION, '4.13.1');
+});
