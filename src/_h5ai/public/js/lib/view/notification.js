@@ -1,4 +1,4 @@
-const {jQuery: jq} = require('../win');
+const {jq} = require('../globals');
 const root = require('./root');
 
 const $el = jq('<div id="notification"/>').hide().appendTo(root.$el);

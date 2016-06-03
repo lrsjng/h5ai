@@ -1,11 +1,11 @@
-const {window: win, document: doc, _: lo} = require('../win');
+const {win, lo} = require('../globals');
 const {request} = require('./server');
 const allsettings = require('./settings');
 const event = require('./event');
 
 const notification = require('../view/notification');
 
-
+const doc = win.document;
 const settings = lo.extend({
     fastBrowsing: true,
     unmanagedInNewWindow: true

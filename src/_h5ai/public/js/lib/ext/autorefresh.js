@@ -1,4 +1,4 @@
-const {setTimeout} = require('../win');
+const {win} = require('../globals');
 const event = require('../core/event');
 const location = require('../core/location');
 const allsettings = require('../core/settings');
@@ -16,12 +16,12 @@ function heartbeat() {
 }
 
 function before() {
-    clearTimeout(timeoutId);
+    win.clearTimeout(timeoutId);
 }
 
 function after() {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(heartbeat, settings.interval);
+    win.clearTimeout(timeoutId);
+    timeoutId = win.setTimeout(heartbeat, settings.interval);
 }
 
 function init() {

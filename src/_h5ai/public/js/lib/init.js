@@ -1,8 +1,8 @@
-// const {jQuery: jq} = require('./win');
+// const {jq} = require('./globals');
 // const config = require('./config');
 //
 // const name = jq('script[data-module]').data('module');
-// const request = {
+// const query = {
 //     action: 'get',
 //     setup: true,
 //     options: true,
@@ -10,26 +10,26 @@
 // };
 //
 // if (name === 'index') {
-//     request.theme = true;
-//     request.langs = true;
+//     query.theme = true;
+//     query.langs = true;
 // } else if (name === 'info') {
-//     request.refresh = true;
+//     query.refresh = true;
 // } else {
 //     throw new Error(`no-main-module: '${name}'`);
 // }
 //
-// config._update(request).then(() => {
+// config._update(query).then(() => {
 //     jq(() => require(`./main/${name}`));
 // });
 
 module.exports = (deps = {}) => {
     const {
-        jq = require('./win').jQuery,
+        jq = require('./globals').jq,
         config = require('./config')
     } = deps;
 
     const name = jq('script[data-module]').data('module');
-    const request = {
+    const query = {
         action: 'get',
         setup: true,
         options: true,
@@ -37,15 +37,15 @@ module.exports = (deps = {}) => {
     };
 
     if (name === 'index') {
-        request.theme = true;
-        request.langs = true;
+        query.theme = true;
+        query.langs = true;
     } else if (name === 'info') {
-        request.refresh = true;
+        query.refresh = true;
     } else {
         throw new Error(`no-main-module: '${name}'`);
     }
 
-    config._update(request).then(() => {
+    config._update(query).then(() => {
         jq(() => require(`./main/${name}`));
     });
 };

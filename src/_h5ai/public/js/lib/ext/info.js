@@ -1,4 +1,4 @@
-const {window: win, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const resource = require('../core/resource');

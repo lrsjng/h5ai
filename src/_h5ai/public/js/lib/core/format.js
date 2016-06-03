@@ -1,4 +1,4 @@
-const {_: lo} = require('../win');
+const {lo} = require('../globals');
 
 const decimalMetric = {
     t: 1000.0,

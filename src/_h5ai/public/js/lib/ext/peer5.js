@@ -1,4 +1,4 @@
-const {window: win, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const allsettings = require('../core/settings');
 
 const settings = lo.extend({

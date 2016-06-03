@@ -1,4 +1,4 @@
-const {_: lo} = require('../win');
+const {lo} = require('../globals');
 const config = require('../config');
 
 const reEndsWithSlash = /\/$/;

@@ -1,2 +1,2 @@
-const config = require('../config');
-module.exports = Object.assign({}, config.langs);
+const {langs} = require('../config');
+module.exports = Object.assign({}, langs);

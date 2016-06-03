@@ -1,4 +1,4 @@
-const {setTimeout, jQuery: jq, _: lo, marked, Prism: prism} = require('../win');
+const {win, jq, lo, marked, prism} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 const preview = require('./preview');
@@ -26,7 +26,7 @@ function preloadText(item, callback) {
         callback(item, content);
 
         // for testing
-        // setTimeout(function () { callback(item, content); }, 1000);
+        // win.setTimeout(function () { callback(item, content); }, 1000);
     })
     .fail((jqXHR, textStatus) => {
         callback(item, '[ajax error] ' + textStatus);
@@ -57,8 +57,8 @@ function onIdxChange(rel) {
     if (preview.isSpinnerVisible()) {
         preview.showSpinner(true, currentItem.icon);
     } else {
-        clearTimeout(spinnerTimeoutId);
-        spinnerTimeoutId = setTimeout(() => {
+        win.clearTimeout(spinnerTimeoutId);
+        spinnerTimeoutId = win.setTimeout(() => {
             preview.showSpinner(true, currentItem.icon);
         }, spinnerThreshold);
     }
@@ -86,13 +86,13 @@ function onIdxChange(rel) {
                 $code.empty().html(prism.highlight(textContent, prism.languages[type]));
             } else {
                 $code.empty().text(textContent);
-                setTimeout(() => {
+                win.setTimeout(() => {
                     $code.empty().html(prism.highlight(textContent, prism.languages[type]));
                 }, 300);
             }
         }
 
-        clearTimeout(spinnerTimeoutId);
+        win.clearTimeout(spinnerTimeoutId);
         preview.showSpinner(false);
         jq('#pv-content')
             .empty()

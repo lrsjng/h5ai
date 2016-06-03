@@ -1,4 +1,4 @@
-const {jQuery: jq, _: lo} = require('../win');
+const {jq, lo} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');

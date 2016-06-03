@@ -1,4 +1,4 @@
-const {jQuery: jq} = require('../win');
+const {jq} = require('../globals');
 const resource = require('../core/resource');
 const store = require('../core/store');
 const mainrow = require('./mainrow');

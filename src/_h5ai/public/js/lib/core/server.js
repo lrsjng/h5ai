@@ -1,4 +1,4 @@
-const {jQuery: jq, _: lo} = require('../win');
+const {jq, lo} = require('../globals');
 
 function request(data) {
     return new Promise(resolve => {

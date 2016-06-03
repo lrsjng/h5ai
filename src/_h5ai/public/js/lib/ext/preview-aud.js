@@ -1,4 +1,4 @@
-const {setTimeout, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const allsettings = require('../core/settings');
@@ -13,7 +13,7 @@ function preloadAudio(src, callback) {
     const $audio = jq('<audio/>')
         .one('loadedmetadata', () => {
             callback($audio);
-            // setTimeout(function () { callback($img); }, 1000); // for testing
+            // win.setTimeout(function () { callback($img); }, 1000); // for testing
         })
         .attr('autoplay', 'autoplay')
         .attr('controls', 'controls')
@@ -46,7 +46,7 @@ function onEnter(items, idx) {
         currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
         currentItem = currentItems[currentIdx];
 
-        const spinnerTimeout = setTimeout(() => preview.showSpinner(true), 200);
+        const spinnerTimeout = win.setTimeout(() => preview.showSpinner(true), 200);
 
         if (jq('#pv-aud-audio').length) {
             jq('#pv-aud-audio')[0].pause();
@@ -61,11 +61,11 @@ function onEnter(items, idx) {
         function swap(nuContent) {
             jq('#pv-content').empty().append(nuContent.attr('id', 'pv-vid-audio')).fadeIn(200);
             // small timeout, so nuContent is visible and therefore its width is available
-            setTimeout(updateMeta, 10);
+            win.setTimeout(updateMeta, 10);
         }
 
         function onReady($preloadedContent) {
-            clearTimeout(spinnerTimeout);
+            win.clearTimeout(spinnerTimeout);
             preview.showSpinner(false);
 
             jq('#pv-content').fadeOut(100, () => swap($preloadedContent));

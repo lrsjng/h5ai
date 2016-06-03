@@ -1,4 +1,4 @@
-const {jQuery: jq} = require('../win');
+const {jq} = require('../globals');
 
 const $el = jq('body').attr('id', 'root');
 

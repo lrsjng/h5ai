@@ -1,4 +1,4 @@
-const {_: lo} = require('../win');
+const {lo} = require('../globals');
 const location = require('../core/location');
 const server = require('../core/server');
 const settings = require('../core/settings');

@@ -1,4 +1,4 @@
-const {_: lo} = require('../win');
+const {lo} = require('../globals');
 
 function regularCmpFn(val1, val2) {
     if (val1 < val2) {

@@ -1,9 +1,10 @@
-const {document: doc, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
 
+const doc = win.document;
 const settings = lo.extend({
     enabled: false,
     clickndrag: false,

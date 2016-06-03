@@ -1,4 +1,4 @@
-const {navigator, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const langs = require('../core/langs');
@@ -89,7 +89,7 @@ function localize(languages, isoCode, useBrowserLang) {
     if (languages[storedIsoCode]) {
         isoCode = storedIsoCode;
     } else if (useBrowserLang) {
-        const browserLang = navigator.language || navigator.browserLanguage;
+        const browserLang = win.navigator.language || win.navigator.browserLanguage;
         if (browserLang) {
             if (languages[browserLang]) {
                 isoCode = browserLang;

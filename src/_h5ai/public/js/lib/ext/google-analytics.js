@@ -1,4 +1,4 @@
-const {window: win, _: lo} = require('../win');
+const {win, lo} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 

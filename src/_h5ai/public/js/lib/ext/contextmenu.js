@@ -1,7 +1,8 @@
-const {document: doc, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
+const doc = win.document;
 const settings = lo.extend({
     enabled: false
 }, allsettings.contextmenu);

@@ -1,6 +1,5 @@
-(function check(win) {
-    /* eslint-disable func-names,no-console,no-var */
-
+/* eslint-disable func-names,no-var */
+(function (win) {
     if (typeof win !== 'object' || win.window !== win || !win.document) {
         throw new Error('no-window');
     }
@@ -14,7 +13,6 @@
             docEl.className = noBrowser;
             throw new Error(noBrowser + ': ' + msg);
         }
-        win.console.log('checked: ' + msg);
     }
 
     assert('console', win.console && typeof win.console.log === 'function');
@@ -37,9 +35,8 @@
             return false;
         }
     }()));
-
-    /* eslint-enable no-var */
 }(this));
+/* eslint-enable */
 
 
 // @include "vendor/*.js"

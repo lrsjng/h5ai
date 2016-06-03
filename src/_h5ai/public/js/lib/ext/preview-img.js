@@ -1,4 +1,4 @@
-const {setTimeout, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const event = require('../core/event');
 const server = require('../core/server');
 const allsettings = require('../core/settings');
@@ -42,7 +42,7 @@ function preloadImage(item, callback) {
                 callback(item, ev.target);
 
                 // for testing
-                // setTimeout(function () { callback(item, ev.target); }, 1000);
+                // win.setTimeout(function () { callback(item, ev.target); }, 1000);
             })
             .attr('src', src);
     });
@@ -81,8 +81,8 @@ function onIdxChange(rel) {
     if (preview.isSpinnerVisible()) {
         preview.showSpinner(true, currentItem.thumbSquare);
     } else {
-        clearTimeout(spinnerTimeoutId);
-        spinnerTimeoutId = setTimeout(() => {
+        win.clearTimeout(spinnerTimeoutId);
+        spinnerTimeoutId = win.setTimeout(() => {
             preview.showSpinner(true, currentItem.thumbSquare);
         }, spinnerThreshold);
     }
@@ -92,7 +92,7 @@ function onIdxChange(rel) {
             return;
         }
 
-        clearTimeout(spinnerTimeoutId);
+        win.clearTimeout(spinnerTimeoutId);
         preview.showSpinner(false);
         jq('#pv-content')
             .empty()

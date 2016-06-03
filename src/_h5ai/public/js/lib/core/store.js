@@ -1,4 +1,4 @@
-const win = require('../win');
+const {win} = require('../globals');
 
 const store = win.localStorage;
 const storekey = '_h5ai';

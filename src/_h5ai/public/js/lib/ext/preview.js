@@ -1,4 +1,4 @@
-const {window: win, setTimeout, jQuery: jq, _: lo} = require('../win');
+const {win, jq, lo} = require('../globals');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
@@ -89,11 +89,11 @@ function onPrevious() {
 }
 
 function userAlive() {
-    clearTimeout(userAliveTimeoutId);
+    win.clearTimeout(userAliveTimeoutId);
     jq('#pv-overlay .hof').stop(true, true).fadeIn(200);
 
     if (isFullscreen) {
-        userAliveTimeoutId = setTimeout(() => {
+        userAliveTimeoutId = win.setTimeout(() => {
             jq('#pv-overlay .hof').stop(true, true).fadeOut(2000);
         }, 2000);
     }
