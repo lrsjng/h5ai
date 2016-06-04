@@ -9,7 +9,7 @@ const SRC = join(ROOT, 'src');
 const TEST = join(ROOT, 'test');
 const BUILD = join(ROOT, 'build');
 
-const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.jade', '');
+const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.pug', '');
 
 ghu.defaults('release');
 
@@ -88,8 +88,8 @@ ghu.task('build:styles', runtime => {
 });
 
 ghu.task('build:pages', runtime => {
-    return read(`${SRC}: **/*.jade, ! **/*.tpl.jade`)
-        .then(newerThan(mapper, `${SRC}/**/*.tpl.jade`))
+    return read(`${SRC}: **/*.pug, ! **/*.tpl.pug`)
+        .then(newerThan(mapper, `${SRC}/**/*.tpl.pug`))
         .then(pug({pkg: runtime.pkg}))
         .then(wrap('', runtime.commentHtml))
         .then(write(mapper, {overwrite: true}));
@@ -104,7 +104,7 @@ ghu.task('build:copy', runtime => {
             .then(wrap(runtime.commentJs))
             .then(write(mapper, {overwrite: true, cluster: true})),
 
-        read(`${SRC}: **, ! **/*.js, ! **/*.less, ! **/*.jade, ! **/conf/*.json`)
+        read(`${SRC}: **, ! **/*.js, ! **/*.less, ! **/*.pug, ! **/conf/*.json`)
             .then(newerThan(mapper))
             .then(each(obj => {
                 if (/index\.php$/.test(obj.source)) {
