@@ -4,13 +4,17 @@ const allsettings = require('../core/settings');
 const store = require('../core/store');
 const base = require('./base');
 
-const disabled = !!(allsettings.view && allsettings.view.disableSidebar);
+
+const settings = Object.assign({
+    disableSidebar: false
+}, allsettings.view);
 const storekey = 'sidebarIsVisible';
 const tplSidebar = '<div id="sidebar"/>';
 const tplToggle =
         `<div id="sidebar-toggle" class="tool">
             <img alt="sidebar"/>
         </div>`;
+
 
 const init = () => {
     const $sidebar = jq(tplSidebar);
@@ -36,13 +40,11 @@ const init = () => {
         }
     };
 
-    if (!disabled) {
+    if (!settings.disableSidebar) {
         $sidebar.appendTo(base.$mainrow);
-        $toggle.appendTo(base.$toolbar);
+        $toggle.appendTo(base.$toolbar).on('click', () => update(true));
+        update();
     }
-
-    $toggle.on('click', () => update(true));
-    update();
 
     return {
         $el: $sidebar
