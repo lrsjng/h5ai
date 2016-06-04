@@ -1,45 +1,52 @@
 const {jq} = require('../globals');
 const resource = require('../core/resource');
+const allsettings = require('../core/settings');
 const store = require('../core/store');
-const mainrow = require('./mainrow');
-const topbar = require('./topbar');
+const base = require('./base');
 
-
+const disabled = !!(allsettings.view && allsettings.view.disableSidebar);
 const storekey = 'sidebarIsVisible';
 const tplSidebar = '<div id="sidebar"/>';
 const tplToggle =
         `<div id="sidebar-toggle" class="tool">
             <img alt="sidebar"/>
         </div>`;
-const $sidebar = jq(tplSidebar);
-const $toggle = jq(tplToggle);
-const $img = $toggle.find('img');
 
+const init = () => {
+    const $sidebar = jq(tplSidebar);
+    const $toggle = jq(tplToggle);
+    const $img = $toggle.find('img');
 
-function update(toggle) {
-    let isVisible = store.get(storekey);
+    const update = toggle => {
+        let isVisible = store.get(storekey);
 
-    if (toggle) {
-        isVisible = !isVisible;
-        store.put(storekey, isVisible);
+        if (toggle) {
+            isVisible = !isVisible;
+            store.put(storekey, isVisible);
+        }
+
+        if (isVisible) {
+            $toggle.addClass('active');
+            $img.attr('src', resource.image('back'));
+            $sidebar.show();
+        } else {
+            $toggle.removeClass('active');
+            $img.attr('src', resource.image('sidebar'));
+            $sidebar.hide();
+        }
+    };
+
+    if (!disabled) {
+        $sidebar.appendTo(base.$mainrow);
+        $toggle.appendTo(base.$toolbar);
     }
 
-    if (isVisible) {
-        $toggle.addClass('active');
-        $img.attr('src', resource.image('back'));
-        $sidebar.show();
-    } else {
-        $toggle.removeClass('active');
-        $img.attr('src', resource.image('sidebar'));
-        $sidebar.hide();
-    }
-}
+    $toggle.on('click', () => update(true));
+    update();
 
-
-$sidebar.appendTo(mainrow.$el);
-$toggle.appendTo(topbar.$toolbar).on('click', () => update(true));
-update();
-
-module.exports = {
-    $el: $sidebar
+    return {
+        $el: $sidebar
+    };
 };
+
+module.exports = init();

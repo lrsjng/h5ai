@@ -32,6 +32,7 @@
     General view options.
 
     - binaryPrefix: boolean, set to true uses 1024B=1KiB when formatting file sizes (see http://en.wikipedia.org/wiki/Binary_prefix)
+    - disableSidebar: boolean, hides sidebar and toggle button
     - fallbackMode: boolean, serve fallback mode
     - fastBrowsing: boolean, use History API if available (no need to reload the whole page)
     - fonts: array of strings, fonts to use in regular context
@@ -59,6 +60,7 @@
     */
     "view": {
         "binaryPrefix": false,
+        "disableSidebar": false,
         "fallbackMode": false,
         "fastBrowsing": true,
         "fonts": ["Ubuntu", "Roboto", "Helvetica", "Arial", "sans-serif"],

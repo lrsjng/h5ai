@@ -5,7 +5,7 @@ const location = require('../core/location');
 const resource = require('../core/resource');
 const store = require('../core/store');
 const allsettings = require('../core/settings');
-const content = require('./content');
+const base = require('./base');
 
 const modes = ['details', 'grid', 'icons'];
 const sizes = [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400];
@@ -204,7 +204,7 @@ function setItems(items) {
         $items.append(createHtml(e));
     });
 
-    content.$el.scrollLeft(0).scrollTop(0);
+    base.$content.scrollLeft(0).scrollTop(0);
     checkHint();
     event.pub('view.changed', items, removed);
 }
@@ -267,7 +267,7 @@ function init() {
     addCssStyles();
     set();
 
-    $view.appendTo(content.$el);
+    $view.appendTo(base.$content);
     $hint.hide();
 
     format.setDefaultMetric(settings.binaryPrefix);

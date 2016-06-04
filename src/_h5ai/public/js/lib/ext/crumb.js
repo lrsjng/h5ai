@@ -3,7 +3,7 @@ const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
-const topbar = require('../view/topbar');
+const base = require('../view/base');
 
 
 const settings = lo.extend({
@@ -56,7 +56,7 @@ function init() {
         return;
     }
 
-    $crumbbar = jq('<div id="crumbbar"/>').appendTo(topbar.$flowbar);
+    $crumbbar = jq('<div id="crumbbar"/>').appendTo(base.$flowbar);
 
     event.sub('location.changed', onLocationChanged);
 }

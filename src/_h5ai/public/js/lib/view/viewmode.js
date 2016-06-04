@@ -3,7 +3,7 @@ const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const sidebar = require('./sidebar');
-const topbar = require('./topbar');
+const base = require('./base');
 const view = require('./view');
 
 
@@ -79,7 +79,7 @@ function addToggle() {
     if (settings.modeToggle && modes.length > 1) {
         jq(tplToggle)
             .on('click', onToggle)
-            .appendTo(topbar.$toolbar);
+            .appendTo(base.$toolbar);
     }
 }
 

@@ -1,7 +1,7 @@
 const {jq} = require('../globals');
-const root = require('./root');
+const base = require('./base');
 
-const $el = jq('<div id="notification"/>').hide().appendTo(root.$el);
+const $el = jq('<div id="notification"/>').hide().appendTo(base.$root);
 
 function set(content) {
     if (content) {
