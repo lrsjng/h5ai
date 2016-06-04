@@ -61,8 +61,7 @@ ghu.task('build:scripts', runtime => {
                         cacheDirectory: true
                     }
                 }
-            ],
-            presets: ['es2015']
+            ]
         }
     };
 
@@ -126,7 +125,10 @@ ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
                 {
                     include: [TEST],
                     loader: 'babel',
-                    query: {cacheDirectory: true}
+                    query: {
+                        presets: ['es2015'],
+                        cacheDirectory: true
+                    }
                 }
             ]
         }
