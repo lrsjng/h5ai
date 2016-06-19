@@ -1,4 +1,4 @@
-const {jq, lo} = require('../globals');
+const {jq, lo} = require('./globals');
 
 function request(data) {
     return new Promise(resolve => {

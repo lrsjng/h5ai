@@ -1,7 +1,7 @@
 const {win, jq} = require('../globals');
 const config = require('../config');
+const server = require('../server');
 const resource = require('../core/resource');
-const server = require('../core/server');
 
 
 const tplTests =

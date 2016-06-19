@@ -1,4 +1,4 @@
-const {request} = require('./core/server');
+const {request} = require('./server');
 
 const config = module.exports = {
     _update: query => {

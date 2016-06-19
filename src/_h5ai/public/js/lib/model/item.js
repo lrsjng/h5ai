@@ -1,6 +1,6 @@
 const {lo} = require('../globals');
+const server = require('../server');
 const location = require('../core/location');
-const server = require('../core/server');
 const settings = require('../core/settings');
 const types = require('../core/types');
 

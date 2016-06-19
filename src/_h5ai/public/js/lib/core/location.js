@@ -1,5 +1,5 @@
 const {win, lo} = require('../globals');
-const {request} = require('./server');
+const {request} = require('../server');
 const allsettings = require('./settings');
 const event = require('./event');
 

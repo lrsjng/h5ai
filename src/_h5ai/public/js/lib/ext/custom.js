@@ -1,6 +1,6 @@
 const {jq, lo, marked} = require('../globals');
+const server = require('../server');
 const event = require('../core/event');
-const server = require('../core/server');
 const allsettings = require('../core/settings');
 
 

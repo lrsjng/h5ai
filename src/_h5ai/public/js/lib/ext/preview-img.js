@@ -1,6 +1,6 @@
 const {win, jq, lo} = require('../globals');
+const server = require('../server');
 const event = require('../core/event');
-const server = require('../core/server');
 const allsettings = require('../core/settings');
 const preview = require('./preview');
 

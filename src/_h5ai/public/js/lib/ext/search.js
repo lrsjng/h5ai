@@ -1,8 +1,8 @@
 const {jq, lo} = require('../globals');
+const server = require('../server');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
-const server = require('../core/server');
 const allsettings = require('../core/settings');
 const util = require('../core/util');
 const Item = require('../model/item');
