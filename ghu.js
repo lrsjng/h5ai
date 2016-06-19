@@ -68,7 +68,7 @@ ghu.task('build:scripts', runtime => {
     return read(`${SRC}/_h5ai/public/js/scripts.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
         .then(webpack(webpackConfig, {showStats: false}))
-        .then(wrap('\n\n// @include "global.js"\n\n'))
+        .then(wrap('\n\n// @include "pre.js"\n\n'))
         .then(includeit())
         .then(ife(() => runtime.args.production, uglify()))
         .then(wrap(runtime.commentJs))
@@ -145,7 +145,7 @@ ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
 
         read(`${TEST}: tests.js`)
             .then(webpack(webpackConfig, {showStats: false}))
-            .then(wrap(`\n\n// @include "${SRC}/**/js/global.js"\n\n`))
+            .then(wrap(`\n\n// @include "${SRC}/**/js/pre.js"\n\n`))
             .then(includeit())
             .then(write(mapfn.p(TEST, `${BUILD}/test`), {overwrite: true}))
     ]).then(() => {
