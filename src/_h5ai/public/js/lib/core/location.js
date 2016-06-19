@@ -3,6 +3,11 @@ const {request} = require('../server');
 const allsettings = require('./settings');
 const event = require('./event');
 
+const each = (obj, fn) => Object.keys(obj).forEach(key => fn(obj[key], key));
+const values = obj => Object.keys(obj).map(key => obj[key]);
+const isFn = x => typeof x === 'function';
+const difference = (...args) => lo.difference(...args);
+
 const notification = require('../view/notification');
 
 const doc = win.document;
@@ -38,15 +43,15 @@ const reForceEncoding = [
 let absHref = null;
 
 
-function forceEncoding(href) {
+const forceEncoding = href => {
     return reForceEncoding.reduce((nuHref, data) => {
         return nuHref.replace(data[0], data[1]);
     }, href);
-}
+};
 
-function uriToPathname(uri) {
+const uriToPathname = uri => {
     return uri.replace(reUriToPathname, '');
-}
+};
 
 const hrefsAreDecoded = (() => {
     const testpathname = '/a b';
@@ -56,7 +61,7 @@ const hrefsAreDecoded = (() => {
     return uriToPathname(a.href) === testpathname;
 })();
 
-function encodedHref(href) {
+const encodedHref = href => {
     const a = doc.createElement('a');
     let location;
 
@@ -68,22 +73,22 @@ function encodedHref(href) {
     }
 
     return forceEncoding(location);
-}
+};
 
-function getDomain() {
+const getDomain = () => {
     return doc.domain;
-}
+};
 
-function getAbsHref() {
+const getAbsHref = () => {
     return absHref;
-}
+};
 
-function getItem() {
+const getItem = () => {
     const Item = require('../model/item');
     return Item.get(absHref);
-}
+};
 
-function load(callback) {
+const load = callback => {
     request({action: 'get', items: {href: absHref, what: 1}}).then(json => {
         const Item = require('../model/item');
         const item = Item.get(absHref);
@@ -91,39 +96,39 @@ function load(callback) {
         if (json) {
             const found = {};
 
-            lo.each(json.items, jsonItem => {
+            each(json.items, jsonItem => {
                 const e = Item.get(jsonItem);
                 found[e.absHref] = true;
             });
 
-            lo.each(item.content, e => {
+            each(item.content, e => {
                 if (!found[e.absHref]) {
                     Item.remove(e.absHref);
                 }
             });
         }
-        if (lo.isFunction(callback)) {
+        if (isFn(callback)) {
             callback(item);
         }
     });
-}
+};
 
-function refresh() {
+const refresh = () => {
     const item = getItem();
-    const oldItems = lo.values(item.content);
+    const oldItems = values(item.content);
 
     event.pub('location.beforeRefresh');
 
     load(() => {
-        const newItems = lo.values(item.content);
-        const added = lo.difference(newItems, oldItems);
-        const removed = lo.difference(oldItems, newItems);
+        const newItems = values(item.content);
+        const added = difference(newItems, oldItems);
+        const removed = difference(oldItems, newItems);
 
         event.pub('location.refreshed', item, added, removed);
     });
-}
+};
 
-function setLocation(newAbsHref, keepBrowserUrl) {
+const setLocation = (newAbsHref, keepBrowserUrl) => {
     event.pub('location.beforeChange');
 
     newAbsHref = encodedHref(newAbsHref);
@@ -152,9 +157,9 @@ function setLocation(newAbsHref, keepBrowserUrl) {
             event.pub('location.changed', item);
         });
     }
-}
+};
 
-function setLink($el, item) {
+const setLink = ($el, item) => {
     $el.attr('href', item.absHref);
 
     if (history && item.isFolder() && item.isManaged) {
@@ -167,13 +172,13 @@ function setLink($el, item) {
     if (settings.unmanagedInNewWindow && !item.isManaged) {
         $el.attr('target', '_blank');
     }
-}
+};
 
-function onPopState(ev) {
+const onPopState = ev => {
     if (ev.state && ev.state.absHref) {
         setLocation(ev.state.absHref, true);
     }
-}
+};
 
 
 win.onpopstate = history ? onPopState : null;
