@@ -10,6 +10,20 @@ const TEST = join(ROOT, 'test');
 const BUILD = join(ROOT, 'build');
 
 const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.pug', '');
+const webpackCfg = include => ({
+    module: {
+        loaders: [
+            {
+                include,
+                loader: 'babel-loader',
+                query: {
+                    cacheDirectory: true,
+                    presets: ['es2015']
+                }
+            }
+        ]
+    }
+});
 
 ghu.defaults('release');
 
@@ -49,25 +63,9 @@ ghu.task('lint', 'lint all JavaScript files with eslint', () => {
 });
 
 ghu.task('build:scripts', runtime => {
-    const webpackConfig = {
-        output: {},
-        module: {
-            loaders: [
-                {
-                    include: [SRC],
-                    loader: 'babel',
-                    query: {
-                        presets: ['es2015'],
-                        cacheDirectory: true
-                    }
-                }
-            ]
-        }
-    };
-
     return read(`${SRC}/_h5ai/public/js/scripts.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
-        .then(webpack(webpackConfig, {showStats: false}))
+        .then(webpack(webpackCfg([SRC]), {showStats: false}))
         .then(wrap('\n\n// @include "pre.js"\n\n'))
         .then(includeit())
         .then(ife(() => runtime.args.production, uglify()))
@@ -119,21 +117,6 @@ ghu.task('build:copy', runtime => {
 });
 
 ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
-    const webpackConfig = {
-        module: {
-            loaders: [
-                {
-                    include: [TEST],
-                    loader: 'babel',
-                    query: {
-                        presets: ['es2015'],
-                        cacheDirectory: true
-                    }
-                }
-            ]
-        }
-    };
-
     return Promise.all([
         read(`${BUILD}/_h5ai/public/css/styles.css`)
             .then(newerThan(`${BUILD}/test/h5ai-styles.css`))
@@ -144,7 +127,7 @@ ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
             .then(write(`${BUILD}/test/tests.html`, {overwrite: true})),
 
         read(`${TEST}: tests.js`)
-            .then(webpack(webpackConfig, {showStats: false}))
+            .then(webpack(webpackCfg([SRC, TEST]), {showStats: false}))
             .then(wrap(`\n\n// @include "${SRC}/**/js/pre.js"\n\n`))
             .then(includeit())
             .then(write(mapfn.p(TEST, `${BUILD}/test`), {overwrite: true}))
