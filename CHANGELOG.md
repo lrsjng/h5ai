@@ -10,14 +10,14 @@
 * fixes shell command detection on Windows
 * fixes `.htaccess` auth issues
 * adds `rust` type and icon
-* removes *Install* section from `README.md`, to much trouble
-* updates `nl` translation
-* updates `pl` translation
+* removes *Install* section from `README.md`, caused too much trouble
 * updates build process to use `node 6.0+`, no need for babel now
+* updates `normalize.css` to 4.1.1
 * updates `jQuery` to 2.2.4
-* updates `jquery-qrcode` to 0.14.0
+* replaces `jquery-qrcode` with `kjua` 0.1.1
 * updates `lodash` to 4.13.1 (removes `contains`)
 * removes `modulejs`
+* language updates and additions (`nl`, `pl`)
 
 
 ## v0.28.0 - *2015-12-19*

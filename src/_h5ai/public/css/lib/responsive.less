@@ -21,8 +21,15 @@
 }
 
 @media print {
-    a[href]:after {
-        content: "" !important;
+    *,
+    *:before,
+    *:after,
+    *:first-letter,
+    *:first-line {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
     }
     #toolbar, #sidebar, #tree, #info {
         display: none !important;
