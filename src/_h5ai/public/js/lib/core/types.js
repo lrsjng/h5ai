@@ -1,23 +1,25 @@
-const {lo} = require('../globals');
 const config = require('../config');
+
+const each = (obj, fn) => Object.keys(obj).forEach(key => fn(obj[key], key));
+const map = (arr, fn) => Array.from(arr, fn);
 
 const reEndsWithSlash = /\/$/;
 const regexps = {};
 
 
-function escapeRegExp(sequence) {
+const escapeRegExp = sequence => {
     return sequence.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$]/g, '\\$&');
     // return sequence.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-}
+};
 
-function parse(types) {
-    lo.each(types, (patterns, type) => {
-        const pattern = '^(' + lo.map(patterns, p => '(' + escapeRegExp(p).replace(/\*/g, '.*') + ')').join('|') + ')$';
+const parse = types => {
+    each(types, (patterns, type) => {
+        const pattern = '^(' + map(patterns, p => '(' + escapeRegExp(p).replace(/\*/g, '.*') + ')').join('|') + ')$';
         regexps[type] = new RegExp(pattern, 'i');
     });
-}
+};
 
-function getType(sequence) {
+const getType = sequence => {
     if (reEndsWithSlash.test(sequence)) {
         return 'folder';
     }
@@ -26,15 +28,14 @@ function getType(sequence) {
     const name = slashidx >= 0 ? sequence.substr(slashidx + 1) : sequence;
     let result;
 
-    lo.each(regexps, (regexp, type) => { // eslint-disable-line consistent-return
+    each(regexps, (regexp, type) => {
         if (regexps[type].test(name)) {
             result = type;
-            return false;
         }
     });
 
     return result ? result : 'file';
-}
+};
 
 
 parse(Object.assign({}, config.types));

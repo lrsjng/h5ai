@@ -1,4 +1,4 @@
-const {lo} = require('../globals');
+const isNum = x => typeof x === 'number';
 
 const decimalMetric = {
     t: 1000.0,
@@ -30,14 +30,14 @@ const datePatterns = [
 let defaultDateFormat = 'YYYY-MM-DD HH:mm';
 
 
-function setDefaultMetric(useBinaryMetric) {
+const setDefaultMetric = useBinaryMetric => {
     defaultMetric = useBinaryMetric ? binaryMetric : decimalMetric;
-}
+};
 
-function formatSize(size, metric) {
+const formatSize = (size, metric) => {
     metric = metric || defaultMetric;
 
-    if (!lo.isNumber(size) || size < 0) {
+    if (!isNum(size) || size < 0) {
         return '';
     }
 
@@ -49,22 +49,22 @@ function formatSize(size, metric) {
         i += 1;
     }
     return (i <= 1 ? Math.round(size) : size.toFixed(1)).toString() + ' ' + metric.u[i];
-}
+};
 
-function setDefaultDateFormat(dateFormat) {
+const setDefaultDateFormat = dateFormat => {
     defaultDateFormat = dateFormat;
-}
+};
 
-function formatNumber(number, padding) {
+const formatNumber = (number, padding) => {
     let str = String(number);
     if (padding) {
         str = ('000' + str).substr(-padding);
     }
     return str;
-}
+};
 
-function formatDate(millis, format) {
-    if (!millis || !lo.isNumber(millis)) {
+const formatDate = (millis, format) => {
+    if (!millis || !isNum(millis)) {
         return '';
     }
 
@@ -85,7 +85,7 @@ function formatDate(millis, format) {
     });
 
     return format;
-}
+};
 
 
 module.exports = {

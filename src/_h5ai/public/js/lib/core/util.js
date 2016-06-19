@@ -1,6 +1,4 @@
-const {lo} = require('../globals');
-
-function regularCmpFn(val1, val2) {
+const regularCmpFn = (val1, val2) => {
     if (val1 < val2) {
         return -1;
     }
@@ -8,13 +6,13 @@ function regularCmpFn(val1, val2) {
         return 1;
     }
     return 0;
-}
+};
 
 // Natural Sort algorithm for Javascript - Version 0.7 - Released under MIT license
 // Author: Jim Palmer (based on chunking idea from Dave Koelle)
 //
 // Modified to make it work with h5ai
-function naturalCmpFn(val1, val2) {
+const naturalCmpFn = (val1, val2) => {
     const re = /(^-?[0-9]+(\.?[0-9]*)[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/gi;
     const sre = /(^[ ]*|[ ]*$)/g;
     const dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/;
@@ -60,13 +58,13 @@ function naturalCmpFn(val1, val2) {
         }
     }
     return 0;
-}
+};
 
-function escapePattern(sequence) {
+const escapePattern = sequence => {
     return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
-}
+};
 
-function parsePattern(sequence, advanced) {
+const parsePattern = (sequence, advanced) => {
     if (!advanced) {
         return escapePattern(sequence);
     }
@@ -75,14 +73,10 @@ function parsePattern(sequence, advanced) {
         return sequence.substr(3);
     }
 
-    sequence = lo.map(lo.trim(sequence).split(/\s+/), part => {
-        return lo.map(part.split(''), character => {
-            return escapePattern(character);
-        }).join('.*?');
+    return sequence.trim().split(/\s+/).map(part => {
+        return part.split('').map(char => escapePattern(char)).join('.*?');
     }).join('|');
-
-    return sequence;
-}
+};
 
 
 module.exports = {

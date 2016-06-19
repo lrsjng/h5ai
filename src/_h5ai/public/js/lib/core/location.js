@@ -6,7 +6,7 @@ const event = require('./event');
 const notification = require('../view/notification');
 
 const doc = win.document;
-const settings = lo.extend({
+const settings = Object.assign({
     fastBrowsing: true,
     unmanagedInNewWindow: true
 }, allsettings.view);

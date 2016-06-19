@@ -1,6 +1,7 @@
-const {lo} = require('../globals');
 const config = require('../config');
 const settings = require('./settings');
+
+const includes = (arr, x) => arr.indexOf(x) >= 0;
 
 const imagesHref = settings.publicHref + 'images/';
 const uiHref = imagesHref + 'ui/';
@@ -21,11 +22,11 @@ function icon(id) {
         return themesHref + href;
     }
 
-    if (lo.includes(defaultIcons, id)) {
+    if (includes(defaultIcons, id)) {
         return defaultThemeHref + id + '.svg';
     }
 
-    if (lo.includes(defaultIcons, baseId)) {
+    if (includes(defaultIcons, baseId)) {
         return defaultThemeHref + baseId + '.svg';
     }
 
