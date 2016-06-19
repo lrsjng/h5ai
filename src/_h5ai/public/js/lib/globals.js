@@ -10,5 +10,6 @@ const publish = (id, name) => {
 publish('window', 'win');
 publish('_', 'lo');
 publish('jQuery', 'jq');
+publish('kjua', 'kjua');
 publish('marked', 'marked');
 publish('Prism', 'prism');

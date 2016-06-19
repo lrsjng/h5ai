@@ -1,4 +1,4 @@
-const {win, jq, lo} = require('../globals');
+const {win, jq, lo, kjua} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const resource = require('../core/resource');
@@ -94,13 +94,16 @@ function update(item) {
     }
 
     if (settings.qrcode) {
-        $qrcode.empty().qrcode({
-            render: 'canvas',
+        const loc = win.location;
+        $qrcode.empty().append(kjua({
+            render: 'image',
             size: 200,
-            fill: settings.qrColor,
-            background: null,
-            text: win.location.protocol + '//' + win.location.host + item.absHref
-        });
+            fill: settings.qrFill,
+            back: settings.qrBack,
+            text: loc.protocol + '//' + loc.host + item.absHref,
+            crisp: true,
+            quiet: 1
+        }));
     }
 }
 

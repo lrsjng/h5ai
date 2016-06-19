@@ -190,7 +190,8 @@
         "enabled": true,
         "show": false,
         "qrcode": true,
-        "qrColor": "#999"
+        "qrFill": "#999",
+        "qrBack": "#fff"
     },
 
     /*
