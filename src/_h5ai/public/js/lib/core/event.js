@@ -1,33 +1,27 @@
-const {lo} = require('../globals');
+const isStr = x => typeof x === 'string';
+const isFn = x => typeof x === 'function';
 
 const subscriptions = {};
 
-function sub(topic, listener) {
-    if (lo.isString(topic) && lo.isFunction(listener)) {
+const sub = (topic, listener) => {
+    if (isStr(topic) && isFn(listener)) {
         if (!subscriptions[topic]) {
             subscriptions[topic] = [];
         }
         subscriptions[topic].push(listener);
     }
-}
+};
 
-function unsub(topic, listener) {
-    if (lo.isString(topic) && lo.isFunction(listener) && subscriptions[topic]) {
-        subscriptions[topic] = lo.without(subscriptions[topic], listener);
-    }
-}
-
-function pub(topic, ...args) {
+const pub = (topic, ...args) => {
     // console.log(topic, args);
-    if (lo.isString(topic) && subscriptions[topic]) {
-        lo.each(subscriptions[topic], listener => {
+    if (isStr(topic) && subscriptions[topic]) {
+        subscriptions[topic].forEach(listener => {
             listener.apply(topic, args);
         });
     }
-}
+};
 
 module.exports = {
     sub,
-    unsub,
     pub
 };

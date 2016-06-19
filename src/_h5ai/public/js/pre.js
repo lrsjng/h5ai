@@ -1,6 +1,6 @@
 /* eslint-disable func-names,no-var */
 (function (win) {
-    if (typeof win !== 'object' || win.window !== win || !win.document) {
+    if (!win || win.window !== win || !win.document) {
         throw new Error('no-window');
     }
 
@@ -15,26 +15,13 @@
         }
     }
 
-    assert('console', win.console && typeof win.console.log === 'function');
-    assert('assign', win.Object && typeof win.Object.assign === 'function');
-    assert('promise', win.Promise && typeof win.Promise === 'function');
-    assert('history', win.history && typeof win.history.pushState === 'function');
+    function isFn(x) {
+        return typeof x === 'function';
+    }
 
-    assert('canvas', (function () {
-        var elem = win.document.createElement('canvas');
-        return elem.getContext && elem.getContext('2d');
-    }()));
-
-    assert('storage', (function () {
-        var key = '#test#';
-        try {
-            win.localStorage.setItem(key, key);
-            win.localStorage.removeItem(key);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }()));
+    assert('console', win.console && isFn(win.console.log));
+    assert('assign', win.Object && isFn(win.Object.assign));
+    assert('promise', isFn(win.Promise));
 }(this));
 /* eslint-enable */
 

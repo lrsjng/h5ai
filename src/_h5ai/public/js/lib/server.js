@@ -1,6 +1,6 @@
 const {jq, lo} = require('./globals');
 
-function request(data) {
+const request = data => {
     return new Promise(resolve => {
         jq.ajax({
             url: '?',
@@ -11,9 +11,9 @@ function request(data) {
         .done(json => resolve(json))
         .fail(() => resolve());
     });
-}
+};
 
-function formRequest(data) {
+const formRequest = data => {
     const $form = jq('<form method="post" action="?" style="display:none;"/>');
 
     lo.each(data, (val, key) => {
@@ -24,7 +24,7 @@ function formRequest(data) {
     });
 
     $form.appendTo('body').submit().remove();
-}
+};
 
 module.exports = {
     request,
