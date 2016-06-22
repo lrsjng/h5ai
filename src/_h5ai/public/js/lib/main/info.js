@@ -36,16 +36,16 @@ const tplSupport =
 const setup = config.setup;
 
 
-function addTest(label, info, passed, result) {
+const addTest = (label, info, passed, result) => {
     const $test = jq(tplTest).appendTo('#tests');
     $test.find('.label').text(label);
     $test.find('.result')
             .addClass(passed ? 'passed' : 'failed')
             .text(result ? result : passed ? 'yes' : 'no');
     $test.find('.info').html(info);
-}
+};
 
-function addTests() {
+const addTests = () => {
     if (!setup.AS_ADMIN) {
         return;
     }
@@ -131,36 +131,36 @@ function addTests() {
         'Shell du', 'Command line program <code>du</code> available',
         setup.HAS_CMD_DU
     );
-}
+};
 
-function reload() {
+const reload = () => {
     win.location.reload();
-}
+};
 
-function onLogin() {
+const onLogin = () => {
     server.request({
         action: 'login',
         pass: jq('#pass').val()
     }).then(reload);
-}
+};
 
-function onLogout() {
+const onLogout = () => {
     server.request({
         action: 'logout'
     }).then(reload);
-}
+};
 
-function onKeydown(event) {
+const onKeydown = event => {
     if (event.which === 13) {
         onLogin();
     }
-}
+};
 
-function addSupport() {
+const addSupport = () => {
     jq(tplSupport).appendTo('#content');
-}
+};
 
-function addLogin() {
+const addLogin = () => {
     jq(tplLogin).appendTo('#content');
 
     if (setup.AS_ADMIN) {
@@ -175,13 +175,13 @@ function addLogin() {
     if (config.options.hasCustomPasshash) {
         jq('#hint').remove();
     }
-}
+};
 
-function init() {
+const init = () => {
     addSupport();
     addLogin();
     addTests();
-}
+};
 
 
 init();
