@@ -1,40 +1,26 @@
 <?php
 
 class Filesize {
-    private $cache = [];
+    private static $cache = [];
 
-    public function __construct() {
+    public static function getSize($path, $withFoldersize, $withDu) {
+        $fs = new Filesize();
+        return $fs->size($path, $withFoldersize, $withDu);
     }
 
-    public function fseek($path) {
-        $size = 0;
-        $step = 1073741824;
-
-        $handle = fopen($path, 'r');
-        fseek($handle, 0, SEEK_SET);
-
-        while ($step > 1) {
-            fseek($handle, $step, SEEK_CUR);
-            if (fgetc($handle) !== false) {
-                $size += $step + 1;
-            } else {
-                fseek($handle, -$step, SEEK_CUR);
-                $step = intval($step / 2, 10);
-            }
+    public static function getCachedSize($path, $withFoldersize, $withDu) {
+        if (array_key_exists($path, Filesize::$cache)) {
+            return Filesize::$cache[$path];
         }
 
-        while (fgetc($handle) !== false) {
-            $size += 1;
-        }
+        $size = Filesize::getSize($path, $withFoldersize, $withDu);
 
-        fclose($handle);
-
+        Filesize::$cache[$path] = $size;
         return $size;
     }
 
-    public function filesize($path) {
-        return @filesize($path);
-    }
+
+    private function __construct() {}
 
     private function read_dir($path) {
         $paths = [];
@@ -48,6 +34,22 @@ class Filesize {
         return $paths;
     }
 
+    private function php_filesize($path, $recursive = false) {
+        // if (PHP_INT_SIZE < 8) {
+        // }
+        $size = @filesize($path);
+
+        if (!is_dir($path) || !$recursive) {
+            return $size;
+        }
+
+        foreach ($this->read_dir($path) as $p) {
+            $size += $this->php_filesize($p, true);
+        }
+        return $size;
+    }
+
+
     private function exec($cmdv) {
         $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
         $lines = [];
@@ -56,34 +58,39 @@ class Filesize {
         return $lines;
     }
 
-    public function du_paths($paths) {
-        $cmdv = array_merge(['du', '-sk'], $paths);
+    private function exec_du_all($paths) {
+        $cmdv = array_merge(['du', '-sb'], $paths);
         $lines = $this->exec($cmdv);
 
         $sizes = [];
         foreach ($lines as $line) {
             $parts = preg_split('/[\s]+/', $line, 2);
-            $size = intval($parts[0], 10) * 1024;
+            $size = intval($parts[0], 10);
             $path = $parts[1];
             $sizes[$path] = $size;
         }
         return $sizes;
     }
 
-    public function du_dir($path) {
-        return $this->du_paths($this->read_dir($path));
-    }
-
-    public function du_path($path) {
-        $sizes = $this->du_paths([$path]);
+    private function exec_du($path) {
+        $sizes = $this->exec_du_all([$path]);
         return $sizes[$path];
     }
 
-    public function add($path) {
-        $size = 0;
-        foreach ($this->read_dir($path) as $p) {
-            $size += $this->filesize($p);
+
+    private function size($path, $withFoldersize = false, $withDu = false) {
+        if (is_file($path)) {
+            return $this->php_filesize($path);
         }
-        return $size;
+
+        if (is_dir($path) && $withFoldersize) {
+            if ($withDu) {
+                return $this->exec_du($path);
+            }
+
+            return $this->php_filesize($path, true);
+        }
+
+        return null;
     }
 }

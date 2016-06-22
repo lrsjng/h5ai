@@ -81,31 +81,10 @@ class Util {
         return false;
     }
 
-    private static $size_cache = [];
-
     public static function filesize($context, $path) {
-        if (array_key_exists($path, Util::$size_cache)) {
-            return Util::$size_cache[$path];
-        }
-        $fs = new Filesize();
+        $withFoldersize = $context->query_option('foldersize.enabled', false);
+        $withDu = $context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du';
+        return Filesize::getCachedSize($path, $withFoldersize, $withDu);
 
-        $size = null;
-
-        if (is_file($path)) {
-            if (PHP_INT_SIZE < 8) {
-                $size = $fs->fseek($path);
-            } else {
-                $size = $fs->filesize($path);
-            }
-        } else if (is_dir($path) && $context->query_option('foldersize.enabled', false)) {
-            if ($context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du') {
-                $size = $fs->du_path($path);
-            } else {
-                $size = $fs->add($path);
-            }
-        }
-
-        Util::$size_cache[$path] = $size;
-        return $size;
     }
 }
