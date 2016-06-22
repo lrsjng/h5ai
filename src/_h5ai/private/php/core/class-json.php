@@ -18,12 +18,12 @@ class Json {
         return file_put_contents($path, $json) !== false;
     }
 
-    public static function decode($json) {
+    private static function decode($json) {
         $json = Json::strip($json);
         return json_decode($json, true);
     }
 
-    public static function strip($commented_json) {
+    private static function strip($commented_json) {
         $insideString = false;
         $insideComment = false;
         $json = '';
