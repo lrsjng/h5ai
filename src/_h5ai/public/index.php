@@ -1,4 +1,4 @@
-s<?php
+<?php
 
 define('H5AI_VERSION', '{{VERSION}}');
 define('MIN_PHP_VERSION', '5.5.0');
