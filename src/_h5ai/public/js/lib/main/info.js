@@ -83,6 +83,11 @@ function addTests() {
     );
 
     addTest(
+        'PHP arch', 'PHP arch is 64-bit',
+        setup.PHP_ARCH === '64-bit', setup.PHP_ARCH
+    );
+
+    addTest(
         'Public Cache directory', 'Web server has write access',
         setup.HAS_WRITABLE_CACHE_PUB
     );

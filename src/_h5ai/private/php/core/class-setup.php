@@ -48,6 +48,7 @@ class Setup {
     private function add_globals_and_envs() {
         $this->set('PHP_VERSION', PHP_VERSION);
         $this->set('MIN_PHP_VERSION', MIN_PHP_VERSION);
+        $this->set('PHP_ARCH', (PHP_INT_SIZE * 8) . '-bit');
 
         $this->set('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
         $this->set('REQUEST_HREF', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
@@ -152,6 +153,7 @@ class Setup {
 
                 'PHP_VERSION',
                 'MIN_PHP_VERSION',
+                'PHP_ARCH',
                 'HAS_PHP_EXIF',
                 'HAS_PHP_JPEG',
 
