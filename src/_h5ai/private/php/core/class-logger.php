@@ -4,15 +4,15 @@ class Logger {
     private static $start;
     private static $prev;
 
+    private static function time() {
+        return microtime(true) * 1000; // sec * 1000 = ms
+    }
+
     public static function init() {
         self::$start = self::time();
         self::$prev = self::$start;
         register_shutdown_function(function () { Logger::log('shutdown'); });
         Logger::log('--------------------------------');
-    }
-
-    private static function time() {
-        return microtime(true) * 1000; // sec * 1000 = ms
     }
 
     public static function log($message=null, $obj=null) {
@@ -24,4 +24,5 @@ class Logger {
         self::$prev = $now;
     }
 }
+
 Logger::init();
