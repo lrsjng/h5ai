@@ -83,7 +83,7 @@ const addTests = () => {
     );
 
     addTest(
-        'PHP arch', 'PHP arch is 64-bit',
+        'PHP arch', '64-bit required to correctly display file/folder sizes &gt; ~2GB',
         setup.PHP_ARCH === '64-bit', setup.PHP_ARCH
     );
 
