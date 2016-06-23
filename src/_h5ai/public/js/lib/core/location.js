@@ -1,14 +1,13 @@
-const {win, lo} = require('../globals');
+const {win} = require('../globals');
 const {request} = require('../server');
 const allsettings = require('./settings');
 const event = require('./event');
+const notification = require('../view/notification');
 
 const each = (obj, fn) => Object.keys(obj).forEach(key => fn(obj[key], key));
 const values = obj => Object.keys(obj).map(key => obj[key]);
 const isFn = x => typeof x === 'function';
-const difference = (...args) => lo.difference(...args);
-
-const notification = require('../view/notification');
+const difference = (arr1, arr2) => arr1.filter(x => arr2.indexOf(x) < 0);
 
 const doc = win.document;
 const settings = Object.assign({

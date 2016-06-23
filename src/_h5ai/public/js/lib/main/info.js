@@ -150,8 +150,8 @@ const onLogout = () => {
     }).then(reload);
 };
 
-const onKeydown = event => {
-    if (event.which === 13) {
+const onKeydown = ev => {
+    if (ev.which === 13) {
         onLogin();
     }
 };
