@@ -53,9 +53,8 @@ function update(item) {
     const $img = $html.find('.icon img');
     const $label = $html.find('.label');
 
-    $html
-        .addClass(item.isFolder() ? 'folder' : 'file')
-        .data('item', item);
+    $html.addClass(item.isFolder() ? 'folder' : 'file');
+    $html[0]._item = item;
 
     location.setLink($a, item);
     $img.attr('src', resource.icon('folder'));
@@ -126,7 +125,7 @@ function createOnIndicatorClick() {
     return ev => {
         let $indicator = jq(ev.currentTarget);
         let $item = $indicator.closest('.item');
-        const item = $item.data('item');
+        const item = $item[0]._item;
         let $content = $item.find('> ul.content');
 
         if ($indicator.hasClass('unknown')) {

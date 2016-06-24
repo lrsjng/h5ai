@@ -26,9 +26,7 @@ const $selectionRect = jq('<div id="selection-rect"/>');
 
 
 function publish() {
-    const items = lo.map(jq('#items .item.selected'), itemElement => {
-        return jq(itemElement).data('item');
-    });
+    const items = lo.map(jq('#items .item.selected'), el => el._item);
     event.pub('selection', items);
 }
 

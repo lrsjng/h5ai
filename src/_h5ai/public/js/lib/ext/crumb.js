@@ -20,7 +20,8 @@ let $crumbbar;
 
 
 function createHtml(item) {
-    const $html = jq(crumbTemplate).data('item', item);
+    const $html = jq(crumbTemplate);
+    $html[0]._item = item;
     item.elCrumb = $html[0];
     location.setLink($html, item);
 

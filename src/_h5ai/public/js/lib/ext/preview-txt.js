@@ -117,8 +117,8 @@ function initItem(item) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
-            const matchedItems = lo.compact(lo.map(jq('#items .item'), matchedItem => {
-                matchedItem = jq(matchedItem).data('item');
+            const matchedItems = lo.compact(lo.map(jq('#items .item'), el => {
+                const matchedItem = el._item;
                 return lo.includes(lo.keys(settings.types), matchedItem.type) ? matchedItem : null;
             }));
 

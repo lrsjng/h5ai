@@ -127,9 +127,7 @@ const createHtml = item => {
     const $date = $html.find('.date');
     const $size = $html.find('.size');
 
-    $html
-        .addClass(item.isFolder() ? 'folder' : 'file')
-        .data('item', item);
+    $html.addClass(item.isFolder() ? 'folder' : 'file');
     $html[0]._item = item;
 
     location.setLink($a, item);
