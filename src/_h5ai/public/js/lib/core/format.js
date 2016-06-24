@@ -1,4 +1,4 @@
-const isNum = x => typeof x === 'number';
+const {isNum} = require('../lo');
 
 const decimalMetric = {
     t: 1000.0,

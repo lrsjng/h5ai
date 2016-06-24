@@ -1,4 +1,5 @@
-const {jq, lo} = require('../globals');
+const {each, map, includes, intersection} = require('../lo');
+const {jq} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const location = require('../core/location');
@@ -9,7 +10,7 @@ const base = require('./base');
 
 const modes = ['details', 'grid', 'icons'];
 const sizes = [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400];
-const settings = lo.extend({
+const settings = Object.assign({
     binaryPrefix: false,
     hideFolders: false,
     hideParentFolder: false,
@@ -18,7 +19,7 @@ const settings = lo.extend({
     sizes
 }, allsettings.view);
 const sortedSizes = settings.sizes.sort((a, b) => a - b);
-const checkedModes = lo.intersection(settings.modes, modes);
+const checkedModes = intersection(settings.modes, modes);
 const storekey = 'view';
 const tplView =
         `<div id="view">
@@ -78,7 +79,7 @@ function createStyles(size) {
 }
 
 function addCssStyles() {
-    const styles = lo.map(sortedSizes, size => createStyles(size));
+    const styles = map(sortedSizes, size => createStyles(size));
     styles.push(`#view .icon img {max-width: ${settings.maxIconSize}px; max-height: ${settings.maxIconSize}px;}`);
     jq('<style/>').text(styles.join('\n')).appendTo('head');
 }
@@ -88,11 +89,11 @@ function set(mode, size) {
 
     mode = mode || stored && stored.mode;
     size = size || stored && stored.size;
-    mode = lo.includes(settings.modes, mode) ? mode : settings.modes[0];
-    size = lo.includes(settings.sizes, size) ? size : settings.sizes[0];
+    mode = includes(settings.modes, mode) ? mode : settings.modes[0];
+    size = includes(settings.sizes, size) ? size : settings.sizes[0];
     store.put(storekey, {mode, size});
 
-    lo.each(checkedModes, m => {
+    each(checkedModes, m => {
         if (m === mode) {
             $view.addClass('view-' + m);
         } else {
@@ -100,7 +101,7 @@ function set(mode, size) {
         }
     });
 
-    lo.each(sortedSizes, s => {
+    each(sortedSizes, s => {
         if (s === size) {
             $view.addClass('view-size-' + s);
         } else {
@@ -194,15 +195,11 @@ function checkHint() {
 }
 
 function setItems(items) {
-    const removed = lo.map($items.find('.item'), item => {
-        return jq(item).data('item');
-    });
+    const removed = map($items.find('.item'), el => jq(el).data('item'));
 
     $items.find('.item').remove();
 
-    lo.each(items, e => {
-        $items.append(createHtml(e));
-    });
+    each(items, item => $items.append(createHtml(item)));
 
     base.$content.scrollLeft(0).scrollTop(0);
     checkHint();
@@ -210,11 +207,11 @@ function setItems(items) {
 }
 
 function changeItems(add, remove) {
-    lo.each(add, item => {
+    each(add, item => {
         createHtml(item).hide().appendTo($items).fadeIn(400);
     });
 
-    lo.each(remove, item => {
+    each(remove, item => {
         item.$view.fadeOut(400, () => {
             item.$view.remove();
         });
@@ -240,7 +237,7 @@ function onLocationChanged(item) {
         items.push(item.parent);
     }
 
-    lo.each(item.content, child => {
+    each(item.content, child => {
         if (!(child.isFolder() && settings.hideFolders)) {
             items.push(child);
         }
@@ -253,7 +250,7 @@ function onLocationChanged(item) {
 function onLocationRefreshed(item, added, removed) {
     const add = [];
 
-    lo.each(added, child => {
+    each(added, child => {
         if (!(child.isFolder() && settings.hideFolders)) {
             add.push(child);
         }

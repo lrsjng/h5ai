@@ -1,4 +1,5 @@
-const {jq, lo} = require('../globals');
+const {each} = require('../lo');
+const {jq} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
@@ -7,7 +8,7 @@ const base = require('./base');
 const view = require('./view');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     modeToggle: false
 }, allsettings.view);
 const tplSettings =
@@ -29,7 +30,7 @@ let sizes;
 function onChanged(mode, size) {
     jq('#viewmode-settings .mode').removeClass('active');
     jq('#viewmode-' + mode).addClass('active');
-    jq('#viewmode-size').val(lo.indexOf(sizes, size));
+    jq('#viewmode-size').val(sizes.indexOf(size));
 
     if (settings.modeToggle === 'next') {
         mode = modes[(modes.indexOf(mode) + 1) % modes.length];
@@ -45,7 +46,7 @@ function addSettings() {
     const $viewBlock = jq(tplSettings);
 
     if (modes.length > 1) {
-        lo.each(modes, mode => {
+        each(modes, mode => {
             jq(tplMode.replace(/\[MODE\]/g, mode))
                 .on('click', () => {
                     view.setMode(mode);

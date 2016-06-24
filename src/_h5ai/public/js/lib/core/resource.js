@@ -1,7 +1,6 @@
+const {includes} = require('../lo');
 const config = require('../config');
 const settings = require('./settings');
-
-const includes = (arr, x) => arr.indexOf(x) >= 0;
 
 const imagesHref = settings.publicHref + 'images/';
 const uiHref = imagesHref + 'ui/';

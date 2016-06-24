@@ -1,4 +1,4 @@
-const {lo} = require('../globals');
+const {keys, each, filter, sortBy, isFn, isStr, isNum} = require('../lo');
 const server = require('../server');
 const location = require('../core/location');
 const settings = require('../core/settings');
@@ -49,9 +49,9 @@ function splitPath(sequence) { // eslint-disable-line consistent-return
 }
 
 function getItem(options) {
-    if (lo.isString(options)) {
+    if (isStr(options)) {
         options = {href: options};
-    } else if (!options || !lo.isString(options.href)) {
+    } else if (!options || !isStr(options.href)) {
         return null;
     }
 
@@ -63,10 +63,10 @@ function getItem(options) {
 
     const item = cache[href] || new Item(href); // eslint-disable-line no-use-before-define
 
-    if (lo.isNumber(options.time)) {
+    if (isNum(options.time)) {
         item.time = options.time;
     }
-    if (lo.isNumber(options.size)) {
+    if (isNum(options.size)) {
         item.size = options.size;
     }
     if (options.managed) {
@@ -89,7 +89,7 @@ function removeItem(absHref) {
         if (item.parent) {
             delete item.parent.content[item.absHref];
         }
-        lo.each(item.content, child => {
+        each(item.content, child => {
             removeItem(child.absHref);
         });
     }
@@ -98,7 +98,7 @@ function removeItem(absHref) {
 function fetchContent(absHref, callback) {
     const item = getItem(absHref);
 
-    if (!lo.isFunction(callback)) {
+    if (!isFn(callback)) {
         callback = () => undefined;
     }
 
@@ -107,7 +107,7 @@ function fetchContent(absHref, callback) {
     } else {
         server.request({action: 'get', items: {href: item.absHref, what: 1}}).then(response => {
             if (response.items) {
-                lo.each(response.items, jsonItem => {
+                each(response.items, jsonItem => {
                     getItem(jsonItem);
                 });
             }
@@ -135,13 +135,13 @@ function Item(absHref) {
     if (split.parent) {
         this.parent = getItem(split.parent);
         this.parent.content[this.absHref] = this;
-        if (lo.keys(this.parent.content).length > 1) {
+        if (keys(this.parent.content).length > 1) {
             this.parent.isContentFetched = true;
         }
     }
 }
 
-lo.extend(Item.prototype, {
+Object.assign(Item.prototype, {
     isFolder() {
         return reEndsWithSlash.test(this.absHref);
     },
@@ -168,7 +168,7 @@ lo.extend(Item.prototype, {
     },
 
     isEmpty() {
-        return lo.keys(this.content).length === 0;
+        return keys(this.content).length === 0;
     },
 
     fetchContent(callback) {
@@ -188,7 +188,7 @@ lo.extend(Item.prototype, {
     },
 
     getSubfolders() {
-        return lo.sortBy(lo.filter(this.content, item => {
+        return sortBy(filter(this.content, item => {
             return item.isFolder();
         }), item => {
             return item.label.toLowerCase();
@@ -199,7 +199,7 @@ lo.extend(Item.prototype, {
         let folders = 0;
         let files = 0;
 
-        lo.each(this.content, item => {
+        each(this.content, item => {
             if (item.isFolder()) {
                 folders += 1;
             } else {

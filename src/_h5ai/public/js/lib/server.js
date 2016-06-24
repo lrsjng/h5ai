@@ -1,6 +1,5 @@
 const {jq} = require('./globals');
-
-const each = (obj, fn) => Object.keys(obj).forEach(key => fn(obj[key], key));
+const {each} = require('./lo');
 
 const request = data => {
     return new Promise(resolve => {

@@ -1,5 +1,4 @@
-const isStr = x => typeof x === 'string';
-const isFn = x => typeof x === 'function';
+const {isStr, isFn} = require('../lo');
 
 const subscriptions = {};
 

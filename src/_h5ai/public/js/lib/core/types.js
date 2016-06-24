@@ -1,7 +1,5 @@
+const {each, map} = require('../lo');
 const config = require('../config');
-
-const each = (obj, fn) => Object.keys(obj).forEach(key => fn(obj[key], key));
-const map = (arr, fn) => Array.from(arr, fn);
 
 const reEndsWithSlash = /\/$/;
 const regexps = {};
