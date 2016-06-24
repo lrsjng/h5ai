@@ -21,7 +21,7 @@ let $crumbbar;
 
 function createHtml(item) {
     const $html = jq(crumbTemplate).data('item', item);
-    item.$crumb = $html;
+    item.elCrumb = $html[0];
     location.setLink($html, item);
 
     $html.find('.label').text(item.label);
@@ -38,7 +38,7 @@ function createHtml(item) {
 }
 
 function onLocationChanged(item) {
-    const $crumb = item.$crumb;
+    const $crumb = jq(item.elCrumb);
 
     if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
         $crumbbar.children().removeClass('active');

@@ -22,7 +22,6 @@ const settings = Object.assign({
 const sortedSizes = settings.sizes.sort((a, b) => a - b);
 const checkedModes = intersection(settings.modes, modes);
 const storekey = 'view';
-const elKey = '_h5ai_item';
 const tplView =
         `<div id="view">
             <ul id="items" class="clearfix">
@@ -131,8 +130,7 @@ const createHtml = item => {
     $html
         .addClass(item.isFolder() ? 'folder' : 'file')
         .data('item', item);
-
-    $html[0][elKey] = item;
+    $html[0]._item = item;
 
     location.setLink($a, item);
 
@@ -162,12 +160,12 @@ const createHtml = item => {
 };
 
 const onMouseenter = ev => {
-    const item = jq(ev.currentTarget).closest('.item').data('item');
+    const item = jq(ev.currentTarget).closest('.item')[0]._item;
     event.pub('item.mouseenter', item);
 };
 
 const onMouseleave = ev => {
-    const item = jq(ev.currentTarget).closest('.item').data('item');
+    const item = jq(ev.currentTarget).closest('.item')[0]._item;
     event.pub('item.mouseleave', item);
 };
 
@@ -182,7 +180,7 @@ const checkHint = () => {
 };
 
 const setItems = items => {
-    const removed = map($items.find('.item'), el => jq(el).data('item'));
+    const removed = map($items.find('.item'), el => el._item);
 
     $items.find('.item').remove();
 

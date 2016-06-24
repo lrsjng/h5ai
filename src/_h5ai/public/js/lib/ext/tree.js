@@ -108,10 +108,10 @@ function update(item) {
         }
     }
 
-    if (item.$tree) {
-        item.$tree.replaceWith($html);
+    if (item.elTree) {
+        jq(item.elTree).replaceWith($html);
     }
-    item.$tree = $html;
+    item.elTree = $html[0];
 
     return $html;
 }
