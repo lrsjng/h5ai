@@ -14,6 +14,7 @@ const settings = Object.assign({
     binaryPrefix: false,
     hideFolders: false,
     hideParentFolder: false,
+    maxIconSize: 40,
     modes,
     setParentFolderLabels: false,
     sizes
@@ -21,6 +22,7 @@ const settings = Object.assign({
 const sortedSizes = settings.sizes.sort((a, b) => a - b);
 const checkedModes = intersection(settings.modes, modes);
 const storekey = 'view';
+const elKey = '_h5ai_item';
 const tplView =
         `<div id="view">
             <ul id="items" class="clearfix">
@@ -48,11 +50,9 @@ const $items = $view.find('#items');
 const $hint = $view.find('#view-hint');
 
 
-function cropSize(size, min, max) {
-    return Math.min(max, Math.max(min, size));
-}
+const cropSize = (size, min, max) => Math.min(max, Math.max(min, size));
 
-function createStyles(size) {
+const createStyles = size => {
     const dsize = cropSize(size, 20, 80);
     const gsize = cropSize(size, 40, 160);
     const isize = cropSize(size, 80, 1000);
@@ -76,15 +76,15 @@ function createStyles(size) {
     ];
 
     return rules.join('\n');
-}
+};
 
-function addCssStyles() {
+const addCssStyles = () => {
     const styles = map(sortedSizes, size => createStyles(size));
     styles.push(`#view .icon img {max-width: ${settings.maxIconSize}px; max-height: ${settings.maxIconSize}px;}`);
     jq('<style/>').text(styles.join('\n')).appendTo('head');
-}
+};
 
-function set(mode, size) {
+const set = (mode, size) => {
     const stored = store.get(storekey);
 
     mode = mode || stored && stored.mode;
@@ -110,33 +110,17 @@ function set(mode, size) {
     });
 
     event.pub('view.mode.changed', mode, size);
-}
+};
 
-function getModes() {
-    return checkedModes;
-}
+const getModes = () => checkedModes;
+const getMode = () => store.get(storekey).mode;
+const setMode = mode => set(mode, null);
 
-function getSizes() {
-    return sortedSizes;
-}
+const getSizes = () => sortedSizes;
+const getSize = () => store.get(storekey).size;
+const setSize = size => set(null, size);
 
-function getMode() {
-    return store.get(storekey).mode;
-}
-
-function setMode(mode) {
-    set(mode, null);
-}
-
-function getSize() {
-    return store.get(storekey).size;
-}
-
-function setSize(size) {
-    set(null, size);
-}
-
-function createHtml(item) {
+const createHtml = item => {
     const $html = jq(tplItem);
     const $a = $html.find('a');
     const $iconImg = $html.find('.icon img');
@@ -147,6 +131,8 @@ function createHtml(item) {
     $html
         .addClass(item.isFolder() ? 'folder' : 'file')
         .data('item', item);
+
+    $html[0][elKey] = item;
 
     location.setLink($a, item);
 
@@ -170,21 +156,22 @@ function createHtml(item) {
     $iconImg.attr('src', item.icon).attr('alt', item.type);
 
     item.$view = $html;
+    item.elView = $html[0];
 
     return $html;
-}
+};
 
-function onMouseenter(ev) {
+const onMouseenter = ev => {
     const item = jq(ev.currentTarget).closest('.item').data('item');
     event.pub('item.mouseenter', item);
-}
+};
 
-function onMouseleave(ev) {
+const onMouseleave = ev => {
     const item = jq(ev.currentTarget).closest('.item').data('item');
     event.pub('item.mouseleave', item);
-}
+};
 
-function checkHint() {
+const checkHint = () => {
     const hasNoItems = $items.find('.item').not('.folder-parent').length === 0;
 
     if (hasNoItems) {
@@ -192,9 +179,9 @@ function checkHint() {
     } else {
         $hint.hide();
     }
-}
+};
 
-function setItems(items) {
+const setItems = items => {
     const removed = map($items.find('.item'), el => jq(el).data('item'));
 
     $items.find('.item').remove();
@@ -204,9 +191,9 @@ function setItems(items) {
     base.$content.scrollLeft(0).scrollTop(0);
     checkHint();
     event.pub('view.changed', items, removed);
-}
+};
 
-function changeItems(add, remove) {
+const changeItems = (add, remove) => {
     each(add, item => {
         createHtml(item).hide().appendTo($items).fadeIn(400);
     });
@@ -219,14 +206,14 @@ function changeItems(add, remove) {
 
     checkHint();
     event.pub('view.changed', add, remove);
-}
+};
 
-function setHint(l10nKey) {
+const setHint = l10nKey => {
     $hint.removeClass().addClass('l10n-' + l10nKey);
     checkHint();
-}
+};
 
-function onLocationChanged(item) {
+const onLocationChanged = item => {
     if (!item) {
         item = location.getItem();
     }
@@ -245,9 +232,9 @@ function onLocationChanged(item) {
 
     setHint('empty');
     setItems(items);
-}
+};
 
-function onLocationRefreshed(item, added, removed) {
+const onLocationRefreshed = (item, added, removed) => {
     const add = [];
 
     each(added, child => {
@@ -258,9 +245,9 @@ function onLocationRefreshed(item, added, removed) {
 
     setHint('empty');
     changeItems(add, removed);
-}
+};
 
-function init() {
+const init = () => {
     addCssStyles();
     set();
 
@@ -275,7 +262,7 @@ function init() {
 
     event.sub('location.changed', onLocationChanged);
     event.sub('location.refreshed', onLocationRefreshed);
-}
+};
 
 
 init();
