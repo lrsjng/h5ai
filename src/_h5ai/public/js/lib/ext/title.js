@@ -9,7 +9,7 @@ const settings = Object.assign({
     enabled: false
 }, allsettings.title);
 
-function onLocationChanged(item) {
+const onLocationChanged = item => {
     const labels = map(item.getCrumb(), i => i.label);
     let title = labels.join(' > ');
 
@@ -18,14 +18,14 @@ function onLocationChanged(item) {
     }
 
     doc.title = title;
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
     event.sub('location.changed', onLocationChanged);
-}
+};
 
 init();

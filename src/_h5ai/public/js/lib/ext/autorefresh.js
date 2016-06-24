@@ -3,7 +3,6 @@ const event = require('../core/event');
 const location = require('../core/location');
 const allsettings = require('../core/settings');
 
-
 const settings = Object.assign({
     enabled: false,
     interval: 5000
@@ -11,20 +10,20 @@ const settings = Object.assign({
 let timeoutId = null;
 
 
-function heartbeat() {
+const heartbeat = () => {
     location.refresh();
-}
+};
 
-function before() {
+const before = () => {
     win.clearTimeout(timeoutId);
-}
+};
 
-function after() {
+const after = () => {
     win.clearTimeout(timeoutId);
     timeoutId = win.setTimeout(heartbeat, settings.interval);
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
@@ -35,7 +34,7 @@ function init() {
     event.sub('location.beforeRefresh', before);
     event.sub('location.changed', after);
     event.sub('location.refreshed', after);
-}
+};
 
 
 init();

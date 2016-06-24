@@ -12,7 +12,7 @@ let $footer;
 const duration = 200;
 
 
-function onLocationChanged(item) {
+const onLocationChanged = item => {
     server.request({action: 'get', custom: item.absHref}).then(response => {
         const custom = response && response.custom;
         let hasHeader;
@@ -49,9 +49,9 @@ function onLocationChanged(item) {
             $footer.stop().slideUp(duration);
         }
     });
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
@@ -60,7 +60,7 @@ function init() {
     $footer = jq('<div id="content-footer"/>').hide().appendTo('#content');
 
     event.sub('location.changed', onLocationChanged);
-}
+};
 
 
 init();

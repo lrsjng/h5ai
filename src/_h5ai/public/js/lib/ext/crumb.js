@@ -20,7 +20,7 @@ const pageHintTemplate =
 let $crumbbar;
 
 
-function createHtml(item) {
+const createHtml = item => {
     const $html = jq(crumbTemplate);
     $html[0]._item = item;
     item.elCrumb = $html[0];
@@ -37,9 +37,9 @@ function createHtml(item) {
     }
 
     return $html;
-}
+};
 
-function onLocationChanged(item) {
+const onLocationChanged = item => {
     const $crumb = jq(item.elCrumb);
 
     if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
@@ -51,9 +51,9 @@ function onLocationChanged(item) {
             $crumbbar.append(createHtml(crumbItem));
         });
     }
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
@@ -61,7 +61,7 @@ function init() {
     $crumbbar = jq('<div id="crumbbar"/>').appendTo(base.$flowbar);
 
     event.sub('location.changed', onLocationChanged);
-}
+};
 
 
 init();
