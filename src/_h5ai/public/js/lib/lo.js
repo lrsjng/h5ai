@@ -25,13 +25,10 @@ const intersection = (obj1, obj2) => {
     obj2 = values(obj2);
     return filter(obj1, x => obj2.indexOf(x) >= 0);
 };
+const cmp = (x, y) => x < y ? -1 : x > y ? 1 : 0;
 const sortBy = (obj, sel) => {
     const selFn = isFn(sel) ? sel : x => x[sel];
-    const cmpFn = (x, y) => {
-        x = selFn(x);
-        y = selFn(y);
-        return x < y ? -1 : x > y ? 1 : 0;
-    };
+    const cmpFn = (x, y) => cmp(selFn(x), selFn(y));
     return values(obj).sort(cmpFn);
 };
 const debounce = (fn, delay) => {

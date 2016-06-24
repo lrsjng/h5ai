@@ -21,9 +21,7 @@ const put = (key, value) => {
     save(obj);
 };
 
-const get = key => {
-    return load()[key];
-};
+const get = key => load()[key];
 
 
 module.exports = {

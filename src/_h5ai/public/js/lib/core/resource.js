@@ -9,9 +9,7 @@ const defaultThemeHref = themesHref + 'default/';
 const defaultIcons = ['file', 'folder', 'folder-page', 'folder-parent', 'ar', 'aud', 'bin', 'img', 'txt', 'vid', 'x'];
 
 
-const image = id => {
-    return uiHref + id + '.svg';
-};
+const image = id => uiHref + id + '.svg';
 
 const icon = id => {
     const baseId = (id || '').split('-')[0];

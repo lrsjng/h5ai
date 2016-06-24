@@ -4,19 +4,12 @@ const location = require('../core/location');
 const settings = require('../core/settings');
 const types = require('../core/types');
 
-
 const reEndsWithSlash = /\/$/;
 const reSplitPath = /^(.*\/)([^\/]+\/?)$/;
 const cache = {};
 
 
-const startsWith = (sequence, part) => {
-    if (!sequence || !sequence.indexOf) {
-        return false;
-    }
-
-    return sequence.indexOf(part) === 0;
-};
+const startsWith = (sequence, part) => isStr(sequence) && sequence.startsWith(part);
 
 const createLabel = sequence => {
     sequence = sequence.replace(reEndsWithSlash, '');
@@ -26,7 +19,7 @@ const createLabel = sequence => {
     return sequence;
 };
 
-const splitPath = sequence => { // eslint-disable-line consistent-return
+const splitPath = sequence => {
     if (sequence === '/') {
         return {
             parent: null,
@@ -35,17 +28,19 @@ const splitPath = sequence => { // eslint-disable-line consistent-return
     }
 
     const match = reSplitPath.exec(sequence);
-    if (match) {
-        const split = {
-            parent: match[1],
-            name: match[2]
-        };
-
-        if (split.parent && !startsWith(split.parent, settings.rootHref)) {
-            split.parent = null;
-        }
-        return split;
+    if (!match) {
+        return null;
     }
+
+    const split = {
+        parent: match[1],
+        name: match[2]
+    };
+
+    if (split.parent && !startsWith(split.parent, settings.rootHref)) {
+        split.parent = null;
+    }
+    return split;
 };
 
 const getItem = options => {

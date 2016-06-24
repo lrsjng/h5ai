@@ -1,12 +1,4 @@
-const regularCmpFn = (val1, val2) => {
-    if (val1 < val2) {
-        return -1;
-    }
-    if (val1 > val2) {
-        return 1;
-    }
-    return 0;
-};
+const regularCmpFn = (x, y) => x < y ? -1 : x > y ? 1 : 0;
 
 // Natural Sort algorithm for Javascript - Version 0.7 - Released under MIT license
 // Author: Jim Palmer (based on chunking idea from Dave Koelle)

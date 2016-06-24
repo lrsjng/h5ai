@@ -71,18 +71,9 @@ const encodedHref = href => {
     return forceEncoding(location);
 };
 
-const getDomain = () => {
-    return doc.domain;
-};
-
-const getAbsHref = () => {
-    return absHref;
-};
-
-const getItem = () => {
-    const Item = require('../model/item');
-    return Item.get(absHref);
-};
+const getDomain = () => doc.domain;
+const getAbsHref = () => absHref;
+const getItem = () => require('../model/item').get(absHref);
 
 const load = callback => {
     request({action: 'get', items: {href: absHref, what: 1}}).then(json => {
