@@ -27,7 +27,7 @@ let modes;
 let sizes;
 
 
-function onChanged(mode, size) {
+const onChanged = (mode, size) => {
     jq('#viewmode-settings .mode').removeClass('active');
     jq('#viewmode-' + mode).addClass('active');
     jq('#viewmode-size').val(sizes.indexOf(size));
@@ -36,9 +36,9 @@ function onChanged(mode, size) {
         mode = modes[(modes.indexOf(mode) + 1) % modes.length];
     }
     jq('#viewmode-toggle img').attr('src', resource.image('view-' + mode));
-}
+};
 
-function addSettings() {
+const addSettings = () => {
     if (modes.length < 2 && sizes.length < 2) {
         return;
     }
@@ -66,25 +66,25 @@ function addSettings() {
     }
 
     $viewBlock.appendTo(sidebar.$el);
-}
+};
 
-function onToggle() {
+const onToggle = () => {
     const mode = view.getMode();
     const nextIdx = (modes.indexOf(mode) + 1) % modes.length;
     const nextMode = modes[nextIdx];
 
     view.setMode(nextMode);
-}
+};
 
-function addToggle() {
+const addToggle = () => {
     if (settings.modeToggle && modes.length > 1) {
         jq(tplToggle)
             .on('click', onToggle)
             .appendTo(base.$toolbar);
     }
-}
+};
 
-function init() {
+const init = () => {
     modes = view.getModes();
     sizes = view.getSizes();
 
@@ -93,7 +93,7 @@ function init() {
     onChanged(view.getMode(), view.getSize());
 
     event.sub('view.mode.changed', onChanged);
-}
+};
 
 
 init();

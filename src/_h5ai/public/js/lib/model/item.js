@@ -10,23 +10,23 @@ const reSplitPath = /^(.*\/)([^\/]+\/?)$/;
 const cache = {};
 
 
-function startsWith(sequence, part) {
+const startsWith = (sequence, part) => {
     if (!sequence || !sequence.indexOf) {
         return false;
     }
 
     return sequence.indexOf(part) === 0;
-}
+};
 
-function createLabel(sequence) {
+const createLabel = sequence => {
     sequence = sequence.replace(reEndsWithSlash, '');
     try {
         sequence = decodeURIComponent(sequence);
     } catch (e) {/* skip */}
     return sequence;
-}
+};
 
-function splitPath(sequence) { // eslint-disable-line consistent-return
+const splitPath = sequence => { // eslint-disable-line consistent-return
     if (sequence === '/') {
         return {
             parent: null,
@@ -46,9 +46,9 @@ function splitPath(sequence) { // eslint-disable-line consistent-return
         }
         return split;
     }
-}
+};
 
-function getItem(options) {
+const getItem = options => {
     if (isStr(options)) {
         options = {href: options};
     } else if (!options || !isStr(options.href)) {
@@ -61,7 +61,7 @@ function getItem(options) {
         return null;
     }
 
-    const item = cache[href] || new Item(href); // eslint-disable-line no-use-before-define
+    const item = cache[href] || Item(href); // eslint-disable-line no-use-before-define
 
     if (isNum(options.time)) {
         item.time = options.time;
@@ -77,9 +77,9 @@ function getItem(options) {
     }
 
     return item;
-}
+};
 
-function removeItem(absHref) {
+const removeItem = absHref => {
     absHref = location.forceEncoding(absHref);
 
     const item = cache[absHref];
@@ -93,9 +93,9 @@ function removeItem(absHref) {
             removeItem(child.absHref);
         });
     }
-}
+};
 
-function fetchContent(absHref, callback) {
+const fetchContent = (absHref, callback) => {
     const item = getItem(absHref);
 
     if (!isFn(callback)) {
@@ -115,33 +115,39 @@ function fetchContent(absHref, callback) {
             callback(item);
         });
     }
-}
+};
 
 
-function Item(absHref) {
+const Item = absHref => {
     const split = splitPath(absHref);
 
-    cache[absHref] = this;
+    const inst = Object.assign(Object.create(Item.prototype), {
+        absHref,
+        type: types.getType(absHref),
+        label: createLabel(absHref === '/' ? location.getDomain() : split.name),
+        time: null,
+        size: null,
+        parent: null,
+        isManaged: null,
+        content: {}
+    });
 
-    this.absHref = absHref;
-    this.type = types.getType(absHref);
-    this.label = createLabel(absHref === '/' ? location.getDomain() : split.name);
-    this.time = null;
-    this.size = null;
-    this.parent = null;
-    this.isManaged = null;
-    this.content = {};
+    cache[absHref] = inst;
 
     if (split.parent) {
-        this.parent = getItem(split.parent);
-        this.parent.content[this.absHref] = this;
-        if (keys(this.parent.content).length > 1) {
-            this.parent.isContentFetched = true;
+        inst.parent = getItem(split.parent);
+        inst.parent.content[inst.absHref] = inst;
+        if (keys(inst.parent.content).length > 1) {
+            inst.parent.isContentFetched = true;
         }
     }
-}
 
-Object.assign(Item.prototype, {
+    return inst;
+};
+
+Item.prototype = {
+    constructor: Item,
+
     isFolder() {
         return reEndsWithSlash.test(this.absHref);
     },
@@ -151,12 +157,12 @@ Object.assign(Item.prototype, {
     },
 
     isInCurrentFolder() {
-        return Boolean(this.parent) && this.parent.isCurrentFolder();
+        return !!this.parent && this.parent.isCurrentFolder();
     },
 
     isCurrentParentFolder() {
         const item = getItem(location.getAbsHref());
-        return Boolean(item) && this === item.parent;
+        return !!item && this === item.parent;
     },
 
     isDomain() {
@@ -221,7 +227,7 @@ Object.assign(Item.prototype, {
             depth
         };
     }
-});
+};
 
 
 module.exports = {
