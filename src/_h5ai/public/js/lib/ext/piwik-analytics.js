@@ -1,9 +1,10 @@
-const {win, jq, lo} = require('../globals');
+const {map} = require('../lo');
+const {win, jq} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     baseURL: 'not-set',
     idSite: 0
@@ -26,7 +27,7 @@ function init() {
     });
 
     event.sub('location.changed', item => {
-        const title = lo.map(item.getCrumb(), 'label').join(' > ');
+        const title = map(item.getCrumb(), i => i.label).join(' > ');
         piwikTracker.trackPageView(title);
     });
 }

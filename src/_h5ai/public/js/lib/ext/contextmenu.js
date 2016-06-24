@@ -1,9 +1,10 @@
-const {win, jq, lo} = require('../globals');
+const {each} = require('../lo');
+const {win, jq} = require('../globals');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
 const doc = win.document;
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false
 }, allsettings.contextmenu);
 const templateOverlay = '<div id="cm-overlay"/>';
@@ -37,7 +38,7 @@ function createPanel(menu) {
     const $ul = $panel.find('ul');
     let $li;
 
-    lo.each(menu, entry => {
+    each(menu, entry => {
         if (entry.type === '-') {
             jq(templateSep).appendTo($ul);
         } else if (entry.type === 'l') {

@@ -1,11 +1,11 @@
-const {jq, lo} = require('../globals');
+const {jq} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
 const util = require('../core/util');
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     column: 0,
     reverse: false,

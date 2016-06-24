@@ -1,4 +1,5 @@
-const {jq, lo} = require('../globals');
+const {each} = require('../lo');
+const {jq} = require('../globals');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -7,7 +8,7 @@ const store = require('../core/store');
 const util = require('../core/util');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     show: true,
     maxSubfolders: 50,
@@ -87,7 +88,7 @@ function update(item) {
 
             const $ul = jq('<ul class="content"/>').appendTo($html);
             let counter = 0;
-            lo.each(subfolders, e => {
+            each(subfolders, e => {
                 counter += 1;
                 if (counter <= settings.maxSubfolders) {
                     jq('<li/>').append(update(e)).appendTo($ul);

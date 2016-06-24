@@ -1,9 +1,10 @@
-const {win, lo} = require('../globals');
+const {map} = require('../lo');
+const {win} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     id: 'UA-000000-0'
 }, allsettings['google-analytics-ua']);
@@ -30,7 +31,7 @@ function init() {
         const loc = win.location;
         win.ga('send', 'pageview', {
             location: loc.protocol + '//' + loc.host + item.absHref,
-            title: lo.map(item.getCrumb(), 'label').join(' > ')
+            title: map(item.getCrumb(), i => i.label).join(' > ')
         });
     });
 }

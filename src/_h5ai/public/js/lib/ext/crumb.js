@@ -1,4 +1,5 @@
-const {jq, lo} = require('../globals');
+const {each} = require('../lo');
+const {jq} = require('../globals');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -6,7 +7,7 @@ const allsettings = require('../core/settings');
 const base = require('../view/base');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false
 }, allsettings.crumb);
 const crumbTemplate =
@@ -46,7 +47,7 @@ function onLocationChanged(item) {
         $crumb.addClass('active');
     } else {
         $crumbbar.empty();
-        lo.each(item.getCrumb(), crumbItem => {
+        each(item.getCrumb(), crumbItem => {
             $crumbbar.append(createHtml(crumbItem));
         });
     }

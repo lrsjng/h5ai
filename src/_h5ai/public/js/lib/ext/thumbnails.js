@@ -1,9 +1,9 @@
-const {lo} = require('../globals');
+const {each, map, includes} = require('../lo');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     img: ['img-bmp', 'img-gif', 'img-ico', 'img-jpg', 'img-png'],
     mov: ['vid-avi', 'vid-flv', 'vid-mkv', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm'],
@@ -18,11 +18,11 @@ const landscapeRatio = 4 / 3;
 function queueItem(queue, item) {
     let type = null;
 
-    if (lo.includes(settings.img, item.type)) {
+    if (includes(settings.img, item.type)) {
         type = 'img';
-    } else if (lo.includes(settings.mov, item.type)) {
+    } else if (includes(settings.mov, item.type)) {
         type = 'mov';
-    } else if (lo.includes(settings.doc, item.type)) {
+    } else if (includes(settings.doc, item.type)) {
         type = 'doc';
     } else {
         return;
@@ -62,7 +62,7 @@ function queueItem(queue, item) {
 }
 
 function requestQueue(queue) {
-    const thumbs = lo.map(queue, req => {
+    const thumbs = map(queue, req => {
         return {
             type: req.type,
             href: req.href,
@@ -75,7 +75,7 @@ function requestQueue(queue) {
         action: 'get',
         thumbs
     }).then(json => {
-        lo.each(queue, (req, idx) => {
+        each(queue, (req, idx) => {
             req.callback(json && json.thumbs ? json.thumbs[idx] : null);
         });
     });
@@ -84,7 +84,7 @@ function requestQueue(queue) {
 function handleItems(items) {
     const queue = [];
 
-    lo.each(items, item => {
+    each(items, item => {
         queueItem(queue, item);
     });
 

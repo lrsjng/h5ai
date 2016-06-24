@@ -1,11 +1,12 @@
-const {win, jq, lo} = require('../globals');
+const {each, map} = require('../lo');
+const {win, jq} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
 
 const doc = win.document;
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     clickndrag: false,
     checkboxes: false
@@ -26,7 +27,7 @@ const $selectionRect = jq('<div id="selection-rect"/>');
 
 
 function publish() {
-    const items = lo.map(jq('#items .item.selected'), el => el._item);
+    const items = map(jq('#items .item.selected'), el => el._item);
     event.pub('selection', items);
 }
 
@@ -155,10 +156,10 @@ function addCheckbox(item) {
 
 function onViewChanged(added, removed) {
     if (settings.checkboxes) {
-        lo.each(added, addCheckbox);
+        each(added, addCheckbox);
     }
 
-    lo.each(removed, item => {
+    each(removed, item => {
         if (item.$view) {
             item.$view.removeClass('selected');
         }

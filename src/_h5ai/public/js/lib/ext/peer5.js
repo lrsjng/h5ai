@@ -1,7 +1,7 @@
-const {win, jq, lo} = require('../globals');
+const {win, jq} = require('../globals');
 const allsettings = require('../core/settings');
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     id: 'z142i5n5qypq4cxr'
 }, allsettings.peer5);

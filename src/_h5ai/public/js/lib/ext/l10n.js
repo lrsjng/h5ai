@@ -1,4 +1,5 @@
-const {win, jq, lo} = require('../globals');
+const {keys, isStr} = require('../lo');
+const {win, jq} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const format = require('../core/format');
@@ -6,7 +7,7 @@ const langs = require('../core/langs');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     lang: 'en',
     useBrowserLang: true
@@ -44,7 +45,7 @@ const blockTemplate =
 const optionTemplate = '<option/>';
 const storekey = 'ext/l10n';
 const loaded = {
-    en: lo.extend({}, defaultTranslations)
+    en: Object.assign({}, defaultTranslations)
 };
 let currentLang = loaded.en;
 
@@ -77,7 +78,7 @@ function loadLanguage(isoCode, callback) {
     } else {
         server.request({action: 'get', l10n: [isoCode]}).then(response => {
             const json = response.l10n && response.l10n[isoCode] ? response.l10n[isoCode] : {};
-            loaded[isoCode] = lo.extend({}, defaultTranslations, json, {isoCode});
+            loaded[isoCode] = Object.assign({}, defaultTranslations, json, {isoCode});
             callback(loaded[isoCode]);
         });
     }
@@ -107,7 +108,7 @@ function localize(languages, isoCode, useBrowserLang) {
 }
 
 function initLangSelector(languages) {
-    const isoCodes = lo.keys(languages).sort();
+    const isoCodes = keys(languages).sort();
     const $block = jq(blockTemplate);
     const $select = $block.find('select')
         .on('change', ev => {
@@ -120,7 +121,7 @@ function initLangSelector(languages) {
         jq(optionTemplate)
             .attr('value', isoCode)
             .addClass(isoCode)
-            .text(isoCode + ' - ' + (lo.isString(languages[isoCode]) ? languages[isoCode] : languages[isoCode].lang))
+            .text(isoCode + ' - ' + (isStr(languages[isoCode]) ? languages[isoCode] : languages[isoCode].lang))
             .appendTo($select);
     });
 

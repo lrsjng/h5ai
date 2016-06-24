@@ -1,4 +1,5 @@
-const {win, jq, lo, kjua} = require('../globals');
+const {isNum} = require('../lo');
+const {win, jq, kjua} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const resource = require('../core/resource');
@@ -6,7 +7,7 @@ const allsettings = require('../core/settings');
 const store = require('../core/store');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     show: false,
     qrcode: true,
@@ -71,13 +72,13 @@ function update(item) {
     }
 
     $label.text(item.label);
-    if (lo.isNumber(item.time)) {
+    if (isNum(item.time)) {
         $time.text(format.formatDate(item.time));
     } else {
         $time.text('.');
     }
 
-    if (lo.isNumber(item.size)) {
+    if (isNum(item.size)) {
         $size.text(format.formatSize(item.size));
         $size.show();
     } else {

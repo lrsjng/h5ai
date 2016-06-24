@@ -16,6 +16,7 @@ const each = (obj, fn) => keys(obj).forEach(key => fn(obj[key], key));
 const filter = (obj, fn) => values(obj).filter(fn);
 const map = (obj, fn) => values(obj).map(fn);
 const includes = (obj, x) => values(obj).indexOf(x) >= 0;
+const compact = obj => filter(obj, x => !!x);
 const difference = (obj1, obj2) => {
     obj2 = values(obj2);
     return filter(obj1, x => obj2.indexOf(x) < 0);
@@ -33,6 +34,13 @@ const sortBy = (obj, sel) => {
     };
     return values(obj).sort(cmpFn);
 };
+const debounce = (fn, delay) => {
+    let id = null;
+    return () => {
+        clearTimeout(id);
+        id = setTimeout(fn, delay);
+    };
+};
 
 module.exports = {
     isStr,
@@ -44,7 +52,9 @@ module.exports = {
     filter,
     map,
     includes,
+    compact,
     difference,
     intersection,
-    sortBy
+    sortBy,
+    debounce
 };

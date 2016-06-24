@@ -1,10 +1,11 @@
-const {win, jq, lo} = require('../globals');
+const {each, isFn, isNum} = require('../lo');
+const {win, jq} = require('../globals');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: true
 }, allsettings.preview);
 const $window = jq(win);
@@ -61,14 +62,14 @@ function adjustSize() {
         jq('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview-fullscreen'));
     }
 
-    if (lo.isFunction(onAdjustSize)) {
+    if (isFn(onAdjustSize)) {
         onAdjustSize(1);
     }
 }
 
 function setLabels(labels) {
     jq('#pv-buttons .bar-left').remove();
-    lo.each(labels, label => {
+    each(labels, label => {
         jq('<li/>')
             .addClass('bar-left bar-label')
             .text(label)
@@ -77,13 +78,13 @@ function setLabels(labels) {
 }
 
 function onNext() {
-    if (lo.isFunction(onIndexChange)) {
+    if (isFn(onIndexChange)) {
         onIndexChange(1);
     }
 }
 
 function onPrevious() {
-    if (lo.isFunction(onIndexChange)) {
+    if (isFn(onIndexChange)) {
         onIndexChange(-1);
     }
 }
@@ -146,8 +147,8 @@ function onExit() {
 }
 
 function setIndex(idx, total) {
-    if (lo.isNumber(idx)) {
-        jq('#pv-bar-idx').text(String(idx) + (lo.isNumber(total) ? '/' + String(total) : '')).show();
+    if (isNum(idx)) {
+        jq('#pv-bar-idx').text(String(idx) + (isNum(total) ? '/' + String(total) : '')).show();
     } else {
         jq('#pv-bar-idx').text('').hide();
     }
@@ -170,7 +171,7 @@ function setOnAdjustSize(fn) {
 }
 
 function showSpinner(show, src, millis) {
-    if (!lo.isNumber(millis)) {
+    if (!isNum(millis)) {
         millis = 300;
     }
 

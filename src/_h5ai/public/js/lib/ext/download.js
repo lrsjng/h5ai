@@ -1,11 +1,12 @@
-const {jq, lo} = require('../globals');
+const {each} = require('../lo');
+const {jq} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     type: 'php-tar',
     packageName: 'package',
@@ -48,7 +49,7 @@ function onClick() {
         baseHref: location.getAbsHref()
     };
 
-    lo.each(selectedItems, (item, idx) => {
+    each(selectedItems, (item, idx) => {
         query['hrefs[' + idx + ']'] = item.absHref;
     });
 

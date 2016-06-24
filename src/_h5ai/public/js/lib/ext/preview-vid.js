@@ -1,9 +1,10 @@
-const {win, jq, lo} = require('../globals');
+const {each, map, includes, compact} = require('../lo');
+const {win, jq} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 const preview = require('./preview');
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     types: []
 }, allsettings['preview-vid']);
@@ -81,22 +82,22 @@ function onEnter(items, idx) {
 }
 
 function initItem(item) {
-    if (item.$view && lo.includes(settings.types, item.type)) {
+    if (item.$view && includes(settings.types, item.type)) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
-            const matchedItems = lo.compact(lo.map(jq('#items .item'), el => {
+            const matchedItems = compact(map(jq('#items .item'), el => {
                 const matchedItem = el._item;
-                return lo.includes(settings.types, matchedItem.type) ? matchedItem : null;
+                return includes(settings.types, matchedItem.type) ? matchedItem : null;
             }));
 
-            onEnter(matchedItems, lo.indexOf(matchedItems, item));
+            onEnter(matchedItems, matchedItems.indexOf(item));
         });
     }
 }
 
 function onViewChanged(added) {
-    lo.each(added, initItem);
+    each(added, initItem);
 }
 
 function init() {

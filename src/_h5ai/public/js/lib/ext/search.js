@@ -1,4 +1,5 @@
-const {jq, lo} = require('../globals');
+const {map, debounce} = require('../lo');
+const {jq} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const location = require('../core/location');
@@ -9,7 +10,7 @@ const Item = require('../model/item');
 const view = require('../view/view');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     advanced: false,
     debounceTime: 300,
@@ -50,9 +51,7 @@ function search(pattern) {
     }).then(response => {
         $search.removeClass('pending');
         view.setHint('noMatch');
-        view.setItems(lo.map(response.search, item => {
-            return Item.get(item);
-        }));
+        view.setItems(map(response.search, item => Item.get(item)));
     });
 }
 
@@ -87,7 +86,7 @@ function init() {
     $input = $search.find('input');
 
     $search.on('click', 'img', toggle);
-    $input.on('keyup', lo.debounce(update, settings.debounceTime, {trailing: true}));
+    $input.on('keyup', debounce(update, settings.debounceTime, {trailing: true}));
     event.sub('location.changed', reset);
 }
 

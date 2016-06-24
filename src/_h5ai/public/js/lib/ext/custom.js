@@ -1,10 +1,10 @@
-const {jq, lo, marked} = require('../globals');
+const {jq, marked} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false
 }, allsettings.custom);
 let $header;

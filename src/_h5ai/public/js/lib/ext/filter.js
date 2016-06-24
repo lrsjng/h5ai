@@ -1,4 +1,5 @@
-const {jq, lo} = require('../globals');
+const {each, debounce} = require('../lo');
+const {jq} = require('../globals');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -7,7 +8,7 @@ const util = require('../core/util');
 const view = require('../view/view');
 
 
-const settings = lo.extend({
+const settings = Object.assign({
     enabled: false,
     advanced: false,
     debounceTime: 100,
@@ -41,7 +42,7 @@ function filter(pattern) {
     const re = new RegExp(pattern, settings.ignorecase ? 'i' : '');
     const matchedItems = [];
 
-    lo.each(location.getItem().content, item => {
+    each(location.getItem().content, item => {
         if (re.test(item.label)) {
             matchedItems.push(item);
         }
@@ -83,7 +84,7 @@ function init() {
     $input = $filter.find('input');
 
     $filter.on('click', 'img', toggle);
-    $input.on('keyup', lo.debounce(update, settings.debounceTime, {trailing: true}));
+    $input.on('keyup', debounce(update, settings.debounceTime, {trailing: true}));
     event.sub('location.changed', reset);
 }
 
