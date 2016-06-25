@@ -1,7 +1,7 @@
-const {jq} = require('./globals');
+const {dom, onReady} = require('./dom');
 const config = require('./config');
 
-const name = jq('script[data-module]').data('module');
+const name = dom('script[data-module]').attr('data-module');
 const query = {
     action: 'get',
     setup: true,
@@ -18,4 +18,4 @@ if (name === 'index') {
     throw new Error(`no-main-module: '${name}'`);
 }
 
-config._update(query).then(() => jq(() => require(`./main/${name}`)));
+config._update(query).then(() => onReady(() => require(`./main/${name}`)));

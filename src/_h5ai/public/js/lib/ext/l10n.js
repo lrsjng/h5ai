@@ -1,4 +1,4 @@
-const {keys, isStr} = require('../lo');
+const {each, isStr} = require('../lo');
 const {win, jq} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
@@ -50,7 +50,7 @@ const loaded = {
 let currentLang = loaded.en;
 
 
-function update(lang) {
+const update = lang => {
     if (lang) {
         currentLang = lang;
     }
@@ -60,7 +60,7 @@ function update(lang) {
         .filter('.' + currentLang.isoCode)
         .attr('selected', 'selected').prop('selected', 'selected');
 
-    jq.each(currentLang, (key, value) => {
+    each(currentLang, (value, key) => {
         jq('.l10n-' + key).text(value);
         jq('.l10n_ph-' + key).attr('placeholder', value);
     });
@@ -70,9 +70,9 @@ function update(lang) {
         const $el = jq(el);
         $el.text(format.formatDate($el.data('time')));
     });
-}
+};
 
-function loadLanguage(isoCode, callback) {
+const loadLanguage = (isoCode, callback) => {
     if (loaded[isoCode]) {
         callback(loaded[isoCode]);
     } else {
@@ -82,9 +82,9 @@ function loadLanguage(isoCode, callback) {
             callback(loaded[isoCode]);
         });
     }
-}
+};
 
-function localize(languages, isoCode, useBrowserLang) {
+const localize = (languages, isoCode, useBrowserLang) => {
     const storedIsoCode = store.get(storekey);
 
     if (languages[storedIsoCode]) {
@@ -105,10 +105,9 @@ function localize(languages, isoCode, useBrowserLang) {
     }
 
     loadLanguage(isoCode, update);
-}
+};
 
-function initLangSelector(languages) {
-    const isoCodes = keys(languages).sort();
+const initLangSelector = languages => {
     const $block = jq(blockTemplate);
     const $select = $block.find('select')
         .on('change', ev => {
@@ -117,18 +116,18 @@ function initLangSelector(languages) {
             localize(languages, isoCode, false);
         });
 
-    jq.each(isoCodes, (idx, isoCode) => {
+    each(languages, (language, isoCode) => {
         jq(optionTemplate)
             .attr('value', isoCode)
             .addClass(isoCode)
-            .text(isoCode + ' - ' + (isStr(languages[isoCode]) ? languages[isoCode] : languages[isoCode].lang))
+            .text(isoCode + ' - ' + (isStr(language) ? language : language.lang))
             .appendTo($select);
     });
 
     $block.appendTo('#sidebar');
-}
+};
 
-function init() {
+const init = () => {
     if (settings.enabled) {
         initLangSelector(langs);
     }
@@ -136,7 +135,7 @@ function init() {
     event.sub('view.changed', () => {
         localize(langs, settings.lang, settings.useBrowserLang);
     });
-}
+};
 
 
 init();

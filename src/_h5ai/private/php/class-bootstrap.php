@@ -11,7 +11,7 @@ class Bootstrap {
         session_start();
 
         $session = new Session($_SESSION);
-        $request = new Request($_REQUEST);
+        $request = new Request($_REQUEST, file_get_contents('php://input'));
         $setup = new Setup($request->query_boolean('refresh', false));
         $context = new Context($session, $request, $setup);
 

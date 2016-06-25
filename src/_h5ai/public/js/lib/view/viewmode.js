@@ -1,5 +1,5 @@
 const {each} = require('../lo');
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
@@ -28,14 +28,14 @@ let sizes;
 
 
 const onChanged = (mode, size) => {
-    jq('#viewmode-settings .mode').removeClass('active');
-    jq('#viewmode-' + mode).addClass('active');
-    jq('#viewmode-size').val(sizes.indexOf(size));
+    dom('#viewmode-settings .mode').rmCls('active');
+    dom('#viewmode-' + mode).addCls('active');
+    dom('#viewmode-size').val(sizes.indexOf(size));
 
     if (settings.modeToggle === 'next') {
         mode = modes[(modes.indexOf(mode) + 1) % modes.length];
     }
-    jq('#viewmode-toggle img').attr('src', resource.image('view-' + mode));
+    dom('#viewmode-toggle img').attr('src', resource.image('view-' + mode));
 };
 
 const addSettings = () => {
@@ -43,29 +43,28 @@ const addSettings = () => {
         return;
     }
 
-    const $viewBlock = jq(tplSettings);
+    const $viewBlock = dom(tplSettings);
 
     if (modes.length > 1) {
         each(modes, mode => {
-            jq(tplMode.replace(/\[MODE\]/g, mode))
+            dom(tplMode.replace(/\[MODE\]/g, mode))
                 .on('click', () => {
                     view.setMode(mode);
                 })
-                .appendTo($viewBlock);
+                .appTo($viewBlock);
         });
     }
 
     if (sizes.length > 1) {
         const max = sizes.length - 1;
-        jq(tplSize)
-            .prop('max', max).attr('max', max)
-            .on('input change', ev => {
-                view.setSize(sizes[ev.target.valueAsNumber]);
-            })
-            .appendTo($viewBlock);
+        dom(tplSize)
+            .attr('max', max)
+            .on('input', ev => view.setSize(sizes[ev.target.valueAsNumber]))
+            .on('change', ev => view.setSize(sizes[ev.target.valueAsNumber]))
+            .appTo($viewBlock);
     }
 
-    $viewBlock.appendTo(sidebar.$el);
+    $viewBlock.appTo(sidebar.$el);
 };
 
 const onToggle = () => {
@@ -78,9 +77,9 @@ const onToggle = () => {
 
 const addToggle = () => {
     if (settings.modeToggle && modes.length > 1) {
-        jq(tplToggle)
+        dom(tplToggle)
             .on('click', onToggle)
-            .appendTo(base.$toolbar);
+            .appTo(base.$toolbar);
     }
 };
 

@@ -161,7 +161,7 @@ function onViewChanged(added, removed) {
 
     each(removed, item => {
         if (item.$view) {
-            item.$view.removeClass('selected');
+            item.$view.rmCls('selected');
         }
     });
 

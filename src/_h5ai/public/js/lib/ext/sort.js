@@ -1,4 +1,5 @@
-const {jq} = require('../globals');
+const {each, toArray} = require('../lo');
+const {dom} = require('../dom');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
@@ -14,16 +15,16 @@ const settings = Object.assign({
     folders: 0
 }, allsettings.sort);
 const storekey = 'ext/sort';
-const template = '<img src="' + resource.image('sort') + '" class="sort" alt="sort order" />';
+const template = '<img src="' + resource.image('sort') + '" class="sort" alt="sort order"/>';
 
 
-function getType(item) {
-    const $item = jq(item);
+const getType = item => {
+    const $item = dom(item);
 
-    if ($item.hasClass('folder-parent')) {
+    if ($item.hasCls('folder-parent')) {
         return 0;
     }
-    if ($item.hasClass('folder')) {
+    if ($item.hasCls('folder')) {
         if (settings.folders === 1) {
             return 2;
         } else if (settings.folders === 2) {
@@ -32,25 +33,12 @@ function getType(item) {
         return 1;
     }
     return 2;
-}
-
-function getName(item) {
-    return jq(item).find('.label').text();
-}
-
-function getTime(item) {
-    return jq(item).find('.date').data('time');
-}
-
-function getSize(item) {
-    return jq(item).find('.size').data('bytes');
-}
-
+};
 
 const columnGetters = {
-    0: getName,
-    1: getTime,
-    2: getSize
+    0: el => el._item.label,
+    1: el => el._item.time,
+    2: el => el._item.size
 };
 const columnClasses = {
     0: 'label',
@@ -59,7 +47,7 @@ const columnClasses = {
 };
 
 
-function cmpFn(getValue, reverse, ignorecase, natural) {
+const cmpFn = (getValue, reverse, ignorecase, natural) => {
     return (item1, item2) => {
         let res;
         let val1;
@@ -86,66 +74,51 @@ function cmpFn(getValue, reverse, ignorecase, natural) {
         res = natural ? util.naturalCmpFn(val1, val2) : util.regularCmpFn(val1, val2);
         return reverse ? -res : res;
     };
-}
+};
 
-function sortItems(column, reverse) {
-    const $headers = jq('#items li.header a');
-    const $header = jq('#items li.header a.' + columnClasses[column]);
+const sortItems = (column, reverse) => {
+    const $headers = dom('#items li.header a');
+    const $header = dom('#items li.header a.' + columnClasses[column]);
     const fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, column === 0 && settings.natural);
-    const $current = jq('#items .item');
-    const $sorted = jq('#items .item').sort(fn);
 
     store.put(storekey, {column, reverse});
 
-    $headers.removeClass('ascending descending');
-    $header.addClass(reverse ? 'descending' : 'ascending');
+    $headers.rmCls('ascending').rmCls('descending');
+    $header.addCls(reverse ? 'descending' : 'ascending');
 
-    for (let i = 0, l = $current.length; i < l; i += 1) {
-        if ($current[i] !== $sorted[i]) {
-            $sorted.detach().sort(fn).appendTo('#items');
-            break;
-        }
-    }
-}
+    dom(toArray(dom('#items .item')).sort(fn)).appTo('#items');
+};
 
-function onContentChanged() {
+const onContentChanged = () => {
     const order = store.get(storekey);
     const column = order && order.column || settings.column;
     const reverse = order && order.reverse || settings.reverse;
 
     sortItems(column, reverse);
-}
+};
 
-function init() {
+const addToggles = () => {
+    const $header = dom('#items li.header');
+
+    each(columnClasses, (cls, idx) => {
+        const pos = idx === '0' ? 'app' : 'pre';
+        $header
+        .find('a.' + cls)[pos](template)
+        .on('click', ev => {
+            sortItems(idx, dom(ev.currentTarget).hasCls('ascending'));
+            ev.preventDefault();
+        });
+    });
+};
+
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    const $header = jq('#items li.header');
-
-    $header.find('a.label')
-        .append(template)
-        .click(ev => {
-            sortItems(0, jq(ev.currentTarget).hasClass('ascending'));
-            ev.preventDefault();
-        });
-
-    $header.find('a.date')
-        .prepend(template)
-        .click(ev => {
-            sortItems(1, jq(ev.currentTarget).hasClass('ascending'));
-            ev.preventDefault();
-        });
-
-    $header.find('a.size')
-        .prepend(template)
-        .click(ev => {
-            sortItems(2, jq(ev.currentTarget).hasClass('ascending'));
-            ev.preventDefault();
-        });
-
+    addToggles();
     event.sub('view.changed', onContentChanged);
-}
+};
 
 
 init();

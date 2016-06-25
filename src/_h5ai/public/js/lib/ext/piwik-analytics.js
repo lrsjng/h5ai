@@ -1,5 +1,5 @@
-const {map} = require('../lo');
-const {win, jq} = require('../globals');
+const {win} = require('../globals');
+const {dom, onLoad} = require('../dom');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
@@ -10,7 +10,7 @@ const settings = Object.assign({
     idSite: 0
 }, allsettings['piwik-analytics']);
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
@@ -20,17 +20,17 @@ function init() {
     const pkBaseURL = (win.location.protocol === 'https:' ? 'https://' : 'http://') + settings.baseURL + '/';
     let piwikTracker = null;
 
-    jq('<script/>').attr('src', pkBaseURL + 'piwik.js').appendTo('body');
-    jq(win).load(() => {
+    dom('<script></script>').attr('src', pkBaseURL + 'piwik.js').appTo('body');
+    onLoad(() => {
         piwikTracker = win.Piwik.getTracker(pkBaseURL + 'piwik.php', settings.idSite);
         piwikTracker.enableLinkTracking();
     });
 
     event.sub('location.changed', item => {
-        const title = map(item.getCrumb(), i => i.label).join(' > ');
+        const title = item.getCrumb().map(i => i.label).join(' > ');
         piwikTracker.trackPageView(title);
     });
-}
+};
 
 
 init();

@@ -1,4 +1,3 @@
-const {map} = require('../lo');
 const {win} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
@@ -10,7 +9,7 @@ const settings = Object.assign({
 }, allsettings.title);
 
 const onLocationChanged = item => {
-    const labels = map(item.getCrumb(), i => i.label);
+    const labels = item.getCrumb().map(i => i.label);
     let title = labels.join(' > ');
 
     if (labels.length > 1) {

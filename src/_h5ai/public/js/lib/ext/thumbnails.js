@@ -15,7 +15,7 @@ const settings = Object.assign({
 const landscapeRatio = 4 / 3;
 
 
-function queueItem(queue, item) {
+const queueItem = (queue, item) => {
     let type = null;
 
     if (includes(settings.img, item.type)) {
@@ -29,7 +29,7 @@ function queueItem(queue, item) {
     }
 
     if (item.thumbSquare) {
-        item.$view.find('.icon.square img').addClass('thumb').attr('src', item.thumbSquare);
+        item.$view.find('.icon.square img').addCls('thumb').attr('src', item.thumbSquare);
     } else {
         queue.push({
             type,
@@ -38,14 +38,14 @@ function queueItem(queue, item) {
             callback: src => {
                 if (src && item.$view) {
                     item.thumbSquare = src;
-                    item.$view.find('.icon.square img').addClass('thumb').attr('src', src);
+                    item.$view.find('.icon.square img').addCls('thumb').attr('src', src);
                 }
             }
         });
     }
 
     if (item.thumbRational) {
-        item.$view.find('.icon.landscape img').addClass('thumb').attr('src', item.thumbRational);
+        item.$view.find('.icon.landscape img').addCls('thumb').attr('src', item.thumbRational);
     } else {
         queue.push({
             type,
@@ -54,14 +54,14 @@ function queueItem(queue, item) {
             callback: src => {
                 if (src && item.$view) {
                     item.thumbRational = src;
-                    item.$view.find('.icon.landscape img').addClass('thumb').attr('src', src);
+                    item.$view.find('.icon.landscape img').addCls('thumb').attr('src', src);
                 }
             }
         });
     }
-}
+};
 
-function requestQueue(queue) {
+const requestQueue = queue => {
     const thumbs = map(queue, req => {
         return {
             type: req.type,
@@ -79,33 +79,29 @@ function requestQueue(queue) {
             req.callback(json && json.thumbs ? json.thumbs[idx] : null);
         });
     });
-}
+};
 
-function handleItems(items) {
+const handleItems = items => {
     const queue = [];
 
-    each(items, item => {
-        queueItem(queue, item);
-    });
+    each(items, item => queueItem(queue, item));
 
     if (queue.length) {
         requestQueue(queue);
     }
-}
+};
 
-function onViewChanged(added) {
-    setTimeout(() => {
-        handleItems(added);
-    }, settings.delay);
-}
+const onViewChanged = added => {
+    setTimeout(() => handleItems(added), settings.delay);
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
     event.sub('view.changed', onViewChanged);
-}
+};
 
 
 init();

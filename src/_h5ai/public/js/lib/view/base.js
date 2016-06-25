@@ -1,10 +1,10 @@
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 
 const rootSelector = 'body';
 const tplTopbar =
         `<div id="topbar">
-            <div id="toolbar"/>
-            <div id="flowbar"/>
+            <div id="toolbar"></div>
+            <div id="flowbar"></div>
             <a id="backlink" href="https://larsjung.de/h5ai/" title="powered by h5ai - https://larsjung.de/h5ai/">
                 <div>powered</div>
                 <div>by h5ai</div>
@@ -12,16 +12,16 @@ const tplTopbar =
         </div>`;
 const tplMainrow =
         `<div id="mainrow">
-            <div id="content"/>
+            <div id="content"></div>
         </div>`;
 
 const init = () => {
-    jq('#fallback, #fallback-hints').remove();
+    dom('#fallback, #fallback-hints').rm();
 
-    const $root = jq(rootSelector)
+    const $root = dom(rootSelector)
         .attr('id', 'root')
-        .append(tplTopbar)
-        .append(tplMainrow);
+        .app(tplTopbar)
+        .app(tplMainrow);
 
     return {
         $root,

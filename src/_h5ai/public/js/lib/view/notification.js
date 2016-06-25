@@ -1,17 +1,20 @@
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const base = require('./base');
 
-const $el = jq('<div id="notification"/>').hide().appendTo(base.$root);
+const init = () => {
+    const $el = dom('<div id="notification"></div>').hide().appTo(base.$root);
 
-const set = content => {
-    if (content) {
-        $el.stop(true, true).html(content).fadeIn(400);
-    } else {
-        $el.stop(true, true).fadeOut(400);
-    }
+    const set = content => {
+        if (content) {
+            $el.html(content).show();
+        } else {
+            $el.hide();
+        }
+    };
+
+    return {
+        set
+    };
 };
 
-module.exports = {
-    $el,
-    set
-};
+module.exports = init();

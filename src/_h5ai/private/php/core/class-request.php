@@ -3,8 +3,9 @@
 class Request {
     private $params;
 
-    public function __construct($params) {
-        $this->params = $params;
+    public function __construct($params, $body) {
+        $data = json_decode($body, true);
+        $this->params = $data !== null ? $data : $params;
     }
 
     public function query($keypath = '', $default = Util::NO_DEFAULT) {

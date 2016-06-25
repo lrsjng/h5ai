@@ -150,8 +150,9 @@ const setLink = ($el, item) => {
     $el.attr('href', item.absHref);
 
     if (history && item.isFolder() && item.isManaged) {
-        $el.on('click', () => {
+        $el.on('click', ev => {
             setLocation(item.absHref);
+            ev.preventDefault();
             return false;
         });
     }

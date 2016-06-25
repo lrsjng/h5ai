@@ -1,12 +1,14 @@
+const is = x => x !== undefined && x !== null;
 const tof = (x, str) => typeof x === str;
 const isStr = x => tof(x, 'string');
 const isFn = x => tof(x, 'function');
 const isNum = x => tof(x, 'number');
+const hasLength = x => x && x.hasOwnProperty('length');
 const keys = obj => {
     if (!obj || isStr(obj)) {
         return [];
     }
-    if (obj.hasOwnProperty('length')) {
+    if (hasLength(obj)) {
         obj = Array.from(obj);
     }
     return Object.keys(obj);
@@ -17,6 +19,10 @@ const filter = (obj, fn) => values(obj).filter(fn);
 const map = (obj, fn) => values(obj).map(fn);
 const includes = (obj, x) => values(obj).indexOf(x) >= 0;
 const compact = obj => filter(obj, x => !!x);
+
+const isInstanceOf = (x, constructor) => x ? x instanceof constructor : false;
+const toArray = x => Array.from(x);
+
 const difference = (obj1, obj2) => {
     obj2 = values(obj2);
     return filter(obj1, x => obj2.indexOf(x) < 0);
@@ -40,9 +46,11 @@ const debounce = (fn, delay) => {
 };
 
 module.exports = {
+    is,
     isStr,
     isFn,
     isNum,
+    hasLength,
     keys,
     values,
     each,
@@ -50,6 +58,8 @@ module.exports = {
     map,
     includes,
     compact,
+    isInstanceOf,
+    toArray,
     difference,
     intersection,
     sortBy,

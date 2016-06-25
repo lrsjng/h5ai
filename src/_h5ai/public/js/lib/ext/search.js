@@ -1,5 +1,5 @@
 const {map, debounce} = require('../lo');
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const server = require('../server');
 const event = require('../core/event');
 const location = require('../core/location');
@@ -27,7 +27,7 @@ let $search;
 let $input;
 
 
-function search(pattern) {
+const search = pattern => {
     pattern = pattern || '';
     if (pattern === prevPattern) {
         return;
@@ -39,7 +39,7 @@ function search(pattern) {
         return;
     }
 
-    $search.addClass('pending');
+    $search.addCls('pending');
 
     server.request({
         action: 'get',
@@ -49,46 +49,46 @@ function search(pattern) {
             ignorecase: settings.ignorecase
         }
     }).then(response => {
-        $search.removeClass('pending');
+        $search.rmCls('pending');
         view.setHint('noMatch');
         view.setItems(map(response.search, item => Item.get(item)));
     });
-}
+};
 
-function update() {
+const update = () => {
     if (inputIsVisible) {
-        $search.addClass('active');
-        $input.focus();
+        $search.addCls('active');
+        $input[0].focus();
         search(util.parsePattern($input.val(), settings.advanced));
     } else {
         search();
-        $search.removeClass('active');
+        $search.rmCls('active');
     }
-}
+};
 
-function toggle() {
+const toggle = () => {
     inputIsVisible = !inputIsVisible;
     update();
-}
+};
 
-function reset() {
+const reset = () => {
     inputIsVisible = false;
     $input.val('');
     update();
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    $search = jq(template).appendTo('#toolbar');
+    $search = dom(template).appTo('#toolbar');
     $input = $search.find('input');
 
-    $search.on('click', 'img', toggle);
-    $input.on('keyup', debounce(update, settings.debounceTime, {trailing: true}));
+    $search.find('img').on('click', toggle);
+    $input.on('keyup', debounce(update, settings.debounceTime));
     event.sub('location.changed', reset);
-}
+};
 
 
 init();

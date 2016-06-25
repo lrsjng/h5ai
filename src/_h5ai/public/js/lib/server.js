@@ -1,30 +1,41 @@
-const {jq} = require('./globals');
+const {win} = require('./globals');
+const {dom} = require('./dom');
 const {each} = require('./lo');
+const XHR = win.XMLHttpRequest;
 
 const request = data => {
     return new Promise(resolve => {
-        jq.ajax({
-            url: '?',
-            data,
-            type: 'post',
-            dataType: 'json'
-        })
-        .done(json => resolve(json))
-        .fail(() => resolve());
+        const xhr = new XHR();
+        const callback = () => {
+            if (xhr.readyState === XHR.DONE) {
+                try {
+                    resolve(JSON.parse(xhr.responseText));
+                } catch (err) {
+                    resolve({err, txt: xhr.responseText});
+                }
+            }
+        };
+
+        xhr.open('POST', '?', true);
+        xhr.onreadystatechange = callback;
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        xhr.send(JSON.stringify(data));
     });
 };
 
 const formRequest = data => {
-    const $form = jq('<form method="post" action="?" style="display:none;"/>');
+    const $form = dom('<form method="post" action="?" style="display:none;"/>');
 
     each(data, (val, key) => {
-        jq('<input type="hidden"/>')
+        dom('<input type="hidden"/>')
             .attr('name', key)
             .attr('value', val)
-            .appendTo($form);
+            .appTo($form);
     });
 
-    $form.appendTo('body').submit().remove();
+    $form.appTo('body');
+    $form[0].submit();
+    $form.rm();
 };
 
 module.exports = {

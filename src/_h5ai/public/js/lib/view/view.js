@@ -1,5 +1,5 @@
 const {each, map, includes, intersection} = require('../lo');
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const event = require('../core/event');
 const format = require('../core/format');
 const location = require('../core/location');
@@ -26,25 +26,25 @@ const tplView =
         `<div id="view">
             <ul id="items" class="clearfix">
                 <li class="header">
-                    <a class="icon"/>
+                    <a class="icon"></a>
                     <a class="label" href="#"><span class="l10n-name"/></a>
                     <a class="date" href="#"><span class="l10n-lastModified"/></a>
                     <a class="size" href="#"><span class="l10n-size"/></a>
                 </li>
             </ul>
-            <div id="view-hint"/>
+            <div id="view-hint"></div>
         </div>`;
 const tplItem =
         `<li class="item">
             <a>
                 <span class="icon square"><img/></span>
                 <span class="icon landscape"><img/></span>
-                <span class="label"/>
-                <span class="date"/>
-                <span class="size"/>
+                <span class="label"></span>
+                <span class="date"></span>
+                <span class="size"></span>
             </a>
         </li>`;
-const $view = jq(tplView);
+const $view = dom(tplView);
 const $items = $view.find('#items');
 const $hint = $view.find('#view-hint');
 
@@ -80,7 +80,7 @@ const createStyles = size => {
 const addCssStyles = () => {
     const styles = map(sortedSizes, size => createStyles(size));
     styles.push(`#view .icon img {max-width: ${settings.maxIconSize}px; max-height: ${settings.maxIconSize}px;}`);
-    jq('<style/>').text(styles.join('\n')).appendTo('head');
+    dom('<style></style>').text(styles.join('\n')).appTo('head');
 };
 
 const set = (mode, size) => {
@@ -94,17 +94,17 @@ const set = (mode, size) => {
 
     each(checkedModes, m => {
         if (m === mode) {
-            $view.addClass('view-' + m);
+            $view.addCls('view-' + m);
         } else {
-            $view.removeClass('view-' + m);
+            $view.rmCls('view-' + m);
         }
     });
 
     each(sortedSizes, s => {
         if (s === size) {
-            $view.addClass('view-size-' + s);
+            $view.addCls('view-size-' + s);
         } else {
-            $view.removeClass('view-size-' + s);
+            $view.rmCls('view-size-' + s);
         }
     });
 
@@ -119,56 +119,58 @@ const getSizes = () => sortedSizes;
 const getSize = () => store.get(storekey).size;
 const setSize = size => set(null, size);
 
+const onMouseenter = ev => {
+    const item = ev.target._item;
+    event.pub('item.mouseenter', item);
+};
+
+const onMouseleave = ev => {
+    const item = ev.target._item;
+    event.pub('item.mouseleave', item);
+};
+
 const createHtml = item => {
-    const $html = jq(tplItem);
+    const $html = dom(tplItem);
     const $a = $html.find('a');
     const $iconImg = $html.find('.icon img');
     const $label = $html.find('.label');
     const $date = $html.find('.date');
     const $size = $html.find('.size');
 
-    $html.addClass(item.isFolder() ? 'folder' : 'file');
-    $html[0]._item = item;
+    $html
+        .addCls(item.isFolder() ? 'folder' : 'file')
+        .on('mouseenter', onMouseenter)
+        .on('mouseleave', onMouseleave);
 
     location.setLink($a, item);
 
     $label.text(item.label).attr('title', item.label);
-    $date.data('time', item.time).text(format.formatDate(item.time));
-    $size.data('bytes', item.size).text(format.formatSize(item.size));
+    $date.attr('data-time', item.time).text(format.formatDate(item.time));
+    $size.attr('data-bytes', item.size).text(format.formatSize(item.size));
     item.icon = resource.icon(item.type);
 
     if (item.isFolder() && !item.isManaged) {
-        $html.addClass('page');
+        $html.addCls('page');
         item.icon = resource.icon('folder-page');
     }
 
     if (item.isCurrentParentFolder()) {
         item.icon = resource.icon('folder-parent');
         if (!settings.setParentFolderLabels) {
-            $label.addClass('l10n-parentDirectory');
+            $label.addCls('l10n-parentDirectory');
         }
-        $html.addClass('folder-parent');
+        $html.addCls('folder-parent');
     }
     $iconImg.attr('src', item.icon).attr('alt', item.type);
 
     item.$view = $html;
-    item.elView = $html[0];
+    $html[0]._item = item;
 
     return $html;
 };
 
-const onMouseenter = ev => {
-    const item = jq(ev.currentTarget).closest('.item')[0]._item;
-    event.pub('item.mouseenter', item);
-};
-
-const onMouseleave = ev => {
-    const item = jq(ev.currentTarget).closest('.item')[0]._item;
-    event.pub('item.mouseleave', item);
-};
-
 const checkHint = () => {
-    const hasNoItems = $items.find('.item').not('.folder-parent').length === 0;
+    const hasNoItems = $items.find('.item').length === $items.find('.folder-parent').length;
 
     if (hasNoItems) {
         $hint.show();
@@ -180,24 +182,23 @@ const checkHint = () => {
 const setItems = items => {
     const removed = map($items.find('.item'), el => el._item);
 
-    $items.find('.item').remove();
+    $items.find('.item').rm();
 
-    each(items, item => $items.append(createHtml(item)));
+    each(items, item => $items.app(createHtml(item)));
 
-    base.$content.scrollLeft(0).scrollTop(0);
+    base.$content[0].scrollLeft = 0;
+    base.$content[0].scrollTop = 0;
     checkHint();
     event.pub('view.changed', items, removed);
 };
 
 const changeItems = (add, remove) => {
     each(add, item => {
-        createHtml(item).hide().appendTo($items).fadeIn(400);
+        createHtml(item).hide().appTo($items).show();
     });
 
     each(remove, item => {
-        item.$view.fadeOut(400, () => {
-            item.$view.remove();
-        });
+        item.$view.hide().rm();
     });
 
     checkHint();
@@ -205,7 +206,7 @@ const changeItems = (add, remove) => {
 };
 
 const setHint = l10nKey => {
-    $hint.removeClass().addClass('l10n-' + l10nKey);
+    $hint.rmCls().addCls('l10n-' + l10nKey);
     checkHint();
 };
 
@@ -247,14 +248,10 @@ const init = () => {
     addCssStyles();
     set();
 
-    $view.appendTo(base.$content);
+    $view.appTo(base.$content);
     $hint.hide();
 
     format.setDefaultMetric(settings.binaryPrefix);
-
-    $items
-        .on('mouseenter', '.item a', onMouseenter)
-        .on('mouseleave', '.item a', onMouseleave);
 
     event.sub('location.changed', onLocationChanged);
     event.sub('location.refreshed', onLocationRefreshed);
@@ -265,7 +262,6 @@ init();
 
 module.exports = {
     $el: $view,
-    $items,
     setItems,
     changeItems,
     setLocation: onLocationChanged,

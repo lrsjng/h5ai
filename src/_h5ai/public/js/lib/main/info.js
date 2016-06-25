@@ -1,11 +1,12 @@
-const {win, jq} = require('../globals');
+const {win} = require('../globals');
+const {dom} = require('../dom');
 const config = require('../config');
 const server = require('../server');
 const resource = require('../core/resource');
 
 
 const tplTests =
-        '<ul id="tests">';
+        '<ul id="tests"></ul>';
 const tplTest =
         `<li class="test">
             <span class="label"></span>
@@ -27,9 +28,9 @@ const tplSupport =
             Show your support with a donation!
             <div class="paypal">
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                    <input type="hidden" name="cmd" value="_s-xclick" />
-                    <input type="hidden" name="hosted_button_id" value="8WSPKWT7YBTSQ" />
-                    <input type="image" src="${resource.image('paypal')}" name="submit" alt="PayPal" />
+                    <input type="hidden" name="cmd" value="_s-xclick"/>
+                    <input type="hidden" name="hosted_button_id" value="8WSPKWT7YBTSQ"/>
+                    <input type="image" src="${resource.image('paypal')}" name="submit" alt="PayPal"/>
                 </form>
             </div>
         </div>`;
@@ -37,10 +38,10 @@ const setup = config.setup;
 
 
 const addTest = (label, info, passed, result) => {
-    const $test = jq(tplTest).appendTo('#tests');
+    const $test = dom(tplTest).appTo('#tests');
     $test.find('.label').text(label);
     $test.find('.result')
-            .addClass(passed ? 'passed' : 'failed')
+            .addCls(passed ? 'passed' : 'failed')
             .text(result ? result : passed ? 'yes' : 'no');
     $test.find('.info').html(info);
 };
@@ -50,7 +51,7 @@ const addTests = () => {
         return;
     }
 
-    jq(tplTests).appendTo('#content');
+    dom(tplTests).appTo('#content');
 
     addTest(
         'h5ai version', 'Only green if this is an official h5ai release',
@@ -140,7 +141,7 @@ const reload = () => {
 const onLogin = () => {
     server.request({
         action: 'login',
-        pass: jq('#pass').val()
+        pass: dom('#pass').val()
     }).then(reload);
 };
 
@@ -157,23 +158,23 @@ const onKeydown = ev => {
 };
 
 const addSupport = () => {
-    jq(tplSupport).appendTo('#content');
+    dom(tplSupport).appTo('#content');
 };
 
 const addLogin = () => {
-    jq(tplLogin).appendTo('#content');
+    dom(tplLogin).appTo('#content');
 
     if (setup.AS_ADMIN) {
-        jq('#pass').remove();
-        jq('#login').remove();
-        jq('#logout').on('click', onLogout);
+        dom('#pass').rm();
+        dom('#login').rm();
+        dom('#logout').on('click', onLogout);
     } else {
-        jq('#pass').on('keydown', onKeydown).focus();
-        jq('#login').on('click', onLogin);
-        jq('#logout').remove();
+        dom('#pass').on('keydown', onKeydown)[0].focus();
+        dom('#login').on('click', onLogin);
+        dom('#logout').rm();
     }
     if (config.options.hasCustomPasshash) {
-        jq('#hint').remove();
+        dom('#hint').rm();
     }
 };
 

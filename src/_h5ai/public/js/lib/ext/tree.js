@@ -55,7 +55,6 @@ function update(item) {
     const $label = $html.find('.label');
 
     $html.addClass(item.isFolder() ? 'folder' : 'file');
-    $html[0]._item = item;
 
     location.setLink($a, item);
     $img.attr('src', resource.icon('folder'));
@@ -108,10 +107,11 @@ function update(item) {
         }
     }
 
-    if (item.elTree) {
-        jq(item.elTree).replaceWith($html);
+    if (item.$tree) {
+        item.$tree.replaceWith($html);
     }
-    item.elTree = $html[0];
+    item.$tree = $html;
+    $html[0]._item = item;
 
     return $html;
 }

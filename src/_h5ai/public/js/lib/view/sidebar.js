@@ -1,4 +1,4 @@
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
@@ -9,7 +9,7 @@ const settings = Object.assign({
     disableSidebar: false
 }, allsettings.view);
 const storekey = 'sidebarIsVisible';
-const tplSidebar = '<div id="sidebar"/>';
+const tplSidebar = '<div id="sidebar"></div>';
 const tplToggle =
         `<div id="sidebar-toggle" class="tool">
             <img alt="sidebar"/>
@@ -17,8 +17,8 @@ const tplToggle =
 
 
 const init = () => {
-    const $sidebar = jq(tplSidebar);
-    const $toggle = jq(tplToggle);
+    const $sidebar = dom(tplSidebar).hide();
+    const $toggle = dom(tplToggle);
     const $img = $toggle.find('img');
 
     const update = toggle => {
@@ -30,19 +30,19 @@ const init = () => {
         }
 
         if (isVisible) {
-            $toggle.addClass('active');
+            $toggle.addCls('active');
             $img.attr('src', resource.image('back'));
             $sidebar.show();
         } else {
-            $toggle.removeClass('active');
+            $toggle.rmCls('active');
             $img.attr('src', resource.image('sidebar'));
             $sidebar.hide();
         }
     };
 
     if (!settings.disableSidebar) {
-        $sidebar.appendTo(base.$mainrow);
-        $toggle.appendTo(base.$toolbar).on('click', () => update(true));
+        $sidebar.appTo(base.$mainrow);
+        $toggle.appTo(base.$toolbar).on('click', () => update(true));
         update();
     }
 

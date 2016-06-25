@@ -1,5 +1,5 @@
 const {each, debounce} = require('../lo');
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -25,7 +25,7 @@ let $filter;
 let $input;
 
 
-function filter(pattern) {
+const filter = pattern => {
     pattern = pattern || '';
     if (pattern === prevPattern) {
         return;
@@ -37,7 +37,7 @@ function filter(pattern) {
         return;
     }
 
-    $filter.addClass('pending');
+    $filter.addCls('pending');
 
     const re = new RegExp(pattern, settings.ignorecase ? 'i' : '');
     const matchedItems = [];
@@ -48,45 +48,45 @@ function filter(pattern) {
         }
     });
 
-    $filter.removeClass('pending');
+    $filter.rmCls('pending');
     view.setHint('noMatch');
     view.setItems(matchedItems);
-}
+};
 
-function update() {
+const update = () => {
     if (inputIsVisible) {
-        $filter.addClass('active');
-        $input.focus();
+        $filter.addCls('active');
+        $input[0].focus();
         filter(util.parsePattern($input.val(), settings.advanced));
     } else {
         filter();
-        $filter.removeClass('active');
+        $filter.rmCls('active');
     }
-}
+};
 
-function toggle() {
+const toggle = () => {
     inputIsVisible = !inputIsVisible;
     update();
-}
+};
 
-function reset() {
+const reset = () => {
     inputIsVisible = false;
     $input.val('');
     update();
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    $filter = jq(template).appendTo('#toolbar');
+    $filter = dom(template).appTo('#toolbar');
     $input = $filter.find('input');
 
-    $filter.on('click', 'img', toggle);
-    $input.on('keyup', debounce(update, settings.debounceTime, {trailing: true}));
+    $filter.find('img').on('click', toggle);
+    $input.on('keyup', debounce(update, settings.debounceTime));
     event.sub('location.changed', reset);
-}
+};
 
 
 init();

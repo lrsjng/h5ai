@@ -1,5 +1,5 @@
 const {each} = require('../lo');
-const {jq} = require('../globals');
+const {dom} = require('../dom');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -10,45 +10,47 @@ const base = require('../view/base');
 const settings = Object.assign({
     enabled: false
 }, allsettings.crumb);
-const crumbTemplate =
+const crumbbarTpl = '<div id="crumbbar"></div>';
+const crumbTpl =
         `<a class="crumb">
             <img class="sep" src="${resource.image('crumb')}" alt=">"/>
-            <span class="label"/>
+            <span class="label"></span>
         </a>`;
-const pageHintTemplate =
+const pageHintTpl =
         `<img class="hint" src="${resource.icon('folder-page')}" alt="has index page"/>`;
 let $crumbbar;
 
 
 const createHtml = item => {
-    const $html = jq(crumbTemplate);
-    $html[0]._item = item;
-    item.elCrumb = $html[0];
+    const $html = dom(crumbTpl);
     location.setLink($html, item);
 
     $html.find('.label').text(item.label);
 
     if (item.isCurrentFolder()) {
-        $html.addClass('active');
+        $html.addCls('active');
     }
 
     if (!item.isManaged) {
-        $html.append(jq(pageHintTemplate));
+        $html.app(dom(pageHintTpl));
     }
+
+    item.$crumb = $html;
+    $html[0]._item = item;
 
     return $html;
 };
 
 const onLocationChanged = item => {
-    const $crumb = jq(item.elCrumb);
+    const $crumb = item.$crumb;
 
     if ($crumb && $crumb.parent()[0] === $crumbbar[0]) {
-        $crumbbar.children().removeClass('active');
-        $crumb.addClass('active');
+        $crumbbar.children().rmCls('active');
+        $crumb.addCls('active');
     } else {
-        $crumbbar.empty();
+        $crumbbar.clr();
         each(item.getCrumb(), crumbItem => {
-            $crumbbar.append(createHtml(crumbItem));
+            $crumbbar.app(createHtml(crumbItem));
         });
     }
 };
@@ -58,7 +60,7 @@ const init = () => {
         return;
     }
 
-    $crumbbar = jq('<div id="crumbbar"/>').appendTo(base.$flowbar);
+    $crumbbar = dom(crumbbarTpl).appTo(base.$flowbar);
 
     event.sub('location.changed', onLocationChanged);
 };
