@@ -4,33 +4,24 @@ const {each, filter, hasLength, is, isStr, map, isInstanceOf, toArray} = require
 const doc = win.document;
 
 const createElement = name => doc.createElement(name);
-const CONTAINER_DIV = createElement('div');
-const CONTAINER_TABLE = createElement('table');
-const CONTAINER_TBODY = createElement('tbody');
-const CONTAINER_TR = createElement('tr');
-const CONTAINER_COLGROUP = createElement('colgroup');
 
-const publish = (obj, arr) => {
-    each(arr, (el, idx) => {
-        obj[idx] = el;
-    });
-    obj.length = arr.length;
-};
+const reReady = /^(i|c|loade)/;
+
+const containers = [
+    {re: /^<t(head|body|foot)|^<c(ap|olg)/i, el: createElement('table')},
+    {re: /^<col/i, el: createElement('colgroup')},
+    {re: /^<tr/i, el: createElement('tbody')},
+    {re: /^<t[dh]/i, el: createElement('tr')}
+];
+const containerDiv = createElement('div');
 
 const findContainer = str => {
-    if (/^<t(head|body|foot)|^<c(ap|olg)/i.test(str)) {
-        return CONTAINER_TABLE;
+    for (const {re, el} of containers) {
+        if (re.test(str)) {
+            return el;
+        }
     }
-    if (/^<col/i.test(str)) {
-        return CONTAINER_COLGROUP;
-    }
-    if (/^<tr/i.test(str)) {
-        return CONTAINER_TBODY;
-    }
-    if (/^<t[dh]/i.test(str)) {
-        return CONTAINER_TR;
-    }
-    return CONTAINER_DIV;
+    return containerDiv;
 };
 
 const parseHtml = str => {
@@ -42,9 +33,9 @@ const parseHtml = str => {
     return res;
 };
 
-const queryAll = (selector, context) => {
+const queryAll = (selector, context = doc) => {
     try {
-        return toArray((context || doc).querySelectorAll(selector));
+        return toArray(context.querySelectorAll(selector));
     } catch (err) {/* ignore */}
     return [];
 };
@@ -58,7 +49,7 @@ const addListener = (el, type, fn) => el.addEventListener(type, fn);
 const removeListener = (el, type, fn) => el.removeEventListener(type, fn);
 
 const onReady = fn => {
-    if (/^(i|c|loade)/.test(doc.readyState)) {
+    if (reReady.test(doc.readyState)) {
         fn();
     } else {
         addListener(doc, 'DOMContentLoaded', fn);
@@ -97,9 +88,7 @@ const dom = arg => {
     }
     els = filter(els, isElDocWin);
 
-    const inst = Object.create(dom.prototype);
-    publish(inst, els);
-    return inst;
+    return Object.assign(Object.create(dom.prototype), els, {length: els.length});
 };
 
 dom.prototype = {
@@ -115,11 +104,7 @@ dom.prototype = {
     },
 
     find(selector) {
-        let els = [];
-        this.each(el => {
-            els = els.concat(queryAll(selector, el));
-        });
-        return dom(els);
+        return dom([].concat(...this.map(el => queryAll(selector, el))));
     },
 
     on(type, fn) {
