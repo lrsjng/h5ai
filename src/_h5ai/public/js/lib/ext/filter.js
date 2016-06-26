@@ -1,4 +1,4 @@
-const {each, debounce} = require('../lo');
+const {filter, debounce} = require('../lo');
 const {dom} = require('../dom');
 const event = require('../core/event');
 const location = require('../core/location');
@@ -25,8 +25,7 @@ let $filter;
 let $input;
 
 
-const filter = pattern => {
-    pattern = pattern || '';
+const filterItems = (pattern = '') => {
     if (pattern === prevPattern) {
         return;
     }
@@ -40,26 +39,20 @@ const filter = pattern => {
     $filter.addCls('pending');
 
     const re = new RegExp(pattern, settings.ignorecase ? 'i' : '');
-    const matchedItems = [];
-
-    each(location.getItem().content, item => {
-        if (re.test(item.label)) {
-            matchedItems.push(item);
-        }
-    });
+    const items = filter(location.getItem().content, item => re.test(item.label));
 
     $filter.rmCls('pending');
     view.setHint('noMatch');
-    view.setItems(matchedItems);
+    view.setItems(items);
 };
 
 const update = () => {
     if (inputIsVisible) {
         $filter.addCls('active');
         $input[0].focus();
-        filter(util.parsePattern($input.val(), settings.advanced));
+        filterItems(util.parsePattern($input.val(), settings.advanced));
     } else {
-        filter();
+        filterItems();
         $filter.rmCls('active');
     }
 };

@@ -27,8 +27,7 @@ let $search;
 let $input;
 
 
-const search = pattern => {
-    pattern = pattern || '';
+const search = (pattern = '') => {
     if (pattern === prevPattern) {
         return;
     }

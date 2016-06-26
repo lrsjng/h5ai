@@ -11,7 +11,10 @@ const settings = Object.assign({
     clickndrag: false,
     checkboxes: false
 }, allsettings.select);
-const template = '<span class="selector"><img src="' + resource.image('selected') + '" alt="selected"/></span>';
+const selectorTpl =
+        `<span class="selector">
+            <img src="${resource.image('selected')}" alt="selected"/>
+        </span>`;
 let x = 0;
 let y = 0;
 let l = 0;
@@ -148,7 +151,7 @@ function onSelectorClick(ev) {
 
 function addCheckbox(item) {
     if (item.$view && !item.isCurrentParentFolder()) {
-        jq(template)
+        jq(selectorTpl)
             .on('click', onSelectorClick)
             .appendTo(item.$view.find('a'));
     }
