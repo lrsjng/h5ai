@@ -1,5 +1,4 @@
-const {each} = require('../lo');
-const {dom} = require('../dom');
+const {each, dom} = require('../util');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');

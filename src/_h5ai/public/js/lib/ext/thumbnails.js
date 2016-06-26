@@ -1,4 +1,4 @@
-const {each, map, includes} = require('../lo');
+const {each, map, includes} = require('../util');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');

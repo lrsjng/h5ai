@@ -1,4 +1,4 @@
-const {map} = require('../lo');
+const {map} = require('../util');
 const {win} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');

@@ -1,4 +1,4 @@
-const {isNum} = require('../lo');
+const {isNum} = require('../util');
 
 const decimalMetric = {
     t: 1000.0,

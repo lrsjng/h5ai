@@ -1,6 +1,5 @@
+const {each, dom} = require('./util');
 const {win} = require('./globals');
-const {dom} = require('./dom');
-const {each} = require('./lo');
 const XHR = win.XMLHttpRequest;
 
 const request = data => {

@@ -1,4 +1,4 @@
-const {each} = require('../lo');
+const {each} = require('../util');
 const {jq} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');

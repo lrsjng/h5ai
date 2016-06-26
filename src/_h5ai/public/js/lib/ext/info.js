@@ -1,4 +1,4 @@
-const {isNum} = require('../lo');
+const {isNum} = require('../util');
 const {win, jq, kjua} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');

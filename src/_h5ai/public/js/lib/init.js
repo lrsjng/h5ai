@@ -1,4 +1,4 @@
-const {dom, onReady} = require('./dom');
+const {dom, onReady} = require('./util');
 const config = require('./config');
 
 const name = dom('script[data-module]').attr('data-module');

@@ -1,4 +1,4 @@
-const {isStr, isFn} = require('../lo');
+const {isStr, isFn} = require('../util');
 
 const subscriptions = {};
 

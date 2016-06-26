@@ -1,5 +1,5 @@
+const {dom, onLoad} = require('../util');
 const {win} = require('../globals');
-const {dom, onLoad} = require('../dom');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 

@@ -1,4 +1,4 @@
-const {each, values, isFn, difference} = require('../lo');
+const {each, values, isFn, difference} = require('../util');
 const {win} = require('../globals');
 const {request} = require('../server');
 const allsettings = require('./settings');

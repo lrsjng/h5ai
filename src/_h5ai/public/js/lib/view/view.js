@@ -1,5 +1,4 @@
-const {each, map, includes, intersection} = require('../lo');
-const {dom} = require('../dom');
+const {each, map, includes, intersection, dom} = require('../util');
 const event = require('../core/event');
 const format = require('../core/format');
 const location = require('../core/location');

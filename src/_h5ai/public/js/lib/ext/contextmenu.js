@@ -1,4 +1,4 @@
-const {each} = require('../lo');
+const {each} = require('../util');
 const {win, jq} = require('../globals');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');

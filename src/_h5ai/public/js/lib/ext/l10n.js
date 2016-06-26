@@ -1,4 +1,4 @@
-const {each, isStr} = require('../lo');
+const {each, isStr} = require('../util');
 const {win, jq} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');

@@ -1,4 +1,4 @@
-const {includes} = require('../lo');
+const {includes} = require('../util');
 const config = require('../config');
 const settings = require('./settings');
 

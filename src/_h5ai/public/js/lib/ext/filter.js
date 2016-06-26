@@ -1,10 +1,8 @@
-const {filter, debounce} = require('../lo');
-const {dom} = require('../dom');
+const {filter, debounce, parsePattern, dom} = require('../util');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
-const util = require('../core/util');
 const view = require('../view/view');
 
 
@@ -50,7 +48,7 @@ const update = () => {
     if (inputIsVisible) {
         $filter.addCls('active');
         $input[0].focus();
-        filterItems(util.parsePattern($input.val(), settings.advanced));
+        filterItems(parsePattern($input.val(), settings.advanced));
     } else {
         filterItems();
         $filter.rmCls('active');

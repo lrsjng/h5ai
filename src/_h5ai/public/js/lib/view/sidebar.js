@@ -1,4 +1,4 @@
-const {dom} = require('../dom');
+const {dom} = require('../util');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');

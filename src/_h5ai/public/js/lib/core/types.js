@@ -1,4 +1,4 @@
-const {each, map} = require('../lo');
+const {each, map} = require('../util');
 const config = require('../config');
 
 const reEndsWithSlash = /\/$/;

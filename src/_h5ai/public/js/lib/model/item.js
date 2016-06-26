@@ -1,4 +1,4 @@
-const {keys, each, filter, sortBy, isFn, isStr, isNum} = require('../lo');
+const {keys, each, filter, sortBy, isFn, isStr, isNum} = require('../util');
 const server = require('../server');
 const location = require('../core/location');
 const settings = require('../core/settings');

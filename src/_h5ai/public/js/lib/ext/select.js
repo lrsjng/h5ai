@@ -1,4 +1,4 @@
-const {each, map} = require('../lo');
+const {each, map} = require('../util');
 const {win, jq} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');

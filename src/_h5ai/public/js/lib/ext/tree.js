@@ -1,11 +1,10 @@
-const {each} = require('../lo');
+const {each, regularCmp, naturalCmp} = require('../util');
 const {jq} = require('../globals');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
-const util = require('../core/util');
 
 
 const settings = Object.assign({
@@ -44,7 +43,7 @@ function cmpFn(item1, item2) {
         val2 = val2.toLowerCase();
     }
 
-    return settings.natural ? util.naturalCmpFn(val1, val2) : util.regularCmpFn(val1, val2);
+    return settings.natural ? naturalCmp(val1, val2) : regularCmp(val1, val2);
 }
 
 function update(item) {

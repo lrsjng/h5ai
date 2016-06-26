@@ -1,11 +1,9 @@
-const {map, debounce} = require('../lo');
-const {dom} = require('../dom');
+const {map, debounce, parsePattern, dom} = require('../util');
 const server = require('../server');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
-const util = require('../core/util');
 const Item = require('../model/item');
 const view = require('../view/view');
 
@@ -58,7 +56,7 @@ const update = () => {
     if (inputIsVisible) {
         $search.addCls('active');
         $input[0].focus();
-        search(util.parsePattern($input.val(), settings.advanced));
+        search(parsePattern($input.val(), settings.advanced));
     } else {
         search();
         $search.rmCls('active');

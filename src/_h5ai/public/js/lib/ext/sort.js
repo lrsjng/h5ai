@@ -1,10 +1,8 @@
-const {each, toArray} = require('../lo');
-const {dom} = require('../dom');
+const {each, toArray, dom, regularCmp, naturalCmp} = require('../util');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
-const util = require('../core/util');
 
 const settings = Object.assign({
     enabled: false,
@@ -71,7 +69,7 @@ const cmpFn = (getValue, reverse, ignorecase, natural) => {
             }
         }
 
-        res = natural ? util.naturalCmpFn(val1, val2) : util.regularCmpFn(val1, val2);
+        res = natural ? naturalCmp(val1, val2) : regularCmp(val1, val2);
         return reverse ? -res : res;
     };
 };

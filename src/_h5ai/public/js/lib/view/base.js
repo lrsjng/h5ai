@@ -1,4 +1,4 @@
-const {dom} = require('../dom');
+const {dom} = require('../util');
 
 const rootSelector = 'body';
 const tplTopbar =

@@ -1,4 +1,4 @@
-const {each, map, includes, compact} = require('../lo');
+const {each, map, includes, compact} = require('../util');
 const {win, jq} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');

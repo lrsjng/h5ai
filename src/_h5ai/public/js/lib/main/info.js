@@ -1,5 +1,5 @@
+const {dom} = require('../util');
 const {win} = require('../globals');
-const {dom} = require('../dom');
 const config = require('../config');
 const server = require('../server');
 const resource = require('../core/resource');
