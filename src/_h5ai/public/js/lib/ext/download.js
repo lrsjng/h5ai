@@ -1,5 +1,4 @@
-const {each} = require('../util');
-const {jq} = require('../globals');
+const {each, dom} = require('../util');
 const server = require('../server');
 const event = require('../core/event');
 const location = require('../core/location');
@@ -20,16 +19,16 @@ let selectedItems = [];
 let $download;
 
 
-function onSelection(items) {
+const onSelection = items => {
     selectedItems = items.slice(0);
     if (selectedItems.length) {
         $download.show();
     } else if (!settings.alwaysVisible) {
         $download.hide();
     }
-}
+};
 
-function onClick() {
+const onClick = () => {
     const type = settings.type;
     let name = settings.packageName;
     const extension = type === 'shell-zip' ? 'zip' : 'tar';
@@ -54,16 +53,16 @@ function onClick() {
     });
 
     server.formRequest(query);
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    $download = jq(template)
+    $download = dom(template)
         .hide()
-        .appendTo('#toolbar')
+        .appTo('#toolbar')
         .on('click', onClick);
 
     if (settings.alwaysVisible) {
@@ -71,7 +70,7 @@ function init() {
     }
 
     event.sub('selection', onSelection);
-}
+};
 
 
 init();

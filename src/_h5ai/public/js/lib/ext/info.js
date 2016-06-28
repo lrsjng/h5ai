@@ -1,5 +1,5 @@
-const {isNum} = require('../util');
-const {win, jq, kjua} = require('../globals');
+const {isNum, dom} = require('../util');
+const {win, kjua} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const resource = require('../core/resource');
@@ -17,12 +17,12 @@ const template =
         `<div id="info">
             <div class="icon"><img/></div>
             <div class="block">
-                <div class="label"/>
-                <div class="time"/>
-                <div class="size"/>
+                <div class="label"></div>
+                <div class="time"></div>
+                <div class="size"></div>
                 <div class="content">
-                    <span class="folders"/> <span class="l10n-folders"/>,
-                    <span class="files"/> <span class="l10n-files"/>
+                    <span class="folders"></span> <span class="l10n-folders"></span>,
+                    <span class="files"></span> <span class="l10n-files"></span>
                 </div>
             </div>
             <div class="qrcode"/>
@@ -46,19 +46,19 @@ let $qrcode;
 let currentFolder;
 
 
-function updateSettings() {
+const updateSettings = () => {
     if (store.get(storekey)) {
-        jq('#view-info').addClass('active');
-        jq('#info').show();
+        dom('#view-info').addCls('active');
+        dom('#info').show();
     } else {
-        jq('#view-info').removeClass('active');
-        jq('#info').hide();
+        dom('#view-info').rmCls('active');
+        dom('#info').hide();
     }
-}
+};
 
-function update(item) {
+const update = item => {
     let src = item.thumbRational || item.icon;
-    const isThumb = Boolean(item.thumbRational);
+    const isThumb = !!item.thumbRational;
 
     if (item.isCurrentFolder() || !src) {
         src = resource.icon('folder');
@@ -66,9 +66,9 @@ function update(item) {
 
     $img.attr('src', src);
     if (isThumb) {
-        $img.addClass('thumb');
+        $img.addCls('thumb');
     } else {
-        $img.removeClass('thumb');
+        $img.rmCls('thumb');
     }
 
     $label.text(item.label);
@@ -96,7 +96,7 @@ function update(item) {
 
     if (settings.qrcode) {
         const loc = win.location;
-        $qrcode.empty().append(kjua({
+        $qrcode.clr().app(kjua({
             render: 'image',
             size: 200,
             fill: settings.qrFill,
@@ -106,27 +106,27 @@ function update(item) {
             quiet: 1
         }));
     }
-}
+};
 
-function onMouseenter(item) {
+const onMouseenter = item => {
     update(item);
-}
+};
 
-function onMouseleave() {
+const onMouseleave = () => {
     update(currentFolder);
-}
+};
 
-function onLocationChanged(item) {
+const onLocationChanged = item => {
     currentFolder = item;
     update(currentFolder);
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    const $info = jq(template).appendTo('#mainrow');
+    const $info = dom(template).hide().appTo('#mainrow');
     $img = $info.find('.icon img');
     $label = $info.find('.label');
     $time = $info.find('.time');
@@ -137,11 +137,11 @@ function init() {
     $qrcode = $info.find('.qrcode');
 
     if (!settings.qrcode) {
-        $qrcode.remove();
+        $qrcode.rm();
     }
 
-    jq(settingsTemplate)
-        .appendTo('#sidebar')
+    dom(settingsTemplate)
+        .appTo('#sidebar')
         .find('#view-info')
         .on('click', ev => {
             store.put(storekey, !store.get(storekey));
@@ -158,7 +158,7 @@ function init() {
     event.sub('location.changed', onLocationChanged);
     event.sub('item.mouseenter', onMouseenter);
     event.sub('item.mouseleave', onMouseleave);
-}
+};
 
 
 init();

@@ -1,5 +1,5 @@
-const {each, isStr} = require('../util');
-const {win, jq} = require('../globals');
+const {each, isStr, dom} = require('../util');
+const {win} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const format = require('../core/format');
@@ -55,20 +55,18 @@ const update = lang => {
         currentLang = lang;
     }
 
-    jq('#langs option')
-        .removeAttr('selected').removeProp('selected')
-        .filter('.' + currentLang.isoCode)
-        .attr('selected', 'selected').prop('selected', 'selected');
+    const sel = 'selected';
+    dom('#langs option').rmAttr(sel).rmProp(sel);
+    dom('#langs .' + currentLang.isoCode).attr(sel, sel).prop(sel, sel);
 
     each(currentLang, (value, key) => {
-        jq('.l10n-' + key).text(value);
-        jq('.l10n_ph-' + key).attr('placeholder', value);
+        dom('.l10n-' + key).text(value);
+        dom('.l10n_ph-' + key).attr('placeholder', value);
     });
     format.setDefaultDateFormat(currentLang.dateFormat);
 
-    jq('#items .item .date').each((idx, el) => {
-        const $el = jq(el);
-        $el.text(format.formatDate($el.data('time')));
+    dom('#items .item').each(el => {
+        dom(el).find('.date').text(format.formatDate(el._item.time));
     });
 };
 
@@ -108,7 +106,7 @@ const localize = (languages, isoCode, useBrowserLang) => {
 };
 
 const initLangSelector = languages => {
-    const $block = jq(blockTemplate);
+    const $block = dom(blockTemplate);
     const $select = $block.find('select')
         .on('change', ev => {
             const isoCode = ev.target.value;
@@ -117,14 +115,14 @@ const initLangSelector = languages => {
         });
 
     each(languages, (language, isoCode) => {
-        jq(optionTemplate)
+        dom(optionTemplate)
             .attr('value', isoCode)
-            .addClass(isoCode)
+            .addCls(isoCode)
             .text(isoCode + ' - ' + (isStr(language) ? language : language.lang))
-            .appendTo($select);
+            .appTo($select);
     });
 
-    $block.appendTo('#sidebar');
+    $block.appTo('#sidebar');
 };
 
 const init = () => {

@@ -1,5 +1,4 @@
-const {each, regularCmp, naturalCmp} = require('../util');
-const {jq} = require('../globals');
+const {each, dom, regularCmp, naturalCmp} = require('../util');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -14,17 +13,17 @@ const settings = Object.assign({
     naturalSort: false,
     ignorecase: true
 }, allsettings.tree);
-const template =
+const itemTpl =
         `<div class="item">
             <span class="indicator none">
                 <img src="${resource.image('tree-indicator')}"/>
             </span>
             <a>
                 <span class="icon"><img/></span>
-                <span class="label"/>
+                <span class="label"></span>
             </a>
         </span>`;
-const settingsTemplate =
+const settingsTpl =
         `<div class="block">
             <h1 class="l10n-tree">Tree</h1>
             <div id="view-tree" class="button view">
@@ -34,7 +33,7 @@ const settingsTemplate =
 const storekey = 'ext/tree';
 
 
-function cmpFn(item1, item2) {
+const cmpFn = (item1, item2) => {
     let val1 = item1.label;
     let val2 = item2.label;
 
@@ -44,16 +43,17 @@ function cmpFn(item1, item2) {
     }
 
     return settings.natural ? naturalCmp(val1, val2) : regularCmp(val1, val2);
-}
+};
 
-function update(item) {
-    const $html = jq(template);
+const update = item => {
+    const $html = dom(itemTpl);
     const $indicator = $html.find('.indicator');
     const $a = $html.find('a');
     const $img = $html.find('.icon img');
     const $label = $html.find('.label');
 
-    $html.addClass(item.isFolder() ? 'folder' : 'file');
+    $html.addCls(item.isFolder() ? 'folder' : 'file');
+    $indicator.on('click', createOnIndicatorClick()); // eslint-disable-line no-use-before-define
 
     location.setLink($a, item);
     $img.attr('src', resource.icon('folder'));
@@ -64,36 +64,36 @@ function update(item) {
 
         // indicator
         if (item.isManaged && !item.isContentFetched || subfolders.length) {
-            $indicator.removeClass('none');
+            $indicator.rmCls('none');
 
             if (item.isManaged && !item.isContentFetched) {
-                $indicator.addClass('unknown');
+                $indicator.addCls('unknown');
             } else if (item.isContentVisible) {
-                $indicator.addClass('open');
+                $indicator.addCls('open');
             } else {
-                $indicator.addClass('close');
+                $indicator.addCls('close');
             }
         }
 
         // is it the current folder?
         if (item.isCurrentFolder()) {
-            $html.addClass('active');
+            $html.addCls('active');
         }
 
         // does it have subfolders?
         if (subfolders.length) {
             subfolders.sort(cmpFn);
 
-            const $ul = jq('<ul class="content"/>').appendTo($html);
+            const $ul = dom('<ul class="content"></ul>').appTo($html);
             let counter = 0;
             each(subfolders, e => {
                 counter += 1;
                 if (counter <= settings.maxSubfolders) {
-                    jq('<li/>').append(update(e)).appendTo($ul);
+                    dom('<li></li>').app(update(e)).appTo($ul);
                 }
             });
             if (subfolders.length > settings.maxSubfolders) {
-                jq('<li class="summary">… ' + (subfolders.length - settings.maxSubfolders) + ' more subfolders</li>').appendTo($ul);
+                dom('<li class="summary">… ' + (subfolders.length - settings.maxSubfolders) + ' more subfolders</li>').appTo($ul);
             }
             if (!item.isContentVisible) {
                 $ul.hide();
@@ -107,48 +107,58 @@ function update(item) {
     }
 
     if (item.$tree) {
-        item.$tree.replaceWith($html);
+        item.$tree.rpl($html);
     }
+
     item.$tree = $html;
     $html[0]._item = item;
 
     return $html;
-}
+};
 
-function createOnIndicatorClick() {
-    function slide(item, $indicator, $content, down) {
-        item.isContentVisible = down;
-        $indicator.removeClass('open close').addClass(down ? 'open' : 'close');
-        $content[down ? 'slideDown' : 'slideUp']();
+const closestItem = el => {
+    while (!el._item && el.parentNode) {
+        el = el.parentNode;
     }
+    return el._item;
+};
+
+const createOnIndicatorClick = () => {
+    const slide = ($indicator, $content, down) => {
+        const item = closestItem($indicator[0]);
+        item.isContentVisible = down;
+        $indicator.rmCls('open').rmCls('close').addCls(down ? 'open' : 'close');
+        // $content[down ? 'slideDown' : 'slideUp']();
+        $content[down ? 'show' : 'hide']();
+    };
 
     return ev => {
-        let $indicator = jq(ev.currentTarget);
-        let $item = $indicator.closest('.item');
-        const item = $item[0]._item;
-        let $content = $item.find('> ul.content');
+        const item = closestItem(ev.target);
+        let $item = item.$tree;
+        let $indicator = dom($item.find('.indicator')[0]);
+        let $content = dom($item.find('ul.content')[0]);
 
-        if ($indicator.hasClass('unknown')) {
+        if ($indicator.hasCls('unknown')) {
             item.fetchContent(() => {
                 item.isContentVisible = false;
 
                 $item = update(item);
-                $indicator = $item.find('> .indicator');
-                $content = $item.find('> ul.content');
+                $indicator = dom($item.find('.indicator')[0]);
+                $content = dom($item.find('ul.content')[0]);
 
-                if (!$indicator.hasClass('none')) {
-                    slide(item, $indicator, $content, true);
+                if (!$indicator.hasCls('none')) {
+                    slide($indicator, $content, true);
                 }
             });
-        } else if ($indicator.hasClass('open')) {
-            slide(item, $indicator, $content, false);
-        } else if ($indicator.hasClass('close')) {
-            slide(item, $indicator, $content, true);
+        } else if ($indicator.hasCls('open')) {
+            slide($indicator, $content, false);
+        } else if ($indicator.hasCls('close')) {
+            slide($indicator, $content, true);
         }
     };
-}
+};
 
-function fetchTree(item, callback) {
+const fetchTree = (item, callback) => {
     item.isContentVisible = true;
     item.fetchContent(() => {
         if (item.parent) {
@@ -157,36 +167,34 @@ function fetchTree(item, callback) {
             callback(item);
         }
     });
-}
+};
 
-function updateSettings() {
+const updateSettings = () => {
     if (store.get(storekey)) {
-        jq('#view-tree').addClass('active');
-        jq('#tree').show();
+        dom('#view-tree').addCls('active');
+        dom('#tree').show();
     } else {
-        jq('#view-tree').removeClass('active');
-        jq('#tree').hide();
+        dom('#view-tree').rmCls('active');
+        dom('#tree').hide();
     }
-}
+};
 
-function onLocationChanged(item) {
+const onLocationChanged = item => {
     fetchTree(item, root => {
-        jq('#tree').append(update(root));
+        dom('#tree').clr().app(update(root));
         updateSettings();
     });
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    jq('<div id="tree"/>')
-        .appendTo('#mainrow')
-        .on('click', '.indicator', createOnIndicatorClick());
+    dom('<div id="tree"></div>').hide().appTo('#mainrow');
 
-    jq(settingsTemplate)
-        .appendTo('#sidebar')
+    dom(settingsTpl)
+        .appTo('#sidebar')
         .find('#view-tree')
         .on('click', ev => {
             store.put(storekey, !store.get(storekey));
@@ -201,7 +209,7 @@ function init() {
     updateSettings();
 
     event.sub('location.changed', onLocationChanged);
-}
+};
 
 
 init();

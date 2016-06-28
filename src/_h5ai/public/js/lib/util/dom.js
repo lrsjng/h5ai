@@ -126,6 +126,17 @@ dom.prototype = {
         return this.each(el => el.removeAttribute(key));
     },
 
+    prop(key, value) {
+        if (value === undefined) {
+            return this.length ? this[0][key] : undefined;
+        }
+        return this.each(el => {el[key] = value;});
+    },
+
+    rmProp(key) {
+        return this.each(el => delete el[key]);
+    },
+
     val(value) {
         if (value === undefined) {
             return this.length ? this[0].value : undefined;
@@ -168,7 +179,10 @@ dom.prototype = {
 
     rpl(arg) {
         return this.each(el => {
-            el.outerHTML = dom(arg).map(rplEl => rplEl.outerHTML).join('');
+            const parent = el.parentNode;
+            if (parent) {
+                parent.replaceChild(dom(arg)[0], el);
+            }
         });
     },
 
