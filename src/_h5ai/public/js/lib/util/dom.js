@@ -243,6 +243,18 @@ dom.prototype = {
         });
     },
 
+    tglCls(...names) {
+        return this.each(el => {
+            for (const name of names) {
+                if (el.classList.contains(name)) {
+                    el.classList.remove(name);
+                } else {
+                    el.classList.add(name);
+                }
+            }
+        });
+    },
+
     parent() {
         return dom(this.map(el => el.parentNode));
     },
@@ -257,6 +269,10 @@ dom.prototype = {
 
     show() {
         return this.rmCls('hidden');
+    },
+
+    isHidden() {
+        return this.hasCls('hidden');
     }
 };
 

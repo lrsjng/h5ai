@@ -1,5 +1,5 @@
-const {each, map} = require('../util');
-const {win, jq} = require('../globals');
+const {each, dom} = require('../util');
+const {win} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
@@ -15,39 +15,37 @@ const selectorTpl =
         `<span class="selector">
             <img src="${resource.image('selected')}" alt="selected"/>
         </span>`;
-let x = 0;
-let y = 0;
-let l = 0;
-let t = 0;
-let w = 0;
-let h = 0;
-let isDragSelect;
-let isCtrlPressed;
-const shrink = 1 / 3;
-const $document = jq(doc);
-const $html = jq('html');
-const $selectionRect = jq('<div id="selection-rect"/>');
+const $document = dom(doc);
+const $html = dom('html');
+const $selectionRect = dom('<div id="selection-rect"></div>');
+
+let dragStartX = 0;
+let dragStartY = 0;
+let isDragSelect = false;
+let isCtrlPressed = false;
 
 
-function publish() {
-    const items = map(jq('#items .item.selected'), el => el._item);
+const publish = () => {
+    const items = dom('#items .item.selected').map(el => el._item);
     event.pub('selection', items);
-}
+};
 
-function elementRect($element) {
-    if (!$element.is(':visible')) {
+const elementRect = $el => {
+    if ($el.isHidden()) {
         return null;
     }
 
-    const offset = $element.offset();
-    const elL = offset.left;
-    const elT = offset.top;
-    const elW = $element.outerWidth();
-    const elH = $element.outerHeight();
-    return {l: elL, t: elT, w: elW, h: elH, r: elL + elW, b: elT + elH};
-}
+    const rect = $el[0].getBoundingClientRect();
+    // const rect = {left: 0, top: 0, right: 10, bottom: 10};
+    return {
+        l: rect.left,
+        t: rect.top,
+        r: rect.right,
+        b: rect.bottom
+    };
+};
 
-function doOverlap(rect1, rect2) {
+const doOverlap = (rect1, rect2) => {
     if (!rect1 || !rect2) {
         return false;
     }
@@ -60,104 +58,106 @@ function doOverlap(rect1, rect2) {
     const height = bottom - top;
 
     return width >= 0 && height >= 0;
-}
+};
 
-function selectionUpdate(ev) {
-    l = Math.min(x, ev.pageX);
-    t = Math.min(y, ev.pageY);
-    w = Math.abs(x - ev.pageX);
-    h = Math.abs(y - ev.pageY);
+const selectionUpdate = ev => {
+    const left = Math.min(dragStartX, ev.pageX);
+    const top = Math.min(dragStartY, ev.pageY);
+    const width = Math.abs(dragStartX - ev.pageX);
+    const height = Math.abs(dragStartY - ev.pageY);
 
-    if (!isDragSelect && w < 4 && h < 4) {
+    if (!isDragSelect && width < 4 && height < 4) {
         return;
     }
 
     if (!isDragSelect && !isCtrlPressed) {
-        jq('#items .item').removeClass('selected');
+        dom('#items .item').rmCls('selected');
         publish();
     }
 
     isDragSelect = true;
-    $html.addClass('drag-select');
+    $html.addCls('drag-select');
 
-    ev.preventDefault();
-    $selectionRect
-        .stop(true, true)
-        .css({left: l, top: t, width: w, height: h, opacity: 1})
-        .show();
+    $selectionRect.show();
+    const style = $selectionRect[0].style;
+    style.left = left + 'px';
+    style.top = top + 'px';
+    style.width = width + 'px';
+    style.height = height + 'px';
 
     const selRect = elementRect($selectionRect);
-    jq('#items .item').removeClass('selecting').each((idx, el) => {
-        const $item = jq(el);
+    dom('#items .item').rmCls('selecting').each(el => {
+        const $item = dom(el);
         const inter = doOverlap(selRect, elementRect($item.find('a')));
 
-        if (inter && !$item.hasClass('folder-parent')) {
-            $item.addClass('selecting');
+        if (inter && !$item.hasCls('folder-parent')) {
+            $item.addCls('selecting');
         }
     });
-}
 
-function selectionEnd(ev) {
-    $document.off('mousemove', selectionUpdate);
+    ev.preventDefault();
+};
+
+const selectionEnd = ev => {
+    $document
+        .off('mousemove', selectionUpdate)
+        .off('mouseup', selectionEnd);
 
     if (!isDragSelect) {
         return;
     }
 
-    ev.preventDefault();
-    jq('#items .item.selecting.selected').removeClass('selecting').removeClass('selected');
-    jq('#items .item.selecting').removeClass('selecting').addClass('selected');
+    dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
+    dom('#items .item.selecting').rmCls('selecting').addCls('selected');
     publish();
 
-    $html.removeClass('drag-select');
-    $selectionRect
-        .stop(true, true)
-        .animate({
-            left: l + w * 0.5 * shrink,
-            top: t + h * 0.5 * shrink,
-            width: w * (1 - shrink),
-            height: h * (1 - shrink),
-            opacity: 0
-        },
-        300,
-        () => {
-            $selectionRect.hide();
-        });
-}
+    $html.rmCls('drag-select');
+    $selectionRect.hide();
 
-function selectionStart(ev) {
-    // only on left button and don't block scrollbar
-    if (ev.button !== 0 || ev.offsetX >= jq('#content').width() - 14) {
+    ev.preventDefault();
+};
+
+const selectionStart = ev => {
+    // only start on left button, don't block scrollbar
+    if (ev.button !== 0 || ev.offsetX >= dom('#content')[0].offsetWidth - 14) {
         return;
     }
 
     isDragSelect = false;
     isCtrlPressed = ev.ctrlKey || ev.metaKey;
-    x = ev.pageX;
-    y = ev.pageY;
+    dragStartX = ev.pageX;
+    dragStartY = ev.pageY;
 
     $document
         .on('mousemove', selectionUpdate)
-        .one('mouseup', selectionEnd);
-}
+        .on('mouseup', selectionEnd);
 
-function onSelectorClick(ev) {
-    ev.stopImmediatePropagation();
     ev.preventDefault();
+};
 
-    jq(ev.target).closest('.item').toggleClass('selected');
-    publish();
-}
-
-function addCheckbox(item) {
-    if (item.$view && !item.isCurrentParentFolder()) {
-        jq(selectorTpl)
-            .on('click', onSelectorClick)
-            .appendTo(item.$view.find('a'));
+const closestItem = el => {
+    while (!el._item && el.parentNode) {
+        el = el.parentNode;
     }
-}
+    return el._item;
+};
 
-function onViewChanged(added, removed) {
+const onSelectorClick = ev => {
+    closestItem(ev.target).$view.tglCls('selected');
+    publish();
+    ev.preventDefault();
+    ev.stopPropagation();
+};
+
+const addCheckbox = item => {
+    if (item.$view && !item.isCurrentParentFolder()) {
+        dom(selectorTpl)
+            .on('click', onSelectorClick)
+            .appTo(item.$view.find('a'));
+    }
+};
+
+const onViewChanged = (added, removed) => {
     if (settings.checkboxes) {
         each(added, addCheckbox);
     }
@@ -169,9 +169,9 @@ function onViewChanged(added, removed) {
     });
 
     publish();
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled || !settings.clickndrag && !settings.checkboxes) {
         return;
     }
@@ -179,20 +179,18 @@ function init() {
     event.sub('view.changed', onViewChanged);
 
     if (settings.clickndrag) {
-        $selectionRect.hide().appendTo('body');
+        $selectionRect.hide().appTo('body');
 
-        jq('#content')
+        dom('#content')
             .on('mousedown', selectionStart)
-            .on('drag dragstart', ev => {
-                ev.stopImmediatePropagation();
-                ev.preventDefault();
-            })
+            .on('drag', ev => ev.preventDefault())
+            .on('dragstart', ev => ev.preventDefault())
             .on('click', () => {
-                jq('#items .item').removeClass('selected');
+                dom('#items .item').rmCls('selected');
                 publish();
             });
     }
-}
+};
 
 
 init();
