@@ -14,12 +14,12 @@ const settings = Object.assign({
     ignorecase: true
 }, allsettings.tree);
 const itemTpl =
-        `<div class="item">
-            <span class="indicator none">
+        `<div class="item folder">
+            <span class="indicator">
                 <img src="${resource.image('tree-indicator')}"/>
             </span>
             <a>
-                <span class="icon"><img/></span>
+                <span class="icon"><img src="${resource.icon('folder')}"/></span>
                 <span class="label"></span>
             </a>
         </span>`;
@@ -33,7 +33,31 @@ const settingsTpl =
 const storekey = 'ext/tree';
 
 
-const cmpFn = (item1, item2) => {
+const closestItem = el => {
+    while (!el._item && el.parentNode) {
+        el = el.parentNode;
+    }
+    return el._item;
+};
+
+const onIndicatorClick = ev => {
+    const item = closestItem(ev.target);
+
+    if (item._treeState === 'unknown') {
+        item.fetchContent(() => {
+            item._treeState = 'open';
+            update(item); // eslint-disable-line no-use-before-define
+        });
+    } else if (item._treeState === 'open') {
+        item._treeState = 'closed';
+        item._$tree.rmCls('open').addCls('closed');
+    } else if (item._treeState === 'closed') {
+        item._treeState = 'open';
+        item._$tree.rmCls('closed').addCls('open');
+    }
+};
+
+const cmpItems = (item1, item2) => {
     let val1 = item1.label;
     let val2 = item2.label;
 
@@ -46,120 +70,54 @@ const cmpFn = (item1, item2) => {
 };
 
 const update = item => {
+    const subfolders = item.getSubfolders();
+    const subLen = subfolders.length;
+    const subMax = settings.maxSubfolders;
     const $html = dom(itemTpl);
-    const $indicator = $html.find('.indicator');
-    const $a = $html.find('a');
-    const $img = $html.find('.icon img');
-    const $label = $html.find('.label');
 
-    $html.addCls(item.isFolder() ? 'folder' : 'file');
-    $indicator.on('click', createOnIndicatorClick()); // eslint-disable-line no-use-before-define
+    $html.find('.indicator').on('click', onIndicatorClick);
+    $html.find('.label').text(item.label);
+    location.setLink($html.find('a'), item);
 
-    location.setLink($a, item);
-    $img.attr('src', resource.icon('folder'));
-    $label.text(item.label);
+    if (item.isCurrentFolder()) {
+        $html.addCls('active');
+    }
 
-    if (item.isFolder()) {
-        const subfolders = item.getSubfolders();
+    if (!item.isManaged) {
+        $html.find('.icon img').attr('src', resource.icon('folder-page'));
+    }
 
-        // indicator
-        if (item.isManaged && !item.isContentFetched || subfolders.length) {
-            $indicator.rmCls('none');
+    // indicator
+    item._treeState = item._treeState || 'none';
+    if (item.isManaged && !item.isContentFetched) {
+        item._treeState = 'unknown';
+    } else if (!subLen) {
+        item._treeState = 'none';
+    }
+    $html.addCls(item._treeState);
 
-            if (item.isManaged && !item.isContentFetched) {
-                $indicator.addCls('unknown');
-            } else if (item.isContentVisible) {
-                $indicator.addCls('open');
-            } else {
-                $indicator.addCls('close');
-            }
-        }
-
-        // is it the current folder?
-        if (item.isCurrentFolder()) {
-            $html.addCls('active');
-        }
-
-        // does it have subfolders?
-        if (subfolders.length) {
-            subfolders.sort(cmpFn);
-
-            const $ul = dom('<ul class="content"></ul>').appTo($html);
-            let counter = 0;
-            each(subfolders, e => {
-                counter += 1;
-                if (counter <= settings.maxSubfolders) {
-                    dom('<li></li>').app(update(e)).appTo($ul);
-                }
-            });
-            if (subfolders.length > settings.maxSubfolders) {
-                dom('<li class="summary">… ' + (subfolders.length - settings.maxSubfolders) + ' more subfolders</li>').appTo($ul);
-            }
-            if (!item.isContentVisible) {
-                $ul.hide();
-            }
-        }
-
-        // reflect folder status
-        if (!item.isManaged) {
-            $img.attr('src', resource.icon('folder-page'));
+    // subfolders
+    if (subLen) {
+        const $ul = dom('<div class="content"></div>').appTo($html);
+        subfolders.sort(cmpItems);
+        each(subfolders.slice(0, subMax), e => $ul.app(update(e)));
+        if (subLen > subMax) {
+            $ul.app(`<div class="summary">… ${subLen - subMax} more subfolders</div>`);
         }
     }
 
-    if (item.$tree) {
-        item.$tree.rpl($html);
+    if (item._$tree) {
+        item._$tree.rpl($html);
     }
 
-    item.$tree = $html;
+    item._$tree = $html;
     $html[0]._item = item;
 
     return $html;
 };
 
-const closestItem = el => {
-    while (!el._item && el.parentNode) {
-        el = el.parentNode;
-    }
-    return el._item;
-};
-
-const createOnIndicatorClick = () => {
-    const slide = ($indicator, $content, down) => {
-        const item = closestItem($indicator[0]);
-        item.isContentVisible = down;
-        $indicator.rmCls('open').rmCls('close').addCls(down ? 'open' : 'close');
-        // $content[down ? 'slideDown' : 'slideUp']();
-        $content[down ? 'show' : 'hide']();
-    };
-
-    return ev => {
-        const item = closestItem(ev.target);
-        let $item = item.$tree;
-        let $indicator = dom($item.find('.indicator')[0]);
-        let $content = dom($item.find('ul.content')[0]);
-
-        if ($indicator.hasCls('unknown')) {
-            item.fetchContent(() => {
-                item.isContentVisible = false;
-
-                $item = update(item);
-                $indicator = dom($item.find('.indicator')[0]);
-                $content = dom($item.find('ul.content')[0]);
-
-                if (!$indicator.hasCls('none')) {
-                    slide($indicator, $content, true);
-                }
-            });
-        } else if ($indicator.hasCls('open')) {
-            slide($indicator, $content, false);
-        } else if ($indicator.hasCls('close')) {
-            slide($indicator, $content, true);
-        }
-    };
-};
-
 const fetchTree = (item, callback) => {
-    item.isContentVisible = true;
+    item._treeState = 'open';
     item.fetchContent(() => {
         if (item.parent) {
             fetchTree(item.parent, callback);
