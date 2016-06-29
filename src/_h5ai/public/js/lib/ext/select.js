@@ -41,7 +41,7 @@ const elRect = el => {
     return {l: rect.left, t: rect.top, r: rect.right, b: rect.bottom};
 };
 
-const rectEqual = (r1, r2) => {
+const rectsAreEqual = (r1, r2) => {
     return !!r1 && !!r2 &&
         r1.l === r2.l &&
         r1.t === r2.t &&
@@ -51,14 +51,14 @@ const rectEqual = (r1, r2) => {
 
 const updateRects = $items => {
     const el0 = $items[0];
-    if (!rectEqual(elRect(el0), el0 && el0._rect)) {
+    if (!rectsAreEqual(elRect(el0), el0 && el0._rect)) {
         $items.each(el => {
             el._rect = elRect(el);
         });
     }
 };
 
-const doOverlap = (rect1, rect2) => {
+const rectsDoOverlap = (rect1, rect2) => {
     if (!rect1 || !rect2) {
         return false;
     }
@@ -99,7 +99,7 @@ const selectionUpdate = ev => {
     updateRects($items);
 
     $items.rmCls('selecting').each(el => {
-        if (doOverlap(selRect, el._rect)) {
+        if (rectsDoOverlap(selRect, el._rect)) {
             dom(el).addCls('selecting');
         }
     });
@@ -110,6 +110,7 @@ const selectionEnd = ev => {
         .off('mousemove', selectionUpdate)
         .off('mouseup', selectionEnd);
 
+    selectionUpdate(ev);
     dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
     dom('#items .item.selecting').rmCls('selecting').addCls('selected');
     publish();
@@ -134,6 +135,7 @@ const selectionStart = ev => {
         .on('mousemove', selectionUpdate)
         .on('mouseup', selectionEnd);
 
+    selectionUpdate(ev);
     ev.preventDefault();
 };
 
