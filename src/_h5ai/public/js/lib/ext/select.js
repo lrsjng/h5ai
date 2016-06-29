@@ -41,11 +41,13 @@ const elRect = el => {
     return {l: rect.left, t: rect.top, r: rect.right, b: rect.bottom};
 };
 
-const rectEqual = (r1, r2) => !!r1 && !!r2 &&
+const rectEqual = (r1, r2) => {
+    return !!r1 && !!r2 &&
         r1.l === r2.l &&
         r1.t === r2.t &&
         r1.r === r2.r &&
         r1.b === r2.b;
+};
 
 const updateRects = $items => {
     const el0 = $items[0];
