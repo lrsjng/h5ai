@@ -24,7 +24,6 @@ const mabs = Math.abs;
 
 let dragStartX = 0;
 let dragStartY = 0;
-let isCtrlPressed = false;
 
 
 const publish = () => {
@@ -76,6 +75,7 @@ const selectionUpdate = ev => {
     const top = mmin(dragStartY, ev.pageY);
     const width = mabs(dragStartX - ev.pageX);
     const height = mabs(dragStartY - ev.pageY);
+    const isCtrlPressed = ev.ctrlKey || ev.metaKey;
 
     if (!isCtrlPressed && width < 4 && height < 4) {
         return;
@@ -127,7 +127,6 @@ const selectionStart = ev => {
         return;
     }
 
-    isCtrlPressed = ev.ctrlKey || ev.metaKey;
     dragStartX = ev.pageX;
     dragStartY = ev.pageY;
 

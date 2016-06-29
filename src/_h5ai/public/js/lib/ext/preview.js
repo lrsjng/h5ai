@@ -21,7 +21,7 @@ const tplOverlay =
                     <li id="pv-bar-raw" class="bar-right"><a class="bar-button" target="_blank"><img src="${resource.image('preview-raw')}"/></a></li>
                     <li id="pv-bar-fullscreen" class="bar-right bar-button"><img src="${resource.image('preview-fullscreen')}"/></li>
                     <li id="pv-bar-next" class="bar-right bar-button"><img src="${resource.image('preview-next')}"/></li>
-                    <li id="pv-bar-idx" class="bar-right bar-label"/>
+                    <li id="pv-bar-idx" class="bar-right bar-label"></li>
                     <li id="pv-bar-prev" class="bar-right bar-button"><img src="${resource.image('preview-prev')}"/></li>
                 </ul>
             </div>
