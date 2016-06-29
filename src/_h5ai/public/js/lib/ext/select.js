@@ -18,10 +18,12 @@ const selectorTpl =
 const $document = dom(doc);
 const $html = dom('html');
 const $selectionRect = dom('<div id="selection-rect"></div>');
+const mmax = Math.max;
+const mmin = Math.min;
+const mabs = Math.abs;
 
 let dragStartX = 0;
 let dragStartY = 0;
-let isDragSelect = false;
 let isCtrlPressed = false;
 
 
@@ -30,19 +32,28 @@ const publish = () => {
     event.pub('selection', items);
 };
 
-const elementRect = $el => {
-    if ($el.isHidden()) {
+const elRect = el => {
+    const $el = dom(el);
+    if (!$el.length || $el.isHidden()) {
         return null;
     }
-
     const rect = $el[0].getBoundingClientRect();
-    // const rect = {left: 0, top: 0, right: 10, bottom: 10};
-    return {
-        l: rect.left,
-        t: rect.top,
-        r: rect.right,
-        b: rect.bottom
-    };
+    return {l: rect.left, t: rect.top, r: rect.right, b: rect.bottom};
+};
+
+const rectEqual = (r1, r2) => !!r1 && !!r2 &&
+        r1.l === r2.l &&
+        r1.t === r2.t &&
+        r1.r === r2.r &&
+        r1.b === r2.b;
+
+const updateRects = $items => {
+    const el0 = $items[0];
+    if (!rectEqual(elRect(el0), el0 && el0._rect)) {
+        $items.each(el => {
+            el._rect = elRect(el);
+        });
+    }
 };
 
 const doOverlap = (rect1, rect2) => {
@@ -50,32 +61,28 @@ const doOverlap = (rect1, rect2) => {
         return false;
     }
 
-    const left = Math.max(rect1.l, rect2.l);
-    const right = Math.min(rect1.r, rect2.r);
-    const top = Math.max(rect1.t, rect2.t);
-    const bottom = Math.min(rect1.b, rect2.b);
-    const width = right - left;
-    const height = bottom - top;
+    const maxLeft = mmax(rect1.l, rect2.l);
+    const minRight = mmin(rect1.r, rect2.r);
+    const maxTop = mmax(rect1.t, rect2.t);
+    const minBottom = mmin(rect1.b, rect2.b);
 
-    return width >= 0 && height >= 0;
+    return maxLeft <= minRight && maxTop <= minBottom;
 };
 
 const selectionUpdate = ev => {
-    const left = Math.min(dragStartX, ev.pageX);
-    const top = Math.min(dragStartY, ev.pageY);
-    const width = Math.abs(dragStartX - ev.pageX);
-    const height = Math.abs(dragStartY - ev.pageY);
+    const left = mmin(dragStartX, ev.pageX);
+    const top = mmin(dragStartY, ev.pageY);
+    const width = mabs(dragStartX - ev.pageX);
+    const height = mabs(dragStartY - ev.pageY);
 
-    if (!isDragSelect && width < 4 && height < 4) {
+    if (!isCtrlPressed && width < 4 && height < 4) {
         return;
     }
 
-    if (!isDragSelect && !isCtrlPressed) {
+    if (!isCtrlPressed) {
         dom('#items .item').rmCls('selected');
-        publish();
     }
 
-    isDragSelect = true;
     $html.addCls('drag-select');
 
     $selectionRect.show();
@@ -85,27 +92,21 @@ const selectionUpdate = ev => {
     style.width = width + 'px';
     style.height = height + 'px';
 
-    const selRect = elementRect($selectionRect);
-    dom('#items .item').rmCls('selecting').each(el => {
-        const $item = dom(el);
-        const inter = doOverlap(selRect, elementRect($item.find('a')));
+    const selRect = elRect($selectionRect);
+    const $items = dom('#items .item:not(.folder-parent)');
+    updateRects($items);
 
-        if (inter && !$item.hasCls('folder-parent')) {
-            $item.addCls('selecting');
+    $items.rmCls('selecting').each(el => {
+        if (doOverlap(selRect, el._rect)) {
+            dom(el).addCls('selecting');
         }
     });
-
-    ev.preventDefault();
 };
 
 const selectionEnd = ev => {
     $document
         .off('mousemove', selectionUpdate)
         .off('mouseup', selectionEnd);
-
-    if (!isDragSelect) {
-        return;
-    }
 
     dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
     dom('#items .item.selecting').rmCls('selecting').addCls('selected');
@@ -119,11 +120,10 @@ const selectionEnd = ev => {
 
 const selectionStart = ev => {
     // only start on left button, don't block scrollbar
-    if (ev.button !== 0 || ev.offsetX >= dom('#content')[0].offsetWidth - 14) {
+    if (ev.button !== 0 || ev.offsetX >= dom('#content')[0].offsetWidth - 16) {
         return;
     }
 
-    isDragSelect = false;
     isCtrlPressed = ev.ctrlKey || ev.metaKey;
     dragStartX = ev.pageX;
     dragStartY = ev.pageY;
