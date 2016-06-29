@@ -11,7 +11,6 @@ require('../ext/filter');
 require('../ext/google-analytics');
 require('../ext/info');
 require('../ext/l10n');
-require('../ext/peer5');
 require('../ext/piwik-analytics');
 require('../ext/preview');
 require('../ext/preview-aud');
