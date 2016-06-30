@@ -1,5 +1,5 @@
-const {each, map, includes, compact} = require('../util');
-const {win, jq} = require('../globals');
+const {each, includes, compact, dom} = require('../util');
+const {win} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const allsettings = require('../core/settings');
@@ -10,30 +10,32 @@ const settings = Object.assign({
     types: []
 }, allsettings['preview-aud']);
 
-function preloadAudio(src, callback) {
-    const $audio = jq('<audio/>')
-        .one('loadedmetadata', () => {
-            callback($audio);
-            // win.setTimeout(function () { callback($img); }, 1000); // for testing
-        })
+const preloadAudio = (src, callback) => {
+    const $audio = dom('<audio/>')
+        .on('loadedmetadata', () => callback($audio))
         .attr('autoplay', 'autoplay')
         .attr('controls', 'controls')
         .attr('src', src);
-}
+};
 
-function onEnter(items, idx) {
+const onEnter = (items, idx) => {
     const currentItems = items;
     let currentIdx = idx;
     let currentItem = items[idx];
 
-    function onAdjustSize() {
-        const $content = jq('#pv-content');
-        const $audio = jq('#pv-aud-audio');
+    const onAdjustSize = () => {
+        const $content = dom('#pv-content');
+        const $audio = dom('#pv-aud-audio');
 
         if ($audio.length) {
+            const contentW = $content[0].offsetWidth;
+            const contentH = $content[0].offsetHeight;
+            const audioW = $audio[0].offsetWidth;
+            const audioH = $audio[0].offsetHeight;
+
             $audio.css({
-                left: String(($content.width() - $audio.width()) * 0.5) + 'px',
-                top: String(($content.height() - $audio.height()) * 0.5) + 'px'
+                left: (contentW - audioW) * 0.5 + 'px',
+                top: (contentH - audioH) * 0.5 + 'px'
             });
 
             preview.setLabels([
@@ -41,52 +43,52 @@ function onEnter(items, idx) {
                 format.formatDate($audio[0].duration * 1000, 'm:ss')
             ]);
         }
-    }
+    };
 
-    function onIdxChange(rel) {
+    const onIdxChange = rel => {
         currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
         currentItem = currentItems[currentIdx];
 
         const spinnerTimeout = win.setTimeout(() => preview.showSpinner(true), 200);
 
-        if (jq('#pv-aud-audio').length) {
-            jq('#pv-aud-audio')[0].pause();
+        if (dom('#pv-aud-audio').length) {
+            dom('#pv-aud-audio')[0].pause();
         }
 
-        function updateMeta() {
+        const updateMeta = () => {
             onAdjustSize();
             preview.setIndex(currentIdx + 1, currentItems.length);
             preview.setRawLink(currentItem.absHref);
-        }
+        };
 
-        function swap(nuContent) {
-            jq('#pv-content').empty().append(nuContent.attr('id', 'pv-vid-audio')).fadeIn(200);
-            // small timeout, so nuContent is visible and therefore its width is available
-            win.setTimeout(updateMeta, 10);
-        }
+        const swap = nuContent => {
+            dom('#pv-content').clr().app(nuContent.attr('id', 'pv-aud-audio')).show();
+            updateMeta();
+        };
 
-        function onReady($preloadedContent) {
+        const onReady = $preloadedContent => {
             win.clearTimeout(spinnerTimeout);
             preview.showSpinner(false);
 
-            jq('#pv-content').fadeOut(100, () => swap($preloadedContent));
-        }
+            dom('#pv-content').hide();
+            swap($preloadedContent);
+        };
 
         preloadAudio(currentItem.absHref, onReady);
-    }
+    };
 
     onIdxChange(0);
     preview.setOnIndexChange(onIdxChange);
     preview.setOnAdjustSize(onAdjustSize);
     preview.enter();
-}
+};
 
-function initItem(item) {
+const initItem = item => {
     if (item.$view && includes(settings.types, item.type)) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
-            const matchedItems = compact(map(jq('#items .item'), el => {
+            const matchedItems = compact(dom('#items .item').map(el => {
                 const matchedItem = el._item;
                 return includes(settings.types, matchedItem.type) ? matchedItem : null;
             }));
@@ -94,18 +96,16 @@ function initItem(item) {
             onEnter(matchedItems, matchedItems.indexOf(item));
         });
     }
-}
+};
 
-function onViewChanged(added) {
-    each(added, initItem);
-}
+const onViewChanged = added => each(added, initItem);
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
     event.sub('view.changed', onViewChanged);
-}
+};
 
 init();

@@ -87,12 +87,12 @@ const selectionUpdate = ev => {
 
     $html.addCls('drag-select');
 
-    $selectionRect.show();
-    const style = $selectionRect[0].style;
-    style.left = left + 'px';
-    style.top = top + 'px';
-    style.width = width + 'px';
-    style.height = height + 'px';
+    $selectionRect.show().css({
+        left: left + 'px',
+        top: top + 'px',
+        width: width + 'px',
+        height: height + 'px'
+    });
 
     const selRect = elRect($selectionRect);
     const $items = dom('#items .item:not(.folder-parent)');

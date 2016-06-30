@@ -273,6 +273,10 @@ dom.prototype = {
 
     isHidden() {
         return this.hasCls('hidden');
+    },
+
+    css(styles) {
+        return this.each(el => Object.assign(el.style, styles));
     }
 };
 

@@ -1,5 +1,5 @@
-const {each, map, includes, compact} = require('../util');
-const {win, jq} = require('../globals');
+const {each, includes, compact, dom} = require('../util');
+const {win} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
@@ -17,7 +17,7 @@ let currentIdx;
 let currentItem;
 
 
-function requestSample(href, callback) {
+const requestSample = (href, callback) => {
     if (!settings.size) {
         callback(href);
         return;
@@ -34,43 +34,50 @@ function requestSample(href, callback) {
     }).then(json => {
         callback(json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null);
     });
-}
+};
 
-function preloadImage(item, callback) {
+const preloadImage = (item, callback) => {
     requestSample(item.absHref, src => {
-        jq('<img/>')
-            .one('load', ev => {
-                callback(item, ev.target);
+        const $img = dom('<img/>')
+            .on('load', () => {
+                callback(item, $img);
 
                 // for testing
-                // win.setTimeout(function () { callback(item, ev.target); }, 1000);
+                // win.setTimeout(() => callback(item, $img), 1000);
             })
             .attr('src', src);
     });
-}
+};
 
-function onAdjustSize() {
-    const $content = jq('#pv-content');
-    const $img = jq('#pv-img-image');
+const onAdjustSize = () => {
+    const $content = dom('#pv-content');
+    const $img = dom('#pv-img-image');
+
+    const contentW = $content[0].offsetWidth;
+    const contentH = $content[0].offsetHeight;
+    const imgW = ($img[0] || {}).offsetWidth;
+    const imgH = ($img[0] || {}).offsetHeight;
 
     if ($img.length === 0) {
         return;
     }
 
     $img.css({
-        left: ($content.width() - $img.width()) * 0.5,
-        top: ($content.height() - $img.height()) * 0.5
+        left: (contentW - imgW) * 0.5 + 'px',
+        top: (contentH - imgH) * 0.5 + 'px'
     });
 
     const labels = [currentItem.label];
     if (!settings.size) {
-        labels.push(String($img[0].naturalWidth) + 'x' + String($img[0].naturalHeight));
-        labels.push(String((100 * $img.width() / $img[0].naturalWidth).toFixed(0)) + '%');
+        const imgNW = $img[0].naturalWidth;
+        const imgNH = $img[0].naturalHeight;
+        labels.push(String(imgNW) + 'x' + String(imgNH));
+        labels.push(String((100 * imgW / imgNW).toFixed(0)) + '%');
     }
     preview.setLabels(labels);
-}
+};
 
-function onIdxChange(rel) {
+const onIdxChange = rel => {
     currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
     currentItem = currentItems[currentIdx];
 
@@ -78,7 +85,7 @@ function onIdxChange(rel) {
     preview.setIndex(currentIdx + 1, currentItems.length);
     preview.setRawLink(currentItem.absHref);
 
-    jq('#pv-content').hide();
+    dom('#pv-content').hide();
     if (preview.isSpinnerVisible()) {
         preview.showSpinner(true, currentItem.thumbSquare);
     } else {
@@ -95,29 +102,29 @@ function onIdxChange(rel) {
 
         win.clearTimeout(spinnerTimeoutId);
         preview.showSpinner(false);
-        jq('#pv-content')
-            .empty()
-            .append(jq(preloadedImage).attr('id', 'pv-img-image'))
+        dom('#pv-content')
+            .clr()
+            .app(dom(preloadedImage).attr('id', 'pv-img-image'))
             .show();
         onAdjustSize();
     });
-}
+};
 
-function onEnter(items, idx) {
+const onEnter = (items, idx) => {
     currentItems = items;
     currentIdx = idx;
     preview.setOnIndexChange(onIdxChange);
     preview.setOnAdjustSize(onAdjustSize);
     preview.enter();
     onIdxChange(0);
-}
+};
 
-function initItem(item) {
+const initItem = item => {
     if (item.$view && includes(settings.types, item.type)) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
-            const matchedItems = compact(map(jq('#items .item'), el => {
+            const matchedItems = compact(dom('#items .item').map(el => {
                 const matchedItem = el._item;
                 return includes(settings.types, matchedItem.type) ? matchedItem : null;
             }));
@@ -125,19 +132,19 @@ function initItem(item) {
             onEnter(matchedItems, matchedItems.indexOf(item));
         });
     }
-}
+};
 
-function onViewChanged(added) {
+const onViewChanged = added => {
     each(added, initItem);
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
     event.sub('view.changed', onViewChanged);
-}
+};
 
 
 init();

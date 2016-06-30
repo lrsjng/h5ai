@@ -1,5 +1,5 @@
-const {each, isFn, isNum} = require('../util');
-const {win, jq} = require('../globals');
+const {each, isFn, isNum, dom} = require('../util');
+const {win} = require('../globals');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
@@ -8,10 +8,9 @@ const store = require('../core/store');
 const settings = Object.assign({
     enabled: true
 }, allsettings.preview);
-const $window = jq(win);
 const tplOverlay =
         `<div id="pv-overlay">
-            <div id="pv-content"/>
+            <div id="pv-content"></div>
             <div id="pv-spinner"><img class="back"/><img class="spinner" src="${resource.image('spinner')}"/></div>
             <div id="pv-prev-area" class="hof"><img src="${resource.image('preview-prev')}"/></div>
             <div id="pv-next-area" class="hof"><img src="${resource.image('preview-next')}"/></div>
@@ -34,193 +33,194 @@ let onAdjustSize = null;
 let spinnerVisible = false;
 
 
-function adjustSize() {
-    const winWidth = $window.width();
-    const winHeight = $window.height();
-    const $container = jq('#pv-content');
-    const $spinner = jq('#pv-spinner');
+const adjustSize = () => {
+    const docEl = win.document.documentElement;
+    const winWidth = docEl.clientWidth;
+    const winHeight = docEl.clientHeight;
     const margin = isFullscreen ? 0 : 20;
     const barHeight = isFullscreen ? 0 : 48;
 
-    $container.css({
-        width: winWidth - 2 * margin,
-        height: winHeight - 2 * margin - barHeight,
-        left: margin,
-        top: margin
+    dom('#pv-content').css({
+        width: winWidth - 2 * margin + 'px',
+        height: winHeight - 2 * margin - barHeight + 'px',
+        left: margin + 'px',
+        top: margin + 'px'
     });
 
-    $spinner.css({
-        left: winWidth * 0.5,
-        top: winHeight * 0.5
+    dom('#pv-spinner').css({
+        left: winWidth * 0.5 + 'px',
+        top: winHeight * 0.5 + 'px'
     });
 
     if (isFullscreen) {
-        jq('#pv-overlay').addClass('fullscreen');
-        jq('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview-no-fullscreen'));
+        dom('#pv-overlay').addCls('fullscreen');
+        dom('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview-no-fullscreen'));
     } else {
-        jq('#pv-overlay').removeClass('fullscreen');
-        jq('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview-fullscreen'));
+        dom('#pv-overlay').rmCls('fullscreen');
+        dom('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview-fullscreen'));
     }
 
     if (isFn(onAdjustSize)) {
         onAdjustSize(1);
     }
-}
+};
 
-function setLabels(labels) {
-    jq('#pv-buttons .bar-left').remove();
+const setLabels = labels => {
+    dom('#pv-buttons .bar-left').rm();
     each(labels, label => {
-        jq('<li/>')
-            .addClass('bar-left bar-label')
+        dom('<li></li>')
+            .addCls('bar-left')
+            .addCls('bar-label')
             .text(label)
-            .appendTo('#pv-buttons');
+            .appTo('#pv-buttons');
     });
-}
+};
 
-function onNext() {
+const onNext = () => {
     if (isFn(onIndexChange)) {
         onIndexChange(1);
     }
-}
+};
 
-function onPrevious() {
+const onPrevious = () => {
     if (isFn(onIndexChange)) {
         onIndexChange(-1);
     }
-}
+};
 
-function userAlive() {
+const userAlive = () => {
+    const $hof = dom('#pv-overlay .hof');
     win.clearTimeout(userAliveTimeoutId);
-    jq('#pv-overlay .hof').stop(true, true).fadeIn(200);
-
+    $hof.show();
     if (isFullscreen) {
-        userAliveTimeoutId = win.setTimeout(() => {
-            jq('#pv-overlay .hof').stop(true, true).fadeOut(2000);
-        }, 2000);
+        userAliveTimeoutId = win.setTimeout(() => $hof.hide(), 2000);
     }
-}
+};
 
-function onFullscreen() {
+const onFullscreen = () => {
     isFullscreen = !isFullscreen;
     store.put(storekey, isFullscreen);
 
     userAlive();
     adjustSize();
-}
+};
 
-function onKeydown(ev) {
-    const key = ev.which;
+const dropEvent = ev => {
+    ev.stopPropagation();
+    ev.preventDefault();
+};
+
+const onKeydown = ev => {
+    const key = ev.keyCode;
 
     if (key === 27) { // esc
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
+        dropEvent(ev);
         onExit(); // eslint-disable-line no-use-before-define
     } else if (key === 8 || key === 37) { // backspace, left
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
+        dropEvent(ev);
         onPrevious();
     } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
+        dropEvent(ev);
         onNext();
     } else if (key === 70) { // f
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
+        dropEvent(ev);
         onFullscreen();
     }
-}
+};
 
-function onEnter() {
+const onEnter = () => {
     setLabels([]);
-    jq('#pv-content').empty();
-    jq('#pv-overlay').stop(true, true).fadeIn(200);
-    $window.on('keydown', onKeydown);
+    dom('#pv-content').clr();
+    dom('#pv-overlay').show();
+    dom(win).on('keydown', onKeydown);
     adjustSize();
-}
+};
 
-function onExit() {
-    $window.off('keydown', onKeydown);
-    jq('#pv-overlay').stop(true, true).fadeOut(200, () => {
-        jq('#pv-content').empty();
-        setLabels([]);
-    });
-}
+const onExit = () => {
+    setLabels([]);
+    dom('#pv-content').clr();
+    dom('#pv-overlay').hide();
+    dom(win).off('keydown', onKeydown);
+};
 
-function setIndex(idx, total) {
+const setIndex = (idx, total) => {
     if (isNum(idx)) {
-        jq('#pv-bar-idx').text(String(idx) + (isNum(total) ? '/' + String(total) : '')).show();
+        dom('#pv-bar-idx').text(String(idx) + (isNum(total) ? '/' + String(total) : '')).show();
     } else {
-        jq('#pv-bar-idx').text('').hide();
+        dom('#pv-bar-idx').text('').hide();
     }
-}
+};
 
-function setRawLink(href) {
+const setRawLink = href => {
     if (href) {
-        jq('#pv-bar-raw').show().find('a').attr('href', href);
+        dom('#pv-bar-raw').show().find('a').attr('href', href);
     } else {
-        jq('#pv-bar-raw').hide().find('a').attr('href', '#');
+        dom('#pv-bar-raw').hide().find('a').attr('href', '#');
     }
-}
+};
 
-function setOnIndexChange(fn) {
+const setOnIndexChange = fn => {
     onIndexChange = fn;
-}
+};
 
-function setOnAdjustSize(fn) {
+const setOnAdjustSize = fn => {
     onAdjustSize = fn;
-}
+};
 
-function showSpinner(show, src, millis) {
-    if (!isNum(millis)) {
-        millis = 300;
-    }
-
-    const $spinner = jq('#pv-spinner').stop(true, true);
-    const $back = $spinner.find('.back');
+const showSpinner = (show, src) => {
+    const $spinner = dom('#pv-spinner');
 
     if (show) {
+        const $back = $spinner.find('.back');
         if (src) {
             $back.attr('src', src).show();
         } else {
             $back.hide();
         }
         spinnerVisible = true;
-        $spinner.fadeIn(millis);
+        $spinner.show();
     } else {
         spinnerVisible = false;
-        $spinner.fadeOut(millis);
+        $spinner.hide();
     }
-}
+};
 
-function isSpinnerVisible() {
+const isSpinnerVisible = () => {
     return spinnerVisible;
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    jq(tplOverlay).appendTo('body');
-
-    jq('#pv-spinner').hide();
-    jq('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
-    jq('#pv-bar-next, #pv-next-area').on('click', onNext);
-    jq('#pv-bar-close').on('click', onExit);
-    jq('#pv-bar-fullscreen').on('click', onFullscreen);
-
-    jq('#pv-overlay')
+    dom(tplOverlay)
+        .hide()
+        .appTo('body')
         .on('keydown', onKeydown)
-        .on('mousemove mousedown', userAlive)
-        .on('click mousedown mousemove keydown keypress', ev => {
-            if (ev.type === 'click' && (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content')) {
+        .on('mousemove', userAlive)
+        .on('mousedown', userAlive)
+        .on('click', ev => {
+            if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content') {
                 onExit();
             }
-            ev.stopImmediatePropagation();
-        });
+            dropEvent(ev);
+        })
+        .on('mousedown', dropEvent)
+        .on('mousemove', dropEvent)
+        .on('keydown', dropEvent)
+        .on('keypress', dropEvent);
 
-    $window.on('resize load', adjustSize);
-}
+    dom('#pv-spinner').hide();
+    dom('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
+    dom('#pv-bar-next, #pv-next-area').on('click', onNext);
+    dom('#pv-bar-close').on('click', onExit);
+    dom('#pv-bar-fullscreen').on('click', onFullscreen);
+
+    dom(win)
+        .on('resize', adjustSize)
+        .on('load', adjustSize);
+};
 
 
 init();

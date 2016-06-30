@@ -1,10 +1,11 @@
-const {each, map, keys, includes, compact} = require('../util');
-const {win, jq, marked, prism} = require('../globals');
+const {each, keys, includes, compact, dom} = require('../util');
+const {win, marked, prism} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 const preview = require('./preview');
 
 
+const XHR = win.XMLHttpRequest;
 const settings = Object.assign({
     enabled: false,
     types: {}
@@ -12,38 +13,53 @@ const settings = Object.assign({
 const tplText = '<pre id="pv-txt-text" class="highlighted"/>';
 const tplMarkdown = '<div id="pv-txt-text" class="markdown"/>';
 const spinnerThreshold = 200;
+
 let spinnerTimeoutId;
 let currentItems;
 let currentIdx;
 let currentItem;
 
 
-function preloadText(item, callback) {
-    jq.ajax({
-        url: item.absHref,
-        dataType: 'text'
-    })
-    .done(content => {
-        callback(item, content);
+const request = href => {
+    return new Promise((resolve, reject) => {
+        const xhr = new XHR();
+        const callback = () => {
+            if (xhr.readyState === XHR.DONE) {
+                try {
+                    resolve(xhr.responseText);
+                } catch (err) {
+                    reject(String(err));
+                }
+            }
+        };
 
-        // for testing
-        // win.setTimeout(function () { callback(item, content); }, 1000);
-    })
-    .fail((jqXHR, textStatus) => {
-        callback(item, '[ajax error] ' + textStatus);
+        xhr.open('GET', href, true);
+        xhr.onreadystatechange = callback;
+        xhr.send();
     });
-}
+};
 
-function onAdjustSize() {
-    const $content = jq('#pv-content');
-    const $text = jq('#pv-txt-text');
+const preloadText = (item, callback) => {
+    request(item.absHref)
+        .then(content => {
+            callback(item, content);
+
+            // for testing
+            // win.setTimeout(() => callback(item, content), 1000);
+        })
+        .catch(err => callback(item, '[ajax error] ' + err));
+};
+
+const onAdjustSize = () => {
+    const $content = dom('#pv-content');
+    const $text = dom('#pv-txt-text');
 
     if ($text.length) {
-        $text.height($content.height() - 16);
+        $text[0].style.height = $content[0].offsetHeight - 16 + 'px';
     }
-}
+};
 
-function onIdxChange(rel) {
+const onIdxChange = rel => {
     currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
     currentItem = currentItems[currentIdx];
 
@@ -54,7 +70,7 @@ function onIdxChange(rel) {
     preview.setIndex(currentIdx + 1, currentItems.length);
     preview.setRawLink(currentItem.absHref);
 
-    jq('#pv-content').hide();
+    dom('#pv-content').hide();
     if (preview.isSpinnerVisible()) {
         preview.showSpinner(true, currentItem.icon);
     } else {
@@ -74,36 +90,36 @@ function onIdxChange(rel) {
         let $code;
 
         if (type === 'none') {
-            $text = jq(tplMarkdown).text(textContent);
+            $text = dom(tplMarkdown).text(textContent);
         } else if (type === 'fixed') {
-            $text = jq(tplText).text(textContent);
+            $text = dom(tplText).text(textContent);
         } else if (type === 'markdown') {
-            $text = jq(tplMarkdown).html(marked(textContent));
+            $text = dom(tplMarkdown).html(marked(textContent));
         } else {
-            $text = jq(tplText);
-            $code = jq('<code/>').appendTo($text);
+            $text = dom(tplText);
+            $code = dom('<code/>').appTo($text);
 
             if (textContent.length < 20000) {
-                $code.empty().html(prism.highlight(textContent, prism.languages[type]));
+                $code.clr().html(prism.highlight(textContent, prism.languages[type]));
             } else {
-                $code.empty().text(textContent);
+                $code.clr().text(textContent);
                 win.setTimeout(() => {
-                    $code.empty().html(prism.highlight(textContent, prism.languages[type]));
+                    $code.clr().html(prism.highlight(textContent, prism.languages[type]));
                 }, 300);
             }
         }
 
         win.clearTimeout(spinnerTimeoutId);
         preview.showSpinner(false);
-        jq('#pv-content')
-            .empty()
-            .append($text)
+        dom('#pv-content')
+            .clr()
+            .app($text)
             .show();
         onAdjustSize();
     });
-}
+};
 
-function onEnter(items, idx) {
+const onEnter = (items, idx) => {
     currentItems = items;
     currentIdx = idx;
     currentItem = items[idx];
@@ -111,14 +127,14 @@ function onEnter(items, idx) {
     preview.setOnAdjustSize(onAdjustSize);
     preview.enter();
     onIdxChange(0);
-}
+};
 
-function initItem(item) {
+const initItem = item => {
     if (item.$view && includes(keys(settings.types), item.type)) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
-            const matchedItems = compact(map(jq('#items .item'), el => {
+            const matchedItems = compact(dom('#items .item').map(el => {
                 const matchedItem = el._item;
                 return includes(keys(settings.types), matchedItem.type) ? matchedItem : null;
             }));
@@ -126,19 +142,17 @@ function initItem(item) {
             onEnter(matchedItems, matchedItems.indexOf(item));
         });
     }
-}
+};
 
-function onViewChanged(added) {
-    each(added, initItem);
-}
+const onViewChanged = added => each(added, initItem);
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
     event.sub('view.changed', onViewChanged);
-}
+};
 
 
 init();
