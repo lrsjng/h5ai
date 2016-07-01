@@ -202,16 +202,6 @@
     },
 
     /*
-    Adds peer5 p2p downloader which is based on webrtc (see peer5.com).
-
-    - id: string, the API key
-    */
-    "peer5": {
-        "enabled": false,
-        "id": "z142i5n5qypq4cxr"
-    },
-
-    /*
     Adds Piwik tracker javascript code.
 
     - baseURL: string, do not include the protocol, e.g. "mydomain.tld/piwik"
