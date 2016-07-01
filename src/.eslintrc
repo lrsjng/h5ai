@@ -1,5 +1,4 @@
 ---
   rules:
-    max-params: [1, 10]
     no-console: 1
     prefer-reflect: 0

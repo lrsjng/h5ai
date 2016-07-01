@@ -10,6 +10,7 @@ const dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-
 const reHex = /^0x[0-9a-f]+$/i;
 const reLeadingZero = /^0/;
 
+/* eslint-disable complexity */
 const naturalCmp = (val1, val2) => {
     // convert all to strings strip whitespace
     const x = String(val1).replace(reStrip, '');
@@ -56,6 +57,7 @@ const naturalCmp = (val1, val2) => {
 
     return 0;
 };
+/* eslint-enable */
 
 module.exports = {
     naturalCmp

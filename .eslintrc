@@ -18,7 +18,7 @@
     comma-dangle: [2, never]
     comma-spacing: [2, {before: false, after: true}]
     comma-style: [2, last]
-    complexity: [1, 25] ###
+    complexity: [1, 10] ###
     computed-property-spacing: [2, never]
     consistent-return: 2
     consistent-this: [2, self]
@@ -41,8 +41,8 @@
     max-depth: [1, 4]
     max-len: [0, 80, 4]
     max-nested-callbacks: [1, 3]
-    max-params: [1, 5] ###
-    max-statements: [1, 80] ###
+    max-params: [1, 4] ###
+    max-statements: [1, 30] ###
     new-cap: 0
     new-parens: 2
     newline-after-var: 0
