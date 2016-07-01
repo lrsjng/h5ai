@@ -66,7 +66,7 @@ const cmpItems = (item1, item2) => {
         val2 = val2.toLowerCase();
     }
 
-    return settings.natural ? naturalCmp(val1, val2) : regularCmp(val1, val2);
+    return settings.naturalSort ? naturalCmp(val1, val2) : regularCmp(val1, val2);
 };
 
 const update = item => {

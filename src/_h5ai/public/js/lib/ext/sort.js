@@ -13,51 +13,25 @@ const settings = Object.assign({
     folders: 0
 }, allsettings.sort);
 const storekey = 'ext/sort';
-const template = '<img src="' + resource.image('sort') + '" class="sort" alt="sort order"/>';
+const template = `<img src="${resource.image('sort')}" class="sort" alt="sort order"/>`;
+
+const getTypeOrder = item => item.isFolder() ? settings.folders : 1;
+const columnProps = {0: 'label', 1: 'time', 2: 'size'};
+const columnClasses = {0: 'label', 1: 'date', 2: 'size'};
 
 
-const getType = item => {
-    const $item = dom(item);
+const cmpFn = (prop, reverse, ignorecase, natural) => {
+    return (el1, el2) => {
+        const item1 = el1._item;
+        const item2 = el2._item;
 
-    if ($item.hasCls('folder-parent')) {
-        return 0;
-    }
-    if ($item.hasCls('folder')) {
-        if (settings.folders === 1) {
-            return 2;
-        } else if (settings.folders === 2) {
-            return 3;
-        }
-        return 1;
-    }
-    return 2;
-};
-
-const columnGetters = {
-    0: el => el._item.label,
-    1: el => el._item.time,
-    2: el => el._item.size
-};
-const columnClasses = {
-    0: 'label',
-    1: 'date',
-    2: 'size'
-};
-
-
-const cmpFn = (getValue, reverse, ignorecase, natural) => {
-    return (item1, item2) => {
-        let res;
-        let val1;
-        let val2;
-
-        res = getType(item1) - getType(item2);
+        let res = getTypeOrder(item1) - getTypeOrder(item2);
         if (res !== 0) {
             return res;
         }
 
-        val1 = getValue(item1);
-        val2 = getValue(item2);
+        let val1 = item1[prop];
+        let val2 = item2[prop];
 
         if (isNaN(val1) || isNaN(val2)) {
             val1 = String(val1);
@@ -77,14 +51,14 @@ const cmpFn = (getValue, reverse, ignorecase, natural) => {
 const sortItems = (column, reverse) => {
     const $headers = dom('#items li.header a');
     const $header = dom('#items li.header a.' + columnClasses[column]);
-    const fn = cmpFn(columnGetters[column], reverse, settings.ignorecase, column === 0 && settings.natural);
+    const fn = cmpFn(columnProps[column], reverse, settings.ignorecase, settings.natural);
 
     store.put(storekey, {column, reverse});
 
     $headers.rmCls('ascending').rmCls('descending');
     $header.addCls(reverse ? 'descending' : 'ascending');
 
-    dom(toArray(dom('#items .item')).sort(fn)).appTo('#items');
+    dom(toArray(dom('#items .item:not(.folder-parent)')).sort(fn)).appTo('#items');
 };
 
 const onContentChanged = () => {
@@ -101,11 +75,11 @@ const addToggles = () => {
     each(columnClasses, (cls, idx) => {
         const pos = idx === '0' ? 'app' : 'pre';
         $header
-        .find('a.' + cls)[pos](template)
-        .on('click', ev => {
-            sortItems(idx, dom(ev.currentTarget).hasCls('ascending'));
-            ev.preventDefault();
-        });
+            .find('a.' + cls)[pos](template)
+            .on('click', ev => {
+                sortItems(idx, dom(ev.currentTarget).hasCls('ascending'));
+                ev.preventDefault();
+            });
     });
 };
 

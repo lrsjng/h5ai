@@ -3,58 +3,57 @@
 
 // Modified to make it work with h5ai
 
-
-const re = /(^-?[0-9]+(\.?[0-9]*)[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/gi;
-const reStrip = /(^[ ]*|[ ]*$)/g;
-const dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/;
+const reToken = /(^([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?)?$|^0x[0-9a-f]+$|\d+)/gi;
+const reDate = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/;
 const reHex = /^0x[0-9a-f]+$/i;
 const reLeadingZero = /^0/;
 
 /* eslint-disable complexity */
-const naturalCmp = (val1, val2) => {
+const naturalCmp = (a, b) => {
     // convert all to strings strip whitespace
-    const x = String(val1).replace(reStrip, '');
-    const y = String(val2).replace(reStrip, '');
-    // chunk/tokenize
-    const xN = x.replace(re, '\0$1\0').replace(/\0$/, '').replace(/^\0/, '').split('\0');
-    const yN = y.replace(re, '\0$1\0').replace(/\0$/, '').replace(/^\0/, '').split('\0');
-    // numeric, hex or date detection
-    const xD = parseInt(x.match(reHex), 10) || xN.length !== 1 && x.match(dre) && Date.parse(x);
-    const yD = parseInt(y.match(reHex), 10) || xD && y.match(dre) && Date.parse(y) || null;
+    const x = String(a).trim();
+    const y = String(b).trim();
 
-    let oFxNcL;
-    let oFyNcL;
+    // chunk/tokenize
+    const xTokens = x.replace(reToken, '\0$1\0').replace(/\0$/, '').replace(/^\0/, '').split('\0');
+    const yTokens = y.replace(reToken, '\0$1\0').replace(/\0$/, '').replace(/^\0/, '').split('\0');
 
     // first try and sort Hex codes or Dates
-    if (yD) {
-        if (xD < yD) {
+    const xDate = parseInt(x.match(reHex), 16) || xTokens.length !== 1 && x.match(reDate) && Date.parse(x);
+    const yDate = parseInt(y.match(reHex), 16) || xDate && y.match(reDate) && Date.parse(y) || null;
+    if (yDate) {
+        if (xDate < yDate) {
             return -1;
-        } else if (xD > yD) {
+        }
+        if (xDate > yDate) {
             return 1;
         }
     }
 
     // natural sorting through split numeric strings and default strings
-    for (let cLoc = 0, numS = Math.max(xN.length, yN.length); cLoc < numS; cLoc += 1) {
+    for (let idx = 0, len = Math.max(xTokens.length, yTokens.length); idx < len; idx += 1) {
         // find floats not starting with '0', string or 0 if not defined (Clint Priest)
-        oFxNcL = !(xN[cLoc] || '').match(reLeadingZero) && parseFloat(xN[cLoc]) || xN[cLoc] || 0;
-        oFyNcL = !(yN[cLoc] || '').match(reLeadingZero) && parseFloat(yN[cLoc]) || yN[cLoc] || 0;
+        let xToken = !(xTokens[idx] || '').match(reLeadingZero) && parseFloat(xTokens[idx]) || xTokens[idx] || 0;
+        let yToken = !(yTokens[idx] || '').match(reLeadingZero) && parseFloat(yTokens[idx]) || yTokens[idx] || 0;
+
         // handle numeric vs string comparison - number < string - (Kyle Adams)
-        if (isNaN(oFxNcL) !== isNaN(oFyNcL)) {
-            return isNaN(oFxNcL) ? 1 : -1;
-        } else if (typeof oFxNcL !== typeof oFyNcL) {
-            // rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
-            oFxNcL = String(oFxNcL);
-            oFxNcL = String(oFxNcL);
+        if (isNaN(xToken) !== isNaN(yToken)) {
+            return isNaN(xToken) ? 1 : -1;
         }
-        if (oFxNcL < oFyNcL) {
+
+        // rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
+        if (typeof xToken !== typeof yToken) {
+            xToken = String(xToken);
+            yToken = String(yToken);
+        }
+
+        if (xToken < yToken) {
             return -1;
         }
-        if (oFxNcL > oFyNcL) {
+        if (xToken > yToken) {
             return 1;
         }
     }
-
     return 0;
 };
 /* eslint-enable */

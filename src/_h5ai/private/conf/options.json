@@ -345,7 +345,7 @@
         "column": 0,
         "reverse": false,
         "ignorecase": true,
-        "natural": false,
+        "natural": true,
         "folders": 0
     },
 
@@ -390,7 +390,7 @@
         "enabled": true,
         "show": true,
         "maxSubfolders": 50,
-        "naturalSort": false,
+        "naturalSort": true,
         "ignorecase": true
     }
 }
