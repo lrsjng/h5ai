@@ -13,9 +13,10 @@
 * removes *Install* section from `README.md`, caused too much trouble
 * updates build process to use `node 6.0+`, no need for babel now
 * updates `normalize.css` to 4.1.1
-* updates `jQuery` to 2.2.4
 * replaces `jquery-qrcode` with `kjua` 0.1.1
-* updates `lodash` to 4.13.1 (removes `contains`)
+* updates `prism` to 2016-07-01
+* removes `jQuery`
+* removes `lodash`
 * removes `modulejs`
 * language updates and additions (`nl`, `pl`)
 
