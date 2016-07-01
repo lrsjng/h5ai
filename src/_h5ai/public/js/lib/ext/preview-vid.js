@@ -1,5 +1,5 @@
-const {each, map, includes, compact} = require('../util');
-const {win, jq} = require('../globals');
+const {each, includes, compact, dom} = require('../util');
+const {win} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 const preview = require('./preview');
@@ -9,84 +9,92 @@ const settings = Object.assign({
     types: []
 }, allsettings['preview-vid']);
 
-function preloadVideo(src, callback) {
-    const $video = jq('<video/>')
-        .one('loadedmetadata', () => {
+const preloadVideo = (src, callback) => {
+    const $video = dom('<video/>')
+        .on('loadedmetadata', () => {
             callback($video);
-            // win.setTimeout(function () { callback($video); }, 1000); // for testing
+            // win.setTimeout(() => {callback($video);}, 1000); // for testing
         })
         .attr('autoplay', 'autoplay')
         .attr('controls', 'controls')
         .attr('src', src);
-}
+};
 
-function onEnter(items, idx) {
+const onEnter = (items, idx) => {
     const currentItems = items;
     let currentIdx = idx;
     let currentItem = items[idx];
 
-    function onAdjustSize() {
-        const $content = jq('#pv-content');
-        const $vid = jq('#pv-vid-video');
+    const onAdjustSize = () => {
+        const $content = dom('#pv-content');
+        const $vid = dom('#pv-vid-video');
 
-        if ($vid.length) {
-            $vid.css({
-                left: String(($content.width() - $vid.width()) * 0.5) + 'px',
-                top: String(($content.height() - $vid.height()) * 0.5) + 'px'
-            });
+        const contentW = $content[0].offsetWidth;
+        const contentH = $content[0].offsetHeight;
+        const vidW = ($vid[0] || {}).offsetWidth;
+        const vidH = ($vid[0] || {}).offsetHeight;
 
-            preview.setLabels([
-                currentItem.label,
-                String($vid[0].videoWidth) + 'x' + String($vid[0].videoHeight),
-                String((100 * $vid.width() / $vid[0].videoWidth).toFixed(0)) + '%'
-            ]);
+        if ($vid.length === 0) {
+            return;
         }
-    }
 
-    function onIdxChange(rel) {
+        $vid.css({
+            left: (contentW - vidW) * 0.5 + 'px',
+            top: (contentH - vidH) * 0.5 + 'px'
+        });
+
+        const vidVW = $vid[0].videoWidth;
+        const vidVH = $vid[0].videoHeight;
+
+        preview.setLabels([
+            currentItem.label,
+            String(vidVW) + 'x' + String(vidVH),
+            String((100 * vidW / vidVW).toFixed(0)) + '%'
+        ]);
+    };
+
+    const onIdxChange = rel => {
         currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
         currentItem = currentItems[currentIdx];
 
         const spinnerTimeout = win.setTimeout(() => preview.showSpinner(true), 200);
 
-        if (jq('#pv-vid-video').length) {
-            jq('#pv-vid-video')[0].pause();
+        if (dom('#pv-vid-video').length) {
+            dom('#pv-vid-video')[0].pause();
         }
 
-        function updateMeta() {
+        const updateMeta = () => {
             onAdjustSize();
             preview.setIndex(currentIdx + 1, currentItems.length);
             preview.setRawLink(currentItem.absHref);
-        }
+        };
 
-        function swap(nuContent) {
-            jq('#pv-content').empty().append(nuContent.attr('id', 'pv-vid-video')).fadeIn(200);
-            // small timeout, so nuContent is visible and therefore its width is available
-            win.setTimeout(updateMeta, 10);
-        }
-
-        function onReady($preloadedContent) {
+        const onReady = $preloadedContent => {
             win.clearTimeout(spinnerTimeout);
             preview.showSpinner(false);
 
-            jq('#pv-content').fadeOut(100, () => swap($preloadedContent));
-        }
+            dom('#pv-content')
+                .clr()
+                .app($preloadedContent.attr('id', 'pv-vid-video'))
+                .show();
+            updateMeta();
+        };
 
         preloadVideo(currentItem.absHref, onReady);
-    }
+    };
 
     onIdxChange(0);
     preview.setOnIndexChange(onIdxChange);
     preview.setOnAdjustSize(onAdjustSize);
     preview.enter();
-}
+};
 
-function initItem(item) {
+const initItem = item => {
     if (item.$view && includes(settings.types, item.type)) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
-            const matchedItems = compact(map(jq('#items .item'), el => {
+            const matchedItems = compact(dom('#items .item').map(el => {
                 const matchedItem = el._item;
                 return includes(settings.types, matchedItem.type) ? matchedItem : null;
             }));
@@ -94,18 +102,18 @@ function initItem(item) {
             onEnter(matchedItems, matchedItems.indexOf(item));
         });
     }
-}
+};
 
-function onViewChanged(added) {
+const onViewChanged = added => {
     each(added, initItem);
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
     event.sub('view.changed', onViewChanged);
-}
+};
 
 init();

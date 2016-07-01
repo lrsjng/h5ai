@@ -1,65 +1,71 @@
-const {each} = require('../util');
-const {win, jq} = require('../globals');
+const {each, dom} = require('../util');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
-const doc = win.document;
 const settings = Object.assign({
     enabled: false
 }, allsettings.contextmenu);
-const templateOverlay = '<div id="cm-overlay"/>';
-const templatePanel = '<div class="cm-panel"><ul/></div>';
-const templateSep = '<li class="cm-sep"/>';
-const templateEntry = '<li class="cm-entry"><span class="cm-icon"><img/></span><span class="cm-text"/></li>';
-const templateLabel = '<li class="cm-label"><span class="cm-text"/></li>';
+const tplOverlay = '<div id="cm-overlay"></div>';
+const tplPanel = '<div class="cm-panel"><ul></ul></div>';
+const tplSep = '<li class="cm-sep"></li>';
+const tplEntry = '<li class="cm-entry"><span class="cm-icon"><img/></span><span class="cm-text"></span></li>';
+const tplLabel = '<li class="cm-label"><span class="cm-text"></span></li>';
 
 
-function createOverlay(callback) {
-    const $overlay = jq(templateOverlay);
+const closestId = el => {
+    while (!el._cmId && el.parentNode) {
+        el = el.parentNode;
+    }
+    return el._cmId;
+};
 
-    $overlay
-        .on('click contextmenu', ev => {
-            ev.stopPropagation();
-            ev.preventDefault();
+const createOverlay = callback => {
+    const $overlay = dom(tplOverlay);
 
-            const cmId = jq(ev.target).closest('.cm-entry').data('cm-id');
+    const handle = ev => {
+        ev.stopPropagation();
+        ev.preventDefault();
 
-            if (ev.target === $overlay[0] || cmId !== undefined) {
-                $overlay.remove();
-                callback(cmId);
-            }
-        });
+        const cmId = closestId(ev.target);
 
-    return $overlay;
-}
+        if (ev.target === $overlay[0] || cmId !== undefined) {
+            $overlay.rm();
+            callback(cmId);
+        }
+    };
 
-function createPanel(menu) {
-    const $panel = jq(templatePanel);
+    return $overlay
+        .on('contextmenu', handle)
+        .on('click', handle);
+};
+
+const createPanel = menu => {
+    const $panel = dom(tplPanel);
     const $ul = $panel.find('ul');
     let $li;
 
     each(menu, entry => {
         if (entry.type === '-') {
-            jq(templateSep).appendTo($ul);
+            dom(tplSep).appTo($ul);
         } else if (entry.type === 'l') {
-            jq(templateLabel).appendTo($ul)
+            dom(tplLabel).appTo($ul)
                 .find('.cm-text').text(entry.text);
         } else if (entry.type === 'e') {
-            $li = jq(templateEntry).appendTo($ul);
-            $li.data('cm-id', entry.id);
+            $li = dom(tplEntry).appTo($ul);
+            $li[0]._cmId = entry.id;
             $li.find('.cm-text').text(entry.text);
             if (entry.icon) {
                 $li.find('.cm-icon img').attr('src', resource.icon(entry.icon));
             } else {
-                $li.find('.cm-icon').addClass('no-icon');
+                $li.find('.cm-icon').addCls('no-icon');
             }
         }
     });
 
     return $panel;
-}
+};
 
-function positionPanel($overlay, $panel, x, y) {
+const positionPanel = ($overlay, $panel, x, y) => {
     const margin = 4;
 
     $panel.css({
@@ -69,17 +75,16 @@ function positionPanel($overlay, $panel, x, y) {
     });
     $overlay.show();
 
-    const overlayOffset = $overlay.offset();
-    const overlayLeft = overlayOffset.left;
-    const overlayTop = overlayOffset.top;
-    const overlayWidth = $overlay.outerWidth(true);
-    const overlayHeight = $overlay.outerHeight(true);
+    const or = $overlay[0].getBoundingClientRect();
+    const pr = $panel[0].getBoundingClientRect();
 
-    // const panelOffset = $panel.offset();
-    // const panelLeft = panelOffset.left;
-    // const panelTop = panelOffset.top;
-    let panelWidth = $panel.outerWidth(true);
-    let panelHeight = $panel.outerHeight(true);
+    const overlayLeft = or.left;
+    const overlayTop = or.top;
+    const overlayWidth = or.width;
+    const overlayHeight = or.height;
+
+    let panelWidth = pr.width;
+    let panelHeight = pr.height;
 
     let posLeft = x;
     let posTop = y;
@@ -111,54 +116,42 @@ function positionPanel($overlay, $panel, x, y) {
     }
 
     $panel.css({
-        left: posLeft,
-        top: posTop,
-        width: panelWidth,
-        height: panelHeight,
+        left: posLeft + 'px',
+        top: posTop + 'px',
+        width: panelWidth + 'px',
+        height: panelHeight + 'px',
         opacity: 1
     });
-}
+};
 
-function showMenuAt(x, y, menu, callback) {
+const showMenuAt = (x, y, menu, callback) => {
     const $overlay = createOverlay(callback);
     const $panel = createPanel(menu);
-    $overlay.append($panel).appendTo('body');
+    $overlay.hide().app($panel).appTo('body');
     positionPanel($overlay, $panel, x, y);
-}
+};
 
-function init() {
+const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    jq(doc).on('contextmenu', ev => {
-        ev.stopPropagation();
-        ev.preventDefault();
-        jq(ev.target).trigger(jq.Event('h5ai-contextmenu', {
-            originalEvent: ev,
-            showMenu: (menu, callback) => {
-                showMenuAt(ev.pageX, ev.pageY, menu, callback);
-            }
-        }));
-    });
+    const menu = [
+        {type: 'e', id: 'e1', text: 'testing context menus'},
+        {type: 'e', id: 'e2', text: 'another entry'},
+        {type: 'e', id: 'e3', text: 'one with icon', icon: 'folder'},
+        {type: '-'},
+        {type: 'e', id: 'e4', text: 'one with icon', icon: 'x'},
+        {type: 'e', id: 'e5', text: 'one with icon', icon: 'img'}
+    ];
 
-    // const menu = [
-    //     {type: 'e', id: 'e1', text: 'testing context menus'},
-    //     {type: 'e', id: 'e2', text: 'another entry'},
-    //     {type: 'e', id: 'e3', text: 'one with icon', icon: 'folder'},
-    //     {type: '-'},
-    //     {type: 'e', id: 'e4', text: 'one with icon', icon: 'x'},
-    //     {type: 'e', id: 'e5', text: 'one with icon', icon: 'img'}
-    // ];
-    // const callback = res => {
-    //     console.log('>> CB-RESULT >> ' + res);
-    // };
-    //
-    // jq(doc).on('h5ai-contextmenu', '#items .item.folder', ev => {
-    //     console.log('CM', ev);
-    //     ev.showMenu(menu, callback);
-    // });
-}
+
+    dom('#view').on('contextmenu', ev => {
+        ev.preventDefault();
+        // showMenuAt(ev.pageX, ev.pageY, menu, res => console.log('>> CB-RESULT >> ' + res));
+        showMenuAt(ev.pageX, ev.pageY, menu);
+    });
+};
 
 
 init();

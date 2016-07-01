@@ -94,13 +94,6 @@
     },
 
     /*
-    Enable a context menu (right-click) on some elements.
-    */
-    "contextmenu": {
-        "enabled": false
-    },
-
-    /*
     Show a clickable breadcrumb.
     */
     "crumb": {
