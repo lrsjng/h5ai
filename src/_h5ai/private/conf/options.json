@@ -248,6 +248,7 @@
     /*
     Show text file preview on click.
     "types" maps file types to http://prismjs.com languages.
+    Currently included: markup+css+clike+javascript+bash+ruby+go+json+python+rust
 
     Additional type are:
      - "markdown" to render Markdown text
@@ -261,15 +262,14 @@
         "types": {
             "txt": "fixed",
             "txt-authors": "fixed",
-            "txt-c": "c",
-            "txt-cpp": "cpp",
+            "txt-c": "clike",
+            "txt-cpp": "clike",
             "txt-css": "css",
             "txt-diff": "fixed",
             "txt-go": "go",
-            "txt-h": "c",
-            "txt-hpp": "cpp",
+            "txt-h": "clike",
+            "txt-hpp": "clike",
             "txt-install": "fixed",
-            "txt-java": "java",
             "txt-js": "javascript",
             "txt-json": "javascript",
             "txt-less": "css",
@@ -277,12 +277,11 @@
             "txt-log": "fixed",
             "txt-makefile": "fixed",
             "txt-md": "markdown",
-            // "txt-php": "php",
             "txt-py": "python",
             "txt-rb": "ruby",
             "txt-readme": "fixed",
             "txt-rtf": "fixed",
-            "txt-scala": "scala",
+            "txt-rust": "rust",
             "txt-script": "bash",
             "txt-xml": "fixed"
         }
