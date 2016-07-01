@@ -1,13 +1,13 @@
 const globals = module.exports = {};
 
-const publish = (id, name) => {
+const add = (id, as) => {
     if (!global[id]) {
         throw new Error(`no-global: ${id}`);
     }
-    globals[name] = global[id];
+    globals[as] = global[id];
 };
 
-publish('window', 'win');
-publish('kjua', 'kjua');
-publish('marked', 'marked');
-publish('Prism', 'prism');
+add('window', 'win');
+add('kjua', 'kjua');
+add('marked', 'marked');
+add('Prism', 'prism');
