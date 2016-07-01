@@ -70,16 +70,19 @@ const update = lang => {
     });
 };
 
-const loadLanguage = (isoCode, callback) => {
+const loadLanguage = isoCode => {
     if (loaded[isoCode]) {
-        callback(loaded[isoCode]);
-    } else {
-        server.request({action: 'get', l10n: [isoCode]}).then(response => {
-            const json = response.l10n && response.l10n[isoCode] ? response.l10n[isoCode] : {};
-            loaded[isoCode] = Object.assign({}, defaultTranslations, json, {isoCode});
-            callback(loaded[isoCode]);
-        });
+        return Promise.resolve(loaded[isoCode]);
     }
+
+    return server.request({action: 'get', l10n: [isoCode]}).then(response => {
+        loaded[isoCode] = Object.assign({},
+            defaultTranslations,
+            response.l10n && response.l10n[isoCode],
+            {isoCode}
+        );
+        return loaded[isoCode];
+    });
 };
 
 const localize = (languages, isoCode, useBrowserLang) => {
@@ -102,7 +105,7 @@ const localize = (languages, isoCode, useBrowserLang) => {
         isoCode = 'en';
     }
 
-    loadLanguage(isoCode, update);
+    loadLanguage(isoCode).then(update);
 };
 
 const initLangSelector = languages => {

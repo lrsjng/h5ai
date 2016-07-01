@@ -1,4 +1,4 @@
-const {each, values, isFn, difference} = require('../util');
+const {each, values, difference} = require('../util');
 const {win} = require('../globals');
 const {request} = require('../server');
 const allsettings = require('./settings');
@@ -75,8 +75,8 @@ const getDomain = () => doc.domain;
 const getAbsHref = () => absHref;
 const getItem = () => require('../model/item').get(absHref);
 
-const load = callback => {
-    request({action: 'get', items: {href: absHref, what: 1}}).then(json => {
+const load = () => {
+    return request({action: 'get', items: {href: absHref, what: 1}}).then(json => {
         const Item = require('../model/item');
         const item = Item.get(absHref);
 
@@ -94,9 +94,8 @@ const load = callback => {
                 }
             });
         }
-        if (isFn(callback)) {
-            callback(item);
-        }
+
+        return item;
     });
 };
 
@@ -106,7 +105,7 @@ const refresh = () => {
 
     event.pub('location.beforeRefresh');
 
-    load(() => {
+    load().then(() => {
         const newItems = values(item.content);
         const added = difference(newItems, oldItems);
         const removed = difference(oldItems, newItems);
@@ -138,7 +137,7 @@ const setLocation = (newAbsHref, keepBrowserUrl) => {
         refresh();
     } else {
         notification.set('loading...');
-        load(() => {
+        load().then(() => {
             item.isLoaded = true;
             notification.set();
             event.pub('location.changed', item);

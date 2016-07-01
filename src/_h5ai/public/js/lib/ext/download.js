@@ -49,7 +49,7 @@ const onClick = () => {
     };
 
     each(selectedItems, (item, idx) => {
-        query['hrefs[' + idx + ']'] = item.absHref;
+        query[`hrefs[${idx}]`] = item.absHref;
     });
 
     server.formRequest(query);

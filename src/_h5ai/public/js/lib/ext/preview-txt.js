@@ -20,7 +20,7 @@ let currentIdx;
 let currentItem;
 
 
-const request = href => {
+const requestTextContent = href => {
     return new Promise((resolve, reject) => {
         const xhr = new XHR();
         const callback = () => {
@@ -40,7 +40,7 @@ const request = href => {
 };
 
 const preloadText = (item, callback) => {
-    request(item.absHref)
+    requestTextContent(item.absHref)
         .then(content => {
             callback(item, content);
 

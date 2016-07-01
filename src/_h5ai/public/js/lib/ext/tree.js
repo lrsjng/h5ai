@@ -44,7 +44,7 @@ const onIndicatorClick = ev => {
     const item = closestItem(ev.target);
 
     if (item._treeState === 'unknown') {
-        item.fetchContent(() => {
+        item.fetchContent().then(() => {
             item._treeState = 'open';
             update(item); // eslint-disable-line no-use-before-define
         });
@@ -116,14 +116,13 @@ const update = item => {
     return $html;
 };
 
-const fetchTree = (item, callback) => {
+const fetchTree = item => {
     item._treeState = 'open';
-    item.fetchContent(() => {
+    return item.fetchContent().then(() => {
         if (item.parent) {
-            fetchTree(item.parent, callback);
-        } else {
-            callback(item);
+            return fetchTree(item.parent);
         }
+        return item;
     });
 };
 
@@ -138,7 +137,7 @@ const updateSettings = () => {
 };
 
 const onLocationChanged = item => {
-    fetchTree(item, root => {
+    fetchTree(item).then(root => {
         dom('#tree').clr().app(update(root));
         updateSettings();
     });

@@ -1,4 +1,4 @@
-const {keys, each, filter, sortBy, isFn, isStr, isNum} = require('../util');
+const {keys, each, filter, sortBy, isStr, isNum} = require('../util');
 const server = require('../server');
 const location = require('../core/location');
 const settings = require('../core/settings');
@@ -90,26 +90,24 @@ const removeItem = absHref => {
     }
 };
 
-const fetchContent = (absHref, callback) => {
-    const item = getItem(absHref);
+const fetchContent = absHref => {
+    return new Promise(resolve => {
+        const item = getItem(absHref);
 
-    if (!isFn(callback)) {
-        callback = () => undefined;
-    }
+        if (item.isContentFetched) {
+            resolve(item);
+        } else {
+            server.request({action: 'get', items: {href: item.absHref, what: 1}}).then(response => {
+                if (response.items) {
+                    each(response.items, jsonItem => {
+                        getItem(jsonItem);
+                    });
+                }
 
-    if (item.isContentFetched) {
-        callback(item);
-    } else {
-        server.request({action: 'get', items: {href: item.absHref, what: 1}}).then(response => {
-            if (response.items) {
-                each(response.items, jsonItem => {
-                    getItem(jsonItem);
-                });
-            }
-
-            callback(item);
-        });
-    }
+                resolve(item);
+            });
+        }
+    });
 };
 
 
@@ -172,8 +170,8 @@ Item.prototype = {
         return keys(this.content).length === 0;
     },
 
-    fetchContent(callback) {
-        return fetchContent(this.absHref, callback);
+    fetchContent() {
+        return fetchContent(this.absHref);
     },
 
     getCrumb() {

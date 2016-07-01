@@ -17,13 +17,12 @@ let currentIdx;
 let currentItem;
 
 
-const requestSample = (href, callback) => {
+const requestSample = href => {
     if (!settings.size) {
-        callback(href);
-        return;
+        return Promise.resolve(href);
     }
 
-    server.request({
+    return server.request({
         action: 'get',
         thumbs: [{
             type: 'img',
@@ -32,12 +31,12 @@ const requestSample = (href, callback) => {
             height: 0
         }]
     }).then(json => {
-        callback(json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null);
+        return json && json.thumbs && json.thumbs[0] ? json.thumbs[0] : null;
     });
 };
 
 const preloadImage = (item, callback) => {
-    requestSample(item.absHref, src => {
+    return requestSample(item.absHref).then(src => {
         const $img = dom('<img/>')
             .on('load', () => {
                 callback(item, $img);
