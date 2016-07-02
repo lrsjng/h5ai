@@ -16,10 +16,9 @@
   "devDependencies": {
     "babel-loader": "6.2.4",
     "babel-preset-es2015": "6.9.0",
-    "eslint": "2.13.1",
+    "eslint": "3.0.0",
     "ghu": "0.6.0",
-    "scar": "0.11.0",
-    "sinon": "2.0.0-pre"
+    "scar": "0.11.0"
   },
   "engines": {
     "node": ">=6.0.0"
