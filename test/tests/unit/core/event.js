@@ -6,15 +6,11 @@ test('event is object', () => {
 });
 
 test('event has the right props', () => {
-    assert.deepEqual(Object.keys(event), ['sub', 'unsub', 'pub']);
+    assert.deepEqual(Object.keys(event), ['sub', 'pub']);
 });
 
 test('event.sub is function', () => {
     assert.equal(typeof event.sub, 'function');
-});
-
-test('event.unsub is function', () => {
-    assert.equal(typeof event.unsub, 'function');
 });
 
 test('event.pub is function', () => {

@@ -1,6 +1,6 @@
 const win = global.window;
 const doc = win.document;
-const jq = win.jQuery;
+
 let title;
 let htmlId;
 let htmlClasses;
@@ -8,24 +8,48 @@ let bodyId;
 let bodyClasses;
 let $pinnedElements;
 
-function pinHtml() {
-    title = doc.title;
-    htmlId = jq('html').attr('id');
-    htmlClasses = jq('html').attr('class');
-    bodyId = jq('body').attr('id');
-    bodyClasses = jq('body').attr('class');
-    $pinnedElements = jq('head,body').children();
-}
+const attr = (el, name, value) => {
+    if (typeof el === 'string') {
+        el = doc.querySelector(el);
+    }
+    if (value === undefined) {
+        return el.getAttribute(name);
+    }
+    if (value === null) {
+        return el.removeAttribute(name);
+    }
+    return el.setAttribute(name, value);
+};
 
-function restoreHtml() {
+const rootChildren = () => {
+    return [
+        ...doc.querySelector('head').childNodes,
+        ...doc.querySelector('body').childNodes
+    ];
+};
+
+const pinHtml = () => {
+    title = doc.title;
+    htmlId = attr('html', 'id');
+    htmlClasses = attr('html', 'class');
+    bodyId = attr('body', 'id');
+    bodyClasses = attr('body', 'class');
+    $pinnedElements = rootChildren();
+};
+
+const restoreHtml = () => {
     doc.title = title;
-    jq('html').attr('id', htmlId);
-    jq('html').attr('class', htmlClasses);
-    jq('body').attr('id', bodyId);
-    jq('body').attr('class', bodyClasses);
-    jq('head,body').children().not($pinnedElements).remove();
+    attr('html', 'id', htmlId);
+    attr('html', 'class', htmlClasses);
+    attr('body', 'id', bodyId);
+    attr('body', 'class', bodyClasses);
+    rootChildren().forEach(el => {
+        if ($pinnedElements.indexOf(el) <= 0) {
+            el.remove();
+        }
+    });
     win.localStorage.clear();
-}
+};
 
 module.exports = {
     pinHtml,
