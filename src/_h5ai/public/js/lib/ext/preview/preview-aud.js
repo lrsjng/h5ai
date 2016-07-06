@@ -1,8 +1,8 @@
-const {each, includes, compact, dom} = require('../util');
-const {win} = require('../globals');
-const event = require('../core/event');
-const format = require('../core/format');
-const allsettings = require('../core/settings');
+const {each, includes, compact, dom} = require('../../util');
+const {win} = require('../../globals');
+const event = require('../../core/event');
+const format = require('../../core/format');
+const allsettings = require('../../core/settings');
 const preview = require('./preview');
 
 const settings = Object.assign({
@@ -18,62 +18,63 @@ const preloadAudio = (src, callback) => {
         .attr('src', src);
 };
 
+const onAdjustSize = () => {
+    const $audio = dom('#pv-aud-audio');
+    if (!$audio.length) {
+        return;
+    }
+
+    const elContent = dom('#pv-content')[0];
+    const contentW = elContent.offsetWidth;
+    const contentH = elContent.offsetHeight;
+    const audioW = $audio[0].offsetWidth;
+    const audioH = $audio[0].offsetHeight;
+
+    $audio.css({
+        left: (contentW - audioW) * 0.5 + 'px',
+        top: (contentH - audioH) * 0.5 + 'px'
+    });
+};
+
 const onEnter = (items, idx) => {
     const currentItems = items;
     let currentIdx = idx;
     let currentItem = items[idx];
+    let spinnerTimeout;
 
-    const onAdjustSize = () => {
-        const $content = dom('#pv-content');
-        const $audio = dom('#pv-aud-audio');
+    const updateMeta = () => {
+        preview.setLabels([
+            currentItem.label,
+            format.formatDate(dom('#pv-aud-audio')[0].duration * 1000, 'm:ss')
+        ]);
 
-        if ($audio.length) {
-            const contentW = $content[0].offsetWidth;
-            const contentH = $content[0].offsetHeight;
-            const audioW = $audio[0].offsetWidth;
-            const audioH = $audio[0].offsetHeight;
+        preview.setIndex(currentIdx + 1, currentItems.length);
+        preview.setRawLink(currentItem.absHref);
+    };
 
-            $audio.css({
-                left: (contentW - audioW) * 0.5 + 'px',
-                top: (contentH - audioH) * 0.5 + 'px'
-            });
+    const onReady = $preloadedContent => {
+        win.clearTimeout(spinnerTimeout);
+        preview.showSpinner(false);
 
-            preview.setLabels([
-                currentItem.label,
-                format.formatDate($audio[0].duration * 1000, 'm:ss')
-            ]);
-        }
+        dom('#pv-content')
+            .hide()
+            .clr()
+            .app($preloadedContent.attr('id', 'pv-aud-audio'))
+            .show();
+
+        updateMeta();
+        onAdjustSize();
     };
 
     const onIdxChange = rel => {
         currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
         currentItem = currentItems[currentIdx];
 
-        const spinnerTimeout = win.setTimeout(() => preview.showSpinner(true), 200);
+        spinnerTimeout = win.setTimeout(() => preview.showSpinner(true), 200);
 
         if (dom('#pv-aud-audio').length) {
             dom('#pv-aud-audio')[0].pause();
         }
-
-        const updateMeta = () => {
-            onAdjustSize();
-            preview.setIndex(currentIdx + 1, currentItems.length);
-            preview.setRawLink(currentItem.absHref);
-        };
-
-        const swap = nuContent => {
-            dom('#pv-content').clr().app(nuContent.attr('id', 'pv-aud-audio')).show();
-            updateMeta();
-        };
-
-        const onReady = $preloadedContent => {
-            win.clearTimeout(spinnerTimeout);
-            preview.showSpinner(false);
-
-            dom('#pv-content').hide();
-            swap($preloadedContent);
-        };
-
         preloadAudio(currentItem.absHref, onReady);
     };
 

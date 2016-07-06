@@ -1,7 +1,7 @@
-const {each, includes, compact, dom} = require('../util');
-const {win} = require('../globals');
-const event = require('../core/event');
-const allsettings = require('../core/settings');
+const {each, includes, compact, dom} = require('../../util');
+const {win} = require('../../globals');
+const event = require('../../core/event');
+const allsettings = require('../../core/settings');
 const preview = require('./preview');
 
 const settings = Object.assign({

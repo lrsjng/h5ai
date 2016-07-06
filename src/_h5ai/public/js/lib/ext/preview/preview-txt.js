@@ -1,7 +1,7 @@
-const {each, keys, includes, compact, dom} = require('../util');
-const {win, marked, prism} = require('../globals');
-const event = require('../core/event');
-const allsettings = require('../core/settings');
+const {each, keys, includes, compact, dom} = require('../../util');
+const {win, marked, prism} = require('../../globals');
+const event = require('../../core/event');
+const allsettings = require('../../core/settings');
 const preview = require('./preview');
 
 

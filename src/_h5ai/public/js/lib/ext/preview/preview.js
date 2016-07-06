@@ -1,8 +1,8 @@
-const {each, isFn, isNum, dom} = require('../util');
-const {win} = require('../globals');
-const resource = require('../core/resource');
-const allsettings = require('../core/settings');
-const store = require('../core/store');
+const {each, isFn, isNum, dom} = require('../../util');
+const {win} = require('../../globals');
+const resource = require('../../core/resource');
+const allsettings = require('../../core/settings');
+const store = require('../../core/store');
 
 
 const settings = Object.assign({
