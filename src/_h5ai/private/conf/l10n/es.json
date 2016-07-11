@@ -10,9 +10,13 @@
     "folders": "Directorios",
     "grid": "Cuadrícula",
     "icons": "Íconos",
+    "language": "Idioma",
     "lastModified": "Última modificación",
     "name": "Nombre",
     "noMatch": "Sin coincidencias",
     "parentDirectory": "Directorio superior",
-    "size": "Tamaño"
+    "search": "buscar",
+    "size": "Tamaño",
+    "tree": "Arbol",
+    "view": "Vista"
 }
