@@ -8,6 +8,4 @@ const add = (id, as) => {
 };
 
 add('window', 'win');
-add('kjua', 'kjua');
-add('marked', 'marked');
 add('Prism', 'prism');

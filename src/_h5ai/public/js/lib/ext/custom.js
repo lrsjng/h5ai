@@ -1,5 +1,5 @@
+const marked = require('marked');
 const {each, dom} = require('../util');
-const {marked} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');

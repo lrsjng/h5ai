@@ -1,5 +1,6 @@
+const kjua = require('kjua');
 const {isNum, dom} = require('../util');
-const {win, kjua} = require('../globals');
+const {win} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const resource = require('../core/resource');

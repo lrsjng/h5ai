@@ -10,11 +10,12 @@
 * fixes shell command detection on Windows
 * fixes `.htaccess` auth issues
 * adds `rust` type and icon
-* removes *Install* section from `README.md`, caused too much trouble
+* removes *Install* section from `README.md`, caused to much trouble
 * updates build process to use `node 6.0+`, no need for babel now
-* updates `normalize.css` to 4.1.1
+* updates `normalize.css` to 4.2.0
 * replaces `jquery-qrcode` with `kjua` 0.1.1
 * updates `prism` to 2016-07-01
+* move deps `normalize.css`, `kjua` and `marked` to `package.json`
 * removes `jQuery`
 * removes `lodash`
 * removes `modulejs`
