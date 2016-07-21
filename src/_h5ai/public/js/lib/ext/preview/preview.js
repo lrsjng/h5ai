@@ -204,7 +204,6 @@ const init = () => {
             if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content') {
                 onExit();
             }
-            dropEvent(ev);
         })
         .on('mousedown', dropEvent)
         .on('mousemove', dropEvent)
