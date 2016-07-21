@@ -122,17 +122,17 @@ ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
             .then(newerThan(`${BUILD}/test/h5ai-styles.css`))
             .then(write(`${BUILD}/test/h5ai-styles.css`, {overwrite: true})),
 
-        read(`${TEST}/tests.html`)
-            .then(newerThan(`${BUILD}/test/tests.html`))
-            .then(write(`${BUILD}/test/tests.html`, {overwrite: true})),
+        read(`${TEST}/index.html`)
+            .then(newerThan(`${BUILD}/test/index.html`))
+            .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
 
-        read(`${TEST}: tests.js`)
+        read(`${TEST}: index.js`)
             .then(webpack(webpackCfg([SRC, TEST]), {showStats: false}))
             .then(wrap(`\n\n// @include "${SRC}/**/js/pre.js"\n\n`))
             .then(includeit())
             .then(write(mapfn.p(TEST, `${BUILD}/test`), {overwrite: true}))
     ]).then(() => {
-        console.log(`browse to file://${BUILD}/test/tests.html to run the test suite`);
+        console.log(`browse to file://${BUILD}/test/index.html to run the test suite`);
     });
 });
 

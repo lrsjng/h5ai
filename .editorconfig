@@ -12,7 +12,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 
-[{package.json,.travis.yml,.eslintrc,.babelrc}]
+[{package.json,.travis.yml,.eslintrc}]
 indent_size = 2
 
 

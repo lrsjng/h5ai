@@ -27,6 +27,4 @@
 /* eslint-enable */
 
 
-// @include "vendor/kjua*.js"
-// @include "vendor/marked*.js"
-// @include "vendor/prism*.js"
+// @include "vendor/*.js"
