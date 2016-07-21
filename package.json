@@ -19,6 +19,7 @@
     "eslint": "3.1.1",
     "ghu": "0.7.0",
     "kjua": "0.1.1",
+    "lolight": "0.3.0",
     "marked": "0.3.5",
     "normalize.css": "4.2.0",
     "scar": "0.14.0"

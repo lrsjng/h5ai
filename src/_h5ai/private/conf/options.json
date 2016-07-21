@@ -237,43 +237,42 @@
 
     /*
     Show text file preview on click.
-    "types" maps file types to http://prismjs.com languages.
-    Currently included: markup+css+clike+javascript+bash+ruby+go+json+python+rust
 
-    Additional type are:
-     - "markdown" to render Markdown text
-     - "none" for floating text
-     - "fixed" for fixed width text
+    Available styles are:
+      0: floating text
+      1: fixed width text
+      2: markdown
+      3: syntax highlighting
 
-    - types: dict string to string, maps types to languages
+    - styles: dict string to int, maps types to styles
     */
     "preview-txt": {
         "enabled": true,
-        "types": {
-            "txt": "fixed",
-            "txt-authors": "fixed",
-            "txt-c": "clike",
-            "txt-cpp": "clike",
-            "txt-css": "css",
-            "txt-diff": "fixed",
-            "txt-go": "go",
-            "txt-h": "clike",
-            "txt-hpp": "clike",
-            "txt-install": "fixed",
-            "txt-js": "javascript",
-            "txt-json": "javascript",
-            "txt-less": "css",
-            "txt-license": "fixed",
-            "txt-log": "fixed",
-            "txt-makefile": "fixed",
-            "txt-md": "markdown",
-            "txt-py": "python",
-            "txt-rb": "ruby",
-            "txt-readme": "fixed",
-            "txt-rtf": "fixed",
-            "txt-rust": "rust",
-            "txt-script": "bash",
-            "txt-xml": "fixed"
+        "styles": {
+            "txt": 1,
+            "txt-authors": 1,
+            "txt-c": 3,
+            "txt-cpp": 3,
+            "txt-css": 3,
+            "txt-diff": 1,
+            "txt-go": 3,
+            "txt-h": 3,
+            "txt-hpp": 3,
+            "txt-install": 1,
+            "txt-js": 3,
+            "txt-json": 3,
+            "txt-less": 3,
+            "txt-license": 1,
+            "txt-log": 1,
+            "txt-makefile": 1,
+            "txt-md": 2,
+            "txt-py": 3,
+            "txt-rb": 3,
+            "txt-readme": 1,
+            "txt-rtf": 1,
+            "txt-rust": 3,
+            "txt-script": 3,
+            "txt-xml": 1
         }
     },
 

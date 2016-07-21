@@ -25,6 +25,3 @@
     assert('xhr', isFn(win.XMLHttpRequest));
 }(this));
 /* eslint-enable */
-
-
-// @include "vendor/*.js"

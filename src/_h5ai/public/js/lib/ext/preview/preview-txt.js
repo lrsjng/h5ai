@@ -1,6 +1,7 @@
+const lolight = require('lolight');
 const marked = require('marked');
 const {each, keys, includes, compact, dom} = require('../../util');
-const {win, prism} = require('../../globals');
+const {win} = require('../../globals');
 const event = require('../../core/event');
 const allsettings = require('../../core/settings');
 const preview = require('./preview');
@@ -9,7 +10,7 @@ const preview = require('./preview');
 const XHR = win.XMLHttpRequest;
 const settings = Object.assign({
     enabled: false,
-    types: {}
+    styles: {}
 }, allsettings['preview-txt']);
 const tplText = '<pre id="pv-txt-text" class="highlighted"/>';
 const tplMarkdown = '<div id="pv-txt-text" class="markdown"/>';
@@ -86,28 +87,21 @@ const onIdxChange = rel => {
             return;
         }
 
-        const type = settings.types[currentItem.type];
+        const style = settings.styles[currentItem.type];
         let $text;
-        let $code;
 
-        if (type === 'none') {
-            $text = dom(tplMarkdown).text(textContent);
-        } else if (type === 'fixed') {
+        if (style === 1) {
             $text = dom(tplText).text(textContent);
-        } else if (type === 'markdown') {
+        } else if (style === 2) {
             $text = dom(tplMarkdown).html(marked(textContent));
-        } else {
+        } else if (style === 3) {
             $text = dom(tplText);
-            $code = dom('<code/>').appTo($text);
-
-            if (textContent.length < 20000) {
-                $code.clr().html(prism.highlight(textContent, prism.languages[type]));
-            } else {
-                $code.clr().text(textContent);
-                win.setTimeout(() => {
-                    $code.clr().html(prism.highlight(textContent, prism.languages[type]));
-                }, 300);
-            }
+            const $code = dom('<code/>').text(textContent).appTo($text);
+            win.setTimeout(() => {
+                lolight.el($code[0]);
+            }, textContent.length < 20000 ? 0 : 500);
+        } else {
+            $text = dom(tplMarkdown).text(textContent);
         }
 
         win.clearTimeout(spinnerTimeoutId);
@@ -131,13 +125,13 @@ const onEnter = (items, idx) => {
 };
 
 const initItem = item => {
-    if (item.$view && includes(keys(settings.types), item.type)) {
+    if (item.$view && includes(keys(settings.styles), item.type)) {
         item.$view.find('a').on('click', ev => {
             ev.preventDefault();
 
             const matchedItems = compact(dom('#items .item').map(el => {
                 const matchedItem = el._item;
-                return includes(keys(settings.types), matchedItem.type) ? matchedItem : null;
+                return includes(keys(settings.styles), matchedItem.type) ? matchedItem : null;
             }));
 
             onEnter(matchedItems, matchedItems.indexOf(item));

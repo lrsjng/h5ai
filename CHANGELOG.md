@@ -12,10 +12,9 @@
 * adds `rust` type and icon
 * removes *Install* section from `README.md`, caused to much trouble
 * updates build process to use `node 6.0+`, no need for babel now
-* updates `normalize.css` to 4.2.0
-* replaces `jquery-qrcode` with `kjua` 0.1.1
-* updates `prism` to 2016-07-01
-* move deps `normalize.css`, `kjua` and `marked` to `package.json`
+* replaces `jquery-qrcode` with `kjua`
+* replaces `prism` with `lolight`
+* move deps `normalize.css`, `kjua`, `lolight` and `marked` to `package.json`
 * removes `jQuery`
 * removes `lodash`
 * removes `modulejs`
