@@ -1,11 +1,9 @@
 const {each, dom} = require('../util');
-const {win} = require('../globals');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
 
-
-const doc = win.document;
+const doc = global.window.document;
 const settings = Object.assign({
     enabled: false,
     clickndrag: false,

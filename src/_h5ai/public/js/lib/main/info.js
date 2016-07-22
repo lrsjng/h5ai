@@ -1,5 +1,4 @@
 const {dom} = require('../util');
-const {win} = require('../globals');
 const config = require('../config');
 const server = require('../server');
 const resource = require('../core/resource');
@@ -135,7 +134,7 @@ const addTests = () => {
 };
 
 const reload = () => {
-    win.location.reload();
+    global.window.location.reload();
 };
 
 const onLogin = () => {

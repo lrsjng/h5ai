@@ -1,5 +1,4 @@
 const {each, isStr, dom} = require('../util');
-const {win} = require('../globals');
 const server = require('../server');
 const event = require('../core/event');
 const format = require('../core/format');
@@ -7,6 +6,7 @@ const langs = require('../core/langs');
 const allsettings = require('../core/settings');
 const store = require('../core/store');
 
+const win = global.window;
 const settings = Object.assign({
     enabled: false,
     lang: 'en',

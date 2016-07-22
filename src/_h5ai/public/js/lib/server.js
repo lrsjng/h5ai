@@ -1,6 +1,5 @@
 const {each, dom} = require('./util');
-const {win} = require('./globals');
-const XHR = win.XMLHttpRequest;
+const XHR = global.window.XMLHttpRequest;
 
 const request = data => {
     return new Promise(resolve => {

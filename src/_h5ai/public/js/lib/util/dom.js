@@ -1,6 +1,6 @@
-const {win} = require('../globals');
 const {each, filter, hasLength, is, isStr, map, isInstanceOf, toArray} = require('./lo');
 
+const win = global.window;
 const doc = win.document;
 
 const parseHtml = (() => {

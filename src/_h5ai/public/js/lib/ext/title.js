@@ -1,9 +1,7 @@
-const {win} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
-
-const doc = win.document;
+const doc = global.window.document;
 const settings = Object.assign({
     enabled: false
 }, allsettings.title);

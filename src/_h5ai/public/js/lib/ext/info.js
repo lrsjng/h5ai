@@ -1,6 +1,5 @@
 const kjua = require('kjua');
 const {isNum, dom} = require('../util');
-const {win} = require('../globals');
 const event = require('../core/event');
 const format = require('../core/format');
 const resource = require('../core/resource');
@@ -96,7 +95,7 @@ const update = item => {
     }
 
     if (settings.qrcode) {
-        const loc = win.location;
+        const loc = global.window.location;
         $qrcode.clr().app(kjua({
             render: 'image',
             size: 200,

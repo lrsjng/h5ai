@@ -1,4 +1,3 @@
-const {win} = require('../globals');
 const location = require('../core/location');
 
 require('../view/viewmode');
@@ -20,4 +19,4 @@ require('../ext/thumbnails');
 require('../ext/title');
 require('../ext/tree');
 
-location.setLocation(win.document.location.href, true);
+location.setLocation(global.window.document.location.href, true);

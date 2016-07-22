@@ -1,8 +1,8 @@
-const {win} = require('../globals');
 const event = require('../core/event');
 const location = require('../core/location');
 const allsettings = require('../core/settings');
 
+const win = global.window;
 const settings = Object.assign({
     enabled: false,
     interval: 5000

@@ -1,3 +1,7 @@
+if (!global.window) {
+    global.window = require('jsdom').jsdom().defaultView;
+}
+
 const {test} = require('scar');
 const {pinHtml} = require('./util/pin');
 

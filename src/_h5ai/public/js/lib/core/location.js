@@ -1,11 +1,10 @@
 const {each, values, difference} = require('../util');
-const {win} = require('../globals');
 const {request} = require('../server');
 const allsettings = require('./settings');
 const event = require('./event');
 const notification = require('../view/notification');
 
-
+const win = global.window;
 const doc = win.document;
 const settings = Object.assign({
     fastBrowsing: true,

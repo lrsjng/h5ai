@@ -1,10 +1,10 @@
 const {each, isFn, isNum, dom, includes, compact} = require('../../util');
-const {win} = require('../../globals');
 const event = require('../../core/event');
 const resource = require('../../core/resource');
 const allsettings = require('../../core/settings');
 const store = require('../../core/store');
 
+const win = global.window;
 const settings = Object.assign({
     enabled: true
 }, allsettings.preview);

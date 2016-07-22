@@ -20,6 +20,10 @@ const webpackCfg = include => ({
                     cacheDirectory: true,
                     presets: ['es2015']
                 }
+            },
+            {
+                test: /jsdom/,
+                loader: 'null-loader'
             }
         ]
     }

@@ -1,9 +1,8 @@
 const {map} = require('../util');
-const {win} = require('../globals');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
-
+const win = global.window;
 const settings = Object.assign({
     enabled: false,
     id: 'UA-000000-0'
