@@ -3,41 +3,41 @@ const {each, filter, hasLength, is, isStr, map, isInstanceOf, toArray} = require
 
 const doc = win.document;
 
-const createElement = name => doc.createElement(name);
+const parseHtml = (() => {
+    const create = name => doc.createElement(name);
+    const rules = [
+        [/^<t(head|body|foot)|^<c(ap|olg)/i, create('table')],
+        [/^<col/i, create('colgroup')],
+        [/^<tr/i, create('tbody')],
+        [/^<t[dh]/i, create('tr')]
+    ];
+    const div = create('div');
 
-const reReady = /^(i|c|loade)/;
-
-const containers = [
-    {re: /^<t(head|body|foot)|^<c(ap|olg)/i, el: createElement('table')},
-    {re: /^<col/i, el: createElement('colgroup')},
-    {re: /^<tr/i, el: createElement('tbody')},
-    {re: /^<t[dh]/i, el: createElement('tr')}
-];
-const containerDiv = createElement('div');
-
-const findContainer = str => {
-    for (const {re, el} of containers) {
-        if (re.test(str)) {
-            return el;
+    const findContainer = str => {
+        for (const [re, el] of rules) {
+            if (re.test(str)) {
+                return el;
+            }
         }
-    }
-    return containerDiv;
-};
+        return div;
+    };
 
-const parseHtml = str => {
-    const container = findContainer(str);
-    container.innerHTML = str;
-    const res = toArray(container.childNodes);
-    each(res, el => container.removeChild(el));
-    container.innerHTML = '';
-    return res;
-};
+    return str => {
+        const container = findContainer(str);
+        container.innerHTML = str;
+        const res = toArray(container.childNodes);
+        each(res, el => container.removeChild(el));
+        container.innerHTML = '';
+        return res;
+    };
+})();
 
 const queryAll = (selector, context = doc) => {
     try {
         return toArray(context.querySelectorAll(selector));
-    } catch (err) {/* ignore */}
-    return [];
+    } catch (err) {
+        return [];
+    }
 };
 
 const isElement = x => isInstanceOf(x, win.Element);
@@ -48,6 +48,7 @@ const isElDocWin = x => isElement(x) || isDocument(x) || isWindow(x);
 const addListener = (el, type, fn) => el.addEventListener(type, fn);
 const removeListener = (el, type, fn) => el.removeEventListener(type, fn);
 
+const reReady = /^(i|c|loade)/;
 const onReady = fn => {
     if (reReady.test(doc.readyState)) {
         fn();
@@ -57,20 +58,6 @@ const onReady = fn => {
 };
 
 const onLoad = fn => addListener(win, 'load', fn);
-
-const onResize = fn => {
-    addListener(win, 'resize', fn);
-};
-
-const onPrint = (before, after) => {
-    win.matchMedia('print').addListener(mql => {
-        if (mql.matches) {
-            before();
-        } else {
-            after();
-        }
-    });
-};
 
 const dom = arg => {
     if (isInstanceOf(arg, dom)) {
@@ -281,13 +268,7 @@ dom.prototype = {
 };
 
 module.exports = {
-    isElement,
-    isDocument,
-    isWindow,
-    isElDocWin,
     onReady,
     onLoad,
-    onResize,
-    onPrint,
     dom
 };
