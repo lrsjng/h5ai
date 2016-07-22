@@ -220,6 +220,7 @@
     */
     "preview-aud": {
         "enabled": true,
+        "autoplay": true,
         "types": ["aud"]
     },
 
@@ -283,6 +284,7 @@
     */
     "preview-vid": {
         "enabled": true,
+        "autoplay": true,
         "types": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"]
     },
 

@@ -10,6 +10,7 @@
 * fixes shell command detection on Windows
 * fixes `.htaccess` auth issues
 * adds `rust` type and icon
+* adds `autoplay` option to audio and video preview
 * removes *Install* section from `README.md`, caused to much trouble
 * updates build process to use `node 6.0+`, no need for babel now
 * replaces `jquery-qrcode` with `kjua`

@@ -1,16 +1,16 @@
-const {each, isFn, isNum, dom} = require('../../util');
+const {each, isFn, isNum, dom, includes, compact} = require('../../util');
 const {win} = require('../../globals');
+const event = require('../../core/event');
 const resource = require('../../core/resource');
 const allsettings = require('../../core/settings');
 const store = require('../../core/store');
-
 
 const settings = Object.assign({
     enabled: true
 }, allsettings.preview);
 const tplOverlay =
         `<div id="pv-overlay">
-            <div id="pv-content"></div>
+            <div id="pv-container"></div>
             <div id="pv-spinner"><img class="back"/><img class="spinner" src="${resource.image('spinner')}"/></div>
             <div id="pv-prev-area" class="hof"><img src="${resource.image('preview-prev')}"/></div>
             <div id="pv-next-area" class="hof"><img src="${resource.image('preview-next')}"/></div>
@@ -40,7 +40,7 @@ const adjustSize = () => {
     const margin = isFullscreen ? 0 : 20;
     const barHeight = isFullscreen ? 0 : 48;
 
-    dom('#pv-content').css({
+    dom('#pv-container').css({
         width: winWidth - 2 * margin + 'px',
         height: winHeight - 2 * margin - barHeight + 'px',
         left: margin + 'px',
@@ -130,7 +130,7 @@ const onKeydown = ev => {
 
 const onEnter = () => {
     setLabels([]);
-    dom('#pv-content').clr();
+    dom('#pv-container').clr();
     dom('#pv-overlay').show();
     dom(win).on('keydown', onKeydown);
     adjustSize();
@@ -138,7 +138,7 @@ const onEnter = () => {
 
 const onExit = () => {
     setLabels([]);
-    dom('#pv-content').clr();
+    dom('#pv-container').clr();
     dom('#pv-overlay').hide();
     dom(win).off('keydown', onKeydown);
 };
@@ -192,8 +192,98 @@ const showSpinner = (show, src, delay) => {
     $spinner.show();
 };
 
-const isSpinnerVisible = () => {
-    return spinnerVisible;
+const centerContent = () => {
+    const $container = dom('#pv-container');
+
+    const container = $container[0];
+    const content = $container.children()[0];
+    if (!container || !content) {
+        return;
+    }
+
+    const containerW = container.offsetWidth;
+    const containerH = container.offsetHeight;
+    const contentW = content.offsetWidth;
+    const contentH = content.offsetHeight;
+
+    dom(content).css({
+        left: (containerW - contentW) * 0.5 + 'px',
+        top: (containerH - contentH) * 0.5 + 'px'
+    });
+};
+
+const state = (items, idx, load, adjust) => {
+    const inst = Object.assign(Object.create(state.prototype), {items, load, adjust});
+    inst.setIdx(idx);
+
+    setOnAdjustSize(adjust);
+    setOnIndexChange(delta => inst.moveIdx(delta));
+    onEnter();
+
+    return {
+        get item() {
+            return inst.item;
+        }
+    };
+};
+
+state.prototype = {
+    setIdx(idx) {
+        this.idx = (idx + this.items.length) % this.items.length;
+        this.item = this.items[this.idx];
+        this.updateGui();
+        this.updateContent();
+    },
+
+    moveIdx(delta) {
+        this.setIdx(this.idx + delta);
+    },
+
+    updateGui() {
+        setLabels([this.item.label]);
+        setIndex(this.idx + 1, this.items.length);
+        setRawLink(this.item.absHref);
+    },
+
+    updateContent() {
+        const item = this.item;
+        Promise.resolve()
+            .then(() => {
+                dom('#pv-container').hide().clr();
+                showSpinner(true, item.thumbSquare || item.icon, 200);
+            })
+            .then(() => this.load(item))
+            // delay for testing
+            // .then(x => new Promise(resolve => setTimeout(() => resolve(x), 1000)))
+            .then($content => {
+                if (item !== this.item) {
+                    return;
+                }
+                showSpinner(false);
+
+                dom('#pv-container').clr().app($content).show();
+                this.adjust();
+            });
+    }
+};
+
+const register = (types, enter) => {
+    const initItem = item => {
+        if (item.$view && includes(types, item.type)) {
+            item.$view.find('a').on('click', ev => {
+                ev.preventDefault();
+
+                const matchedItems = compact(dom('#items .item').map(el => {
+                    const matchedItem = el._item;
+                    return includes(types, matchedItem.type) ? matchedItem : null;
+                }));
+
+                enter(matchedItems, matchedItems.indexOf(item));
+            });
+        }
+    };
+
+    event.sub('view.changed', added => each(added, initItem));
 };
 
 const init = () => {
@@ -208,7 +298,7 @@ const init = () => {
         .on('mousemove', userAlive)
         .on('mousedown', userAlive)
         .on('click', ev => {
-            if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-content') {
+            if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-container') {
                 onExit();
             }
         })
@@ -228,17 +318,11 @@ const init = () => {
         .on('load', adjustSize);
 };
 
-
 init();
 
 module.exports = {
-    enter: onEnter,
-    exit: onExit,
-    setIndex,
-    setRawLink,
     setLabels,
-    setOnIndexChange,
-    setOnAdjustSize,
-    showSpinner,
-    isSpinnerVisible
+    centerContent,
+    state,
+    register
 };

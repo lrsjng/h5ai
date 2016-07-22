@@ -1,9 +1,7 @@
-const {each, dom} = require('../../util');
+const {dom} = require('../../util');
 const server = require('../../server');
-const event = require('../../core/event');
 const allsettings = require('../../core/settings');
 const preview = require('./preview');
-const previewX = require('./preview-x');
 
 const settings = Object.assign({
     enabled: false,
@@ -14,22 +12,15 @@ const tpl = '<img id="pv-content-img"/>';
 
 let state;
 
-const onAdjustSize = () => {
+const updateGui = () => {
     const el = dom('#pv-content-img')[0];
     if (!el) {
         return;
     }
 
-    const elContent = dom('#pv-content')[0];
-    const contentW = elContent.offsetWidth;
-    const contentH = elContent.offsetHeight;
-    const elW = el.offsetWidth;
-    const elH = el.offsetHeight;
+    preview.centerContent();
 
-    dom(el).css({
-        left: (contentW - elW) * 0.5 + 'px',
-        top: (contentH - elH) * 0.5 + 'px'
-    });
+    const elW = el.offsetWidth;
 
     const labels = [state.item.label];
     if (!settings.size) {
@@ -61,26 +52,22 @@ const loadImage = item => {
             return settings.size ? requestSample(href) : href;
         })
         .then(href => new Promise(resolve => {
-            const $img = dom(tpl)
-                .on('load', () => resolve($img))
+            const $el = dom(tpl)
+                .on('load', () => resolve($el))
                 .attr('src', href);
         }));
-        // .then(x => new Promise(resolve => setTimeout(() => resolve(x), 1000)));
 };
 
 const onEnter = (items, idx) => {
-    state = previewX.pvState(items, idx, loadImage, onAdjustSize);
+    state = preview.state(items, idx, loadImage, updateGui);
 };
-
-const initItem = previewX.initItemFn(settings.types, onEnter);
-const onViewChanged = added => each(added, initItem);
 
 const init = () => {
     if (!settings.enabled) {
         return;
     }
 
-    event.sub('view.changed', onViewChanged);
+    preview.register(settings.types, onEnter);
 };
 
 init();

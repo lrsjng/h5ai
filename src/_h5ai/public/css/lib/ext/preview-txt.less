@@ -1,6 +1,7 @@
 #pv-content-txt {
     .raised;
 
+    box-sizing: border-box;
     max-width: 960px;
     text-align: left;
     background: @col-back-paper;
@@ -17,20 +18,19 @@
             color: #68A9FF;
         }
     }
+}
 
-    &.highlighted {
-
-        code {
-            line-height: 1.2em;
-        }
+pre#pv-content-txt {
+    code {
+        line-height: 1.2em;
     }
+}
 
-    &.markdown {
-        font-size: 1.1em;
-        padding: 8px 24px;
+div#pv-content-txt {
+    font-size: 1.1em;
+    padding: 8px 24px;
 
-        code {
-            color: #008200;
-        }
+    code {
+        color: #008200;
     }
 }
