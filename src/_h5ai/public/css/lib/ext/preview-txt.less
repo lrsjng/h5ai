@@ -1,4 +1,4 @@
-#pv-txt-text {
+#pv-content-txt {
     .raised;
 
     max-width: 960px;
@@ -8,100 +8,26 @@
     padding: 8px;
     overflow: auto;
 
+    a, a:active, a:visited {
+        color: #2080FF;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            color: #68A9FF;
+        }
+    }
+
     &.highlighted {
 
         code {
             line-height: 1.2em;
-        }
-
-        a, a:active, a:visited {
-            color: #2080FF;
-            text-decoration: none;
-            cursor: pointer;
-
-            &:hover {
-                color: #68A9FF;
-            }
-        }
-
-        .token.comment,
-        .token.prolog,
-        .token.doctype,
-        .token.cdata {
-            color: #aaa;
-        }
-
-        .token.punctuation {
-            color: #999;
-        }
-
-        .namespace {
-            opacity: .7;
-        }
-
-        .token.property,
-        .token.tag,
-        .token.boolean,
-        .token.number,
-        .token.constant,
-        .token.symbol {
-            color: #905;
-        }
-
-        .token.selector,
-        .token.attr-name,
-        .token.string,
-        .token.builtin {
-            color: #690;
-        }
-
-        .token.operator,
-        .token.entity,
-        .token.url,
-        .language-css .token.string,
-        .style .token.string,
-        .token.variable {
-            color: #a67f59;
-            background: hsla(0,0%,100%,.5);
-        }
-
-        .token.atrule,
-        .token.attr-value,
-        .token.keyword {
-            color: #07a;
-        }
-
-        .token.function {
-            color: #DD4A68;
-        }
-
-        .token.regex,
-        .token.important {
-            color: #e90;
-        }
-
-        .token.important {
-            font-weight: bold;
-        }
-
-        .token.entity {
-            cursor: help;
         }
     }
 
     &.markdown {
         font-size: 1.1em;
         padding: 8px 24px;
-
-        a, a:active, a:visited {
-            color: #2080FF;
-            text-decoration: none;
-            cursor: pointer;
-
-            &:hover {
-                color: #68A9FF;
-            }
-        }
 
         code {
             color: #008200;

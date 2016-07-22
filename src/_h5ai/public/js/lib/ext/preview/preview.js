@@ -31,7 +31,7 @@ let userAliveTimeoutId = null;
 let onIndexChange = null;
 let onAdjustSize = null;
 let spinnerVisible = false;
-
+let spinnerTimeoutId;
 
 const adjustSize = () => {
     const docEl = win.document.documentElement;
@@ -61,7 +61,7 @@ const adjustSize = () => {
     }
 
     if (isFn(onAdjustSize)) {
-        onAdjustSize(1);
+        onAdjustSize();
     }
 };
 
@@ -167,22 +167,29 @@ const setOnAdjustSize = fn => {
     onAdjustSize = fn;
 };
 
-const showSpinner = (show, src) => {
+const showSpinner = (show, src, delay) => {
+    win.clearTimeout(spinnerTimeoutId);
     const $spinner = dom('#pv-spinner');
 
-    if (show) {
-        const $back = $spinner.find('.back');
-        if (src) {
-            $back.attr('src', src).show();
-        } else {
-            $back.hide();
-        }
-        spinnerVisible = true;
-        $spinner.show();
-    } else {
+    if (!show) {
         spinnerVisible = false;
         $spinner.hide();
+        return;
     }
+
+    if (!spinnerVisible && delay) {
+        spinnerTimeoutId = win.setTimeout(() => showSpinner(true, src), delay);
+        return;
+    }
+
+    const $back = $spinner.find('.back');
+    if (src) {
+        $back.attr('src', src).show();
+    } else {
+        $back.hide();
+    }
+    spinnerVisible = true;
+    $spinner.show();
 };
 
 const isSpinnerVisible = () => {

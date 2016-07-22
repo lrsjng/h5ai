@@ -1,104 +1,57 @@
-const {each, includes, compact, dom} = require('../../util');
-const {win} = require('../../globals');
+const {each, dom} = require('../../util');
 const event = require('../../core/event');
 const format = require('../../core/format');
 const allsettings = require('../../core/settings');
 const preview = require('./preview');
+const previewX = require('./preview-x');
 
 const settings = Object.assign({
     enabled: false,
     types: []
 }, allsettings['preview-aud']);
+const tpl = '<audio id="pv-content-aud"/>';
 
-const preloadAudio = (src, callback) => {
-    const $audio = dom('<audio/>')
-        .on('loadedmetadata', () => callback($audio))
-        .attr('autoplay', 'autoplay')
-        .attr('controls', 'controls')
-        .attr('src', src);
-};
+let state;
 
 const onAdjustSize = () => {
-    const $audio = dom('#pv-aud-audio');
-    if (!$audio.length) {
+    const el = dom('#pv-content-aud')[0];
+    if (!el) {
         return;
     }
 
     const elContent = dom('#pv-content')[0];
     const contentW = elContent.offsetWidth;
     const contentH = elContent.offsetHeight;
-    const audioW = $audio[0].offsetWidth;
-    const audioH = $audio[0].offsetHeight;
+    const elW = el.offsetWidth;
+    const elH = el.offsetHeight;
 
-    $audio.css({
-        left: (contentW - audioW) * 0.5 + 'px',
-        top: (contentH - audioH) * 0.5 + 'px'
+    dom(el).css({
+        left: (contentW - elW) * 0.5 + 'px',
+        top: (contentH - elH) * 0.5 + 'px'
     });
+
+    preview.setLabels([
+        state.item.label,
+        format.formatDate(dom('#pv-content-aud')[0].duration * 1000, 'm:ss')
+    ]);
+};
+
+const loadAudio = item => {
+    return new Promise(resolve => {
+        const $el = dom(tpl)
+            .on('loadedmetadata', () => resolve($el))
+            // .attr('autoplay', 'autoplay')
+            .attr('controls', 'controls')
+            .attr('src', item.absHref);
+    });
+    // .then(x => new Promise(resolve => setTimeout(() => resolve(x), 1000)));
 };
 
 const onEnter = (items, idx) => {
-    const currentItems = items;
-    let currentIdx = idx;
-    let currentItem = items[idx];
-    let spinnerTimeout;
-
-    const updateMeta = () => {
-        preview.setLabels([
-            currentItem.label,
-            format.formatDate(dom('#pv-aud-audio')[0].duration * 1000, 'm:ss')
-        ]);
-
-        preview.setIndex(currentIdx + 1, currentItems.length);
-        preview.setRawLink(currentItem.absHref);
-    };
-
-    const onReady = $preloadedContent => {
-        win.clearTimeout(spinnerTimeout);
-        preview.showSpinner(false);
-
-        dom('#pv-content')
-            .hide()
-            .clr()
-            .app($preloadedContent.attr('id', 'pv-aud-audio'))
-            .show();
-
-        updateMeta();
-        onAdjustSize();
-    };
-
-    const onIdxChange = rel => {
-        currentIdx = (currentIdx + rel + currentItems.length) % currentItems.length;
-        currentItem = currentItems[currentIdx];
-
-        spinnerTimeout = win.setTimeout(() => preview.showSpinner(true), 200);
-
-        if (dom('#pv-aud-audio').length) {
-            dom('#pv-aud-audio')[0].pause();
-        }
-        preloadAudio(currentItem.absHref, onReady);
-    };
-
-    onIdxChange(0);
-    preview.setOnIndexChange(onIdxChange);
-    preview.setOnAdjustSize(onAdjustSize);
-    preview.enter();
+    state = previewX.pvState(items, idx, loadAudio, onAdjustSize);
 };
 
-const initItem = item => {
-    if (item.$view && includes(settings.types, item.type)) {
-        item.$view.find('a').on('click', ev => {
-            ev.preventDefault();
-
-            const matchedItems = compact(dom('#items .item').map(el => {
-                const matchedItem = el._item;
-                return includes(settings.types, matchedItem.type) ? matchedItem : null;
-            }));
-
-            onEnter(matchedItems, matchedItems.indexOf(item));
-        });
-    }
-};
-
+const initItem = previewX.initItemFn(settings.types, onEnter);
 const onViewChanged = added => each(added, initItem);
 
 const init = () => {
