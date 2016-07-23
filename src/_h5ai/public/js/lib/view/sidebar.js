@@ -9,16 +9,16 @@ const settings = Object.assign({
     disableSidebar: false
 }, allsettings.view);
 const storekey = 'sidebarIsVisible';
-const tplSidebar = '<div id="sidebar"></div>';
-const tplToggle =
+const sidebarTpl = '<div id="sidebar"></div>';
+const toggleTpl =
         `<div id="sidebar-toggle" class="tool">
             <img alt="sidebar"/>
         </div>`;
 
 
 const init = () => {
-    const $sidebar = dom(tplSidebar).hide();
-    const $toggle = dom(tplToggle);
+    const $sidebar = dom(sidebarTpl).hide();
+    const $toggle = dom(toggleTpl);
     const $img = $toggle.find('img');
 
     const update = toggle => {

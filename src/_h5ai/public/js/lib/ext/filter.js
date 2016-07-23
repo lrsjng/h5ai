@@ -12,7 +12,7 @@ const settings = Object.assign({
     debounceTime: 100,
     ignorecase: true
 }, allsettings.filter);
-const template =
+const tpl =
         `<div id="filter" class="tool">
             <img src="${resource.image('filter')}" alt="filter"/>
             <input class="l10n_ph-filter" type="text" value=""/>
@@ -71,7 +71,7 @@ const init = () => {
         return;
     }
 
-    $filter = dom(template).appTo('#toolbar');
+    $filter = dom(tpl).appTo('#toolbar');
     $input = $filter.find('input');
 
     $filter.find('img').on('click', toggle);

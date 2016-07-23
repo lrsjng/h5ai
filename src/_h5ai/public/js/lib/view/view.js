@@ -21,7 +21,7 @@ const settings = Object.assign({
 const sortedSizes = settings.sizes.sort((a, b) => a - b);
 const checkedModes = intersection(settings.modes, modes);
 const storekey = 'view';
-const tplView =
+const viewTpl =
         `<div id="view">
             <ul id="items" class="clearfix">
                 <li class="header">
@@ -33,7 +33,7 @@ const tplView =
             </ul>
             <div id="view-hint"></div>
         </div>`;
-const tplItem =
+const itemTpl =
         `<li class="item">
             <a>
                 <span class="icon square"><img/></span>
@@ -43,7 +43,7 @@ const tplItem =
                 <span class="size"></span>
             </a>
         </li>`;
-const $view = dom(tplView);
+const $view = dom(viewTpl);
 const $items = $view.find('#items');
 const $hint = $view.find('#view-hint');
 
@@ -55,22 +55,26 @@ const createStyles = size => {
     const gsize = cropSize(size, 40, 160);
     const isize = cropSize(size, 80, 1000);
     const ilsize = Math.round(isize * 4 / 3);
+    const important = '!important;';
+    const detailsPrefix = `#view.view-details.view-size-${size}`;
+    const gridPrefix = `#view.view-grid.view-size-${size}`;
+    const iconsPrefix = `#view.view-icons.view-size-${size}`;
     const rules = [
-        `#view.view-details.view-size-${size} .item .label {line-height: ${dsize + 14}px !important;}`,
-        `#view.view-details.view-size-${size} .item .date {line-height: ${dsize + 14}px !important;}`,
-        `#view.view-details.view-size-${size} .item .size {line-height: ${dsize + 14}px !important;}`,
-        `#view.view-details.view-size-${size} .square {width: ${dsize}px !important; height: ${dsize}px !important;}`,
-        `#view.view-details.view-size-${size} .square img {width: ${dsize}px !important; height: ${dsize}px !important;}`,
-        `#view.view-details.view-size-${size} .label {margin-left: ${dsize + 32}px !important;}`,
+        `${detailsPrefix} .item .label {line-height: ${dsize + 14}px ${important}}`,
+        `${detailsPrefix} .item .date {line-height: ${dsize + 14}px ${important}}`,
+        `${detailsPrefix} .item .size {line-height: ${dsize + 14}px ${important}}`,
+        `${detailsPrefix} .square {width: ${dsize}px ${important} height: ${dsize}px ${important}}`,
+        `${detailsPrefix} .square img {width: ${dsize}px ${important} height: ${dsize}px ${important}}`,
+        `${detailsPrefix} .label {margin-left: ${dsize + 32}px ${important}}`,
 
-        `#view.view-grid.view-size-${size} .item .label {line-height: ${gsize}px !important;}`,
-        `#view.view-grid.view-size-${size} .square {width: ${gsize}px !important; height: ${gsize}px !important;}`,
-        `#view.view-grid.view-size-${size} .square img {width: ${gsize}px !important; height: ${gsize}px !important;}`,
+        `${gridPrefix} .item .label {line-height: ${gsize}px ${important}}`,
+        `${gridPrefix} .square {width: ${gsize}px ${important} height: ${gsize}px ${important}}`,
+        `${gridPrefix} .square img {width: ${gsize}px ${important} height: ${gsize}px ${important}}`,
 
-        `#view.view-icons.view-size-${size} .item {width: ${ilsize}px !important;}`,
-        `#view.view-icons.view-size-${size} .landscape {width: ${ilsize}px !important; height: ${isize}px !important;}`,
-        `#view.view-icons.view-size-${size} .landscape img {width: ${isize}px !important; height: ${isize}px !important;}`,
-        `#view.view-icons.view-size-${size} .landscape .thumb {width: ${ilsize}px !important;}`
+        `${iconsPrefix} .item {width: ${ilsize}px ${important}}`,
+        `${iconsPrefix} .landscape {width: ${ilsize}px ${important} height: ${isize}px ${important}}`,
+        `${iconsPrefix} .landscape img {width: ${isize}px ${important} height: ${isize}px ${important}}`,
+        `${iconsPrefix} .landscape .thumb {width: ${ilsize}px ${important}}`
     ];
 
     return rules.join('\n');
@@ -129,7 +133,7 @@ const onMouseleave = ev => {
 };
 
 const createHtml = item => {
-    const $html = dom(tplItem);
+    const $html = dom(itemTpl);
     const $a = $html.find('a');
     const $iconImg = $html.find('.icon img');
     const $label = $html.find('.label');
@@ -243,6 +247,17 @@ const onLocationRefreshed = (item, added, removed) => {
     changeItems(add, removed);
 };
 
+const onResize = () => {
+    const width = $view[0].offsetWidth;
+
+    $view.rmCls('width-0').rmCls('width-1');
+    if (width < 320) {
+        $view.addCls('width-0');
+    } else if (width < 480) {
+        $view.addCls('width-1');
+    }
+};
+
 const init = () => {
     addCssStyles();
     set();
@@ -254,8 +269,9 @@ const init = () => {
 
     event.sub('location.changed', onLocationChanged);
     event.sub('location.refreshed', onLocationRefreshed);
+    event.sub('resize', onResize);
+    onResize();
 };
-
 
 init();
 

@@ -5,11 +5,11 @@ const allsettings = require('../core/settings');
 const settings = Object.assign({
     enabled: false
 }, allsettings.contextmenu);
-const tplOverlay = '<div id="cm-overlay"></div>';
-const tplPanel = '<div class="cm-panel"><ul></ul></div>';
-const tplSep = '<li class="cm-sep"></li>';
-const tplEntry = '<li class="cm-entry"><span class="cm-icon"><img/></span><span class="cm-text"></span></li>';
-const tplLabel = '<li class="cm-label"><span class="cm-text"></span></li>';
+const overlayTpl = '<div id="cm-overlay"></div>';
+const panelTpl = '<div class="cm-panel"><ul></ul></div>';
+const sepTpl = '<li class="cm-sep"></li>';
+const entryTpl = '<li class="cm-entry"><span class="cm-icon"><img/></span><span class="cm-text"></span></li>';
+const labelTpl = '<li class="cm-label"><span class="cm-text"></span></li>';
 
 
 const closestId = el => {
@@ -20,7 +20,7 @@ const closestId = el => {
 };
 
 const createOverlay = callback => {
-    const $overlay = dom(tplOverlay);
+    const $overlay = dom(overlayTpl);
 
     const handle = ev => {
         ev.stopPropagation();
@@ -40,18 +40,18 @@ const createOverlay = callback => {
 };
 
 const createPanel = menu => {
-    const $panel = dom(tplPanel);
+    const $panel = dom(panelTpl);
     const $ul = $panel.find('ul');
     let $li;
 
     each(menu, entry => {
         if (entry.type === '-') {
-            dom(tplSep).appTo($ul);
+            dom(sepTpl).appTo($ul);
         } else if (entry.type === 'l') {
-            dom(tplLabel).appTo($ul)
+            dom(labelTpl).appTo($ul)
                 .find('.cm-text').text(entry.text);
         } else if (entry.type === 'e') {
-            $li = dom(tplEntry).appTo($ul);
+            $li = dom(entryTpl).appTo($ul);
             $li[0]._cmId = entry.id;
             $li.find('.cm-text').text(entry.text);
             if (entry.icon) {

@@ -35,14 +35,14 @@ const defaultTranslations = {
     tree: 'Tree',
     view: 'View'
 };
-const blockTemplate =
+const blockTpl =
         `<div class="block">
             <h1 class="l10n-language">Language</h1>
             <div class="select">
                 <select id="langs"/>
             </div>
         </div>`;
-const optionTemplate = '<option/>';
+const optionTpl = '<option/>';
 const storekey = 'ext/l10n';
 const loaded = {
     en: Object.assign({}, defaultTranslations)
@@ -109,7 +109,7 @@ const localize = (languages, isoCode, useBrowserLang) => {
 };
 
 const initLangSelector = languages => {
-    const $block = dom(blockTemplate);
+    const $block = dom(blockTpl);
     const $select = $block.find('select')
         .on('change', ev => {
             const isoCode = ev.target.value;
@@ -118,7 +118,7 @@ const initLangSelector = languages => {
         });
 
     each(languages, (language, isoCode) => {
-        dom(optionTemplate)
+        dom(optionTpl)
             .attr('value', isoCode)
             .addCls(isoCode)
             .text(isoCode + ' - ' + (isStr(language) ? language : language.lang))

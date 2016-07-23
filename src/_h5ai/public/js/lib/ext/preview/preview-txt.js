@@ -10,8 +10,8 @@ const settings = Object.assign({
     enabled: false,
     styles: {}
 }, allsettings['preview-txt']);
-const tplPre = '<pre id="pv-content-txt"></pre>';
-const tplDiv = '<div id="pv-content-txt"></div>';
+const preTpl = '<pre id="pv-content-txt"></pre>';
+const divTpl = '<div id="pv-content-txt"></div>';
 
 const updateGui = () => {
     const el = dom('#pv-content-txt')[0];
@@ -54,18 +54,18 @@ const load = item => {
             const style = settings.styles[item.type];
 
             if (style === 1) {
-                return dom(tplPre).text(content);
+                return dom(preTpl).text(content);
             } else if (style === 2) {
-                return dom(tplDiv).html(marked(content));
+                return dom(divTpl).html(marked(content));
             } else if (style === 3) {
                 const $code = dom('<code></code>').text(content);
                 win.setTimeout(() => {
                     lolight.el($code[0]);
                 }, content.length < 20000 ? 0 : 500);
-                return dom(tplPre).app($code);
+                return dom(preTpl).app($code);
             }
 
-            return dom(tplDiv).text(content);
+            return dom(divTpl).text(content);
         });
 };
 

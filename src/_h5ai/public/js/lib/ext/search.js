@@ -14,7 +14,7 @@ const settings = Object.assign({
     debounceTime: 300,
     ignorecase: true
 }, allsettings.search);
-const template =
+const tpl =
         `<div id="search" class="tool">
             <img src="${resource.image('search')}" alt="search"/>
             <input class="l10n_ph-search" type="text" value=""/>
@@ -79,7 +79,7 @@ const init = () => {
         return;
     }
 
-    $search = dom(template).appTo('#toolbar');
+    $search = dom(tpl).appTo('#toolbar');
     $input = $search.find('input');
 
     $search.find('img').on('click', toggle);

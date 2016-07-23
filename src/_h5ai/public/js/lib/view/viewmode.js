@@ -10,15 +10,15 @@ const view = require('./view');
 const settings = Object.assign({
     modeToggle: false
 }, allsettings.view);
-const tplSettings =
+const settingsTpl =
         '<div id="viewmode-settings" class="block"><h1 class="l10n-view">View</h1></div>';
-const tplMode =
+const modeTpl =
         `<div id="viewmode-[MODE]" class="button mode">
             <img src="${resource.image('view-[MODE]')}" alt="viewmode-[MODE]"/>
         </div>`;
-const tplSize =
+const sizeTpl =
         '<input id="viewmode-size" type="range" min="0" max="0" value="0">';
-const tplToggle =
+const toggleTpl =
         `<div id="viewmode-toggle" class="tool">
             <img alt="viewmode"/>
         </div>`;
@@ -42,11 +42,11 @@ const addSettings = () => {
         return;
     }
 
-    const $viewBlock = dom(tplSettings);
+    const $viewBlock = dom(settingsTpl);
 
     if (modes.length > 1) {
         each(modes, mode => {
-            dom(tplMode.replace(/\[MODE\]/g, mode))
+            dom(modeTpl.replace(/\[MODE\]/g, mode))
                 .on('click', () => {
                     view.setMode(mode);
                 })
@@ -56,7 +56,7 @@ const addSettings = () => {
 
     if (sizes.length > 1) {
         const max = sizes.length - 1;
-        dom(tplSize)
+        dom(sizeTpl)
             .attr('max', max)
             .on('input', ev => view.setSize(sizes[ev.target.valueAsNumber]))
             .on('change', ev => view.setSize(sizes[ev.target.valueAsNumber]))
@@ -76,7 +76,7 @@ const onToggle = () => {
 
 const addToggle = () => {
     if (settings.modeToggle && modes.length > 1) {
-        dom(tplToggle)
+        dom(toggleTpl)
             .on('click', onToggle)
             .appTo(base.$toolbar);
     }

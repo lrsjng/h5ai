@@ -11,7 +11,7 @@ const settings = Object.assign({
     packageName: 'package',
     alwaysVisible: false
 }, allsettings.download);
-const template =
+const tpl =
         `<div id="download" class="tool">
             <img src="${resource.image('download')}" alt="download"/>
         </div>`;
@@ -60,7 +60,7 @@ const init = () => {
         return;
     }
 
-    $download = dom(template)
+    $download = dom(tpl)
         .hide()
         .appTo('#toolbar')
         .on('click', onClick);

@@ -156,6 +156,7 @@ const init = () => {
         .on('click', ev => {
             store.put(storekey, !store.get(storekey));
             updateSettings();
+            event.pub('resize');
             ev.preventDefault();
         });
 
@@ -167,6 +168,5 @@ const init = () => {
 
     event.sub('location.changed', onLocationChanged);
 };
-
 
 init();

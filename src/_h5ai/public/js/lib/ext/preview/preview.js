@@ -8,7 +8,7 @@ const win = global.window;
 const settings = Object.assign({
     enabled: true
 }, allsettings.preview);
-const tplOverlay =
+const overlayTpl =
         `<div id="pv-overlay">
             <div id="pv-container"></div>
             <div id="pv-spinner"><img class="back"/><img class="spinner" src="${resource.image('spinner')}"/></div>
@@ -252,7 +252,7 @@ const init = () => {
         return;
     }
 
-    dom(tplOverlay)
+    dom(overlayTpl)
         .hide()
         .appTo('body')
         .on('keydown', onKeydown)

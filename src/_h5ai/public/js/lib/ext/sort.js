@@ -13,7 +13,7 @@ const settings = Object.assign({
     folders: 0
 }, allsettings.sort);
 const storekey = 'ext/sort';
-const template = `<img src="${resource.image('sort')}" class="sort" alt="sort order"/>`;
+const tpl = `<img src="${resource.image('sort')}" class="sort" alt="sort order"/>`;
 
 const getTypeOrder = item => item.isFolder() ? settings.folders : 1;
 const columnProps = {0: 'label', 1: 'time', 2: 'size'};
@@ -75,7 +75,7 @@ const addToggles = () => {
     each(columnClasses, (cls, idx) => {
         const pos = idx === '0' ? 'app' : 'pre';
         $header
-            .find('a.' + cls)[pos](template)
+            .find('a.' + cls)[pos](tpl)
             .on('click', ev => {
                 sortItems(idx, dom(ev.currentTarget).hasCls('ascending'));
                 ev.preventDefault();

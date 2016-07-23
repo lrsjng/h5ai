@@ -1,4 +1,4 @@
-const {isStr, isFn} = require('../util');
+const {isStr, isFn, dom} = require('../util');
 
 const subscriptions = {};
 
@@ -19,6 +19,8 @@ const pub = (topic, ...args) => {
         });
     }
 };
+
+dom(global.window).on('resize', () => pub('resize'));
 
 module.exports = {
     sub,

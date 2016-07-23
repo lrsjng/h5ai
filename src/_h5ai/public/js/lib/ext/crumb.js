@@ -9,18 +9,18 @@ const base = require('../view/base');
 const settings = Object.assign({
     enabled: false
 }, allsettings.crumb);
-const tplCrumbbar = '<div id="crumbbar"></div>';
-const tplCrumb =
+const crumbbarTpl = '<div id="crumbbar"></div>';
+const crumbTpl =
         `<a class="crumb">
             <img class="sep" src="${resource.image('crumb')}" alt=">"/>
             <span class="label"></span>
         </a>`;
-const tplPageHint =
+const pageHintTpl =
         `<img class="hint" src="${resource.icon('folder-page')}" alt="has index page"/>`;
 
 
 const createHtml = item => {
-    const $html = dom(tplCrumb);
+    const $html = dom(crumbTpl);
     location.setLink($html, item);
 
     $html.find('.label').text(item.label);
@@ -30,7 +30,7 @@ const createHtml = item => {
     }
 
     if (!item.isManaged) {
-        $html.app(dom(tplPageHint));
+        $html.app(dom(pageHintTpl));
     }
 
     item._$crumb = $html;
@@ -59,7 +59,7 @@ const init = () => {
         return;
     }
 
-    dom(tplCrumbbar).appTo(base.$flowbar);
+    dom(crumbbarTpl).appTo(base.$flowbar);
 
     event.sub('location.changed', onLocationChanged);
 };

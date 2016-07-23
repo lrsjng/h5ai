@@ -13,7 +13,7 @@ const settings = Object.assign({
     qrcode: true,
     qrColor: '#999'
 }, allsettings.info);
-const template =
+const tpl =
         `<div id="info">
             <div class="icon"><img/></div>
             <div class="block">
@@ -27,7 +27,7 @@ const template =
             </div>
             <div class="qrcode"/>
         </div>`;
-const settingsTemplate =
+const settingsTpl =
         `<div class="block">
             <h1 class="l10n-info">Info</h1>
             <div id="view-info" class="button view">
@@ -126,7 +126,7 @@ const init = () => {
         return;
     }
 
-    const $info = dom(template).hide().appTo('#mainrow');
+    const $info = dom(tpl).hide().appTo('#mainrow');
     $img = $info.find('.icon img');
     $label = $info.find('.label');
     $time = $info.find('.time');
@@ -140,12 +140,13 @@ const init = () => {
         $qrcode.rm();
     }
 
-    dom(settingsTemplate)
+    dom(settingsTpl)
         .appTo('#sidebar')
         .find('#view-info')
         .on('click', ev => {
             store.put(storekey, !store.get(storekey));
             updateSettings();
+            event.pub('resize');
             ev.preventDefault();
         });
 

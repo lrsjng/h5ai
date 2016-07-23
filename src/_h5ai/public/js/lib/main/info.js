@@ -4,15 +4,15 @@ const server = require('../server');
 const resource = require('../core/resource');
 
 
-const tplTests =
+const testsTpl =
         '<ul id="tests"></ul>';
-const tplTest =
+const testTpl =
         `<li class="test">
             <span class="label"></span>
             <span class="result"></span>
             <div class="info"></div>
         </li>`;
-const tplLogin =
+const loginTpl =
         `<div id="login-wrapper">
             <input id="pass" type="password" placeholder="password"/>
             <span id="login">login</span>
@@ -22,7 +22,7 @@ const tplLogin =
                 Change it in '_h5ai/private/conf/options.json'.
             </div>
         </div>`;
-const tplSupport =
+const supportTpl =
         `<div id="support">
             Show your support with a donation!
             <div class="paypal">
@@ -37,7 +37,7 @@ const setup = config.setup;
 
 
 const addTest = (label, info, passed, result) => {
-    const $test = dom(tplTest).appTo('#tests');
+    const $test = dom(testTpl).appTo('#tests');
     $test.find('.label').text(label);
     $test.find('.result')
             .addCls(passed ? 'passed' : 'failed')
@@ -50,7 +50,7 @@ const addTests = () => {
         return;
     }
 
-    dom(tplTests).appTo('#content');
+    dom(testsTpl).appTo('#content');
 
     addTest(
         'h5ai version', 'Only green if this is an official h5ai release',
@@ -157,11 +157,11 @@ const onKeydown = ev => {
 };
 
 const addSupport = () => {
-    dom(tplSupport).appTo('#content');
+    dom(supportTpl).appTo('#content');
 };
 
 const addLogin = () => {
-    dom(tplLogin).appTo('#content');
+    dom(loginTpl).appTo('#content');
 
     if (setup.AS_ADMIN) {
         dom('#pass').rm();

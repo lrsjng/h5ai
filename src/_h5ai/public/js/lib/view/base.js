@@ -1,7 +1,7 @@
 const {dom} = require('../util');
 
 const rootSelector = 'body';
-const tplTopbar =
+const topbarTpl =
         `<div id="topbar">
             <div id="toolbar"></div>
             <div id="flowbar"></div>
@@ -10,7 +10,7 @@ const tplTopbar =
                 <div>by h5ai</div>
             </a>
         </div>`;
-const tplMainrow =
+const mainrowTpl =
         `<div id="mainrow">
             <div id="content"></div>
         </div>`;
@@ -20,8 +20,8 @@ const init = () => {
 
     const $root = dom(rootSelector)
         .attr('id', 'root')
-        .app(tplTopbar)
-        .app(tplMainrow);
+        .app(topbarTpl)
+        .app(mainrowTpl);
 
     return {
         $root,
