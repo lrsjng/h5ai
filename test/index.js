@@ -9,6 +9,7 @@ require('./tests/premisses');
 require('./tests/unit/core/event');
 require('./tests/unit/core/format');
 require('./tests/unit/util/naturalCmp');
+require('./tests/unit/util/parsePatten');
 
 pinHtml();
 

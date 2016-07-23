@@ -16,10 +16,9 @@ const mainrowTpl =
         </div>`;
 
 const init = () => {
-    dom('#fallback, #fallback-hints').rm();
-
     const $root = dom(rootSelector)
         .attr('id', 'root')
+        .clr()
         .app(topbarTpl)
         .app(mainrowTpl);
 
