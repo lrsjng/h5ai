@@ -1,12 +1,7 @@
 const win = global.window;
 const doc = win.document;
 
-let title;
-let htmlId;
-let htmlClasses;
-let bodyId;
-let bodyClasses;
-let $pinnedElements;
+const pinned = {};
 
 const attr = (el, name, value) => {
     if (typeof el === 'string') {
@@ -29,26 +24,27 @@ const rootChildren = () => {
 };
 
 const pinHtml = () => {
-    title = doc.title;
-    htmlId = attr('html', 'id');
-    htmlClasses = attr('html', 'class');
-    bodyId = attr('body', 'id');
-    bodyClasses = attr('body', 'class');
-    $pinnedElements = rootChildren();
+    pinned.title = doc.title;
+    pinned.htmlId = attr('html', 'id');
+    pinned.htmlClasses = attr('html', 'class');
+    pinned.bodyId = attr('body', 'id');
+    pinned.bodyClasses = attr('body', 'class');
+    pinned.els = rootChildren();
+    // console.log('pinned', pinned);
 };
 
 const restoreHtml = () => {
-    doc.title = title;
-    attr('html', 'id', htmlId);
-    attr('html', 'class', htmlClasses);
-    attr('body', 'id', bodyId);
-    attr('body', 'class', bodyClasses);
+    doc.title = pinned.title;
+    attr('html', 'id', pinned.htmlId);
+    attr('html', 'class', pinned.htmlClasses);
+    attr('body', 'id', pinned.bodyId);
+    attr('body', 'class', pinned.bodyClasses);
     rootChildren().forEach(el => {
-        if ($pinnedElements.indexOf(el) <= 0) {
+        if (pinned.els.indexOf(el) < 0) {
             el.remove();
         }
     });
-    win.localStorage.clear();
+    // win.localStorage.clear();
 };
 
 module.exports = {
