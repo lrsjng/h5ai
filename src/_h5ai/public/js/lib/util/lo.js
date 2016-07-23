@@ -62,6 +62,7 @@ module.exports = {
     toArray,
     difference,
     intersection,
+    cmp,
     sortBy,
     debounce
 };

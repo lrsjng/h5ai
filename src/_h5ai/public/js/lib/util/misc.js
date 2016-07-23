@@ -1,5 +1,3 @@
-const regularCmp = (x, y) => x < y ? -1 : x > y ? 1 : 0;
-
 const escapePattern = sequence => {
     return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
 };
@@ -19,6 +17,5 @@ const parsePattern = (sequence, advanced) => {
 };
 
 module.exports = {
-    regularCmp,
     parsePattern
 };

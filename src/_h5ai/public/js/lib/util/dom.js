@@ -48,9 +48,8 @@ const isElDocWin = x => isElement(x) || isDocument(x) || isWindow(x);
 const addListener = (el, type, fn) => el.addEventListener(type, fn);
 const removeListener = (el, type, fn) => el.removeEventListener(type, fn);
 
-const reReady = /^(i|c|loade)/;
 const onReady = fn => {
-    if (reReady.test(doc.readyState)) {
+    if (/^(i|c|loade)/.test(doc.readyState)) {
         fn();
     } else {
         addListener(doc, 'DOMContentLoaded', fn);

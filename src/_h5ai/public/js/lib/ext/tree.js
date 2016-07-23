@@ -1,4 +1,4 @@
-const {each, dom, regularCmp, naturalCmp} = require('../util');
+const {each, dom, cmp, naturalCmp} = require('../util');
 const event = require('../core/event');
 const location = require('../core/location');
 const resource = require('../core/resource');
@@ -66,7 +66,7 @@ const cmpItems = (item1, item2) => {
         val2 = val2.toLowerCase();
     }
 
-    return settings.naturalSort ? naturalCmp(val1, val2) : regularCmp(val1, val2);
+    return settings.naturalSort ? naturalCmp(val1, val2) : cmp(val1, val2);
 };
 
 const update = item => {

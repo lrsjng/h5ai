@@ -1,4 +1,4 @@
-const {each, toArray, dom, regularCmp, naturalCmp} = require('../util');
+const {each, toArray, dom, cmp, naturalCmp} = require('../util');
 const event = require('../core/event');
 const resource = require('../core/resource');
 const allsettings = require('../core/settings');
@@ -43,7 +43,7 @@ const cmpFn = (prop, reverse, ignorecase, natural) => {
             }
         }
 
-        res = natural ? naturalCmp(val1, val2) : regularCmp(val1, val2);
+        res = natural ? naturalCmp(val1, val2) : cmp(val1, val2);
         return reverse ? -res : res;
     };
 };
