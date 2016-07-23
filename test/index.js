@@ -8,6 +8,7 @@ const {pinHtml} = require('./util/pin');
 require('./tests/premisses');
 require('./tests/unit/core/event');
 require('./tests/unit/core/format');
+require('./tests/unit/util/naturalCmp');
 
 pinHtml();
 
