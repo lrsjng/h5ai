@@ -13,8 +13,6 @@ const settings = Object.assign({
 const tplPre = '<pre id="pv-content-txt"></pre>';
 const tplDiv = '<div id="pv-content-txt"></div>';
 
-let state;
-
 const updateGui = () => {
     const el = dom('#pv-content-txt')[0];
     if (!el) {
@@ -22,11 +20,11 @@ const updateGui = () => {
     }
 
     const container = dom('#pv-container')[0];
-    el.style.height = container.offsetHeight - 16 + 'px';
+    el.style.height = container.offsetHeight + 'px';
 
     preview.setLabels([
-        state.item.label,
-        state.item.size + ' bytes'
+        preview.item.label,
+        preview.item.size + ' bytes'
     ]);
 };
 
@@ -49,7 +47,7 @@ const requestTextContent = href => {
     });
 };
 
-const loadText = item => {
+const load = item => {
     return requestTextContent(item.absHref)
         .catch(err => '[request failed] ' + err)
         .then(content => {
@@ -71,16 +69,10 @@ const loadText = item => {
         });
 };
 
-const onEnter = (items, idx) => {
-    state = preview.state(items, idx, loadText, updateGui);
-};
-
 const init = () => {
-    if (!settings.enabled) {
-        return;
+    if (settings.enabled) {
+        preview.register(keys(settings.styles), load, updateGui);
     }
-
-    preview.register(keys(settings.styles), onEnter);
 };
 
 init();

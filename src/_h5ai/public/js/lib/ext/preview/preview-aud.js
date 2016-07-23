@@ -10,22 +10,19 @@ const settings = Object.assign({
 }, allsettings['preview-aud']);
 const tpl = '<audio id="pv-content-aud"/>';
 
-let state;
-
 const updateGui = () => {
     const el = dom('#pv-content-aud')[0];
     if (!el) {
         return;
     }
 
-    preview.centerContent();
     preview.setLabels([
-        state.item.label,
+        preview.item.label,
         format.formatDate(el.duration * 1000, 'm:ss')
     ]);
 };
 
-const loadAudio = item => {
+const load = item => {
     return new Promise(resolve => {
         const $el = dom(tpl)
             .on('loadedmetadata', () => resolve($el))
@@ -38,16 +35,10 @@ const loadAudio = item => {
     });
 };
 
-const onEnter = (items, idx) => {
-    state = preview.state(items, idx, loadAudio, updateGui);
-};
-
 const init = () => {
-    if (!settings.enabled) {
-        return;
+    if (settings.enabled) {
+        preview.register(settings.types, load, updateGui);
     }
-
-    preview.register(settings.types, onEnter);
 };
 
 init();

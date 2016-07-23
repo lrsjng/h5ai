@@ -1,4 +1,4 @@
-const {each, isFn, isNum, dom, includes, compact} = require('../../util');
+const {each, isFn, dom, includes, compact} = require('../../util');
 const event = require('../../core/event');
 const resource = require('../../core/resource');
 const allsettings = require('../../core/settings');
@@ -26,14 +26,34 @@ const tplOverlay =
             </div>
         </div>`;
 const storekey = 'ext/preview';
+
 let isFullscreen = store.get(storekey) || false;
 let userAliveTimeoutId = null;
-let onIndexChange = null;
-let onAdjustSize = null;
-let spinnerVisible = false;
-let spinnerTimeoutId;
+let spinnerIsVisible = false;
+let spinnerTimeoutId = null;
+let session = null;
 
-const adjustSize = () => {
+const centerContent = () => {
+    const $container = dom('#pv-container');
+
+    const container = $container[0];
+    const content = $container.children()[0];
+    if (!container || !content) {
+        return;
+    }
+
+    const containerW = container.offsetWidth;
+    const containerH = container.offsetHeight;
+    const contentW = content.offsetWidth;
+    const contentH = content.offsetHeight;
+
+    dom(content).css({
+        left: (containerW - contentW) * 0.5 + 'px',
+        top: (containerH - contentH) * 0.5 + 'px'
+    });
+};
+
+const updateGui = () => {
     const docEl = win.document.documentElement;
     const winWidth = docEl.clientWidth;
     const winHeight = docEl.clientHeight;
@@ -60,9 +80,19 @@ const adjustSize = () => {
         dom('#pv-bar-fullscreen').find('img').attr('src', resource.image('preview-fullscreen'));
     }
 
-    if (isFn(onAdjustSize)) {
-        onAdjustSize();
+    centerContent();
+
+    if (isFn(session && session.adjust)) {
+        session.adjust();
     }
+};
+
+const setIndex = (idx, total) => {
+    dom('#pv-bar-idx').text(`${idx}/${total}`).show();
+};
+
+const setRawLink = href => {
+    dom('#pv-bar-raw').show().find('a').attr('href', href);
 };
 
 const setLabels = labels => {
@@ -76,18 +106,6 @@ const setLabels = labels => {
     });
 };
 
-const onNext = () => {
-    if (isFn(onIndexChange)) {
-        onIndexChange(1);
-    }
-};
-
-const onPrevious = () => {
-    if (isFn(onIndexChange)) {
-        onIndexChange(-1);
-    }
-};
-
 const userAlive = () => {
     const $hof = dom('#pv-overlay .hof');
     win.clearTimeout(userAliveTimeoutId);
@@ -97,12 +115,15 @@ const userAlive = () => {
     }
 };
 
-const onFullscreen = () => {
+const next = () => session && session.moveIdx(1);
+const prev = () => session && session.moveIdx(-1);
+
+const toggleFullscreen = () => {
     isFullscreen = !isFullscreen;
     store.put(storekey, isFullscreen);
 
     userAlive();
-    adjustSize();
+    updateGui();
 };
 
 const dropEvent = ev => {
@@ -115,56 +136,32 @@ const onKeydown = ev => {
 
     if (key === 27) { // esc
         dropEvent(ev);
-        onExit(); // eslint-disable-line no-use-before-define
+        exit(); // eslint-disable-line no-use-before-define
     } else if (key === 8 || key === 37) { // backspace, left
         dropEvent(ev);
-        onPrevious();
+        prev();
     } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
         dropEvent(ev);
-        onNext();
+        next();
     } else if (key === 70) { // f
         dropEvent(ev);
-        onFullscreen();
+        toggleFullscreen();
     }
 };
 
-const onEnter = () => {
+const enter = () => {
     setLabels([]);
     dom('#pv-container').clr();
     dom('#pv-overlay').show();
     dom(win).on('keydown', onKeydown);
-    adjustSize();
+    updateGui();
 };
 
-const onExit = () => {
+const exit = () => {
     setLabels([]);
     dom('#pv-container').clr();
     dom('#pv-overlay').hide();
     dom(win).off('keydown', onKeydown);
-};
-
-const setIndex = (idx, total) => {
-    if (isNum(idx)) {
-        dom('#pv-bar-idx').text(String(idx) + (isNum(total) ? '/' + String(total) : '')).show();
-    } else {
-        dom('#pv-bar-idx').text('').hide();
-    }
-};
-
-const setRawLink = href => {
-    if (href) {
-        dom('#pv-bar-raw').show().find('a').attr('href', href);
-    } else {
-        dom('#pv-bar-raw').hide().find('a').attr('href', '#');
-    }
-};
-
-const setOnIndexChange = fn => {
-    onIndexChange = fn;
-};
-
-const setOnAdjustSize = fn => {
-    onAdjustSize = fn;
 };
 
 const showSpinner = (show, src, delay) => {
@@ -172,12 +169,12 @@ const showSpinner = (show, src, delay) => {
     const $spinner = dom('#pv-spinner');
 
     if (!show) {
-        spinnerVisible = false;
+        spinnerIsVisible = false;
         $spinner.hide();
         return;
     }
 
-    if (!spinnerVisible && delay) {
+    if (!spinnerIsVisible && delay) {
         spinnerTimeoutId = win.setTimeout(() => showSpinner(true, src), delay);
         return;
     }
@@ -188,64 +185,25 @@ const showSpinner = (show, src, delay) => {
     } else {
         $back.hide();
     }
-    spinnerVisible = true;
+    spinnerIsVisible = true;
     $spinner.show();
 };
 
-const centerContent = () => {
-    const $container = dom('#pv-container');
-
-    const container = $container[0];
-    const content = $container.children()[0];
-    if (!container || !content) {
-        return;
-    }
-
-    const containerW = container.offsetWidth;
-    const containerH = container.offsetHeight;
-    const contentW = content.offsetWidth;
-    const contentH = content.offsetHeight;
-
-    dom(content).css({
-        left: (containerW - contentW) * 0.5 + 'px',
-        top: (containerH - contentH) * 0.5 + 'px'
-    });
-};
-
-const state = (items, idx, load, adjust) => {
-    const inst = Object.assign(Object.create(state.prototype), {items, load, adjust});
+const Session = (items, idx, load, adjust) => {
+    const inst = Object.assign(Object.create(Session.prototype), {items, load, adjust});
     inst.setIdx(idx);
-
-    setOnAdjustSize(adjust);
-    setOnIndexChange(delta => inst.moveIdx(delta));
-    onEnter();
-
-    return {
-        get item() {
-            return inst.item;
-        }
-    };
+    return inst;
 };
 
-state.prototype = {
+Session.prototype = {
     setIdx(idx) {
         this.idx = (idx + this.items.length) % this.items.length;
         this.item = this.items[this.idx];
-        this.updateGui();
-        this.updateContent();
-    },
 
-    moveIdx(delta) {
-        this.setIdx(this.idx + delta);
-    },
-
-    updateGui() {
-        setLabels([this.item.label]);
         setIndex(this.idx + 1, this.items.length);
         setRawLink(this.item.absHref);
-    },
+        setLabels([this.item.label]);
 
-    updateContent() {
         const item = this.item;
         Promise.resolve()
             .then(() => {
@@ -256,18 +214,20 @@ state.prototype = {
             // delay for testing
             // .then(x => new Promise(resolve => setTimeout(() => resolve(x), 1000)))
             .then($content => {
-                if (item !== this.item) {
-                    return;
+                if (item === this.item) {
+                    dom('#pv-container').clr().app($content).show();
+                    showSpinner(false);
+                    updateGui();
                 }
-                showSpinner(false);
-
-                dom('#pv-container').clr().app($content).show();
-                this.adjust();
             });
+    },
+
+    moveIdx(delta) {
+        this.setIdx(this.idx + delta);
     }
 };
 
-const register = (types, enter) => {
+const register = (types, load, adjust) => {
     const initItem = item => {
         if (item.$view && includes(types, item.type)) {
             item.$view.find('a').on('click', ev => {
@@ -278,7 +238,8 @@ const register = (types, enter) => {
                     return includes(types, matchedItem.type) ? matchedItem : null;
                 }));
 
-                enter(matchedItems, matchedItems.indexOf(item));
+                session = Session(matchedItems, matchedItems.indexOf(item), load, adjust);
+                enter();
             });
         }
     };
@@ -299,7 +260,7 @@ const init = () => {
         .on('mousedown', userAlive)
         .on('click', ev => {
             if (ev.target.id === 'pv-overlay' || ev.target.id === 'pv-container') {
-                onExit();
+                exit();
             }
         })
         .on('mousedown', dropEvent)
@@ -308,21 +269,22 @@ const init = () => {
         .on('keypress', dropEvent);
 
     dom('#pv-spinner').hide();
-    dom('#pv-bar-prev, #pv-prev-area').on('click', onPrevious);
-    dom('#pv-bar-next, #pv-next-area').on('click', onNext);
-    dom('#pv-bar-close').on('click', onExit);
-    dom('#pv-bar-fullscreen').on('click', onFullscreen);
+    dom('#pv-bar-prev, #pv-prev-area').on('click', prev);
+    dom('#pv-bar-next, #pv-next-area').on('click', next);
+    dom('#pv-bar-close').on('click', exit);
+    dom('#pv-bar-fullscreen').on('click', toggleFullscreen);
 
     dom(win)
-        .on('resize', adjustSize)
-        .on('load', adjustSize);
+        .on('resize', updateGui)
+        .on('load', updateGui);
 };
-
-init();
 
 module.exports = {
     setLabels,
-    centerContent,
-    state,
-    register
+    register,
+    get item() {
+        return session && session.item;
+    }
 };
+
+init();

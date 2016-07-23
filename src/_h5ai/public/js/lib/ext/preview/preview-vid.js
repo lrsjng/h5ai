@@ -9,28 +9,24 @@ const settings = Object.assign({
 }, allsettings['preview-vid']);
 const tpl = '<video id="pv-content-vid"/>';
 
-let state;
-
 const updateGui = () => {
     const el = dom('#pv-content-vid')[0];
     if (!el) {
         return;
     }
 
-    preview.centerContent();
-
     const elW = el.offsetWidth;
     const elVW = el.videoWidth;
     const elVH = el.videoHeight;
 
     preview.setLabels([
-        state.item.label,
+        preview.item.label,
         String(elVW) + 'x' + String(elVH),
         String((100 * elW / elVW).toFixed(0)) + '%'
     ]);
 };
 
-const loadVideo = item => {
+const load = item => {
     return new Promise(resolve => {
         const $el = dom(tpl)
             .on('loadedmetadata', () => resolve($el))
@@ -43,16 +39,10 @@ const loadVideo = item => {
     });
 };
 
-const onEnter = (items, idx) => {
-    state = preview.state(items, idx, loadVideo, updateGui);
-};
-
 const init = () => {
-    if (!settings.enabled) {
-        return;
+    if (settings.enabled) {
+        preview.register(settings.types, load, updateGui);
     }
-
-    preview.register(settings.types, onEnter);
 };
 
 init();

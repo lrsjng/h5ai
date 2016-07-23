@@ -10,19 +10,15 @@ const settings = Object.assign({
 }, allsettings['preview-img']);
 const tpl = '<img id="pv-content-img"/>';
 
-let state;
-
 const updateGui = () => {
     const el = dom('#pv-content-img')[0];
     if (!el) {
         return;
     }
 
-    preview.centerContent();
-
     const elW = el.offsetWidth;
 
-    const labels = [state.item.label];
+    const labels = [preview.item.label];
     if (!settings.size) {
         const elNW = el.naturalWidth;
         const elNH = el.naturalHeight;
@@ -46,7 +42,7 @@ const requestSample = href => {
     });
 };
 
-const loadImage = item => {
+const load = item => {
     return Promise.resolve(item.absHref)
         .then(href => {
             return settings.size ? requestSample(href) : href;
@@ -58,16 +54,10 @@ const loadImage = item => {
         }));
 };
 
-const onEnter = (items, idx) => {
-    state = preview.state(items, idx, loadImage, updateGui);
-};
-
 const init = () => {
-    if (!settings.enabled) {
-        return;
+    if (settings.enabled) {
+        preview.register(settings.types, load, updateGui);
     }
-
-    preview.register(settings.types, onEnter);
 };
 
 init();
