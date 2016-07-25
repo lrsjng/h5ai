@@ -17,7 +17,7 @@
     "babel-loader": "6.2.4",
     "babel-preset-es2015": "6.9.0",
     "eslint": "3.1.1",
-    "ghu": "0.8.0",
+    "ghu": "0.7.0",
     "jsdom": "9.4.1",
     "kjua": "0.1.1",
     "lolight": "0.3.0",
