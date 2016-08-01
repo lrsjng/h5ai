@@ -207,6 +207,11 @@ Session.prototype = {
         const item = this.item;
         Promise.resolve()
             .then(() => {
+                each(dom('#pv-container *'), el => {
+                    if (typeof el.unload === 'function') {
+                        el.unload();
+                    }
+                });
                 dom('#pv-container').hide().clr();
                 showSpinner(true, item.thumbSquare || item.icon, 200);
             })

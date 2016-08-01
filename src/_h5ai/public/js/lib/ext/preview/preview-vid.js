@@ -26,16 +26,23 @@ const updateGui = () => {
     ]);
 };
 
+const addUnloadFn = el => {
+    el.unload = () => {
+        el.src = '';
+        el.load();
+    };
+};
+
 const load = item => {
     return new Promise(resolve => {
         const $el = dom(tpl)
             .on('loadedmetadata', () => resolve($el))
-            .attr('controls', 'controls')
-            .attr('src', item.absHref);
-
+            .attr('controls', 'controls');
         if (settings.autoplay) {
             $el.attr('autoplay', 'autoplay');
         }
+        addUnloadFn($el[0]);
+        $el.attr('src', item.absHref);
     });
 };
 
