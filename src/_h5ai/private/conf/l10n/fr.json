@@ -6,13 +6,17 @@
     "download": "télécharger",
     "empty": "vide",
     "files": "Fichiers",
-    "filter": "filtre",
+    "filter": "filtrer",
     "folders": "Répertoires",
     "grid": "grille",
     "icons": "icônes",
+    "language": "Langue",
     "lastModified": "Dernière modification",
     "name": "Nom",
     "noMatch": "rien trouvé",
     "parentDirectory": "Dossier parent",
-    "size": "Taille"
+    "search": "rechercher",
+    "size": "Taille",
+    "tree": "Arborescence",
+    "view": "Disposition"
 }
