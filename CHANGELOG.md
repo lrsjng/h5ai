@@ -8,10 +8,12 @@
 * change type `txt-svg` to `img-svg`, no thumbs but preview
 * fixes a tree indentaion glitch
 * fixes shell command detection on Windows
+* fixes Piwik anayltics
 * fixes `.htaccess` auth issues
 * adds `rust` type and icon
 * adds `autoplay` option to audio and video preview
-* removes *Install* section from `README.md`, caused to much trouble
+* removes *Install* section from `README.md`, caused too much trouble
+* removes peer5 support
 * updates build process to use `node 6.0+`, no need for babel now
 * replaces `jquery-qrcode` with `kjua`
 * replaces `prism` with `lolight`
@@ -19,7 +21,7 @@
 * removes `jQuery`
 * removes `lodash`
 * removes `modulejs`
-* language updates and additions (`nl`, `pl`)
+* language updates and additions (`et`, `nl`, `pl`)
 
 
 ## v0.28.0 - *2015-12-19*
