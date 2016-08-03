@@ -1,0 +1,23 @@
+/* only here as a reference, these values are the hardcoded defaults */
+{
+    "lang": "estonian",
+
+    "dateFormat": "DD-MM-YYYY HH.mm",
+    "details": "täpsem info",
+    "download": "laadi alla",
+    "empty": "tühi",
+    "files": "failid",
+    "filter": "filter",
+    "folders": "kataloogid",
+    "grid": "võre",
+    "icons": "ikoonid",
+    "language": "Keel",
+    "lastModified": "Viimati muudetud",
+    "name": "Nimi",
+    "noMatch": "ei leitud sobivat",
+    "parentDirectory": "Emakataloog",
+    "search": "otsi",
+    "size": "Suurus",
+    "tree": "Puu",
+    "view": "Vaade"
+}
