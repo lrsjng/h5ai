@@ -17,17 +17,27 @@ const init = () => {
     // reference: http://piwik.org/docs/javascript-tracking/
 
     const pkBaseURL = (win.location.protocol === 'https:' ? 'https://' : 'http://') + settings.baseURL + '/';
+    const queue = [];
     let piwikTracker = null;
 
     dom('<script></script>').attr('src', pkBaseURL + 'piwik.js').appTo('body');
     onLoad(() => {
-        piwikTracker = win.Piwik.getTracker(pkBaseURL + 'piwik.php', settings.idSite);
-        piwikTracker.enableLinkTracking();
+        piwikTracker = win.Piwik && win.Piwik.getTracker(pkBaseURL + 'piwik.php', settings.idSite);
+        if (piwikTracker) {
+            piwikTracker.enableLinkTracking();
+            while (queue.length) {
+                piwikTracker.trackPageView(queue.shift());
+            }
+        }
     });
 
     event.sub('location.changed', item => {
         const title = item.getCrumb().map(i => i.label).join(' > ');
-        piwikTracker.trackPageView(title);
+        if (piwikTracker) {
+            piwikTracker.trackPageView(title);
+        } else {
+            queue.push(title);
+        }
     });
 };
 

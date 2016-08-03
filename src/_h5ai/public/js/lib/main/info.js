@@ -40,8 +40,8 @@ const addTest = (label, info, passed, result) => {
     const $test = dom(testTpl).appTo('#tests');
     $test.find('.label').text(label);
     $test.find('.result')
-            .addCls(passed ? 'passed' : 'failed')
-            .text(result ? result : passed ? 'yes' : 'no');
+        .addCls(passed ? 'passed' : 'failed')
+        .text(result ? result : passed ? 'yes' : 'no');
     $test.find('.info').html(info);
 };
 
