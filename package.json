@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "babel-loader": "6.2.4",
-    "babel-preset-es2015": "6.9.0",
+    "babel-preset-es2015": "6.13.2",
     "eslint": "3.2.2",
     "ghu": "0.11.0",
     "jsdom": "9.4.1",
