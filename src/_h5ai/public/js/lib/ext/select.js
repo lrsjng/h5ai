@@ -118,8 +118,12 @@ const selectionEnd = ev => {
         .off('mouseup', selectionEnd);
 
     selectionUpdate(ev);
-    dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
-    dom('#items .item.selecting').rmCls('selecting').addCls('selected');
+    if ($html.hasCls('drag-select')) {
+        dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
+        dom('#items .item.selecting').rmCls('selecting').addCls('selected');
+    } else {
+        dom('#items .item').rmCls('selected');
+    }
     publish();
 
     $html.rmCls('drag-select');
@@ -195,11 +199,7 @@ const init = () => {
         dom('#content')
             .on('mousedown', selectionStart)
             .on('drag', ev => ev.preventDefault())
-            .on('dragstart', ev => ev.preventDefault())
-            .on('click', () => {
-                dom('#items .item').rmCls('selected');
-                publish();
-            });
+            .on('dragstart', ev => ev.preventDefault());
     }
 };
 
