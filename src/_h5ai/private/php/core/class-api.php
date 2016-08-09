@@ -26,7 +26,7 @@ class Api {
         $as = $this->request->query('as');
         $type = $this->request->query('type');
         $base_href = $this->request->query('baseHref');
-        $hrefs = $this->request->query('hrefs');
+        $hrefs = $this->request->query('hrefs', '');
 
         $archive = new Archive($this->context);
 
