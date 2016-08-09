@@ -59,7 +59,7 @@ class Filesize {
     }
 
     private function exec_du_all($paths) {
-        $cmdv = array_merge(['du', '-sb'], $paths);
+        $cmdv = array_merge(['du', '-sbL'], $paths);
         $lines = $this->exec($cmdv);
 
         $sizes = [];
