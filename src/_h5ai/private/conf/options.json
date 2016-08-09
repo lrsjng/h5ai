@@ -216,6 +216,7 @@
     /*
     Play a audio preview on click.
 
+    - autoplay: start playing as soon as ready
     - types: array of strings
     */
     "preview-aud": {
@@ -280,6 +281,7 @@
     /*
     Play a video preview on click.
 
+    - autoplay: start playing as soon as ready
     - types: array of strings
     */
     "preview-vid": {

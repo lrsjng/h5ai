@@ -1,5 +1,6 @@
 # Changelog
 
+* back to cleaner visual experience
 * adds option to disable sidebar
 * adds options to filter/search ignore case
 * replaces PHP `getenv` calls with `$_SERVER` lookups
@@ -10,8 +11,12 @@
 * fixes shell command detection on Windows
 * fixes Piwik anayltics
 * fixes `.htaccess` auth issues
+* fixes drag-select on scrollable content
+* fixes download-all function
+* fixes audio and video preview loading
 * adds `rust` type and icon
 * adds `autoplay` option to audio and video preview
+* adds `--dereference` to `shell-du`
 * removes *Install* section from `README.md`, caused too much trouble
 * removes peer5 support
 * updates build process to use `node 6.0+`, no need for babel now
