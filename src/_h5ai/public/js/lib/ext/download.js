@@ -45,7 +45,8 @@ const onClick = () => {
         action: 'download',
         as: name + '.' + extension,
         type,
-        baseHref: location.getAbsHref()
+        baseHref: location.getAbsHref(),
+        hrefs: ''
     };
 
     each(selectedItems, (item, idx) => {
