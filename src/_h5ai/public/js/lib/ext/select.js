@@ -68,11 +68,20 @@ const rectsDoOverlap = (rect1, rect2) => {
     return maxLeft <= minRight && maxTop <= minBottom;
 };
 
+const getPointer = ev => {
+    const content = dom('#content')[0];
+    const r = elRect(content);
+    const x = ev.pageX - r.l + content.scrollLeft;
+    const y = ev.pageY - r.t + content.scrollTop;
+    return {x, y};
+};
+
 const selectionUpdate = ev => {
-    const left = mmin(dragStartX, ev.pageX);
-    const top = mmin(dragStartY, ev.pageY);
-    const width = mabs(dragStartX - ev.pageX);
-    const height = mabs(dragStartY - ev.pageY);
+    const {x, y} = getPointer(ev);
+    const left = mmin(dragStartX, x);
+    const top = mmin(dragStartY, y);
+    const width = mabs(dragStartX - x);
+    const height = mabs(dragStartY - y);
     const isCtrlPressed = ev.ctrlKey || ev.metaKey;
 
     if (!isCtrlPressed && width < 4 && height < 4) {
@@ -125,8 +134,9 @@ const selectionStart = ev => {
         return;
     }
 
-    dragStartX = ev.pageX;
-    dragStartY = ev.pageY;
+    const {x, y} = getPointer(ev);
+    dragStartX = x;
+    dragStartY = y;
 
     $document
         .on('mousemove', selectionUpdate)
@@ -180,7 +190,7 @@ const init = () => {
     event.sub('view.changed', onViewChanged);
 
     if (settings.clickndrag) {
-        $selectionRect.hide().appTo('body');
+        $selectionRect.hide().appTo('#content');
 
         dom('#content')
             .on('mousedown', selectionStart)
