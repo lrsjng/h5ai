@@ -15,10 +15,6 @@
     clear: both;
 }
 
-.card {
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
-}
-
 .raised {
     box-shadow: 0 1px 10px 0 rgba(0,0,0,0.5);
 }
@@ -60,7 +56,6 @@
 }
 
 .el-button {
-    .card;
     .rounded;
     .eased-transition;
     color: @col-text-primary-white;
@@ -74,10 +69,11 @@
 }
 
 .el-input {
-    .card;
     .rounded;
     .clear-appearance;
     background: @col-back-paper;
     border: none;
     outline: none;
+    background: @col-back-panel;
+    border: 1px solid @col-border;
 }
