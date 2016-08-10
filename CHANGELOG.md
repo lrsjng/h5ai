@@ -7,7 +7,7 @@
 * adds `view.fallbackMode` option to generally serve only fallback mode
 * serves fallback mode for text browsers (`curl`, `links`, `lynx`, `w3m`)
 * change type `txt-svg` to `img-svg`, no thumbs but preview
-* fixes a tree indentaion glitch
+* fixes a tree indentation glitch
 * fixes shell command detection on Windows
 * fixes Piwik anayltics
 * fixes `.htaccess` auth issues
@@ -20,8 +20,8 @@
 * removes *Install* section from `README.md`, caused too much trouble
 * removes peer5 support
 * updates build process to use `node 6.0+`, no need for babel now
-* replaces `jquery-qrcode` with `kjua`
-* replaces `prism` with `lolight`
+* replaces `jquery-qrcode` with [kjua](https://larsjung.de/kjua/)
+* replaces `prism` with [lolight](https://larsjung.de/lolight/)
 * move deps `normalize.css`, `kjua`, `lolight` and `marked` to `package.json`
 * removes `jQuery`
 * removes `lodash`
