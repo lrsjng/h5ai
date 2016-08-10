@@ -22,6 +22,7 @@
     assert('console', win.console && isFn(win.console.log));
     assert('assign', win.Object && isFn(win.Object.assign));
     assert('promise', isFn(win.Promise));
-    assert('xhr', isFn(win.XMLHttpRequest));
+    // assert('xhr', isFn(win.XMLHttpRequest)); // is object in safari
+    assert('xhr', win.XMLHttpRequest);
 }(this));
 /* eslint-enable */
