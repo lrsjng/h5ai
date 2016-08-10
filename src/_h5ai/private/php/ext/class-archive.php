@@ -37,9 +37,9 @@ class Archive {
 
         if ($type === 'php-tar') {
             return $this->php_tar($this->dirs, $this->files);
-        } else if ($type === 'shell-tar') {
+        } elseif ($type === 'shell-tar') {
             return $this->shell_cmd(Archive::$TAR_PASSTHRU_CMD);
-        } else if ($type === 'shell-zip') {
+        } elseif ($type === 'shell-zip') {
             return $this->shell_cmd(Archive::$ZIP_PASSTHRU_CMD);
         }
         return false;
@@ -73,7 +73,7 @@ class Archive {
         header('Content-Length: ' . $total_size);
 
         foreach ($dirs as $real_dir => $archived_dir) {
-            echo $this->php_tar_header($archived_dir, 0, @filemtime($real_dir . DIRECTORY_SEPARATOR . "."), 5);
+            echo $this->php_tar_header($archived_dir, 0, @filemtime($real_dir . DIRECTORY_SEPARATOR . '.'), 5);
         }
 
         foreach ($files as $real_file => $archived_file) {

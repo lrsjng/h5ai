@@ -17,7 +17,7 @@ class Bootstrap {
 
         if ($context->is_api_request()) {
             (new Api($context))->apply();
-        } else if ($context->is_info_request()) {
+        } elseif ($context->is_info_request()) {
             $public_href = $setup->get('PUBLIC_HREF');
             $x_head_tags = $context->get_x_head_html();
             $fallback_mode = false;

@@ -28,7 +28,7 @@ class Json {
         $insideComment = false;
         $json = '';
 
-        for ($i = 0; $i < strlen($commented_json); $i += 1) {
+        for ($i = 0, $len = strlen($commented_json); $i < $len; $i += 1) {
             $char = $commented_json[$i];
             $charchar = $char . @$commented_json[$i + 1];
             $prevChar = @$commented_json[$i - 1];
@@ -39,22 +39,22 @@ class Json {
 
             if ($insideString) {
                 $json .= $char;
-            } else if (!$insideComment && $charchar === '//') {
+            } elseif (!$insideComment && $charchar === '//') {
                 $insideComment = Json::SINGLE;
                 $i += 1;
-            } else if (!$insideComment && $charchar === '/*') {
+            } elseif (!$insideComment && $charchar === '/*') {
                 $insideComment = Json::MULTI;
                 $i += 1;
-            } else if (!$insideComment) {
+            } elseif (!$insideComment) {
                 $json .= $char;
-            } else if ($insideComment === Json::SINGLE && $charchar === "\r\n") {
+            } elseif ($insideComment === Json::SINGLE && $charchar === "\r\n") {
                 $insideComment = false;
                 $json .= $charchar;
                 $i += 1;
-            } else if ($insideComment === Json::SINGLE && $char === "\n") {
+            } elseif ($insideComment === Json::SINGLE && $char === "\n") {
                 $insideComment = false;
                 $json .= $char;
-            } else if ($insideComment === Json::MULTI && $charchar === '*/') {
+            } elseif ($insideComment === Json::MULTI && $charchar === '*/') {
                 $insideComment = false;
                 $i += 1;
             }

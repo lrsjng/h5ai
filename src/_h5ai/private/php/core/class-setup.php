@@ -126,7 +126,7 @@ class Setup {
             $cmd = false;
             if ($cmds['command']) {
                 $cmd = 'command -v';
-            } else if ($cmds['which']) {
+            } elseif ($cmds['which']) {
                 $cmd = 'which';
             }
 
