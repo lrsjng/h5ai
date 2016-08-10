@@ -118,17 +118,14 @@ const selectionEnd = ev => {
         .off('mouseup', selectionEnd);
 
     selectionUpdate(ev);
-    if ($html.hasCls('drag-select')) {
-        dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
-        dom('#items .item.selecting').rmCls('selecting').addCls('selected');
-    } else {
-        dom('#items .item').rmCls('selected');
-    }
+    dom('#items .item.selecting.selected').rmCls('selecting').rmCls('selected');
+    dom('#items .item.selecting').rmCls('selecting').addCls('selected');
     publish();
 
     $html.rmCls('drag-select');
     $selectionRect.hide();
 
+    ev.stopPropagation();
     ev.preventDefault();
 };
 
@@ -160,8 +157,8 @@ const closestItem = el => {
 const onSelectorClick = ev => {
     closestItem(ev.target).$view.tglCls('selected');
     publish();
-    ev.preventDefault();
     ev.stopPropagation();
+    ev.preventDefault();
 };
 
 const addCheckbox = item => {
@@ -199,7 +196,11 @@ const init = () => {
         dom('#content')
             .on('mousedown', selectionStart)
             .on('drag', ev => ev.preventDefault())
-            .on('dragstart', ev => ev.preventDefault());
+            .on('dragstart', ev => ev.preventDefault())
+            .on('click', () => {
+                dom('#items .item').rmCls('selected');
+                publish();
+            });
     }
 };
 
