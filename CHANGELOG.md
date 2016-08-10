@@ -1,169 +1,169 @@
 # Changelog
 
 * back to cleaner visual experience
-* adds option to disable sidebar
-* adds options to filter/search ignore case
-* replaces PHP `getenv` calls with `$_SERVER` lookups
-* adds `view.fallbackMode` option to generally serve only fallback mode
-* serves fallback mode for text browsers (`curl`, `links`, `lynx`, `w3m`)
+* add option to disable sidebar
+* add options to filter/search ignore case
+* replace PHP `getenv` calls with `$_SERVER` lookups
+* add `view.fallbackMode` option to generally serve only fallback mode
+* serve fallback mode for text browsers (`curl`, `links`, `lynx`, `w3m`)
 * change type `txt-svg` to `img-svg`, no thumbs but preview
-* fixes a tree indentation glitch
-* fixes shell command detection on Windows
-* fixes Piwik anayltics
-* fixes `.htaccess` auth issues
-* fixes drag-select on scrollable content
-* fixes download-all function
-* fixes audio and video preview loading
-* adds `rust` type and icon
-* adds `autoplay` option to audio and video preview
-* adds `--dereference` to `shell-du`
-* removes *Install* section from `README.md`, caused too much trouble
-* removes peer5 support
-* updates build process to use `node 6.0+`, no need for babel now
-* replaces `jquery-qrcode` with [kjua](https://larsjung.de/kjua/)
-* replaces `prism` with [lolight](https://larsjung.de/lolight/)
-* move deps `normalize.css`, `kjua`, `lolight` and `marked` to `package.json`
-* removes `jQuery`
-* removes `lodash`
-* removes `modulejs`
-* language updates and additions (`et`, `nl`, `pl`)
+* fix a tree indentation glitch
+* fix shell command detection on Windows
+* fix Piwik anayltics
+* fix `.htaccess` auth issues
+* fix drag-select on scrollable content
+* fix download-all function
+* fix audio and video preview loading
+* add `rust` type and icon
+* add `autoplay` option to audio and video preview
+* add `--dereference` to `shell-du` to follow sym links
+* remove *Install* section from `README.md`, causes too much trouble
+* remove peer5 support
+* update build process to use `node 6.0+`, no need for babel now
+* replace `jquery-qrcode` with [`kjua`](https://larsjung.de/kjua/)
+* replace `prism` with [`lolight`](https://larsjung.de/lolight/)
+* move deps to `package.json` (`normalize.css`, `kjua`, `lolight` and `marked`)
+* remove `jQuery`
+* remove `lodash`
+* remove [`modulejs`](https://larsjung.de/modulejs/) for now
+* update languages (`et`, `nl`, `pl`)
 
 
 ## v0.28.0 - *2015-12-19*
 
-* now requires PHP 5.5.0+
-* changes index path to `/_h5ai/public/index.php`
-* now only `/_h5ai/public/` needs to be accessible from web
-* adds support for custom script and style additions
-* adds options to set font families
-* adds search
-* adds ignorecase sorting option to tree
-* adds wide links in tree view
-* adds IE edge mode
-* adds frontend tests
-* fixes some styles in IE10
-* fixes preview bottom bar for small screen widths
+* now require PHP 5.5.0+
+* change index path to `/_h5ai/public/index.php`
+* now only `/_h5ai/public/` needs to be web-accessible
+* add support for custom script and style additions
+* add options to set font families
+* add search
+* add ignorecase sorting option to tree
+* add wide links in tree view
+* add IE edge mode
+* add frontend tests
+* fix some styles in IE10
+* fix preview bottom bar for small screen widths
 * lots of code cleanup and refactorings
-* changes API
-* updates build process, now uses [ghu](https://larsjung.de/ghu/)
-* switches from jshint and jscs to [eslint](http://eslint.org/)
-* updates `jQuery` to 2.1.4
-* updates `lodash` to 3.9.3 (adds debounce and trim)
-* updates `marked` to 0.3.5
-* updates `modulejs` to 1.13.0
-* updates `prism` to 2015-12-19
-* updates h5bp styles to 5.2.0
-* updates `normalize.css` to 3.0.3
-* removes `Moment.js`
+* change API
+* update build process, now uses [`ghu`](https://larsjung.de/ghu/)
+* switch from jshint and jscs to [`eslint`](http://eslint.org/)
+* update `jQuery` to 2.1.4
+* update `lodash` to 3.9.3 (add debounce and trim)
+* update `marked` to 0.3.5
+* update `modulejs` to 1.13.0
+* update `prism` to 2015-12-19
+* update h5bp styles to 5.2.0
+* update `normalize.css` to 3.0.3
+* remove `Moment.js`
 
 
 ## v0.27.0 - *2015-04-06*
 
 * new layout
-* adds editorconfig
-* drops support for IE9 (gets fallback)
-* updates sidebar settings
-* adds info sidebar
-* adds opt-out for click'n'drag selection
-* adds package name option for single selections
-* adds initial support for Peer5
-* adds option to down-sample images for preview
-* adds option for natural sorting in tree sidebar
-* fixes problems with files/folders named `0`
-* changes font from `Ubuntu` to `Roboto` (smaller footprint, clearer for small sizes)
-* switches back to Google Fonts
-* improves PDF thumbnail quality
-* improves drag-select
-* improves image preview
-* prevents listing `_h5ai` folder and subfolders
-* updates build process, now uses [mkr](https://larsjung.de/mkr/) and [fQuery](https://larsjung.de/fquery/)
-* updates `jQuery` to 2.1.3
-* updates `jQuery.qrcode` to 0.11.0
-* updates `Lo-Dash` to 3.6.0
-* updates `Modernizr` to 2.8.3
-* updates `modulejs` to 1.4.0
-* updates `Moment.js` to 2.9.0
-* updates `Prism` to 2015-04-05
-* removes deprecated Google Analytics code
-* removes `jQuery.fracs`
-* removes `jQuery.scrollpanel`
-* removes `jQuery.mousewheel`
-* language updates and additions (`af`, `es`, `ja`, `ko`, `ru`, `zh-cn`)
+* add editorconfig
+* drop support for IE9 (gets fallback)
+* update sidebar settings
+* add info sidebar
+* add opt-out for click'n'drag selection
+* add package name option for single selections
+* add initial support for Peer5
+* add option to down-sample images for preview
+* add option for natural sorting in tree sidebar
+* fix problems with files/folders named `0`
+* change font from `Ubuntu` to `Roboto` (smaller footprint, clearer for small sizes)
+* switch back to Google Fonts
+* improve PDF thumbnail quality
+* improve drag-select
+* improve image preview
+* prevent listing `_h5ai` folder and subfolders
+* update build process, now uses [`mkr`](https://larsjung.de/mkr/) and [`fQuery`](https://larsjung.de/fquery/)
+* update `jQuery` to 2.1.3
+* update `jQuery.qrcode` to 0.11.0
+* update `Lo-Dash` to 3.6.0
+* update `Modernizr` to 2.8.3
+* update `modulejs` to 1.4.0
+* update `Moment.js` to 2.9.0
+* update `Prism` to 2015-04-05
+* remove deprecated Google Analytics code
+* remove `jQuery.fracs`
+* remove `jQuery.scrollpanel`
+* remove `jQuery.mousewheel`
+* update languages (`af`, `es`, `ja`, `ko`, `ru`, `zh-cn`)
 
 
 ## v0.26.1 - *2014-08-17*
 
-* fixes links
+* fix links
 
 
 ## v0.26.0 - *2014-08-16*
 
-* removes True Type fonts
-* outsources themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
-* adds filesize fallback for large files and 32bit PHP
-* fixes server detection
-* adds config file tests to info page
-* removes JSON shim
-* adds caching of command checks
-* updates `jQuery.mousewheel` to 3.1.12
-* updates `jQuery.qrcode` to 0.8.0
-* replaces `markdown` with [`marked`](https://github.com/chjj/marked) 0.3.2
-* updates `modulejs` to 0.4.5
-* updates `Moment.js` to 2.8.1
-* replaces `underscore` with [`Lo-Dash`](https://github.com/lodash/lodash) 2.4.1
-* replaces `SyntaxHighlighter` with [`Prism`](http://prismjs.com) 2014-08-04
+* remove True Type fonts
+* outsource themes to [h5ai-themes](https://github.com/lrsjng/h5ai-themes)
+* add filesize fallback for large files and 32bit PHP
+* fix server detection
+* add config file tests to info page
+* remove JSON shim
+* add caching of command checks
+* update `jQuery.mousewheel` to 3.1.12
+* update `jQuery.qrcode` to 0.8.0
+* replace `markdown` with [`marked`](https://github.com/chjj/marked) 0.3.2
+* update `modulejs` to 0.4.5
+* update `Moment.js` to 2.8.1
+* replace `underscore` with [`Lo-Dash`](https://github.com/lodash/lodash) 2.4.1
+* replace `SyntaxHighlighter` with [`Prism`](http://prismjs.com) 2014-08-04
 
 
 ## v0.25.2 - *2014-07-01*
 
-* adds optional info page protection
-* fixes `short_open_tag` issues for PHP < 5.4.0
-* fixes default folder download (`alwaysVisible` option)
+* add optional info page protection
+* fix `short_open_tag` issues for PHP < 5.4.0
+* fix default folder download (`alwaysVisible` option)
 * minor fixes
 
 
 ## v0.25.1 - *2014-06-25*
 
-* fixes broken paths for filenames containing '+' characters
-* fixes Google Universal Analytics
-* fixes file type check
+* fix broken paths for filenames containing '+' characters
+* fix Google Universal Analytics
+* fix file type check
 
 
 ## v0.25.0 - *2014-06-22*
 
-* adds sidebar
-* adds initial theme support
-* adds icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
-* adds PHP variant to calc folder sizes
-* adds scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))
-* adds option to hide unreadable files
-* adds option where to place folders (top, inplace, bottom)
-* adds markdown support for custom header and footer files
-* adds video and audio preview via HTML5 elements (no fallback, works best in Chrome)
-* adds filter reset on location change
-* adds option to make download button always visible
-* adds Google UA support
-* extends selectable icon sizes (adds 128px, 192px, 256px, 384px)
-* improves preview GUI
+* add sidebar
+* add initial theme support
+* add icons from [Evolvere Icon Theme](http://franksouza183.deviantart.com/art/Evolvere-Icon-theme-440718295)
+* add PHP variant to calc folder sizes
+* add scroll position reset on location change (issue [#279](https://github.com/lrsjng/h5ai/issues/279))
+* add option to hide unreadable files
+* add option where to place folders (top, inplace, bottom)
+* add markdown support for custom header and footer files
+* add video and audio preview via HTML5 elements (no fallback, works best in Chrome)
+* add filter reset on location change
+* add option to make download button always visible
+* add Google UA support
+* extend selectable icon sizes (add 128px, 192px, 256px, 384px)
+* improve preview GUI
 * disable thumbs in `cache` folder
-* fixes QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
-* replaces PHP backtick operator with `exec`
-* removes server side file manipulation extensions `dropbox`, `delete` and `rename`
-* updates `H5BP` to 4.3.0
-* updates `jQuery` to 2.1.1
-* updates `json2.js` to 2014-02-04
-* updates `markdown-js` to 0.5.0
-* updates `Modernizr` to 2.8.2
-* updates `Moment.js` to 2.6.0
-* updates `Underscore.js` to 1.6.0
-* language updates (`bg`, `ko`, `pt`, `sl`, `sv`, `zh-cn`)
+* fix QR code URI origin (issue [#287](https://github.com/lrsjng/h5ai/issues/287))
+* replace PHP backtick operator with `exec`
+* remove server side file manipulation extensions `dropbox`, `delete` and `rename`
+* update `H5BP` to 4.3.0
+* update `jQuery` to 2.1.1
+* update `json2.js` to 2014-02-04
+* update `markdown-js` to 0.5.0
+* update `Modernizr` to 2.8.2
+* update `Moment.js` to 2.6.0
+* update `Underscore.js` to 1.6.0
+* update languages (`bg`, `ko`, `pt`, `sl`, `sv`, `zh-cn`)
 
 
 ## v0.24.1 - *2014-04-09*
 
 * security fixes! (issues [#268](https://github.com/lrsjng/h5ai/issues/268), [#269](https://github.com/lrsjng/h5ai/issues/269))
-* language updates (`fi`, `fr`, `hi`, `it`, `zh-tw`)
-* fixes WinOS command detection
+* fix WinOS command detection
+* update languages (`fi`, `fr`, `hi`, `it`, `zh-tw`)
 
 
 ## v0.24.0 - *2013-09-04*
