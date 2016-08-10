@@ -57,7 +57,7 @@ const update = lang => {
 
     const sel = 'selected';
     dom('#langs option').rmAttr(sel).rmProp(sel);
-    dom('#langs .' + currentLang.isoCode).attr(sel, sel).prop(sel, sel);
+    dom('#langs .' + currentLang.isoCode).attr(sel, '').prop(sel, true);
 
     each(currentLang, (value, key) => {
         dom('.l10n-' + key).text(value);
