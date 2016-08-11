@@ -352,6 +352,7 @@
     - delay: number, delay in milliseconds after "dom-ready" before thumb-requesting starts
     - size: number, size in pixel of the generated thumbnails
     - exif: boolean, use included EXIF thumbs if possible
+    - chunksize: int, number of thumbs per request
     */
     "thumbnails": {
         "enabled": true,
@@ -360,7 +361,8 @@
         "doc": ["x-pdf", "x-ps"],
         "delay": 1,
         "size": 240,
-        "exif": false
+        "exif": false,
+        "chunksize": 20
     },
 
     /*

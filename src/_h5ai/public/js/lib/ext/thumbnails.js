@@ -10,7 +10,8 @@ const settings = Object.assign({
     doc: ['x-pdf', 'x-ps'],
     delay: 1,
     size: 100,
-    exif: false
+    exif: false,
+    chunksize: 20
 }, allsettings.thumbnails);
 const landscapeRatio = 4 / 3;
 
@@ -71,7 +72,7 @@ const requestQueue = queue => {
         };
     });
 
-    server.request({
+    return server.request({
         action: 'get',
         thumbs
     }).then(json => {
@@ -81,14 +82,19 @@ const requestQueue = queue => {
     });
 };
 
+const breakAndRequestQueue = queue => {
+    const len = queue.length;
+    const chunksize = settings.chunksize;
+    let p = Promise.resolve();
+    for (let i = 0; i < len; i += chunksize) {
+        p = p.then(() => requestQueue(queue.slice(i, i + chunksize)));
+    }
+};
+
 const handleItems = items => {
     const queue = [];
-
     each(items, item => queueItem(queue, item));
-
-    if (queue.length) {
-        requestQueue(queue);
-    }
+    breakAndRequestQueue(queue);
 };
 
 const onViewChanged = added => {
