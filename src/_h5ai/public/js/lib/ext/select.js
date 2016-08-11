@@ -196,11 +196,7 @@ const init = () => {
         dom('#content')
             .on('mousedown', selectionStart)
             .on('drag', ev => ev.preventDefault())
-            .on('dragstart', ev => ev.preventDefault())
-            .on('click', () => {
-                dom('#items .item').rmCls('selected');
-                publish();
-            });
+            .on('dragstart', ev => ev.preventDefault());
     }
 };
 
