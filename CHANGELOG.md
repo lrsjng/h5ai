@@ -14,6 +14,7 @@
 * fix drag-select on scrollable content
 * fix download-all function
 * fix audio and video preview loading
+* fix thumbnail request issues
 * add `rust` type and icon
 * add `autoplay` option to audio and video preview
 * add `--dereference` to `shell-du` to follow sym links
