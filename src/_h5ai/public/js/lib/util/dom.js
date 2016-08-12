@@ -48,15 +48,19 @@ const isElDocWin = x => isElement(x) || isDocument(x) || isWindow(x);
 const addListener = (el, type, fn) => el.addEventListener(type, fn);
 const removeListener = (el, type, fn) => el.removeEventListener(type, fn);
 
-const onReady = fn => {
+const readyPromise = new Promise(resolve => {
     if (/^(i|c|loade)/.test(doc.readyState)) {
-        fn();
+        resolve();
     } else {
-        addListener(doc, 'DOMContentLoaded', fn);
+        addListener(doc, 'DOMContentLoaded', () => resolve());
     }
-};
+});
+const awaitReady = () => readyPromise;
 
-const onLoad = fn => addListener(win, 'load', fn);
+const loadPromise = new Promise(resolve => {
+    addListener(win, 'load', () => resolve());
+});
+const awaitLoad = () => loadPromise;
 
 const dom = arg => {
     if (isInstanceOf(arg, dom)) {
@@ -267,7 +271,7 @@ dom.prototype = {
 };
 
 module.exports = {
-    onReady,
-    onLoad,
+    awaitReady,
+    awaitLoad,
     dom
 };

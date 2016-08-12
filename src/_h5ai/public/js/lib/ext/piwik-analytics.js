@@ -1,4 +1,4 @@
-const {dom, onLoad} = require('../util');
+const {dom, awaitLoad} = require('../util');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
@@ -21,7 +21,7 @@ const init = () => {
     let piwikTracker = null;
 
     dom('<script></script>').attr('src', pkBaseURL + 'piwik.js').appTo('body');
-    onLoad(() => {
+    awaitLoad().then(() => {
         piwikTracker = win.Piwik && win.Piwik.getTracker(pkBaseURL + 'piwik.php', settings.idSite);
         if (piwikTracker) {
             piwikTracker.enableLinkTracking();

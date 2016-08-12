@@ -1,6 +1,5 @@
-const location = require('../core/location');
-
 require('../view/viewmode');
+
 require('../ext/autorefresh');
 require('../ext/contextmenu');
 require('../ext/crumb');
@@ -19,4 +18,5 @@ require('../ext/thumbnails');
 require('../ext/title');
 require('../ext/tree');
 
-location.setLocation(global.window.document.location.href, true);
+const href = global.window.document.location.href;
+require('../core/location').setLocation(href, true);
