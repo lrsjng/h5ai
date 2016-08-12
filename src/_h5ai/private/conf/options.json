@@ -122,7 +122,7 @@
     - alwaysVisible: boolean, always show download button (defaults to download the current folder)
     */
     "download": {
-        "enabled": true,
+        "enabled": false,
         "type": "php-tar",
         "packageName": null,
         "alwaysVisible": false
@@ -142,7 +142,7 @@
     - ignorecase: boolean, ignore case
     */
     "filter": {
-        "enabled": true,
+        "enabled": false,
         "advanced": true,
         "debounceTime": 100,
         "ignorecase": true
@@ -180,7 +180,7 @@
     - qrColor: string, QR-Code fill color
     */
     "info": {
-        "enabled": true,
+        "enabled": false,
         "show": false,
         "qrcode": true,
         "qrFill": "#999",
@@ -318,7 +318,7 @@
     - checkboxes: boolean, show a checkbox on mouse over item
     */
     "select": {
-        "enabled": true,
+        "enabled": false,
         "clickndrag": true,
         "checkboxes": true
     },

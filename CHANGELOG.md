@@ -1,5 +1,8 @@
 # Changelog
 
+
+## v0.29.0 - *2016-08-12*
+
 * back to cleaner visual experience
 * add option to disable sidebar
 * add options to filter/search ignore case
@@ -27,6 +30,7 @@
 * remove `jQuery`
 * remove `lodash`
 * remove [`modulejs`](https://larsjung.de/modulejs/) for now
+* reduce JS code by 60% (~250kb -> ~100kb)
 * update languages (`et`, `nl`, `pl`)
 
 
