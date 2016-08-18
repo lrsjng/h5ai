@@ -5,5 +5,6 @@ build_and_deploy:
         - npm run build
         - git log --oneline --decorate > ./build/_h5ai/CHANGELOG.txt
         - cd ./build/
+        - rm h5ai-*.zip
         - scp -r . root@dose.rsc.lan:/var/www/
     environment: staging
