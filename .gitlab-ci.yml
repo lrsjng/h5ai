@@ -1,0 +1,11 @@
+build_and_deploy:
+    stage: build
+    script:
+        - npm install
+        - mkr release :uncompressed
+        - git log --oneline --decorate > ./build/_h5ai/CHANGELOG.txt
+        - cd ./build/
+        - rm _h5ai/private/conf/options.json
+        - rm _h5ai/private/conf/users.conf
+        - scp -r . root@dose.rsc.lan:/var/www/
+    environment: staging
