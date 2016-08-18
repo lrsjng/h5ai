@@ -20,7 +20,7 @@ const tpl =
                 <div class="label"></div>
                 <div class="time"></div>
                 <div class="size"></div>
-                <div class="sha1"></div>
+                <div>SHA-1:&nbsp;<span class="sha1"></span></div>
                 <div class="content">
                     <span class="folders"></span> <span class="l10n-folders"></span>,
                     <span class="files"></span> <span class="l10n-files"></span>
