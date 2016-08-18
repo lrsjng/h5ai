@@ -54,7 +54,8 @@ class Item {
         $obj = [
             'href' => $this->href,
             'time' => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
-            'size' => $this->size
+            'size' => $this->size,
+            'sha1' => $this->sha1
         ];
 
         if ($this->is_folder) {
