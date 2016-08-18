@@ -120,6 +120,7 @@ const Item = absHref => {
         label: createLabel(absHref === '/' ? location.getDomain() : split.name),
         time: null,
         size: null,
+        sha1: null,
         parent: null,
         isManaged: null,
         content: {}
