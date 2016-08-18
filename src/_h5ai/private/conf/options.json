@@ -181,7 +181,7 @@
     */
     "info": {
         "enabled": true,
-        "show": false,
+        "show": true,
         "qrcode": true,
         "qrFill": "#999",
         "qrBack": "#fff"
