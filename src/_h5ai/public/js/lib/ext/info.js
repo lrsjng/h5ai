@@ -20,7 +20,7 @@ const tpl =
                 <div class="label"></div>
                 <div class="time"></div>
                 <div class="size"></div>
-                <div>SHA-1:&nbsp;<span class="sha1"></span></div>
+                <div class="sha1"></div>
                 <div class="content">
                     <span class="folders"></span> <span class="l10n-folders"></span>,
                     <span class="files"></span> <span class="l10n-files"></span>
@@ -88,7 +88,7 @@ const update = item => {
     }
 
     if(item.sha1) {
-        $sha1.text(item.sha1);
+        $sha1.text(item.sha1 + ' (SHA-1)');
         $sha1.show();
     } else {
         $sha1.hide();
