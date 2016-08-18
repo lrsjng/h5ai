@@ -328,7 +328,7 @@
     This operation is real slow for large files.
     */
     "sha1": {
-        "enabled": true,
+        "enabled": true
     },
 
     /*
