@@ -324,6 +324,14 @@
     },
 
     /*
+    Calc the SHA-1 checksum of files.
+    This operation is real slow for large files.
+    */
+    "sha1": {
+        "enabled": true,
+    },
+
+    /*
     Default sort order.
     "column" and "reverse" are locally stored.
 
