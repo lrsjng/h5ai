@@ -77,12 +77,17 @@ class Context {
     }
 
     public function to_href($path, $trailing_slash = true) {
+        $nonUtf8Charset = $this->query_option('view.nonUTF8charset', '');
         $rel_path = substr($path, strlen($this->setup->get('ROOT_PATH')));
         $parts = explode('/', $rel_path);
         $encoded_parts = [];
         foreach ($parts as $part) {
             if ($part != '') {
-                $encoded_parts[] = rawurlencode($part);
+                if (PHP_OS === "WINNT"){
+                    $encoded_parts[] = rawurlencode(mb_convert_encoding($part, "UTF-8", $nonUtf8Charset));
+                }else {
+                    $encoded_parts[] = rawurlencode($part);
+                }
             }
         }
 
