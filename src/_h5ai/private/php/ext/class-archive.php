@@ -135,6 +135,9 @@ class Archive {
     }
 
     private function add_hrefs($hrefs) {
+        if(!is_array($hrefs)){
+            $hrefs=array($hrefs);
+        }
         foreach ($hrefs as $href) {
             if (trim($href) === '') {
                 continue;
