@@ -56,6 +56,7 @@ const togglePlay = el => {
 };
 
 const movieDelta = 5;
+const volumeDelta = 0.07;
 const keypress = key => {
     const el = dom('#pv-content-vid')[0];
     if (!el) {
@@ -70,6 +71,14 @@ const keypress = key => {
 
         case 39: // right
             el.currentTime += movieDelta;
+            break;
+
+        case 38: // up
+            el.volume += volumeDelta;
+            break;
+
+        case 40: // down
+            el.volume -= volumeDelta;
             break;
 
         case 32: // space
