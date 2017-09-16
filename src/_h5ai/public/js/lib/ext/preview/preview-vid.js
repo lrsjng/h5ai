@@ -65,7 +65,7 @@ const keypress = key => {
     let handled = true;
     switch(key) {
         case 37: // left
-            el.currentTime += movieDelta;
+            el.currentTime -= movieDelta;
             break;
 
         case 39: // right
