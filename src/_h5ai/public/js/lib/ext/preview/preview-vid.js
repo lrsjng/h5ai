@@ -99,7 +99,7 @@ const keypress = key => {
                     handled = false;
                 }
             } else {
-                let requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen;
+                let requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
                 if (isFn(requestFullscreen)) {
                     requestFullscreen.call(el);
                 } else {
