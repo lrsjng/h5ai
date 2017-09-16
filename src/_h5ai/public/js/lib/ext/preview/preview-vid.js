@@ -91,11 +91,20 @@ const keypress = key => {
 
         case 70:
         {
-            let requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen;
-            if (isFn(requestFullscreen)) {
-                requestFullscreen.call(el);
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
+                let exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+                if (isFn(exitFullscreen)) {
+                    exitFullscreen.call(document);
+                } else {
+                    handled = false;
+                }
             } else {
-                handled = false;
+                let requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen;
+                if (isFn(requestFullscreen)) {
+                    requestFullscreen.call(el);
+                } else {
+                    handled = false;
+                }
             }
             break;
         }
