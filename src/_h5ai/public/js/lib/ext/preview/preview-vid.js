@@ -37,6 +37,7 @@ const load = item => {
     return new Promise(resolve => {
         const $el = dom(tpl)
             .on('loadedmetadata', () => resolve($el))
+            .on('click', () => togglePlay($el[0]))
             .attr('controls', 'controls');
         if (settings.autoplay) {
             $el.attr('autoplay', 'autoplay');
@@ -44,6 +45,14 @@ const load = item => {
         addUnloadFn($el[0]);
         $el.attr('src', item.absHref);
     });
+};
+
+const togglePlay = el => {
+    if (el.paused) {
+        el.play();
+    } else {
+        el.pause();
+    }
 };
 
 const init = () => {
