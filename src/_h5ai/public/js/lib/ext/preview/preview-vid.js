@@ -1,4 +1,4 @@
-const {dom} = require('../../util');
+const {dom, isFn} = require('../../util');
 const allsettings = require('../../core/settings');
 const preview = require('./preview');
 
@@ -55,9 +55,52 @@ const togglePlay = el => {
     }
 };
 
+const movieDelta = 5;
+const keypress = key => {
+    const el = dom('#pv-content-vid')[0];
+    if (!el) {
+        return false;
+    }
+
+    let handled = true;
+    switch(key) {
+        case 37: // left
+            el.currentTime += movieDelta;
+            break;
+
+        case 39: // right
+            el.currentTime += movieDelta;
+            break;
+
+        case 32: // space
+            togglePlay(el);
+            break;
+
+        case 32: // 'm' -- mute
+            el.muted = !el.muted;
+            break;
+
+        case 70:
+        {
+            let requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen;
+            if (isFn(requestFullscreen)) {
+                requestFullscreen.call(el);
+            } else {
+                handled = false;
+            }
+            break;
+        }
+
+        default:
+            handled = false;
+    }
+
+    return handled;
+}
+
 const init = () => {
     if (settings.enabled) {
-        preview.register(settings.types, load, updateGui);
+        preview.register(settings.types, load, updateGui, keypress);
     }
 };
 
