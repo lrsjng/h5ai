@@ -85,7 +85,7 @@ const keypress = key => {
             togglePlay(el);
             break;
 
-        case 32: // 'm' -- mute
+        case 77: // 'm' -- mute
             el.muted = !el.muted;
             break;
 
