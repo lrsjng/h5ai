@@ -134,13 +134,21 @@ const dropEvent = ev => {
 const onKeydown = ev => {
     const key = ev.keyCode;
 
+    // Check if the plugin want to handle this key
+    if (isFn(session && session.keypress)) {
+        if (session.keypress(key)) {
+            dropEvent(ev);
+            return ;
+        }
+    }
+
     if (key === 27) { // esc
         dropEvent(ev);
         exit(); // eslint-disable-line no-use-before-define
-    } else if (key === 8 || key === 37) { // backspace, left
+    } else if (key === 8 || key === 37 || key === 33) { // backspace, left, page up
         dropEvent(ev);
         prev();
-    } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
+    } else if (key === 13 || key === 32 || key === 39 || key === 34) { // enter, space, right, page down
         dropEvent(ev);
         next();
     } else if (key === 70) { // f
@@ -189,13 +197,12 @@ const showSpinner = (show, src, delay) => {
     $spinner.show();
 };
 
-const Session = (items, idx, load, adjust) => {
-    const inst = Object.assign(Object.create(Session.prototype), {items, load, adjust});
-    inst.setIdx(idx);
-    return inst;
-};
+class Session {
+    constructor(items, idx, load, adjust, keypress) {
+        Object.assign(this, {items, load, adjust, keypress});
+        this.setIdx(idx);
+    }
 
-Session.prototype = {
     setIdx(idx) {
         this.idx = (idx + this.items.length) % this.items.length;
         this.item = this.items[this.idx];
@@ -225,14 +232,14 @@ Session.prototype = {
                     updateGui();
                 }
             });
-    },
+    }
 
     moveIdx(delta) {
         this.setIdx(this.idx + delta);
     }
-};
+}
 
-const register = (types, load, adjust) => {
+const register = (types, load, adjust, keypress) => {
     const initItem = item => {
         if (item.$view && includes(types, item.type)) {
             item.$view.find('a').on('click', ev => {
@@ -243,7 +250,7 @@ const register = (types, load, adjust) => {
                     return includes(types, matchedItem.type) ? matchedItem : null;
                 }));
 
-                session = Session(matchedItems, matchedItems.indexOf(item), load, adjust);
+                session = new Session(matchedItems, matchedItems.indexOf(item), load, adjust, keypress);
                 enter();
             });
         }
