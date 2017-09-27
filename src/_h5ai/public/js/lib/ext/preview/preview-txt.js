@@ -13,6 +13,10 @@ const settings = Object.assign({
 const preTpl = '<pre id="pv-content-txt"></pre>';
 const divTpl = '<div id="pv-content-txt"></div>';
 
+const ignoreUserHandler = (e) => {
+    e.stopPropagation();
+};
+
 const updateGui = () => {
     const el = dom('#pv-content-txt')[0];
     if (!el) {
@@ -21,6 +25,10 @@ const updateGui = () => {
 
     const container = dom('#pv-container')[0];
     el.style.height = container.offsetHeight + 'px';
+
+    // Enable text selection for text preview plugin.
+    el.addEventListener('mousemove', ignoreUserHandler);
+    el.addEventListener('mousedown', ignoreUserHandler);
 
     preview.setLabels([
         preview.item.label,
