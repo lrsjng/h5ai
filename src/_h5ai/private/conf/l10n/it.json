@@ -10,9 +10,13 @@
     "folders": "cartelle",
     "grid": "griglia",
     "icons": "icone",
+    "language": "Linugua",
     "lastModified": "Ultima modifica",
     "name": "Nome",
     "noMatch": "nessun risultato",
     "parentDirectory": "Cartella Superiore",
-    "size": "Dimensione"
+    "search": "cerca",
+    "size": "Dimensione",
+    "tree": "Albero",
+    "view": "Vista"
 }
