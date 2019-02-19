@@ -54,6 +54,14 @@ class Custom {
             if ($parent_path === $path) {
                 break;
             }
+
+            // Stop once we reach the root
+            if (
+                $this->context->query_option('custom.stopSearchingAtRoot', true) &&
+                $path === $this->context->get_setup()->get('ROOT_PATH')
+            ) {
+                break;
+            }
             $path = $parent_path;
         }
 
