@@ -18,7 +18,7 @@ const webpackCfg = include => ({
                 loader: 'babel-loader',
                 query: {
                     cacheDirectory: true,
-                    presets: ['es2015']
+                    presets: ['babel-preset-env']
                 }
             },
             {
@@ -108,7 +108,7 @@ ghu.task('build:copy', runtime => {
         read(`${SRC}: **, ! **/*.js, ! **/*.less, ! **/*.pug, ! **/conf/*.json`)
             .then(newerThan(mapper))
             .then(each(obj => {
-                if (/index\.php$/.test(obj.source)) {
+                if ((/index\.php$/).test(obj.source)) {
                     obj.content = obj.content.replace('{{VERSION}}', runtime.pkg.version);
                 }
             }))

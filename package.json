@@ -1,6 +1,6 @@
 {
   "name": "h5ai",
-  "version": "0.29.0",
+  "version": "0.29.1",
   "description": "Modern HTTP web server index.",
   "homepage": "https://larsjung.de/h5ai/",
   "bugs": "https://github.com/lrsjng/h5ai/issues",
@@ -15,18 +15,18 @@
   },
   "devDependencies": {
     "babel-loader": "6.2.4",
-    "babel-preset-es2015": "6.13.2",
-    "eslint": "3.2.2",
-    "ghu": "0.11.0",
-    "jsdom": "9.4.2",
-    "kjua": "0.1.1",
-    "lolight": "0.3.0",
-    "marked": "0.3.6",
-    "normalize.css": "4.2.0",
+    "babel-preset-env": "1.7.0",
+    "eslint": "5.14.1",
+    "ghu": "0.12.0",
+    "jsdom": "9.2.0",
+    "kjua": "0.1.2",
+    "lolight": "0.6.0",
+    "marked": "0.6.1",
+    "normalize.css": "8.0.1",
     "null-loader": "0.1.1",
-    "scar": "0.17.0"
+    "scar": "1.0.0"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=10.0.0"
   }
 }
