@@ -86,15 +86,15 @@ const addCssStyles = () => {
     dom('<style></style>').text(styles.join('\n')).appTo('head');
 };
 
-const set = (mode, size) => {
-    const stored = store.get(storekey);
+const getModes = () => checkedModes;
+const getMode = () => store.get(storekey) && store.get(storekey).mode || settings.modes[0];
 
-    mode = mode || stored && stored.mode;
-    size = size || stored && stored.size;
-    mode = includes(settings.modes, mode) ? mode : settings.modes[0];
-    size = includes(settings.sizes, size) ? size : settings.sizes[0];
-    store.put(storekey, {mode, size});
+const getSizes = () => sortedSizes;
+const getSize = () => store.get(storekey) && store.get(storekey).size || settings.sizes[0];
 
+const updateView = () => {
+    const mode = getMode();
+    const size = getSize();
     each(checkedModes, m => {
         if (m === mode) {
             $view.addCls('view-' + m);
@@ -114,12 +114,27 @@ const set = (mode, size) => {
     event.pub('view.mode.changed', mode, size);
 };
 
-const getModes = () => checkedModes;
-const getMode = () => store.get(storekey).mode;
-const setMode = mode => set(mode, null);
+const set = (mode, size) => {
+    const stored = store.get(storekey);
 
-const getSizes = () => sortedSizes;
-const getSize = () => store.get(storekey).size;
+    mode = mode || stored && stored.mode;
+    size = size || stored && stored.size;
+    mode = includes(settings.modes, mode) ? mode : settings.modes[0];
+    size = includes(settings.sizes, size) ? size : settings.sizes[0];
+
+    // Unset if it's being set back to the default value
+    if (mode === settings.modes[0]) {
+        mode = undefined;
+    }
+    if (size === settings.sizes[0]) {
+        size = undefined;
+    }
+
+    store.put(storekey, {mode, size});
+    updateView();
+};
+
+const setMode = mode => set(mode, null);
 const setSize = size => set(null, size);
 
 const onMouseenter = ev => {
@@ -260,7 +275,7 @@ const onResize = () => {
 
 const init = () => {
     addCssStyles();
-    set();
+    updateView();
 
     $view.appTo(base.$content);
     $hint.hide();
