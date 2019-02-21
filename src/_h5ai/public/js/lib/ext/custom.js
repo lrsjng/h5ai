@@ -27,6 +27,7 @@ const onLocationChanged = item => {
     server.request({action: 'get', custom: item.absHref}).then(response => {
         const data = response && response.custom;
         each(['header', 'footer'], key => update(data, key));
+        event.pub('custom.optionsLoaded', data.options);
     });
 };
 

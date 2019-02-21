@@ -56,7 +56,7 @@ class Custom {
             return [
                 'header' => ['content' => null, 'type' => null],
                 'footer' => ['content' => null, 'type' => null],
-                'options' => [],
+                'options' => (object)[],
             ];
         }
 
@@ -91,7 +91,7 @@ class Custom {
         return [
             'header' => ['content' => $header, 'type' => $header_type],
             'footer' => ['content' => $footer, 'type' => $footer_type],
-            'options' => self::get_options($href),
+            'options' => (object)self::get_options($href),
         ];
     }
 }

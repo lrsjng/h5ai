@@ -18,6 +18,7 @@ const settings = Object.assign({
     setParentFolderLabels: false,
     sizes
 }, allsettings.view);
+let folderSettings = null;
 const sortedSizes = settings.sizes.sort((a, b) => a - b);
 const checkedModes = intersection(settings.modes, modes);
 const storekey = 'view';
@@ -87,10 +88,16 @@ const addCssStyles = () => {
 };
 
 const getModes = () => checkedModes;
-const getMode = () => store.get(storekey) && store.get(storekey).mode || settings.modes[0];
+const getMode = () =>
+    (folderSettings && folderSettings.mode) ||
+    (store.get(storekey) && store.get(storekey).mode) ||
+    settings.modes[0];
 
 const getSizes = () => sortedSizes;
-const getSize = () => store.get(storekey) && store.get(storekey).size || settings.sizes[0];
+const getSize = () =>
+    (folderSettings && folderSettings.size) ||
+    (store.get(storekey) && store.get(storekey).size) ||
+    settings.sizes[0];
 
 const updateView = () => {
     const mode = getMode();
@@ -273,6 +280,11 @@ const onResize = () => {
     }
 };
 
+const onCustomOptionsLoaded = options => {
+    folderSettings = options && options.view;
+    updateView();
+};
+
 const init = () => {
     addCssStyles();
     updateView();
@@ -285,6 +297,7 @@ const init = () => {
     event.sub('location.changed', onLocationChanged);
     event.sub('location.refreshed', onLocationRefreshed);
     event.sub('resize', onResize);
+    event.sub('custom.optionsLoaded', onCustomOptionsLoaded);
     onResize();
 };
 
