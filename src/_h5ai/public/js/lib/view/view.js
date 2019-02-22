@@ -87,17 +87,28 @@ const addCssStyles = () => {
     dom('<style></style>').text(styles.join('\n')).appTo('head');
 };
 
+// Gets the first truthy value in `candidates` that is also listed in `validOptions`
+const findFirstValid = (candidates, validOptions) => candidates.find(x => x && includes(validOptions, x));
+
 const getModes = () => checkedModes;
-const getMode = () =>
-    (folderSettings && folderSettings.mode) ||
-    (store.get(storekey) && store.get(storekey).mode) ||
-    settings.modes[0];
+const getMode = () => findFirstValid(
+    [
+        (store.get(storekey) && store.get(storekey).mode),
+        (folderSettings && folderSettings.mode),
+        settings.modes[0]
+    ],
+    settings.modes
+);
 
 const getSizes = () => sortedSizes;
-const getSize = () =>
-    (folderSettings && folderSettings.size) ||
-    (store.get(storekey) && store.get(storekey).size) ||
-    settings.sizes[0];
+const getSize = () => findFirstValid(
+    [
+        (store.get(storekey) && store.get(storekey).size),
+        (folderSettings && folderSettings.size),
+        settings.sizes[0]
+    ],
+    settings.sizes
+);
 
 const updateView = () => {
     const mode = getMode();
@@ -126,8 +137,6 @@ const set = (mode, size) => {
 
     mode = mode || stored && stored.mode;
     size = size || stored && stored.size;
-    mode = includes(settings.modes, mode) ? mode : settings.modes[0];
-    size = includes(settings.sizes, size) ? size : settings.sizes[0];
 
     // Unset if it's being set back to the default value
     if (mode === settings.modes[0]) {
