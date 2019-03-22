@@ -5,9 +5,6 @@
     es6: true
     node: true
 
-  parserOptions:
-    ecmaVersion: 6
-
   rules:
     array-bracket-spacing: [2, never]
     arrow-parens: [2, as-needed]

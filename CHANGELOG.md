@@ -1,6 +1,17 @@
 # Changelog
 
 
+## v0.29.2 - *2019-03-22*
+
+* update `babel-loader` to 7.1.1
+* update `eslint` to 5.15.3
+* update `ghu` to 0.13.0
+* update `jsdom` to 14.0.0
+* update `kjua` to 0.2.0
+* update `lolight` to 1.0.0
+* update `scar` to 1.2.0
+
+
 ## v0.29.1 - *2019-01-20*
 
 * replace `babel-preset-es2015` with `babel-preset-env`

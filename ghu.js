@@ -62,10 +62,6 @@ ghu.task('clean', 'delete build folder', () => {
     return remove(BUILD);
 });
 
-ghu.task('lint', 'lint all JavaScript files with eslint', () => {
-    return run('eslint .', {stdio: 'inherit'});
-});
-
 ghu.task('build:scripts', runtime => {
     return read(`${SRC}/_h5ai/public/js/scripts.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))

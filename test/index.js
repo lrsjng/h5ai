@@ -1,5 +1,6 @@
 if (!global.window) {
-    global.window = require('jsdom').jsdom().defaultView;
+    const JSDOM = require('jsdom').JSDOM;
+    global.window = new JSDOM('').window;
 }
 
 const {test} = require('scar');
