@@ -10,7 +10,7 @@ const TEST = join(ROOT, 'test');
 const BUILD = join(ROOT, 'build');
 
 const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.pug', '');
-const webpackCfg = include => ({
+const webpack_cfg = (...include) => ({
     module: {
         loaders: [
             {
@@ -45,8 +45,8 @@ ghu.before(runtime => {
     }
 
     runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
-    runtime.commentJs = `/* ${runtime.comment} */\n`;
-    runtime.commentHtml = `<!-- ${runtime.comment} -->`;
+    runtime.comment_js = `/* ${runtime.comment} */\n`;
+    runtime.comment_html = `<!-- ${runtime.comment} -->`;
 
     console.log(runtime.comment);
 });
@@ -65,11 +65,11 @@ ghu.task('clean', 'delete build folder', () => {
 ghu.task('build:scripts', runtime => {
     return read(`${SRC}/_h5ai/public/js/scripts.js`)
         .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
-        .then(webpack(webpackCfg([SRC]), {showStats: false}))
+        .then(webpack(webpack_cfg(SRC), {showStats: false}))
         .then(wrap('\n\n// @include "pre.js"\n\n'))
         .then(includeit())
         .then(ife(() => runtime.args.production, uglify({compressor: {warnings: false}})))
-        .then(wrap(runtime.commentJs))
+        .then(wrap(runtime.comment_js))
         .then(write(mapper, {overwrite: true}));
 });
 
@@ -80,7 +80,7 @@ ghu.task('build:styles', runtime => {
         .then(less())
         .then(autoprefixer())
         .then(ife(() => runtime.args.production, cssmin()))
-        .then(wrap(runtime.commentJs))
+        .then(wrap(runtime.comment_js))
         .then(write(mapper, {overwrite: true}));
 });
 
@@ -88,17 +88,17 @@ ghu.task('build:pages', runtime => {
     return read(`${SRC}: **/*.pug, ! **/*.tpl.pug`)
         .then(newerThan(mapper, `${SRC}/**/*.tpl.pug`))
         .then(pug({pkg: runtime.pkg}))
-        .then(wrap('', runtime.commentHtml))
+        .then(wrap('', runtime.comment_html))
         .then(write(mapper, {overwrite: true}));
 });
 
 ghu.task('build:copy', runtime => {
-    const mapperRoot = mapfn.p(ROOT, join(BUILD, '_h5ai'));
+    const mapper_root = mapfn.p(ROOT, join(BUILD, '_h5ai'));
 
     return Promise.all([
         read(`${SRC}/**/conf/*.json`)
             .then(newerThan(mapper))
-            .then(wrap(runtime.commentJs))
+            .then(wrap(runtime.comment_js))
             .then(write(mapper, {overwrite: true, cluster: true})),
 
         read(`${SRC}: **, ! **/*.js, ! **/*.less, ! **/*.pug, ! **/conf/*.json`)
@@ -111,8 +111,8 @@ ghu.task('build:copy', runtime => {
             .then(write(mapper, {overwrite: true, cluster: true})),
 
         read(`${ROOT}/*.md`)
-            .then(newerThan(mapperRoot))
-            .then(write(mapperRoot, {overwrite: true, cluster: true}))
+            .then(newerThan(mapper_root))
+            .then(write(mapper_root, {overwrite: true, cluster: true}))
     ]);
 });
 
@@ -127,7 +127,7 @@ ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
             .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
 
         read(`${TEST}: index.js`)
-            .then(webpack(webpackCfg([SRC, TEST]), {showStats: false}))
+            .then(webpack(webpack_cfg(SRC, TEST), {showStats: false}))
             .then(wrap(`\n\n// @include "${SRC}/**/js/pre.js"\n\n`))
             .then(includeit())
             .then(write(mapfn.p(TEST, `${BUILD}/test`), {overwrite: true}))
@@ -145,11 +145,11 @@ ghu.task('deploy', ['build'], 'deploy to a specified path with :dest=/some/path'
     }
     console.log(`deploy to ${runtime.args.dest}`);
 
-    const mapperDeploy = mapfn.p(BUILD, resolve(runtime.args.dest));
+    const mapper_deploy = mapfn.p(BUILD, resolve(runtime.args.dest));
 
     return read(`${BUILD}/_h5ai/**`)
-        .then(newerThan(mapperDeploy))
-        .then(write(mapperDeploy, {overwrite: true, cluster: true}));
+        .then(newerThan(mapper_deploy))
+        .then(write(mapper_deploy, {overwrite: true, cluster: true}));
 });
 
 ghu.task('watch', runtime => {
