@@ -10,24 +10,14 @@ const TEST = join(ROOT, 'test');
 const BUILD = join(ROOT, 'build');
 
 const mapper = mapfn.p(SRC, BUILD).s('.less', '.css').s('.pug', '');
-const webpack_cfg = (...include) => ({
-    module: {
-        loaders: [
-            {
-                include,
-                loader: 'babel-loader',
-                query: {
-                    cacheDirectory: true,
-                    presets: ['babel-preset-env']
-                }
-            },
-            {
-                test: /jsdom/,
-                loader: 'null-loader'
-            }
-        ]
-    }
-});
+const webpack_cfg = (...include) => {
+    const cfg = webpack.cfg(include);
+    cfg.module.rules.push({
+        test: /jsdom/,
+        loader: 'null-loader'
+    });
+    return cfg;
+};
 
 ghu.defaults('release');
 
@@ -68,7 +58,7 @@ ghu.task('build:scripts', runtime => {
         .then(webpack(webpack_cfg(SRC), {showStats: false}))
         .then(wrap('\n\n// @include "pre.js"\n\n'))
         .then(includeit())
-        .then(ife(() => runtime.args.production, uglify({compressor: {warnings: false}})))
+        .then(ife(() => runtime.args.production, uglify()))
         .then(wrap(runtime.comment_js))
         .then(write(mapper, {overwrite: true}));
 });
