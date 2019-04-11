@@ -131,7 +131,25 @@ const dropEvent = ev => {
     ev.preventDefault();
 };
 
-const onKeydown = ev => {
+// const onKeydown = ev => {
+//     const key = ev.keyCode;
+
+//     if (key === 27) { // esc
+//         dropEvent(ev);
+//         exit(); // eslint-disable-line no-use-before-define
+//     } else if (key === 8 || key === 37) { // backspace, left
+//         dropEvent(ev);
+//         prev();
+//     } else if (key === 13 || key === 32 || key === 39) { // enter, space, right
+//         dropEvent(ev);
+//         next();
+//     } else if (key === 70) { // f
+//         dropEvent(ev);
+//         toggleFullscreen();
+//     }
+// };
+
+const defaultControls = ev => {
     const key = ev.keyCode;
 
     if (key === 27) { // esc
@@ -147,7 +165,42 @@ const onKeydown = ev => {
         dropEvent(ev);
         toggleFullscreen();
     }
-};
+}
+
+const videoControls = ev => {
+    const key = ev.keyCode;
+
+    if (key === 27) { // esc
+        dropEvent(ev);
+        exit(); // eslint-disable-line no-use-before-define
+    } else if (key === 8 || key === 188) { // backspace === 8; , ===188
+        dropEvent(ev);
+        prev();
+    } else if (key === 13 || key === 190) { // enter === 13; . ===190
+        dropEvent(ev);
+        next();
+    } else if (key === 70) { // f
+        dropEvent(ev);
+        toggleFullscreen();
+    }
+}
+
+const onKeydown = ev => {
+    
+    switch(Preview.controlsType){
+        case "vid":
+            videoControls(ev)
+            break;
+        default:
+            defaultControls(ev)
+    }
+}
+
+const setControlType = (t) =>{
+    Preview.controlsType = t
+}
+
+
 
 const enter = () => {
     setLabels([]);
@@ -284,12 +337,15 @@ const init = () => {
         .on('load', updateGui);
 };
 
-module.exports = {
+
+var Preview =  module.exports = {
     setLabels,
     register,
     get item() {
         return session && session.item;
-    }
+    },
+    controlsType:"default",
+    setControlType
 };
 
 init();
