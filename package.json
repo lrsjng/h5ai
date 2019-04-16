@@ -14,12 +14,11 @@
     "lint": "eslint .",
     "test": "node test",
     "build": "node ghu release",
-    "precommit": "npm run lint && npm run test"
+    "precommit": "npm run -s lint && npm run -s test"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
     "@babel/preset-env": "7.4.3",
-    "babel-loader": "8.0.5",
     "eslint": "5.16.0",
     "ghu": "0.18.0",
     "jsdom": "14.0.0",
