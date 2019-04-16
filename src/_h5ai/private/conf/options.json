@@ -54,7 +54,7 @@
         is given the view size is fixed and the selector buttons are hidden.
         The user selected view size is also stored local in modern browsers
         so that it will be persistent.
-    - theme: string, name of one of the folders in "_h5ai/images/themes", defaults to "default"
+    - theme: string, name of one of the folders in "_h5ai/public/images/themes", defaults to "default"
     - unmanaged: array of strings, don't manage folders containing one of those files
     - unmanagedInNewWindow: boolean, open unmanaged links in new window/tab
     */
