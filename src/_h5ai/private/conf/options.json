@@ -108,9 +108,14 @@
     Note the different filenames: "header" (only current) - "headers" (current and sub directories)!
     The file's content will be placed inside a <div/> tag above/below the main content.
     If a file's extension is ".md" instead of ".html" its content will be interpreted as markdown.
+
+    - stopSearchingAtRoot: boolean, only search for header and footer files until the web root
+        directory. if `false`, will search for header/footer up the entire directory structure,
+        even above the web root
     */
     "custom": {
-        "enabled": true
+        "enabled": true,
+        "stopSearchingAtRoot": true
     },
 
     /*
