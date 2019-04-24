@@ -1,7 +1,7 @@
 const {resolve, join} = require('path');
 const {
     ghu, autoprefixer, cssmin, each, ife, includeit, jszip, less, mapfn,
-    newerThan, pug, read, remove, run, uglify, watch, webpack, wrap, write
+    pug, read, remove, run, uglify, watch, webpack, wrap, write
 } = require('ghu');
 
 const ROOT = resolve(__dirname);
@@ -54,8 +54,7 @@ ghu.task('clean', 'delete build folder', () => {
 
 ghu.task('build:scripts', runtime => {
     return read(`${SRC}/_h5ai/public/js/scripts.js`)
-        .then(newerThan(mapper, `${SRC}/_h5ai/public/js/**`))
-        .then(webpack(webpack_cfg(SRC), {showStats: false}))
+        .then(webpack(webpack_cfg(SRC)))
         .then(wrap('\n\n// @include "pre.js"\n\n'))
         .then(includeit())
         .then(ife(() => runtime.args.production, uglify()))
@@ -65,7 +64,6 @@ ghu.task('build:scripts', runtime => {
 
 ghu.task('build:styles', runtime => {
     return read(`${SRC}/_h5ai/public/css/*.less`)
-        .then(newerThan(mapper, `${SRC}/_h5ai/public/css/**`))
         .then(includeit())
         .then(less())
         .then(autoprefixer())
@@ -76,7 +74,6 @@ ghu.task('build:styles', runtime => {
 
 ghu.task('build:pages', runtime => {
     return read(`${SRC}: **/*.pug, ! **/*.tpl.pug`)
-        .then(newerThan(mapper, `${SRC}/**/*.tpl.pug`))
         .then(pug({pkg: runtime.pkg}))
         .then(wrap('', runtime.comment_html))
         .then(write(mapper, {overwrite: true}));
@@ -87,12 +84,10 @@ ghu.task('build:copy', runtime => {
 
     return Promise.all([
         read(`${SRC}/**/conf/*.json`)
-            .then(newerThan(mapper))
             .then(wrap(runtime.comment_js))
             .then(write(mapper, {overwrite: true, cluster: true})),
 
         read(`${SRC}: **, ! **/*.js, ! **/*.less, ! **/*.pug, ! **/conf/*.json`)
-            .then(newerThan(mapper))
             .then(each(obj => {
                 if ((/index\.php$/).test(obj.source)) {
                     obj.content = obj.content.replace('{{VERSION}}', runtime.pkg.version);
@@ -101,7 +96,6 @@ ghu.task('build:copy', runtime => {
             .then(write(mapper, {overwrite: true, cluster: true})),
 
         read(`${ROOT}/*.md`)
-            .then(newerThan(mapper_root))
             .then(write(mapper_root, {overwrite: true, cluster: true}))
     ]);
 });
@@ -109,15 +103,13 @@ ghu.task('build:copy', runtime => {
 ghu.task('build:tests', ['build:styles'], 'build the test suite', () => {
     return Promise.all([
         read(`${BUILD}/_h5ai/public/css/styles.css`)
-            .then(newerThan(`${BUILD}/test/h5ai-styles.css`))
             .then(write(`${BUILD}/test/h5ai-styles.css`, {overwrite: true})),
 
         read(`${TEST}/index.html`)
-            .then(newerThan(`${BUILD}/test/index.html`))
             .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
 
         read(`${TEST}: index.js`)
-            .then(webpack(webpack_cfg(SRC, TEST), {showStats: false}))
+            .then(webpack(webpack_cfg(SRC, TEST)))
             .then(wrap(`\n\n// @include "${SRC}/**/js/pre.js"\n\n`))
             .then(includeit())
             .then(write(mapfn.p(TEST, `${BUILD}/test`), {overwrite: true}))
@@ -138,7 +130,6 @@ ghu.task('deploy', ['build'], 'deploy to a specified path with :dest=/some/path'
     const mapper_deploy = mapfn.p(BUILD, resolve(runtime.args.dest));
 
     return read(`${BUILD}/_h5ai/**`)
-        .then(newerThan(mapper_deploy))
         .then(write(mapper_deploy, {overwrite: true, cluster: true}));
 });
 

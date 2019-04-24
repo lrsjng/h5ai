@@ -21,12 +21,12 @@
     "@babel/preset-env": "7.4.3",
     "eslint": "5.16.0",
     "ghu": "0.18.0",
-    "jsdom": "14.0.0",
-    "kjua": "0.4.0",
+    "jsdom": "15.0.0",
+    "kjua": "0.5.0",
     "lolight": "1.2.0",
     "marked": "0.6.2",
     "normalize.css": "8.0.1",
-    "null-loader": "0.1.1",
+    "null-loader": "1.0.0",
     "scar": "1.6.0"
   },
   "engines": {

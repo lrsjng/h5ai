@@ -9,9 +9,10 @@
 * remove `babel-loader`
 * update `eslint` to 5.16.0
 * update `ghu` to 0.18.0
-* update `jsdom` to 14.0.0
-* update `kjua` to 0.4.0
+* update `jsdom` to 15.0.0
+* update `kjua` to 0.5.0
 * update `lolight` to 1.2.0
+* update `null-loader` to 1.0.0
 * update `scar` to 1.6.0
 
 
