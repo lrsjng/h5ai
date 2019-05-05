@@ -37,7 +37,6 @@ ghu.before(runtime => {
     runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
     runtime.comment_js = `/* ${runtime.comment} */\n`;
     runtime.comment_html = `<!-- ${runtime.comment} -->`;
-
     console.log(runtime.comment);
 });
 
