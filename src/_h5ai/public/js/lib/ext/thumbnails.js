@@ -25,8 +25,6 @@ const queueItem = (queue, item) => {
         type = 'mov';
     } else if (includes(settings.doc, item.type)) {
         type = 'doc';
-    } else {
-        return;
     }
 
     if (item.thumbSquare) {
