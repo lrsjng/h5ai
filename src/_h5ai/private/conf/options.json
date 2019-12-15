@@ -348,7 +348,7 @@
     },
 
     /*
-    Show thumbnails for image files. Needs the "/_h5ai/cache" folder to be
+    Show thumbnails for image files. Needs the "/_h5ai/public/cache" folder to be
     writable for the web Server.
 
     - img: array of strings
