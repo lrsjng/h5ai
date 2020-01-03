@@ -1,0 +1,22 @@
+{
+    "lang": "português do Brasil",
+
+    "dateFormat": "DD-MM-YYYY HH:mm",
+    "details": "detalhes",
+    "download": "download",
+    "empty": "vazio",
+    "files": "arquivos",
+    "filter": "filtro",
+    "folders": "pastas",
+    "grid": "grade",
+    "icons": "ícones",
+    "language": "Idioma",
+    "lastModified": "Última modificação",
+    "name": "Nome",
+    "noMatch": "sem resultados",
+    "parentDirectory": "Diretório acima",
+    "search": "pesquisa",
+    "size": "Tamanho",
+    "tree": "Árvore",
+    "view": "Visualização"
+}

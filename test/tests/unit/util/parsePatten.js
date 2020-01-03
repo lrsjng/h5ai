@@ -1,5 +1,6 @@
 const {test, assert, insp} = require('scar');
-const {parsePattern} = require('../../../../src/_h5ai/public/js/lib/util');
+const reqlib = require('../../../util/reqlib');
+const {parsePattern} = reqlib('util');
 
 test('util.parsePattern()', () => {
     assert.equal(typeof parsePattern, 'function', 'is function');

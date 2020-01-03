@@ -1,6 +1,6 @@
 {
   "name": "h5ai",
-  "version": "0.29.0",
+  "version": "0.29.2",
   "description": "Modern HTTP web server index.",
   "homepage": "https://larsjung.de/h5ai/",
   "bugs": "https://github.com/lrsjng/h5ai/issues",
@@ -11,22 +11,25 @@
     "url": "https://github.com/lrsjng/h5ai.git"
   },
   "scripts": {
-    "build": "node ghu release"
+    "lint": "eslint .",
+    "test": "node test",
+    "build": "node ghu release",
+    "precommit": "npm run -s lint && npm run -s test"
   },
   "devDependencies": {
-    "babel-loader": "6.2.4",
-    "babel-preset-es2015": "6.13.2",
-    "eslint": "3.2.2",
-    "ghu": "0.11.0",
-    "jsdom": "9.4.2",
-    "kjua": "0.1.1",
-    "lolight": "0.3.0",
-    "marked": "0.3.6",
-    "normalize.css": "4.2.0",
-    "null-loader": "0.1.1",
-    "scar": "0.17.0"
+    "@babel/core": "7.5.5",
+    "@babel/preset-env": "7.5.5",
+    "eslint": "6.1.0",
+    "ghu": "0.22.0",
+    "jsdom": "15.1.1",
+    "kjua": "0.6.0",
+    "lolight": "1.3.0",
+    "marked": "0.7.0",
+    "normalize.css": "8.0.1",
+    "null-loader": "3.0.0",
+    "scar": "2.2.0"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=10.0.0"
   }
 }

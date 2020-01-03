@@ -16,30 +16,30 @@ const attr = (el, name, value) => {
     return el.setAttribute(name, value);
 };
 
-const rootChildren = () => {
+const root_children = () => {
     return [
         ...doc.querySelector('head').childNodes,
         ...doc.querySelector('body').childNodes
     ];
 };
 
-const pinHtml = () => {
+const pin_html = () => {
     pinned.title = doc.title;
     pinned.htmlId = attr('html', 'id');
     pinned.htmlClasses = attr('html', 'class');
     pinned.bodyId = attr('body', 'id');
     pinned.bodyClasses = attr('body', 'class');
-    pinned.els = rootChildren();
+    pinned.els = root_children();
     // console.log('pinned', pinned);
 };
 
-const restoreHtml = () => {
+const restore_html = () => {
     doc.title = pinned.title;
     attr('html', 'id', pinned.htmlId);
     attr('html', 'class', pinned.htmlClasses);
     attr('body', 'id', pinned.bodyId);
     attr('body', 'class', pinned.bodyClasses);
-    rootChildren().forEach(el => {
+    root_children().forEach(el => {
         if (pinned.els.indexOf(el) < 0) {
             el.remove();
         }
@@ -48,6 +48,6 @@ const restoreHtml = () => {
 };
 
 module.exports = {
-    pinHtml,
-    restoreHtml
+    pin_html,
+    restore_html
 };

@@ -1,5 +1,6 @@
 const {test, assert} = require('scar');
-const format = require('../../../../src/_h5ai/public/js/lib/core/format');
+const reqlib = require('../../../util/reqlib');
+const format = reqlib('core/format');
 
 test('core.format', () => {
     assert.equal(typeof format, 'object');

@@ -1,4 +1,6 @@
-build
-local
-node_modules
-npm-debug.log
+/.nyc_output/
+/build/
+/coverage/
+/local/
+/node_modules/
+/npm-debug.log

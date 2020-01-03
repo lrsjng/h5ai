@@ -49,7 +49,7 @@ const addListener = (el, type, fn) => el.addEventListener(type, fn);
 const removeListener = (el, type, fn) => el.removeEventListener(type, fn);
 
 const readyPromise = new Promise(resolve => {
-    if (/^(i|c|loade)/.test(doc.readyState)) {
+    if ((/^(i|c|loade)/).test(doc.readyState)) {
         resolve();
     } else {
         addListener(doc, 'DOMContentLoaded', () => resolve());

@@ -1,0 +1,22 @@
+{
+    "lang": "Bahasa Indonesia",
+
+    "dateFormat": "DD-MM-YYYY HH:mm",
+    "details": "rincian",
+    "download": "unduh",
+    "empty": "kosong",
+    "files": "berkas",
+    "filter": "saring",
+    "folders": "pelipat",
+    "grid": "jaring",
+    "icons": "ikon",
+    "language": "Bahasa",
+    "lastModified": "Di modifikasi",
+    "name": "Nama",
+    "noMatch": "tidak cocok",
+    "parentDirectory": "Direktori induk",
+    "search": "cari",
+    "size": "Ukuran",
+    "tree": "Pohon",
+    "view": "Tampil"
+}

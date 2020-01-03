@@ -2,7 +2,7 @@
 
 [![license][license-img]][github] [![web][web-img]][web] [![github][github-img]][github]
 
-A modern HTTP web server index for Apache httpd, lighttpd, nginx and Cherokee.
+A modern HTTP web server index for Apache httpd, lighttpd, and nginx.
 
 
 ## Important
@@ -20,7 +20,8 @@ There are installation ready packages for the latest [releases][release] and
 [dev builds][develop]. But to build **h5ai** yourself either `git clone` or
 download the repository. From within the root folder run the following
 commands to find a fresh zipball in folder `build` (tested on linux only,
-requires [`node 6.0+`][node] to be installed).
+requires [`node 10.0+`][node] to be installed, might work on other
+configurations).
 
 ~~~sh
 > npm install
@@ -32,7 +33,7 @@ requires [`node 6.0+`][node] to be installed).
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Lars Jung (https://larsjung.de)
+Copyright (c) 2019 Lars Jung (https://larsjung.de)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

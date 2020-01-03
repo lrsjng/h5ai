@@ -1,5 +1,5 @@
 {
-    "lang": "português",
+    "lang": "português de Portugal",
 
     "dateFormat": "DD-MM-YYYY HH:mm",
     "details": "detalhes",
@@ -10,9 +10,13 @@
     "folders": "pastas",
     "grid": "grelha",
     "icons": "ícones",
+    "language": "Idioma",
     "lastModified": "última modificação",
     "name": "Nome",
     "noMatch": "sem resultados",
-    "parentDirectory": "diretório acima",
-    "size": "Tamanho"
+    "parentDirectory": "Diretório acima",
+    "search": "pesquisa",
+    "size": "Tamanho",
+    "tree": "Árvore",
+    "view": "Visualização"
 }
