@@ -31,6 +31,7 @@ class Api {
         $archive = new Archive($this->context);
 
         set_time_limit(0);
+        session_write_close();
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . $as . '"');
         header('Connection: close');
