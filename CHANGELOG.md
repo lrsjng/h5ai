@@ -4,8 +4,8 @@
 * fix archive-single-item problem
 * add header/footer search stop condition
 * update languages (`id`, `it`, `pt-br`, `pt-pt`)
-* add `@babel/core` 7.8.4
-* add `@babel/preset-env` 7.8.4
+* add `@babel/core` 7.8.7
+* add `@babel/preset-env` 7.8.7
 * remove `babel-loader`
 * update `eslint` to 6.8.0
 * update `ghu` to 0.23.0
