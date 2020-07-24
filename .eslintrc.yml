@@ -6,7 +6,7 @@
     node: true
 
   parserOptions:
-    ecmaVersion: 2019
+    ecmaVersion: 2020
 
   rules:
     array-bracket-spacing: [2, never]

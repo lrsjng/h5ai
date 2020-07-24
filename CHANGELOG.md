@@ -4,17 +4,17 @@
 * fix archive-single-item problem
 * add header/footer search stop condition
 * update languages (`id`, `it`, `pt-br`, `pt-pt`)
-* add `@babel/core` 7.8.7
-* add `@babel/preset-env` 7.8.7
+* add `@babel/core` 7.10.5
+* add `@babel/preset-env` 7.10.4
 * remove `babel-loader`
-* update `eslint` to 6.8.0
-* update `ghu` to 0.23.0
-* update `jsdom` to 16.1.0
+* update `eslint` to 7.5.0
+* update `ghu` to 0.25.0
+* update `jsdom` to 16.3.0
 * update `kjua` to 0.6.0
 * update `lolight` to 1.3.0
-* update `marked` to 0.8.0
-* update `null-loader` to 3.0.0
-* update `scar` to 2.2.0
+* update `marked` to 1.1.1
+* update `null-loader` to 4.0.0
+* update `scar` to 2.3.0
 
 
 ## v0.29.2 - *2019-03-22*
