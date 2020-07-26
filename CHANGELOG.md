@@ -1,6 +1,7 @@
 # Changelog
 
 
+* now require PHP 7.0.0+
 * fix archive-single-item problem
 * add header/footer search stop condition
 * update languages (`id`, `it`, `pt-br`, `pt-pt`)

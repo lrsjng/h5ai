@@ -1,10 +1,10 @@
-const escapePattern = sequence => {
+const esc_pattern = sequence => {
     return sequence.replace(/[\-\[\]{}()*+?.,\\$\^|#\s]/g, '\\$&');
 };
 
-const parsePattern = (sequence, advanced) => {
+const parse_pattern = (sequence, advanced) => {
     if (!advanced) {
-        return escapePattern(sequence);
+        return esc_pattern(sequence);
     }
 
     if (sequence.substr(0, 3) === 're:') {
@@ -12,10 +12,10 @@ const parsePattern = (sequence, advanced) => {
     }
 
     return sequence.trim().split(/\s+/).map(part => {
-        return part.split('').map(char => escapePattern(char)).join('.*?');
+        return part.split('').map(char => esc_pattern(char)).join('.*?');
     }).join('|');
 };
 
 module.exports = {
-    parsePattern
+    parsePattern: parse_pattern
 };

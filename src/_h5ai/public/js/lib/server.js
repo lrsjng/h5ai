@@ -4,7 +4,7 @@ const XHR = global.window.XMLHttpRequest;
 const request = data => {
     return new Promise(resolve => {
         const xhr = new XHR();
-        const onReadyStateChange = () => {
+        const on_ready_state_change = () => {
             if (xhr.readyState === XHR.DONE) {
                 try {
                     resolve(JSON.parse(xhr.responseText));
@@ -15,7 +15,7 @@ const request = data => {
         };
 
         xhr.open('POST', '?', true);
-        xhr.onreadystatechange = onReadyStateChange;
+        xhr.onreadystatechange = on_ready_state_change;
         xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         xhr.send(JSON.stringify(data));
     });
