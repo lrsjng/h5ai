@@ -122,12 +122,15 @@ class Setup {
         if (sizeof($cmds) === 0 || $this->refresh) {
             $cmds['command'] = Util::exec_0('command -v command');
             $cmds['which'] = Util::exec_0('which which') || Util::exec_0('which which.exe');
+            $cmds['where'] = Util::exec_0('where where.exe');
 
             $cmd = false;
             if ($cmds['command']) {
                 $cmd = 'command -v';
             } elseif ($cmds['which']) {
                 $cmd = 'which';
+            } elseif ($cmds['where']) {
+                $cmd = 'where';
             }
 
             foreach (['avconv', 'convert', 'du', 'ffmpeg', 'gm', 'tar', 'zip'] as $c) {
