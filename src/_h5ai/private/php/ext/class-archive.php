@@ -144,7 +144,8 @@ class Archive {
                 continue;
             }
 
-            $d = Util::normalize_path(dirname($href), true);
+            $href = Util::normalize_path($href, false);
+            $d = dirname($href);
             $n = basename($href);
 
             if ($this->context->is_managed_href($d) && !$this->context->is_hidden($n)) {
