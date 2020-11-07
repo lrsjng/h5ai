@@ -132,6 +132,8 @@ class Context {
     }
 
     public function is_managed_path($path) {
+        $path = str_replace('\\', '/', $path);
+
         if (!is_dir($path) || strpos($path, '../') !== false || strpos($path, '/..') !== false || $path === '..') {
             return false;
         }
