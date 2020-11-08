@@ -233,7 +233,7 @@ class Context {
         $results = [];
 
         foreach ($iso_codes as $iso_code) {
-            if (!in_array($iso_code, $this->$L10N_ISO_CODES)) {
+            if (!in_array($iso_code, Context::$L10N_ISO_CODES)) {
                 continue;
             }
 
