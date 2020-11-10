@@ -29,7 +29,6 @@ class Thumb {
             return null;
         }
 
-        $capture_path = $source_path;
         if ($type === 'img') {
             $capture_path = $source_path;
         } elseif ($type === 'mov') {
@@ -44,6 +43,8 @@ class Thumb {
             } elseif ($this->setup->get('HAS_CMD_GM')) {
                 $capture_path = $this->capture(Thumb::$GM_CONVERT_CMDV, $source_path);
             }
+        } else {
+            $capture_path = $source_path;
         }
 
         return $this->thumb_href($capture_path, $width, $height);
