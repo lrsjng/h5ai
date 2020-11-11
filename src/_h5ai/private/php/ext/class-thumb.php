@@ -1,10 +1,12 @@
 <?php
 
 class Thumb {
-    private static $FFMPEG_CMDV = ['ffmpeg', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
-    private static $AVCONV_CMDV = ['avconv', '-ss', '0:00:10', '-i', '[SRC]', '-an', '-vframes', '1', '[DEST]'];
-    private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-strip', '[SRC][0]', '[DEST]'];
-    private static $GM_CONVERT_CMDV = ['gm', 'convert', '-density', '200', '-quality', '100', '[SRC][0]', '[DEST]'];
+    private static $FFMPEG_CMDV = ['ffmpeg', '-nostdin', '-hide_banner', '-ss', '[DUR]', '-i', '[H5AI_SRC]', '-an', '-vframes', '1', '[H5AI_DEST]'];
+    private static $FFPROBE_CMDV = ['ffprobe', '-v', 'quiet', '-show_format_entry', 'duration', '-of', 'default=noprint_wrappers=1:nokey=1', '[H5AI_SRC]'];
+    private static $AVCONV_CMDV = ['avconv', '-nostdin', '-hide_banner', '-ss', '[DUR]', '-i', '[H5AI_SRC]', '-an', '-vframes', '1', '[H5AI_DEST]'];
+    private static $AVPROBE_CMDV = ['avprobe', '-v', 'quiet', '-show_format_entry', 'duration', '-of', 'default=noprint_wrappers=1:nokey=1', '[H5AI_SRC]'];
+    private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-strip', '[H5AI_SRC][0]', '[H5AI_DEST]'];
+    private static $GM_CONVERT_CMDV = ['gm', 'convert', '-density', '200', '-quality', '100', '[H5AI_SRC][0]', '[H5AI_DEST]'];
     private static $THUMB_CACHE = 'thumbs';
 
     private $context;
@@ -33,15 +35,15 @@ class Thumb {
             $capture_path = $source_path;
         } elseif ($type === 'mov') {
             if ($this->setup->get('HAS_CMD_AVCONV')) {
-                $capture_path = $this->capture(Thumb::$AVCONV_CMDV, $source_path);
+                $capture_path = $this->capture(Thumb::$AVCONV_CMDV, $source_path, $type);
             } elseif ($this->setup->get('HAS_CMD_FFMPEG')) {
-                $capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path);
+                $capture_path = $this->capture(Thumb::$FFMPEG_CMDV, $source_path, $type);
             }
         } elseif ($type === 'doc') {
             if ($this->setup->get('HAS_CMD_CONVERT')) {
-                $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path);
+                $capture_path = $this->capture(Thumb::$CONVERT_CMDV, $source_path, $type);
             } elseif ($this->setup->get('HAS_CMD_GM')) {
-                $capture_path = $this->capture(Thumb::$GM_CONVERT_CMDV, $source_path);
+                $capture_path = $this->capture(Thumb::$GM_CONVERT_CMDV, $source_path, $type);
             }
         } else {
             $capture_path = $source_path;
@@ -81,7 +83,7 @@ class Thumb {
         return file_exists($thumb_path) ? $thumb_href : null;
     }
 
-    private function capture($cmdv, $source_path) {
+    private function capture($cmdv, $source_path, $type) {
         if (!file_exists($source_path)) {
             return null;
         }
@@ -89,15 +91,48 @@ class Thumb {
         $capture_path = $this->thumbs_path . '/capture-' . sha1($source_path) . '.jpg';
 
         if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
-            foreach ($cmdv as &$arg) {
-                $arg = str_replace('[SRC]', $source_path, $arg);
-                $arg = str_replace('[DEST]', $capture_path, $arg);
+            $movtype = ($type === 'mov') ? true : false;
+            if ($movtype) {
+                try {
+                    if ($cmdv[0] === 'ffmpeg') {
+                        $timestamp = $this->compute_duration(Thumb::$FFPROBE_CMDV, $source_path);
+                    } else {
+                        $timestamp = $this->compute_duration(Thumb::$AVPROBE_CMDV, $source_path);
+                    }
+                } catch(Exception $e) {
+                    // Attempt to capture after the first second anyway
+                    $timestamp = "1";
+                }
+                foreach ($cmdv as &$arg) {
+                    $arg = str_replace(
+                        ['[H5AI_SRC]', '[H5AI_DEST]', '[DUR]'],
+                        [$source_path, $capture_path, $timestamp],
+                        $arg
+                    );
+                }
             }
-
+            else {
+                foreach ($cmdv as &$arg) {
+                    $arg = str_replace(['[H5AI_SRC]', '[H5AI_DEST]'], [$source_path, $capture_path], $arg);
+                }
+            }
             Util::exec_cmdv($cmdv);
         }
 
         return file_exists($capture_path) ? $capture_path : null;
+    }
+
+    private function compute_duration($cmdv, $source_path) {
+        foreach ($cmdv as &$arg) {
+            $arg = str_replace('[H5AI_SRC]', $source_path, $arg);
+        }
+        $result = Util::exec_cmdv($cmdv);
+        if (empty($result)) {
+            throw new Exception("Incorrect video duration returned: \"".$result."\"");
+        }
+        // Seek at 15% of the total video duration
+        $ret = strval(round(((floatval($result) * 15) / 100), 1, PHP_ROUND_HALF_UP));
+        return $ret;
     }
 }
 
