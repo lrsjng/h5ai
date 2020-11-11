@@ -24,8 +24,10 @@ const queueItem = (queue, item) => {
         type = 'mov';
     } else if (includes(settings.doc, item.type)) {
         type = 'doc';
-    } else {
+    } else if (item.type === 'folder') {
         return;
+    } else {
+        type = 'file'
     }
 
     if (item.thumbSquare) {
