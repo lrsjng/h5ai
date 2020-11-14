@@ -93,16 +93,14 @@ class Thumb {
         if (!file_exists($capture_path) || filemtime($source_path) >= filemtime($capture_path)) {
             $movtype = ($type === 'mov') ? true : false;
             if ($movtype) {
-                try {
-                    if ($cmdv[0] === 'ffmpeg') {
-                        $timestamp = $this->compute_duration(Thumb::$FFPROBE_CMDV, $source_path);
-                    } else {
-                        $timestamp = $this->compute_duration(Thumb::$AVPROBE_CMDV, $source_path);
-                    }
-                } catch(Exception $e) {
-                    // Attempt to capture after the first second anyway
-                    $timestamp = "1";
+                // Attempt to capture after the first second anyway
+                $timestamp = 1;
+                if ($cmdv[0] === 'ffmpeg') {
+                    $timestamp = $this->compute_duration(Thumb::$FFPROBE_CMDV, $source_path);
+                } else {
+                    $timestamp = $this->compute_duration(Thumb::$AVPROBE_CMDV, $source_path);
                 }
+
                 foreach ($cmdv as &$arg) {
                     $arg = str_replace(
                         ['[H5AI_SRC]', '[H5AI_DEST]', '[DUR]'],
@@ -127,12 +125,12 @@ class Thumb {
             $arg = str_replace('[H5AI_SRC]', $source_path, $arg);
         }
         $result = Util::exec_cmdv($cmdv);
-        if (empty($result)) {
-            throw new Exception("Incorrect video duration returned: \"".$result."\"");
+        if (empty($result) || !is_numeric($result) || is_infinite($result)) {
+            // Force seeking at 1 second in
+            return "1";
         }
         // Seek at 15% of the total video duration
-        $ret = strval(round(((floatval($result) * 15) / 100), 1, PHP_ROUND_HALF_UP));
-        return $ret;
+        return strval(round(((floatval($result) * 15) / 100), 1, PHP_ROUND_HALF_UP));
     }
 }
 

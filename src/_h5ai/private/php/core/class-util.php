@@ -76,7 +76,7 @@ class Util {
             exec($cmd, $lines, $rc);
             return [implode("\n", $lines), $rc];
         }
-        exec($cmd);
+        return exec($cmd);
     }
 
     public static function exec_0($cmd) {
