@@ -1,9 +1,9 @@
 <?php
 
 class Thumb {
-    private static $FFMPEG_CMDV = ['ffmpeg', '-nostdin', '-hide_banner', '-ss', '[DUR]', '-i', '[H5AI_SRC]', '-an', '-vframes', '1', '[H5AI_DEST]'];
+    private static $FFMPEG_CMDV = ['ffmpeg', '-nostdin', '-y', '-hide_banner', '-ss', '[DUR]', '-i', '[H5AI_SRC]', '-an', '-vframes', '1', '[H5AI_DEST]'];
     private static $FFPROBE_CMDV = ['ffprobe', '-v', 'quiet', '-show_format_entry', 'duration', '-of', 'default=noprint_wrappers=1:nokey=1', '[H5AI_SRC]'];
-    private static $AVCONV_CMDV = ['avconv', '-nostdin', '-hide_banner', '-ss', '[DUR]', '-i', '[H5AI_SRC]', '-an', '-vframes', '1', '[H5AI_DEST]'];
+    private static $AVCONV_CMDV = ['avconv', '-nostdin', '-y', '-hide_banner', '-ss', '[DUR]', '-i', '[H5AI_SRC]', '-an', '-vframes', '1', '[H5AI_DEST]'];
     private static $AVPROBE_CMDV = ['avprobe', '-v', 'quiet', '-show_format_entry', 'duration', '-of', 'default=noprint_wrappers=1:nokey=1', '[H5AI_SRC]'];
     private static $CONVERT_CMDV = ['convert', '-density', '200', '-quality', '100', '-strip', '[H5AI_SRC][0]', '[H5AI_DEST]'];
     private static $GM_CONVERT_CMDV = ['gm', 'convert', '-density', '200', '-quality', '100', '[H5AI_SRC][0]', '[H5AI_DEST]'];
