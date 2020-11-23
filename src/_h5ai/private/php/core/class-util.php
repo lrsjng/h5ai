@@ -60,9 +60,6 @@ class Util {
     }
 
     public static function exec_cmdv($cmdv, $capture = false, $redirect = false) {
-        if (!is_array($cmdv)) {
-            $cmdv = func_get_args();
-        }
         $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
 
         if ($redirect) {
