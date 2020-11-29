@@ -124,13 +124,17 @@ class Thumb {
         foreach ($cmdv as &$arg) {
             $arg = str_replace('[H5AI_SRC]', $source_path, $arg);
         }
-        $result = Util::exec_cmdv($cmdv);
-        if (empty($result) || !is_numeric($result) || is_infinite($result)) {
-            // Force seeking at 1 second in
-            return "1";
+        $duration = Util::exec_cmdv($cmdv);
+        if (empty($duration) || !is_numeric($duration) || is_infinite($duration)) {
+            return "0.1";
         }
-        // Seek at 15% of the total video duration
-        return strval(round(((floatval($result) * 15) / 100), 1, PHP_ROUND_HALF_UP));
+        // Seek at user-defined percentage of the total video duration
+        return strval(
+            round(
+            (floatval($duration) *
+            floatval($this->context->query_option('thumbnails.seek', 50)) / 100),
+            1, PHP_ROUND_HALF_UP)
+        );
     }
 }
 
