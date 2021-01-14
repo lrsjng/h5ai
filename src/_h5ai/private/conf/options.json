@@ -48,6 +48,13 @@
         The user selected view mode is also stored local in modern browsers
         so that it will be persistent.
     - modeToggle: boolean, show a view mode toggle in the toolbar, or "next"
+    - paginationItems: array of numbers
+        user selectable amounts of items to display at once until pagination occurs.
+        The first value will be selected as the default. Values are then sorted automatically.
+        Value "0" means display ALL items at once, no pagination needed (as an option).
+        It is recommended to place this value (if desired at all) at the end of the array.
+        The user selected amount is also stored local in modern browsers
+        so that is will be persistent.
     - setParentFolderLabels: boolean, set parent folder labels to real folder names
     - sizes: array of numbers
         the first value indicates the default view size. If only one value
@@ -72,6 +79,7 @@
         "maxIconSize": 40,
         "modes": ["details", "grid", "icons"],
         "modeToggle": false,
+        "paginationItems": [100, 50, 200, 300, 400, 500, 0],
         "setParentFolderLabels": true,
         "sizes": [20, 40, 60, 80, 100, 140, 180, 220, 260, 300],
         "theme": "comity",
