@@ -3,12 +3,25 @@
 
     "details": "detaylar",
     "download": "indir",
+    "displayAll": "TÜMÜNÜ Görüntüle",
     "empty": "boş",
     "files": "dosyalar",
+    "filter": "filtre",
     "folders": "klasörler",
+    "grid": "ızgara",
     "icons": "ikonlar",
+    "info": "Bilgi",
+    "language": "Dil",
     "lastModified": "Son Düzenleme",
     "name": "İsim",
+    "noMatch": "eşleşme yok",
+    "pagination": "Sayfalandırma",
+    "pagInputBtn": "GİT",
+    "pagInputTxt": "sayfa",
     "parentDirectory": "Üst Dizin",
-    "size": "Boyut"
+    "perPage": "Sayfa başına ###",
+    "search": "arama",
+    "size": "Boyut",
+    "tree": "Ağaçlanma",
+    "view": "Yerleşim"
 }

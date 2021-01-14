@@ -3,13 +3,24 @@
 
     "details": "detalii",
     "download": "descarcă",
+    "displayAll": "Afișați TOATE",
     "empty": "gol",
     "files": "fişiere",
+    "filter": "filtru",
     "folders": "dosar",
-    "icons": "pictograme",
+    "icons": "icoane",
+    "info": "informație",
+    "language": "Limba",
     "lastModified": "ultima modificare",
     "name": "nume",
     "noMatch": "0 rezultate",
+    "pagination": "Paginare",
+    "pagInputBtn": "MERGE",
+    "pagInputTxt": "pagină",
     "parentDirectory": "dosar părinte",
-    "size": "mărime"
+    "perPage": "### pe pagină",
+    "search": "căutare",
+    "size": "mărime",
+    "tree": "Arborele",
+    "view": "Dispoziţie"
 }
