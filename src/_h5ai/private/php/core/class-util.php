@@ -8,8 +8,6 @@ class Util {
     const ERR_UNSUPPORTED = 'ERR_UNSUPPORTED';
     const NO_DEFAULT = 'NO_*@+#?!_DEFAULT';
     const RE_DELIMITER = '@';
-    // 'file' has to be the last item!
-    public const AVAILABLE_TYPES = ['img', 'mov', 'doc', 'swf', 'file'];
 
     public static function normalize_path($path, $trailing_slash = false) {
         $path = preg_replace('#[\\\\/]+#', '/', $path);
@@ -129,30 +127,7 @@ class Util {
         return $finfo->file($source_path);
     }
 
-    public static function mime_to_type($mime) {
-        if (strpos($mime, 'image') !== false) {
-            return 'img';
-        }
-        if (strpos($mime, 'video') !== false) {
-            return 'mov';
-        }
-        if (strpos($mime, 'pdf') !== false) {
-            return 'doc';
-        }
-        if (strpos($mime, 'flash') !== false) {
-            return 'swf';
-        }
-        return 'file';
-    }
-
-    public static function get_types_array($type) {
-        /* Returns an array of possible types, with $type as the first element*/
-        $types = Util::AVAILABLE_TYPES;
-        $key = array_search($type, $types);
-        if ($key !== false) {
-            unset($types[$key]);
-            array_unshift($types, $type);
-        }
-        return $types;
+    public static function log($log_msg, $filename = __DIR__."/../../cache/debug.log") {
+        file_put_contents($filename, date('Y-m-d H:i:s')." ". $log_msg . PHP_EOL, FILE_APPEND);
     }
 }

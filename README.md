@@ -29,6 +29,17 @@ configurations).
 ~~~
 
 
+## Optional Dependencies
+
+* FFmpeg/FFprobe or AVconv/AVprobe
+* gm (GraphicsMagick) or convert (ImageMagick)
+* PHP FileInfo module
+* PHP Sqlite3 module
+* PHP Zip module
+* PHP Rar module
+* du
+* tar
+
 ## License
 
 The MIT License (MIT)

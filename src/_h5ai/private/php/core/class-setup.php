@@ -68,6 +68,9 @@ class Setup {
         $this->set('HAS_PHP_JPEG', $has_php_jpeg);
 
         $this->set('HAS_PHP_FILEINFO', extension_loaded('fileinfo'));
+
+        $this->set('HAS_PHP_ZIP', extension_loaded('zip'));
+        $this->set('HAS_PHP_RAR', extension_loaded('rar'));
     }
 
     private function add_app_metadata() {
@@ -162,6 +165,8 @@ class Setup {
                 'HAS_PHP_EXIF',
                 'HAS_PHP_JPEG',
                 'HAS_PHP_FILEINFO',
+                'HAS_PHP_ZIP',
+                'HAS_PHP_RAR',
 
                 'SERVER_NAME',
                 'SERVER_VERSION',
