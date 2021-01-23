@@ -13,7 +13,6 @@ const settings = Object.assign({
     exif: false,
     chunksize: 20
 }, allsettings.thumbnails);
-const landscapeRatio = 4 / 3;
 
 
 const queueItem = (queue, item) => {
@@ -35,7 +34,6 @@ const queueItem = (queue, item) => {
         queue.push({
             type,
             href: item.absHref,
-            ratio: 1,
             callback: src => {
                 if (src && item.$view) {
                     item.thumbSquare = src;
@@ -51,7 +49,6 @@ const queueItem = (queue, item) => {
         queue.push({
             type,
             href: item.absHref,
-            ratio: landscapeRatio,
             callback: src => {
                 if (src && item.$view) {
                     item.thumbRational = src;
@@ -67,8 +64,6 @@ const requestQueue = queue => {
         return {
             type: req.type,
             href: req.href,
-            width: Math.round(settings.size * req.ratio),
-            height: settings.size
         };
     });
 
