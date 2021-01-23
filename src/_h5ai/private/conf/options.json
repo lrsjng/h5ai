@@ -355,7 +355,7 @@
     - mov: array of strings
     - doc: array of strings
     - delay: number, delay in milliseconds after "dom-ready" before thumb-requesting starts
-    - size: number, size in pixel of the generated thumbnails
+    - size: number, height in pixel of the generated thumbnails
     - exif: boolean, use included EXIF thumbs if possible
     - chunksize: int, number of thumbs per request
     */
