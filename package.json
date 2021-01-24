@@ -16,16 +16,16 @@
     "precommit": "npm run -s lint && npm run -s test"
   },
   "devDependencies": {
-    "@babel/core": "7.10.5",
-    "@babel/preset-env": "7.10.4",
-    "eslint": "7.5.0",
+    "@babel/core": "7.12.10",
+    "@babel/preset-env": "7.12.11",
+    "eslint": "7.18.0",
     "ghu": "0.26.0",
-    "jsdom": "16.3.0",
+    "jsdom": "16.4.0",
     "kjua": "0.9.0",
     "lolight": "1.4.0",
-    "marked": "1.1.1",
+    "marked": "1.2.7",
     "normalize.css": "8.0.1",
-    "null-loader": "4.0.0",
+    "null-loader": "4.0.1",
     "scar": "2.3.0"
   }
 }
