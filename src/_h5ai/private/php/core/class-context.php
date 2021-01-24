@@ -7,7 +7,7 @@ class Context {
         'af', 'bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'he',
         'hi', 'hr', 'hu', 'id', 'it', 'ja','ko', 'lv', 'nb', 'nl', 'pl',
         'pt-br', 'pt-pt', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'tr', 'uk',
-        'zh-cn', 'zh-tw',
+        'zh-cn', 'zh-tw'
     );
 
     private $session;
