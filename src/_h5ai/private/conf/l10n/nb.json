@@ -1,15 +1,28 @@
 {
     "lang": "norwegian",
 
+    "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "detaljer",
     "download": "last ned",
+    "displayAll": "Vis ALLE",
     "empty": "tom",
     "files": "filer",
+    "filter": "filter",
     "folders": "mapper",
+    "grid": "nett",
     "icons": "ikoner",
+    "info": "Informasjon",
+    "language": "Språk",
     "lastModified": "Sist endret",
     "name": "Navn",
     "noMatch": "ingen treff",
+    "pagination": "Paginering",
+    "pagInputBtn": "GÅ",
+    "pagInputTxt": "side",
     "parentDirectory": "Overordnet mappe",
-    "size": "Størrelse"
+    "perPage": "### per side",
+    "search": "søk",
+    "size": "Størrelse",
+    "tree": "Tre",
+    "view": "Disposisjon"
 }

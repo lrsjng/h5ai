@@ -3,13 +3,25 @@
 
     "details": "detalji",
     "download": "download",
+    "displayAll": "Prikažite SVE",
     "empty": "prazno",
     "files": "fajlovi",
+    "filter": "filtrate",
     "folders": "direktorijum",
+    "grid": "mreža",
     "icons": "ikone",
+    "info": "Информације",
+    "language": "Jezik",
     "lastModified": "Poslednja modifikacija",
     "name": "Ime",
     "noMatch": "bez poklapanja",
+    "pagination": "Paginacija",
+    "pagInputBtn": "GO",
+    "pagInputTxt": "stranica",
     "parentDirectory": "Roditeljski direktorijum",
-    "size": "Veličina"
+    "perPage": "### po stranici",
+    "search": "pretraga",
+    "size": "Veličina",
+    "tree": "Mapa",
+    "view": "Dispozicija"
 }

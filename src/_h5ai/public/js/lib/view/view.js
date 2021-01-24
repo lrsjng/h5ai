@@ -6,6 +6,7 @@ const resource = require('../core/resource');
 const store = require('../core/store');
 const allsettings = require('../core/settings');
 const base = require('./base');
+const pagination = require('./pagination');
 
 const modes = ['details', 'grid', 'icons'];
 const sizes = [20, 40, 60, 80, 100, 150, 200, 250, 300, 350, 400];
@@ -183,6 +184,12 @@ const checkHint = () => {
 };
 
 const setItems = items => {
+    if (!pagination.canHandle(items)) {
+        doSetItems(items);
+    }
+};
+
+const doSetItems = items => {
     const removed = map($items.find('.item'), el => el._item);
 
     $items.find('.item').rm();
@@ -218,6 +225,15 @@ const onLocationChanged = item => {
         item = location.getItem();
     }
 
+    pagination.setPayload(item);
+
+    const items = filterPayload(item);
+
+    setHint('empty');
+    setItems(items);
+};
+
+const filterPayload = item => {
     const items = [];
 
     if (item.parent && !settings.hideParentFolder) {
@@ -229,12 +245,18 @@ const onLocationChanged = item => {
             items.push(child);
         }
     });
-
-    setHint('empty');
-    setItems(items);
-};
+    return items;
+}
 
 const onLocationRefreshed = (item, added, removed) => {
+    if (added.length === 0 && removed.length === 0){
+        return;
+    }
+
+    if (pagination.isRefreshHandled(item)) {
+        return;
+    }
+
     const add = [];
 
     each(added, child => {
@@ -263,6 +285,7 @@ const init = () => {
     set();
 
     $view.appTo(base.$content);
+    pagination.$el.appTo(base.$content);
     $hint.hide();
 
     format.setDefaultMetric(settings.binaryPrefix);
@@ -277,7 +300,9 @@ init();
 
 module.exports = {
     $el: $view,
+    filterPayload,
     setItems,
+    doSetItems,
     changeItems,
     setLocation: onLocationChanged,
     setHint,
@@ -288,3 +313,6 @@ module.exports = {
     getSize,
     setSize
 };
+
+// For code reuse purposes
+pagination.setView(module.exports);

@@ -1,0 +1,103 @@
+// @minWidth: 30px;
+// @height: 28px;
+// @lineHeight: @height;
+// @activeHeight: @height + 2;
+@inputWidth: 35px;
+@inputHeight: 28px;
+@buttonMinWidth: 40px;
+@buttonHeight: 30px;
+@buttonLineHeight: @buttonHeight - 2;
+@buttonPadding: 0 8px;
+// @navHeight: @activeHeight;
+@col-hover-green: #44EEAA;
+@col-placeholder-grey: rgb(170, 170, 170);
+
+#pagination_btm {
+
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    bottom: 0;
+
+    .nav_buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        bottom: 0;
+    }
+
+    .nav_buttons button {
+        width: @buttonMinWidth; // 20px;
+        height: @buttonHeight; // 30px;
+        appearance: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0;
+        background-color: @col-link;
+        margin: 5px;
+        transition: 0.4s;
+        color: @col-back;
+        font-size: @font-size;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+        &:hover {
+            background-color: @col-hover-green
+        }
+        &:disabled {
+            background-color: @col-text-disabled-black;
+            box-shadow: inset 0px 0px 4px rgb(0, 0, 0);
+            cursor: default;
+        }
+    }
+
+    .page_input {
+        display: flex;
+        align-content: flex-end;
+        float: left;
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: @font-size;
+        > input[type="text"]{
+            width: @inputWidth;
+            height: @inputHeight;
+            background: @col-back;
+            border-radius: 3px;
+            border: 1px solid @col-divider-black;
+            padding: @buttonPadding;
+            text-align: center;
+            vertical-align: baseline;
+            outline: none;
+            box-shadow: none;
+            box-sizing: initial;
+            &::placeholder {
+                color: @col-placeholder-grey;
+                opacity: 1; /* Firefox */
+            }
+            &:focus::placeholder {
+                color: transparent;
+            }
+        }
+
+        > input[type="button"]{
+            min-width: @buttonMinWidth;
+            height: @buttonHeight;
+            line-height: @buttonLineHeight;
+            background: @col-back;
+            border-radius: 3px;
+            border: 1px solid @col-divider-black;
+            text-align: center;
+            padding: @buttonPadding;
+            vertical-align: baseline;
+            outline: none;
+            box-shadow: none;
+            color: @col-text;
+            cursor: pointer;
+            &:hover{
+                background-color: @col-hover-green;
+            }
+        }
+    }
+}

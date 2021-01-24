@@ -3,6 +3,7 @@
 
     "dateFormat": "YYYY-MM-DD HH:mm",
     "details": "besonderhede",
+    "displayAll": "Vertoon alles",
     "download": "aflaai",
     "empty": "leeg",
     "files": "lêers",
@@ -10,9 +11,18 @@
     "folders": "gidse",
     "grid": "rooster",
     "icons": "ikone",
+    "info": "Inligting",
+    "language": "Taal",
     "lastModified": "Laas verander",
     "name": "Naam",
     "noMatch": "geen resultaat",
+    "pagination": "Paginasie",
+    "pagInputBtn": "GO",
+    "pagInputTxt": "bladsy",
     "parentDirectory": "Hoër Vlak",
-    "size": "Grootte"
+    "perPage": "### per bladsy",
+    "search": "soek",
+    "size": "Grootte",
+    "tree": "boom",
+    "view": "geaardheid"
 }

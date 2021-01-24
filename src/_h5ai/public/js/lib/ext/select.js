@@ -193,7 +193,7 @@ const init = () => {
     if (settings.clickndrag) {
         $selectionRect.hide().appTo('#content');
 
-        dom('#content')
+        dom('#view')
             .on('mousedown', selectionStart)
             .on('drag', ev => ev.preventDefault())
             .on('dragstart', ev => ev.preventDefault());

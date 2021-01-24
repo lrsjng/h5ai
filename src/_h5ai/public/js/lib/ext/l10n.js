@@ -18,6 +18,7 @@ const defaultTranslations = {
 
     dateFormat: 'YYYY-MM-DD HH:mm',
     details: 'details',
+    displayAll: "Display ALL",
     download: 'download',
     empty: 'empty',
     files: 'files',
@@ -25,11 +26,16 @@ const defaultTranslations = {
     folders: 'folders',
     grid: 'grid',
     icons: 'icons',
+    info: 'Informations',
     language: 'Language',
     lastModified: 'Last modified',
     name: 'Name',
     noMatch: 'no match',
+    pagination: "Pagination",
+    pagInputBtn: "GO",
+    pagInputTxt: "page",
     parentDirectory: 'Parent Directory',
+    perPage: "### per page",
     search: 'search',
     size: 'Size',
     tree: 'Tree',
@@ -62,11 +68,23 @@ const update = lang => {
     each(currentLang, (value, key) => {
         dom('.l10n-' + key).text(value);
         dom('.l10n_ph-' + key).attr('placeholder', value);
+        replace(dom('.l10n_rp-' + key), value);
+        dom('.l10n_val-' + key).val(value);
+        dom('.l10n_title-' + key).prop('title', value)
     });
     format.setDefaultDateFormat(currentLang.dateFormat);
 
     dom('#items .item').each(el => {
         dom(el).find('.date').text(format.formatDate(el._item.time));
+    });
+};
+
+const replace = (elem, value) => {
+    if (!elem.length) {
+        return;
+    }
+    each(elem, el => {
+        el.text = value.replace('###', el.value);
     });
 };
 

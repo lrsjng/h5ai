@@ -1,18 +1,28 @@
 {
     "lang": "čeština",
 
-    "dateFormat": "DD.MM.YYYY HH:mm",
+    "DateFormat": "DD.MM.YYYY HH:mm",
     "details": "Podrobnosti",
     "download": "Stáhnout",
+    "displayAll": "Zobrazit VŠE",
     "empty": "Prázdná složka",
     "files": "souborů",
     "filter": "Filtr",
     "folders": "složek",
     "grid": "Seznam",
     "icons": "Velké ikony",
+    "info": "Informace",
+    "language": "Jazyk",
     "lastModified": "Datum změny",
     "name": "Název",
     "noMatch": "Žádná shoda",
+    "pagination": "Stránkování",
+    "pagInputBtn": "JÍT",
+    "pagInputTxt": "strana",
     "parentDirectory": "Nadřazený adresář",
-    "size": "Velikost"
+    "perPage": "### na stránku",
+    "search": "vyhledávání",
+    "size": "Velikost",
+    "tree": "Strom",
+    "view": "Dispozice"
 }

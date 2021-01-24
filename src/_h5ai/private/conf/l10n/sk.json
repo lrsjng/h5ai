@@ -2,12 +2,26 @@
     "lang": "slovenčina",
 
     "details": "podrobnosti",
+    "download": "prenesi",
+    "displayAll": "Prikaži VSE",
     "empty": "prázdny",
     "files": "súborov",
+    "filter": "filtrirati",
     "folders": "priečinkov",
+    "grid": "mreža",
     "icons": "ikony",
+    "info": "Informácie",
+    "language": "Jezik",
     "lastModified": "Upravené",
     "name": "Názov",
+    "noMatch": "ni ujemanj",
+    "pagination": "Paginacija",
+    "pagInputBtn": "POJDI",
+    "pagInputTxt": "strani",
     "parentDirectory": "Nadriadený priečinok",
-    "size": "Velkosť"
+    "perPage": "### na stran",
+    "search": "iskanje",
+    "size": "Velkosť",
+    "tree": "Drevo",
+    "view": "Dispozicija"
 }
