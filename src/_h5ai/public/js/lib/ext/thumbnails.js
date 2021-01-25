@@ -28,23 +28,8 @@ const queueItem = (queue, item) => {
         return;
     }
 
-    if (item.thumbSquare) {
-        item.$view.find('.icon.square img').addCls('thumb').attr('src', item.thumbSquare);
-    } else {
-        queue.push({
-            type,
-            href: item.absHref,
-            callback: src => {
-                if (src && item.$view) {
-                    item.thumbSquare = src;
-                    item.$view.find('.icon.square img').addCls('thumb').attr('src', src);
-                }
-            }
-        });
-    }
-
     if (item.thumbRational) {
-        item.$view.find('.icon.landscape img').addCls('thumb').attr('src', item.thumbRational);
+        item.$view.find('.icon img').addCls('thumb').attr('src', item.thumbRational);
     } else {
         queue.push({
             type,
@@ -52,7 +37,7 @@ const queueItem = (queue, item) => {
             callback: src => {
                 if (src && item.$view) {
                     item.thumbRational = src;
-                    item.$view.find('.icon.landscape img').addCls('thumb').attr('src', src);
+                    item.$view.find('.icon img').addCls('thumb').attr('src', src);
                 }
             }
         });
