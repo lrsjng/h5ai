@@ -23,9 +23,6 @@ class Context {
 
         $this->options = Json::load($this->setup->get('CONF_PATH') . '/options.json');
 
-        $this->thumbnail_height = $this->options['thumbnails']['size'] ?? 240;
-        $this->thumbnail_width = floor($this->thumbnail_height * (4 / 3));
-
         $this->passhash = $this->query_option('passhash', '');
         $this->options['hasCustomPasshash'] = strcasecmp($this->passhash, Context::$DEFAULT_PASSHASH) !== 0;
         unset($this->options['passhash']);
@@ -251,6 +248,9 @@ class Context {
     public function get_thumbs($requests) {
         $hrefs = [];
         $thumbs = [];
+        $height = $this->options['thumbnails']['size'] ?? 240;
+        $width = floor($this->thumbnail_height * (4 / 3));
+
         foreach ($requests as $req) {
             $path = $this->to_path($req['href']);
             if (!array_key_exists($path, $thumbs)) {
@@ -261,7 +261,7 @@ class Context {
                 $hrefs[] = null;
                 continue;
             }
-            $hrefs[] = $thumbs[$path]->thumb($this->thumbnail_width, $this->thumbnail_height);
+            $hrefs[] = $thumbs[$path]->thumb($width, $height);
         }
         return $hrefs;
     }
