@@ -23,7 +23,7 @@ class Thumb {
         }
     }
 
-    public function thumb($type, $source_href) {
+    public function thumb($type, $source_href, $width, $height) {
         $source_path = $this->context->to_path($source_href);
         if (!file_exists($source_path) || Util::starts_with($source_path, $this->setup->get('CACHE_PUB_PATH'))) {
             return null;
@@ -46,7 +46,7 @@ class Thumb {
             }
         }
 
-        return $this->thumb_href($capture_path, $this->context->thumbnail_width, $this->context->thumbnail_height);
+        return $this->thumb_href($capture_path, $width, $height);
     }
 
     private function thumb_href($source_path, $width, $height) {
