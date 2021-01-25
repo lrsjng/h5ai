@@ -252,16 +252,16 @@ class Context {
         $hrefs = [];
         $thumbs = [];
         foreach ($requests as $req) {
-            $href = $this->to_path($req['href']);
-            if (!array_key_exists($href, $thumbs)) {
-                $thumbs[$href] = new Thumb($this, $href, $req['type']);
+            $path = $this->to_path($req['href']);
+            if (!array_key_exists($path, $thumbs)) {
+                $thumbs[$path] = new Thumb($this, $path, $req['type']);
             }
-            else if ($thumbs[$href]->type === 'file') {
+            else if ($thumbs[$path]->type === 'file') {
                 // File has already been mime tested and cannot have a thumbnail
                 $hrefs[] = null;
                 continue;
             }
-            $hrefs[] = $thumbs[$href]->thumb($this->thumbnail_width, $this->thumbnail_height);
+            $hrefs[] = $thumbs[$path]->thumb($this->thumbnail_width, $this->thumbnail_height);
         }
         return $hrefs;
     }
