@@ -18,6 +18,7 @@ const settings = Object.assign({
     setParentFolderLabels: false,
     sizes
 }, allsettings.view);
+let folderSettings = null;
 const sortedSizes = settings.sizes.sort((a, b) => a - b);
 const checkedModes = intersection(settings.modes, modes);
 const storekey = 'view';
@@ -86,15 +87,32 @@ const addCssStyles = () => {
     dom('<style></style>').text(styles.join('\n')).appTo('head');
 };
 
-const set = (mode, size) => {
-    const stored = store.get(storekey);
+// Gets the first truthy value in `candidates` that is also listed in `validOptions`
+const findFirstValid = (candidates, validOptions) => candidates.find(x => x && includes(validOptions, x));
 
-    mode = mode || stored && stored.mode;
-    size = size || stored && stored.size;
-    mode = includes(settings.modes, mode) ? mode : settings.modes[0];
-    size = includes(settings.sizes, size) ? size : settings.sizes[0];
-    store.put(storekey, {mode, size});
+const getModes = () => checkedModes;
+const getMode = () => findFirstValid(
+    [
+        (store.get(storekey) && store.get(storekey).mode),
+        (folderSettings && folderSettings.mode),
+        settings.modes[0]
+    ],
+    settings.modes
+);
 
+const getSizes = () => sortedSizes;
+const getSize = () => findFirstValid(
+    [
+        (store.get(storekey) && store.get(storekey).size),
+        (folderSettings && folderSettings.size),
+        settings.sizes[0]
+    ],
+    settings.sizes
+);
+
+const updateView = () => {
+    const mode = getMode();
+    const size = getSize();
     each(checkedModes, m => {
         if (m === mode) {
             $view.addCls('view-' + m);
@@ -114,12 +132,25 @@ const set = (mode, size) => {
     event.pub('view.mode.changed', mode, size);
 };
 
-const getModes = () => checkedModes;
-const getMode = () => store.get(storekey).mode;
-const setMode = mode => set(mode, null);
+const set = (mode, size) => {
+    const stored = store.get(storekey);
 
-const getSizes = () => sortedSizes;
-const getSize = () => store.get(storekey).size;
+    mode = mode || stored && stored.mode;
+    size = size || stored && stored.size;
+
+    // Unset if it's being set back to the default value
+    if (mode === settings.modes[0]) {
+        mode = undefined;
+    }
+    if (size === settings.sizes[0]) {
+        size = undefined;
+    }
+
+    store.put(storekey, {mode, size});
+    updateView();
+};
+
+const setMode = mode => set(mode, null);
 const setSize = size => set(null, size);
 
 const onMouseenter = ev => {
@@ -258,9 +289,14 @@ const onResize = () => {
     }
 };
 
+const onCustomOptionsLoaded = options => {
+    folderSettings = options && options.view;
+    updateView();
+};
+
 const init = () => {
     addCssStyles();
-    set();
+    updateView();
 
     $view.appTo(base.$content);
     $hint.hide();
@@ -270,6 +306,7 @@ const init = () => {
     event.sub('location.changed', onLocationChanged);
     event.sub('location.refreshed', onLocationRefreshed);
     event.sub('resize', onResize);
+    event.sub('custom.optionsLoaded', onCustomOptionsLoaded);
     onResize();
 };
 
