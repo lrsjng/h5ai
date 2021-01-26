@@ -59,16 +59,21 @@ class Util {
         return $rc;
     }
 
-    public static function exec_cmdv($cmdv) {
-        if (!is_array($cmdv)) {
-            $cmdv = func_get_args();
-        }
+    public static function exec_cmdv($cmdv, $capture = false, $redirect = false) {
         $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
 
-        $lines = [];
-        $rc = null;
-        exec($cmd, $lines, $rc);
-        return implode("\n", $lines);
+        if ($redirect) {
+            // Redirect stderr to stdout (notably for ffmpeg)
+            $cmd .= ' 2>&1'; // This cannot be shellarg-escaped
+        }
+
+        if ($capture){
+            $lines = [];
+            $rc = null;
+            exec($cmd, $lines, $rc);
+            return [implode("\n", $lines), $rc];
+        }
+        return exec($cmd);
     }
 
     public static function exec_0($cmd) {

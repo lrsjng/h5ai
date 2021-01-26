@@ -133,7 +133,7 @@ class Setup {
                 $cmd = 'where';
             }
 
-            foreach (['avconv', 'convert', 'du', 'ffmpeg', 'gm', 'tar', 'zip'] as $c) {
+            foreach (['avconv', 'avprobe', 'convert', 'du', 'ffmpeg', 'ffprobe', 'gm', 'tar', 'zip'] as $c) {
                 $cmds[$c] = ($cmd !== false) && (Util::exec_0($cmd . ' ' . $c) || Util::exec_0($cmd . ' ' . $c . '.exe'));
             }
 

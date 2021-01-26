@@ -13,7 +13,6 @@ const settings = Object.assign({
     exif: false,
     chunksize: 20
 }, allsettings.thumbnails);
-const landscapeRatio = 4 / 3;
 
 
 const queueItem = (queue, item) => {
@@ -29,33 +28,16 @@ const queueItem = (queue, item) => {
         return;
     }
 
-    if (item.thumbSquare) {
-        item.$view.find('.icon.square img').addCls('thumb').attr('src', item.thumbSquare);
-    } else {
-        queue.push({
-            type,
-            href: item.absHref,
-            ratio: 1,
-            callback: src => {
-                if (src && item.$view) {
-                    item.thumbSquare = src;
-                    item.$view.find('.icon.square img').addCls('thumb').attr('src', src);
-                }
-            }
-        });
-    }
-
     if (item.thumbRational) {
-        item.$view.find('.icon.landscape img').addCls('thumb').attr('src', item.thumbRational);
+        item.$view.find('.icon img').addCls('thumb').attr('src', item.thumbRational);
     } else {
         queue.push({
             type,
             href: item.absHref,
-            ratio: landscapeRatio,
             callback: src => {
                 if (src && item.$view) {
                     item.thumbRational = src;
-                    item.$view.find('.icon.landscape img').addCls('thumb').attr('src', src);
+                    item.$view.find('.icon img').addCls('thumb').attr('src', src);
                 }
             }
         });
@@ -67,8 +49,6 @@ const requestQueue = queue => {
         return {
             type: req.type,
             href: req.href,
-            width: Math.round(settings.size * req.ratio),
-            height: settings.size
         };
     });
 
