@@ -34,6 +34,7 @@ class Item {
     public $href;
     public $date;
     public $size;
+    public $sha1;
     public $is_folder;
     public $is_content_fetched;
 
@@ -45,6 +46,7 @@ class Item {
         $this->href = $context->to_href($this->path, $this->is_folder);
         $this->date = @filemtime($this->path);
         $this->size = Util::filesize($context, $this->path);
+        $this->sha1 = Util::sha1($context, $this->path);
         $this->is_content_fetched = false;
     }
 
@@ -52,7 +54,8 @@ class Item {
         $obj = [
             'href' => $this->href,
             'time' => $this->date * 1000, // seconds (PHP) to milliseconds (JavaScript)
-            'size' => $this->size
+            'size' => $this->size,
+            'sha1' => $this->sha1
         ];
 
         if ($this->is_folder) {

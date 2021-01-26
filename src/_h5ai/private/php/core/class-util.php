@@ -86,4 +86,13 @@ class Util {
         $withDu = $context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du';
         return Filesize::getCachedSize($path, $withFoldersize, $withDu);
     }
+
+    public static function sha1($context, $path, $clear_cache = false) {
+        $sha1Enabled = $context->query_option('sha1.enabled', false);
+        if($sha1Enabled) {
+    	   return SHA1::getCachedHash($path, $clear_cache);
+        } else {
+            return null;
+        }
+    }
 }

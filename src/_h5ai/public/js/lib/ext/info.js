@@ -20,6 +20,7 @@ const tpl =
                 <div class="label"></div>
                 <div class="time"></div>
                 <div class="size"></div>
+                <div class="sha1"></div>
                 <div class="content">
                     <span class="folders"></span> <span class="l10n-folders"></span>,
                     <span class="files"></span> <span class="l10n-files"></span>
@@ -39,6 +40,7 @@ let $img;
 let $label;
 let $time;
 let $size;
+let $sha1;
 let $content;
 let $folders;
 let $files;
@@ -83,6 +85,13 @@ const update = item => {
         $size.show();
     } else {
         $size.hide();
+    }
+
+    if(item.sha1) {
+        $sha1.text(item.sha1 + ' (SHA-1)');
+        $sha1.show();
+    } else {
+        $sha1.hide();
     }
 
     if (item.isContentFetched) {
@@ -131,6 +140,7 @@ const init = () => {
     $label = $info.find('.label');
     $time = $info.find('.time');
     $size = $info.find('.size');
+    $sha1 = $info.find('.sha1');
     $content = $info.find('.content');
     $folders = $info.find('.folders');
     $files = $info.find('.files');

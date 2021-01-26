@@ -64,6 +64,11 @@ const getItem = options => {
     if (isNum(options.size)) {
         item.size = options.size;
     }
+    
+    if(options.sha1) {
+        item.sha1 = options.sha1;
+    }
+
     if (options.managed) {
         item.isManaged = true;
     }
@@ -120,6 +125,7 @@ const Item = absHref => {
         label: createLabel(absHref === '/' ? location.getDomain() : split.name),
         time: null,
         size: null,
+        sha1: null,
         parent: null,
         isManaged: null,
         content: {}

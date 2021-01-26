@@ -186,7 +186,7 @@
     */
     "info": {
         "enabled": true,
-        "show": false,
+        "show": true,
         "qrcode": true,
         "qrFill": "#999",
         "qrBack": "#fff"
@@ -326,6 +326,14 @@
         "enabled": true,
         "clickndrag": true,
         "checkboxes": true
+    },
+
+    /*
+    Calc the SHA-1 checksum of files.
+    This operation is real slow for large files.
+    */
+    "sha1": {
+        "enabled": true
     },
 
     /*
