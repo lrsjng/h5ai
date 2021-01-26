@@ -29,8 +29,12 @@ class Thumb {
             return null;
         }
 
-        $capture_path = $source_path;
-        if ($type === 'img') {
+        $capture_path = false;
+        $fileparts = pathinfo($source_path);
+        $custom_path = $fileparts['dirname'].'/.thumb/'.$fileparts['filename'].'.jpg';
+        if (file_exists($custom_path)) {
+            $capture_path = $custom_path;
+        } elseif ($type === 'img') {
             $capture_path = $source_path;
         } elseif ($type === 'mov') {
             if ($this->setup->get('HAS_CMD_AVCONV')) {
@@ -46,7 +50,7 @@ class Thumb {
             }
         }
 
-        return $this->thumb_href($capture_path, $width, $height);
+        return $capture_path ? $this->thumb_href($capture_path, $width, $height) : null;
     }
 
     private function thumb_href($source_path, $width, $height) {
