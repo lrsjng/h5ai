@@ -249,7 +249,7 @@ class Context {
         $hrefs = [];
         $thumbs = [];
         $height = $this->options['thumbnails']['size'] ?? 240;
-        $width = floor($this->thumbnail_height * (4 / 3));
+        $width = floor($height * (4 / 3));
 
         foreach ($requests as $req) {
             $path = $this->to_path($req['href']);
