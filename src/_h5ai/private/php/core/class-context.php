@@ -248,7 +248,7 @@ class Context {
     public function get_thumbs($requests) {
         $hrefs = [];
         $height = $this->options['thumbnails']['size'] ?? 240;
-        $width = floor($this->thumbnail_height * (4 / 3));
+        $width = floor($height * (4 / 3));
 
         foreach ($requests as $req) {
             $thumb = new Thumb($this);
