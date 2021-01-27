@@ -359,6 +359,7 @@
     - seek: number, percentage of total video duration to seek into
     - exif: boolean, use included EXIF thumbs if possible
     - chunksize: int, number of thumbs per request
+    - blocklist: array of strings, do not generate thumbnails for these types
     */
     "thumbnails": {
         "enabled": true,
@@ -369,7 +370,8 @@
         "size": 240,
         "seek": 50,
         "exif": false,
-        "chunksize": 20
+        "chunksize": 20,
+        "blocklist": []
     },
 
     /*

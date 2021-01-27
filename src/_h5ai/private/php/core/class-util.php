@@ -129,7 +129,7 @@ class Util {
         return $finfo->file($source_path);
     }
 
-    public static function mime_to_type($mime) {
+    public static function mime_to_handler_type($mime) {
         if (strpos($mime, 'image') !== false) {
             return 'img';
         }

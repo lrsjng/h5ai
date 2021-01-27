@@ -252,6 +252,10 @@ class Context {
         $width = floor($height * (4 / 3));
 
         foreach ($requests as $req) {
+            if ($req['type'] === 'blocked') {
+                $hrefs[] = null;
+                continue;
+            }
             $path = $this->to_path($req['href']);
             if (!array_key_exists($path, $thumbs)) {
                 $thumbs[$path] = new Thumb($this, $path, $req['type']);

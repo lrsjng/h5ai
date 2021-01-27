@@ -11,14 +11,17 @@ const settings = Object.assign({
     delay: 1,
     size: 100,
     exif: false,
-    chunksize: 20
+    chunksize: 20,
+    blocklist: [],
 }, allsettings.thumbnails);
 
 
 const queueItem = (queue, item) => {
     let type = null;
 
-    if (includes(settings.img, item.type)) {
+    if (includes(settings.blocklist, item.type)) {
+        type = 'blocked';
+    } else if (includes(settings.img, item.type)) {
         type = 'img';
     } else if (includes(settings.mov, item.type)) {
         type = 'mov';
