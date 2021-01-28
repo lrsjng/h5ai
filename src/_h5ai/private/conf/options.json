@@ -349,7 +349,8 @@
 
     /*
     Show thumbnails for image files. Needs the "/_h5ai/public/cache" folder to be
-    writable for the web Server.
+    writable for the web Server. Removing a default value from an array of strings
+    results in adding it to the blocklist implicitly.
 
     - img: array of strings
     - mov: array of strings

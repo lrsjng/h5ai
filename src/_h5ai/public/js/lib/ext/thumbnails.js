@@ -1,9 +1,9 @@
-const {each, map, includes} = require('../util');
+const {each, map, includes, difference} = require('../util');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
-const settings = Object.assign({
+const defaults = {
     enabled: false,
     img: ['img-bmp', 'img-gif', 'img-ico', 'img-jpg', 'img-png'],
     mov: ['vid-avi', 'vid-flv', 'vid-mkv', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm'],
@@ -13,8 +13,12 @@ const settings = Object.assign({
     exif: false,
     chunksize: 20,
     blocklist: [],
-}, allsettings.thumbnails);
-
+};
+const default_types = defaults.img.concat(defaults.mov, defaults.doc, defaults.ar);
+const settings = Object.assign(defaults, allsettings.thumbnails);
+settings.blocklist = settings.blocklist.concat(
+    difference(default_types,
+        settings.img.concat(settings.mov, settings.doc, settings.ar)));
 
 const queueItem = (queue, item) => {
     let type = null;
