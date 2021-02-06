@@ -234,11 +234,9 @@
     Show an image preview on click.
 
     - types: array of strings
-    - size: number, sample size, or false for original size
     */
     "preview-img": {
         "enabled": true,
-        "size": false,
         "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw", "img-svg"]
     },
 
