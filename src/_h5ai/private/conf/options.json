@@ -234,11 +234,9 @@
     Show an image preview on click.
 
     - types: array of strings
-    - size: number, sample size, or false for original size
     */
     "preview-img": {
         "enabled": true,
-        "size": false,
         "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw", "img-svg"]
     },
 
@@ -349,15 +347,18 @@
 
     /*
     Show thumbnails for image files. Needs the "/_h5ai/public/cache" folder to be
-    writable for the web Server.
+    writable for the web Server. Removing a default value from an array of strings
+    results in adding it to the blocklist implicitly.
 
     - img: array of strings
     - mov: array of strings
     - doc: array of strings
     - delay: number, delay in milliseconds after "dom-ready" before thumb-requesting starts
-    - size: number, size in pixel of the generated thumbnails
+    - size: number, height in pixel of the generated thumbnails
+    - seek: number, percentage of total video duration to seek into
     - exif: boolean, use included EXIF thumbs if possible
     - chunksize: int, number of thumbs per request
+    - blocklist: array of strings, do not generate thumbnails for these types
     */
     "thumbnails": {
         "enabled": true,
@@ -366,8 +367,10 @@
         "doc": ["x-pdf", "x-ps"],
         "delay": 1,
         "size": 240,
+        "seek": 50,
         "exif": false,
-        "chunksize": 20
+        "chunksize": 20,
+        "blocklist": []
     },
 
     /*

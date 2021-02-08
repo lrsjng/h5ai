@@ -247,12 +247,26 @@ class Context {
 
     public function get_thumbs($requests) {
         $hrefs = [];
+        $thumbs = [];
+        $height = $this->options['thumbnails']['size'] ?? 240;
+        $width = floor($height * (4 / 3));
 
         foreach ($requests as $req) {
-            $thumb = new Thumb($this);
-            $hrefs[] = $thumb->thumb($req['type'], $req['href'], $req['width'], $req['height']);
+            if ($req['type'] === 'blocked') {
+                $hrefs[] = null;
+                continue;
+            }
+            $path = $this->to_path($req['href']);
+            if (!array_key_exists($path, $thumbs)) {
+                $thumbs[$path] = new Thumb($this, $path, $req['type']);
+            }
+            else if ($thumbs[$path]->type === 'file') {
+                // File has already been mime tested and cannot have a thumbnail
+                $hrefs[] = null;
+                continue;
+            }
+            $hrefs[] = $thumbs[$path]->thumb($width, $height);
         }
-
         return $hrefs;
     }
 

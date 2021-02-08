@@ -103,6 +103,11 @@ const addTests = () => {
     );
 
     addTest(
+        'Fileinfo module', 'PHP Fileinfo extension is available',
+        setup.HAS_PHP_FILEINFO
+    );
+
+    addTest(
         'Use EXIF thumbs', 'PHP EXIF extension available',
         setup.HAS_PHP_EXIF
     );
