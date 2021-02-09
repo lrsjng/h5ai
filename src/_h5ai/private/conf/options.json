@@ -26,6 +26,17 @@
         ]
     },
 
+    /*
+    Custom Page Titles
+    - Placeholders available: DIR, PATH
+    - Link on "mydomain.com/foo/bar" with Pattern "MyShare DIR - PATH" generates "MyShare bar - foo/bar"
+    - If DIR is "" (doc root) fallback to "index"
+    (title has 65 and meta has 155 max. chars)
+    */
+    "pagetitle": {
+        "title": "DIR - powered by h5ai",
+        "desc": "shared files: PATH"
+    },
 
 
     /*

@@ -7,10 +7,9 @@ html(class='no-js', lang='en')
     head
         meta(charset='utf-8')
         meta(http-equiv='x-ua-compatible', content='ie=edge')
-        title #{title}
-        meta(name='description', content=title)
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='shortcut icon', href!='<?= $public_href; ?>images/favicon/favicon-16-32.ico')
+        meta(property='og:image', content!='<?= $public_href; ?>images/favicon/favicon-152.png')
         link(rel='apple-touch-icon-precomposed', type='image/png', href!='<?= $public_href; ?>images/favicon/favicon-152.png')
         link(rel='stylesheet', href!='<?= $public_href; ?>css/styles.css')
         <?php if (!$fallback_mode) { ?>
