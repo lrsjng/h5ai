@@ -20,6 +20,7 @@ const tpl =
                 <div class="label"></div>
                 <div class="time"></div>
                 <div class="size"></div>
+                <div class="type"></div>
                 <div class="content">
                     <span class="folders"></span> <span class="l10n-folders"></span>,
                     <span class="files"></span> <span class="l10n-files"></span>
@@ -39,6 +40,7 @@ let $img;
 let $label;
 let $time;
 let $size;
+let $type;
 let $content;
 let $folders;
 let $files;
@@ -84,6 +86,8 @@ const update = item => {
     } else {
         $size.hide();
     }
+
+    $type.text(item.type);
 
     if (item.isContentFetched) {
         const stats = item.getStats();
@@ -131,6 +135,7 @@ const init = () => {
     $label = $info.find('.label');
     $time = $info.find('.time');
     $size = $info.find('.size');
+    $type = $info.find('.type');
     $content = $info.find('.content');
     $folders = $info.find('.folders');
     $files = $info.find('.files');

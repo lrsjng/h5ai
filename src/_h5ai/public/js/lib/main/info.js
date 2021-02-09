@@ -103,12 +103,27 @@ const addTests = () => {
     );
 
     addTest(
+        'Fileinfo module', 'PHP Fileinfo extension is available',
+        setup.HAS_PHP_FILEINFO
+    );
+
+    addTest(
+        'Zip module', 'PHP Zip extension is available',
+        setup.HAS_PHP_ZIP
+    );
+
+    addTest(
+        'Rar module', 'PHP Rar extension is available',
+        setup.HAS_PHP_RAR
+    );
+
+    addTest(
         'Use EXIF thumbs', 'PHP EXIF extension available',
         setup.HAS_PHP_EXIF
     );
 
     addTest(
-        'Movie thumbs', 'Command line program <code>avconv</code> or <code>ffmpeg</code> available',
+        'Video thumbs', 'Command line program <code>avconv</code> or <code>ffmpeg</code> available',
         setup.HAS_CMD_AVCONV || setup.HAS_CMD_FFMPEG
     );
 

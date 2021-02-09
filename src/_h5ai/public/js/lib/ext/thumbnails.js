@@ -1,61 +1,55 @@
-const {each, map, includes} = require('../util');
+const {each, map, includes, difference} = require('../util');
 const server = require('../server');
 const event = require('../core/event');
 const allsettings = require('../core/settings');
 
-const settings = Object.assign({
+const defaults = {
     enabled: false,
-    img: ['img-bmp', 'img-gif', 'img-ico', 'img-jpg', 'img-png'],
-    mov: ['vid-avi', 'vid-flv', 'vid-mkv', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm'],
+    img: ['img-bmp', 'img-gif', 'img-ico', 'img-jpg', 'img-png', 'img-svg', 'img-tiff'],
+    mov: ['vid-avi', 'vid-mkv', 'vid-flv', 'vid-swf', 'vid-mov', 'vid-mp4', 'vid-mpg', 'vid-webm', 'vid-wmv', 'vid-ts'],
     doc: ['x-pdf', 'x-ps'],
+    ar: ['ar-zip', 'ar-rar'],
     delay: 1,
-    size: 100,
     exif: false,
-    chunksize: 20
-}, allsettings.thumbnails);
-const landscapeRatio = 4 / 3;
-
+    chunksize: 20,
+    blocklist: [],
+};
+const default_types = defaults.img.concat(defaults.mov, defaults.doc, defaults.ar);
+const settings = Object.assign(defaults, allsettings.thumbnails);
+const current_settings = settings.img.concat(settings.mov, settings.doc, settings.ar);
+settings.blocklist = settings.blocklist.concat(
+    difference(default_types, current_settings));
 
 const queueItem = (queue, item) => {
     let type = null;
 
-    if (includes(settings.img, item.type)) {
-        type = 'img';
-    } else if (includes(settings.mov, item.type)) {
-        type = 'mov';
-    } else if (includes(settings.doc, item.type)) {
-        type = 'doc';
-    } else {
+    if (includes(settings.blocklist, item.type)) {
+        type = 'blocked';
+    } else if (includes(current_settings, item.type)) {
+        type = item.type;
+    } else if (item.type === 'folder') {
         return;
-    }
-
-    if (item.thumbSquare) {
-        item.$view.find('.icon.square img').addCls('thumb').attr('src', item.thumbSquare);
     } else {
-        queue.push({
-            type,
-            href: item.absHref,
-            ratio: 1,
-            callback: src => {
-                if (src && item.$view) {
-                    item.thumbSquare = src;
-                    item.$view.find('.icon.square img').addCls('thumb').attr('src', src);
-                }
-            }
-        });
+        type = 'file'
     }
 
     if (item.thumbRational) {
-        item.$view.find('.icon.landscape img').addCls('thumb').attr('src', item.thumbRational);
+        item.$view.find('.icon img').addCls('thumb').attr('src', item.thumbRational);
     } else {
         queue.push({
             type,
             href: item.absHref,
-            ratio: landscapeRatio,
             callback: src => {
                 if (src && item.$view) {
                     item.thumbRational = src;
-                    item.$view.find('.icon.landscape img').addCls('thumb').attr('src', src);
+                    item.$view.find('.icon img').addCls('thumb').attr('src', src);
+                }
+            },
+            callback_type: filetype => {
+                if (filetype && item.$view) {
+                    console.log(`Updated type for ${item.label}: ${item.type}->${filetype}`);
+                    item.type = filetype;
+                    event.pub('item.changed', item);
                 }
             }
         });
@@ -67,8 +61,6 @@ const requestQueue = queue => {
         return {
             type: req.type,
             href: req.href,
-            width: Math.round(settings.size * req.ratio),
-            height: settings.size
         };
     });
 
@@ -77,7 +69,14 @@ const requestQueue = queue => {
         thumbs
     }).then(json => {
         each(queue, (req, idx) => {
-            req.callback(json && json.thumbs ? json.thumbs[idx] : null);
+            if (json) {
+                if (json.thumbs) {
+                    req.callback(json.thumbs[idx]);
+                }
+                if (json.filetypes) {
+                    req.callback_type(json.filetypes[idx]);
+                }
+            }
         });
     });
 };

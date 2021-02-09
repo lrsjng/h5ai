@@ -59,16 +59,21 @@ class Util {
         return $rc;
     }
 
-    public static function exec_cmdv($cmdv) {
-        if (!is_array($cmdv)) {
-            $cmdv = func_get_args();
-        }
+    public static function exec_cmdv($cmdv, $capture = false, $redirect = false) {
         $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
 
-        $lines = [];
-        $rc = null;
-        exec($cmd, $lines, $rc);
-        return implode("\n", $lines);
+        if ($redirect) {
+            // Redirect stderr to stdout (notably for ffmpeg)
+            $cmd .= ' 2>&1'; // This cannot be shellarg-escaped
+        }
+
+        if ($capture){
+            $lines = [];
+            $rc = null;
+            exec($cmd, $lines, $rc);
+            return [$lines, $rc];
+        }
+        return exec($cmd);
     }
 
     public static function exec_0($cmd) {
@@ -81,9 +86,48 @@ class Util {
         return false;
     }
 
+    public static function proc_open_cmdv($cmdv, &$output, &$error) {
+        $cmd = implode(' ', array_map('escapeshellarg', $cmdv));
+
+        $descriptorspec = array(
+            0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+            1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+            2 => array("pipe", "w")   // stderr is a pipe the child will write to
+        );
+        $process = proc_open($cmd, $descriptorspec, $pipes);
+
+        if (is_resource($process)) {
+            fclose($pipes[0]);  // We usually don't need stdin
+
+            if (is_resource($output)) {
+                stream_copy_to_stream($pipes[1], $output);
+            } else {
+                $output = stream_get_contents($pipes[1]);
+            }
+            fclose($pipes[1]);
+
+            $error = stream_get_contents($pipes[2]);
+            fclose($pipes[2]);
+
+            $exit_code = proc_close($process);
+            return $exit_code;
+        }
+        return -1;
+    }
+
     public static function filesize($context, $path) {
         $withFoldersize = $context->query_option('foldersize.enabled', false);
         $withDu = $context->get_setup()->get('HAS_CMD_DU') && $context->query_option('foldersize.type', null) === 'shell-du';
         return Filesize::getCachedSize($path, $withFoldersize, $withDu);
+    }
+
+    public static function get_mimetype($source_path) {
+        //return mime_content_type($filename);
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        return $finfo->file($source_path);
+    }
+
+    public static function log($log_msg, $filename = __DIR__."/../../cache/debug.log") {
+        file_put_contents($filename, date('Y-m-d H:i:s')." ". $log_msg . PHP_EOL, FILE_APPEND);
     }
 }

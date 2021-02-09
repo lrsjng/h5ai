@@ -234,11 +234,9 @@
     Show an image preview on click.
 
     - types: array of strings
-    - size: number, sample size, or false for original size
     */
     "preview-img": {
         "enabled": true,
-        "size": false,
         "types": ["img", "img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-raw", "img-svg"]
     },
 
@@ -292,7 +290,7 @@
     "preview-vid": {
         "enabled": true,
         "autoplay": true,
-        "types": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"]
+        "types": ["vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"]
     },
 
     /*
@@ -349,25 +347,32 @@
 
     /*
     Show thumbnails for image files. Needs the "/_h5ai/public/cache" folder to be
-    writable for the web Server.
+    writable for the web Server. Removing a default value from an array of strings
+    results in adding it to the blocklist implicitly.
 
     - img: array of strings
     - mov: array of strings
     - doc: array of strings
+    - ar : array of strings
     - delay: number, delay in milliseconds after "dom-ready" before thumb-requesting starts
-    - size: number, size in pixel of the generated thumbnails
+    - size: number, height in pixel of the generated thumbnails
+    - seek: number, percentage of total video duration to seek into
     - exif: boolean, use included EXIF thumbs if possible
     - chunksize: int, number of thumbs per request
+    - blocklist: array of strings, do not generate thumbnails for these types
     */
     "thumbnails": {
         "enabled": true,
-        "img": ["img-bmp", "img-gif", "img-ico", "img-jpg", "img-png"],
-        "mov": ["vid-avi", "vid-flv", "vid-mkv", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm"],
+        "img": ["img-bmp", "img-gif", "img-ico", "img-jpg", "img-png", "img-svg", "img-tiff"],
+        "mov": ["vid-avi", "vid-mkv", "vid-flv", "vid-swf", "vid-mov", "vid-mp4", "vid-mpg", "vid-webm", "vid-wmv", "vid-ts"],
         "doc": ["x-pdf", "x-ps"],
+        "ar": ["ar-zip", "ar-rar"],
         "delay": 1,
         "size": 240,
+        "seek": 50,
         "exif": false,
-        "chunksize": 20
+        "chunksize": 20,
+        "blocklist": []
     },
 
     /*

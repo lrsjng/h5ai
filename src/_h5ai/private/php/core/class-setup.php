@@ -66,6 +66,11 @@ class Setup {
             $has_php_jpeg = array_key_exists('JPEG Support', $infos) && $infos['JPEG Support'];
         }
         $this->set('HAS_PHP_JPEG', $has_php_jpeg);
+
+        $this->set('HAS_PHP_FILEINFO', extension_loaded('fileinfo'));
+
+        $this->set('HAS_PHP_ZIP', extension_loaded('zip'));
+        $this->set('HAS_PHP_RAR', extension_loaded('rar'));
     }
 
     private function add_app_metadata() {
@@ -133,7 +138,7 @@ class Setup {
                 $cmd = 'where';
             }
 
-            foreach (['avconv', 'convert', 'du', 'ffmpeg', 'gm', 'tar', 'zip'] as $c) {
+            foreach (['avconv', 'avprobe', 'convert', 'du', 'ffmpeg', 'ffprobe', 'gm', 'tar', 'zip'] as $c) {
                 $cmds[$c] = ($cmd !== false) && (Util::exec_0($cmd . ' ' . $c) || Util::exec_0($cmd . ' ' . $c . '.exe'));
             }
 
@@ -159,6 +164,9 @@ class Setup {
                 'PHP_ARCH',
                 'HAS_PHP_EXIF',
                 'HAS_PHP_JPEG',
+                'HAS_PHP_FILEINFO',
+                'HAS_PHP_ZIP',
+                'HAS_PHP_RAR',
 
                 'SERVER_NAME',
                 'SERVER_VERSION',

@@ -15,6 +15,7 @@ class Context {
     private $setup;
     private $options;
     private $passhash;
+    private $types;
 
     public function __construct($session, $request, $setup) {
         $this->session = $session;
@@ -49,7 +50,10 @@ class Context {
     }
 
     public function get_types() {
-        return Json::load($this->setup->get('CONF_PATH') . '/types.json');
+        if (!isset($this->types)) {
+            $this->types = Json::load($this->setup->get('CONF_PATH') . '/types.json');
+        }
+        return $this->types;
     }
 
     public function login_admin($pass) {
@@ -188,7 +192,7 @@ class Context {
         $cache = [];
         $folder = Item::get($this, $this->to_path($href), $cache);
 
-        // add content of subfolders
+        // Add content of subfolders.
         if ($what >= 2 && $folder !== null) {
             foreach ($folder->get_content($cache) as $item) {
                 $item->get_content($cache);
@@ -196,7 +200,7 @@ class Context {
             $folder = $folder->get_parent($cache);
         }
 
-        // add content of this folder and all parent folders
+        // Add content of this folder and all parent folders.
         while ($what >= 1 && $folder !== null) {
             $folder->get_content($cache);
             $folder = $folder->get_parent($cache);
@@ -247,13 +251,42 @@ class Context {
 
     public function get_thumbs($requests) {
         $hrefs = [];
+        $thumbs = [];
+        $filetypes = [];
+
+        $height = $this->options['thumbnails']['size'] ?? 240;
+        $width = floor($height * (4 / 3));
+
+        $db = new CacheDB($this->setup);
 
         foreach ($requests as $req) {
-            $thumb = new Thumb($this);
-            $hrefs[] = $thumb->thumb($req['type'], $req['href'], $req['width'], $req['height']);
-        }
+            if ($req['type'] === 'blocked') {
+                // FIXME the client is still free to choose what is blocked or not.
+                $hrefs[] = null;
+                $filetypes[] = null;
+                continue;
+            }
+            $path = $this->to_path($req['href']);
+            if (!array_key_exists($path, $thumbs)) {
+                $thumbs[$path] = new Thumb($this, $path, $req['type'], $db);
+            }
+            else if ($thumbs[$path]->type->name === 'file') {
+                // File has already been mime tested and cannot have a thumbnail
+                // Only applies if we request the same path again in the same request (security measure)
+                $hrefs[] = null;
+                $filetypes[] = 'file';
+                continue;
+            }
 
-        return $hrefs;
+            $hrefs[] = $thumbs[$path]->thumb($width, $height);
+
+            if ($thumbs[$path]->type->was_wrong()) {
+                $filetypes[] = $thumbs[$path]->type->name;
+            } else {
+                $filetypes[] = null; // No client-side update needed.
+            }
+        }
+        return [$hrefs, $filetypes];
     }
 
     private function prefix_x_head_href($href) {

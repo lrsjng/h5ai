@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.31.0 - *2020-02-07*
+
+* update all languages
+* drastically reduce disk usage of thumbnails
+* fix thumbnails for video files under 10 seconds
+* add thumbnail support for most common archive formats (requires Zip, Rar PHP modules)
+* fix broken thumbnails and previews for files with incorrect file extensions
+* add file type detection based on MIME (requires Fileinfo PHP module)
+* remove client's ability to request custom samples and thumbnails
+
+
+## v0.30.0 - *2020-01-24*
+
 * now require PHP 7.0.0+
 * fix archive-single-item problem
 * add header/footer search stop condition
