@@ -289,6 +289,18 @@ class Context {
 
         $html = '';
 
+        $title = $this->query_option('pagetitle.title', "DIR index - powered by h5ai");
+        $meta  = $this->query_option('pagetitle.desc',  "shared files in PATH");
+
+        $path = trim($this->setup->get('REQUEST_HREF'), '/') ?: "index"; // fallback to index if root
+        $dir = substr(strrchr($path, '/'), 1) ?: $path; // fallback to dir = path if path contains no /
+
+        $title = str_replace('DIR', $dir, str_replace('PATH', $path, $title));
+        $meta  = str_replace('DIR', $dir, str_replace('PATH', $path, $meta ));
+
+        $html .= '<title>' . $title . '</title>';
+        $html .= '<meta name="description" content="' . $meta . '"/>';
+
         foreach ($styles as $href) {
             $html .= '<link rel="stylesheet" href="' . $this->prefix_x_head_href($href) . '" class="x-head">';
         }
