@@ -36,9 +36,10 @@ configurations).
 * PHP FileInfo module
 * PHP Sqlite3 module
 * PHP Zip module
-* PHP Rar module
+* PHP [Rar](https://pecl.php.net/package/rar) module
 * du
 * tar
+* zip
 
 ## License
 
