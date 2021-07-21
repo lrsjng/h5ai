@@ -1,8 +1,0 @@
-extends ./page.tpl.pug
-
-block init
-    - var title = `index - powered by h5ai v${pkg.version} (${pkg.homepage})`
-    - var module = 'index'
-
-block body
-    div#fallback <?= $fallback_html; ?>
