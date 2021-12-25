@@ -1,15 +1,17 @@
 {
   "name": "h5ai",
-  "version": "0.30.0",
+  "version": "0.30.1",
   "description": "Modern HTTP web server index.",
   "homepage": "https://larsjung.de/h5ai/",
   "author": "Lars Jung <lrsjng@gmail.com> (https://larsjung.de)",
   "license": "MIT",
+  "main": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/lrsjng/h5ai.git"
   },
   "scripts": {
+    "prepare": "npm run build",
     "lint": "eslint .",
     "test": "node test",
     "build": "node ghu release",
