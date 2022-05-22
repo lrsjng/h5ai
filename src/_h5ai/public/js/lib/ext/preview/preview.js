@@ -5,6 +5,7 @@ const allsettings = require('../../core/settings');
 const store = require('../../core/store');
 
 const win = global.window;
+const doc = win.document;
 const settings = Object.assign({
     enabled: true
 }, allsettings.preview);
@@ -27,11 +28,15 @@ const overlayTpl =
         </div>`;
 const storekey = 'ext/preview';
 
+const TOUCH_MAX_DELAY = 250;
+const TOUCH_GESTURE_DISTANCE = 40;
+
 let isFullscreen = store.get(storekey) || false;
 let userAliveTimeoutId = null;
 let spinnerIsVisible = false;
 let spinnerTimeoutId = null;
 let session = null;
+let touchState = {};
 
 const centerContent = () => {
     const $container = dom('#pv-container');
@@ -54,7 +59,7 @@ const centerContent = () => {
 };
 
 const updateGui = () => {
-    const docEl = win.document.documentElement;
+    const docEl = doc.documentElement;
     const winWidth = docEl.clientWidth;
     const winHeight = docEl.clientHeight;
     const margin = isFullscreen ? 0 : 20;
@@ -149,9 +154,69 @@ const onKeydown = ev => {
     }
 };
 
+const onTouchstart = ev => {
+    const now = Date.now();
+    const deltaT = now - (touchState.last || now);
+    const touch = ev.changedTouches;
+
+    touchState = {
+        x: touch[0].pageX,
+        y: touch[0].pageY,
+        last: now,
+        deltaX: 0,
+        deltaY: 0,
+        isHorizontal: null,
+        isDoubleTap: touch.length === 1 && deltaT > 0 && deltaT <= TOUCH_MAX_DELAY
+    };
+
+    dom(doc)
+        .on('touchmove', onTouchmove) // eslint-disable-line no-use-before-define
+        .on('touchend', onTouchend); // eslint-disable-line no-use-before-define
+};
+
+const onTouchmove = ev => {
+    const touch = ev.changedTouches;
+    if (touch && touch.length > 1 || ev.scale && ev.scale !== 1) {
+        return;
+    }
+
+    touchState.deltaX = touch[0].pageX - touchState.x;
+    touchState.deltaY = touch[0].pageY - touchState.y;
+
+    if (touchState.isHorizontal === null) {
+        touchState.isHorizontal = Math.abs(touchState.deltaX) >= Math.abs(touchState.deltaY);
+    }
+    dropEvent(ev);
+};
+
+const onTouchend = ev => {
+    const dX = Math.abs(touchState.deltaX);
+    const dY = Math.abs(touchState.deltaY);
+
+    if (touchState.isDoubleTap && dX <= TOUCH_GESTURE_DISTANCE && dY <= TOUCH_GESTURE_DISTANCE) {
+        dropEvent(ev);
+        toggleFullscreen();
+    } else if (touchState.isHorizontal && dX > TOUCH_GESTURE_DISTANCE && Date.now() - touchState.last < TOUCH_MAX_DELAY) {
+        switch (touchState.deltaX > 0) {
+        case true:
+            dropEvent(ev);
+            prev();
+            break;
+        default:
+            dropEvent(ev);
+            next();
+        }
+    }
+    dom(doc)
+        .off('touchmove', onTouchmove)
+        .off('touchend', onTouchend);
+};
+
 const enter = () => {
     setLabels([]);
-    dom('#pv-container').clr();
+    dom('#pv-container')
+        .on('touchstart', onTouchstart)
+        .clr();
     dom('#pv-overlay').show();
     dom(win).on('keydown', onKeydown);
     updateGui();
@@ -159,7 +224,9 @@ const enter = () => {
 
 const exit = () => {
     setLabels([]);
-    dom('#pv-container').clr();
+    dom('#pv-container')
+        .off('touchstart', onTouchstart)
+        .clr();
     dom('#pv-overlay').hide();
     dom(win).off('keydown', onKeydown);
 };
