@@ -1,13 +1,23 @@
 {
     "lang": "slovenčina",
 
+    "dateFormat": "DD. MM. YYYY HH:mm",
     "details": "podrobnosti",
+    "download": "stiahnuť",
     "empty": "prázdny",
     "files": "súborov",
+    "filter": "filter",
     "folders": "priečinkov",
+    "grid": "mriežka",
     "icons": "ikony",
+    "info": "Informácie",
+    "language": "Jazyk",
     "lastModified": "Upravené",
     "name": "Názov",
-    "parentDirectory": "Nadriadený priečinok",
-    "size": "Velkosť"
+    "noMatch": "žiadna zhoda",
+    "parentDirectory": "Rodičovský priečinok",
+    "search": "hľadať",
+    "size": "Veľkosť",
+    "tree": "Strom",
+    "view": "Zobrazenie"
 }
