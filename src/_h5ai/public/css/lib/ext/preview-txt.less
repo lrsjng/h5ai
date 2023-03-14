@@ -21,6 +21,12 @@
 }
 
 pre#pv-content-txt {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+
     code {
         line-height: 1.2em;
     }
@@ -29,6 +35,7 @@ pre#pv-content-txt {
 div#pv-content-txt {
     font-size: 1.1em;
     padding: 8px 24px;
+    overflow-wrap: normal;
 
     code {
         color: #008200;
