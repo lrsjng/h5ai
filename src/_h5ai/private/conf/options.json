@@ -284,6 +284,14 @@
     },
 
     /*
+    Object-Tag for e.g. PDFs
+    */
+    "preview-object": {
+      "enabled": true,
+      "types": ["x-pdf"]
+    },
+
+    /*
     Play a video preview on click.
 
     - autoplay: start playing as soon as ready

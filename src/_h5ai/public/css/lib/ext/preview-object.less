@@ -1,0 +1,11 @@
+#pv-content-object {
+    padding: 0;
+    overflow: hidden;
+    object {
+        width: calc(100% - 230px);
+        height: 100%;
+        @media (max-aspect-ratio: ~"1/1") { /* escape to avoid convert to literal 1 */
+            width: 100%;
+        }
+    }
+}
