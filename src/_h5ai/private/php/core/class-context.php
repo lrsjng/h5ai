@@ -189,7 +189,7 @@ class Context {
         $folder = Item::get($this, $this->to_path($href), $cache);
 
         // add content of subfolders
-        if ($what >= 3 && $folder !== null) {
+        if ($what >= 2 && $folder !== null) {
             foreach ($folder->get_content($cache) as $item) {
                 $item->get_content($cache);
             }
@@ -197,14 +197,9 @@ class Context {
         }
 
         // add content of this folder and all parent folders
-        while ($what >= 2 && $folder !== null) {
+        while ($what >= 1 && $folder !== null) {
             $folder->get_content($cache);
             $folder = $folder->get_parent($cache);
-        }
-
-        // only add the requested folder (less fstat overhead)
-        if ($what == 1 && $folder !== null) {
-            $folder->get_content($cache);
         }
 
         uasort($cache, ['Item', 'cmp']);
@@ -252,12 +247,10 @@ class Context {
 
     public function get_thumbs($requests) {
         $hrefs = [];
-        $height = $this->options['thumbnails']['size'] ?? 240;
-        $width = floor($height * (4 / 3));
 
         foreach ($requests as $req) {
             $thumb = new Thumb($this);
-            $hrefs[] = $thumb->thumb($req['type'], $req['href'], $width, $height);
+            $hrefs[] = $thumb->thumb($req['type'], $req['href'], $req['width'], $req['height']);
         }
 
         return $hrefs;

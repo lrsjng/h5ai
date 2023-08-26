@@ -91,7 +91,7 @@ const localize = (languages, isoCode, useBrowserLang) => {
     if (languages[storedIsoCode]) {
         isoCode = storedIsoCode;
     } else if (useBrowserLang) {
-        const browserLang = win.navigator.language.toLowerCase() || win.navigator.browserLanguage.toLowerCase();
+        const browserLang = win.navigator.language || win.navigator.browserLanguage;
         if (browserLang) {
             if (languages[browserLang]) {
                 isoCode = browserLang;
