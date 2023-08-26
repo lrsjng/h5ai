@@ -10,12 +10,9 @@
     "folders": "složek",
     "grid": "Seznam",
     "icons": "Velké ikony",
-	"info": "Informace",
     "lastModified": "Datum změny",
     "name": "Název",
     "noMatch": "Žádná shoda",
     "parentDirectory": "Nadřazený adresář",
-    "size": "Velikost",
-    "tree": "Strom",
-    "view": "Zobrazení"
+    "size": "Velikost"
 }

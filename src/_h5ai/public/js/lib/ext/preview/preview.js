@@ -213,7 +213,7 @@ Session.prototype = {
                     }
                 });
                 dom('#pv-container').hide().clr();
-                showSpinner(true, item.thumbRational || item.icon, 200);
+                showSpinner(true, item.thumbSquare || item.icon, 200);
             })
             .then(() => this.load(item))
             // delay for testing
